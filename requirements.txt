@@ -1,0 +1,6 @@
+Django==1.11.7
+django-extensions==1.9.7
+pytz==2017.3
+six==1.11.0
+typing==3.6.2
+Werkzeug==0.12.2
