@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'WSS',
-    'event',
+    'events',
     'staff',
     'django_extensions',
 ]
