@@ -28,8 +28,5 @@ class WSSAdmin(admin.ModelAdmin):
 
 
 admin.site.register(WSS, WSSAdmin)
-admin.site.register(Image)
-admin.site.register(Clip)
 admin.site.register(Sponsor)
 admin.site.register(ExternalLinkType)
-admin.site.register(ExternalLink)

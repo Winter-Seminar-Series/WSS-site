@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'events',
     'staff',
     'django_extensions',
+    'polymorphic',
 ]
 
 MIDDLEWARE = [

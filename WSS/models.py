@@ -12,9 +12,12 @@ class WSS(models.Model):
     main_image = models.OneToOneField(to='Image', null=True, blank=True, related_name='+')
 
     class Meta:
-        ordering = ['-year']
+        ordering = ('-year',)
         verbose_name = 'Winter Seminar Series'
         verbose_name_plural = 'Winter Seminar Series'
+
+    def __str__(self):
+        return 'WSS {}'.format(self.year)
 
 
 class Clip(models.Model):
@@ -33,13 +36,22 @@ class Sponsor(models.Model):
     is_main = models.BooleanField()
     wss = models.ForeignKey(to='WSS', related_name='sponsors')
 
+    def __str__(self):
+        return self.name
+
 
 class ExternalLinkType(models.Model):
     logoURL = models.URLField()
     name = models.CharField(max_length=40)
+
+    def __str__(self):
+        return self.name
 
 
 class ExternalLink(models.Model):
     type = models.ForeignKey(to=ExternalLinkType)
     url = models.URLField()
     wss = models.ForeignKey(to=WSS, related_name='external_links')
+
+    def __str__(self):
+        return self.url
