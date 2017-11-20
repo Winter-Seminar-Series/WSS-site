@@ -4,7 +4,7 @@ from django.db import models
 class WSS(models.Model):
     year = models.PositiveSmallIntegerField()
     description = models.TextField()
-    registrantion_link = models.URLField(null=True, blank=True)
+    registration_link = models.URLField(null=True, blank=True)
     proposal_link = models.URLField(null=True, blank=True)
     start_date = models.DateField()
     end_date = models.DateField()
@@ -21,27 +21,27 @@ class WSS(models.Model):
 
 
 class Clip(models.Model):
-    clip = models.FileField(upload_to='clips/')
     wss = models.ForeignKey(to='WSS', related_name='clips')
+    clip = models.FileField(upload_to='clips/')
 
 
 class Image(models.Model):
-    image = models.ImageField(upload_to='images/')
     wss = models.ForeignKey(to='WSS', related_name='images')
+    image = models.ImageField(upload_to='images/')
 
 
 class Sponsor(models.Model):
+    wss = models.ForeignKey(to='WSS', related_name='sponsors')
     name = models.CharField(max_length=70)
     logo = models.ImageField(upload_to='logos/')
     is_main = models.BooleanField()
-    wss = models.ForeignKey(to='WSS', related_name='sponsors')
 
     def __str__(self):
         return self.name
 
 
 class ExternalLinkType(models.Model):
-    logoURL = models.URLField()
+    logo_url = models.URLField()
     name = models.CharField(max_length=40)
 
     def __str__(self):
@@ -49,9 +49,9 @@ class ExternalLinkType(models.Model):
 
 
 class ExternalLink(models.Model):
+    wss = models.ForeignKey(to=WSS, related_name='external_links')
     type = models.ForeignKey(to=ExternalLinkType)
     url = models.URLField()
-    wss = models.ForeignKey(to=WSS, related_name='external_links')
 
     def __str__(self):
         return self.url

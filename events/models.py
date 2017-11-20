@@ -1,12 +1,8 @@
 from django.db import models
-from django.forms import URLField
 from polymorphic.models import PolymorphicModel
-from simple_history.models import HistoricalRecords
-
-from staff.models import Human
 
 
-class Event(PolymorphicModel):
+class BaseEvent(PolymorphicModel):  # Is implicitly Abstract
     wss = models.ForeignKey(to='WSS.WSS', related_name='events')
     title = models.CharField(max_length=150)
     start_time = models.DateTimeField()
@@ -17,6 +13,11 @@ class Event(PolymorphicModel):
         return self.title
 
 
+class Event(BaseEvent):
+    class Meta:
+        verbose_name_plural = 'Other Events'
+
+
 class Venue(models.Model):
     name = models.CharField(max_length=100)
     address = models.TextField()
@@ -25,29 +26,30 @@ class Venue(models.Model):
         return self.name
 
 
-class Seminar(Event):
+class Seminar(BaseEvent):
     abstract = models.TextField()
     is_keynote = models.BooleanField()
+    speaker = models.ForeignKey(to='people.HistoricalSpeaker', related_name='seminars')
     material = models.OneToOneField(to='SeminarMaterial', null=True, blank=True)
-    speaker = models.ForeignKey(to='HistoricalSpeaker', related_name='seminars')
 
 
-class SeminarMaterial(models.Model):
+class Workshop(BaseEvent):
+    syllabus = models.TextField()
+    sponsor = models.ForeignKey(to='WSS.Sponsor', related_name='workshops', null=True, blank=True)
+    speaker = models.ForeignKey(to='people.HistoricalSpeaker', related_name='workshops')
+    material = models.OneToOneField(to='WorkshopMaterial', null=True, blank=True)
+
+
+class Material(PolymorphicModel):
     slides = models.FileField()
-    videoURL = URLField()
+    video_url = models.URLField()
 
+
+class SeminarMaterial(Material):
     def __str__(self):
         return 'Material of {}'.format(self.seminar)
 
 
-class Workshop(Event):
-    syllabus = models.TextField()
-    sponsor = models.ForeignKey(to='WSS.Sponsor', related_name='workshops', null=True, blank=True)
-    speaker = models.ForeignKey(to='HistoricalSpeaker', related_name='workshops')
-
-
-class Speaker(Human):
-    degree = models.CharField(max_length=20)
-    place = models.CharField(max_length=50)
-    bio = models.TextField()
-    history = HistoricalRecords()
+class WorkshopMaterial(Material):
+    def __str__(self):
+        return 'Material of {}'.format(self.workshop)

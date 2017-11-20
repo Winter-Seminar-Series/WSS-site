@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'WSS',
     'events',
-    'staff',
+    'people',
     'django_extensions',
     'polymorphic',
 ]
@@ -137,3 +137,24 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'collected_static')
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+JET_SIDE_MENU_COMPACT = True
+JET_SIDE_MENU_CUSTOM_APPS = [
+    ('WSS', [
+        'WSS',
+        'Sponsor',
+        'ExternalLinkType',
+    ]),
+    ('people', [
+        'Speaker',
+        'HoldingTeam',
+        'Staff',
+    ]),
+    ('events', [
+        'Venue',
+        'Seminar',
+        'Workshop',
+        'Event',
+    ]),
+]
+JET_CHANGE_FORM_SIBLING_LINKS = False

@@ -15,12 +15,25 @@ class Human(PolymorphicModel):
         abstract = True
 
 
+class Speaker(Human):
+    degree = models.CharField(max_length=20)
+    place = models.CharField(max_length=50)
+    bio = models.TextField()
+    history = HistoricalRecords()
+
+
 class HoldingTeam(models.Model):
+    wss = models.ForeignKey(to='WSS.WSS', related_name='holding_teams', verbose_name='WSS')
     name = models.CharField(max_length=50)
     description = models.TextField()
-    wss = models.ForeignKey(to='WSS.WSS', related_name='holding_teams')
-    staff = models.ManyToManyField(to='HistoricalStaff', related_name='holding_teams')
+    staff = models.ManyToManyField(to='HistoricalStaff', related_name='holding_teams', blank=True)
+
+    def __str__(self):
+        return self.name
 
 
 class Staff(Human):
     history = HistoricalRecords()
+
+    class Meta:
+        verbose_name_plural = 'Staff'
