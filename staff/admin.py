@@ -1,10 +1,7 @@
 from django.contrib import admin
 from jet.admin import CompactInline
-from polymorphic.admin import PolymorphicParentModelAdmin
-from polymorphic.admin.filters import PolymorphicChildModelFilter
 
-from events.models import Speaker
-from staff.models import Human, Staff, HoldingTeam
+from staff.models import Staff, HoldingTeam
 
 
 class StaffInline(CompactInline):

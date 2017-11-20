@@ -1,6 +1,4 @@
 from django.contrib import admin
-from django.contrib.admin.templatetags.admin_urls import add_preserved_filters
-from polymorphic.admin import PolymorphicChildModelFilter
 from polymorphic.admin.parentadmin import PolymorphicParentModelAdmin
 
 from events.models import Event, Seminar, Workshop, Venue
