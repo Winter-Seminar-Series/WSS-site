@@ -1,6 +1,9 @@
 from django.db import models
 from django.forms import URLField
 from polymorphic.models import PolymorphicModel
+from simple_history.models import HistoricalRecords
+
+from staff.models import Human
 
 
 class Event(PolymorphicModel):
@@ -26,6 +29,7 @@ class Seminar(Event):
     abstract = models.TextField()
     is_keynote = models.BooleanField()
     material = models.OneToOneField(to='SeminarMaterial', null=True, blank=True)
+    speaker = models.ForeignKey(to='HistoricalSpeaker', related_name='seminars')
 
 
 class SeminarMaterial(models.Model):
@@ -39,3 +43,11 @@ class SeminarMaterial(models.Model):
 class Workshop(Event):
     syllabus = models.TextField()
     sponsor = models.ForeignKey(to='WSS.Sponsor', related_name='workshops', null=True, blank=True)
+    speaker = models.ForeignKey(to='HistoricalSpeaker', related_name='workshops')
+
+
+class Speaker(Human):
+    degree = models.CharField(max_length=20)
+    place = models.CharField(max_length=50)
+    bio = models.TextField()
+    history = HistoricalRecords()
