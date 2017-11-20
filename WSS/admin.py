@@ -46,7 +46,14 @@ class WSSAdmin(admin.ModelAdmin):
                ImageInline, ClipInline)
     list_display = ('__str__', 'start_date', 'end_date')
 
-admin.site.register(ExternalLinkType)
-admin.site.register(Sponsor)
-admin.site.register(WSS, WSSAdmin)
 
+class SponsorAdmin(admin.ModelAdmin):
+    list_display = ('__str__', 'wss', 'logo_tag')
+    readonly_fields = ('logo_tag',)
+
+class ExternalLinkTypeAdmin(admin.ModelAdmin):
+    list_display = ('__str__', 'logo_tag')
+
+admin.site.register(ExternalLinkType, ExternalLinkTypeAdmin)
+admin.site.register(Sponsor, SponsorAdmin)
+admin.site.register(WSS, WSSAdmin)

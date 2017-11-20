@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils.safestring import mark_safe
 
 
 class WSS(models.Model):
@@ -39,6 +40,11 @@ class Sponsor(models.Model):
     def __str__(self):
         return self.name
 
+    def logo_tag(self):
+        return mark_safe('<img src={} width=40 height=40>'.format(self.logo.url))
+
+    logo_tag.short_description = 'logo'
+
 
 class ExternalLinkType(models.Model):
     logo_url = models.URLField()
@@ -46,6 +52,11 @@ class ExternalLinkType(models.Model):
 
     def __str__(self):
         return self.name
+
+    def logo_tag(self):
+        return mark_safe('<img src={} width=40 height=40>'.format(self.logo_url))
+
+    logo_tag.short_description = 'logo'
 
 
 class ExternalLink(models.Model):

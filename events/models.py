@@ -41,15 +41,19 @@ class Workshop(BaseEvent):
 
 
 class Material(PolymorphicModel):
-    slides = models.FileField()
-    video_url = models.URLField()
+    slides = models.FileField(null=True, blank=True)
+    video_url = models.URLField(null=True, blank=True)
 
 
 class SeminarMaterial(Material):
     def __str__(self):
-        return 'Material of {}'.format(self.seminar)
+        if hasattr(self, 'seminar'):
+            return 'Material of {}'.format(self.seminar)
+        return 'Added Material'
 
 
 class WorkshopMaterial(Material):
     def __str__(self):
-        return 'Material of {}'.format(self.workshop)
+        if hasattr(self, 'workshop'):
+            return 'Material of {}'.format(self.workshop)
+        return 'Added Material'
