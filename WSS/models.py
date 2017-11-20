@@ -42,3 +42,4 @@ class ExternalLinkType(models.Model):
 class ExternalLink(models.Model):
     type = models.ForeignKey(to=ExternalLinkType)
     url = models.URLField()
+    wss = models.ForeignKey(to=WSS, related_name='external_links')
