@@ -160,3 +160,4 @@ JET_SIDE_MENU_CUSTOM_APPS = [
     ]),
 ]
 JET_CHANGE_FORM_SIBLING_LINKS = False
+JET_INDEX_DASHBOARD = 'WSS_Site.dashboard.IndexDashboard'
