@@ -3,7 +3,7 @@ from django.utils.safestring import mark_safe
 
 
 class WSS(models.Model):
-    year = models.PositiveSmallIntegerField()
+    year = models.PositiveSmallIntegerField(primary_key=True)
     description = models.TextField()
     registration_link = models.URLField(null=True, blank=True)
     proposal_link = models.URLField(null=True, blank=True)
@@ -22,13 +22,19 @@ class WSS(models.Model):
 
 
 class Clip(models.Model):
-    wss = models.ForeignKey(to='WSS', related_name='clips')
+    wss = models.ForeignKey(to='WSS', related_name='clips', verbose_name='WSS')
     clip = models.FileField(upload_to='clips/')
+
+    def __str__(self):
+        return 'Clip'
 
 
 class Image(models.Model):
-    wss = models.ForeignKey(to='WSS', related_name='images')
+    wss = models.ForeignKey(to='WSS', related_name='images', verbose_name='WSS')
     image = models.ImageField(upload_to='images/')
+
+    def __str__(self):
+        return 'Image'
 
 
 class Sponsor(models.Model):
