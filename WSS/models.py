@@ -3,7 +3,7 @@ from django.utils.safestring import mark_safe
 
 
 class WSS(models.Model):
-    year = models.PositiveSmallIntegerField(primary_key=True)
+    year = models.PositiveSmallIntegerField()
     description = models.TextField()
     registration_link = models.URLField(null=True, blank=True)
     proposal_link = models.URLField(null=True, blank=True)
