@@ -37,3 +37,14 @@ class Staff(Human):
 
     class Meta:
         verbose_name_plural = 'Staff'
+
+
+class Role(models.Model):
+    name = models.CharField(max_length=30)
+
+    def __str__(self):
+        return self.name
+
+
+class TechnicalExpert(Human):
+    role = models.ForeignKey(to=Role, related_name='technical_experts')

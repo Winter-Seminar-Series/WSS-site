@@ -148,6 +148,8 @@ JET_SIDE_MENU_CUSTOM_APPS = [
     ('people', [
         'Speaker',
         'HoldingTeam',
+        'Role',
+        'TechnicalExpert',
         'Staff',
     ]),
     ('events', [
