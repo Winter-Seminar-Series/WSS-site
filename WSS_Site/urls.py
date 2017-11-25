@@ -2,6 +2,9 @@ from django.conf import settings
 from django.conf.urls import url, include
 from django.conf.urls.static import static
 from django.contrib import admin
+from jet.dashboard.dashboard_modules import google_analytics_views
+
+admin.autodiscover()
 
 urlpatterns = [
     url(r'^jet/', include('jet.urls', 'jet')),
