@@ -47,7 +47,7 @@ jQuery(function($) {
 
 	if ( $( '#map' ).length > 0 ) {
 		
-      var eventmap = {lat: 40.742964, lng: -73.992277};
+      var eventmap = {lat: 35.703637, lng: 51.351593};
 
       $('#map')
       .gmap3({
