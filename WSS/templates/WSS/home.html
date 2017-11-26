@@ -174,17 +174,20 @@ Besides, if you have a research paper, report, or proposal, we would love to hea
                      </p>
                   </div>
                   <!-- Col end -->
-                  <div class="col-xs-12 col-sm-12 col-md-6">
-                     <div class="intro-video">
-                        <img class="img-responsive" src="images/intro-video.jpg" alt="" />
-                        <a class="popup" href="https://www.youtube.com/embed/XhveHKJWnOQ?autoplay=1&amp;loop=1">
-                           <div class="video-icon">
-                              <i class="fa fa-play"></i>
-                           </div>
-                        </a>
-                     </div>
-                     <!-- Intro video end -->
-                  </div>
+                  <!--<div class="col-xs-12 col-sm-12 col-md-6">-->
+                     <!--<div class="intro-video">-->
+					<!--<video width="70%" controls>-->
+						<!--<source src="http://s.tamasha.com/statics/video_file/320227_0_normalized_854x480.mp4" type="video/mp4" />-->
+					<!--</video>-->
+                        <!--&lt;!&ndash;<img class="img-responsive" src="images/intro-video.jpg" alt="" />&ndash;&gt;-->
+                        <!--&lt;!&ndash;<a class="popup" href="{{ wss.main_clip_url }}">&ndash;&gt;-->
+                           <!--&lt;!&ndash;<div class="video-icon">&ndash;&gt;-->
+                              <!--&lt;!&ndash;<i class="fa fa-play"></i>&ndash;&gt;-->
+                           <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                        <!--&lt;!&ndash;</a>&ndash;&gt;-->
+                     <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                     <!--&lt;!&ndash; Intro video end &ndash;&gt;-->
+                  <!--</div>-->
                   <!-- Col end -->
                </div>
                <!-- Content row 1 end -->
@@ -235,7 +238,7 @@ Besides, if you have a research paper, report, or proposal, we would love to hea
                         <img src="{% static 'images/icons/fact-country.png' %}" alt="" />
                         </span>
                         <div class="ts-facts-content">
-                           <h2 class="ts-facts-num"><span class="counterUp">{{ wss.staff.count }}</span></h2>
+                           <h2 class="ts-facts-num"><span class="counterUp">{{ wss.staff_count }}</span></h2>
                            <h3 class="ts-facts-title">Staff</h3>
                         </div>
                      </div>
@@ -249,192 +252,192 @@ Besides, if you have a research paper, report, or proposal, we would love to hea
          </section>
          <!-- Intro area end -->
 
-         <section id="ts-speakers" class="ts-speakers gradient-bg">
-            <div class="container">
-               <div class="row text-center">
-                  <h2 class="section-title">Revolutionizing the World</h2>
-                  <h3 class="section-sub-title title-white">Visionary Speakers</h3>
-               </div>
-               <!--/ Title row end -->
-               <div class="row">
-                  <div class="col-xs-12 col-sm-6 col-md-3">
-                     <div class="ts-speaker">
-                        <div class="ts-speaker-image">
-                           <img class="img-responsive" src="images/speakers/speaker1.jpg" alt="" />
-                           <ul class="social-links">
-                              <li><a href="#"><i class="fa fa-instagram"></i></a></li>
-                              <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
-                              <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                              <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                           </ul>
-                        </div>
-                        <!--Image end -->
-                        <div class="ts-speaker-info">
-                           <h3 class="ts-speaker-name"><a href="#">Edward C. Horner</a></h3>
-                           <p class="ts-speaker-designation">Founder, Textlab</p>
-                        </div>
-                        <!-- Info end -->
-                     </div>
-                     <!-- Speaker end -->
-                  </div>
-                  <!-- Speaker Col 1 end -->
-                  <div class="col-xs-12 col-sm-6 col-md-3">
-                     <div class="ts-speaker">
-                        <div class="ts-speaker-image">
-                           <img class="img-responsive" src="images/speakers/speaker2.jpg" alt="" />
-                           <ul class="social-links">
-                              <li><a href="#"><i class="fa fa-instagram"></i></a></li>
-                              <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
-                              <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                              <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                           </ul>
-                        </div>
-                        <!--Image end -->
-                        <div class="ts-speaker-info">
-                           <h3 class="ts-speaker-name"><a href="#">Yue Ying Yüan</a></h3>
-                           <p class="ts-speaker-designation">CFO, First Choice Inc.</p>
-                        </div>
-                        <!-- Info end -->
-                     </div>
-                     <!-- Speaker end -->
-                  </div>
-                  <!-- Speaker Col 2 end -->
-                  <div class="col-xs-12 col-sm-6 col-md-3">
-                     <div class="ts-speaker transparent">
-                        <div class="ts-speaker-image">
-                           <img class="img-responsive" src="images/speakers/speaker3.jpg" alt="" />
-                           <ul class="social-links">
-                              <li><a href="#"><i class="fa fa-instagram"></i></a></li>
-                              <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
-                              <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                              <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                           </ul>
-                        </div>
-                        <!--Image end -->
-                        <div class="ts-speaker-info">
-                           <h3 class="ts-speaker-name"><a href="#">Laura Bryant</a></h3>
-                           <p class="ts-speaker-designation">CCO, Buena Vista</p>
-                        </div>
-                        <!-- Info end -->
-                     </div>
-                     <!-- Speaker end -->
-                  </div>
-                  <!-- Speaker Col 3 end -->
-                  <div class="col-xs-12 col-sm-6 col-md-3">
-                     <div class="ts-speaker transparent">
-                        <div class="ts-speaker-image">
-                           <img class="img-responsive" src="images/speakers/speaker4.jpg" alt="" />
-                           <ul class="social-links">
-                              <li><a href="#"><i class="fa fa-instagram"></i></a></li>
-                              <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
-                              <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                              <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                           </ul>
-                        </div>
-                        <!--Image end -->
-                        <div class="ts-speaker-info">
-                           <h3 class="ts-speaker-name"><a href="#">Avdei Ignatyev</a></h3>
-                           <p class="ts-speaker-designation">Co-Founder, Newhair Corp.</p>
-                        </div>
-                        <!-- Info end -->
-                     </div>
-                     <!-- Speaker end -->
-                  </div>
-                  <!-- Speaker Col 4 end -->
-               </div>
-               <!-- Content row 1 end -->
-               <div class="gap-40"></div>
-               <div class="row">
-                  <div class="col-xs-12 col-sm-6 col-md-3">
-                     <div class="ts-speaker transparent">
-                        <div class="ts-speaker-image">
-                           <img class="img-responsive" src="images/speakers/speaker5.jpg" alt="" />
-                           <ul class="social-links">
-                              <li><a href="#"><i class="fa fa-instagram"></i></a></li>
-                              <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
-                              <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                              <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                           </ul>
-                        </div>
-                        <!--Image end -->
-                        <div class="ts-speaker-info">
-                           <h3 class="ts-speaker-name"><a href="#">Summer Cross</a></h3>
-                           <p class="ts-speaker-designation">Chairman, Access Ltd.</p>
-                        </div>
-                        <!-- Info end -->
-                     </div>
-                     <!-- Speaker end -->
-                  </div>
-                  <!-- Speaker Col 1 end -->
-                  <div class="col-xs-12 col-sm-6 col-md-3">
-                     <div class="ts-speaker transparent">
-                        <div class="ts-speaker-image">
-                           <img class="img-responsive" src="images/speakers/speaker6.jpg" alt="" />
-                           <ul class="social-links">
-                              <li><a href="#"><i class="fa fa-instagram"></i></a></li>
-                              <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
-                              <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                              <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                           </ul>
-                        </div>
-                        <!--Image end -->
-                        <div class="ts-speaker-info">
-                           <h3 class="ts-speaker-name"><a href="#">Oscar Watkins</a></h3>
-                           <p class="ts-speaker-designation">CMO, Circus World</p>
-                        </div>
-                        <!-- Info end -->
-                     </div>
-                     <!-- Speaker end -->
-                  </div>
-                  <!-- Speaker Col 2 end -->
-                  <div class="col-xs-12 col-sm-6 col-md-3">
-                     <div class="ts-speaker transparent">
-                        <div class="ts-speaker-image">
-                           <img class="img-responsive" src="images/speakers/speaker7.jpg" alt="" />
-                           <ul class="social-links">
-                              <li><a href="#"><i class="fa fa-instagram"></i></a></li>
-                              <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
-                              <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                              <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                           </ul>
-                        </div>
-                        <!--Image end -->
-                        <div class="ts-speaker-info">
-                           <h3 class="ts-speaker-name"><a href="#">Eden Nivison</a></h3>
-                           <p class="ts-speaker-designation">EVP, Jeans Unlimited</p>
-                        </div>
-                        <!-- Info end -->
-                     </div>
-                     <!-- Speaker end -->
-                  </div>
-                  <!-- Speaker Col 3 end -->
-                  <div class="col-xs-12 col-sm-6 col-md-3">
-                     <div class="ts-speaker transparent">
-                        <div class="ts-speaker-image">
-                           <img class="img-responsive" src="images/speakers/speaker8.jpg" alt="" />
-                           <ul class="social-links">
-                              <li><a href="#"><i class="fa fa-instagram"></i></a></li>
-                              <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
-                              <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                              <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                           </ul>
-                        </div>
-                        <!--Image end -->
-                        <div class="ts-speaker-info">
-                           <h3 class="ts-speaker-name"><a href="#">Davi Azevedo</a></h3>
-                           <p class="ts-speaker-designation">Architect, Piccolo Mondo</p>
-                        </div>
-                        <!-- Info end -->
-                     </div>
-                     <!-- Speaker end -->
-                  </div>
-                  <!-- Speaker Col 4 end -->
-               </div>
-               <!-- Content row 2 end -->
-            </div>
-            <!--/ Container end -->
-         </section>
-         <!-- Speakers end -->
+         <!--<section id="ts-speakers" class="ts-speakers gradient-bg">-->
+            <!--<div class="container">-->
+               <!--<div class="row text-center">-->
+                  <!--<h2 class="section-title">Revolutionizing the World</h2>-->
+                  <!--<h3 class="section-sub-title title-white">Visionary Speakers</h3>-->
+               <!--</div>-->
+               <!--&lt;!&ndash;/ Title row end &ndash;&gt;-->
+               <!--<div class="row">-->
+                  <!--<div class="col-xs-12 col-sm-6 col-md-3">-->
+                     <!--<div class="ts-speaker">-->
+                        <!--<div class="ts-speaker-image">-->
+                           <!--<img class="img-responsive" src="images/speakers/speaker1.jpg" alt="" />-->
+                           <!--<ul class="social-links">-->
+                              <!--<li><a href="#"><i class="fa fa-instagram"></i></a></li>-->
+                              <!--<li><a href="#"><i class="fa fa-linkedin"></i></a></li>-->
+                              <!--<li><a href="#"><i class="fa fa-facebook"></i></a></li>-->
+                              <!--<li><a href="#"><i class="fa fa-twitter"></i></a></li>-->
+                           <!--</ul>-->
+                        <!--</div>-->
+                        <!--&lt;!&ndash;Image end &ndash;&gt;-->
+                        <!--<div class="ts-speaker-info">-->
+                           <!--<h3 class="ts-speaker-name"><a href="#">Edward C. Horner</a></h3>-->
+                           <!--<p class="ts-speaker-designation">Founder, Textlab</p>-->
+                        <!--</div>-->
+                        <!--&lt;!&ndash; Info end &ndash;&gt;-->
+                     <!--</div>-->
+                     <!--&lt;!&ndash; Speaker end &ndash;&gt;-->
+                  <!--</div>-->
+                  <!--&lt;!&ndash; Speaker Col 1 end &ndash;&gt;-->
+                  <!--<div class="col-xs-12 col-sm-6 col-md-3">-->
+                     <!--<div class="ts-speaker">-->
+                        <!--<div class="ts-speaker-image">-->
+                           <!--<img class="img-responsive" src="images/speakers/speaker2.jpg" alt="" />-->
+                           <!--<ul class="social-links">-->
+                              <!--<li><a href="#"><i class="fa fa-instagram"></i></a></li>-->
+                              <!--<li><a href="#"><i class="fa fa-linkedin"></i></a></li>-->
+                              <!--<li><a href="#"><i class="fa fa-facebook"></i></a></li>-->
+                              <!--<li><a href="#"><i class="fa fa-twitter"></i></a></li>-->
+                           <!--</ul>-->
+                        <!--</div>-->
+                        <!--&lt;!&ndash;Image end &ndash;&gt;-->
+                        <!--<div class="ts-speaker-info">-->
+                           <!--<h3 class="ts-speaker-name"><a href="#">Yue Ying Yüan</a></h3>-->
+                           <!--<p class="ts-speaker-designation">CFO, First Choice Inc.</p>-->
+                        <!--</div>-->
+                        <!--&lt;!&ndash; Info end &ndash;&gt;-->
+                     <!--</div>-->
+                     <!--&lt;!&ndash; Speaker end &ndash;&gt;-->
+                  <!--</div>-->
+                  <!--&lt;!&ndash; Speaker Col 2 end &ndash;&gt;-->
+                  <!--<div class="col-xs-12 col-sm-6 col-md-3">-->
+                     <!--<div class="ts-speaker transparent">-->
+                        <!--<div class="ts-speaker-image">-->
+                           <!--<img class="img-responsive" src="images/speakers/speaker3.jpg" alt="" />-->
+                           <!--<ul class="social-links">-->
+                              <!--<li><a href="#"><i class="fa fa-instagram"></i></a></li>-->
+                              <!--<li><a href="#"><i class="fa fa-linkedin"></i></a></li>-->
+                              <!--<li><a href="#"><i class="fa fa-facebook"></i></a></li>-->
+                              <!--<li><a href="#"><i class="fa fa-twitter"></i></a></li>-->
+                           <!--</ul>-->
+                        <!--</div>-->
+                        <!--&lt;!&ndash;Image end &ndash;&gt;-->
+                        <!--<div class="ts-speaker-info">-->
+                           <!--<h3 class="ts-speaker-name"><a href="#">Laura Bryant</a></h3>-->
+                           <!--<p class="ts-speaker-designation">CCO, Buena Vista</p>-->
+                        <!--</div>-->
+                        <!--&lt;!&ndash; Info end &ndash;&gt;-->
+                     <!--</div>-->
+                     <!--&lt;!&ndash; Speaker end &ndash;&gt;-->
+                  <!--</div>-->
+                  <!--&lt;!&ndash; Speaker Col 3 end &ndash;&gt;-->
+                  <!--<div class="col-xs-12 col-sm-6 col-md-3">-->
+                     <!--<div class="ts-speaker transparent">-->
+                        <!--<div class="ts-speaker-image">-->
+                           <!--<img class="img-responsive" src="images/speakers/speaker4.jpg" alt="" />-->
+                           <!--<ul class="social-links">-->
+                              <!--<li><a href="#"><i class="fa fa-instagram"></i></a></li>-->
+                              <!--<li><a href="#"><i class="fa fa-linkedin"></i></a></li>-->
+                              <!--<li><a href="#"><i class="fa fa-facebook"></i></a></li>-->
+                              <!--<li><a href="#"><i class="fa fa-twitter"></i></a></li>-->
+                           <!--</ul>-->
+                        <!--</div>-->
+                        <!--&lt;!&ndash;Image end &ndash;&gt;-->
+                        <!--<div class="ts-speaker-info">-->
+                           <!--<h3 class="ts-speaker-name"><a href="#">Avdei Ignatyev</a></h3>-->
+                           <!--<p class="ts-speaker-designation">Co-Founder, Newhair Corp.</p>-->
+                        <!--</div>-->
+                        <!--&lt;!&ndash; Info end &ndash;&gt;-->
+                     <!--</div>-->
+                     <!--&lt;!&ndash; Speaker end &ndash;&gt;-->
+                  <!--</div>-->
+                  <!--&lt;!&ndash; Speaker Col 4 end &ndash;&gt;-->
+               <!--</div>-->
+               <!--&lt;!&ndash; Content row 1 end &ndash;&gt;-->
+               <!--<div class="gap-40"></div>-->
+               <!--<div class="row">-->
+                  <!--<div class="col-xs-12 col-sm-6 col-md-3">-->
+                     <!--<div class="ts-speaker transparent">-->
+                        <!--<div class="ts-speaker-image">-->
+                           <!--<img class="img-responsive" src="images/speakers/speaker5.jpg" alt="" />-->
+                           <!--<ul class="social-links">-->
+                              <!--<li><a href="#"><i class="fa fa-instagram"></i></a></li>-->
+                              <!--<li><a href="#"><i class="fa fa-linkedin"></i></a></li>-->
+                              <!--<li><a href="#"><i class="fa fa-facebook"></i></a></li>-->
+                              <!--<li><a href="#"><i class="fa fa-twitter"></i></a></li>-->
+                           <!--</ul>-->
+                        <!--</div>-->
+                        <!--&lt;!&ndash;Image end &ndash;&gt;-->
+                        <!--<div class="ts-speaker-info">-->
+                           <!--<h3 class="ts-speaker-name"><a href="#">Summer Cross</a></h3>-->
+                           <!--<p class="ts-speaker-designation">Chairman, Access Ltd.</p>-->
+                        <!--</div>-->
+                        <!--&lt;!&ndash; Info end &ndash;&gt;-->
+                     <!--</div>-->
+                     <!--&lt;!&ndash; Speaker end &ndash;&gt;-->
+                  <!--</div>-->
+                  <!--&lt;!&ndash; Speaker Col 1 end &ndash;&gt;-->
+                  <!--<div class="col-xs-12 col-sm-6 col-md-3">-->
+                     <!--<div class="ts-speaker transparent">-->
+                        <!--<div class="ts-speaker-image">-->
+                           <!--<img class="img-responsive" src="images/speakers/speaker6.jpg" alt="" />-->
+                           <!--<ul class="social-links">-->
+                              <!--<li><a href="#"><i class="fa fa-instagram"></i></a></li>-->
+                              <!--<li><a href="#"><i class="fa fa-linkedin"></i></a></li>-->
+                              <!--<li><a href="#"><i class="fa fa-facebook"></i></a></li>-->
+                              <!--<li><a href="#"><i class="fa fa-twitter"></i></a></li>-->
+                           <!--</ul>-->
+                        <!--</div>-->
+                        <!--&lt;!&ndash;Image end &ndash;&gt;-->
+                        <!--<div class="ts-speaker-info">-->
+                           <!--<h3 class="ts-speaker-name"><a href="#">Oscar Watkins</a></h3>-->
+                           <!--<p class="ts-speaker-designation">CMO, Circus World</p>-->
+                        <!--</div>-->
+                        <!--&lt;!&ndash; Info end &ndash;&gt;-->
+                     <!--</div>-->
+                     <!--&lt;!&ndash; Speaker end &ndash;&gt;-->
+                  <!--</div>-->
+                  <!--&lt;!&ndash; Speaker Col 2 end &ndash;&gt;-->
+                  <!--<div class="col-xs-12 col-sm-6 col-md-3">-->
+                     <!--<div class="ts-speaker transparent">-->
+                        <!--<div class="ts-speaker-image">-->
+                           <!--<img class="img-responsive" src="images/speakers/speaker7.jpg" alt="" />-->
+                           <!--<ul class="social-links">-->
+                              <!--<li><a href="#"><i class="fa fa-instagram"></i></a></li>-->
+                              <!--<li><a href="#"><i class="fa fa-linkedin"></i></a></li>-->
+                              <!--<li><a href="#"><i class="fa fa-facebook"></i></a></li>-->
+                              <!--<li><a href="#"><i class="fa fa-twitter"></i></a></li>-->
+                           <!--</ul>-->
+                        <!--</div>-->
+                        <!--&lt;!&ndash;Image end &ndash;&gt;-->
+                        <!--<div class="ts-speaker-info">-->
+                           <!--<h3 class="ts-speaker-name"><a href="#">Eden Nivison</a></h3>-->
+                           <!--<p class="ts-speaker-designation">EVP, Jeans Unlimited</p>-->
+                        <!--</div>-->
+                        <!--&lt;!&ndash; Info end &ndash;&gt;-->
+                     <!--</div>-->
+                     <!--&lt;!&ndash; Speaker end &ndash;&gt;-->
+                  <!--</div>-->
+                  <!--&lt;!&ndash; Speaker Col 3 end &ndash;&gt;-->
+                  <!--<div class="col-xs-12 col-sm-6 col-md-3">-->
+                     <!--<div class="ts-speaker transparent">-->
+                        <!--<div class="ts-speaker-image">-->
+                           <!--<img class="img-responsive" src="images/speakers/speaker8.jpg" alt="" />-->
+                           <!--<ul class="social-links">-->
+                              <!--<li><a href="#"><i class="fa fa-instagram"></i></a></li>-->
+                              <!--<li><a href="#"><i class="fa fa-linkedin"></i></a></li>-->
+                              <!--<li><a href="#"><i class="fa fa-facebook"></i></a></li>-->
+                              <!--<li><a href="#"><i class="fa fa-twitter"></i></a></li>-->
+                           <!--</ul>-->
+                        <!--</div>-->
+                        <!--&lt;!&ndash;Image end &ndash;&gt;-->
+                        <!--<div class="ts-speaker-info">-->
+                           <!--<h3 class="ts-speaker-name"><a href="#">Davi Azevedo</a></h3>-->
+                           <!--<p class="ts-speaker-designation">Architect, Piccolo Mondo</p>-->
+                        <!--</div>-->
+                        <!--&lt;!&ndash; Info end &ndash;&gt;-->
+                     <!--</div>-->
+                     <!--&lt;!&ndash; Speaker end &ndash;&gt;-->
+                  <!--</div>-->
+                  <!--&lt;!&ndash; Speaker Col 4 end &ndash;&gt;-->
+               <!--</div>-->
+               <!--&lt;!&ndash; Content row 2 end &ndash;&gt;-->
+            <!--</div>-->
+            <!--&lt;!&ndash;/ Container end &ndash;&gt;-->
+         <!--</section>-->
+         <!--&lt;!&ndash; Speakers end &ndash;&gt;-->
           
          <section class="venu-map no-padding">
             <div class="container-fluid">

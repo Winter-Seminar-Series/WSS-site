@@ -5,7 +5,7 @@ from simple_history.models import HistoricalRecords
 
 class Human(PolymorphicModel):
     name = models.CharField(max_length=40)
-    picture = models.ImageField(upload_to='human_pictures/')
+    picture = models.ImageField(upload_to='human_pictures/', null=True, blank=True)
     history = HistoricalRecords()
 
     def __str__(self):
@@ -30,6 +30,10 @@ class HoldingTeam(models.Model):
 
     def __str__(self):
         return self.name
+
+    @property
+    def staff_pk_set(self):
+        return {staff.instance.pk for staff in self.staff.all()}
 
 
 class Staff(Human):

@@ -2,6 +2,7 @@ from django.db import models
 from django.utils.safestring import mark_safe
 
 from events.models import Workshop, Seminar
+from people.models import TechnicalExpert
 
 
 class WSS(models.Model):
@@ -27,12 +28,23 @@ class WSS(models.Model):
         return self.main_image.image.url
 
     @property
+    def main_clip_url(self):
+        return self.main_clip.clip.url
+
+    @property
     def workshops(self):
         return Workshop.objects.filter(wss=self)
 
     @property
     def seminars(self):
         return Seminar.objects.filter(wss=self)
+
+    @property
+    def staff_count(self):
+        return len(set.union(
+            set(TechnicalExpert.objects.values_list('pk')),
+            *[holding_team.staff_pk_set for holding_team in self.holding_teams.all()]
+        ))
 
 
 class Clip(models.Model):
