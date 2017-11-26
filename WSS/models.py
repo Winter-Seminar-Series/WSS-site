@@ -20,6 +20,9 @@ class WSS(models.Model):
     def __str__(self):
         return 'WSS {}'.format(self.year)
 
+    @property
+    def main_image_url(self):
+        return self.main_image.image.url
 
 class Clip(models.Model):
     wss = models.ForeignKey(to='WSS', related_name='clips', verbose_name='WSS')

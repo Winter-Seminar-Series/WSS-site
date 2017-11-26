@@ -22,7 +22,7 @@ class IndexDashboard(Dashboard):
                     'external': True,
                 },
                 {
-                    'title': 'Amirreza Mozayyeni',
+                    'title': 'Amirreza Mozayani',
                     'url': 'http://ce.sharif.edu/~amozayani',
                     'external': True,
                 },
