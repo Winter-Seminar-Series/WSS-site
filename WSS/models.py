@@ -1,6 +1,8 @@
 from django.db import models
 from django.utils.safestring import mark_safe
 
+from events.models import Workshop, Seminar
+
 
 class WSS(models.Model):
     year = models.PositiveSmallIntegerField()
@@ -23,6 +25,15 @@ class WSS(models.Model):
     @property
     def main_image_url(self):
         return self.main_image.image.url
+
+    @property
+    def workshops(self):
+        return Workshop.objects.filter(wss=self)
+
+    @property
+    def seminars(self):
+        return Seminar.objects.filter(wss=self)
+
 
 class Clip(models.Model):
     wss = models.ForeignKey(to='WSS', related_name='clips', verbose_name='WSS')

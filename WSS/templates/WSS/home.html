@@ -52,7 +52,7 @@
                   <div class="navbar-header">
                      <div class="logo">
                         <a href="index.html">
-                        <img src="images/logo.png" alt="WINTER SEMINAR SERIES" width="40" height="40px">
+                        <img src="{% static 'images/logo.png' %}" alt="WINTER SEMINAR SERIES" width="40" height="40px">
                         </a>
                      </div>
                      <!-- logo end -->
@@ -129,6 +129,7 @@
                         <h1 class="banner-title">WINTER SEMINAR SERIES</h1>
                         <h2 class="banner-subtitle2">ADVANCED TOPICS IN COMPUTER SCIENCE AND ENGINEERING</h2>
 
+                        <input type="hidden" value="{% date_string wss.start_date %}" id="start-date">
                         <h2 class="banner-subtitle">{% render_date wss %}</h2>
                         <h3 class="banner-desc">IRAN, TEHRAN, SHARIF UNIVERSITY OF TECHNOLOGY</h3>
                         {% if wss.registration_link %}
@@ -153,12 +154,24 @@
                   <div class="col-xs-12 col-sm-12 col-md-6">
                      <div class="gap-60"></div>
                      <h2 class="intro-title">About the Event</h2>
-                     <h3 class="intro-sub-title">How it All Started</h3>
-                     <p class="intro-desc">	We are rethoric question ran over her cheek When she reached the first hills of the Italic Mountains, she had a last view back on the skyline of her hometown Bookmarksgrove, the headline of Alphabet Village and the subline of her own road, the Line Lane.
+                     <p class="intro-desc">	{{ wss.description }}</p>
+                     <h2 class="intro-title">Registration</h2>
+                     {% if wss.registration_link %}
+                     <p>If you are a student, researcher, industry professional, or just interested in any CSE related field, please join us in this event! You can register to participate through the following link.
                      </p>
-                     <blockquote>Throw myself down teems with vapour around me, and the meridian sun strikes the upper surface of the impenetrable foliage of my trees.</blockquote>
-                     <p>Few stray gleams steal into the inner sanctuary grow familiar with the countless indescribable forms, then I feel the presence of the Almighty.</p>
-                     <p><a href="#" class="btn btn-primary">Know More</a></p>
+                     {% endif %}
+                     {% if wss.proposal_link %}
+                     <p>
+Besides, if you have a research paper, report, or proposal, we would love to hear your ideas! Please submit an abstract so you can share your ideas with us during the event in a short 10 minute talk.</p>
+                     {% endif %}
+                     <p>
+                     {% if wss.registration_link %}
+                     <a href="{{ wss.registration_link }}" class="btn btn-primary">Register now</a>
+                     {% endif %}
+                     {% if wss.proposal_link %}
+                     <a href="{{ wss.proposal_link }}" class="btn btn-primary">Submit your proposal</a>
+                     {% endif %}
+                     </p>
                   </div>
                   <!-- Col end -->
                   <div class="col-xs-12 col-sm-12 col-md-6">
@@ -180,10 +193,10 @@
                   <div class="col-sm-3 col-xs-6">
                      <div class="ts-facts">
                         <span class="ts-facts-img">
-                        <img src="images/icons/fact-workshop.png" alt="" />
+                        <img src="{% static 'images/icons/fact-workshop.png' %}" alt="" />
                         </span>
                         <div class="ts-facts-content">
-                           <h2 class="ts-facts-num"><span class="counterUp">47</span></h2>
+                           <h2 class="ts-facts-num"><span class="counterUp">{{ wss.workshops.count }}</span></h2>
                            <h3 class="ts-facts-title">Workshops</h3>
                         </div>
                      </div>
@@ -193,11 +206,11 @@
                   <div class="col-sm-3 col-xs-6">
                      <div class="ts-facts">
                         <span class="ts-facts-img">
-                        <img src="images/icons/fact-speaker.png" alt="" />
+                        <img src="{% static 'images/icons/fact-seminar.png' %}" alt="" />
                         </span>
                         <div class="ts-facts-content">
-                           <h2 class="ts-facts-num"><span class="counterUp">139</span></h2>
-                           <h3 class="ts-facts-title">Speakers</h3>
+                           <h2 class="ts-facts-num"><span class="counterUp">{{ wss.seminars.count }}</span></h2>
+                           <h3 class="ts-facts-title">Seminars</h3>
                         </div>
                      </div>
                      <!--Facts end -->
@@ -206,10 +219,10 @@
                   <div class="col-sm-3 col-xs-6">
                      <div class="ts-facts">
                         <span class="ts-facts-img">
-                        <img src="images/icons/fact-sponsor.png" alt="" />
+                        <img src="{% static 'images/icons/fact-sponsor.png' %}" alt="" />
                         </span>
                         <div class="ts-facts-content">
-                           <h2 class="ts-facts-num"><span class="counterUp">37</span></h2>
+                           <h2 class="ts-facts-num"><span class="counterUp">{{ wss.sponsors.count }}</span></h2>
                            <h3 class="ts-facts-title">Sponsors</h3>
                         </div>
                      </div>
@@ -219,11 +232,11 @@
                   <div class="col-sm-3 col-xs-6">
                      <div class="ts-facts last">
                         <span class="ts-facts-img">
-                        <img src="images/icons/fact-country.png" alt="" />
+                        <img src="{% static 'images/icons/fact-country.png' %}" alt="" />
                         </span>
                         <div class="ts-facts-content">
-                           <h2 class="ts-facts-num"><span class="counterUp">88</span></h2>
-                           <h3 class="ts-facts-title">Countries</h3>
+                           <h2 class="ts-facts-num"><span class="counterUp">{{ wss.staff.count }}</span></h2>
+                           <h3 class="ts-facts-title">Staff</h3>
                         </div>
                      </div>
                      <!--Facts end -->

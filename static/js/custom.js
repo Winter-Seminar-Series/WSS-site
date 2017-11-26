@@ -36,7 +36,7 @@ jQuery(function($) {
 
 	if ( $( '.countdown' ).length > 0 ) {
 		$(".countdown").jCounter({
-		  	date: '27 December 2017 12:00:00',
+		  	date: $('#start-date').val() + ' 08:00:00',
 		  	fallback: function() { console.log("count finished!") }
 		});
 	}
