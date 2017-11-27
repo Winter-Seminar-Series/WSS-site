@@ -38,7 +38,7 @@
 
 	/* Subscribe */
 
-	.newsletter-form input{
+	.statics input{
 		min-width: 340px;
 	}
 
@@ -322,13 +322,13 @@
 		margin-bottom: 40px;
 	}
 
-	/* Newsletter */
+	/* statics */
 
-	.newsletter-form h3{
+	.statics h3{
 		margin-bottom: 30px;
 	}
 
-	.newsletter-form input{
+	.statics input{
 		margin-left: 0;
 	}
 
@@ -603,7 +603,7 @@
 
 	.banner-content, .banner-reg-form {
    	padding: 200px 0;
-   }
+   	}
 
 	.banner-content .banner-title,
 	.banner-content .classic-style .banner-title{
@@ -613,9 +613,9 @@
 	}
 
 	.banner-subtitle {
-   	font-size: 22px;
-   	margin-top: 8px;
-   }
+		font-size: 22px;
+		margin-top: 8px;
+	}
 
 	.banner-subtitle2 {
 		font-size: 12px;
@@ -750,17 +750,17 @@
 		margin-bottom: 30px;
 	}
 
-	/* Newsletter */
+	/* Statics */
 
-	.newsletter-form{
+	.statics{
 		padding: 0 80px 0 20px;
 	}
 
-	.newsletter-form h3{
+	.statics h3{
 		margin-bottom: 30px;
 	}
 
-	.newsletter-form input{
+	.statics input{
 		margin-left: 0;
 	}
 
