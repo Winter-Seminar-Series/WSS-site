@@ -16,7 +16,7 @@ class Human(PolymorphicModel):
 
 
 class Speaker(Human):
-    degree = models.CharField(max_length=20)
+    degree = models.CharField(max_length=30)
     place = models.CharField(max_length=50)
     bio = models.TextField()
     history = HistoricalRecords()
