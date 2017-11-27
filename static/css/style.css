@@ -34,7 +34,7 @@
 	
 */
 
-@import url("font-googleapi.css");
+@import url(https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,500,500i,700,700i,900,900i|Lato:400,400i,700,700i,900,900i);
 
 /* Typography
 ================================================== */
@@ -250,7 +250,7 @@ img.pull-right {
 .pattern-bg{
 	padding: 80px 0;
 	background: #eee;
-	background: url("../images/pattern3.png");
+	background: url(../images/pattern3.png);
 }
 .solid-row {
     background: #f0f0f0;
@@ -1382,7 +1382,7 @@ ul.navbar-nav > li:hover > a{
 ================================================== */
 
 .ts-intro{
-    padding-bottom: 80px;
+    padding-bottom: 30px;
 }
 
 .ts-intro .btn-primary{
@@ -1514,7 +1514,7 @@ ul.navbar-nav > li:hover > a{
 .facts-area {
     color: #ffffff;
     background-color: #1c1c24;
-    background-image: url("../images/parallax1.jpg");
+    background-image: url(../images/parallax1.jpg);
     background-repeat: no-repeat;
     background-size: cover;
     background-attachment: fixed;
@@ -1657,7 +1657,7 @@ ul.navbar-nav > li:hover > a{
 
 .ts-speakers-bg{
     background-color: #f5f5f5;
-    background-image: url("../images/parallax1.jpg");
+    background-image: url(../images/parallax1.jpg);
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-size: cover;
@@ -1857,21 +1857,21 @@ ul.navbar-nav > li:hover > a{
     margin-top: 0;
 }
 
-/* Newsletter
+/* statics
 ================================================== */
 
-.ts-newsletter{
-    background: url("../images/pattern1.png");
-    padding: 100px 0;
+.ts-statics{
+    background: url(../images/pattern1.png);
+    padding: 40px 0;
 }
 
-.newsletter-form {
+.statics {
     position: relative;
     z-index: 1;
     padding: 0 80px;
 }
 
-.newsletter-form h2 {
+.statics h2 {
     color: #ff0763;
     margin-top: 0;
     font-size: 14px;
@@ -1879,17 +1879,17 @@ ul.navbar-nav > li:hover > a{
     font-weight: 400;
 }
 
-.newsletter-form h3 {
+.statics h3 {
     color: #fff;
     margin: 5px 0 0;
     font-size: 30px;
 }
 
-.newsletter-form form{
+.statics form{
     margin-top: 5px;
 }
 
-.newsletter-form input {
+.statics input {
     width: 100%;
     display: inline-block;
     font-size: 12px;
@@ -1902,7 +1902,7 @@ ul.navbar-nav > li:hover > a{
     border: 1px solid #1d1c1c;
 }
 
-.newsletter-form button {
+.statics button {
     position: absolute;
     top: 5px;
     right: -50px;
@@ -1970,7 +1970,7 @@ ul.navbar-nav > li:hover > a{
 
 .ts-pricing {
     background-color: #f5f5f5;
-    background-image: url("../images/parallax2.jpg");
+    background-image: url(../images/parallax2.jpg);
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-size: cover;
@@ -2361,6 +2361,7 @@ h4.panel-title a.collapsed:before {
     font-weight: 700;
     font-size: 20px;
     padding: 0;
+    letter-spacing: 1px;
 }
 #back-to-top .btn.btn-primary:hover {
     color: #fff;
@@ -2471,7 +2472,7 @@ h4.panel-title a.collapsed:before {
 
 .ts-action.bg-image{
     background-color: #f5f5f5;
-    background-image: url("../images/parallax2.jpg");
+    background-image: url(../images/parallax2.jpg);
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-size: cover;
