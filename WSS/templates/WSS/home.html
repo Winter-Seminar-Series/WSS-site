@@ -270,7 +270,9 @@
    </div>
 
       {% for seminar in wss.non_keynote_seminars %}
+           <div class="col-xs-12 col-sm-6 col-md-3">
          {% render_human seminar.speaker subtitle=seminar.speaker.short_bio url='/' %}
+          </div>
       {% endfor %}
 
    <!-- Content row 2 end -->

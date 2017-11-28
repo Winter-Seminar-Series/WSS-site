@@ -2,6 +2,7 @@
 <html lang="en">
 {% load static %}
 {% load date_tags %}
+{% load human_tags %}
 
 <head>
 	<!-- Basic Page Needs ================================================== -->
@@ -105,19 +106,9 @@
 		<div class="container">
 			<div class="row">
 				<div class="clearfix">
-					<div class="col-xs-12 col-md-4">
-						<div class="ts-speaker-details">
-							<div>
-								<img class="img-responsive" src={{ seminar.speaker.picture.url }} alt="" />
-							</div><!--Image end -->
-							<div class="ts-speaker-info">
-								<h3 class="ts-speaker-name">{{ seminar.speaker.name }}</h3>
-								<p class="ts-speaker-designation">{{ seminar.speaker.degree }}</p>
-								<p>{{ seminar.speaker.place }}</p>
-							</div><!--Info end -->
-						</div><!--Imag eend -->
-					</div><!-- Col end -->
-
+					<div class="col-xs-12 col-md-4">>
+                        {% render_human seminar.speaker subtitle=seminar.speaker.short_bio url=None %}
+                    </div>
 					<div class="col-xs-12 col-md-8">
 							<div class="ts-speaker-session right">
 								<h3 class="session-title">{{ seminar.title }}</h3>
