@@ -1,14 +1,14 @@
  <div class="col-xs-12 col-sm-6 col-md-3">
- <a href="{{ url }}"><div class="ts-speaker">
+ {% if url %} <a href="{{ url }}"> {% endif %}<div class="ts-speaker">
  <div class="ts-speaker-image">
  <img class="img-responsive" src="{{ human.picture_url }}" alt="" />
  </div>
  <!--Image end -->
  <div class="ts-speaker-info">
- <h3 class="ts-speaker-name"><a href="{{ url }}">{{ human.name }}</a></h3>
+ <h3 class="ts-speaker-name">{% if url %}<a href="{{ url }}">{% endif %}{{ human.name }}{% if url %}</a>{% endif %}</h3>
  <p class="ts-speaker-designation">{{ subtitle }}</p>
  </div>
  <!-- Info end -->
- </div></a>
+ </div>{% if url %}</a>{% endif %}
  <!-- Speaker end -->
  </div>

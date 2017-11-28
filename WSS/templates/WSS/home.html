@@ -264,17 +264,22 @@
 
    </div>
    <br>
-   <div class="container">
    <div class="row text-center">
    <h3 class="section-sub-title title-white">Speakers</h3>
    </div>
 
-      {% for seminar in wss.non_keynote_seminars %}
+      {% for seminar in selected_seminars %}
          {% render_human seminar.speaker subtitle=seminar.speaker.short_bio url='/' %}
       {% endfor %}
+   </div>
+
+   <p class="banner-btn center">
+   <a href="/" class="btn btn-primary">View More</a>
+   </p>
+
 
    <!-- Content row 2 end -->
-   </div>
+
    <!--/ Container end -->
    </section>
    <!-- Speakers end -->
