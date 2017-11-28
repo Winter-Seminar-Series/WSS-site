@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'people',
     'django_extensions',
     'polymorphic',
+    'sorl.thumbnail',
 ]
 
 MIDDLEWARE = [

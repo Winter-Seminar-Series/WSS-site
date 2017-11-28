@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils.safestring import mark_safe
+from sorl.thumbnail.fields import ImageField
 
 from events.models import Workshop, Seminar
 from people.models import TechnicalExpert
@@ -69,7 +70,7 @@ class Clip(models.Model):
 
 class Image(models.Model):
     wss = models.ForeignKey(to='WSS', related_name='images', verbose_name='WSS')
-    image = models.ImageField(upload_to='images/')
+    image = ImageField(upload_to='images/')
 
     def __str__(self):
         return 'Image of {}'.format(self.wss)

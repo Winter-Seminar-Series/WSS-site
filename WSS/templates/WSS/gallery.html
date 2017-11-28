@@ -2,7 +2,7 @@
 <html lang="en">
 {% load static %}
 {% load date_tags %}
-
+{% load thumbnail %}
 <head>
 	<!-- Basic Page Needs ================================================== -->
 	<meta charset="utf-8">
@@ -102,6 +102,12 @@
          </div>
       </div><!-- Subpage title end -->
 	</div><!-- Page Banner end -->
+		{% for item in wss.images.all %}
+		{% thumbnail item.image "300x300" crop="center" as im %}
+    		<img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">
+	{% endthumbnail %}
+		{% endfor %}
+
 
 	<!--<section id="main-container" class="main-container">-->
 		<!--<div class="container">-->
