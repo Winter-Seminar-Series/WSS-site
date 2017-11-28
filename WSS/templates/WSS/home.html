@@ -4,779 +4,807 @@
 {% load date_tags %}
 
 <head>
-   <!-- Basic Page Needs ================================================== -->
-   <meta charset="utf-8">
+    <!-- Basic Page Needs ================================================== -->
+    <meta charset="utf-8">
 
-   <!-- Mobile Specific Metas ================================================== -->
-   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+    <!-- Mobile Specific Metas ================================================== -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
 
-   <!-- Site Title -->
-   <title>{{ wss }}</title>
+    <!-- Site Title -->
+    <title>{{ wss }}</title>
 
-   <!--Favicon-->
-   <link rel="shortcut icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon">
-   <link rel="icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon">
+    <!--Favicon-->
+    <link rel="shortcut icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon">
+    <link rel="icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon">
 
-   <!-- CSS
-      ================================================== -->
-   <!-- Bootstrap -->
-   <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
-   <!-- Template styles-->
-   <link rel="stylesheet" href="{% static 'css/style.css' %}?v=1.1">
-   <!-- Responsive styles-->
-   <link rel="stylesheet" href="{% static 'css/responsive.css' %}">
-   <!-- FontAwesome -->
-   <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}">
-   <!-- Animation -->
-   <link rel="stylesheet" href="{% static 'css/animate.css' %}">
-   <!-- Colorbox -->
-   <link rel="stylesheet" href="{% static 'css/colorbox.css' %}">
+    <!-- CSS
+       ================================================== -->
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <!-- Template styles-->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}?v=1.1">
+    <!-- Responsive styles-->
+    <link rel="stylesheet" href="{% static 'css/responsive.css' %}">
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}">
+    <!-- Animation -->
+    <link rel="stylesheet" href="{% static 'css/animate.css' %}">
+    <!-- Colorbox -->
+    <link rel="stylesheet" href="{% static 'css/colorbox.css' %}">
 
-   <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-   <!--[if lt IE 9]>
-   <!--<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>-->
-   <!--<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>-->
-   <![endif]-->
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <!--<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>-->
+    <!--<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>-->
+    <![endif]-->
 
 </head>
 
 <body>
 <div class="body-inner">
-   <!-- Header start -->
-   <header id="header" class="header header-transparent">
-      <div class="container">
-         <div class="row">
-            <div class="site-nav-inner">
-               <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                  <span class="sr-only">Toggle navigation</span>
-                  <span class="icon-bar"></span>
-                  <span class="icon-bar"></span>
-                  <span class="icon-bar"></span>
-               </button>
-               <nav class="collapse navbar-collapse navbar-responsive-collapse pull-right">
-                  <ul class="nav navbar-nav">
-                     <li><a href="home.html">Home</a></li>
-                     <!-- Home li end -->
-                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">About <i class="fa fa-angle-down"></i></a>
-                        <ul class="dropdown-menu menu-center" role="menu">
-                           <li><a href="about.html">Why Attend</a></li>
-                           <li><a href="staffs.html">Staffs</a></li>
-                           <li><a href="gallery.html">Gallery</a></li>
-                           <li><a href="sponsors.html">Sponsors</a></li>
+    <!-- Header start -->
+    <header id="header" class="header header-transparent">
+        <div class="container">
+            <div class="row">
+                <div class="site-nav-inner">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <nav class="collapse navbar-collapse navbar-responsive-collapse pull-right">
+                        <ul class="nav navbar-nav">
+                            <li><a href="home.html">Home</a></li>
+                            <!-- Home li end -->
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">About <i
+                                        class="fa fa-angle-down"></i></a>
+                                <ul class="dropdown-menu menu-center" role="menu">
+                                    <li><a href="about.html">Why Attend</a></li>
+                                    <li><a href="staffs.html">Staffs</a></li>
+                                    <li><a href="gallery.html">Gallery</a></li>
+                                    <li><a href="sponsors.html">Sponsors</a></li>
+                                </ul>
+                            </li>
+                            <!-- About li end -->
+                            <li><a href="speakers.html">Speakers</a></li>
+                            <!-- Speakers li end -->
+                            <li><a href="schedule.html">Schedule</a></li>
+                            <!-- Schedule li end -->
+                            <li><a href="contact.html">Contact</a></li>
+                            <!-- Contact li end -->
+                            <li class="header-ticket">
+                                <a class="ticket-btn btn-primary" href="register.html"> Register</a>
+                            </li>
+                            <!-- Register li end -->
                         </ul>
-                     </li>
-                     <!-- About li end -->
-                     <li><a href="speakers.html">Speakers</a></li>
-                     <!-- Speakers li end -->
-                     <li><a href="schedule.html">Schedule</a></li>
-                     <!-- Schedule li end -->
-                     <li><a href="contact.html">Contact</a></li>
-                     <!-- Contact li end -->
-                     <li class="header-ticket">
-                        <a class="ticket-btn btn-primary" href="register.html"> Register</a>
-                     </li>
-                     <!-- Register li end -->
-                  </ul>
-                  <!--/ Nav ul end -->
-               </nav>
-               <!--/ Collapse end -->
+                        <!--/ Nav ul end -->
+                    </nav>
+                    <!--/ Collapse end -->
+                </div>
+                <!--/ Site nav inner end -->
             </div>
-            <!--/ Site nav inner end -->
-         </div>
-         <!--/ Row end -->
-      </div>
-      <!--/ Container end -->
-   </header>
-   <!--/ Header end -->
+            <!--/ Row end -->
+        </div>
+        <!--/ Container end -->
+    </header>
+    <!--/ Header end -->
 
-   <section id="banner">
-      <div class="banner-item bg-overlay" style="background-image:url('{{ wss.main_image_url }}')">
-         <div class="container">
-            <div class="banner-content text-center">
-               <div class="banner-content-wrap">
-                  <div class="countdown bg-style">
-                     <div class="counter-day">
-                        <span class="days">00</span>
-                        <div class="smalltext">Days</div>
-                     </div>
-                     <div class="counter-hour">
-                        <span class="hours">00</span>
-                        <div class="smalltext">Hours</div>
-                     </div>
-                     <div class="counter-minute">
-                        <span class="minutes">00</span>
-                        <div class="smalltext">Minutes</div>
-                     </div>
-                     <div class="counter-second">
-                        <span class="seconds">00</span>
-                        <div class="smalltext">Seconds</div>
-                     </div>
-                  </div>
-                  <!-- Countdown end -->
-                  <h1 class="banner-title">WINTER SEMINAR SERIES</h1>
-                  <h2 class="banner-subtitle2">ADVANCED TOPICS IN COMPUTER SCIENCE AND ENGINEERING</h2>
+    <section id="banner">
+        <div class="banner-item bg-overlay" style="background-image:url('{{ wss.main_image_url }}')">
+            <div class="container">
+                <div class="banner-content text-center">
+                    <div class="banner-content-wrap">
+                        <div class="countdown bg-style">
+                            <div class="counter-day">
+                                <span class="days">00</span>
+                                <div class="smalltext">Days</div>
+                            </div>
+                            <div class="counter-hour">
+                                <span class="hours">00</span>
+                                <div class="smalltext">Hours</div>
+                            </div>
+                            <div class="counter-minute">
+                                <span class="minutes">00</span>
+                                <div class="smalltext">Minutes</div>
+                            </div>
+                            <div class="counter-second">
+                                <span class="seconds">00</span>
+                                <div class="smalltext">Seconds</div>
+                            </div>
+                        </div>
+                        <!-- Countdown end -->
+                        <h1 class="banner-title">WINTER SEMINAR SERIES</h1>
+                        <h2 class="banner-subtitle2">ADVANCED TOPICS IN COMPUTER SCIENCE AND ENGINEERING</h2>
 
-                  <input type="hidden" value="{% date_string wss.start_date %}" id="start-date">
-                  <h2 class="banner-subtitle">{% render_date wss %}</h2>
-                  <h3 class="banner-desc">IRAN, TEHRAN, SHARIF UNIVERSITY OF TECHNOLOGY</h3>
-                  {% if wss.registration_link %}
-                  <p class="banner-btn">
-                     <a href="{{ wss.registration_link }}" class="btn btn-primary">Register Now</a>
-                  </p>
-                  {% endif %}
-               </div>
-               <!-- Banner content wrap end -->
+                        <input type="hidden" value="{% date_string wss.start_date %}" id="start-date">
+                        <h2 class="banner-subtitle">{% render_date wss %}</h2>
+                        <h3 class="banner-desc">IRAN, TEHRAN, SHARIF UNIVERSITY OF TECHNOLOGY</h3>
+                        {% if wss.registration_link %}
+                            <p class="banner-btn">
+                                <a href="{{ wss.registration_link }}" class="btn btn-primary">Register Now</a>
+                            </p>
+                        {% endif %}
+                    </div>
+                    <!-- Banner content wrap end -->
+                </div>
+                <!-- Banner content end -->
             </div>
-            <!-- Banner content end -->
-         </div>
-         <!-- Container end -->
-      </div>
-      <!-- Banner item end -->
-   </section>
-   <!-- Section banner end -->
+            <!-- Container end -->
+        </div>
+        <!-- Banner item end -->
+    </section>
+    <!-- Section banner end -->
 
-   <section id="ts-intro" class="ts-intro no-padding">
-      <div class="container">
-         <div class="row">
-            <div class="col-xs-12 col-sm-12 col-md-6">
-               <div class="gap-60"></div>
-               <h2 class="intro-title">About the Event</h2>
-               <p class="intro-desc">{{ wss.description }}</p>
-               <h3 class="intro-title">Registration</h3>
-               {% if wss.registration_link %}
-               <p>If you are a student, researcher, industry professional, or just interested in any CSE related field, please join us in this event! You can register to participate through the following link.
-               </p>
-               {% endif %}
-               {% if wss.proposal_link %}
-               <p>
-                  Besides, if you have a research paper, report, or proposal, we would love to hear your ideas! Please submit an abstract so you can share your ideas with us during the event in a short 10 minute talk.</p>
-               {% endif %}
-               <p>
-                  {% if wss.registration_link %}
-                  <a href="{{ wss.registration_link }}" class="btn btn-primary">Register now</a>
-                  {% endif %}
-                  {% if wss.proposal_link %}
-                  <a href="{{ wss.proposal_link }}" class="btn btn-primary">Submit your proposal</a>
-                  {% endif %}
-               </p>
+    <section id="ts-intro" class="ts-intro no-padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-6">
+                    <div class="gap-60"></div>
+                    <h2 class="intro-title">About the Event</h2>
+                    <p class="intro-desc">{{ wss.description }}</p>
+                    <h3 class="intro-title">Registration</h3>
+                    {% if wss.registration_link %}
+                        <p>If you are a student, researcher, industry professional, or just interested in any CSE
+                            related field, please join us in this event! You can register to participate through the
+                            following link.
+                        </p>
+                    {% endif %}
+                    {% if wss.proposal_link %}
+                        <p>
+                            Besides, if you have a research paper, report, or proposal, we would love to hear your
+                            ideas! Please submit an abstract so you can share your ideas with us during the event in a
+                            short 10 minute talk.</p>
+                    {% endif %}
+                    <p>
+                        {% if wss.registration_link %}
+                            <a href="{{ wss.registration_link }}" class="btn btn-primary">Register now</a>
+                        {% endif %}
+                        {% if wss.proposal_link %}
+                            <a href="{{ wss.proposal_link }}" class="btn btn-primary">Submit your proposal</a>
+                        {% endif %}
+                    </p>
+                </div>
+                <!-- Col end -->
+                <!--<div class="col-xs-12 col-sm-12 col-md-6 text-center">-->
+                <!--<div class="intro-video">-->
+                <!--<img class="img-responsive" src="images/intro-video.jpg" alt="" />-->
+                <!--<a class="popup" href="https://www.youtube.com/embed/XhveHKJWnOQ?autoplay=1&amp;loop=1">-->
+                <!--<div class="video-icon">-->
+                <!--<i class="fa fa-play"></i>-->
+                <!--</div>-->
+                <!--</a>-->
+                <!--</div>-->
+                <!--&lt;!&ndash; Intro video end &ndash;&gt;-->
+                <!--</div>-->
+                <!-- Col end -->
             </div>
-            <!-- Col end -->
-            <!--<div class="col-xs-12 col-sm-12 col-md-6 text-center">-->
-               <!--<div class="intro-video">-->
-                  <!--<img class="img-responsive" src="images/intro-video.jpg" alt="" />-->
-                  <!--<a class="popup" href="https://www.youtube.com/embed/XhveHKJWnOQ?autoplay=1&amp;loop=1">-->
-                     <!--<div class="video-icon">-->
-                        <!--<i class="fa fa-play"></i>-->
-                     <!--</div>-->
-                  <!--</a>-->
-               <!--</div>-->
-               <!--&lt;!&ndash; Intro video end &ndash;&gt;-->
-            <!--</div>-->
-            <!-- Col end -->
-         </div>
-         <!-- Content row 1 end -->
-      </div>
-      <!-- Container end -->
-   </section>
-   <!-- Intro area end -->
+            <!-- Content row 1 end -->
+        </div>
+        <!-- Container end -->
+    </section>
+    <!-- Intro area end -->
 
-   <section id="ts-statics" class="ts-statics">
-      <div class="container">
-         <div class="row">
-            <div class="statics clearfix">
-               <div class="col-md-3 col-xs-12 text-center">
-                  <div class="ts-facts">
+    <section id="ts-statics" class="ts-statics">
+        <div class="container">
+            <div class="row">
+                <div class="statics clearfix">
+                    <div class="col-md-3 col-xs-12 text-center">
+                        <div class="ts-facts">
                         <span class="ts-facts-img">
-                        <img src="{% static 'images/icons/fact-workshop.png' %}" alt="" />
+                        <img src="{% static 'images/icons/fact-workshop.png' %}" alt=""/>
                         </span>
-                     <div class="ts-facts-content">
-                        <h2 class="ts-facts-num"><span class="counterUp">{{ wss.workshops.count }}</span></h2>
-                        <h3 class="ts-facts-title">Workshops</h3>
-                     </div>
-                  </div>
-                  <!--Facts end -->
-               </div>
-               <!-- Col end -->
-               <div class="col-md-3 col-xs-12 text-center">
-                  <div class="ts-facts">
+                            <div class="ts-facts-content">
+                                <h2 class="ts-facts-num"><span class="counterUp">{{ wss.workshops.count }}</span></h2>
+                                <h3 class="ts-facts-title">Workshops</h3>
+                            </div>
+                        </div>
+                        <!--Facts end -->
+                    </div>
+                    <!-- Col end -->
+                    <div class="col-md-3 col-xs-12 text-center">
+                        <div class="ts-facts">
                         <span class="ts-facts-img">
-                        <img src="{% static 'images/icons/fact-speaker.png' %}" alt="" />
+                        <img src="{% static 'images/icons/fact-speaker.png' %}" alt=""/>
                         </span>
-                     <div class="ts-facts-content">
-                        <h2 class="ts-facts-num"><span class="counterUp">{{ wss.seminars.count }}</span></h2>
-                        <h3 class="ts-facts-title">Seminars</h3>
-                     </div>
-                  </div>
-                  <!--Facts end -->
-               </div>
-               <div class="col-md-3 col-xs-12 text-center">
-                  <div class="ts-facts">
+                            <div class="ts-facts-content">
+                                <h2 class="ts-facts-num"><span class="counterUp">{{ wss.seminars.count }}</span></h2>
+                                <h3 class="ts-facts-title">Seminars</h3>
+                            </div>
+                        </div>
+                        <!--Facts end -->
+                    </div>
+                    <div class="col-md-3 col-xs-12 text-center">
+                        <div class="ts-facts">
                         <span class="ts-facts-img">
-                        <img src="{% static 'images/icons/fact-sponsor.png' %}" alt="" />
+                        <img src="{% static 'images/icons/fact-sponsor.png' %}" alt=""/>
                         </span>
-                     <div class="ts-facts-content">
-                        <h2 class="ts-facts-num"><span class="counterUp">{{ wss.sponsors.count }}</span></h2>
-                        <h3 class="ts-facts-title">Sponsors</h3>
-                     </div>
-                  </div>
-                  <!--Facts end -->
-               </div>
-               <!-- Col end -->
-               <div class="col-md-3 col-xs-12 text-center">
-                  <div class="ts-facts">
+                            <div class="ts-facts-content">
+                                <h2 class="ts-facts-num"><span class="counterUp">{{ wss.sponsors.count }}</span></h2>
+                                <h3 class="ts-facts-title">Sponsors</h3>
+                            </div>
+                        </div>
+                        <!--Facts end -->
+                    </div>
+                    <!-- Col end -->
+                    <div class="col-md-3 col-xs-12 text-center">
+                        <div class="ts-facts">
                         <span class="ts-facts-img">
-                        <img src="{% static 'images/icons/fact-country.png' %}" alt="Staff" />
+                        <img src="{% static 'images/icons/fact-country.png' %}" alt="Staff"/>
                         </span>
-                     <div class="ts-facts-content">
-                        <h2 class="ts-facts-num"><span class="counterUp">{{ wss.staff_count }}</span></h2>
-                        <h3 class="ts-facts-title">Staff</h3>
-                     </div>
-                  </div>
-                  <!--Facts end -->
-               </div>
-               <!-- Col end -->
+                            <div class="ts-facts-content">
+                                <h2 class="ts-facts-num"><span class="counterUp">{{ wss.staff_count }}</span></h2>
+                                <h3 class="ts-facts-title">Staff</h3>
+                            </div>
+                        </div>
+                        <!--Facts end -->
+                    </div>
+                    <!-- Col end -->
+                </div>
+                <!-- Statics end -->
             </div>
-            <!-- Statics end -->
-         </div>
-         <!-- Row end -->
-      </div>
-      <!--/ Container end -->
-   </section>
-   <!--/ Newsletter end -->
+            <!-- Row end -->
+        </div>
+        <!--/ Container end -->
+    </section>
+    <!--/ Newsletter end -->
 
-   <section id="ts-speakers" class="ts-speakers gradient-bg">
-   <div class="container">
-   <div class="row text-center">
-   <h2 class="section-title">Revolutionizing the World</h2>
-   <h3 class="section-sub-title title-white">Visionary Speakers</h3>
-   </div>
-
-   <!--/ Title row end -->
-   <div class="row">
-
-      {% for seminar in wss.seminars.all %}
-         <div class="col-xs-12 col-sm-6 col-md-3">
-         <a href="/seminar/{{seminar.pk}}"><div class="ts-speaker">
-         <div class="ts-speaker-image">
-         <img class="img-responsive" src="{{ seminar.speaker.picture_url }}" alt="" />
-         </div>
-         <!--Image end -->
-         <div class="ts-speaker-info">
-         <h3 class="ts-speaker-name"><a href="/seminar/{{seminar.pk}}">{{ seminar.speaker.name }}</a></h3>
-         <p class="ts-speaker-designation">{{ seminar.speaker.short_bio }}</p>
-         </div>
-         <!-- Info end -->
-         </div></a>
-         <!-- Speaker end -->
-         </div>
-      {% endfor %}
-
-   </div>
-   <!-- Content row 2 end -->
-   </div>
-   <!--/ Container end -->
-   </section>
-   <!-- Speakers end -->
-
-   <!--<section id="ts-schedule" class="ts-schedule">-->
-   <!--<div class="container">-->
-   <!--<div class="row text-center">-->
-   <!--<h2 class="section-title">Don't Miss a Thing</h2>-->
-   <!--<h3 class="section-sub-title">Event Programme</h3>-->
-   <!--</div>-->
-   <!--&lt;!&ndash;/ Title row end &ndash;&gt;-->
-   <!--<div class="row">-->
-   <!--<div class="col-md-12">-->
-   <!--<div class="schedule-tab">-->
-   <!--<ul class="nav nav-tabs" id="nav-tabs">-->
-   <!--<li class="active">-->
-   <!--<a class="animated fadeIn" href="#tab_one" data-toggle="tab">-->
-   <!--<span class="tab-head">-->
-   <!--<span class="tab-text-title">Day One</span>					-->
-   <!--</span>-->
-   <!--</a>-->
-   <!--</li>-->
-   <!--<li>-->
-   <!--<a class="animated fadeIn" href="#tab_two" data-toggle="tab">-->
-   <!--<span class="tab-head">-->
-   <!--<span class="tab-text-title">Day Two</span>					-->
-   <!--</span>-->
-   <!--</a>-->
-   <!--</li>-->
-   <!--<li>-->
-   <!--<a class="animated fadeIn" href="#tab_three" data-toggle="tab">-->
-   <!--<span class="tab-head">-->
-   <!--<span class="tab-text-title">Day Three</span>					-->
-   <!--</span>-->
-   <!--</a>-->
-   <!--</li>-->
-   <!--</ul>-->
-   <!--<div class="tab-content">-->
-   <!--<div class="tab-pane active animated fadeInRight" id="tab_one">-->
-   <!--<h2 class="schedule-date">Sunday, 7th March</h2>-->
-   <!--<div class="schedule-listing bg">-->
-   <!--<span class="schedule-slot-time">9:30 - 10:00</span>-->
-   <!--<div class="schedule-slot-info">-->
-   <!--<div class="schedule-slot-info-content">-->
-   <!--<h3 class="schedule-slot-title">Registration</h3>-->
-   <!--<p class="schedule-slot-desc">Pick up your name badge and goodie bag</p>-->
-   <!--</div>-->
-   <!--&lt;!&ndash;Info content end &ndash;&gt;-->
-   <!--</div>-->
-   <!--&lt;!&ndash; Slot info end &ndash;&gt;-->
-   <!--</div>-->
-   <!--&lt;!&ndash; Slot listing 1 end &ndash;&gt;-->
-   <!--<div class="schedule-listing">-->
-   <!--<span class="schedule-slot-time">10:30 - 11:15AM</span>-->
-   <!--<div class="schedule-slot-info">-->
-   <!--<a href="#">-->
-   <!--<img class="schedule-slot-speakers" src="images/speakers/speaker1.jpg" alt="" />-->
-   <!--</a>-->
-   <!--<div class="schedule-slot-info-content">-->
-   <!--<h3 class="schedule-slot-speaker-name">Edward C. Horner</h3>-->
-   <!--<h4 class="schedule-slot-title">Reinventing Experiences to All</h4>-->
-   <!--<p class="schedule-slot-desc">Throw myself down teems with vapour around me, and the meridian sun strikes the upper surface of the impenetrable.</p>-->
-   <!--</div>-->
-   <!--&lt;!&ndash;Info content end &ndash;&gt;-->
-   <!--</div>-->
-   <!--&lt;!&ndash; Slot info end &ndash;&gt;-->
-   <!--</div>-->
-   <!--&lt;!&ndash; Slot listing 2 end &ndash;&gt;-->
-   <!--<div class="schedule-listing bg">-->
-   <!--<span class="schedule-slot-time">11:15 - 13:15PM</span>-->
-   <!--<div class="schedule-slot-info">-->
-   <!--<a href="#">-->
-   <!--<img class="schedule-slot-speakers" src="images/speakers/speaker5.jpg" alt="" />-->
-   <!--</a>-->
-   <!--<div class="schedule-slot-info-content">-->
-   <!--<h3 class="schedule-slot-speaker-name">Summer Cross</h3>-->
-   <!--<h4 class="schedule-slot-title">Human Centered Design </h4>-->
-   <!--<p class="schedule-slot-desc">Minim Austin 3 wolf moon scenester aesthetic, umami odio pariatur bitters. Pop-up occaecat taxidermy street art, tattooed beard literally.</p>-->
-   <!--</div>-->
-   <!--&lt;!&ndash;Info content end &ndash;&gt;-->
-   <!--</div>-->
-   <!--&lt;!&ndash; Slot info end &ndash;&gt;-->
-   <!--</div>-->
-   <!--&lt;!&ndash; Slot listing 3 end &ndash;&gt;-->
-   <!--<div class="schedule-listing">-->
-   <!--<span class="schedule-slot-time">13:30 - 14:30PM</span>-->
-   <!--<div class="schedule-slot-info">-->
-   <!--<div class="schedule-slot-info-content">-->
-   <!--<h3 class="schedule-slot-title">Lunch</h3>-->
-   <!--<p class="schedule-slot-desc">Five star buffet for everybody.</p>-->
-   <!--</div>-->
-   <!--&lt;!&ndash;Info content end &ndash;&gt;-->
-   <!--</div>-->
-   <!--&lt;!&ndash; Slot info end &ndash;&gt;-->
-   <!--</div>-->
-   <!--&lt;!&ndash; Slot listing 4 end &ndash;&gt;-->
-   <!--<div class="schedule-listing bg">-->
-   <!--<span class="schedule-slot-time">14:35 - 16:00PM</span>-->
-   <!--<div class="schedule-slot-info">-->
-   <!--<a href="#">-->
-   <!--<img class="schedule-slot-speakers" src="images/speakers/speaker3.jpg" alt="" />-->
-   <!--</a>-->
-   <!--<div class="schedule-slot-info-content">-->
-   <!--<h3 class="schedule-slot-speaker-name">Laura Bryant</h3>-->
-   <!--<h4 class="schedule-slot-title">A frontier for designers: cultures of creativity</h4>-->
-   <!--<p class="schedule-slot-desc">Plaid fashion axe semiotics skateboard, try-hard food truck aesthetic biodiesel exercitation. Accusamus VHS Wes Anderson Banksy food truck vero.</p>-->
-   <!--</div>-->
-   <!--&lt;!&ndash;Info content end &ndash;&gt;-->
-   <!--</div>-->
-   <!--&lt;!&ndash; Slot info end &ndash;&gt;-->
-   <!--</div>-->
-   <!--&lt;!&ndash; Slot listing 5 end &ndash;&gt;-->
-   <!--</div>-->
-   <!--&lt;!&ndash; Tab pane 1 end &ndash;&gt;-->
-   <!--<div class="tab-pane animated fadeInRight" id="tab_two">-->
-   <!--<h2 class="schedule-date">Monday, 8th March</h2>-->
-   <!--<div class="schedule-listing">-->
-   <!--<span class="schedule-slot-time">09:30 - 11:15AM</span>-->
-   <!--<div class="schedule-slot-info">-->
-   <!--<a href="#">-->
-   <!--<img class="schedule-slot-speakers" src="images/speakers/speaker4.jpg" alt="" />-->
-   <!--</a>-->
-   <!--<div class="schedule-slot-info-content">-->
-   <!--<h3 class="schedule-slot-speaker-name">Avdei Ignatyev</h3>-->
-   <!--<h4 class="schedule-slot-title">Getting Started With User-Centered Content</h4>-->
-   <!--<p class="schedule-slot-desc">Throw myself down teems with vapour around me, and the meridian sun strikes the upper surface of the impenetrable.</p>-->
-   <!--</div>-->
-   <!--&lt;!&ndash;Info content end &ndash;&gt;-->
-   <!--</div>-->
-   <!--&lt;!&ndash; Slot info end &ndash;&gt;-->
-   <!--</div>-->
-   <!--&lt;!&ndash; Slot listing 1 end &ndash;&gt;-->
-   <!--<div class="schedule-listing bg">-->
-   <!--<span class="schedule-slot-time">11:15 - 13:15PM</span>-->
-   <!--<div class="schedule-slot-info">-->
-   <!--<a href="#">-->
-   <!--<img class="schedule-slot-speakers" src="images/speakers/speaker7.jpg" alt="" />-->
-   <!--</a>-->
-   <!--<div class="schedule-slot-info-content">-->
-   <!--<h3 class="schedule-slot-speaker-name">Eden Nivison</h3>-->
-   <!--<h4 class="schedule-slot-title">Content Measurement and Analytics</h4>-->
-   <!--<p class="schedule-slot-desc">Minim Austin 3 wolf moon scenester aesthetic, umami odio pariatur bitters. Pop-up occaecat taxidermy street art, tattooed beard literally.</p>-->
-   <!--</div>-->
-   <!--&lt;!&ndash;Info content end &ndash;&gt;-->
-   <!--</div>-->
-   <!--&lt;!&ndash; Slot info end &ndash;&gt;-->
-   <!--</div>-->
-   <!--&lt;!&ndash; Slot listing 2 end &ndash;&gt;-->
-   <!--<div class="schedule-listing">-->
-   <!--<span class="schedule-slot-time">13:30 - 14:30PM</span>-->
-   <!--<div class="schedule-slot-info">-->
-   <!--<div class="schedule-slot-info-content">-->
-   <!--<h3 class="schedule-slot-title">Lunch</h3>-->
-   <!--<p class="schedule-slot-desc">Five star buffet for everybody.</p>-->
-   <!--</div>-->
-   <!--&lt;!&ndash;Info content end &ndash;&gt;-->
-   <!--</div>-->
-   <!--&lt;!&ndash; Slot info end &ndash;&gt;-->
-   <!--</div>-->
-   <!--&lt;!&ndash; Slot listing 3 end &ndash;&gt;-->
-   <!--<div class="schedule-listing bg">-->
-   <!--<span class="schedule-slot-time">14:35 - 16:00PM</span>-->
-   <!--<div class="schedule-slot-info">-->
-   <!--<a href="#">-->
-   <!--<img class="schedule-slot-speakers" src="images/speakers/speaker8.jpg" alt="" />-->
-   <!--</a>-->
-   <!--<div class="schedule-slot-info-content">-->
-   <!--<h3 class="schedule-slot-speaker-name">Davi Azevedo</h3>-->
-   <!--<h4 class="schedule-slot-title">Not Perfect, Always Better: A Story of Inclusion</h4>-->
-   <!--<p class="schedule-slot-desc">Plaid fashion axe semiotics skateboard, try-hard food truck aesthetic biodiesel exercitation. Accusamus VHS Wes Anderson Banksy food truck vero.</p>-->
-   <!--</div>-->
-   <!--&lt;!&ndash;Info content end &ndash;&gt;-->
-   <!--</div>-->
-   <!--&lt;!&ndash; Slot info end &ndash;&gt;-->
-   <!--</div>-->
-   <!--&lt;!&ndash; Slot listing 4 end &ndash;&gt;-->
-   <!--</div>-->
-   <!--&lt;!&ndash; Tab pane 2 end &ndash;&gt;-->
-   <!--<div class="tab-pane animated fadeInLeft" id="tab_three">-->
-   <!--<h2 class="schedule-date">Tuesday, 9th March</h2>-->
-   <!--<div class="schedule-listing">-->
-   <!--<span class="schedule-slot-time">09:30 - 11:15AM</span>-->
-   <!--<div class="schedule-slot-info">-->
-   <!--<a href="#">-->
-   <!--<img class="schedule-slot-speakers" src="images/speakers/speaker2.jpg" alt="" />-->
-   <!--</a>-->
-   <!--<div class="schedule-slot-info-content">-->
-   <!--<h3 class="schedule-slot-speaker-name">Yue Ying Yüan</h3>-->
-   <!--<h4 class="schedule-slot-title">How Silos Learn: Working in the Idea Factory</h4>-->
-   <!--<p class="schedule-slot-desc">Throw myself down teems with vapour around me, and the meridian sun strikes the upper surface of the impenetrable.</p>-->
-   <!--</div>-->
-   <!--&lt;!&ndash;Info content end &ndash;&gt;-->
-   <!--</div>-->
-   <!--&lt;!&ndash; Slot info end &ndash;&gt;-->
-   <!--</div>-->
-   <!--&lt;!&ndash; Slot listing 1 end &ndash;&gt;-->
-   <!--<div class="schedule-listing bg">-->
-   <!--<span class="schedule-slot-time">11:15 - 13:15PM</span>-->
-   <!--<div class="schedule-slot-info">-->
-   <!--<a href="#">-->
-   <!--<img class="schedule-slot-speakers" src="images/speakers/speaker3.jpg" alt="" />-->
-   <!--</a>-->
-   <!--<div class="schedule-slot-info-content">-->
-   <!--<h3 class="schedule-slot-speaker-name">Laura Bryant</h3>-->
-   <!--<h4 class="schedule-slot-title">Empathy Behind the Algorithms</h4>-->
-   <!--<p class="schedule-slot-desc">Minim Austin 3 wolf moon scenester aesthetic, umami odio pariatur bitters. Pop-up occaecat taxidermy street art, tattooed beard literally.</p>-->
-   <!--</div>-->
-   <!--&lt;!&ndash;Info content end &ndash;&gt;-->
-   <!--</div>-->
-   <!--&lt;!&ndash; Slot info end &ndash;&gt;-->
-   <!--</div>-->
-   <!--&lt;!&ndash; Slot listing 2 end &ndash;&gt;-->
-   <!--<div class="schedule-listing">-->
-   <!--<span class="schedule-slot-time">13:30 - 14:30PM</span>-->
-   <!--<div class="schedule-slot-info">-->
-   <!--<div class="schedule-slot-info-content">-->
-   <!--<h3 class="schedule-slot-title">Lunch</h3>-->
-   <!--<p class="schedule-slot-desc">Five star buffet for everybody.</p>-->
-   <!--</div>-->
-   <!--&lt;!&ndash;Info content end &ndash;&gt;-->
-   <!--</div>-->
-   <!--&lt;!&ndash; Slot info end &ndash;&gt;-->
-   <!--</div>-->
-   <!--&lt;!&ndash; Slot listing 3 end &ndash;&gt;-->
-   <!--<div class="schedule-listing bg">-->
-   <!--<span class="schedule-slot-time">14:35 - 16:00PM</span>-->
-   <!--<div class="schedule-slot-info">-->
-   <!--<a href="#">-->
-   <!--<img class="schedule-slot-speakers" src="images/speakers/speaker6.jpg" alt="" />-->
-   <!--</a>-->
-   <!--<div class="schedule-slot-info-content">-->
-   <!--<h3 class="schedule-slot-speaker-name">Oscar Watkins</h3>-->
-   <!--<h4 class="schedule-slot-title">Adaptive Content, Context, and Controversy</h4>-->
-   <!--<p class="schedule-slot-desc">Plaid fashion axe semiotics skateboard, try-hard food truck aesthetic biodiesel exercitation. Accusamus VHS Wes Anderson Banksy food truck vero.</p>-->
-   <!--</div>-->
-   <!--&lt;!&ndash;Info content end &ndash;&gt;-->
-   <!--</div>-->
-   <!--&lt;!&ndash; Slot info end &ndash;&gt;-->
-   <!--</div>-->
-   <!--&lt;!&ndash; Slot listing 4 end &ndash;&gt;-->
-   <!--<div class="schedule-listing listing-last">-->
-   <!--<span class="schedule-slot-time">16:30 - Late</span>-->
-   <!--<div class="schedule-slot-info">-->
-   <!--<div class="schedule-slot-info-content">-->
-   <!--<h3 class="schedule-slot-title">After Party</h3>-->
-   <!--<p class="schedule-slot-desc">Stick around and enjoy a dazzling after work.</p>-->
-   <!--</div>-->
-   <!--&lt;!&ndash;Info content end &ndash;&gt;-->
-   <!--</div>-->
-   <!--&lt;!&ndash; Slot info end &ndash;&gt;-->
-   <!--</div>-->
-   <!--&lt;!&ndash; Slot listing 5 end &ndash;&gt;-->
-   <!--</div>-->
-   <!--&lt;!&ndash; Tab pane 3 end &ndash;&gt;	-->
-   <!--</div>-->
-   <!--&lt;!&ndash; tab content &ndash;&gt;-->
-   <!--<div class="gap-60"></div>-->
-   <!--<div class="text-center"><a class="btn btn-primary" href="#"><i class="fa fa-file-pdf-o"></i> Download PDF</a></div>-->
-   <!--</div>-->
-   <!--&lt;!&ndash; Schedule tab end &ndash;&gt;-->
-   <!--</div>-->
-   <!--&lt;!&ndash; Col end &ndash;&gt;-->
-   <!--</div>-->
-   <!--&lt;!&ndash; Content row end &ndash;&gt;-->
-   <!--</div>-->
-   <!--&lt;!&ndash;/ Container end &ndash;&gt;-->
-   <!--</section>-->
-   <!--&lt;!&ndash; Schedule end &ndash;&gt;-->
-
-   <!--<section id="ts-sponsors" class="ts-sponsors">-->
-   <!--<div class="container">-->
-   <!--<div class="row text-center">-->
-   <!--<h2 class="section-title">Supporting Our Project</h2>-->
-   <!--<p class="section-sub-title">Event Sponsors</p>-->
-   <!--</div>-->
-   <!--&lt;!&ndash;/ Title row end &ndash;&gt;-->
-   <!--<div class="row sponsor-padding text-center">-->
-   <!--<h3 class="sponsor-title">Platinum Sponsors</h3>-->
-   <!--<div class="col-xs-12 col-sm-4 col-md-4">-->
-   <!--<a href="#" class="sponsor-logo">-->
-   <!--<img class="img-responsive" src="images/sponsors/sponsor1.png" alt="" />-->
-   <!--</a>-->
-   <!--</div>-->
-   <!--&lt;!&ndash; Col 1 end &ndash;&gt;-->
-   <!--<div class="col-xs-12 col-sm-4 col-md-4">-->
-   <!--<a href="#" class="sponsor-logo">-->
-   <!--<img class="img-responsive" src="images/sponsors/sponsor2.png" alt="" />-->
-   <!--</a>-->
-   <!--</div>-->
-   <!--&lt;!&ndash; Col 2 end &ndash;&gt;-->
-   <!--<div class="col-xs-12 col-sm-4 col-md-4">-->
-   <!--<a href="#" class="sponsor-logo">-->
-   <!--<img class="img-responsive" src="images/sponsors/sponsor3.png" alt="" />-->
-   <!--</a>-->
-   <!--</div>-->
-   <!--&lt;!&ndash; Col 3 end &ndash;&gt;-->
-   <!--</div>-->
-   <!--&lt;!&ndash;/ Content row 1 end &ndash;&gt;-->
-   <!--<div class="row text-center">-->
-   <!--<h3 class="sponsor-title">Silver Sponsors</h3>-->
-   <!--<div class="col-xs-12 col-sm-3 col-md-3">-->
-   <!--<a href="#" class="sponsor-logo">-->
-   <!--<img class="img-responsive" src="images/sponsors/sponsor4.png" alt="" />-->
-   <!--</a>-->
-   <!--</div>-->
-   <!--&lt;!&ndash; Col 1 end &ndash;&gt;-->
-   <!--<div class="col-xs-12 col-sm-3 col-md-3">-->
-   <!--<a href="#" class="sponsor-logo">-->
-   <!--<img class="img-responsive" src="images/sponsors/sponsor5.png" alt="" />-->
-   <!--</a>-->
-   <!--</div>-->
-   <!--&lt;!&ndash; Col 2 end &ndash;&gt;-->
-   <!--<div class="col-xs-12 col-sm-3 col-md-3">-->
-   <!--<a href="#" class="sponsor-logo">-->
-   <!--<img class="img-responsive" src="images/sponsors/sponsor6.png" alt="" />-->
-   <!--</a>-->
-   <!--</div>-->
-   <!--&lt;!&ndash; Col 3 end &ndash;&gt;-->
-   <!--<div class="col-xs-12 col-sm-3 col-md-3">-->
-   <!--<a href="#" class="sponsor-logo">-->
-   <!--<img class="img-responsive" src="images/sponsors/sponsor7.png" alt="" />-->
-   <!--</a>-->
-   <!--</div>-->
-   <!--&lt;!&ndash; Col 4 end &ndash;&gt;-->
-   <!--</div>-->
-   <!--&lt;!&ndash;/ Content row 2 end &ndash;&gt;-->
-   <!--<div class="row text-center">-->
-   <!--<h3 class="sponsor-title">Creative Partners</h3>-->
-   <!--<div class="col-xs-12 col-sm-3 col-md-3">-->
-   <!--<a href="#" class="sponsor-logo">-->
-   <!--<img class="img-responsive" src="images/sponsors/sponsor8.png" alt="" />-->
-   <!--</a>-->
-   <!--</div>-->
-   <!--&lt;!&ndash; Col 1 end &ndash;&gt;-->
-   <!--<div class="col-xs-12 col-sm-3 col-md-3">-->
-   <!--<a href="#" class="sponsor-logo">-->
-   <!--<img class="img-responsive" src="images/sponsors/sponsor9.png" alt="" />-->
-   <!--</a>-->
-   <!--</div>-->
-   <!--&lt;!&ndash; Col 2 end &ndash;&gt;-->
-   <!--<div class="col-xs-12 col-sm-3 col-md-3">-->
-   <!--<a href="#" class="sponsor-logo">-->
-   <!--<img class="img-responsive" src="images/sponsors/sponsor10.png" alt="" />-->
-   <!--</a>-->
-   <!--</div>-->
-   <!--&lt;!&ndash; Col 3 end &ndash;&gt;-->
-   <!--<div class="col-xs-12 col-sm-3 col-md-3">-->
-   <!--<a href="#" class="sponsor-logo">-->
-   <!--<img class="img-responsive" src="images/sponsors/sponsor11.png" alt="" />-->
-   <!--</a>-->
-   <!--</div>-->
-   <!--&lt;!&ndash; Col 4 end &ndash;&gt;-->
-   <!--</div>-->
-   <!--&lt;!&ndash;/ Content row 3 end &ndash;&gt;-->
-   <!--<div class="row">-->
-   <!--<div class="general-btn text-center">-->
-   <!--<a class="btn btn-primary" href="#">Become our Sponsor</a>-->
-   <!--</div>-->
-   <!--</div>-->
-   <!--&lt;!&ndash;/ Content row 3 end &ndash;&gt;-->
-   <!--</div>-->
-   <!--&lt;!&ndash;/ Container end &ndash;&gt;-->
-   <!--</section>-->
-   <!--&lt;!&ndash; Sponsors end &ndash;&gt;-->
-
-   <!--<section id="ts-venue" class="ts-venue solid-bg">-->
-      <!--<div class="container">-->
-         <!--<div class="row text-center">-->
-            <!--<h2 class="section-title">Where to find us</h2>-->
-            <!--<h3 class="section-sub-title">Venue and Info</h3>-->
-         <!--</div>-->
-         <!--&lt;!&ndash;/ Title row end &ndash;&gt;-->
-         <!--<div class="row">-->
-            <!--<div class="col-md-6">-->
-               <!--&lt;!&ndash; contact info end &ndash;&gt;-->
-            <!--</div>-->
-            <!--&lt;!&ndash; Col end &ndash;&gt;-->
-         <!--</div>-->
-         <!--&lt;!&ndash; Content row 1 end &ndash;&gt;-->
-      <!--</div>-->
-      <!--&lt;!&ndash; Container end &ndash;&gt;-->
-   <!--</section>-->
-   <!--&lt;!&ndash; Venue end &ndash;&gt;-->
-
-   <section class="venu-map no-padding">
-   <div class="container-fluid">
-      <div class="row">
-         <div class="col-md-6">
-            <div class="bottom-contact white">
-               <h4 class="white">Organizer info</h4>
-                  <p>The event is held by the <a href="http://ssc.ce.sharif.edu">Student Scientific
-                  Chapter (SSC)</a> of <a href="http://ce.sharif.edu">Computer Engineering Department</a>
-                  of <a href="http://sharif.edu">Sharif University of Technology</a>
-               </p>
-               <br>
-               <h4 class="white">Venue Details</h4>
-               <div class="contact-info">
-                  <div class="contact-info-box">
-                     <i class="fa fa-map-marker">&nbsp;</i>
-                     <div class="contact-info-box-content">
-                        <h5 class="white">Address: </h5>
-                        <p>Sharif University of Technology, Azadi Street, Distinct 2, Tehran, Iran</p>
-                     </div>
-                  </div>
-                  <div class="contact-info-box">
-                     <i class="fa fa-envelope-o">&nbsp;</i>
-                     <div class="contact-info-box-content">
-                        <h5 class="white">Email: </h5>
-                        <p>ssc@ce.sharif.edu</p>
-                     </div>
-                  </div>
-                  <div class="contact-info-box">
-                     <i class="fa fa-phone">&nbsp;</i>
-                     <div class="contact-info-box-content">
-                        <h5 class="white">Phone: </h5>
-                        <p>+98(021) 66 16 57 81</p>
-                     </div>
-                  </div>
-               </div>
-               <!-- Contact info end -->
+    <section id="ts-speakers" class="ts-speakers gradient-bg">
+        <div class="container">
+            <div class="row text-center">
+                <h2 class="section-title">Revolutionizing the World</h2>
+                <h3 class="section-sub-title title-white">Visionary Speakers</h3>
             </div>
-            <!-- Contact form div end -->
-         </div>
-         <!-- Col end -->
-         <div class="col-md-6">
-            <div id="map" class="map-bottom"></div>
-            <!-- Google Map -->
-         </div>
-         <!-- Col end -->
-      </div>
-      <!-- Content row end -->
-   </div>
-   <!-- Container end -->
-</section>
-<!-- Map end -->
 
+            <!--/ Title row end -->
+            <div class="row">
 
-   <footer id="footer" class="footer text-center">
-      <div class="container">
-         <div class="row">
-            <div class="col-md-12">
-               <div class="footer-menu">
-                  <ul class="nav unstyled">
-                     <li><a href="#">Home</a></li>
-                     <li><a href="#">Register</a></li>
-                     <li><a href="#">Contact</a></li>
-                  </ul>
-               </div>
-               <!-- Footer menu end -->
-               <div class="footer-logo">
-                  <img src="{% static 'images/footer-logo.png' %}" alt="footer logo" />
-               </div>
-               <div class="footer-social">
-                  <ul>
-                     <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                     <li><a href="#"><i class="fa fa-youtube"></i></a></li>
-                     <li><a href="#"><i class="fa fa-instagram"></i></a></li>
-                  </ul>
-               </div>
-               <!-- Footer social end -->
-               <div class="copyright-info">
-                  <span>Copyright © 2015-2017 WSS. All Rights Reserved.</span>
-               </div>
-               <!-- Copyright info end -->
+                {% for seminar in wss.seminars.all %}
+                    <div class="col-xs-12 col-sm-6 col-md-3">
+                        <a href="/seminar/{{ seminar.pk }}">
+                            <div class="ts-speaker">
+                                <div class="ts-speaker-image">
+                                    <img class="img-responsive" src="{{ seminar.speaker.picture_url }}" alt=""/>
+                                </div>
+                                <!--Image end -->
+                                <div class="ts-speaker-info">
+                                    <h3 class="ts-speaker-name"><a
+                                            href="/seminar/{{ seminar.pk }}">{{ seminar.speaker.name }}</a></h3>
+                                    <p class="ts-speaker-designation">{{ seminar.speaker.short_bio }}</p>
+                                </div>
+                                <!-- Info end -->
+                            </div>
+                        </a>
+                        <!-- Speaker end -->
+                    </div>
+                {% endfor %}
+
             </div>
-            <!-- Content col end -->
-         </div>
-         <!-- Content row end -->
-      </div>
-      <!-- Container end -->
-      <!--<div id="back-to-top" data-spy="affix" data-offset-top="10" class="back-to-top affix">-->
-         <!--<button class="btn btn-primary" title="Back to Top">-->
-            <!--<i class="fa fa-angle-up"></i>-->
-         <!--</button>-->
-      <!--</div>-->
-   </footer>
-   <!-- Footer end -->
+            <!-- Content row 2 end -->
+        </div>
+        <!--/ Container end -->
+    </section>
+    <!-- Speakers end -->
 
-   <!-- Javascript Files
-      ================================================== -->
-   <!-- initialize jQuery Library -->
-   <script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>
-   <!-- Bootstrap jQuery -->
-   <script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
-   <!-- Counter -->
-   <script type="text/javascript" src="{% static 'js/jquery.counterup.min.js' %}"></script>
-   <!-- Countdown -->
-   <script type="text/javascript" src="{% static 'js/jquery.jCounter.js' %}"></script>
-   <!-- Waypoints -->
-   <script type="text/javascript" src="{% static 'js/waypoints.min.js' %}"></script>
-   <!-- Color box for Popup-->
-   <script type="text/javascript" src="{% static 'js/jquery.colorbox.js' %}"></script>
-   <!-- Smoothscroll -->
-   <script type="text/javascript" src="{% static 'js/smoothscroll.js' %}"></script>
-   <!-- Google Map API Key-->
-   <script type="text/javascript" src="//maps.googleapis.com/maps/api/js?key=AIzaSyCsa2Mi2HqyEcEnM1urFSIGEpvualYjwwM"></script>
-   <!-- Google Map Plugin-->
-   <script type="text/javascript" src="{% static 'js/gmap3.js' %}"></script>
-   <!-- Template custom -->
-   <script type="text/javascript" src="{% static 'js/custom.js' %}?v=1"></script>
+    <!--<section id="ts-schedule" class="ts-schedule">-->
+    <!--<div class="container">-->
+    <!--<div class="row text-center">-->
+    <!--<h2 class="section-title">Don't Miss a Thing</h2>-->
+    <!--<h3 class="section-sub-title">Event Programme</h3>-->
+    <!--</div>-->
+    <!--&lt;!&ndash;/ Title row end &ndash;&gt;-->
+    <!--<div class="row">-->
+    <!--<div class="col-md-12">-->
+    <!--<div class="schedule-tab">-->
+    <!--<ul class="nav nav-tabs" id="nav-tabs">-->
+    <!--<li class="active">-->
+    <!--<a class="animated fadeIn" href="#tab_one" data-toggle="tab">-->
+    <!--<span class="tab-head">-->
+    <!--<span class="tab-text-title">Day One</span>					-->
+    <!--</span>-->
+    <!--</a>-->
+    <!--</li>-->
+    <!--<li>-->
+    <!--<a class="animated fadeIn" href="#tab_two" data-toggle="tab">-->
+    <!--<span class="tab-head">-->
+    <!--<span class="tab-text-title">Day Two</span>					-->
+    <!--</span>-->
+    <!--</a>-->
+    <!--</li>-->
+    <!--<li>-->
+    <!--<a class="animated fadeIn" href="#tab_three" data-toggle="tab">-->
+    <!--<span class="tab-head">-->
+    <!--<span class="tab-text-title">Day Three</span>					-->
+    <!--</span>-->
+    <!--</a>-->
+    <!--</li>-->
+    <!--</ul>-->
+    <!--<div class="tab-content">-->
+    <!--<div class="tab-pane active animated fadeInRight" id="tab_one">-->
+    <!--<h2 class="schedule-date">Sunday, 7th March</h2>-->
+    <!--<div class="schedule-listing bg">-->
+    <!--<span class="schedule-slot-time">9:30 - 10:00</span>-->
+    <!--<div class="schedule-slot-info">-->
+    <!--<div class="schedule-slot-info-content">-->
+    <!--<h3 class="schedule-slot-title">Registration</h3>-->
+    <!--<p class="schedule-slot-desc">Pick up your name badge and goodie bag</p>-->
+    <!--</div>-->
+    <!--&lt;!&ndash;Info content end &ndash;&gt;-->
+    <!--</div>-->
+    <!--&lt;!&ndash; Slot info end &ndash;&gt;-->
+    <!--</div>-->
+    <!--&lt;!&ndash; Slot listing 1 end &ndash;&gt;-->
+    <!--<div class="schedule-listing">-->
+    <!--<span class="schedule-slot-time">10:30 - 11:15AM</span>-->
+    <!--<div class="schedule-slot-info">-->
+    <!--<a href="#">-->
+    <!--<img class="schedule-slot-speakers" src="images/speakers/speaker1.jpg" alt="" />-->
+    <!--</a>-->
+    <!--<div class="schedule-slot-info-content">-->
+    <!--<h3 class="schedule-slot-speaker-name">Edward C. Horner</h3>-->
+    <!--<h4 class="schedule-slot-title">Reinventing Experiences to All</h4>-->
+    <!--<p class="schedule-slot-desc">Throw myself down teems with vapour around me, and the meridian sun strikes the upper surface of the impenetrable.</p>-->
+    <!--</div>-->
+    <!--&lt;!&ndash;Info content end &ndash;&gt;-->
+    <!--</div>-->
+    <!--&lt;!&ndash; Slot info end &ndash;&gt;-->
+    <!--</div>-->
+    <!--&lt;!&ndash; Slot listing 2 end &ndash;&gt;-->
+    <!--<div class="schedule-listing bg">-->
+    <!--<span class="schedule-slot-time">11:15 - 13:15PM</span>-->
+    <!--<div class="schedule-slot-info">-->
+    <!--<a href="#">-->
+    <!--<img class="schedule-slot-speakers" src="images/speakers/speaker5.jpg" alt="" />-->
+    <!--</a>-->
+    <!--<div class="schedule-slot-info-content">-->
+    <!--<h3 class="schedule-slot-speaker-name">Summer Cross</h3>-->
+    <!--<h4 class="schedule-slot-title">Human Centered Design </h4>-->
+    <!--<p class="schedule-slot-desc">Minim Austin 3 wolf moon scenester aesthetic, umami odio pariatur bitters. Pop-up occaecat taxidermy street art, tattooed beard literally.</p>-->
+    <!--</div>-->
+    <!--&lt;!&ndash;Info content end &ndash;&gt;-->
+    <!--</div>-->
+    <!--&lt;!&ndash; Slot info end &ndash;&gt;-->
+    <!--</div>-->
+    <!--&lt;!&ndash; Slot listing 3 end &ndash;&gt;-->
+    <!--<div class="schedule-listing">-->
+    <!--<span class="schedule-slot-time">13:30 - 14:30PM</span>-->
+    <!--<div class="schedule-slot-info">-->
+    <!--<div class="schedule-slot-info-content">-->
+    <!--<h3 class="schedule-slot-title">Lunch</h3>-->
+    <!--<p class="schedule-slot-desc">Five star buffet for everybody.</p>-->
+    <!--</div>-->
+    <!--&lt;!&ndash;Info content end &ndash;&gt;-->
+    <!--</div>-->
+    <!--&lt;!&ndash; Slot info end &ndash;&gt;-->
+    <!--</div>-->
+    <!--&lt;!&ndash; Slot listing 4 end &ndash;&gt;-->
+    <!--<div class="schedule-listing bg">-->
+    <!--<span class="schedule-slot-time">14:35 - 16:00PM</span>-->
+    <!--<div class="schedule-slot-info">-->
+    <!--<a href="#">-->
+    <!--<img class="schedule-slot-speakers" src="images/speakers/speaker3.jpg" alt="" />-->
+    <!--</a>-->
+    <!--<div class="schedule-slot-info-content">-->
+    <!--<h3 class="schedule-slot-speaker-name">Laura Bryant</h3>-->
+    <!--<h4 class="schedule-slot-title">A frontier for designers: cultures of creativity</h4>-->
+    <!--<p class="schedule-slot-desc">Plaid fashion axe semiotics skateboard, try-hard food truck aesthetic biodiesel exercitation. Accusamus VHS Wes Anderson Banksy food truck vero.</p>-->
+    <!--</div>-->
+    <!--&lt;!&ndash;Info content end &ndash;&gt;-->
+    <!--</div>-->
+    <!--&lt;!&ndash; Slot info end &ndash;&gt;-->
+    <!--</div>-->
+    <!--&lt;!&ndash; Slot listing 5 end &ndash;&gt;-->
+    <!--</div>-->
+    <!--&lt;!&ndash; Tab pane 1 end &ndash;&gt;-->
+    <!--<div class="tab-pane animated fadeInRight" id="tab_two">-->
+    <!--<h2 class="schedule-date">Monday, 8th March</h2>-->
+    <!--<div class="schedule-listing">-->
+    <!--<span class="schedule-slot-time">09:30 - 11:15AM</span>-->
+    <!--<div class="schedule-slot-info">-->
+    <!--<a href="#">-->
+    <!--<img class="schedule-slot-speakers" src="images/speakers/speaker4.jpg" alt="" />-->
+    <!--</a>-->
+    <!--<div class="schedule-slot-info-content">-->
+    <!--<h3 class="schedule-slot-speaker-name">Avdei Ignatyev</h3>-->
+    <!--<h4 class="schedule-slot-title">Getting Started With User-Centered Content</h4>-->
+    <!--<p class="schedule-slot-desc">Throw myself down teems with vapour around me, and the meridian sun strikes the upper surface of the impenetrable.</p>-->
+    <!--</div>-->
+    <!--&lt;!&ndash;Info content end &ndash;&gt;-->
+    <!--</div>-->
+    <!--&lt;!&ndash; Slot info end &ndash;&gt;-->
+    <!--</div>-->
+    <!--&lt;!&ndash; Slot listing 1 end &ndash;&gt;-->
+    <!--<div class="schedule-listing bg">-->
+    <!--<span class="schedule-slot-time">11:15 - 13:15PM</span>-->
+    <!--<div class="schedule-slot-info">-->
+    <!--<a href="#">-->
+    <!--<img class="schedule-slot-speakers" src="images/speakers/speaker7.jpg" alt="" />-->
+    <!--</a>-->
+    <!--<div class="schedule-slot-info-content">-->
+    <!--<h3 class="schedule-slot-speaker-name">Eden Nivison</h3>-->
+    <!--<h4 class="schedule-slot-title">Content Measurement and Analytics</h4>-->
+    <!--<p class="schedule-slot-desc">Minim Austin 3 wolf moon scenester aesthetic, umami odio pariatur bitters. Pop-up occaecat taxidermy street art, tattooed beard literally.</p>-->
+    <!--</div>-->
+    <!--&lt;!&ndash;Info content end &ndash;&gt;-->
+    <!--</div>-->
+    <!--&lt;!&ndash; Slot info end &ndash;&gt;-->
+    <!--</div>-->
+    <!--&lt;!&ndash; Slot listing 2 end &ndash;&gt;-->
+    <!--<div class="schedule-listing">-->
+    <!--<span class="schedule-slot-time">13:30 - 14:30PM</span>-->
+    <!--<div class="schedule-slot-info">-->
+    <!--<div class="schedule-slot-info-content">-->
+    <!--<h3 class="schedule-slot-title">Lunch</h3>-->
+    <!--<p class="schedule-slot-desc">Five star buffet for everybody.</p>-->
+    <!--</div>-->
+    <!--&lt;!&ndash;Info content end &ndash;&gt;-->
+    <!--</div>-->
+    <!--&lt;!&ndash; Slot info end &ndash;&gt;-->
+    <!--</div>-->
+    <!--&lt;!&ndash; Slot listing 3 end &ndash;&gt;-->
+    <!--<div class="schedule-listing bg">-->
+    <!--<span class="schedule-slot-time">14:35 - 16:00PM</span>-->
+    <!--<div class="schedule-slot-info">-->
+    <!--<a href="#">-->
+    <!--<img class="schedule-slot-speakers" src="images/speakers/speaker8.jpg" alt="" />-->
+    <!--</a>-->
+    <!--<div class="schedule-slot-info-content">-->
+    <!--<h3 class="schedule-slot-speaker-name">Davi Azevedo</h3>-->
+    <!--<h4 class="schedule-slot-title">Not Perfect, Always Better: A Story of Inclusion</h4>-->
+    <!--<p class="schedule-slot-desc">Plaid fashion axe semiotics skateboard, try-hard food truck aesthetic biodiesel exercitation. Accusamus VHS Wes Anderson Banksy food truck vero.</p>-->
+    <!--</div>-->
+    <!--&lt;!&ndash;Info content end &ndash;&gt;-->
+    <!--</div>-->
+    <!--&lt;!&ndash; Slot info end &ndash;&gt;-->
+    <!--</div>-->
+    <!--&lt;!&ndash; Slot listing 4 end &ndash;&gt;-->
+    <!--</div>-->
+    <!--&lt;!&ndash; Tab pane 2 end &ndash;&gt;-->
+    <!--<div class="tab-pane animated fadeInLeft" id="tab_three">-->
+    <!--<h2 class="schedule-date">Tuesday, 9th March</h2>-->
+    <!--<div class="schedule-listing">-->
+    <!--<span class="schedule-slot-time">09:30 - 11:15AM</span>-->
+    <!--<div class="schedule-slot-info">-->
+    <!--<a href="#">-->
+    <!--<img class="schedule-slot-speakers" src="images/speakers/speaker2.jpg" alt="" />-->
+    <!--</a>-->
+    <!--<div class="schedule-slot-info-content">-->
+    <!--<h3 class="schedule-slot-speaker-name">Yue Ying Yüan</h3>-->
+    <!--<h4 class="schedule-slot-title">How Silos Learn: Working in the Idea Factory</h4>-->
+    <!--<p class="schedule-slot-desc">Throw myself down teems with vapour around me, and the meridian sun strikes the upper surface of the impenetrable.</p>-->
+    <!--</div>-->
+    <!--&lt;!&ndash;Info content end &ndash;&gt;-->
+    <!--</div>-->
+    <!--&lt;!&ndash; Slot info end &ndash;&gt;-->
+    <!--</div>-->
+    <!--&lt;!&ndash; Slot listing 1 end &ndash;&gt;-->
+    <!--<div class="schedule-listing bg">-->
+    <!--<span class="schedule-slot-time">11:15 - 13:15PM</span>-->
+    <!--<div class="schedule-slot-info">-->
+    <!--<a href="#">-->
+    <!--<img class="schedule-slot-speakers" src="images/speakers/speaker3.jpg" alt="" />-->
+    <!--</a>-->
+    <!--<div class="schedule-slot-info-content">-->
+    <!--<h3 class="schedule-slot-speaker-name">Laura Bryant</h3>-->
+    <!--<h4 class="schedule-slot-title">Empathy Behind the Algorithms</h4>-->
+    <!--<p class="schedule-slot-desc">Minim Austin 3 wolf moon scenester aesthetic, umami odio pariatur bitters. Pop-up occaecat taxidermy street art, tattooed beard literally.</p>-->
+    <!--</div>-->
+    <!--&lt;!&ndash;Info content end &ndash;&gt;-->
+    <!--</div>-->
+    <!--&lt;!&ndash; Slot info end &ndash;&gt;-->
+    <!--</div>-->
+    <!--&lt;!&ndash; Slot listing 2 end &ndash;&gt;-->
+    <!--<div class="schedule-listing">-->
+    <!--<span class="schedule-slot-time">13:30 - 14:30PM</span>-->
+    <!--<div class="schedule-slot-info">-->
+    <!--<div class="schedule-slot-info-content">-->
+    <!--<h3 class="schedule-slot-title">Lunch</h3>-->
+    <!--<p class="schedule-slot-desc">Five star buffet for everybody.</p>-->
+    <!--</div>-->
+    <!--&lt;!&ndash;Info content end &ndash;&gt;-->
+    <!--</div>-->
+    <!--&lt;!&ndash; Slot info end &ndash;&gt;-->
+    <!--</div>-->
+    <!--&lt;!&ndash; Slot listing 3 end &ndash;&gt;-->
+    <!--<div class="schedule-listing bg">-->
+    <!--<span class="schedule-slot-time">14:35 - 16:00PM</span>-->
+    <!--<div class="schedule-slot-info">-->
+    <!--<a href="#">-->
+    <!--<img class="schedule-slot-speakers" src="images/speakers/speaker6.jpg" alt="" />-->
+    <!--</a>-->
+    <!--<div class="schedule-slot-info-content">-->
+    <!--<h3 class="schedule-slot-speaker-name">Oscar Watkins</h3>-->
+    <!--<h4 class="schedule-slot-title">Adaptive Content, Context, and Controversy</h4>-->
+    <!--<p class="schedule-slot-desc">Plaid fashion axe semiotics skateboard, try-hard food truck aesthetic biodiesel exercitation. Accusamus VHS Wes Anderson Banksy food truck vero.</p>-->
+    <!--</div>-->
+    <!--&lt;!&ndash;Info content end &ndash;&gt;-->
+    <!--</div>-->
+    <!--&lt;!&ndash; Slot info end &ndash;&gt;-->
+    <!--</div>-->
+    <!--&lt;!&ndash; Slot listing 4 end &ndash;&gt;-->
+    <!--<div class="schedule-listing listing-last">-->
+    <!--<span class="schedule-slot-time">16:30 - Late</span>-->
+    <!--<div class="schedule-slot-info">-->
+    <!--<div class="schedule-slot-info-content">-->
+    <!--<h3 class="schedule-slot-title">After Party</h3>-->
+    <!--<p class="schedule-slot-desc">Stick around and enjoy a dazzling after work.</p>-->
+    <!--</div>-->
+    <!--&lt;!&ndash;Info content end &ndash;&gt;-->
+    <!--</div>-->
+    <!--&lt;!&ndash; Slot info end &ndash;&gt;-->
+    <!--</div>-->
+    <!--&lt;!&ndash; Slot listing 5 end &ndash;&gt;-->
+    <!--</div>-->
+    <!--&lt;!&ndash; Tab pane 3 end &ndash;&gt;	-->
+    <!--</div>-->
+    <!--&lt;!&ndash; tab content &ndash;&gt;-->
+    <!--<div class="gap-60"></div>-->
+    <!--<div class="text-center"><a class="btn btn-primary" href="#"><i class="fa fa-file-pdf-o"></i> Download PDF</a></div>-->
+    <!--</div>-->
+    <!--&lt;!&ndash; Schedule tab end &ndash;&gt;-->
+    <!--</div>-->
+    <!--&lt;!&ndash; Col end &ndash;&gt;-->
+    <!--</div>-->
+    <!--&lt;!&ndash; Content row end &ndash;&gt;-->
+    <!--</div>-->
+    <!--&lt;!&ndash;/ Container end &ndash;&gt;-->
+    <!--</section>-->
+    <!--&lt;!&ndash; Schedule end &ndash;&gt;-->
+
+    <section id="ts-sponsors" class="ts-sponsors">
+        <div class="container">
+            <div class="row text-center">
+                <h2 class="section-title">Supporting Our Project</h2>
+                <p class="section-sub-title">Event Sponsors</p>
+            </div>
+            <!-- &lt;!&ndash;/ Title row end &ndash;&gt; -->
+            <div class="row sponsor-padding text-center">
+                <h3 class="sponsor-title">Main Sponsors</h3>
+{#                <div class="col-xs-12 col-sm-4 col-md-4">#}
+{#                    <a href="#" class="sponsor-logo">#}
+{#                        <img class="img-responsive" src="images/sponsors/sponsor1.png" alt=""/>#}
+{#                    </a>#}
+{#                </div>#}
+{#                <!-- &lt;!&ndash; Col 1 end &ndash;&gt; -->#}
+{#                <div class="col-xs-12 col-sm-4 col-md-4">#}
+{#                    <a href="#" class="sponsor-logo">#}
+{#                        <img class="img-responsive" src="images/sponsors/sponsor2.png" alt=""/>#}
+{#                    </a>#}
+{#                </div>#}
+{#                <!-- &lt;!&ndash; Col 2 end &ndash;&gt; -->#}
+{#                <div class="col-xs-12 col-sm-4 col-md-4">#}
+{#                    <a href="#" class="sponsor-logo">#}
+{#                        <img class="img-responsive" src="images/sponsors/sponsor3.png" alt=""/>#}
+{#                    </a>#}
+{#                </div>#}
+                {% for sponsor in wss.sponsors.all %}
+                    {% if sponsor.is_main %}
+                        <div class="col-xs-12 col-sm-4 col-md-4">
+                            <a href="#" class="sponsor-logo">
+                                <img class="img-responsive" src="{{ sponsor.logo_url }}" alt=""/>
+                            </a>
+                        </div>
+                    {%  endif %}
+                {% endfor %}
+                <!-- &lt;!&ndash; Col 3 end &ndash;&gt; -->
+            </div>
+            <!-- &lt;!&ndash;/ Content row 1 end &ndash;&gt; -->
+            <div class="row text-center">
+                <h3 class="sponsor-title">Other Sponsors</h3>
+{#                <div class="col-xs-12 col-sm-3 col-md-3">#}
+{#                    <a href="#" class="sponsor-logo">#}
+{#                        <img class="img-responsive" src="images/sponsors/sponsor4.png" alt=""/>#}
+{#                    </a>#}
+{#                </div>#}
+{#                <!--&lt;!&ndash; Col 1 end &ndash;&gt;-->#}
+{#                <div class="col-xs-12 col-sm-3 col-md-3">#}
+{#                    <a href="#" class="sponsor-logo">#}
+{#                        <img class="img-responsive" src="images/sponsors/sponsor5.png" alt=""/>#}
+{#                    </a>#}
+{#                </div>#}
+{#                <!-- &lt;!&ndash; Col 2 end &ndash;&gt; -->#}
+{#                <div class="col-xs-12 col-sm-3 col-md-3">#}
+{#                    <a href="#" class="sponsor-logo">#}
+{#                        <img class="img-responsive" src="images/sponsors/sponsor6.png" alt=""/>#}
+{#                    </a>#}
+{#                </div>#}
+{#                <!-- &lt;!&ndash; Col 3 end &ndash;&gt; -->#}
+{#                <div class="col-xs-12 col-sm-3 col-md-3">#}
+{#                    <a href="#" class="sponsor-logo">#}
+{#                        <img class="img-responsive" src="images/sponsors/sponsor7.png" alt=""/>#}
+{#                    </a>#}
+{#                </div>#}
+                <!--&lt;!&ndash; Col 4 end &ndash;&gt;-->
+                {% for sponsor in wss.sponsors.all %}
+                    {% if not sponsor.is_main %}
+                        <div class="col-xs-12 col-sm-4 col-md-4">
+                            <a href="#" class="sponsor-logo">
+                                <img class="img-responsive" src="{{ sponsor.logo_url }}" alt=""/>
+                            </a>
+                        </div>
+                    {%  endif %}
+
+                {% endfor %}
+            </div>
+            <!-- &lt;!&ndash;/ Content row 2 end &ndash;&gt; -->
+{#            <div class="row text-center">#}
+{#                <h3 class="sponsor-title">Creative Partners</h3>#}
+{#                <div class="col-xs-12 col-sm-3 col-md-3">#}
+{#                    <a href="#" class="sponsor-logo">#}
+{#                        <img class="img-responsive" src="images/sponsors/sponsor8.png" alt=""/>#}
+{#                    </a>#}
+{#                </div>#}
+{#                <!-- &lt;!&ndash; Col 1 end &ndash;&gt; -->#}
+{#                <div class="col-xs-12 col-sm-3 col-md-3">#}
+{#                    <a href="#" class="sponsor-logo">#}
+{#                        <img class="img-responsive" src="images/sponsors/sponsor9.png" alt=""/>#}
+{#                    </a>#}
+{#                </div>#}
+{#                <!--&lt;!&ndash; Col 2 end &ndash;&gt;-->#}
+{#                <div class="col-xs-12 col-sm-3 col-md-3">#}
+{#                    <a href="#" class="sponsor-logo">#}
+{#                        <img class="img-responsive" src="images/sponsors/sponsor10.png" alt=""/>#}
+{#                    </a>#}
+{#                </div>#}
+{#                <!-- &lt;!&ndash; Col 3 end &ndash;&gt; -->#}
+{#                <div class="col-xs-12 col-sm-3 col-md-3">#}
+{#                    <a href="#" class="sponsor-logo">#}
+{#                        <img class="img-responsive" src="images/sponsors/sponsor11.png" alt=""/>#}
+{#                    </a>#}
+{#                </div>#}
+{#                <!--&lt;!&ndash; Col 4 end &ndash;&gt;-->#}
+{#            </div>#}
+            <!-- &lt;!&ndash;/ Content row 3 end &ndash;&gt; -->
+            <div class="row">
+                <div class="general-btn text-center">
+                    <a class="btn btn-primary" href="#">Become our Sponsor</a>
+                </div>
+            </div>
+            <!-- &lt;!&ndash;/ Content row 3 end &ndash;&gt; -->
+        </div>
+        <!-- &lt;!&ndash;/ Container end &ndash;&gt; -->
+    </section>
+    <!--&lt;!&ndash; Sponsors end &ndash;&gt; -->
+
+    <!--<section id="ts-venue" class="ts-venue solid-bg">-->
+    <!--<div class="container">-->
+    <!--<div class="row text-center">-->
+    <!--<h2 class="section-title">Where to find us</h2>-->
+    <!--<h3 class="section-sub-title">Venue and Info</h3>-->
+    <!--</div>-->
+    <!--&lt;!&ndash;/ Title row end &ndash;&gt;-->
+    <!--<div class="row">-->
+    <!--<div class="col-md-6">-->
+    <!--&lt;!&ndash; contact info end &ndash;&gt;-->
+    <!--</div>-->
+    <!--&lt;!&ndash; Col end &ndash;&gt;-->
+    <!--</div>-->
+    <!--&lt;!&ndash; Content row 1 end &ndash;&gt;-->
+    <!--</div>-->
+    <!--&lt;!&ndash; Container end &ndash;&gt;-->
+    <!--</section>-->
+    <!--&lt;!&ndash; Venue end &ndash;&gt;-->
+
+    <section class="venu-map no-padding">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="bottom-contact white">
+                        <h4 class="white">Organizer info</h4>
+                        <p>The event is held by the <a href="http://ssc.ce.sharif.edu">Student Scientific
+                            Chapter (SSC)</a> of <a href="http://ce.sharif.edu">Computer Engineering Department</a>
+                            of <a href="http://sharif.edu">Sharif University of Technology</a>
+                        </p>
+                        <br>
+                        <h4 class="white">Venue Details</h4>
+                        <div class="contact-info">
+                            <div class="contact-info-box">
+                                <i class="fa fa-map-marker">&nbsp;</i>
+                                <div class="contact-info-box-content">
+                                    <h5 class="white">Address: </h5>
+                                    <p>Sharif University of Technology, Azadi Street, Distinct 2, Tehran, Iran</p>
+                                </div>
+                            </div>
+                            <div class="contact-info-box">
+                                <i class="fa fa-envelope-o">&nbsp;</i>
+                                <div class="contact-info-box-content">
+                                    <h5 class="white">Email: </h5>
+                                    <p>ssc@ce.sharif.edu</p>
+                                </div>
+                            </div>
+                            <div class="contact-info-box">
+                                <i class="fa fa-phone">&nbsp;</i>
+                                <div class="contact-info-box-content">
+                                    <h5 class="white">Phone: </h5>
+                                    <p>+98(021) 66 16 57 81</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Contact info end -->
+                    </div>
+                    <!-- Contact form div end -->
+                </div>
+                <!-- Col end -->
+                <div class="col-md-6">
+                    <div id="map" class="map-bottom"></div>
+                    <!-- Google Map -->
+                </div>
+                <!-- Col end -->
+            </div>
+            <!-- Content row end -->
+        </div>
+        <!-- Container end -->
+    </section>
+    <!-- Map end -->
+
+
+    <footer id="footer" class="footer text-center">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="footer-menu">
+                        <ul class="nav unstyled">
+                            <li><a href="#">Home</a></li>
+                            <li><a href="#">Register</a></li>
+                            <li><a href="#">Contact</a></li>
+                        </ul>
+                    </div>
+                    <!-- Footer menu end -->
+                    <div class="footer-logo">
+                        <img src="{% static 'images/footer-logo.png' %}" alt="footer logo"/>
+                    </div>
+                    <div class="footer-social">
+                        <ul>
+                            <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                            <li><a href="#"><i class="fa fa-youtube"></i></a></li>
+                            <li><a href="#"><i class="fa fa-instagram"></i></a></li>
+                        </ul>
+                    </div>
+                    <!-- Footer social end -->
+                    <div class="copyright-info">
+                        <span>Copyright © 2015-2017 WSS. All Rights Reserved.</span>
+                    </div>
+                    <!-- Copyright info end -->
+                </div>
+                <!-- Content col end -->
+            </div>
+            <!-- Content row end -->
+        </div>
+        <!-- Container end -->
+        <!--<div id="back-to-top" data-spy="affix" data-offset-top="10" class="back-to-top affix">-->
+        <!--<button class="btn btn-primary" title="Back to Top">-->
+        <!--<i class="fa fa-angle-up"></i>-->
+        <!--</button>-->
+        <!--</div>-->
+    </footer>
+    <!-- Footer end -->
+
+    <!-- Javascript Files
+       ================================================== -->
+    <!-- initialize jQuery Library -->
+    <script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>
+    <!-- Bootstrap jQuery -->
+    <script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
+    <!-- Counter -->
+    <script type="text/javascript" src="{% static 'js/jquery.counterup.min.js' %}"></script>
+    <!-- Countdown -->
+    <script type="text/javascript" src="{% static 'js/jquery.jCounter.js' %}"></script>
+    <!-- Waypoints -->
+    <script type="text/javascript" src="{% static 'js/waypoints.min.js' %}"></script>
+    <!-- Color box for Popup-->
+    <script type="text/javascript" src="{% static 'js/jquery.colorbox.js' %}"></script>
+    <!-- Smoothscroll -->
+    <script type="text/javascript" src="{% static 'js/smoothscroll.js' %}"></script>
+    <!-- Google Map API Key-->
+    <script type="text/javascript"
+            src="//maps.googleapis.com/maps/api/js?key=AIzaSyCsa2Mi2HqyEcEnM1urFSIGEpvualYjwwM"></script>
+    <!-- Google Map Plugin-->
+    <script type="text/javascript" src="{% static 'js/gmap3.js' %}"></script>
+    <!-- Template custom -->
+    <script type="text/javascript" src="{% static 'js/custom.js' %}?v=1"></script>
 
 </div>
 <!-- Body inner end -->

@@ -77,7 +77,15 @@ class Sponsor(models.Model):
         return self.name
 
     def logo_tag(self):
+        if not self.logo:
+            return None
         return mark_safe('<img src={} width=40 height=40>'.format(self.logo.url))
+
+    @property
+    def logo_url(self):
+        if not self.logo:
+            return None
+        return self.logo.url
 
     logo_tag.short_description = 'logo'
 
