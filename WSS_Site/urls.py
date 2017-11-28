@@ -9,6 +9,7 @@ urlpatterns = [
     url(r'^jet/dashboard/', include('jet.dashboard.urls', 'jet-dashboard')),
     url(r'^admin/', admin.site.urls),
     url(r'^', include('WSS.urls', namespace='wss')),
+    url(r'^events/',include('events.urls',namespace='events')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 admin.site.site_header = 'WSS Administration'

@@ -2,6 +2,7 @@
 <html lang="en">
 {% load static %}
 {% load date_tags %}
+{% load human_tags %}
 
 <head>
 	<!-- Basic Page Needs ================================================== -->
@@ -57,14 +58,14 @@
 					</button>
 					<nav class="collapse navbar-collapse navbar-responsive-collapse pull-right">
 						<ul class="nav navbar-nav">
-							<li><a href="home.html">Home</a></li>
+							<li><a href="../../../WSS/templates/WSS/home.html">Home</a></li>
 							<!-- Home li end -->
 							<li class="dropdown">
 								<a href="#" class="dropdown-toggle" data-toggle="dropdown">About <i class="fa fa-angle-down"></i></a>
 								<ul class="dropdown-menu menu-center" role="menu">
 									<li><a href="about.html">Why Attend</a></li>
 									<li><a href="staffs.html">Staffs</a></li>
-									<li><a href="gallery.html">Gallery</a></li>
+									<li><a href="../../../WSS/templates/WSS/gallery.html">Gallery</a></li>
 									<li><a href="sponsors.html">Sponsors</a></li>
 								</ul>
 							</li>
@@ -105,45 +106,27 @@
 		<div class="container">
 			<div class="row">
 				<div class="clearfix">
-					<div class="col-xs-12 col-md-4">
-						<div class="ts-speaker-details">
-							<div class="ts-speaker-details-img">
-								<img class="img-responsive" src="images/speakers/speaker1.jpg" alt="" />
-								<ul class="ts-speaker-details-social">
-									<li><a href="#"><i class="fa fa-facebook"></i></a></li>
-									<li><a href="#"><i class="fa fa-twitter"></i></a></li>
-									<li><a href="#"><i class="fa fa-instagram"></i></a></li>
-									<li><a href="#"><i class="fa fa-linkedin"></i></a></li>
-								</ul>
-							</div><!--Image end -->
-							<div class="ts-speaker-info">
-								<h3 class="ts-speaker-name">Edward C. Horner</h3>
-								<p class="ts-speaker-designation">Founder, Textlab</p>
-								<p><a href="#">http://www.textlab.com</a></p>
-								<p>He is a DevOpsologist who has spent the last couple of decades helping organisations make better software faster.</p>
-							</div><!--Info end -->
-						</div><!--Image end -->
-					</div><!-- Col end -->
-
+					<div class="col-xs-12 col-md-4">>
+                        {% render_human seminar.speaker subtitle=seminar.speaker.short_bio url=None %}
+                    </div>
 					<div class="col-xs-12 col-md-8">
 							<div class="ts-speaker-session right">
-								<h3 class="session-title">Session: Diving in to the WordPress REST API</h3>
-								<p>Eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium. Rethoric question ran over her cheek When she reached the first hills of the Italic Mountains, she had a last view back on the skyline.</p>
-								<h4>Topics Covered:</h4>
-								<ul>
-									<li>Design a monolith ready for microservices</li>
-									<li>How to build fast data flows and integrate with big data tasks from your microservices.</li>
-									<li>Deploy, Upgrade, Stress and Manage your microservices so that they are ready for production</li>
-									<li>DevOps definitions – Why DevOps?</li>
-									<li>Making cultural change happen</li>
-									<li>Formulating and executing a DevOps transformation</li>
-								</ul>
-								<h4>Outcomes for attendees:</h4>
-								<ul>
-									<li>A deeper understanding of what the DevOps movement is all about</li>
-									<li>Making cultural change happen</li>
-									<li>An action plan for change and transformation</li>
-								</ul>
+								<h3 class="session-title">{{ seminar.title }}</h3>
+								<h4>Abstract</h4>
+								{{ seminar.abstract }}
+								<h4>Bio</h4>
+                                {{ seminar.speaker.bio }}
+                                <div>
+                                <br/>
+                                {% if seminar.material %}
+                                    {% if seminar.material.slides %}
+                                        <a class="btn btn-warning" href="{{ seminar.material.slides.url }}">Slides</a>
+                                    {% endif %}
+                                    {% if seminar.material.video_url %}
+                                        <a class="btn btn-danger" href="{{ seminar.material.video_url }}">Video</a>
+                                    {% endif %}
+                                {% endif %}
+                                </div>
 							</div><!-- Session end -->
 					</div><!-- Col end -->
 				</div><!-- Speaker list 1 end -->

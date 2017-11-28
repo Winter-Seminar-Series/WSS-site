@@ -25,7 +25,7 @@ class WSS(models.Model):
 
     @property
     def main_image_url(self):
-        if not self.main_clip:
+        if not self.main_image:
             return None
         return self.main_image.image.url
 
@@ -50,13 +50,21 @@ class WSS(models.Model):
             *[holding_team.staff.values_list('pk') for holding_team in self.holding_teams.all()]
         ))
 
+    @property
+    def keynote_seminars(self):
+        return self.seminars.filter(is_keynote=True)
+
+    @property
+    def non_keynote_seminars(self):
+        return self.seminars.filter(is_keynote=False)
+
 
 class Clip(models.Model):
     wss = models.ForeignKey(to='WSS', related_name='clips', verbose_name='WSS')
     clip = models.FileField(upload_to='clips/')
 
     def __str__(self):
-        return 'Clip'
+        return 'Clip of {}'.format(self.wss)
 
 
 class Image(models.Model):
@@ -64,7 +72,7 @@ class Image(models.Model):
     image = models.ImageField(upload_to='images/')
 
     def __str__(self):
-        return 'Image'
+        return 'Image of {}'.format(self.wss)
 
 
 class Sponsor(models.Model):
