@@ -51,7 +51,7 @@ jQuery(function($) {
 
       $('#map')
       .gmap3({
-         zoom: 13,
+         zoom: 15,
          center: eventmap,
          mapTypeId : google.maps.MapTypeId.ROADMAP,
          scrollwheel: false
@@ -63,7 +63,7 @@ jQuery(function($) {
 
       .infowindow({
          position: eventmap,
-         content: "NYC Seminar and Conference Center, New York"
+         content: "Sharif University of Technology, Tehran, Iran"
       })
 
       .then(function (infowindow) {
