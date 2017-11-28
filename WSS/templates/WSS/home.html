@@ -2,6 +2,7 @@
 <html lang="en">
 {% load static %}
 {% load date_tags %}
+{% load human_tags %}
 
 <head>
    <!-- Basic Page Needs ================================================== -->
@@ -250,31 +251,28 @@
    <section id="ts-speakers" class="ts-speakers gradient-bg">
    <div class="container">
    <div class="row text-center">
-   <h2 class="section-title">Revolutionizing the World</h2>
-   <h3 class="section-sub-title title-white">Visionary Speakers</h3>
+   <h2 class="section-title">About the seminar series</h2>
+   <h3 class="section-sub-title title-white">Keynote Speakers</h3>
    </div>
 
    <!--/ Title row end -->
    <div class="row">
 
-      {% for seminar in wss.seminars.all %}
-         <div class="col-xs-12 col-sm-6 col-md-3">
-         <a href="/seminar/{{seminar.pk}}"><div class="ts-speaker">
-         <div class="ts-speaker-image">
-         <img class="img-responsive" src="{{ seminar.speaker.picture_url }}" alt="" />
-         </div>
-         <!--Image end -->
-         <div class="ts-speaker-info">
-         <h3 class="ts-speaker-name"><a href="/seminar/{{seminar.pk}}">{{ seminar.speaker.name }}</a></h3>
-         <p class="ts-speaker-designation">{{ seminar.speaker.short_bio }}</p>
-         </div>
-         <!-- Info end -->
-         </div></a>
-         <!-- Speaker end -->
-         </div>
+      {% for seminar in wss.keynote_seminars %}
+         {% render_human seminar.speaker subtitle=seminar.speaker.short_bio url='/' %}
       {% endfor %}
 
    </div>
+   <br>
+   <div class="container">
+   <div class="row text-center">
+   <h3 class="section-sub-title title-white">Speakers</h3>
+   </div>
+
+      {% for seminar in wss.non_keynote_seminars %}
+         {% render_human seminar.speaker subtitle=seminar.speaker.short_bio url='/' %}
+      {% endfor %}
+
    <!-- Content row 2 end -->
    </div>
    <!--/ Container end -->

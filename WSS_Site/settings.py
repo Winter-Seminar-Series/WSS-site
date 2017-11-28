@@ -72,6 +72,7 @@ TEMPLATES = [
             ],
             'libraries': {
                 'date_tags': 'WSS.templatetags.date_tags',
+                'human_tags': 'people.templatetags.human_tags',
             },
         },
     },

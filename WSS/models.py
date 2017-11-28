@@ -50,6 +50,14 @@ class WSS(models.Model):
             *[holding_team.staff.values_list('pk') for holding_team in self.holding_teams.all()]
         ))
 
+    @property
+    def keynote_seminars(self):
+        return self.seminars.filter(is_keynote=True)
+
+    @property
+    def non_keynote_seminars(self):
+        return self.seminars.filter(is_keynote=False)
+
 
 class Clip(models.Model):
     wss = models.ForeignKey(to='WSS', related_name='clips', verbose_name='WSS')
