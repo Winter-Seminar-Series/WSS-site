@@ -64,7 +64,7 @@ class Clip(models.Model):
     clip = models.FileField(upload_to='clips/')
 
     def __str__(self):
-        return 'Clip'
+        return 'Clip of {}'.format(self.wss)
 
 
 class Image(models.Model):
@@ -72,7 +72,7 @@ class Image(models.Model):
     image = models.ImageField(upload_to='images/')
 
     def __str__(self):
-        return 'Image'
+        return 'Image of {}'.format(self.wss)
 
 
 class Sponsor(models.Model):
