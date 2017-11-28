@@ -259,7 +259,9 @@
    <div class="row">
 
       {% for seminar in wss.keynote_seminars %}
-         {% render_human seminar.speaker subtitle=seminar.speaker.short_bio url='/' %}
+      <div class="col-xs-12 col-sm-6 col-md-3">
+         {% render_human seminar.speaker subtitle=seminar.speaker.short_bio url=seminar.get_absolute_url %}
+      </div>
       {% endfor %}
 
    </div>
@@ -274,9 +276,11 @@
       {% endfor %}
    </div>
 
-   <p class="banner-btn center">
-   <a href="/" class="btn btn-primary">View More</a>
-   </p>
+   <div class="row">
+   <div class="general-btn text-center">
+   <a class="btn btn-primary" href="#">View More</a>
+   </div>
+   </div>
 
 
    <!-- Content row 2 end -->
