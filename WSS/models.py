@@ -25,10 +25,14 @@ class WSS(models.Model):
 
     @property
     def main_image_url(self):
+        if not self.main_clip:
+            return None
         return self.main_image.image.url
 
     @property
     def main_clip_url(self):
+        if not self.main_clip:
+            return None
         return self.main_clip.clip.url
 
     @property
@@ -43,7 +47,7 @@ class WSS(models.Model):
     def staff_count(self):
         return len(set.union(
             set(TechnicalExpert.objects.values_list('pk')),
-            *[holding_team.staff_pk_set for holding_team in self.holding_teams.all()]
+            *[holding_team.staff.values_list('pk') for holding_team in self.holding_teams.all()]
         ))
 
 

@@ -29,14 +29,14 @@ class Venue(models.Model):
 class Seminar(BaseEvent):
     abstract = models.TextField()
     is_keynote = models.BooleanField()
-    speaker = models.ForeignKey(to='people.HistoricalSpeaker', related_name='seminars')
+    speaker = models.ForeignKey(to='people.Speaker', related_name='seminars')
     material = models.OneToOneField(to='SeminarMaterial', null=True, blank=True)
 
 
 class Workshop(BaseEvent):
     syllabus = models.TextField()
     sponsor = models.ForeignKey(to='WSS.Sponsor', related_name='workshops', null=True, blank=True)
-    speaker = models.ForeignKey(to='people.HistoricalSpeaker', related_name='workshops')
+    speaker = models.ForeignKey(to='people.Speaker', related_name='workshops')
     material = models.OneToOneField(to='WorkshopMaterial', null=True, blank=True)
 
 

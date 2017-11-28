@@ -1,12 +1,10 @@
 from django.db import models
 from polymorphic.models import PolymorphicModel
-from simple_history.models import HistoricalRecords
 
 
 class Human(PolymorphicModel):
     name = models.CharField(max_length=40)
     picture = models.ImageField(upload_to='human_pictures/', null=True, blank=True)
-    history = HistoricalRecords()
 
     def __str__(self):
         return self.name
@@ -19,26 +17,18 @@ class Speaker(Human):
     degree = models.CharField(max_length=30)
     place = models.CharField(max_length=50)
     bio = models.TextField()
-    history = HistoricalRecords()
 
 
 class HoldingTeam(models.Model):
     wss = models.ForeignKey(to='WSS.WSS', related_name='holding_teams', verbose_name='WSS')
     name = models.CharField(max_length=50)
     description = models.TextField()
-    staff = models.ManyToManyField(to='HistoricalStaff', related_name='holding_teams', blank=True)
+    staff = models.ManyToManyField(to='Staff', related_name='holding_teams', blank=True)
 
     def __str__(self):
         return self.name
 
-    @property
-    def staff_pk_set(self):
-        return {staff.instance.pk for staff in self.staff.all()}
-
-
 class Staff(Human):
-    history = HistoricalRecords()
-
     class Meta:
         verbose_name_plural = 'Staff'
 
