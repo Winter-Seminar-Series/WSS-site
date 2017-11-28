@@ -5,7 +5,7 @@ from WSS.models import WSS
 
 
 class HomeView(DetailView):
-    template_name = 'WSS/home.html'
+    template_name = 'WSS/gallery.html'
     context_object_name = 'wss'
 
     def get_context_data(self, **kwargs):
