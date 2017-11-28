@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 from polymorphic.models import PolymorphicModel
 
 
@@ -31,6 +32,10 @@ class Seminar(BaseEvent):
     is_keynote = models.BooleanField()
     speaker = models.ForeignKey(to='people.Speaker', related_name='seminars')
     material = models.OneToOneField(to='SeminarMaterial', null=True, blank=True)
+
+    @property
+    def get_absolute_url(self):
+        return reverse('events:seminar',args=[self.pk])
 
 
 class Workshop(BaseEvent):
