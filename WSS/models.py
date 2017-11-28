@@ -80,6 +80,7 @@ class Sponsor(models.Model):
     name = models.CharField(max_length=70)
     logo = models.ImageField(upload_to='logos/')
     is_main = models.BooleanField()
+    url = models.URLField()
 
     def __str__(self):
         return self.name
