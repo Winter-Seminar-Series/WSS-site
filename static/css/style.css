@@ -39,6 +39,10 @@
 /* Typography
 ================================================== */
 
+.white{
+    color: white;
+}
+
 body {
     background: #fff;
     color: #333;
@@ -116,7 +120,6 @@ a {
 }
 a:hover {
     text-decoration: none;
-    color: #000;
 }
 a.read-more {
     color: #446CB3;

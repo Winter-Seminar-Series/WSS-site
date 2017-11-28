@@ -12,11 +12,19 @@ class Human(PolymorphicModel):
     class Meta:
         abstract = True
 
+    @property
+    def picture_url(self):
+        return self.picture.url if self.picture else None
+
 
 class Speaker(Human):
     degree = models.CharField(max_length=30)
     place = models.CharField(max_length=50)
     bio = models.TextField()
+
+    @property
+    def short_bio(self):
+        return '{}, {}'.format(self.degree, self.place)
 
 
 class HoldingTeam(models.Model):
@@ -27,6 +35,7 @@ class HoldingTeam(models.Model):
 
     def __str__(self):
         return self.name
+
 
 class Staff(Human):
     class Meta:
