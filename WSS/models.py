@@ -25,7 +25,7 @@ class WSS(models.Model):
 
     @property
     def main_image_url(self):
-        if not self.main_clip:
+        if not self.main_image:
             return None
         return self.main_image.image.url
 
