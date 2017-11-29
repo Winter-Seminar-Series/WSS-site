@@ -48,8 +48,7 @@ class WSSAdmin(admin.ModelAdmin):
 
 
 class SponsorAdmin(admin.ModelAdmin):
-    list_display = ('__str__', 'logo_tag')
-    readonly_fields = ('logo_tag',)
+    list_display = ('__str__', 'url', 'logo_tag')
 
 
 class ExternalLinkTypeAdmin(admin.ModelAdmin):
