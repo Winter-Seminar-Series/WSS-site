@@ -59,12 +59,12 @@ class WSS(models.Model):
         return self.seminars.filter(is_keynote=False)
 
     @property
-    def main_sponsors(self):
-        return self.sponsors.filter(is_main=True)
+    def main_sponsorships(self):
+        return self.sponsorships.filter(is_main=True)
 
     @property
-    def not_main_sponsors(self):
-        return self.sponsors.filter(is_main=False)
+    def not_main_sponsorships(self):
+        return self.sponsorships.filter(is_main=False)
 
     @property
     def is_active(self):

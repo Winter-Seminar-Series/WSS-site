@@ -28,6 +28,22 @@ class SeminarsListView(DetailView):
     context_object_name = 'wss'
 
     def get_object(self, queryset=None):
-        if 'year' in self.kwargs:
-            return get_object_or_404(WSS, year=int(self.kwargs['year']))
-        raise Http404
+        return get_object_or_404(WSS, year=int(self.kwargs['year']))
+
+
+class WorkshopsListView(DetailView):
+    template_name = 'WSS/workshops_list.html'
+    model = WSS
+    context_object_name = 'wss'
+
+    def get_object(self, queryset=None):
+        return get_object_or_404(WSS, year=int(self.kwargs['year']))
+
+
+class StaffListView(DetailView):
+    template_name = 'WSS/staff_list.html'
+    model = WSS
+    context_object_name = 'wss'
+
+    def get_object(self, queryset=None):
+        return get_object_or_404(WSS, year=int(self.kwargs['year']))

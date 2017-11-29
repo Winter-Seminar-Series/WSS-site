@@ -60,24 +60,24 @@
                </button>
                <nav class="collapse navbar-collapse navbar-responsive-collapse pull-right">
                   <ul class="nav navbar-nav">
-                     <li><a href="home.html">Home</a></li>
-                     <!-- Home li end -->
-                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">About <i class="fa fa-angle-down"></i></a>
-                        <ul class="dropdown-menu menu-center" role="menu">
-                           <li><a href="about.html">Why Attend</a></li>
-                           <li><a href="staffs.html">Staffs</a></li>
-                           <li><a href="gallery.html">Gallery</a></li>
-                           <li><a href="sponsors.html">Sponsors</a></li>
-                        </ul>
-                     </li>
-                     <!-- About li end -->
-                     <li><a href="speakers.html">Speakers</a></li>
-                     <!-- Speakers li end -->
-                     <li><a href="schedule.html">Schedule</a></li>
-                     <!-- Schedule li end -->
-                     <li><a href="contact.html">Contact</a></li>
-                     <!-- Contact li end -->
+                     <li><a href="{% url 'wss:home' wss.year %}">{{ wss }}</a></li>
+                     <!--<li class="dropdown">-->
+                        <!--<a href="#" class="dropdown-toggle" data-toggle="dropdown">About <i class="fa fa-angle-down"></i></a>-->
+                        <!--<ul class="dropdown-menu menu-center" role="menu">-->
+                           <!--<li><a href="about.html">Why Attend</a></li>-->
+                           <!--<li><a href="staffs.html">Staffs</a></li>-->
+                           <!--<li><a href="gallery.html">Gallery</a></li>-->
+                           <!--<li><a href="sponsors.html">Sponsors</a></li>-->
+                        <!--</ul>-->
+                     <!--</li>-->
+                     <li><a data-scroll href="#ts-intro">About</a></li>
+                     <li><a data-scroll href="#ts-speakers">Speakers</a></li>
+                     {% if wss.workshops.count %}
+                     <li><a data-scroll href="{% url 'wss:workshops-list' wss.year %}">Workshops</a></li>
+                     {% endif %}
+                     <li><a data-scroll href="#ts-sponsors">Sponsors</a></li>
+                     <li><a href="#">Schedule</a></li>
+                     <li><a data-scroll href="{% url 'wss:staff-list' wss.year %}">Staff</a></li>
                      <li class="header-ticket">
                         <a class="ticket-btn btn-primary" href="register.html"> Register</a>
                      </li>
@@ -186,20 +186,7 @@
          <div class="row">
             <div class="statics clearfix">
                <div class="col-md-3 col-xs-12 text-center">
-                  <div class="ts-facts">
-                        <span class="ts-facts-img">
-                        <img src="{% static 'images/icons/fact-workshop.png' %}" alt="" />
-                        </span>
-                     <div class="ts-facts-content">
-                        <h2 class="ts-facts-num"><span class="counterUp">{{ wss.workshops.count }}</span></h2>
-                        <h3 class="ts-facts-title">Workshops</h3>
-                     </div>
-                  </div>
-                  <!--Facts end -->
-               </div>
-               <!-- Col end -->
-               <div class="col-md-3 col-xs-12 text-center">
-                  <div class="ts-facts">
+                  <a data-scroll href="#ts-speakers"><div class="ts-facts">
                         <span class="ts-facts-img">
                         <img src="{% static 'images/icons/fact-speaker.png' %}" alt="" />
                         </span>
@@ -207,11 +194,25 @@
                         <h2 class="ts-facts-num"><span class="counterUp">{{ wss.seminars.count }}</span></h2>
                         <h3 class="ts-facts-title">Seminars</h3>
                      </div>
-                  </div>
+                  </div></a>
+                  <!--Facts end -->
+               </div>
+               <!-- Col end -->
+
+               <div class="col-md-3 col-xs-12 text-center">
+                  <a data-scroll href="{% url 'wss:workshops-list' wss.year %}"><div class="ts-facts">
+                        <span class="ts-facts-img">
+                        <img src="{% static 'images/icons/fact-workshop.png' %}" alt="" />
+                        </span>
+                     <div class="ts-facts-content">
+                        <h2 class="ts-facts-num"><span class="counterUp">{{ wss.workshops.count }}</span></h2>
+                        <h3 class="ts-facts-title">Workshops</h3>
+                     </div>
+                  </div></a>
                   <!--Facts end -->
                </div>
                <div class="col-md-3 col-xs-12 text-center">
-                  <div class="ts-facts">
+                  <a data-scroll href="#ts-sponsors"><div class="ts-facts">
                         <span class="ts-facts-img">
                         <img src="{% static 'images/icons/fact-sponsor.png' %}" alt="" />
                         </span>
@@ -219,12 +220,12 @@
                         <h2 class="ts-facts-num"><span class="counterUp">{{ wss.sponsorships.count }}</span></h2>
                         <h3 class="ts-facts-title">Sponsors</h3>
                      </div>
-                  </div>
+                  </div></a>
                   <!--Facts end -->
                </div>
                <!-- Col end -->
                <div class="col-md-3 col-xs-12 text-center">
-                  <div class="ts-facts">
+                 <a data-scroll href="{% url 'wss:staff-list' wss.year %}"> <div class="ts-facts">
                         <span class="ts-facts-img">
                         <img src="{% static 'images/icons/fact-country.png' %}" alt="Staff" />
                         </span>
@@ -232,7 +233,7 @@
                         <h2 class="ts-facts-num"><span class="counterUp">{{ wss.staff_count }}</span></h2>
                         <h3 class="ts-facts-title">Staff</h3>
                      </div>
-                  </div>
+                  </div></a>
                   <!--Facts end -->
                </div>
                <!-- Col end -->
@@ -562,17 +563,17 @@
 
              <h3 class="sponsor-title">Main Sponsors</h3>
 
-             {% for sponsor in wss.main_sponsors %}
+             {% for sponsorship in wss.main_sponsorships %}
 
                  <div class="col-xs-12 col-sm-4 col-md-4">
 
-                     <a href="{{ sponsor.url }}" class="sponsor-logo">
+                     <a href="{{ sponsorship.sponsor.url }}" class="sponsor-logo">
 
-                         <img class="img-responsive" src="{{ sponsor.logo_url }}" alt=""/>
+                         <img class="img-responsive" src="{{ sponsorship.logo_url }}" alt=""/>
 
                      </a>
 
-                    <h3 class="text-center"> {{ sponsor.name }}</h3>
+                    <h3 class="text-center"> {{ sponsorship.sponsor.name }}</h3>
 
                  </div>
 
@@ -582,13 +583,13 @@
          <div class="row text-center">
 
              <h3 class="sponsor-title">Other Sponsors</h3>
-             {% for sponsor in wss.not_main_sponsors %}
+             {% for sponsorship in wss.not_main_sponsorships %}
 
                  <div class="col-xs-12 col-sm-4 col-md-4">
 
-                     <a href="{{ sponsor.url }}" class="sponsor-logo">
+                     <a href="{{ sponsorship.sponsor.url }}" class="sponsor-logo">
 
-                         <img class="img-responsive" src="{{ sponsor.logo_url }}" alt=""/>
+                         <img class="img-responsive" src="{{ sponsorship.sponsor.logo_url }}" alt=""/>
 
                      </a>
 
