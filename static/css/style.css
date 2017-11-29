@@ -1399,6 +1399,9 @@ ul.navbar-nav > li:hover > a{
 .ts-intro-center .intro-desc{
     max-width: 850px;
     margin: 0 auto;
+}
+
+.intro-desc{
     text-align: justify;
 }
 
@@ -2205,6 +2208,7 @@ h4.panel-title a.collapsed:before {
 
 .bottom-contact{
     padding: 60px 50px 60px 140px;
+    text-align: justify;
 }
 
 .bottom-contact h3{
