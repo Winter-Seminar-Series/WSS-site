@@ -21,9 +21,10 @@ class HomeView(DetailView):
             return get_object_or_404(WSS, year=int(self.kwargs['year']))
         return WSS.objects.first()
 
+
 class SeminarsListView(DetailView):
     template_name = 'WSS/seminars_list.html'
-    model=WSS
+    model = WSS
     context_object_name = 'wss'
 
     def get_object(self, queryset=None):

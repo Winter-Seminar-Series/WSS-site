@@ -125,10 +125,12 @@
                   <input type="hidden" value="{% date_string wss.start_date %}" id="start-date">
                   <h2 class="banner-subtitle">{% render_date wss %}</h2>
                   <h3 class="banner-desc">IRAN, TEHRAN, SHARIF UNIVERSITY OF TECHNOLOGY</h3>
-                  {% if wss.registration_link %}
-                  <p class="banner-btn">
-                     <a href="{{ wss.registration_link }}" class="btn btn-primary">Register Now</a>
-                  </p>
+                  {% if wss.is_active %}
+                     {% if wss.registration_link %}
+                     <p class="banner-btn">
+                        <a href="{{ wss.registration_link }}" class="btn btn-primary">Register Now</a>
+                     </p>
+                     {% endif %}
                   {% endif %}
                </div>
                <!-- Banner content wrap end -->
@@ -145,23 +147,28 @@
       <div class="container">
          <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-6">
-               <div class="gap-60"></div>
                <h2 class="intro-title">About the Event</h2>
                <p class="intro-desc">{{ wss.description }}</p>
-               <p>
-                  {% if wss.registration_link %}
-                  <a href="{{ wss.registration_link }}" class="btn btn-primary">Register now</a>
-                  {% endif %}
-                  {% if wss.proposal_link %}
-                  <a href="{{ wss.proposal_link }}" class="btn btn-primary">Submit your proposal</a>
-                  {% endif %}
-               </p>
+               {% if wss.is_active %}
+                  <p>
+                     {% if wss.registration_link %}
+                     <a href="{{ wss.registration_link }}" class="btn btn-primary">Register now</a>
+                     {% endif %}
+                     {% if wss.proposal_link %}
+                     <a href="{{ wss.proposal_link }}" class="btn btn-primary">Submit your proposal</a>
+                     {% endif %}
+                  </p>
+               {% else %}
+                  <h2 class="intro-title">This is not the last WSS!</h2>
+                  <a href="{% url 'wss:home' %}" class="btn btn-primary">Visit the last seminar page</a>
+               {% endif %}
             </div>
              <!--Col end-->
             <!--<div class="col-xs-12 col-sm-12 col-md-6 text-center embed-responsive embed-responsive-16by9">-->
              <!--<video controls class="embed-responsive-item" src="http://techslides.com/demos/sample-videos/small.mp4">-->
              <!--</video>-->
           <!--</div>-->
+            {% if wss.main_clip_url %}
             <div class="col-xs-12 col-sm-12 col-md-6">
                <div class="intro-video">
                   <video controls class="embed-responsive-item" src="{{ wss.main_clip_url }}">
@@ -174,6 +181,7 @@
                   <!--</a>-->
                <!-- Intro video end -->
             </div>
+            {% endif %}
 
 
             <!-- Col end -->

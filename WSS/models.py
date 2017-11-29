@@ -58,6 +58,10 @@ class WSS(models.Model):
     def non_keynote_seminars(self):
         return self.seminars.filter(is_keynote=False)
 
+    @property
+    def is_active(self):
+        return self.pk == WSS.objects.first().pk
+
 
 class Clip(models.Model):
     wss = models.ForeignKey(to='WSS', related_name='clips', verbose_name='WSS')
