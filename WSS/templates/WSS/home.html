@@ -33,6 +33,8 @@
    <link rel="stylesheet" href="{% static 'css/animate.css' %}">
    <!-- Colorbox -->
    <link rel="stylesheet" href="{% static 'css/colorbox.css' %}">
+   <!-- Plyr -->
+   <link rel="stylesheet" href="{% static 'css/plyr.css' %}">
 
    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -164,18 +166,25 @@
                   {% endif %}
                </p>
             </div>
-             Col end
-            <div class="col-xs-12 col-sm-12 col-md-6 text-center">
+             <!--Col end-->
+            <!--<div class="col-xs-12 col-sm-12 col-md-6 text-center embed-responsive embed-responsive-16by9">-->
+             <!--<video controls class="embed-responsive-item" src="http://techslides.com/demos/sample-videos/small.mp4">-->
+             <!--</video>-->
+          <!--</div>-->
+            <div class="col-xs-12 col-sm-12 col-md-6">
                <div class="intro-video">
-                  <img class="img-responsive" src="images/intro-video.jpg" alt="" />
-                  <a class="popup" href="{{ wss.main_clip_url }}">
-                     <div class="video-icon">
-                        <i class="fa fa-play"></i>
-                     </div>
-                  </a>
-               </div>
+                  <video controls class="embed-responsive-item" src="http://techslides.com/demos/sample-videos/small.mp4">
+                  </video>
+                  <!--<img class="img-responsive" src="images/intro-video.jpg" alt="" />-->
+                  <!--<a class="popup" href="https://www.youtube.com/embed/XhveHKJWnOQ?autoplay=1&amp;loop=1">-->
+                     <!--<div class="video-icon">-->
+                        <!--<i class="fa fa-play"></i>-->
+                     <!--</div>-->
+                  <!--</a>-->
                <!-- Intro video end -->
             </div>
+
+
             <!-- Col end -->
          </div>
          <!-- Content row 1 end -->
@@ -731,6 +740,10 @@
    <script type="text/javascript" src="{% static 'js/gmap3.js' %}"></script>
    <!-- Template custom -->
    <script type="text/javascript" src="{% static 'js/custom.js' %}?v=1"></script>
+   <!-- Plyr -->
+   <script src="{% static 'js/plyr.js' %}"></script>
+   <script>plyr.setup();</script>
+
 
 </div>
 <!-- Body inner end -->
