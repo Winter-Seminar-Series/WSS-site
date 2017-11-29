@@ -1675,12 +1675,12 @@ ul.navbar-nav > li:hover > a{
     transition: all .4s ease;
     -webkit-transform: translateY(0);
     transform: translateY(0);
-    margin: 10px 0px;
+    margin: 10px 0px 10px 0px;
 }
 
 .ts-speaker:hover{
-    -webkit-transform: translateY(-3px);
-    transform: translateY(-3px);
+    -webkit-transform: translateY(-4px);
+    transform: translateY(-4px);
     box-shadow: 0 60px 40px -40px rgba(0,0,0,0.13);
 }
 
@@ -1753,11 +1753,11 @@ ul.navbar-nav > li:hover > a{
     background: #1b1b1b;
 }
 .ts-speaker-info {
-    padding: 15px 20px;
+    padding: 10px 20px 10px;
     color: #303030;
 }
 .ts-speaker-info .ts-speaker-name {
-    font-size: 18px;
+    font-size: 16px;
     margin: 0 0 3px 0;
 }
 .ts-speaker-info .ts-speaker-name a {
