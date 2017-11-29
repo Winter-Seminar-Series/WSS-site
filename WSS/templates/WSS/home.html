@@ -148,12 +148,14 @@
                <div class="gap-60"></div>
                <h2 class="intro-title">About the Event</h2>
                <p class="intro-desc">{{ wss.description }}</p>
-               <h3 class="intro-title">Registration</h3>
-               {% if wss.registration_link %}
-               <p>If you are a student, researcher, industry professional, or just interested in any CSE related field, please join us in this event! You can register to participate through the following link.
+               <p>
+                  {% if wss.registration_link %}
+                  <a href="{{ wss.registration_link }}" class="btn btn-primary">Register now</a>
+                  {% endif %}
+                  {% if wss.proposal_link %}
+                  <a href="{{ wss.proposal_link }}" class="btn btn-primary">Submit your proposal</a>
+                  {% endif %}
                </p>
-               {% endif %}
-               {% if wss.proposal_link %}
             </div>
              <!--Col end-->
             <!--<div class="col-xs-12 col-sm-12 col-md-6 text-center embed-responsive embed-responsive-16by9">-->
