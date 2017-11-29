@@ -1,6 +1,11 @@
+ {% load thumbnail %}
+
  {% if url %} <a href="{{ url }}"> {% endif %}<div class="ts-speaker">
  <div class="ts-speaker-image">
- <img class="img-responsive" src="{{ human.picture_url }}" alt="" />
+
+  {% thumbnail human.picture "400x400" crop="center" as image %}
+ <img class="img-responsive" src="{{ image.url }}" alt="" />
+  {% endthumbnail %}
  </div>
  <!--Image end -->
  <div class="ts-speaker-info">
