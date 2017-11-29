@@ -96,14 +96,22 @@
       <div class="container">
 
          <!--/ Title row end -->
-         <div class="row">
-            {% for workshop in wss.workshops %}
-            <div class="col-xs-12 col-sm-6 col-md-3">
-               {% render_human workshop.speaker subtitle=workshop.title url=workshop.get_absolute_url %}
-            </div>
+            {% for holding_team in wss.holding_teams.all %}
+               <div class="row">
+
+                 <div class="row text-center">
+                   <h2 class="section-sub-title title">{{ holding_team.name }}</h2>
+                 </div>
+
+                {% for staff in holding_team.staff.all %}
+                   <div class="col-xs-12 col-sm-6 col-md-3">
+                      {% render_human staff %}
+                   </div>
+                {% endfor %}
+
+               </div>
+               <br><br>
             {% endfor %}
-         </div>
-         <br>
 
       <!-- Content row 2 end -->
 
