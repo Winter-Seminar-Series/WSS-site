@@ -24,7 +24,7 @@
    <!-- Bootstrap -->
    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
    <!-- Template styles-->
-   <link rel="stylesheet" href="{% static 'css/style.css' %}?v=1.2">
+   <link rel="stylesheet" href="{% static 'css/style.css' %}?v=1.3">
    <!-- Responsive styles-->
    <link rel="stylesheet" href="{% static 'css/responsive.css' %}">
    <!-- FontAwesome -->
@@ -92,38 +92,35 @@
       <!--/ Container end -->
    </header>
    <!--/ Header end -->
-   <section id="ts-speakers" class="ts-speakers gradient-bg">
-   <div class="container">
-   <div class="row text-center">
-   <h3 class="section-sub-title title-white">Keynote Speakers</h3>
-   </div>
+   <section id="ts-speakers" class="ts-speaker gradient-bg ts-speakers-bg">
+      <div class="container">
+         <div class="row text-center">
+            <h3 class="section-sub-title title-white">Keynote Speakers</h3>
+         </div>
 
-   <!--/ Title row end -->
-   <div class="row">
+         <!--/ Title row end -->
+         <div class="row">
+            {% for seminar in wss.keynote_seminars %}
+            <div class="col-xs-12 col-sm-6 col-md-3">
+               {% render_human seminar.speaker subtitle=seminar.speaker.short_bio url=seminar.get_absolute_url %}
+            </div>
+            {% endfor %}
+         </div>
+         <br>
 
-      {% for seminar in wss.keynote_seminars %}
-      <div class="col-xs-12 col-sm-6 col-md-3">
-         {% render_human seminar.speaker subtitle=seminar.speaker.short_bio url=seminar.get_absolute_url %}
+         <div class="row text-center">
+            <h3 class="section-sub-title title-white">Speakers</h3>
+         </div>
+            {% for seminar in wss.non_keynote_seminars %}
+         <div class="col-xs-12 col-sm-6 col-md-3">
+            {% render_human seminar.speaker subtitle=seminar.speaker.short_bio url=seminar.get_absolute_url %}
+         </div>
+            {% endfor %}
       </div>
-      {% endfor %}
 
-   </div>
-   <br>
-   <div class="row text-center">
-   <h3 class="section-sub-title title-white">Speakers</h3>
-   </div>
-      {% for seminar in wss.non_keynote_seminars %}
-          <div class="col-xs-12 col-sm-6 col-md-3">
-         {% render_human seminar.speaker subtitle=seminar.speaker.short_bio url=seminar.get_absolute_url %}
-          </div>
-      {% endfor %}
-   </div>
+      <!-- Content row 2 end -->
 
-
-
-   <!-- Content row 2 end -->
-
-   <!--/ Container end -->
+      <!--/ Container end -->
    </section>
    <!-- Speakers end -->
    <section class="venu-map no-padding">
