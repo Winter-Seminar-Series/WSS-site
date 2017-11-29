@@ -1386,6 +1386,7 @@ ul.navbar-nav > li:hover > a{
 
 .ts-intro{
     padding-bottom: 30px;
+    margin-top: 30px;
 }
 
 .ts-intro .btn-primary{
@@ -1419,7 +1420,6 @@ ul.navbar-nav > li:hover > a{
     max-width: 100%;
     position: relative;
     overflow: hidden;
-    margin-top: 25px;
 }
 
 .intro-video:before {
