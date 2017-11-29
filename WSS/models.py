@@ -47,7 +47,6 @@ class WSS(models.Model):
     @property
     def staff_count(self):
         return len(set.union(
-            set(TechnicalExpert.objects.values_list('pk')),
             *[holding_team.staff.values_list('pk') for holding_team in self.holding_teams.all()]
         ))
 
