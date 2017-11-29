@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils.safestring import mark_safe
+from sorl.thumbnail.fields import ImageField
 
 from events.models import Workshop, Seminar
 from people.models import TechnicalExpert
@@ -45,8 +46,7 @@ class WSS(models.Model):
 
     @property
     def staff_count(self):
-        return len(set.union(
-            set(TechnicalExpert.objects.values_list('pk')),
+        return len(set().union(
             *[holding_team.staff.values_list('pk') for holding_team in self.holding_teams.all()]
         ))
 
@@ -66,6 +66,10 @@ class WSS(models.Model):
     def not_main_sponsors(self):
         return self.sponsors.filter(is_main=False)
 
+    @property
+    def is_active(self):
+        return self.pk == WSS.objects.first().pk
+
 
 class Clip(models.Model):
     wss = models.ForeignKey(to='WSS', related_name='clips', verbose_name='WSS')
@@ -77,17 +81,15 @@ class Clip(models.Model):
 
 class Image(models.Model):
     wss = models.ForeignKey(to='WSS', related_name='images', verbose_name='WSS')
-    image = models.ImageField(upload_to='images/')
+    image = ImageField(upload_to='images/')
 
     def __str__(self):
         return 'Image of {}'.format(self.wss)
 
 
 class Sponsor(models.Model):
-    wss = models.ForeignKey(to='WSS', related_name='sponsors')
     name = models.CharField(max_length=70)
     logo = models.ImageField(upload_to='logos/')
-    is_main = models.BooleanField()
     url = models.URLField()
 
     def __str__(self):
@@ -97,14 +99,22 @@ class Sponsor(models.Model):
         if not self.logo:
             return None
         return mark_safe('<img src={} width=40 height=40>'.format(self.logo.url))
+    logo_tag.short_description = 'logo'
+
+
+class Sponsorship(models.Model):
+    wss = models.ForeignKey(to='WSS', related_name='sponsorships')
+    sponsor = models.ForeignKey(to=Sponsor, related_name='sponsorships')
+    is_main = models.BooleanField()
+
+    def __str__(self):
+        return self.sponsor.name
 
     @property
     def logo_url(self):
-        if not self.logo:
+        if not self.sponsor.logo:
             return None
-        return self.logo.url
-
-    logo_tag.short_description = 'logo'
+        return self.sponsor.logo.url
 
 
 class ExternalLinkType(models.Model):

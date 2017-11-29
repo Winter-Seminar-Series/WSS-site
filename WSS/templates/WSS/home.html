@@ -24,7 +24,7 @@
    <!-- Bootstrap -->
    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
    <!-- Template styles-->
-   <link rel="stylesheet" href="{% static 'css/style.css' %}?v=1.2">
+   <link rel="stylesheet" href="{% static 'css/style.css' %}?v=1.8">
    <!-- Responsive styles-->
    <link rel="stylesheet" href="{% static 'css/responsive.css' %}">
    <!-- FontAwesome -->
@@ -33,6 +33,8 @@
    <link rel="stylesheet" href="{% static 'css/animate.css' %}">
    <!-- Colorbox -->
    <link rel="stylesheet" href="{% static 'css/colorbox.css' %}">
+   <!-- Plyr -->
+   <link rel="stylesheet" href="{% static 'css/plyr.css' %}">
 
    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -123,10 +125,12 @@
                   <input type="hidden" value="{% date_string wss.start_date %}" id="start-date">
                   <h2 class="banner-subtitle">{% render_date wss %}</h2>
                   <h3 class="banner-desc">IRAN, TEHRAN, SHARIF UNIVERSITY OF TECHNOLOGY</h3>
-                  {% if wss.registration_link %}
-                  <p class="banner-btn">
-                     <a href="{{ wss.registration_link }}" class="btn btn-primary">Register Now</a>
-                  </p>
+                  {% if wss.is_active %}
+                     {% if wss.registration_link %}
+                     <p class="banner-btn">
+                        <a href="{{ wss.registration_link }}" class="btn btn-primary">Register Now</a>
+                     </p>
+                     {% endif %}
                   {% endif %}
                </div>
                <!-- Banner content wrap end -->
@@ -143,39 +147,32 @@
       <div class="container">
          <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-6">
-               <div class="gap-60"></div>
                <h2 class="intro-title">About the Event</h2>
                <p class="intro-desc">{{ wss.description }}</p>
-               <h3 class="intro-title">Registration</h3>
-               {% if wss.registration_link %}
-               <p>If you are a student, researcher, industry professional, or just interested in any CSE related field, please join us in this event! You can register to participate through the following link.
-               </p>
+               {% if wss.is_active %}
+                  <p>
+                     {% if wss.registration_link %}
+                     <a href="{{ wss.registration_link }}" class="btn btn-primary">Register now</a>
+                     {% endif %}
+                     {% if wss.proposal_link %}
+                     <a href="{{ wss.proposal_link }}" class="btn btn-primary">Submit your proposal</a>
+                     {% endif %}
+                  </p>
+               {% else %}
+                  <h2 class="intro-title">This is not the last WSS!</h2>
+                  <a href="{% url 'wss:home' %}" class="btn btn-primary">Visit the last seminar page</a>
                {% endif %}
-               {% if wss.proposal_link %}
-               <p>
-                  Besides, if you have a research paper, report, or proposal, we would love to hear your ideas! Please submit an abstract so you can share your ideas with us during the event in a short 10 minute talk.</p>
-               {% endif %}
-               <p>
-                  {% if wss.registration_link %}
-                  <a href="{{ wss.registration_link }}" class="btn btn-primary">Register now</a>
-                  {% endif %}
-                  {% if wss.proposal_link %}
-                  <a href="{{ wss.proposal_link }}" class="btn btn-primary">Submit your proposal</a>
-                  {% endif %}
-               </p>
             </div>
-            <!-- Col end -->
-            <!--<div class="col-xs-12 col-sm-12 col-md-6 text-center">-->
-               <!--<div class="intro-video">-->
-                  <!--<img class="img-responsive" src="images/intro-video.jpg" alt="" />-->
-                  <!--<a class="popup" href="https://www.youtube.com/embed/XhveHKJWnOQ?autoplay=1&amp;loop=1">-->
-                     <!--<div class="video-icon">-->
-                        <!--<i class="fa fa-play"></i>-->
-                     <!--</div>-->
-                  <!--</a>-->
-               <!--</div>-->
-               <!--&lt;!&ndash; Intro video end &ndash;&gt;-->
-            <!--</div>-->
+
+            {% if wss.main_clip_url %}
+            <div class="col-xs-12 col-sm-12 col-md-6">
+               <div class="intro-video">
+                  <video controls class="embed-responsive-item" src="{{ wss.main_clip_url }}">
+                  </video>
+            </div>
+            {% endif %}
+
+
             <!-- Col end -->
          </div>
          <!-- Content row 1 end -->
@@ -219,7 +216,7 @@
                         <img src="{% static 'images/icons/fact-sponsor.png' %}" alt="" />
                         </span>
                      <div class="ts-facts-content">
-                        <h2 class="ts-facts-num"><span class="counterUp">{{ wss.sponsors.count }}</span></h2>
+                        <h2 class="ts-facts-num"><span class="counterUp">{{ wss.sponsorships.count }}</span></h2>
                         <h3 class="ts-facts-title">Sponsors</h3>
                      </div>
                   </div>
@@ -278,7 +275,7 @@
 
    <div class="row">
    <div class="general-btn text-center">
-   <a class="btn btn-primary" href="#">View More</a>
+   <a class="btn btn-primary" href="{% url 'wss:seminars-list' wss.year %}">View More</a>
    </div>
    </div>
 
@@ -620,7 +617,7 @@
                      <i class="fa fa-map-marker">&nbsp;</i>
                      <div class="contact-info-box-content">
                         <h5 class="white">Address: </h5>
-                        <p>Sharif University of Technology, Azadi Street, Distinct 2, Tehran, Iran</p>
+                        <p>Sharif University of Technology, Azadi Street, District 2, Tehran, Iran</p>
                      </div>
                   </div>
                   <div class="contact-info-box">
@@ -719,6 +716,10 @@
    <script type="text/javascript" src="{% static 'js/gmap3.js' %}"></script>
    <!-- Template custom -->
    <script type="text/javascript" src="{% static 'js/custom.js' %}?v=1"></script>
+   <!-- Plyr -->
+   <script src="{% static 'js/plyr.js' %}"></script>
+   <script>plyr.setup();</script>
+
 
 </div>
 <!-- Body inner end -->

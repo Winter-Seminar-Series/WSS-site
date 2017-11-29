@@ -1,7 +1,10 @@
+from django.http import Http404
 from django.shortcuts import get_object_or_404
+from django.views.generic import ListView
 from django.views.generic.detail import DetailView
 
 from WSS.models import WSS
+from events.models import Seminar
 
 
 class HomeView(DetailView):
@@ -17,3 +20,14 @@ class HomeView(DetailView):
         if 'year' in self.kwargs:
             return get_object_or_404(WSS, year=int(self.kwargs['year']))
         return WSS.objects.first()
+
+
+class SeminarsListView(DetailView):
+    template_name = 'WSS/seminars_list.html'
+    model = WSS
+    context_object_name = 'wss'
+
+    def get_object(self, queryset=None):
+        if 'year' in self.kwargs:
+            return get_object_or_404(WSS, year=int(self.kwargs['year']))
+        raise Http404
