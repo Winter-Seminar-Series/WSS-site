@@ -3,7 +3,7 @@ from django.shortcuts import get_object_or_404
 from django.views.generic import ListView
 from django.views.generic.detail import DetailView
 
-from WSS.mixins import WSSWithYearMixin, ExternalLinkMixin
+from WSS.mixins import ExternalLinkMixin, WSSWithYearMixin
 from WSS.models import WSS
 from events.models import Seminar
 
@@ -23,20 +23,38 @@ class HomeView(ExternalLinkMixin,DetailView):
         return WSS.objects.first()
 
 
-class SeminarsListView(ExternalLinkMixin,WSSWithYearMixin, DetailView):
+class SeminarsListView(ExternalLinkMixin,DetailView):
     template_name = 'WSS/seminars_list.html'
+    model = WSS
+    context_object_name = 'wss'
+
+    def get_object(self, queryset=None):
+        return get_object_or_404(WSS, year=int(self.kwargs['year']))
 
 
-class WorkshopsListView(ExternalLinkMixin,WSSWithYearMixin, DetailView):
+class WorkshopsListView(ExternalLinkMixin,DetailView):
     template_name = 'WSS/workshops_list.html'
+    model = WSS
+    context_object_name = 'wss'
+
+    def get_object(self, queryset=None):
+        return get_object_or_404(WSS, year=int(self.kwargs['year']))
 
 
-class StaffListView(ExternalLinkMixin,WSSWithYearMixin, DetailView):
+class StaffListView(ExternalLinkMixin,DetailView):
     template_name = 'WSS/staff_list.html'
+    model = WSS
+    context_object_name = 'wss'
+
+    def get_object(self, queryset=None):
+        return get_object_or_404(WSS, year=int(self.kwargs['year']))
+
+class GalleryImageView(ExternalLinkMixin, WSSWithYearMixin, DetailView):
+    template_name = 'WSS/gallery_images.html'
 
 
-class GalleryView(ExternalLinkMixin,WSSWithYearMixin, DetailView):
-    template_name = 'WSS/gallery.html'
+class GalleryVideoView(ExternalLinkMixin, WSSWithYearMixin, DetailView):
+    template_name = 'WSS/gallery_videos.html'
 
 
 class ScheduleView(ExternalLinkMixin,WSSWithYearMixin, DetailView):

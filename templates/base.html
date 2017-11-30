@@ -61,7 +61,7 @@
                </button>
                <nav class="collapse navbar-collapse navbar-responsive-collapse pull-right">
                   <ul class="nav navbar-nav">
-                     <li><a href="{% if wss %}{% url 'wss:home' wss.year%}{% else %}{% url 'wss:home'%}{% endif %}">Home</a></li>
+                     <li><a href="{% url 'wss:home' wss.year%}">{{ wss }}</a></li>
                      <!-- Home li end -->
                      <li><a href="{% url 'wss:seminars-list' wss.year %}">Speakers</a></li>
                      <!-- Speakers li end -->
@@ -72,7 +72,13 @@
                      <!-- Schedule li end -->
                      <li><a href="{% url 'wss:staff-list' wss.year %}">Staff</a></li>
                      <!-- Staff li end -->
-                         <li><a href="{% url 'wss:gallery' wss.year %}">Gallery</a></li>
+                         <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Gallery <i class="fa fa-angle-down"></i></a>
+                            <ul class="dropdown-menu menu-center" role="menu">
+                                <li><a href="{% url 'wss:gallery-image' wss.year %}">Images</a></li>
+                                <li><a href="{% url 'wss:gallery-video' wss.year %}">Videos</a></li>
+                            </ul>
+                        </li>
                          <!-- Gallery li end -->
                             {% if wss.is_active %}
                               {% if wss.registration_link %}
