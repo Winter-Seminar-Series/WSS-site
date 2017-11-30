@@ -127,7 +127,7 @@
                <div class="footer-social">
                   <ul>
                       {% for external_link in wss.external_links.all %}
-                     <li><a href="{{ external_link.url }}"><i class="fa fa-{{ external_link.type.name }}"></i></a></li>
+                     <li><a href="{{ external_link.url }}"><i class="fa fa-{{ external_link.type.name.lower }}"></i></a></li>
                       {% endfor %}
                   </ul>
                </div>
