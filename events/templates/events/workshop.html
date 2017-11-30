@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load date_tags %}
+{% load human_tags %}
+
+{% block title %}{{ workshop.speaker.name }}{% endblock %}
+{% block content %}
+	<section id="main-container" class="main-container">
+		<div class="container">
+			<div class="row">
+				<div class="clearfix">
+					<div class="col-xs-12 col-md-4">
+                        {% render_human workshop.speaker subtitle=workshop.speaker.short_bio url=None %}
+                    </div>
+					<div class="col-xs-12 col-md-8">
+							<div class="ts-speaker-session right">
+								<h3 class="session-title">{{ workshop.title }}</h3>
+								<h4>Abstract</h4>
+								{{ workshop.abstract }}
+								<h4>Bio</h4>
+                                {{ workshop.speaker.bio }}
+                                <div>
+                                <br/>
+                                {% if workshop.material %}
+                                    {% if workshop.material.slides %}
+                                        <a class="btn btn-warning" href="{{ workshop.material.slides.url }}">Slides</a>
+                                    {% endif %}
+                                    {% if workshop.material.video_url %}
+                                        <a class="btn btn-danger" href="{{ workshop.material.video_url }}">Video</a>
+                                    {% endif %}
+                                {% endif %}
+                                </div>
+							</div><!-- Session end -->
+					</div><!-- Col end -->
+				</div><!-- Speaker list 1 end -->
+			</div><!-- Speaker row 1 -->
+
+		</div><!-- Conatiner end -->
+	</section><!-- Main container end -->
+{% endblock %}
