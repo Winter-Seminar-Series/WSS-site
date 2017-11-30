@@ -1,6 +1,6 @@
 from django.db import models
 from django.utils.safestring import mark_safe
-from sorl.thumbnail.fields import ImageField
+from sorl.thumbnail import ImageField
 
 from events.models import Workshop, Seminar
 from people.models import TechnicalExpert

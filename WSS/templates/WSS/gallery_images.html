@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load thumbnail %}
+{% load human_tags %}
+
+{% block title %}{{ wss }} Gallery Images {% endblock %}
+
+{% block content %}
+    <section id="ts-speakers" class="main-container">
+        <div class="container">
+            <div class="row text-center">
+                <h2 class="section-sub-title title"> {{ wss }} Gallery </h2>
+            </div>
+            <div class="row">
+                {% for item in wss.images.all %}
+                    <div class="col-md-4 col-sm-6 col-xs-12">
+                        <a class="gallery-popup" href="{{ item.image.url }}">
+                            <div class="gallery-container" style="width: 300px">
+                                {% thumbnail item.image "300x300" crop="center" as im %}
+                                    <img class="img-responsive" src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" alt="">
+                                {% endthumbnail %}
+                            </div>
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+{% endblock %}
