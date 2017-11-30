@@ -3,6 +3,7 @@ from django.shortcuts import get_object_or_404
 from django.views.generic import ListView
 from django.views.generic.detail import DetailView
 
+from WSS.mixins import WSSWithYearMixin
 from WSS.models import WSS
 from events.models import Seminar
 
@@ -22,41 +23,21 @@ class HomeView(DetailView):
         return WSS.objects.first()
 
 
-class SeminarsListView(DetailView):
+class SeminarsListView(WSSWithYearMixin, DetailView):
     template_name = 'WSS/seminars_list.html'
-    context_object_name = 'wss'
-
-    def get_object(self, queryset=None):
-        return get_object_or_404(WSS, year=int(self.kwargs['year']))
 
 
-class WorkshopsListView(DetailView):
+class WorkshopsListView(WSSWithYearMixin, DetailView):
     template_name = 'WSS/workshops_list.html'
-    context_object_name = 'wss'
-
-    def get_object(self, queryset=None):
-        return get_object_or_404(WSS, year=int(self.kwargs['year']))
 
 
-class StaffListView(DetailView):
+class StaffListView(WSSWithYearMixin, DetailView):
     template_name = 'WSS/staff_list.html'
-    context_object_name = 'wss'
-
-    def get_object(self, queryset=None):
-        return get_object_or_404(WSS, year=int(self.kwargs['year']))
 
 
-class GalleryView(DetailView):
+class GalleryView(WSSWithYearMixin, DetailView):
     template_name = 'WSS/gallery.html'
-    context_object_name = 'wss'
-
-    def get_object(self, queryset=None):
-        return get_object_or_404(WSS, year=int(self.kwargs['year']))
 
 
-class ScheduleView(DetailView):
+class ScheduleView(WSSWithYearMixin, DetailView):
     template_name = 'WSS/schedule.html'
-    context_object_name = 'wss'
-
-    def get_object(self, queryset=None):
-        return get_object_or_404(WSS, year=int(self.kwargs['year']))
