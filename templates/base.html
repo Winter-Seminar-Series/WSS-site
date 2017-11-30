@@ -61,9 +61,9 @@
                </button>
                <nav class="collapse navbar-collapse navbar-responsive-collapse pull-right">
                   <ul class="nav navbar-nav">
-                     <li><a href="{% if wss %}{% url 'wss:home' wss.year%}{% else %}{% url 'wss:home'%}{% endif %}">Home</a></li>
+                     <li><a href="{% if wss %}{% url 'wss:home' wss.year%}{% else %}{% url 'wss:home'%}{% endif %}">{{ wss }}</a></li>
                      <!-- Home li end -->
-                     {% if wss %}<li><a href="{% url 'wss:seminars-list' wss.year %}">Speakers</a></li>
+                     <li><a href="{% url 'wss:seminars-list' wss.year %}">Speakers</a></li>
                      <!-- Speakers li end -->
                          {% if wss.workshops.count %}
                      <li><a data-scroll href="{% url 'wss:workshops-list' wss.year %}">Workshops</a></li>
@@ -72,15 +72,16 @@
                      <!-- Schedule li end -->
                      <li><a href="{% url 'wss:staff-list' wss.year %}">Staff</a></li>
                      <!-- Staff li end -->
-                                    {% endif %}
-                         {% if wss and wss.is_active %}
+                         <li><a href="{% url 'wss:gallery' wss.year %}">Gallery</a></li>
+                         <!-- Gallery li end -->
+                         {% if wss.is_active %}
                      <li class="header-ticket">
                         <a class="ticket-btn btn-primary" href="{{ wss.registraion_link }}"> Register</a>
                      </li>
                          {% else %}
-                                                  <li class="header-ticket">
+                             <li class="header-ticket">
                              <a href="{% url 'wss:home' %}" class="ticket-btn btn-primary">Visit the last seminar page</a>
-                                                  </li>
+                             </li>
                   {% endif %}
                      <!-- Register li end -->
                   </ul>
