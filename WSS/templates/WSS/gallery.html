@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load human_tags %}
+{% load thumbnail %}
 
 {% block title %}{{ wss }} gallery{% endblock %}
 {% block content %}
@@ -12,11 +13,16 @@
          </div>
       </div><!-- Subpage title end -->
 	</div><!-- Page Banner end -->
-		{% for item in wss.images.all %}
-		{% thumbnail item.image "300x300" crop="center" as im %}
-    		<img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">
-	{% endthumbnail %}
-		{% endfor %}
+    {% for item in wss.images.all %}
+{#        {% thumbnail item.image "300x300" crop="center" as im %}#}
+{#            <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">#}
+{#                        <h2> hi </h2>#}
+{#        {% endthumbnail %}#}
+        {% thumbnail item.image "400x400" crop="center" as im %}
+            <img class="img-responsive" src="{{ im.url }}" alt="" />
+        {% endthumbnail %}
+            <h2> salam </h2>
+    {% endfor %}
 
 	<!--<section id="main-container" class="main-container">-->
 		<!--<div class="container">-->
