@@ -3,12 +3,12 @@ from django.shortcuts import get_object_or_404
 from django.views.generic import ListView
 from django.views.generic.detail import DetailView
 
-from WSS.mixins import WSSWithYearMixin
+from WSS.mixins import WSSWithYearMixin, ExternalLinkMixin
 from WSS.models import WSS
 from events.models import Seminar
 
 
-class HomeView(DetailView):
+class HomeView(ExternalLinkMixin,DetailView):
     template_name = 'WSS/home.html'
     context_object_name = 'wss'
 
@@ -23,21 +23,21 @@ class HomeView(DetailView):
         return WSS.objects.first()
 
 
-class SeminarsListView(WSSWithYearMixin, DetailView):
+class SeminarsListView(ExternalLinkMixin,WSSWithYearMixin, DetailView):
     template_name = 'WSS/seminars_list.html'
 
 
-class WorkshopsListView(WSSWithYearMixin, DetailView):
+class WorkshopsListView(ExternalLinkMixin,WSSWithYearMixin, DetailView):
     template_name = 'WSS/workshops_list.html'
 
 
-class StaffListView(WSSWithYearMixin, DetailView):
+class StaffListView(ExternalLinkMixin,WSSWithYearMixin, DetailView):
     template_name = 'WSS/staff_list.html'
 
 
-class GalleryView(WSSWithYearMixin, DetailView):
+class GalleryView(ExternalLinkMixin,WSSWithYearMixin, DetailView):
     template_name = 'WSS/gallery.html'
 
 
-class ScheduleView(WSSWithYearMixin, DetailView):
+class ScheduleView(ExternalLinkMixin,WSSWithYearMixin, DetailView):
     template_name = 'WSS/schedule.html'

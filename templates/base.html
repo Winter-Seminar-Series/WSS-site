@@ -123,15 +123,13 @@
                <div class="footer-logo">
                   <img src="{% static 'images/footer-logo.png' %}" alt="footer logo" />
                </div>
-            {% block external_links %}
                <div class="footer-social">
                   <ul>
-                      {% for external_link in wss.external_links.all %}
-                     <li><a href="{{ external_link.url }}"><i class="fa fa-{{ external_link.type.name.lower }}"></i></a></li>
+                      {% for external_link in external_links %}
+                     <li><a href="{{ external_link.url }}"><i class="fa fa-{{ external_link.name }}"></i></a></li>
                       {% endfor %}
                   </ul>
                </div>
-            {% endblock %}
                <!-- Footer social end -->
                <div class="copyright-info">
                   <span>This website is created by <a href="{% url 'people:creators-list' %}">Moazzam Team</a>.<br>
