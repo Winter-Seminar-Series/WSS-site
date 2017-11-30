@@ -61,7 +61,7 @@
                </button>
                <nav class="collapse navbar-collapse navbar-responsive-collapse pull-right">
                   <ul class="nav navbar-nav">
-                     <li><a href="{% if wss %}{% url 'wss:home' wss.year%}{% else %}{% url 'wss:home'%}{% endif %}">Home</a></li>
+                     <li><a href="{% url 'wss:home' wss.year%}">{{ wss }}</a></li>
                      <!-- Home li end -->
                      <li><a href="{% url 'wss:seminars-list' wss.year %}">Speakers</a></li>
                      <!-- Speakers li end -->
