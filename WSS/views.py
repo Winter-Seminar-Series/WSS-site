@@ -24,7 +24,6 @@ class HomeView(DetailView):
 
 class SeminarsListView(DetailView):
     template_name = 'WSS/seminars_list.html'
-    model = WSS
     context_object_name = 'wss'
 
     def get_object(self, queryset=None):
@@ -33,7 +32,6 @@ class SeminarsListView(DetailView):
 
 class WorkshopsListView(DetailView):
     template_name = 'WSS/workshops_list.html'
-    model = WSS
     context_object_name = 'wss'
 
     def get_object(self, queryset=None):
@@ -42,16 +40,23 @@ class WorkshopsListView(DetailView):
 
 class StaffListView(DetailView):
     template_name = 'WSS/staff_list.html'
-    model = WSS
     context_object_name = 'wss'
 
     def get_object(self, queryset=None):
         return get_object_or_404(WSS, year=int(self.kwargs['year']))
 
+
 class GalleryView(DetailView):
     template_name = 'WSS/gallery.html'
-    model = WSS
     context_object_name = 'wss'
 
     def get_object(self, queryset=None):
-        return  get_object_or_404(WSS, year=int(self.kwargs['year']))
+        return get_object_or_404(WSS, year=int(self.kwargs['year']))
+
+
+class ScheduleView(DetailView):
+    template_name = 'WSS/schedule.html'
+    context_object_name = 'wss'
+
+    def get_object(self, queryset=None):
+        return get_object_or_404(WSS, year=int(self.kwargs['year']))
