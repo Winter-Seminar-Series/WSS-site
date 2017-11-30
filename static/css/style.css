@@ -131,7 +131,7 @@ a.read-more:hover {
 }
 section,
 .section-padding {
-    padding: 80px 0;
+    padding: 120px 0;
     position: relative;
 }
 .gradient-bg{
@@ -601,6 +601,8 @@ a[href^=tel] {
     background: #fff;
     box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.1);
     z-index: 2;
+    padding-top: -10px;
+    padding-bottom: -10px;
 }
 
 
@@ -644,12 +646,13 @@ a[href^=tel] {
 /* Header dark */
 
 .header-dark {
-    background: #1c1c1c;
+    background: #101015;
     overflow: hidden;
-    z-index: 3;
+    z-index: 2;
     position: fixed;
     top: 0;
     width: 100%;
+    opacity: 0.8;
 }
 
 .header-dark ul.navbar-nav > li > a{
@@ -1422,7 +1425,8 @@ ul.navbar-nav > li:hover > a{
 /* Intro video */
 
 .intro-video {
-    max-width: 100%;
+    /*max-width: 100%;*/
+    width: 100%;
     position: relative;
     overflow: hidden;
 }
