@@ -8,7 +8,7 @@ from WSS.models import WSS
 from events.models import Seminar
 
 
-class HomeView(DetailView):
+class HomeView(ExternalLinkMixin,DetailView):
     template_name = 'WSS/home.html'
     context_object_name = 'wss'
 
@@ -23,7 +23,7 @@ class HomeView(DetailView):
         return WSS.objects.first()
 
 
-class SeminarsListView(DetailView):
+class SeminarsListView(ExternalLinkMixin,DetailView):
     template_name = 'WSS/seminars_list.html'
     model = WSS
     context_object_name = 'wss'
@@ -32,7 +32,7 @@ class SeminarsListView(DetailView):
         return get_object_or_404(WSS, year=int(self.kwargs['year']))
 
 
-class WorkshopsListView(DetailView):
+class WorkshopsListView(ExternalLinkMixin,DetailView):
     template_name = 'WSS/workshops_list.html'
     model = WSS
     context_object_name = 'wss'
@@ -41,7 +41,7 @@ class WorkshopsListView(DetailView):
         return get_object_or_404(WSS, year=int(self.kwargs['year']))
 
 
-class StaffListView(DetailView):
+class StaffListView(ExternalLinkMixin,DetailView):
     template_name = 'WSS/staff_list.html'
     model = WSS
     context_object_name = 'wss'

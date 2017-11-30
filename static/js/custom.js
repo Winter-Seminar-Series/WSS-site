@@ -184,21 +184,56 @@ jQuery(function($) {
     /*  Ralative menu
     /* ----------------------------------------------------------- */
 
-    $(window).scroll(function() {
-        if ($(window).scrollTop() >= 800) {
-            $("#header").css({"position": "fixed", "top" : "0px" });
-        } else {
-            $("#header").css({"background": "#1c1c1c", "overflow" : "hidden", "z-index": "3", "position": "fixed", "top": "0", "width": "100%" });
+        if($(window).width() <= 995) {
+            $(".navbar-toggle").css({
+                "z-index": "1",
+                "position": "static",
+                "float": "left",
+                "margin-left": "25px"
+            });
+            $(".navbar-fixed").css({
+                "position": "relative",
+                "animation": "none"
+            });
         }
-    })
 
-    $(window).scroll(function() {
-        if ($(window).scrollTop() < 800) {
-            $("#header").css({"background": "none", "z-index": "2", "position": "absolute", "top": "0", "width": "100%", "left": "0" });
-        } else {
-            $("#header").css({"background": "#1c1c1c", "overflow" : "hidden", "z-index": "3", "position": "fixed", "top": "0", "width": "100%" });
-        }
-    })
+        $(window).scroll(function() {
+            if($(window).width() >= 996) {
+                if ($(window).scrollTop() >= 970) {
+                    $(".header-transparent").css({
+                        "background": "#1c1c1c",
+                        "overflow": "hidden",
+                        "z-index": "2",
+                        "position": "fixed",
+                        "top": "0",
+                        "width": "100%",
+						"opacity": "0.8"
+                    });
+                } else if ($(window).scrollTop() < 970) {
+                    $(".header-transparent").css({
+                        "background": "none",
+                        "z-index": "2",
+                        "position": "absolute",
+                        "top": "0",
+                        "width": "100%",
+                        "left": "0",
+						"opacity": "1"
+                    });
+                }
+            } else if($(window).width() <= 995) {
+                $(".navbar-toggle").css({
+                    "z-index": "1",
+                    "position": "static",
+                    "float": "left",
+                    "margin-left": "25px"
+                });
+                $(".navbar-fixed").css({
+                    "position": "relative",
+                    "animation": "none"
+                });
+            }
+		})
+
     /* ----------------------------------------------------------- */
     /*  Smooth scrolling
     /* ----------------------------------------------------------- */
