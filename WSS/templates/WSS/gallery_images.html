@@ -1,29 +1,36 @@
+
 {% extends 'base.html' %}
 {% load static %}
 {% load thumbnail %}
 {% load human_tags %}
 
-{% block title %}{{ wss }} Images {% endblock %}
+{% block title %}{{ wss }} Videos {% endblock %}
 
 {% block content %}
-    <section id="ts-speakers" class="main-container">
+    <section id="main-container" class="main-container">
         <div class="container">
             <div class="row text-center">
-                <h2 class="section-sub-title title"> {{ wss }} Gallery </h2>
+                <h2 class="section-title">From {{ wss.year }}</h2>
+                <h3 class="section-sub-title title"> Photo Gallery </h3>
             </div>
             <div class="row">
                 {% for item in wss.images.all %}
-                    <div class="col-md-4 col-sm-6 col-xs-12">
-                        <a class="gallery-popup" href="{{ item.image.url }}">
-                            <div class="gallery-container" style="width: 300px">
-                                {% thumbnail item.image "300x300" crop="center" as im %}
-                                    <img class="img-responsive" src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" alt="">
-                                {% endthumbnail %}
-                            </div>
-                        </a>
+                    <div id="gallery">
+                        <div class="col-md-4 col-sm-6 col-xs-12">
+
+                                <div class="gallery-container" style="width: 300px">
+                                    <a class="gallery-popup" href="{{ item.image.url }}">
+                                    {% thumbnail item.image "300x300" crop="center" as im %}
+                                        <img class="img-responsive" src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" alt="">
+                                    {% endthumbnail %}
+                                    <span class="gallery-icon"><i class="fa fa-search"></i></span>
+                                    </a>
+                                </div>
+
+                        </div>
                     </div>
                 {% endfor %}
             </div>
         </div>
-    </section>
+</section>
 {% endblock %}

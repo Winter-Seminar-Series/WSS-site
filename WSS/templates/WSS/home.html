@@ -530,39 +530,41 @@
             <p class="section-sub-title">Event Sponsors</p>
          </div>
 
-         <div class="row sponsor-padding text-center">
+         <div class="row text-center">
 
-             <h3 class="sponsor-title">Main Sponsors</h3>
+             <h3 class="sponsor-title" style="margin-bottom: 60px">Main Sponsors</h3>
 
              {% for sponsorship in wss.main_sponsorships %}
 
                  <div class="col-xs-12 col-sm-4 col-md-4">
 
-                     <a href="{{ sponsorship.sponsor.url }}" class="sponsor-logo">
+                     <a href="{{ sponsorship.sponsor.url }}" class="sponsor-logo" style="margin-bottom: 20px; margin-top: 0px">
 
                          <img class="img-responsive" src="{{ sponsorship.logo_url }}" alt=""/>
 
                      </a>
-
-                    <h3 class="text-center"> {{ sponsorship.sponsor.name }}</h3>
+                    <a href="{{ sponsorship.sponsor.url }}">
+                    <h2 class="intro-title" style="margin-bottom: 60px"> {{ sponsorship.sponsor.name }}</h2> </a>
 
                  </div>
 
              {% endfor %}
 
          </div>
-         <div class="row text-center">
+         <div class="row text-center sponsor-padding ">
 
-             <h3 class="sponsor-title">Other Sponsors</h3>
+             <h3 class="sponsor-title" style="margin-bottom: 60px">Other Sponsors</h3>
              {% for sponsorship in wss.not_main_sponsorships %}
 
                  <div class="col-xs-12 col-sm-4 col-md-4">
 
-                     <a href="{{ sponsorship.sponsor.url }}" class="sponsor-logo">
+                     <a href="{{ sponsorship.sponsor.url }}" class="sponsor-logo" style="margin-bottom: 20px; margin-top: 0px;">
 
-                         <img class="img-responsive" src="{{ sponsorship.sponsor.logo_url }}" alt=""/>
+                         <img class="img-responsive" src="{{ sponsorship.logo_url }}" alt=""/>
 
                      </a>
+                    <a href="{{ sponsorship.sponsor.url }}">
+                    <h2 class="intro-title" style="margin-bottom: 60px"> {{ sponsorship.sponsor.name }}</h2> </a>
 
                  </div>
 

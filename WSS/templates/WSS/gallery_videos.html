@@ -1,10 +1,32 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base.html' %}
+{% load static %}
+{% load thumbnail %}
+{% load human_tags %}
 
-</body>
-</html>
+{% block title %}{{ wss }} Videos {% endblock %}
+
+{% block content %}
+    <section id="main-container" class="main-container">
+        <div class="container">
+            <div class="row text-center">
+                <h2 class="section-title">From {{ wss.year }}</h2>
+                <h3 class="section-sub-title title"> Video Gallery </h3>
+            </div>
+            <div class="row">
+                {% for item in wss.clips.all %}
+
+                    <div class="col-xs-12 col-sm-12 col-md-6 text-center" style="margin-bottom: 20px">
+                         <div class="intro-video">
+                            <img class="img-responsive" src="{% static 'images/intro-video.jpg' %}" alt="" />
+                            <a class="popup" href="{{ item.clip.url }}">
+                               <div class="video-icon">
+                                  <i class="fa fa-play"></i>
+                               </div>
+                            </a>
+                         </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+</section>
+{% endblock %}
