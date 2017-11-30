@@ -2189,7 +2189,7 @@ h4.panel-title a.collapsed:before {
 }
 
 .venu-info-img{
-    margin-bottom: 15px;
+    margin-bottom: 10px;
     display: inline-block;
 }
 
@@ -2204,14 +2204,14 @@ h4.panel-title a.collapsed:before {
 }
 
 .bottom-contact{
-    padding: 60px 50px 60px 140px;
+    padding: 20px 50px 20px 140px;
     text-align: justify;
 }
 
 .bottom-contact h3{
     font-size: 28px;
     color: #fff;
-    margin: 0 0 20px;
+    margin: 0 0 10px;
 }
 
 .contact-form-bottom .form-control{
@@ -2224,12 +2224,12 @@ h4.panel-title a.collapsed:before {
 
 
 .map {
-    height: 400px;
+    height: 300px;
     z-index: 1;
 }
 
 .map-bottom{
-    height: 575px;
+    height: 500px;
 }
 
 /* Footer
@@ -2238,7 +2238,7 @@ h4.panel-title a.collapsed:before {
 .footer {
     background-color: #101015;
     color: #666666;
-    padding: 50px 0;
+    padding: 30px 0;
     position: relative;
     background-attachment: fixed;
 }
