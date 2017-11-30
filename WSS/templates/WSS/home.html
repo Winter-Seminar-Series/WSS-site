@@ -34,6 +34,7 @@
                      <li><a data-scroll href="#ts-sponsors">Sponsors</a></li>
                      <li><a href="#">Schedule</a></li>
                      <li><a data-scroll href="{% url 'wss:staff-list' wss.year %}">Staff</a></li>
+                  <li><a href="{% url 'wss:gallery' wss.year %}">Gallery</a></li>
                          {% if wss and wss.is_active %}
                      {% if wss.registration_link %}
                      <li class="header-ticket">

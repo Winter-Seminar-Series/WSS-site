@@ -72,13 +72,14 @@
                      <!-- Schedule li end -->
                      <li><a href="{% url 'wss:staff-list' wss.year %}">Staff</a></li>
                      <!-- Staff li end -->
-                                    {% endif %}
-                         {% if wss and wss.is_active %}
-                              {% if wss.registration_link %}
-                              <li class="header-ticket">
-                                 <a class="ticket-btn btn-primary" href="{{ wss.registration_link }}">Register</a>
-                              </li>
-                              {% endif %}
+                         <li><a href="{% url 'wss:gallery' wss.year %}">Gallery</a></li>
+                         <!-- Gallery li end -->
+                         {% if wss.is_active %}
+                           {% if wss.registration_link %}
+                           <li class="header-ticket">
+                              <a class="ticket-btn btn-primary" href="{{ wss.registration_link }}">Register</a>
+                           </li>
+                           {% endif %}
                          {% else %}
                                                   <li class="header-ticket">
                              <a href="{% url 'wss:home' %}" class="ticket-btn btn-primary">Visit the last seminar page</a>
@@ -106,16 +107,8 @@
             <div class="col-md-12">
                <div class="footer-menu">
                   <ul class="nav unstyled">
-                     <li><a href="{% if wss %}{% url 'wss:home' wss.year%}{% else %}{% url 'wss:home'%}{% endif %}">Home</a></li>
-                      {% if wss and wss.is_active %}
-                           {% if wss.registration_link %}
-                              <li><a href="{{ wss.registration_link }}">Register</a></li>
-                           {% endif %}
-                      {% else %}
-                        {% if wss.registration_link %}
-                           <li><a href="{% url 'wss:home' %}">Visit the last seminar page</a></li>
-                        {% endif %}
-                     {% endif %}
+                     <li><a href="#">Home</a></li>
+                     <li><a href="#">Register</a></li>
                   </ul>
                </div>
                <!-- Footer menu end -->
