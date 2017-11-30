@@ -126,7 +126,7 @@
                <div class="footer-social">
                   <ul>
                       {% for external_link in external_links %}
-                     <li><a href="{{ external_link.url }}"><i class="fa fa-{{ external_link.name }}"></i></a></li>
+                     <li><a href="{{ external_link.url }}"><i class="fa fa-{{ external_link.type }}"></i></a></li>
                       {% endfor %}
                   </ul>
                </div>
@@ -168,7 +168,7 @@
    <!-- Google Map Plugin-->
    <script type="text/javascript" src="{% static 'js/gmap3.js' %}"></script>
    <!-- Template custom -->
-   <script type="text/javascript" src="{% static 'js/custom.js' %}?v=1"></script>
+   <script type="text/javascript" src="{% static 'js/custom.js' %}?v=1.1"></script>
    <!-- Plyr -->
    <script src="{% static 'js/plyr.js' %}"></script>
    <script>plyr.setup();</script>

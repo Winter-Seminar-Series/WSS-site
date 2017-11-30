@@ -121,4 +121,4 @@ class ExternalLink(models.Model):
     url = models.URLField()
 
     def __str__(self):
-        return '{}: {}'.format(self.name, self.url)
+        return '{}: {}'.format(self.type, self.url)
