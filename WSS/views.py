@@ -47,3 +47,11 @@ class StaffListView(DetailView):
 
     def get_object(self, queryset=None):
         return get_object_or_404(WSS, year=int(self.kwargs['year']))
+
+class GalleryView(DetailView):
+    template_name = 'WSS/gallery.html'
+    model = WSS
+    context_object_name = 'wss'
+
+    def get_object(self, queryset=None):
+        return  get_object_or_404(WSS, year=int(self.kwargs['year']))
