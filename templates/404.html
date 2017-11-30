@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load thumbnail %}
+{% load human_tags %}
+
+{% block title %}{{ wss }} gallery{% endblock %}
+
+{% block content %}
+	<div id="page-banner-area" class="page-banner-area" style="background-image:url(images/banner/banner4.jpg)">
+		<!-- Subpage title start -->
+		<div class="page-banner-title">
+        	<div class="text-center">
+	        	<h2>404</h2>
+         </div>
+      </div><!-- Subpage title end -->
+	</div><!-- Page Banner end -->
+
+
+	<section id="main-container" class="main-container">
+		<div class="container">
+
+			<div class="row">
+
+				<div class="error-page text-center">
+					<div class="error-code">
+						<h2><strong>404</strong></h2>
+					</div>
+					<div class="error-message">
+						<h3>Oops... Page Not Found!</h3>
+					</div>
+					<div class="error-body">
+						Try using the button below to go to main page of the site <br>
+						<a href="index.html" class="btn btn-primary">Back to Home Page</a>
+					</div>
+				</div>
+
+			</div><!-- Content row -->
+		</div><!-- Container end -->
+	</section><!-- Main container end -->
+
+{% endblock %}

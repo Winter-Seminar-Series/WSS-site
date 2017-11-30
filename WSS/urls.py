@@ -8,7 +8,8 @@ year_urlpatterns = [
     url(r'^workshops/$',WorkshopsListView.as_view(), name='workshops-list'),
     url(r'^staff/$', StaffListView.as_view(), name='staff-list'),
     url(r'^gallery/images/$', GalleryImageView.as_view(), name='gallery-image'),
-    url(r'^gallery/videos/$', GalleryVideoView.as_view(), name='gallery-video')
+    url(r'^gallery/videos/$', GalleryVideoView.as_view(), name='gallery-video'),
+    url(r'^schedule/$', ScheduleView.as_view(), name='gallery'),
 ]
 
 urlpatterns = [

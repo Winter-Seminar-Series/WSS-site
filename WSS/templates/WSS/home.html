@@ -34,15 +34,18 @@
                      <li><a data-scroll href="#ts-sponsors">Sponsors</a></li>
                      <li><a href="#">Schedule</a></li>
                      <li><a data-scroll href="{% url 'wss:staff-list' wss.year %}">Staff</a></li>
-                         {% if wss and wss.is_active %}
-                     <li class="header-ticket">
-                        <a class="ticket-btn btn-primary" href="{{ wss.registraion_link }}"> Register</a>
-                     </li>
-                         {% else %}
+                  <li><a href="{% url 'wss:gallery' wss.year %}">Gallery</a></li>
+                   {% if wss.is_active %}
+                        {% if wss.registration_link %}
+                        <li class="header-ticket">
+                           <a class="ticket-btn btn-primary" href="{{ wss.registration_link }}">Register</a>
+                        </li>
+                        {% endif %}
+                   {% else %}
                                                   <li class="header-ticket">
                              <a href="{% url 'wss:home' %}" class="ticket-btn btn-primary">Visit the last seminar page</a>
                                                   </li>
-                  {% endif %}
+                     {% endif %}
                      <!-- Register li end -->
                   </ul>
                   <!--/ Nav ul end -->

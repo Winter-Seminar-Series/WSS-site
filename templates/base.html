@@ -49,7 +49,7 @@
 <div class="body-inner">
     {% block header  %}
    <!-- Header start -->
-    <header id="header" class="header header-transparent">
+    <header id="header" class="header">
       <div class="container">
          <div class="row">
             <div class="site-nav-inner">
@@ -63,7 +63,7 @@
                   <ul class="nav navbar-nav">
                      <li><a href="{% if wss %}{% url 'wss:home' wss.year%}{% else %}{% url 'wss:home'%}{% endif %}">Home</a></li>
                      <!-- Home li end -->
-                     {% if wss %}<li><a href="{% url 'wss:seminars-list' wss.year %}">Speakers</a></li>
+                     <li><a href="{% url 'wss:seminars-list' wss.year %}">Speakers</a></li>
                      <!-- Speakers li end -->
                          {% if wss.workshops.count %}
                      <li><a data-scroll href="{% url 'wss:workshops-list' wss.year %}">Workshops</a></li>
@@ -72,16 +72,19 @@
                      <!-- Schedule li end -->
                      <li><a href="{% url 'wss:staff-list' wss.year %}">Staff</a></li>
                      <!-- Staff li end -->
-                                    {% endif %}
-                         {% if wss and wss.is_active %}
-                     <li class="header-ticket">
-                        <a class="ticket-btn btn-primary" href="{{ wss.registraion_link }}"> Register</a>
-                     </li>
-                         {% else %}
-                                                  <li class="header-ticket">
-                             <a href="{% url 'wss:home' %}" class="ticket-btn btn-primary">Visit the last seminar page</a>
-                                                  </li>
-                  {% endif %}
+                         <li><a href="{% url 'wss:gallery' wss.year %}">Gallery</a></li>
+                         <!-- Gallery li end -->
+                            {% if wss.is_active %}
+                              {% if wss.registration_link %}
+                              <li class="header-ticket">
+                                 <a class="ticket-btn btn-primary" href="{{ wss.registration_link }}">Register</a>
+                              </li>
+                              {% endif %}
+                            {% else %}
+                                                     <li class="header-ticket">
+                                <a href="{% url 'wss:home' %}" class="ticket-btn btn-primary">Visit the last seminar page</a>
+                                                     </li>
+                           {% endif %}
                      <!-- Register li end -->
                   </ul>
                   <!--/ Nav ul end -->
@@ -104,8 +107,16 @@
             <div class="col-md-12">
                <div class="footer-menu">
                   <ul class="nav unstyled">
-                     <li><a href="#">Home</a></li>
-                     <li><a href="#">Register</a></li>
+                     <li><a href="{% if wss %}{% url 'wss:home' wss.year%}{% else %}{% url 'wss:home'%}{% endif %}">Home</a></li>
+                      {% if wss and wss.is_active %}
+                        {% if wss.registration_link %}
+                        <li class="header-ticket">
+                           <li><a href="{{ wss.registration_link }}">Register</a>
+                        </li>
+                        {% endif %}
+                      {% else %}
+                          <li><a href="{% url 'wss:home' %}">Visit the last seminar page</a></li>
+                     {% endif %}
                   </ul>
                </div>
                <!-- Footer menu end -->
@@ -114,9 +125,9 @@
                </div>
                <div class="footer-social">
                   <ul>
-                     <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                     <li><a href="#"><i class="fa fa-youtube"></i></a></li>
-                     <li><a href="#"><i class="fa fa-instagram"></i></a></li>
+                      {% for external_link in external_links %}
+                     <li><a href="{{ external_link.url }}"><i class="fa fa-{{ external_link.type }}"></i></a></li>
+                      {% endfor %}
                   </ul>
                </div>
                <!-- Footer social end -->
@@ -157,7 +168,7 @@
    <!-- Google Map Plugin-->
    <script type="text/javascript" src="{% static 'js/gmap3.js' %}"></script>
    <!-- Template custom -->
-   <script type="text/javascript" src="{% static 'js/custom.js' %}?v=1"></script>
+   <script type="text/javascript" src="{% static 'js/custom.js' %}?v=1.1"></script>
    <!-- Plyr -->
    <script src="{% static 'js/plyr.js' %}"></script>
    <script>plyr.setup();</script>

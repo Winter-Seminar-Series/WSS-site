@@ -48,18 +48,13 @@ class StaffListView(DetailView):
     def get_object(self, queryset=None):
         return get_object_or_404(WSS, year=int(self.kwargs['year']))
 
-class GalleryImageView(DetailView):
+class GalleryImageView(ExternalLinkMixin, WSSWithYearMixin, DetailView):
     template_name = 'WSS/gallery_images.html'
-    model = WSS
-    context_object_name = 'wss'
 
-    def get_object(self, queryset=None):
-        return  get_object_or_404(WSS, year=int(self.kwargs['year']))
 
-class GalleryVideoView(DetailView):
+class GalleryVideoView(ExternalLinkMixin, WSSWithYearMixin, DetailView):
     template_name = 'WSS/gallery_videos.html'
-    model = WSS
-    context_object_name = 'wss'
 
-    def get_object(self, queryset=None):
-        return get_object_or_404(WSS, year=int(self.kwargs['year']))
+
+class ScheduleView(ExternalLinkMixin,WSSWithYearMixin, DetailView):
+    template_name = 'WSS/schedule.html'

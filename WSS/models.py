@@ -3,7 +3,6 @@ from django.utils.safestring import mark_safe
 from sorl.thumbnail import ImageField
 
 from events.models import Workshop, Seminar
-from people.models import TechnicalExpert
 
 
 class WSS(models.Model):
@@ -117,23 +116,9 @@ class Sponsorship(models.Model):
         return self.sponsor.logo.url
 
 
-class ExternalLinkType(models.Model):
-    logo_url = models.URLField()
-    name = models.CharField(max_length=40)
-
-    def __str__(self):
-        return self.name
-
-    def logo_tag(self):
-        return mark_safe('<img src={} width=40 height=40>'.format(self.logo_url))
-
-    logo_tag.short_description = 'logo'
-
-
 class ExternalLink(models.Model):
-    wss = models.ForeignKey(to=WSS, related_name='external_links')
-    type = models.ForeignKey(to=ExternalLinkType)
+    type = models.CharField(max_length=40)
     url = models.URLField()
 
     def __str__(self):
-        return self.url
+        return '{}: {}'.format(self.type, self.url)
