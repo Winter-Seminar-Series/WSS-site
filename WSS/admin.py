@@ -51,11 +51,7 @@ class SponsorAdmin(admin.ModelAdmin):
     list_display = ('__str__', 'url', 'logo_tag')
 
 
-class ExternalLinkTypeAdmin(admin.ModelAdmin):
-    list_display = ('__str__', 'logo_tag')
-
-
-admin.site.register(ExternalLinkType, ExternalLinkTypeAdmin)
+admin.site.register(ExternalLinkType)
 admin.site.register(Sponsor, SponsorAdmin)
 admin.site.register(WSS, WSSAdmin)
 admin.site.register(Image)
