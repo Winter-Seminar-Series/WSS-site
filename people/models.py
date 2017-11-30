@@ -30,7 +30,6 @@ class Speaker(Human):
 class HoldingTeam(models.Model):
     wss = models.ForeignKey(to='WSS.WSS', related_name='holding_teams', verbose_name='WSS')
     name = models.CharField(max_length=50)
-    description = models.TextField()
     staff = models.ManyToManyField(to='Staff', related_name='holding_teams', blank=True)
 
     def __str__(self):
