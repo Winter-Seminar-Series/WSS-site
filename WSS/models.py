@@ -116,18 +116,9 @@ class Sponsorship(models.Model):
         return self.sponsor.logo.url
 
 
-class ExternalLinkType(models.Model):
-    logo_url = models.URLField(null=True, blank=True)  # This is temporarily unused:)))
-    name = models.CharField(max_length=40)
-
-    def __str__(self):
-        return self.name
-
-
 class ExternalLink(models.Model):
-    wss = models.ForeignKey(to=WSS, related_name='external_links')
-    type = models.ForeignKey(to=ExternalLinkType)
+    name = models.CharField(max_length=40)
     url = models.URLField()
 
     def __str__(self):
-        return self.url
+        return '{}: {}'.format(self.name, self.url)

@@ -2,17 +2,12 @@ from django.contrib import admin
 from django.contrib.admin.sites import AdminSite
 from jet.admin import CompactInline
 
-from WSS.models import Clip, WSS, Image, Sponsor, ExternalLinkType, ExternalLink, Sponsorship
+from WSS.models import Clip, WSS, Image, Sponsor, ExternalLink, Sponsorship
 from events.models import Seminar, Workshop, Event
 
 
 class SponsorshipInline(CompactInline):
     model = Sponsorship
-    extra = 0
-
-
-class ExternalLinkInline(CompactInline):
-    model = ExternalLink
     extra = 0
 
 
@@ -42,8 +37,8 @@ class EventInline(CompactInline):
 
 
 class WSSAdmin(admin.ModelAdmin):
-    inlines = (SeminarInline, WorkshopInline, EventInline, SponsorshipInline, ExternalLinkInline,
-               ImageInline, ClipInline)
+    inlines = (SeminarInline, WorkshopInline, EventInline, SponsorshipInline, ImageInline,
+               ClipInline)
     list_display = ('__str__', 'start_date', 'end_date')
 
 
@@ -51,7 +46,7 @@ class SponsorAdmin(admin.ModelAdmin):
     list_display = ('__str__', 'url', 'logo_tag')
 
 
-admin.site.register(ExternalLinkType)
+admin.site.register(ExternalLink)
 admin.site.register(Sponsor, SponsorAdmin)
 admin.site.register(WSS, WSSAdmin)
 admin.site.register(Image)
