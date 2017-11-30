@@ -645,6 +645,11 @@ a[href^=tel] {
 
 .header-dark {
     background: #1c1c1c;
+    overflow: hidden;
+    z-index: 3;
+    position: fixed;
+    top: 0;
+    width: 100%;
 }
 
 .header-dark ul.navbar-nav > li > a{

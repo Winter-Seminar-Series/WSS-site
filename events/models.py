@@ -46,7 +46,7 @@ class Workshop(BaseEvent):
 
     @property
     def get_absolute_url(self):
-        return '/';reverse('events:workshop',args=[self.pk])
+        return reverse('events:workshop',args=[self.pk])
 
 
 class Material(PolymorphicModel):

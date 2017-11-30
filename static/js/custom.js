@@ -162,7 +162,7 @@ jQuery(function($) {
 	/* ----------------------------------------------------------- */
 
 		$(window).scroll(function () {
-			if ($(this).scrollTop() > 50) {
+			if ($(this).scrollTop() > 300) {
 				 $('#back-to-top').fadeIn();
 			} else {
 				 $('#back-to-top').fadeOut();
@@ -180,6 +180,25 @@ jQuery(function($) {
 		
 		$('#back-to-top').tooltip('hide');
 
+    /* ----------------------------------------------------------- */
+    /*  Ralative menu
+    /* ----------------------------------------------------------- */
+
+    $(window).scroll(function() {
+        if ($(window).scrollTop() >= 800) {
+            $("#header").css({"position": "fixed", "top" : "0px" });
+        } else {
+            $("#header").css({"background": "#1c1c1c", "overflow" : "hidden", "z-index": "3", "position": "fixed", "top": "0", "width": "100%" });
+        }
+    })
+
+    $(window).scroll(function() {
+        if ($(window).scrollTop() < 800) {
+            $("#header").css({"background": "none", "z-index": "2", "position": "absolute", "top": "0", "width": "100%", "left": "0" });
+        } else {
+            $("#header").css({"background": "#1c1c1c", "overflow" : "hidden", "z-index": "3", "position": "fixed", "top": "0", "width": "100%" });
+        }
+    })
     /* ----------------------------------------------------------- */
     /*  Smooth scrolling
     /* ----------------------------------------------------------- */
