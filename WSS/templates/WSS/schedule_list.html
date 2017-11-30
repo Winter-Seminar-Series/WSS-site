@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+{% load date_tags %}
+{% load human_tags %}
+
+<head>
+	<!-- Basic Page Needs ================================================== -->
+	<meta charset="utf-8">
+
+	<!-- Mobile Specific Metas ================================================== -->
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+
+	<!-- Site Title -->
+	<title>{{ wss }}</title>
+
+	<!--Favicon-->
+	<link rel="shortcut icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon">
+	<link rel="icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon">
+
+	<!-- CSS ================================================== -->
+	<!-- Bootstrap -->
+	<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+	<!-- Template styles-->
+	<link rel="stylesheet" href="{% static 'css/style.css' %}?v=2">
+	<!-- Responsive styles-->
+	<link rel="stylesheet" href="{% static 'css/responsive.css' %}">
+	<!-- FontAwesome -->
+	<link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}">
+	<!-- Animation -->
+	<link rel="stylesheet" href="{% static 'css/animate.css' %}">
+	<!-- Colorbox -->
+	<link rel="stylesheet" href="{% static 'css/colorbox.css' %}">
+
+	<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+	<!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+	<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+	<![endif]-->
+
+
+</head>
+
+<body>
+<div class="body-inner">
+	<!-- Header start -->
+	<header id="header" class="header">
+		<div class="container">
+			<div class="row">
+				<div class="site-nav-inner">
+					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+						<span class="sr-only">Toggle navigation</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<nav class="collapse navbar-collapse navbar-responsive-collapse pull-right">
+						<ul class="nav navbar-nav">
+							<li><a href="home.html">Home</a></li>
+							<!-- Home li end -->
+							<li class="dropdown">
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown">About <i class="fa fa-angle-down"></i></a>
+								<ul class="dropdown-menu menu-center" role="menu">
+									<li><a href="about.html">Why Attend</a></li>
+									<li><a href="staffs.html">Staffs</a></li>
+									<li><a href="gallery.html">Gallery</a></li>
+									<li><a href="sponsors.html">Sponsors</a></li>
+								</ul>
+							</li>
+							<!-- About li end -->
+							<li><a href="speakers.html">Speakers</a></li>
+							<!-- Speakers li end -->
+							<li><a href="schedule.html">Schedule</a></li>
+							<!-- Schedule li end -->
+							<li><a href="contact.html">Contact</a></li>
+							<!-- Contact li end -->
+							<li class="header-ticket">
+								<a class="ticket-btn btn-primary" href="register.html"> Register</a>
+							</li>
+							<!-- Register li end -->
+						</ul>
+						<!--/ Nav ul end -->
+					</nav>
+					<!--/ Collapse end -->
+				</div>
+				<!--/ Site nav inner end -->
+			</div>
+			<!--/ Row end -->
+		</div>
+		<!--/ Container end -->
+	</header>
+	<!--/ Header end -->
+
+	<div id="page-banner-area" class="page-banner-area" style="background-image:url('{% static 'images/banner/banner3.jpg' %}')">
+		<!-- Subpage title start -->
+		<div class="page-banner-title">
+        	<div class="text-center">
+	        	<h2>Schedule List</h2>
+         </div>
+      </div><!-- Subpage title end -->
+	</div><!-- Page Banner end -->
+
+	<section id="main-container" class="main-container">
+		<div class="container">
+			<div class="row text-center">
+				<h2 class="section-title">Don't Miss a Thing</h2>
+				<h3 class="section-sub-title">Event Programme</h3>
+			</div><!--/ Title row end -->
+		</div><!-- Container 1 end -->
+
+
+		<div class="schedule-content">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12">
+
+						<h2 class="schedule-date">Day 1 / Sunday, 7th March</h2>
+
+						<div class="schedule-listing bg">
+		        			<span class="schedule-slot-time">9:30 - 10:00</span>
+		        			<div class="schedule-slot-info">
+		        				<div class="schedule-slot-info-content">
+		        					<h3 class="schedule-slot-title">Registration</h3>
+		        					<p class="schedule-slot-desc">Pick up your name badge and goodie bag</p>
+		        				</div><!--Info content end -->
+		        			</div><!-- Slot info end -->
+		        		</div><!-- Slot listing 1 end -->
+
+		        		<div class="schedule-listing">
+		        			<span class="schedule-slot-time">10:30 - 11:15AM</span>
+		        			<div class="schedule-slot-info">
+		        				<div class="schedule-slot-info-content">
+		        					<h3 class="schedule-slot-speaker-name">Jay Henderson</h3>
+		        					<h4 class="schedule-slot-title">Reinventing Experiences to All</h4>
+		        					<p class="schedule-slot-desc">Throw myself down teems with vapour around me, and the meridian sun strikes the upper surface of the impenetrable.</p>
+		        				</div><!--Info content end -->
+		        			</div><!-- Slot info end -->
+		        		</div><!-- Slot listing 2 end -->
+
+		        		<div class="schedule-listing bg">
+		        			<span class="schedule-slot-time">11:15 - 13:15PM</span>
+		        			<div class="schedule-slot-info">
+		        				<div class="schedule-slot-info-content">
+		        					<h3 class="schedule-slot-speaker-name">Lydia Austin</h3>
+		        					<h4 class="schedule-slot-title">Human Centered Design </h4>
+		        					<p class="schedule-slot-desc">Minim Austin 3 wolf moon scenester aesthetic, umami odio pariatur bitters. Pop-up occaecat taxidermy street art, tattooed beard literally.</p>
+		        				</div><!--Info content end -->
+		        			</div><!-- Slot info end -->
+		        		</div><!-- Slot listing 3 end -->
+
+		        		<div class="schedule-listing">
+		        			<span class="schedule-slot-time">13:30 - 14:30PM</span>
+		        			<div class="schedule-slot-info">
+		        				<div class="schedule-slot-info-content">
+		        					<h3 class="schedule-slot-title">Lunch</h3>
+		        					<p class="schedule-slot-desc">Five star buffet for everybody.</p>
+		        				</div><!--Info content end -->
+		        			</div><!-- Slot info end -->
+		        		</div><!-- Slot listing 4 end -->
+
+		        		<div class="schedule-listing bg">
+		        			<span class="schedule-slot-time">14:35 - 16:00PM</span>
+		        			<div class="schedule-slot-info">
+		        				<div class="schedule-slot-info-content">
+		        					<h3 class="schedule-slot-speaker-name">Ernest Backman</h3>
+		        					<h4 class="schedule-slot-title">A frontier for designers: cultures of creativity</h4>
+		        					<p class="schedule-slot-desc">Plaid fashion axe semiotics skateboard, try-hard food truck aesthetic biodiesel exercitation. Accusamus VHS Wes Anderson Banksy food truck vero.</p>
+		        				</div><!--Info content end -->
+		        			</div><!-- Slot info end -->
+		        		</div><!-- Slot listing 5 end -->
+
+					</div><!-- Col end -->
+				</div><!-- Content row 1 end -->
+			</div><!-- Container 2 end -->
+		</div><!-- schedule-content 1 end -->
+
+		<div class="gap-60"></div>
+
+		<div class="schedule-content pattern-bg">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12">
+
+						<h2 class="schedule-date">Day 2 / Monday, 8th March</h2>
+
+		        		<div class="schedule-listing">
+		        			<span class="schedule-slot-time">09:30 - 11:15AM</span>
+		        			<div class="schedule-slot-info">
+		        				<div class="schedule-slot-info-content">
+		        					<h3 class="schedule-slot-speaker-name">Albert Brown</h3>
+		        					<h4 class="schedule-slot-title">Getting Started With User-Centered Content</h4>
+		        					<p class="schedule-slot-desc">Throw myself down teems with vapour around me, and the meridian sun strikes the upper surface of the impenetrable.</p>
+		        				</div><!--Info content end -->
+		        			</div><!-- Slot info end -->
+		        		</div><!-- Slot listing 1 end -->
+
+		        		<div class="schedule-listing bg">
+		        			<span class="schedule-slot-time">11:15 - 13:15PM</span>
+		        			<div class="schedule-slot-info">
+		        				<div class="schedule-slot-info-content">
+		        					<h3 class="schedule-slot-speaker-name">Lara Reynolds</h3>
+		        					<h4 class="schedule-slot-title">Content Measurement and Analytics</h4>
+		        					<p class="schedule-slot-desc">Minim Austin 3 wolf moon scenester aesthetic, umami odio pariatur bitters. Pop-up occaecat taxidermy street art, tattooed beard literally.</p>
+		        				</div><!--Info content end -->
+		        			</div><!-- Slot info end -->
+		        		</div><!-- Slot listing 2 end -->
+
+		        		<div class="schedule-listing">
+		        			<span class="schedule-slot-time">13:30 - 14:30PM</span>
+		        			<div class="schedule-slot-info">
+		        				<div class="schedule-slot-info-content">
+		        					<h3 class="schedule-slot-title">Lunch</h3>
+		        					<p class="schedule-slot-desc">Five star buffet for everybody.</p>
+		        				</div><!--Info content end -->
+		        			</div><!-- Slot info end -->
+		        		</div><!-- Slot listing 3 end -->
+
+		        		<div class="schedule-listing bg">
+		        			<span class="schedule-slot-time">14:35 - 16:00PM</span>
+		        			<div class="schedule-slot-info">
+		        				<div class="schedule-slot-info-content">
+		        					<h3 class="schedule-slot-speaker-name">Matthew Blakeley</h3>
+		        					<h4 class="schedule-slot-title">Not Perfect, Always Better: A Story of Inclusion</h4>
+		        					<p class="schedule-slot-desc">Plaid fashion axe semiotics skateboard, try-hard food truck aesthetic biodiesel exercitation. Accusamus VHS Wes Anderson Banksy food truck vero.</p>
+		        				</div><!--Info content end -->
+		        			</div><!-- Slot info end -->
+		        		</div><!-- Slot listing 4 end -->
+				        			
+
+					</div><!-- Col end -->
+				</div><!-- Content row 1 end -->
+			</div><!-- Container 2 end -->
+		</div><!-- schedule-content 2 end -->
+
+		<div class="gap-60"></div>
+
+		<div class="schedule-content">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12">
+
+						<h2 class="schedule-date">Day 3 / Tuesday, 9th March</h2>
+
+		        		<div class="schedule-listing">
+		        			<span class="schedule-slot-time">09:30 - 11:15AM</span>
+		        			<div class="schedule-slot-info">
+		        				<div class="schedule-slot-info-content">
+		        					<h3 class="schedule-slot-speaker-name">Katherine Key</h3>
+		        					<h4 class="schedule-slot-title">How Silos Learn: Working in the Idea Factory</h4>
+		        					<p class="schedule-slot-desc">Throw myself down teems with vapour around me, and the meridian sun strikes the upper surface of the impenetrable.</p>
+		        				</div><!--Info content end -->
+		        			</div><!-- Slot info end -->
+		        		</div><!-- Slot listing 1 end -->
+
+		        		<div class="schedule-listing bg">
+		        			<span class="schedule-slot-time">11:15 - 13:15PM</span>
+		        			<div class="schedule-slot-info">
+		        				<div class="schedule-slot-info-content">
+		        					<h3 class="schedule-slot-speaker-name">Ernest Backman</h3>
+		        					<h4 class="schedule-slot-title">Empathy Behind the Algorithms</h4>
+		        					<p class="schedule-slot-desc">Minim Austin 3 wolf moon scenester aesthetic, umami odio pariatur bitters. Pop-up occaecat taxidermy street art, tattooed beard literally.</p>
+		        				</div><!--Info content end -->
+		        			</div><!-- Slot info end -->
+		        		</div><!-- Slot listing 2 end -->
+
+		        		<div class="schedule-listing">
+		        			<span class="schedule-slot-time">13:30 - 14:30PM</span>
+		        			<div class="schedule-slot-info">
+		        				<div class="schedule-slot-info-content">
+		        					<h3 class="schedule-slot-title">Lunch</h3>
+		        					<p class="schedule-slot-desc">Five star buffet for everybody.</p>
+		        				</div><!--Info content end -->
+		        			</div><!-- Slot info end -->
+		        		</div><!-- Slot listing 3 end -->
+
+		        		<div class="schedule-listing bg">
+		        			<span class="schedule-slot-time">14:35 - 16:00PM</span>
+		        			<div class="schedule-slot-info">
+		        				<div class="schedule-slot-info-content">
+		        					<h3 class="schedule-slot-speaker-name">Angelica Bradley</h3>
+		        					<h4 class="schedule-slot-title">Adaptive Content, Context, and Controversy</h4>
+		        					<p class="schedule-slot-desc">Plaid fashion axe semiotics skateboard, try-hard food truck aesthetic biodiesel exercitation. Accusamus VHS Wes Anderson Banksy food truck vero.</p>
+		        				</div><!--Info content end -->
+		        			</div><!-- Slot info end -->
+		        		</div><!-- Slot listing 4 end -->
+
+		        		<div class="schedule-listing listing-last">
+		        			<span class="schedule-slot-time">16:30 - Late</span>
+		        			<div class="schedule-slot-info">
+		        				<div class="schedule-slot-info-content">
+		        					<h3 class="schedule-slot-title">After Party</h3>
+		        					<p class="schedule-slot-desc">Stick around and enjoy a dazzling after work.</p>
+		        				</div><!--Info content end -->
+		        			</div><!-- Slot info end -->
+		        		</div><!-- Slot listing 5 end -->
+
+					</div><!-- Col end -->
+				</div><!-- Content row 1 end -->
+			</div><!-- Container 2 end -->
+		</div><!-- schedule-content 3 end -->
+		
+	</section><!-- Main container end -->
+
+
+		<footer id="footer" class="footer text-center">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="footer-menu">
+							<ul class="nav unstyled">
+								<li><a href="#">Home</a></li>
+								<li><a href="#">Register</a></li>
+							</ul>
+						</div>
+						<!-- Footer menu end -->
+						<div class="footer-logo">
+							<img src="{% static 'images/footer-logo.png' %}" alt="footer logo" />
+						</div>
+						<div class="footer-social">
+							<ul>
+								<li><a href="#"><i class="fa fa-twitter"></i></a></li>
+								<li><a href="#"><i class="fa fa-youtube"></i></a></li>
+								<li><a href="#"><i class="fa fa-instagram"></i></a></li>
+							</ul>
+						</div>
+						<!-- Footer social end -->
+						<div class="copyright-info">
+                  <span>This website is created by <a href="{% url 'people:creators-list' %}">Moazzam Team</a>.<br>
+                  Copyright © 2015-2017 WSS. All Rights Reserved.</span>
+						</div>
+						<!-- Copyright info end -->
+					</div>
+					<!-- Content col end -->
+				</div>
+				<!-- Content row end -->
+			</div>
+			<!-- Container end -->
+
+			<!--<div id="back-to-top" data-spy="affix" data-offset-top="10" class="header affix"></div>-->
+		</footer>
+		<!-- Footer end -->
+
+		<!-- Javascript Files
+           ================================================== -->
+		<!-- initialize jQuery Library -->
+		<script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>
+		<!-- Bootstrap jQuery -->
+		<script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
+		<!-- Counter -->
+		<script type="text/javascript" src="{% static 'js/jquery.counterup.min.js' %}"></script>
+		<!-- Countdown -->
+		<script type="text/javascript" src="{% static 'js/jquery.jCounter.js' %}"></script>
+		<!-- Waypoints -->
+		<script type="text/javascript" src="{% static 'js/waypoints.min.js' %}"></script>
+		<!-- Color box for Popup-->
+		<script type="text/javascript" src="{% static 'js/jquery.colorbox.js' %}"></script>
+		<!-- Smoothscroll -->
+		<script type="text/javascript" src="{% static 'js/smoothscroll.js' %}"></script>
+		<!-- Google Map API Key-->
+		<!--<script type="text/javascript" src="//maps.googleapis.com/maps/api/js?key=AIzaSyCsa2Mi2HqyEcEnM1urFSIGEpvualYjwwM"></script>-->
+		<!-- Google Map Plugin-->
+		<!--<script type="text/javascript" src="{% static 'js/gmap3.js' %}"></script>-->
+		<!-- Template custom -->
+		<script type="text/javascript" src="{% static 'js/custom.js' %}"></script>
+
+	</div>
+	<!-- Body inner end -->
+</body>
+</html>
