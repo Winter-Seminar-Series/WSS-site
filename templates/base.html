@@ -74,17 +74,18 @@
                      <!-- Staff li end -->
                          <li><a href="{% url 'wss:gallery' wss.year %}">Gallery</a></li>
                          <!-- Gallery li end -->
-                         {% if wss.is_active %}
-                           {% if wss.registration_link %}
-                           <li class="header-ticket">
-                              <a class="ticket-btn btn-primary" href="{{ wss.registration_link }}">Register</a>
-                           </li>
+                            {% if wss.is_active %}
+                              {% if wss.registration_link %}
+                              <li class="header-ticket">
+                                 <a class="ticket-btn btn-primary" href="{{ wss.registration_link }}">Register</a>
+                              </li>
+                              {% endif %}
+                            {% else %}
+                                                     <li class="header-ticket">
+                                <a href="{% url 'wss:home' %}" class="ticket-btn btn-primary">Visit the last seminar page</a>
+                                                     </li>
                            {% endif %}
-                         {% else %}
-                                                  <li class="header-ticket">
-                             <a href="{% url 'wss:home' %}" class="ticket-btn btn-primary">Visit the last seminar page</a>
-                                                  </li>
-                  {% endif %}
+                        {% endif %}
                      <!-- Register li end -->
                   </ul>
                   <!--/ Nav ul end -->
@@ -107,8 +108,16 @@
             <div class="col-md-12">
                <div class="footer-menu">
                   <ul class="nav unstyled">
-                     <li><a href="#">Home</a></li>
-                     <li><a href="#">Register</a></li>
+                     <li><a href="{% if wss %}{% url 'wss:home' wss.year%}{% else %}{% url 'wss:home'%}{% endif %}">Home</a></li>
+                      {% if wss and wss.is_active %}
+                        {% if wss.registration_link %}
+                        <li class="header-ticket">
+                           <li><a href="{{ wss.registration_link }}">Register</a>
+                        </li>
+                        {% endif %}
+                      {% else %}
+                          <li><a href="{% url 'wss:home' %}">Visit the last seminar page</a></li>
+                     {% endif %}
                   </ul>
                </div>
                <!-- Footer menu end -->
