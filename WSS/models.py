@@ -123,11 +123,6 @@ class ExternalLinkType(models.Model):
     def __str__(self):
         return self.name
 
-    def logo_tag(self):
-        return mark_safe('<img src={} width=40 height=40>'.format(self.logo_url))
-
-    logo_tag.short_description = 'logo'
-
 
 class ExternalLink(models.Model):
     wss = models.ForeignKey(to=WSS, related_name='external_links')
