@@ -1,5 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'base.html' %}
 {% load static %}
 {% load date_tags %}
 {% load human_tags %}
@@ -41,7 +40,7 @@
                      </li>
                          {% else %}
                                                   <li class="header-ticket">
-                             <a href="{% url 'wss:home' %}" class="btn btn-primary">Visit the last seminar page</a>
+                             <a href="{% url 'wss:home' %}" class="ticket-btn btn-primary">Visit the last seminar page</a>
                                                   </li>
                   {% endif %}
                      <!-- Register li end -->
