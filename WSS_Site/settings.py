@@ -148,7 +148,7 @@ JET_SIDE_MENU_CUSTOM_APPS = [
     ('WSS', [
         'WSS',
         'Sponsor',
-        'ExternalLinkType',
+        'ExternalLink',
     ]),
     ('people', [
         'Speaker',
