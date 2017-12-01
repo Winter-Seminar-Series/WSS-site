@@ -4,7 +4,7 @@ from django.views.generic.base import TemplateView
 from people.views import CreatorsListView
 
 urlpatterns = [
-    url(r'^creators/', CreatorsListView.as_view(), name='creators-list'),
+    url(r'^creators/$', CreatorsListView.as_view(), name='creators-list'),
 ]
 
 

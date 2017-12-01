@@ -1,34 +1,15 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load no_wss_tags %}
 
 {% block title %}Page Not Found{% endblock %}
 
 {% block header %}
        <!-- Header start -->
-    <header id="header" class="header header-transparent">
+    <header id="header" class="header header-dark">
       <div class="container">
          <div class="row">
-            <div class="site-nav-inner">
-               <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                  <span class="sr-only">Toggle navigation</span>
-                  <span class="icon-bar"></span>
-                  <span class="icon-bar"></span>
-                  <span class="icon-bar"></span>
-               </button>
-               <nav class="collapse navbar-collapse navbar-responsive-collapse pull-right">
-                  <ul class="nav navbar-nav">
-                     <li><a href="{% url 'wss:home'%}">Home</a></li>
-                     <!-- Home li end -->
-                    <li class="header-ticket">
-                    <a href="{% url 'wss:home' %}" class="ticket-btn btn-primary">Visit the last seminar page</a>
-                    </li>
-                     <!-- Register li end -->
-                  </ul>
-                  <!--/ Nav ul end -->
-               </nav>
-               <!--/ Collapse end -->
-            </div>
-            <!--/ Site nav inner end -->
+            {% no_wss_navbar %}
          </div>
          <!--/ Row end -->
       </div>
@@ -39,19 +20,9 @@
 
 
 {% block content %}
-	<div id="page-banner-area" class="page-banner-area" style="background-image:url(images/banner/banner4.jpg)">
-		<!-- Subpage title start -->
-		<div class="page-banner-title">
-        	<div class="text-center">
-	        	<h2>404</h2>
-         </div>
-      </div><!-- Subpage title end -->
-	</div><!-- Page Banner end -->
-
 
 	<section id="main-container" class="main-container">
 		<div class="container">
-
 			<div class="row">
 
 				<div class="error-page text-center">

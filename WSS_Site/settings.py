@@ -13,8 +13,6 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-from django.utils.log import DEFAULT_LOGGING
-
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
@@ -25,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'sag'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = []
 
@@ -76,6 +74,7 @@ TEMPLATES = [
             'libraries': {
                 'date_tags': 'WSS.templatetags.date_tags',
                 'human_tags': 'people.templatetags.human_tags',
+                'no_wss_tags': 'templatetags.no_wss_tags',
             },
         },
     },
@@ -173,4 +172,6 @@ JET_SIDE_MENU_CUSTOM_APPS = [
 ]
 JET_CHANGE_FORM_SIBLING_LINKS = False
 JET_INDEX_DASHBOARD = 'WSS_Site.dashboard.IndexDashboard'
+
+from django.utils.log import DEFAULT_LOGGING
 DEFAULT_LOGGING['handlers']['console']['filters'] = []
