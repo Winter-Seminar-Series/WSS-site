@@ -3,7 +3,7 @@ from django.conf.urls import url, include
 from django.conf.urls.static import static
 from django.contrib import admin
 
-from WSS_Site.handler_views import Handler400View
+from WSS_Site.handler_views import Handler404View
 
 urlpatterns = [
     url(r'^jet/', include('jet.urls', 'jet')),
@@ -17,4 +17,4 @@ urlpatterns = [
 admin.site.site_header = 'WSS Administration'
 admin.site.site_title = 'WSS Administration'
 
-handler400 = Handler400View.as_view()
+handler404 = Handler404View.as_view()
