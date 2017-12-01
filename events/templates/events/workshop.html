@@ -5,23 +5,23 @@
 
 {% block title %}{{ workshop.speaker.name }}{% endblock %}
 {% block content %}
-	<section id="main-container" class="main-container">
-		<div class="container">
-			<div class="row">
-				<div class="clearfix">
-					<div class="col-xs-12 col-md-4">
+    <section id="main-container" class="main-container">
+        <div class="container">
+            <div class="row">
+                <div class="clearfix">
+                    <div class="col-xs-12 col-md-4">
                         {% render_human workshop.speaker subtitle=workshop.speaker.short_bio url=None %}
                     </div>
-					<div class="col-xs-12 col-md-8">
-							<div class="ts-speaker-session right">
-								<h3 class="session-title">{{ workshop.title }}</h3>
-								<h4>Abstract</h4>
-								{{ workshop.abstract }}
-								<h4>Bio</h4>
-                                {{ workshop.speaker.bio }}
-                                <div>
-                                <br/>
+                    <div class="col-xs-12 col-md-8">
+                        <div class="ts-speaker-session right">
+                            <h3 class="session-title">{{ workshop.title }}</h3>
+                            <h4>Syllabus</h4>
+                            {{ workshop.syllabus }}
+                            <h4>Bio</h4>
+                            {{ workshop.speaker.bio }}
+                            <div>
                                 {% if workshop.material %}
+                                    <h4>Material</h4>
                                     {% if workshop.material.slides %}
                                         <a class="btn btn-warning" href="{{ workshop.material.slides.url }}">Slides</a>
                                     {% endif %}
@@ -29,12 +29,30 @@
                                         <a class="btn btn-danger" href="{{ workshop.material.video_url }}">Video</a>
                                     {% endif %}
                                 {% endif %}
-                                </div>
-							</div><!-- Session end -->
-					</div><!-- Col end -->
-				</div><!-- Speaker list 1 end -->
-			</div><!-- Speaker row 1 -->
+                            </div>
+                        {% if workshop.sponsor %}
+                            <h4>Sponsored by</h4>
+                            <div class="col-xs-12 col-sm-4 col-md-4">
 
-		</div><!-- Conatiner end -->
-	</section><!-- Main container end -->
+                                <a href="{{ workshop.sponsor.url }}">
+
+                                    <img class="img-responsive" src="{{ workshop.sponsor.logo.url }}" alt=""/>
+
+                                <h5 class="text-center"> {{ workshop.sponsor.name }}</h5>
+
+
+                                </a>
+                            </div>
+                        {% endif %}
+                        </div><!-- Session end -->
+                    </div><!-- Col end -->
+                </div><!-- Speaker list 1 end -->
+            </div><!-- Speaker row 1 -->
+            {% for sponsorship in wss.main_sponsorships %}
+
+
+
+            {% endfor %}
+        </div><!-- Conatiner end -->
+    </section><!-- Main container end -->
 {% endblock %}
