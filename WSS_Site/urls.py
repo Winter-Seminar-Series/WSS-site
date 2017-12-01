@@ -2,10 +2,8 @@ from django.conf import settings
 from django.conf.urls import url, include
 from django.conf.urls.static import static
 from django.contrib import admin
-from django.http import HttpResponse
-from django.shortcuts import render_to_response
-from django.template import RequestContext
-from django.views.generic import TemplateView
+
+from WSS_Site.error_handler_views import Handler404View
 
 urlpatterns = [
     url(r'^jet/', include('jet.urls', 'jet')),
@@ -19,4 +17,4 @@ urlpatterns = [
 admin.site.site_header = 'WSS Administration'
 admin.site.site_title = 'WSS Administration'
 
-handler400 = TemplateView.as_view(template_name='404.html')
+handler404 = Handler404View.as_view()

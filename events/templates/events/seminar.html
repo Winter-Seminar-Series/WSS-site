@@ -29,6 +29,21 @@
                                         <a class="btn btn-danger" href="{{ seminar.material.video_url }}">Video</a>
                                     {% endif %}
                                 {% endif %}
+                                             {% if workshop.sponsor %}
+
+                 <div class="col-xs-12 col-sm-4 col-md-4">
+
+                     <a href="{{ workshop.sponsor.url }}" class="sponsor-logo">
+
+                         <img class="img-responsive" src="{{ workshop.sponsor.logo_url }}" alt=""/>
+
+                     </a>
+
+                    <h3 class="text-center"> {{ workshop.sponsor.name }}</h3>
+
+                 </div>
+
+             {% endif %}
                                 </div>
 							</div><!-- Session end -->
 					</div><!-- Col end -->
