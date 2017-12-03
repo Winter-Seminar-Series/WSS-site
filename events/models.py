@@ -1,3 +1,5 @@
+from datetime import timedelta
+
 from django.db import models
 from django.urls import reverse
 from polymorphic.models import PolymorphicModel
@@ -6,8 +8,8 @@ from polymorphic.models import PolymorphicModel
 class BaseEvent(PolymorphicModel):  # Is implicitly Abstract
     wss = models.ForeignKey(to='WSS.WSS', related_name='events')
     title = models.CharField(max_length=150)
-    start_time = models.DateTimeField()
-    duration = models.DurationField()
+    start_time = models.DateTimeField(null=True, blank=True)
+    duration = models.DurationField(default=timedelta())
     venue = models.ForeignKey(to='Venue', related_name='events', null=True, blank=True)
 
     def __str__(self):
