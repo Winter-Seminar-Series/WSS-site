@@ -1,27 +1,28 @@
-{% extends 'base.html' %}
+{% extends 'wssbase.html' %}
 {% load static %}
 {% load date_tags %}
 {% load human_tags %}
 
 {% block title %}{{ seminar.speaker.name }}{% endblock %}
 {% block content %}
-	<section id="main-container" class="main-container">
-		<div class="container">
-			<div class="row">
-				<div class="clearfix">
-					<div class="col-xs-12 col-md-4">
+    <section id="main-container" class="main-container">
+        <div class="container">
+            <div class="row">
+                <div class="clearfix">
+                    <div class="col-xs-12 col-md-4">
                         {% render_human seminar.speaker subtitle=seminar.speaker.short_bio url=None %}
                     </div>
-					<div class="col-xs-12 col-md-8">
-							<div class="ts-speaker-session right">
-								<h3 class="session-title">{{ seminar.title }}</h3>
-								<h4>Abstract</h4>
-								{{ seminar.abstract }}
-								<h4>Bio</h4>
-                                {{ seminar.speaker.bio }}
-                                <div>
+                    <div class="col-xs-12 col-md-8">
+                        <div class="ts-speaker-session right">
+                            <h3 class="session-title">{{ seminar.title }}</h3>
+                            <h4>Abstract</h4>
+                            {{ seminar.abstract }}
+                            <h4>Bio</h4>
+                            {{ seminar.speaker.bio }}
+                            <div>
                                 <br/>
                                 {% if seminar.material %}
+                                    <h4>Material</h4>
                                     {% if seminar.material.slides %}
                                         <a class="btn btn-warning" href="{{ seminar.material.slides.url }}">Slides</a>
                                     {% endif %}
@@ -29,12 +30,12 @@
                                         <a class="btn btn-danger" href="{{ seminar.material.video_url }}">Video</a>
                                     {% endif %}
                                 {% endif %}
-                                </div>
-							</div><!-- Session end -->
-					</div><!-- Col end -->
-				</div><!-- Speaker list 1 end -->
-			</div><!-- Speaker row 1 -->
+                            </div>
+                        </div><!-- Session end -->
+                    </div><!-- Col end -->
+                </div><!-- Speaker list 1 end -->
+            </div><!-- Speaker row 1 -->
 
-		</div><!-- Conatiner end -->
-	</section><!-- Main container end -->
+        </div><!-- Conatiner end -->
+    </section><!-- Main container end -->
 {% endblock %}
