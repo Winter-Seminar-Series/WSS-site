@@ -70,25 +70,29 @@
       <div class="banner-item bg-overlay" style="background-image:url('{{ wss.main_image_url }}')">
          <div class="container">
             <div class="banner-content text-center">
-               <div class="banner-content-wrap">
-                  <div class="countdown bg-style">
-                     <div class="counter-day">
-                        <span class="days">00</span>
-                        <div class="smalltext">Days</div>
-                     </div>
-                     <div class="counter-hour">
-                        <span class="hours">00</span>
-                        <div class="smalltext">Hours</div>
-                     </div>
-                     <div class="counter-minute">
-                        <span class="minutes">00</span>
-                        <div class="smalltext">Minutes</div>
-                     </div>
-                     <div class="counter-second">
-                        <span class="seconds">00</span>
-                        <div class="smalltext">Seconds</div>
-                     </div>
-                  </div>
+                   {% if wss.is_active %}
+                    <div class="banner-content-wrap">
+                      <div class="countdown bg-style">
+                         <div class="counter-day">
+                            <span class="days">00</span>
+                            <div class="smalltext">Days</div>
+                         </div>
+                         <div class="counter-hour">
+                            <span class="hours">00</span>
+                            <div class="smalltext">Hours</div>
+                         </div>
+                         <div class="counter-minute">
+                            <span class="minutes">00</span>
+                            <div class="smalltext">Minutes</div>
+                         </div>
+                         <div class="counter-second">
+                            <span class="seconds">00</span>
+                            <div class="smalltext">Seconds</div>
+                         </div>
+                      </div>
+                    </div>
+
+                   {% endif %}
                   <!-- Countdown end -->
                   <h1 class="banner-title">WINTER SEMINAR SERIES</h1>
                   <h2 class="banner-subtitle2">ADVANCED TOPICS IN COMPUTER SCIENCE AND ENGINEERING</h2>
@@ -103,7 +107,6 @@
                      </p>
                      {% endif %}
                   {% endif %}
-               </div>
                <!-- Banner content wrap end -->
             </div>
             <!-- Banner content end -->
