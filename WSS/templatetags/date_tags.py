@@ -28,7 +28,8 @@ def render_date(wss):
                 'end_day': day_with_ordinal(wss.end_date.day),
                 'year': wss.start_date.year,
             }
-        return mark_safe('{start_month} {start_day} - {end_month} {end_day}, {year}'.format(**format_dict))
+        return mark_safe(
+            '{start_month} {start_day} - {end_month} {end_day}, {year}'.format(**format_dict))
     else:
         format_dict = {
             'start_year': wss.start_date.year,
@@ -38,8 +39,9 @@ def render_date(wss):
             'end_month': str(wss.end_date.strftime("%B")).upper(),
             'end_day': day_with_ordinal(wss.end_date.day),
         }
-        return mark_safe('{start_month} {start_day} {start_year} - {end_month} {end_day} {end_year}'.format(**format_dict))
-
+        return mark_safe(
+            '{start_month} {start_day} {start_year} - {end_month} {end_day} {end_year}'.format(
+                **format_dict))
 
 
 @register.simple_tag

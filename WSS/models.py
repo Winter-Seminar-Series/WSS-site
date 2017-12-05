@@ -98,6 +98,7 @@ class Sponsor(models.Model):
         if not self.logo:
             return None
         return mark_safe('<img src={} width=40 height=40>'.format(self.logo.url))
+
     logo_tag.short_description = 'logo'
 
 

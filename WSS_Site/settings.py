@@ -15,7 +15,6 @@ import os
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
@@ -26,7 +25,6 @@ SECRET_KEY = 'sag'
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
 
 # Application definition
 
@@ -81,7 +79,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'WSS_Site.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
@@ -91,7 +88,6 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators
@@ -111,7 +107,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
 
@@ -125,11 +120,9 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 local_settings_path = os.path.join(os.path.dirname(__file__), 'local_settings.py')
 if os.path.exists(local_settings_path):
     exec(open(local_settings_path, 'rb').read())
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
@@ -163,7 +156,7 @@ JET_SIDE_MENU_CUSTOM_APPS = [
         'Workshop',
         'Event',
     ]),
-    ('auth',[
+    ('auth', [
         'User',
         'Group',
     ]),
@@ -173,4 +166,5 @@ JET_CHANGE_FORM_SIBLING_LINKS = False
 JET_INDEX_DASHBOARD = 'WSS_Site.dashboard.IndexDashboard'
 
 from django.utils.log import DEFAULT_LOGGING
+
 DEFAULT_LOGGING['handlers']['console']['filters'] = []

@@ -1,7 +1,6 @@
 from django.contrib import admin
-from polymorphic.admin.parentadmin import PolymorphicParentModelAdmin
 
-from events.models import Seminar, Workshop, Venue, Event, Material, SeminarMaterial, \
+from events.models import Seminar, Workshop, Venue, Event, SeminarMaterial, \
     WorkshopMaterial
 
 

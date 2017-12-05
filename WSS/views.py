@@ -1,13 +1,10 @@
-from django.http import Http404
-from django.shortcuts import get_object_or_404
-from django.views.generic import ListView
-from django.views.generic.detail import DetailView
-from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
+from django.shortcuts import get_object_or_404
+from django.utils.decorators import method_decorator
+from django.views.generic.detail import DetailView
 
 from WSS.mixins import ExternalLinkMixin, WSSWithYearMixin
 from WSS.models import WSS
-from events.models import Seminar
 
 
 class HomeView(ExternalLinkMixin, DetailView):

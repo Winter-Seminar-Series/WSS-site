@@ -1,5 +1,4 @@
 from django.contrib import admin
-from django.contrib.admin.sites import AdminSite
 from jet.admin import CompactInline
 
 from WSS.models import Clip, WSS, Image, Sponsor, ExternalLink, Sponsorship
