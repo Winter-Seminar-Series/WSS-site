@@ -2,13 +2,15 @@ from django.http import Http404
 from django.shortcuts import get_object_or_404
 from django.views.generic import ListView
 from django.views.generic.detail import DetailView
+from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import login_required
 
 from WSS.mixins import ExternalLinkMixin, WSSWithYearMixin
 from WSS.models import WSS
 from events.models import Seminar
 
 
-class HomeView(ExternalLinkMixin,DetailView):
+class HomeView(ExternalLinkMixin, DetailView):
     template_name = 'WSS/home.html'
     context_object_name = 'wss'
 
@@ -23,7 +25,7 @@ class HomeView(ExternalLinkMixin,DetailView):
         return WSS.objects.first()
 
 
-class SeminarsListView(ExternalLinkMixin,DetailView):
+class SeminarsListView(ExternalLinkMixin, DetailView):
     template_name = 'WSS/seminars_list.html'
     model = WSS
     context_object_name = 'wss'
@@ -32,7 +34,7 @@ class SeminarsListView(ExternalLinkMixin,DetailView):
         return get_object_or_404(WSS, year=int(self.kwargs['year']))
 
 
-class WorkshopsListView(ExternalLinkMixin,DetailView):
+class WorkshopsListView(ExternalLinkMixin, DetailView):
     template_name = 'WSS/workshops_list.html'
     model = WSS
     context_object_name = 'wss'
@@ -41,13 +43,14 @@ class WorkshopsListView(ExternalLinkMixin,DetailView):
         return get_object_or_404(WSS, year=int(self.kwargs['year']))
 
 
-class StaffListView(ExternalLinkMixin,DetailView):
+class StaffListView(ExternalLinkMixin, DetailView):
     template_name = 'WSS/staff_list.html'
     model = WSS
     context_object_name = 'wss'
 
     def get_object(self, queryset=None):
         return get_object_or_404(WSS, year=int(self.kwargs['year']))
+
 
 class GalleryImageView(ExternalLinkMixin, WSSWithYearMixin, DetailView):
     template_name = 'WSS/gallery_images.html'
@@ -57,5 +60,6 @@ class GalleryVideoView(ExternalLinkMixin, WSSWithYearMixin, DetailView):
     template_name = 'WSS/gallery_videos.html'
 
 
-class ScheduleView(ExternalLinkMixin,WSSWithYearMixin, DetailView):
+@method_decorator(login_required, name='dispatch')
+class ScheduleView(ExternalLinkMixin, WSSWithYearMixin, DetailView):
     template_name = 'WSS/schedule.html'
