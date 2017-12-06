@@ -19,6 +19,9 @@
                             {{ seminar.abstract }}
                             <h4>Bio</h4>
                             {{ seminar.speaker.bio }}
+                            {% if seminar.venue %}
+                            <h4> Takes place at: {{ seminar.venue }} </h4> {{ seminar.venue.address }}
+                            {% endif %}
                             <div>
                                 <br/>
                                 {% if seminar.material %}

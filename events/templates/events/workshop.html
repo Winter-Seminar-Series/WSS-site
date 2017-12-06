@@ -19,6 +19,10 @@
                             {{ workshop.syllabus }}
                             <h4>Bio</h4>
                             {{ workshop.speaker.bio }}
+                            {% if workshop.venue %}
+                            <h4> Takes place at: {{ workshop.venue }} </h4> {{ workshop.venue.address }}
+                            {% endif %}
+
                             <div>
                                 {% if workshop.material %}
                                     <h4>Material</h4>
