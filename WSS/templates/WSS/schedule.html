@@ -16,7 +16,7 @@
 					<div class="row">
 						<div class="col-md-12">
 
-							<h2 class="schedule-date">Day {{ forloop.counter }} / {% date_string day %}</h2>
+							<h2 class="schedule-date">{% if day %} Day {{ forloop.counter }} / {% date_string day %} {% else %} TBD {% endif %}</h2>
 
 							{% for event in events %}
 							<div class="schedule-listing {% if forloop.counter|divisibleby:2 %} bg {% endif %}">
