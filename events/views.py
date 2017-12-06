@@ -1,10 +1,10 @@
 from django.views.generic import DetailView
 
-from WSS.mixins import ExternalLinkMixin
+from WSS.mixins import FooterMixin
 from events.models import Seminar, Workshop
 
 
-class SeminarView(ExternalLinkMixin, DetailView):
+class SeminarView(FooterMixin, DetailView):
     template_name = 'events/seminar.html'
     context_object_name = 'seminar'
     model = Seminar
@@ -15,7 +15,7 @@ class SeminarView(ExternalLinkMixin, DetailView):
         return context
 
 
-class WorkshopView(ExternalLinkMixin, DetailView):
+class WorkshopView(FooterMixin, DetailView):
     template_name = 'events/workshop.html'
     context_object_name = 'workshop'
     model = Workshop

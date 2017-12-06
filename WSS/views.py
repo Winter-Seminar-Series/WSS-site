@@ -3,11 +3,11 @@ from django.shortcuts import get_object_or_404
 from django.utils.decorators import method_decorator
 from django.views.generic.detail import DetailView
 
-from WSS.mixins import ExternalLinkMixin, WSSWithYearMixin
+from WSS.mixins import FooterMixin, WSSWithYearMixin
 from WSS.models import WSS
 
 
-class HomeView(ExternalLinkMixin, DetailView):
+class HomeView(FooterMixin, DetailView):
     template_name = 'WSS/home.html'
     context_object_name = 'wss'
 
@@ -22,7 +22,7 @@ class HomeView(ExternalLinkMixin, DetailView):
         return WSS.objects.first()
 
 
-class SeminarsListView(ExternalLinkMixin, DetailView):
+class SeminarsListView(FooterMixin, DetailView):
     template_name = 'WSS/seminars_list.html'
     model = WSS
     context_object_name = 'wss'
@@ -31,7 +31,7 @@ class SeminarsListView(ExternalLinkMixin, DetailView):
         return get_object_or_404(WSS, year=int(self.kwargs['year']))
 
 
-class WorkshopsListView(ExternalLinkMixin, DetailView):
+class WorkshopsListView(FooterMixin, DetailView):
     template_name = 'WSS/workshops_list.html'
     model = WSS
     context_object_name = 'wss'
@@ -40,7 +40,7 @@ class WorkshopsListView(ExternalLinkMixin, DetailView):
         return get_object_or_404(WSS, year=int(self.kwargs['year']))
 
 
-class StaffListView(ExternalLinkMixin, DetailView):
+class StaffListView(FooterMixin, DetailView):
     template_name = 'WSS/staff_list.html'
     model = WSS
     context_object_name = 'wss'
@@ -49,13 +49,13 @@ class StaffListView(ExternalLinkMixin, DetailView):
         return get_object_or_404(WSS, year=int(self.kwargs['year']))
 
 
-class GalleryImageView(ExternalLinkMixin, WSSWithYearMixin, DetailView):
+class GalleryImageView(FooterMixin, WSSWithYearMixin, DetailView):
     template_name = 'WSS/gallery_images.html'
 
 
-class GalleryVideoView(ExternalLinkMixin, WSSWithYearMixin, DetailView):
+class GalleryVideoView(FooterMixin, WSSWithYearMixin, DetailView):
     template_name = 'WSS/gallery_videos.html'
 
 
-class ScheduleView(ExternalLinkMixin, WSSWithYearMixin, DetailView):
+class ScheduleView(FooterMixin, WSSWithYearMixin, DetailView):
     template_name = 'WSS/schedule.html'

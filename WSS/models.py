@@ -65,9 +65,13 @@ class WSS(models.Model):
     def not_main_sponsorships(self):
         return self.sponsorships.filter(is_main=False)
 
+    @classmethod
+    def active_wss(cls):
+        return cls.objects.first()
+
     @property
     def is_active(self):
-        return self.pk == WSS.objects.first().pk
+        return self.pk == WSS.active_wss().pk
 
 
 class Clip(models.Model):

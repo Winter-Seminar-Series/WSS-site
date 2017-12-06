@@ -97,6 +97,14 @@
                                 <li><a href="{% url 'wss:home' %}">Visit the last seminar page</a></li>
                             {% endblock %}
                         </ul>
+                        {% if past_years %}
+                        <span>Past seminars archive:</span>
+                        <ul class="nav fa">
+                            {% for past_year in past_years %}
+                                <li><a href="{% url 'wss:home' past_year %}">{{ past_year }}</a></li>
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
                     </div>
                     <!-- Footer menu end -->
                     <div class="footer-logo">
