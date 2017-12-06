@@ -12,8 +12,15 @@ class BaseEvent(PolymorphicModel):  # Is implicitly Abstract
     duration = models.DurationField(default=timedelta())
     venue = models.ForeignKey(to='Venue', related_name='events', null=True, blank=True)
 
+    class Meta:
+        ordering = ('start_time',)
+
     def __str__(self):
         return self.title
+
+    @property
+    def end_time(self):
+        return self.start_time + self.duration
 
 
 class Event(BaseEvent):

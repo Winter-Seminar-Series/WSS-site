@@ -1,205 +1,57 @@
 {% extends 'wssbase.html' %}
+{% load date_tags %}
 
 {% block content %}
 	<section id="main-container" class="main-container">
 		<div class="container">
 			<div class="row text-center">
-				<h2 class="section-title">Don't Miss a Thing</h2>
-				<h3 class="section-sub-title">Event Programme</h3>
+				<h3 class="section-sub-title">Event Schedule</h3>
 			</div><!--/ Title row end -->
 		</div><!-- Container 1 end -->
 
+		{% regroup wss.events.all by start_time.date as events_by_day %}
+		{% for day, events in events_by_day %}
+			<div class="schedule-content {% if forloop.counter|divisibleby:2 %} pattern-bg {% endif %}">
+				<div class="container">
+					<div class="row">
+						<div class="col-md-12">
 
-		<div class="schedule-content">
-			<div class="container">
-				<div class="row">
-					<div class="col-md-12">
+							<h2 class="schedule-date">Day {{ forloop.counter }} / {% date_string day %}</h2>
 
-						<h2 class="schedule-date">Day 1 / Sunday, 7th March</h2>
+							{% for event in events %}
+							<div class="schedule-listing {% if forloop.counter|divisibleby:2 %} bg {% endif %}">
+								<span class="schedule-slot-time">{% time_string event.start_time %} - {% time_string event.end_time %}</span>
 
-						<div class="schedule-listing bg">
-		        			<span class="schedule-slot-time">9:30 - 10:00</span>
-		        			<div class="schedule-slot-info">
-		        				<div class="schedule-slot-info-content">
-		        					<h3 class="schedule-slot-title">Registration</h3>
-		        					<p class="schedule-slot-desc">Pick up your name badge and goodie bag</p>
-		        				</div><!--Info content end -->
-		        			</div><!-- Slot info end -->
-		        		</div><!-- Slot listing 1 end -->
+								<div class="schedule-slot-info">
+									<div class="schedule-slot-info-content">
+										<h3 class="schedule-slot-speaker-name">{{ event.speaker }}</h3>
+										{% if event.seminar %}
+										<a href="{% url 'events:seminar' event.pk %}">
+										{% elif event.workshop %}
+										<a href="{% url 'events:workshop' event.pk %}">
+										{% endif %}
+										<h3 class="schedule-slot-title">{{ event.title }}</h3>
+										{% if event.seminar or event.workshop %}
+										</a>
+										{% endif %}
+										{% if event.venue %}
+										<span class="schedule-slot-desc" data-toggle="tooltip" title="{{ event.venue.address }}">{{ event.venue }}</>
+										{% endif %}
+									</div><!--Info content end -->
+								</div><!-- Slot info end -->
+							</div><!-- Slot listing 1 end -->
 
-		        		<div class="schedule-listing">
-		        			<span class="schedule-slot-time">10:30 - 11:15AM</span>
-		        			<div class="schedule-slot-info">
-		        				<div class="schedule-slot-info-content">
-		        					<h3 class="schedule-slot-speaker-name">Jay Henderson</h3>
-		        					<h4 class="schedule-slot-title">Reinventing Experiences to All</h4>
-		        					<p class="schedule-slot-desc">Throw myself down teems with vapour around me, and the meridian sun strikes the upper surface of the impenetrable.</p>
-		        				</div><!--Info content end -->
-		        			</div><!-- Slot info end -->
-		        		</div><!-- Slot listing 2 end -->
 
-		        		<div class="schedule-listing bg">
-		        			<span class="schedule-slot-time">11:15 - 13:15PM</span>
-		        			<div class="schedule-slot-info">
-		        				<div class="schedule-slot-info-content">
-		        					<h3 class="schedule-slot-speaker-name">Lydia Austin</h3>
-		        					<h4 class="schedule-slot-title">Human Centered Design </h4>
-		        					<p class="schedule-slot-desc">Minim Austin 3 wolf moon scenester aesthetic, umami odio pariatur bitters. Pop-up occaecat taxidermy street art, tattooed beard literally.</p>
-		        				</div><!--Info content end -->
-		        			</div><!-- Slot info end -->
-		        		</div><!-- Slot listing 3 end -->
+							{% endfor %}
 
-		        		<div class="schedule-listing">
-		        			<span class="schedule-slot-time">13:30 - 14:30PM</span>
-		        			<div class="schedule-slot-info">
-		        				<div class="schedule-slot-info-content">
-		        					<h3 class="schedule-slot-title">Lunch</h3>
-		        					<p class="schedule-slot-desc">Five star buffet for everybody.</p>
-		        				</div><!--Info content end -->
-		        			</div><!-- Slot info end -->
-		        		</div><!-- Slot listing 4 end -->
-
-		        		<div class="schedule-listing bg">
-		        			<span class="schedule-slot-time">14:35 - 16:00PM</span>
-		        			<div class="schedule-slot-info">
-		        				<div class="schedule-slot-info-content">
-		        					<h3 class="schedule-slot-speaker-name">Ernest Backman</h3>
-		        					<h4 class="schedule-slot-title">A frontier for designers: cultures of creativity</h4>
-		        					<p class="schedule-slot-desc">Plaid fashion axe semiotics skateboard, try-hard food truck aesthetic biodiesel exercitation. Accusamus VHS Wes Anderson Banksy food truck vero.</p>
-		        				</div><!--Info content end -->
-		        			</div><!-- Slot info end -->
-		        		</div><!-- Slot listing 5 end -->
-
-					</div><!-- Col end -->
-				</div><!-- Content row 1 end -->
-			</div><!-- Container 2 end -->
-		</div><!-- schedule-content 1 end -->
+						</div><!-- Col end -->
+					</div><!-- Content row 1 end -->
+				</div><!-- Container 2 end -->
+			</div><!-- schedule-content 1 end -->
 
 		<div class="gap-60"></div>
+		{% endfor %}
 
-		<div class="schedule-content pattern-bg">
-			<div class="container">
-				<div class="row">
-					<div class="col-md-12">
-
-						<h2 class="schedule-date">Day 2 / Monday, 8th March</h2>
-
-		        		<div class="schedule-listing">
-		        			<span class="schedule-slot-time">09:30 - 11:15AM</span>
-		        			<div class="schedule-slot-info">
-		        				<div class="schedule-slot-info-content">
-		        					<h3 class="schedule-slot-speaker-name">Albert Brown</h3>
-		        					<h4 class="schedule-slot-title">Getting Started With User-Centered Content</h4>
-		        					<p class="schedule-slot-desc">Throw myself down teems with vapour around me, and the meridian sun strikes the upper surface of the impenetrable.</p>
-		        				</div><!--Info content end -->
-		        			</div><!-- Slot info end -->
-		        		</div><!-- Slot listing 1 end -->
-
-		        		<div class="schedule-listing bg">
-		        			<span class="schedule-slot-time">11:15 - 13:15PM</span>
-		        			<div class="schedule-slot-info">
-		        				<div class="schedule-slot-info-content">
-		        					<h3 class="schedule-slot-speaker-name">Lara Reynolds</h3>
-		        					<h4 class="schedule-slot-title">Content Measurement and Analytics</h4>
-		        					<p class="schedule-slot-desc">Minim Austin 3 wolf moon scenester aesthetic, umami odio pariatur bitters. Pop-up occaecat taxidermy street art, tattooed beard literally.</p>
-		        				</div><!--Info content end -->
-		        			</div><!-- Slot info end -->
-		        		</div><!-- Slot listing 2 end -->
-
-		        		<div class="schedule-listing">
-		        			<span class="schedule-slot-time">13:30 - 14:30PM</span>
-		        			<div class="schedule-slot-info">
-		        				<div class="schedule-slot-info-content">
-		        					<h3 class="schedule-slot-title">Lunch</h3>
-		        					<p class="schedule-slot-desc">Five star buffet for everybody.</p>
-		        				</div><!--Info content end -->
-		        			</div><!-- Slot info end -->
-		        		</div><!-- Slot listing 3 end -->
-
-		        		<div class="schedule-listing bg">
-		        			<span class="schedule-slot-time">14:35 - 16:00PM</span>
-		        			<div class="schedule-slot-info">
-		        				<div class="schedule-slot-info-content">
-		        					<h3 class="schedule-slot-speaker-name">Matthew Blakeley</h3>
-		        					<h4 class="schedule-slot-title">Not Perfect, Always Better: A Story of Inclusion</h4>
-		        					<p class="schedule-slot-desc">Plaid fashion axe semiotics skateboard, try-hard food truck aesthetic biodiesel exercitation. Accusamus VHS Wes Anderson Banksy food truck vero.</p>
-		        				</div><!--Info content end -->
-		        			</div><!-- Slot info end -->
-		        		</div><!-- Slot listing 4 end -->
-				        			
-
-					</div><!-- Col end -->
-				</div><!-- Content row 1 end -->
-			</div><!-- Container 2 end -->
-		</div><!-- schedule-content 2 end -->
-
-		<div class="gap-60"></div>
-
-		<div class="schedule-content">
-			<div class="container">
-				<div class="row">
-					<div class="col-md-12">
-
-						<h2 class="schedule-date">Day 3 / Tuesday, 9th March</h2>
-
-		        		<div class="schedule-listing">
-		        			<span class="schedule-slot-time">09:30 - 11:15AM</span>
-		        			<div class="schedule-slot-info">
-		        				<div class="schedule-slot-info-content">
-		        					<h3 class="schedule-slot-speaker-name">Katherine Key</h3>
-		        					<h4 class="schedule-slot-title">How Silos Learn: Working in the Idea Factory</h4>
-		        					<p class="schedule-slot-desc">Throw myself down teems with vapour around me, and the meridian sun strikes the upper surface of the impenetrable.</p>
-		        				</div><!--Info content end -->
-		        			</div><!-- Slot info end -->
-		        		</div><!-- Slot listing 1 end -->
-
-		        		<div class="schedule-listing bg">
-		        			<span class="schedule-slot-time">11:15 - 13:15PM</span>
-		        			<div class="schedule-slot-info">
-		        				<div class="schedule-slot-info-content">
-		        					<h3 class="schedule-slot-speaker-name">Ernest Backman</h3>
-		        					<h4 class="schedule-slot-title">Empathy Behind the Algorithms</h4>
-		        					<p class="schedule-slot-desc">Minim Austin 3 wolf moon scenester aesthetic, umami odio pariatur bitters. Pop-up occaecat taxidermy street art, tattooed beard literally.</p>
-		        				</div><!--Info content end -->
-		        			</div><!-- Slot info end -->
-		        		</div><!-- Slot listing 2 end -->
-
-		        		<div class="schedule-listing">
-		        			<span class="schedule-slot-time">13:30 - 14:30PM</span>
-		        			<div class="schedule-slot-info">
-		        				<div class="schedule-slot-info-content">
-		        					<h3 class="schedule-slot-title">Lunch</h3>
-		        					<p class="schedule-slot-desc">Five star buffet for everybody.</p>
-		        				</div><!--Info content end -->
-		        			</div><!-- Slot info end -->
-		        		</div><!-- Slot listing 3 end -->
-
-		        		<div class="schedule-listing bg">
-		        			<span class="schedule-slot-time">14:35 - 16:00PM</span>
-		        			<div class="schedule-slot-info">
-		        				<div class="schedule-slot-info-content">
-		        					<h3 class="schedule-slot-speaker-name">Angelica Bradley</h3>
-		        					<h4 class="schedule-slot-title">Adaptive Content, Context, and Controversy</h4>
-		        					<p class="schedule-slot-desc">Plaid fashion axe semiotics skateboard, try-hard food truck aesthetic biodiesel exercitation. Accusamus VHS Wes Anderson Banksy food truck vero.</p>
-		        				</div><!--Info content end -->
-		        			</div><!-- Slot info end -->
-		        		</div><!-- Slot listing 4 end -->
-
-		        		<div class="schedule-listing listing-last">
-		        			<span class="schedule-slot-time">16:30 - Late</span>
-		        			<div class="schedule-slot-info">
-		        				<div class="schedule-slot-info-content">
-		        					<h3 class="schedule-slot-title">After Party</h3>
-		        					<p class="schedule-slot-desc">Stick around and enjoy a dazzling after work.</p>
-		        				</div><!--Info content end -->
-		        			</div><!-- Slot info end -->
-		        		</div><!-- Slot listing 5 end -->
-
-					</div><!-- Col end -->
-				</div><!-- Content row 1 end -->
-			</div><!-- Container 2 end -->
-		</div><!-- schedule-content 3 end -->
-		
 	</section><!-- Main container end -->
 
 {% endblock %}

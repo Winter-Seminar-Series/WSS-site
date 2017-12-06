@@ -46,4 +46,15 @@ def render_date(wss):
 
 @register.simple_tag
 def date_string(date):
-    return date.strftime('%m/%d/%Y')
+    return date.strftime('%A, %d %B %Y')
+
+
+@register.filter(name='date_string')
+def date_string(date):
+    return date.strftime('%A, %d %B %Y')
+
+
+
+@register.simple_tag
+def time_string(date):
+    return date.strftime('%H:%M')

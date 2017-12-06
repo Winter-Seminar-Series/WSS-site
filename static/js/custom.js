@@ -179,6 +179,7 @@ jQuery(function($) {
 		});
 		
 		$('#back-to-top').tooltip('hide');
+		$('[data-toggle="tooltip"]').tooltip({'placement': 'bottom'});
 
     /* ----------------------------------------------------------- */
     /*  Ralative menu

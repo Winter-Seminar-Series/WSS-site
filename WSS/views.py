@@ -57,6 +57,5 @@ class GalleryVideoView(ExternalLinkMixin, WSSWithYearMixin, DetailView):
     template_name = 'WSS/gallery_videos.html'
 
 
-@method_decorator(login_required, name='dispatch')
 class ScheduleView(ExternalLinkMixin, WSSWithYearMixin, DetailView):
     template_name = 'WSS/schedule.html'
