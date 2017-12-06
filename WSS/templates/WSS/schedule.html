@@ -20,7 +20,9 @@
 
 							{% for event in events %}
 							<div class="schedule-listing {% if forloop.counter|divisibleby:2 %} bg {% endif %}">
-								<span class="schedule-slot-time">{% time_string event.start_time %} - {% time_string event.end_time %}</span>
+								{% if day %}
+									<span class="schedule-slot-time">{% time_string event.start_time %} - {% time_string event.end_time %}</span>
+								{% endif %}
 
 								<div class="schedule-slot-info">
 									<div class="schedule-slot-info-content">
