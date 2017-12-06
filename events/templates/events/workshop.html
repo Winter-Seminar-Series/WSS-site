@@ -15,13 +15,20 @@
                     <div class="col-xs-12 col-md-8">
                         <div class="ts-speaker-session right">
                             <h3 class="session-title">{{ workshop.title }}</h3>
+                            {% if workshop.venue %}
+                            <h4>Location</h4>
+                            {{ workshop.venue.address }}
+                            {% endif %}
+                            {% if workshop.start_time %}
+                            <h4>Date and Time</h4>
+                            {% date_string workshop.start_time %}
+                            <br>{% time_string workshop.start_time %} - {% time_string workshop.end_time %}
+                            {% endif %}
+
                             <h4>Syllabus</h4>
                             {{ workshop.syllabus }}
                             <h4>Bio</h4>
                             {{ workshop.speaker.bio }}
-                            {% if workshop.venue %}
-                            <h4> Takes place at: {{ workshop.venue }} </h4> {{ workshop.venue.address }}
-                            {% endif %}
 
                             <div>
                                 {% if workshop.material %}
