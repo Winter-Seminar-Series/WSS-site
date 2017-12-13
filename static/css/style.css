@@ -1366,7 +1366,7 @@ ul.navbar-nav > li:hover > a{
     background: -webkit-linear-gradient(145deg, #8BC34A 0%,#689F38 100%);
     background: linear-gradient(145deg, #8BC34A 0%,#689F38 100%);
 }
-.countdown.bg-style > div.counter-hour .smalltext {
+.countdown.bg-style > div.counter-minute .smalltext {
     color: #8BC34A;
 }
 

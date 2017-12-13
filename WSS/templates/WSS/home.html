@@ -267,7 +267,9 @@
 
          <div class="row text-center">
 
+             {% if wss.not_main_sponsorships.count %}
              <h3 class="sponsor-title" style="margin-bottom: 60px">Main Sponsors</h3>
+             {% endif %}
 
              {% for sponsorship in wss.main_sponsorships %}
 
@@ -286,6 +288,8 @@
              {% endfor %}
 
          </div>
+         {% if wss.not_main_sponsorships.count %}
+
          <div class="row text-center sponsor-padding ">
 
              <h3 class="sponsor-title" style="margin-bottom: 60px">Other Sponsors</h3>
@@ -306,6 +310,8 @@
              {% endfor %}
 
          </div>
+
+         {% endif %}
         </div>
     </section>
 
@@ -333,7 +339,7 @@
                      <i class="fa fa-envelope-o">&nbsp;</i>
                      <div class="contact-info-box-content">
                         <h5 class="white">Email: </h5>
-                        <p>ssc@ce.sharif.edu</p>
+                        <p>ssc.ce.sharif@gmail.com</p>
                      </div>
                   </div>
                   <div class="contact-info-box">
