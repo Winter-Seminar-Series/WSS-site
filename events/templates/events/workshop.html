@@ -11,6 +11,11 @@
                 <div class="clearfix">
                     <div class="col-xs-12 col-md-4">
                         {% render_human workshop.speaker subtitle=workshop.speaker.short_bio url=None %}
+                        {% if workshop.registration_link %}
+                         <p class="text-center">
+                            <a href="{{ workshop.registration_link }}" class="btn btn-primary">Register Now</a>
+                         </p>
+                        {% endif %}
                     </div>
                     <div class="col-xs-12 col-md-8">
                         <div class="ts-speaker-session right">

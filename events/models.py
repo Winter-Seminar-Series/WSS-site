@@ -52,6 +52,7 @@ class Workshop(BaseEvent):
     sponsor = models.ForeignKey(to='WSS.Sponsor', related_name='workshops', null=True, blank=True)
     speaker = models.ForeignKey(to='people.Speaker', related_name='workshops')
     material = models.OneToOneField(to='WorkshopMaterial', null=True, blank=True)
+    registration_link = models.URLField(null=True, blank=True)
 
     @property
     def get_absolute_url(self):
