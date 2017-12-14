@@ -26,9 +26,9 @@
                             {% endif %}
 
                             <h4>Syllabus</h4>
-                            {{ workshop.syllabus }}
+                            {{ workshop.syllabus|linebreaksbr }}
                             <h4>Bio</h4>
-                            {{ workshop.speaker.bio }}
+                            {{ workshop.speaker.bio|linebreaksbr }}
 
                             <div>
                                 {% if workshop.material %}

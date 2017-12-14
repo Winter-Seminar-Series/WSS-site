@@ -26,9 +26,9 @@
                             {% endif %}
 
                             <h4>Abstract</h4>
-                            {{ seminar.abstract }}
+                            {{ seminar.abstract|linebreaksbr }}
                             <h4>Bio</h4>
-                            {{ seminar.speaker.bio }}
+                            {{ seminar.speaker.bio|linebreaksbr }}
                             <div>
                                 <br/>
                                 {% if seminar.material %}
