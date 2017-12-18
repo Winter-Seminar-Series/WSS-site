@@ -1707,7 +1707,7 @@ ul.navbar-nav > li:hover > a{
 .ts-speaker-image:after {
     content: '';
     position: absolute;
-    background: rgba(41, 41, 41, .8);
+    /*background: rgba(41, 41, 41, .8);*/
     top: 0;
     left: 0;
     right: 0;
@@ -1761,9 +1761,11 @@ ul.navbar-nav > li:hover > a{
 .ts-speaker-image .social-links li a i.fa-linkedin {
     background: #0077b5;
 }
+
 .ts-speaker-image .social-links li a i:hover {
     background: #1b1b1b;
 }
+
 .ts-speaker-info {
     padding: 10px 20px 10px;
     color: #303030;
