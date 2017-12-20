@@ -114,12 +114,6 @@ class Sponsorship(models.Model):
     def __str__(self):
         return self.sponsor.name
 
-    @property
-    def logo_url(self):
-        if not self.sponsor.logo:
-            return None
-        return self.sponsor.logo.url
-
 
 class ExternalLink(models.Model):
     type = models.CharField(max_length=40)

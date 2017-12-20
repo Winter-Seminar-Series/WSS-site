@@ -5,11 +5,11 @@
  <div class="ts-speaker-image">
 
   {% if human.picture %}
-  {% thumbnail human.picture "400x400" crop="center" as image %}
- <img class="img-responsive" src="{{ image.url }}" alt="" />
-  {% endthumbnail %}
+   {% thumbnail human.picture "400x400" crop="center" as image %}
+    <img class="img-responsive" src="{{ image.url }}" alt="" />
+   {% endthumbnail %}
   {% else %}
-  <img class="img-responsive" src="{% static 'images/icons/avatar.jpg' %}" width="400" height="400" alt=""/>
+   <img class="img-responsive" src="{% static 'images/icons/avatar.jpg' %}" width="400" height="400" alt=""/>
   {% endif %}
  </div>
  <!--Image end -->

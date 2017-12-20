@@ -52,7 +52,9 @@
 
                                 <a href="{{ workshop.sponsor.url }}">
 
-                                    <img class="img-responsive" src="{{ workshop.sponsor.logo.url }}" alt=""/>
+                                  {% thumbnail workshop.sponsor.logo "530x265" crop="center" as image %}
+                                    <img class="img-responsive" src="{{ image.url }}" alt="" />
+                                  {% endthumbnail %}
 
                                 <h5 class="text-center"> {{ workshop.sponsor.name }}</h5>
 

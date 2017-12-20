@@ -2,6 +2,7 @@
 {% load static %}
 {% load date_tags %}
 {% load human_tags %}
+{% load thumbnail %}
 {% block header %}
    <!-- Header start -->
    <header id="header" class="header header-transparent">
@@ -277,7 +278,9 @@
 
                      <a href="{{ sponsorship.sponsor.url }}" class="sponsor-logo" style="margin-bottom: 20px; margin-top: 0px">
 
-                         <img class="img-responsive" src="{{ sponsorship.logo_url }}" alt=""/>
+                      {% thumbnail sponsorship.sponsor.logo "530x265" crop="center" as image %}
+                        <img class="img-responsive" src="{{ image.url }}" alt="" />
+                      {% endthumbnail %}
 
                      </a>
                     <a href="{{ sponsorship.sponsor.url }}">
@@ -299,7 +302,9 @@
 
                      <a href="{{ sponsorship.sponsor.url }}" class="sponsor-logo" style="margin-bottom: 20px; margin-top: 0px;">
 
-                         <img class="img-responsive" src="{{ sponsorship.logo_url }}" alt=""/>
+                      {% thumbnail sponsorship.sponsor.logo "530x265" crop="center" as image %}
+                        <img class="img-responsive" src="{{ image.url }}" alt="" />
+                      {% endthumbnail %}
 
                      </a>
                     <a href="{{ sponsorship.sponsor.url }}">
