@@ -62,7 +62,7 @@
                         </button>
                         <nav class="collapse navbar-collapse navbar-responsive-collapse pull-right">
                             <ul class="nav navbar-nav">
-                                {% block navbarItems %}
+                                {% block navbar_items %}
                                     <li><a href="{% url 'wss:home' %}">Home</a></li>
                                     <!-- Home li end -->
                                     <li class="header-ticket">
@@ -84,15 +84,17 @@
         </header>
         <!--/ Header end -->
     {% endblock %}
+
     {% block content %}
     {% endblock %}
+
     <footer id="footer" class="footer text-center">
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
                     <div class="footer-menu">
                         <ul class="nav unstyled">
-                            {% block footerMenuItems %}
+                            {% block footer_menu_items %}
                                 <li><a href="{% url 'wss:home' %}">Home</a></li>
                                 <li><a href="{% url 'wss:home' %}">Visit the Latest seminar page</a></li>
                             {% endblock %}
