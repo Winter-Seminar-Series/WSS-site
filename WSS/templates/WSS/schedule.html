@@ -119,7 +119,9 @@
 				</div><!-- Container 2 end -->
 			</div><!-- schedule-content 1 end -->
 
-		<div class="gap-60"></div>
+			{% if not forloop.last %}
+				<div class="gap-60"></div>
+			{% endif %}
 		{% empty %}
 			<div class="row text-center">
 				<h3 class="schedule-date">TBD</h3>
