@@ -2,7 +2,7 @@
 {% load static %}
 {% load date_tags %}
 {% load human_tags %}
-{% load thumbnail %}
+
 {% block title %}{{ workshop.speaker.name }}{% endblock %}
 {% block content %}
     <section id="main-container" class="main-container">
@@ -52,9 +52,7 @@
 
                                 <a href="{{ workshop.sponsor.url }}">
 
-                                  {% thumbnail workshop.sponsor.logo "530x265" crop="center" as image %}
-                                    <img class="img-responsive" src="{{ image.url }}" alt="" />
-                                  {% endthumbnail %}
+                                    <img class="img-responsive" src="{{ workshop.sponsor.logo.url }}" alt=""/>
 
                                 <h5 class="text-center"> {{ workshop.sponsor.name }}</h5>
 
