@@ -68,6 +68,7 @@ class ScheduleView(FooterMixin, WSSWithYearMixin, DetailView):
         context['pre_wss_events'] = all_events.filter(start_time__date__lt=wss.start_date)
         main_events = all_events.exclude(start_time__date__lt=wss.start_date)
 
+        # Important: I assumed that events with same start_time will have same end_time
         events_by_day = groupby(groupby(main_events, lambda event: event.start_time),
                                 lambda group: group[0].date())
 
