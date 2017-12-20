@@ -1,5 +1,9 @@
+from itertools import groupby
+
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q
 from django.shortcuts import get_object_or_404
+from django.template.defaulttags import regroup, RegroupNode
 from django.utils.decorators import method_decorator
 from django.views.generic.detail import DetailView
 
@@ -59,3 +63,28 @@ class GalleryVideoView(FooterMixin, WSSWithYearMixin, DetailView):
 
 class ScheduleView(FooterMixin, WSSWithYearMixin, DetailView):
     template_name = 'WSS/schedule.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data()
+        wss = self.object
+        all_events = wss.events.all()
+
+        context['pre_wss_events'] = all_events.filter(start_time__date__lt=wss.start_date)
+        context['post_wss_events'] = all_events.filter(start_time__date__gt=wss.end_date)
+
+        main_events = all_events.exclude(
+            Q(start_time__date__gt=wss.end_date) | Q(start_time__date__lt=wss.start_date))
+
+        events_by_day = groupby(groupby(main_events, lambda event: event.start_time),
+                                           lambda group: group[0].date())
+
+
+        # Surprising bug made me do this! I have know idea why I should reiterate events_by_day!
+        context['events_by_day'] = []
+        for date, events_by_time in events_by_day:
+            print(date)
+            _events_by_time = []
+            for time, events in events_by_time:
+                _events_by_time.append((time, list(events)))  # OMG! casting to list is important!!
+            context['events_by_day'].append((date, _events_by_time))
+        return context
