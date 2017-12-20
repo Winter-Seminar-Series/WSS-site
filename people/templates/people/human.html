@@ -1,11 +1,16 @@
  {% load thumbnail %}
+ {% load static %}
 
  {% if url %} <a href="{{ url }}"> {% endif %}<div class="ts-speaker">
  <div class="ts-speaker-image">
 
+  {% if human.picture %}
   {% thumbnail human.picture "400x400" crop="center" as image %}
  <img class="img-responsive" src="{{ image.url }}" alt="" />
   {% endthumbnail %}
+  {% else %}
+  <img class="img-responsive" src="{% static 'images/icons/avatar.jpg' %}" width="400" height="400" alt=""/>
+  {% endif %}
  </div>
  <!--Image end -->
  <div class="ts-speaker-info">
