@@ -73,38 +73,38 @@
 
 							{% for _, events in events_by_time %}
 
+								<div class="schedule-listing {% if forloop.counter|divisibleby:2 %} bg {% endif %}">
 								{% for event in events %}
 
 									{% if forloop.counter == 1 %}
-									<div class="schedule-listing {% if forloop.counter|divisibleby:2 %} bg {% endif %}">
 										{% if day %}
 											<span class="schedule-slot-time">{% time_string event.start_time %} - {% time_string event.end_time %}</span>
 										{% endif %}
-									<div class="schedule-slot-info">
+										<div class="schedule-slot-info">
 									{% endif %}
 
-										<div class="schedule-slot-info-content">
-											<h3 class="schedule-slot-speaker-name">{{ event.speaker }}</h3>
-											{% if event.seminar %}
-												<a href="{% url 'events:seminar' event.pk %}">
-											{% elif event.workshop %}
-												<a href="{% url 'events:workshop' event.pk %}">
-											{% endif %}
-											<h3 class="schedule-slot-title">{{ event.title }}</h3>
-											{% if event.seminar %}
-												</a>
-											{% elif event.workshop %}
-												</a>
-											{% endif %}
-											{% if event.venue %}
-												<span class="schedule-slot-desc" data-toggle="tooltip" title="{{ event.venue.address }}">{{ event.venue }}</>
-											{% endif %}
+											<div class="schedule-slot-info-content">
+												<h3 class="schedule-slot-speaker-name">{{ event.speaker }}</h3>
+												{% if event.seminar %}
+													<a href="{% url 'events:seminar' event.pk %}">
+												{% elif event.workshop %}
+													<a href="{% url 'events:workshop' event.pk %}">
+												{% endif %}
+												<h3 class="schedule-slot-title">{{ event.title }}</h3>
+												{% if event.seminar %}
+													</a>
+												{% elif event.workshop %}
+													</a>
+												{% endif %}
+												{% if event.venue %}
+													<span class="schedule-slot-desc" data-toggle="tooltip" title="{{ event.venue.address }}">{{ event.venue }}</>
+												{% endif %}
 
-										</div><!--Info content end -->
+											</div><!--Info content end -->
 
-										{% if not forloop.last %}
-										<br>
-										{% endif %}
+									{% if not forloop.last %}
+									<br>
+									{% endif %}
 
 								{% endfor %}
 								</div><!-- Slot info end -->
@@ -117,11 +117,9 @@
 						</div><!-- Col end -->
 					</div><!-- Content row 1 end -->
 				</div><!-- Container 2 end -->
+				<div class="gap-60"></div>
 			</div><!-- schedule-content 1 end -->
 
-			{% if not forloop.last %}
-				<div class="gap-60"></div>
-			{% endif %}
 		{% empty %}
 			<div class="row text-center">
 				<h3 class="schedule-date">TBD</h3>
