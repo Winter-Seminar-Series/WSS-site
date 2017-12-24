@@ -32,6 +32,9 @@ class HoldingTeam(models.Model):
     name = models.CharField(max_length=50)
     staff = models.ManyToManyField(to='Staff', related_name='holding_teams', blank=True)
 
+    class Meta:
+        ordering = ('pk',)
+
     def __str__(self):
         return self.name
 
