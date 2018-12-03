@@ -93,7 +93,7 @@
 	.nav-style-boxed .logo{
 		padding: 30px 0 25px 10px;
 	}
-	
+
 	/* Navigation breakpoint */
 
    .navbar-toggle{
@@ -170,7 +170,7 @@
 		opacity: 0.9;
 	}
 
-	ul.navbar-nav > li:hover > a:after, 
+	ul.navbar-nav > li:hover > a:after,
 	ul.navbar-nav > li.active > a:after{
 		content: '';
 	}
@@ -183,7 +183,7 @@
 		padding-left: 0;
 	}
 
-	.navbar-nav .open .dropdown-menu>li>a, 
+	.navbar-nav .open .dropdown-menu>li>a,
 	.navbar-nav .open .dropdown-menu .dropdown-header{
 		padding: 10px 15px 15px 10px;
 	}
@@ -219,7 +219,7 @@
 
 	ul.navbar-nav > li:hover > a {
    	background: none;
-    	color: #446CB3;
+    	color: #00728f;
 	}
 
 	.header-ticket .ticket-btn{
@@ -435,14 +435,14 @@
 		opacity: 0.9;
 	}
 
-	ul.navbar-nav > li:hover > a:after, 
+	ul.navbar-nav > li:hover > a:after,
 	ul.navbar-nav > li.active > a:after{
 		content: '';
 	}
 
 	ul.navbar-nav > li:hover > a {
    	background: none;
-    	color: #446CB3;
+    	color: #00728f;
 	}
 
 	.header-ticket .ticket-btn{
@@ -473,7 +473,7 @@
 		padding-left: 0;
 	}
 
-	.navbar-nav .open .dropdown-menu>li>a, 
+	.navbar-nav .open .dropdown-menu>li>a,
 	.navbar-nav .open .dropdown-menu .dropdown-header{
 		padding: 15px 15px 15px 10px;
 	}
@@ -582,7 +582,7 @@
 		padding: 10px 15px;
 	}
 
-	
+
 	/* Banner & Counter */
 
 	.banner-content-wrap:before{
@@ -724,7 +724,7 @@
 		padding-left: 0;
 		padding-right: 0;
 	}
-	
+
 	.section-title{
 		font-size: 16px;
 	}
@@ -864,7 +864,7 @@
 
 }
 
-/* Extra Small Devices, Phones */ 
+/* Extra Small Devices, Phones */
 @media (max-width : 479px) {
 
 	.banner-btn .btn-border{
@@ -877,7 +877,7 @@
 
 }
 
-/* Custom, iPhone Retina */ 
+/* Custom, iPhone Retina */
 @media (max-width : 320px) and (max-width: 478px)  {
 
 	.banner-btn .btn-border{
