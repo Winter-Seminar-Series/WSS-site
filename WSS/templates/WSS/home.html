@@ -199,7 +199,9 @@
       <div class="container">
          <div class="row text-center">
             <h2 class="section-title">About the seminar series</h2>
+            {% if wss.keynote_seminars.count %}
             <h3 class="section-sub-title title-white">Keynote Speakers</h3>
+            {% endif %}
          </div>
 
          <!--/ Title row end -->
