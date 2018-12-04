@@ -519,6 +519,7 @@ cite {
 .general-btn {
     clear: both;
     margin-top: 60px;
+    z-index: 1000;
 }
 .intro-content .btn-border {
     margin-right: 15px;
