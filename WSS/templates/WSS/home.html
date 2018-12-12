@@ -155,7 +155,7 @@
                         </span>
                      <div class="ts-facts-content">
                         <h2 class="ts-facts-num"><span class="counterUp">{{ wss.workshops.count }}</span></h2>
-                        <h3 class="ts-facts-title">Workshops</h3>
+                        <h3 class="ts-facts-title">{% if wss.workshops.count != 1 %} Workshops {% else %} Workshop {% endif %}</h3>
                      </div>
                   </div></a>
                   <!--Facts end -->
@@ -167,7 +167,7 @@
                         </span>
                      <div class="ts-facts-content">
                         <h2 class="ts-facts-num"><span class="counterUp">{{ wss.sponsorships.count }}</span></h2>
-                        <h3 class="ts-facts-title">Sponsors</h3>
+                        <h3 class="ts-facts-title">{% if wss.sponsorships.count != 1 %} Sponsors {% else %} Sponsor {% endif %}</h3>
                      </div>
                   </div></a>
                   <!--Facts end -->
@@ -240,13 +240,13 @@
        <div class="container">
 
          <div class="row text-center">
-            <p class="section-sub-title">Event Sponsors</p>
+            <p class="section-sub-title">Event {% if wss.sponsorships.count != 1 %}Sponsors{% else %}Sponsor{% endif %}</p>
          </div>
 
          <div class="row text-center">
 
              {% if wss.not_main_sponsorships.count %}
-             <h3 class="sponsor-title" style="margin-bottom: 60px">Main Sponsors</h3>
+             <h3 class="sponsor-title" style="margin-bottom: 60px">Main {% if wss.main_sponsorships.count != 1 %}Sponsors{% else %}Sponsor{% endif %}</h3>
              {% endif %}
 
              {% for sponsorship in wss.main_sponsorships %}
