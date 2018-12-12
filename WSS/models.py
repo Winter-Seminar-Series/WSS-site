@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils.safestring import mark_safe
+from pip._vendor import requests
 from sorl.thumbnail import ImageField
 
 from events.models import Workshop, Seminar
@@ -10,6 +11,7 @@ class WSS(models.Model):
     description = models.TextField()
     registration_link = models.URLField(null=True, blank=True)
     proposal_link = models.URLField(null=True, blank=True)
+    participants_count_link = models.URLField(null=True, blank=True)
     start_date = models.DateField()
     end_date = models.DateField()
     main_clip = models.OneToOneField(to='Clip', null=True, blank=True, related_name='+')
@@ -72,6 +74,13 @@ class WSS(models.Model):
     @property
     def is_active(self):
         return self.pk == WSS.active_wss().pk
+
+    @property
+    def participants_count(self):
+        try:
+            return requests.get(self.participants_count_link).content
+        except:
+            return 0
 
 
 class Clip(models.Model):
