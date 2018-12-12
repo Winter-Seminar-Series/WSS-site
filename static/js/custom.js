@@ -41,42 +41,6 @@ jQuery(function($) {
 		});
 	}
 
-	/* ----------------------------------------------------------- */
-	/*  Event Map 
-	/* -----------------------------------------------------------*/
-
-	if ( $( '#map' ).length > 0 ) {
-		
-      var eventmap = {lat: 35.703637, lng: 51.351593};
-
-      $('#map')
-      .gmap3({
-         zoom: 15,
-         center: eventmap,
-         mapTypeId : google.maps.MapTypeId.ROADMAP,
-         scrollwheel: false
-      })
-
-      .marker({
-        position: eventmap
-      })
-
-      .infowindow({
-         position: eventmap,
-         content: "Sharif University of Technology, Tehran, Iran"
-      })
-
-      .then(function (infowindow) {
-         var map = this.get(0);
-         var marker = this.get(1);
-         marker.addListener('click', function() {
-            infowindow.open(map, marker);
-         });
-      });
-	}
-
- 
-
 
 	/* ----------------------------------------------------------- */
 	/*  Main slideshow
