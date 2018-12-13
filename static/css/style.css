@@ -1960,6 +1960,12 @@ ul.navbar-nav > li:hover > a{
 /* Sponsors
 ================================================== */
 
+.align-center {
+  float: none !important;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .ts-sponsors .sponsor-padding {
     padding-left: 130px;
     padding-right: 130px
