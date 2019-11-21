@@ -430,8 +430,8 @@
 		width: 100%;
 		box-shadow: none;
 		border: 0;
-		background: #1c1c1c;
-		background: rgba(0, 0, 0, 0.95);
+		/* background: #1c1c1c;
+		background: rgba(0, 0, 0, 0.95); */
 		opacity: 0.9;
 	}
 

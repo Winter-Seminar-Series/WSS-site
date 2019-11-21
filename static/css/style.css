@@ -39,6 +39,13 @@
 /* Typography
 ================================================== */
 
+:root
+{
+    --light-blue: #0089ee;
+    --med-blue: #090979;
+    --dark-blue: #020024;
+}
+
 .white{
     color: white;
 }
@@ -304,11 +311,11 @@ img.pull-right {
 /* Section title */
 .section-title,
 .intro-title{
-    font-size: 18px;
-    line-height: 28px;
+    font-size: 2rem;
     font-weight: 500;
+    font-weight: bold;
     margin:0;
-    color: #00abad;
+    color: var(--med-blue);
 }
 
 .section-sub-title,
@@ -481,7 +488,7 @@ cite {
     text-transform: uppercase;
     padding: 13px 18px;
     line-height: 1.33;
-    border-radius: 3px;
+    border-radius: 50% 50% 50% 50%;
     border: 0;
     -webkit-transition: color 400ms, background-color 400ms, border-color 400ms;
     -o-transition: color 400ms, background-color 400ms, border-color 400ms;
@@ -493,7 +500,7 @@ cite {
     color: #446CB3;
 }
 .btn.btn-primary {
-    background: #446CB3;
+    background: white;
     border: 2px solid transparent;
 }
 .btn.btn-dark {
@@ -673,6 +680,7 @@ a[href^=tel] {
     border-radius: 0;
     border: 0;
     margin-bottom: 0;
+    background-color: #1b7abf;
 }
 .navbar-toggle {
     float: left;
@@ -699,7 +707,6 @@ ul.navbar-nav > li {
     display: inline-block;
     position: relative;
     padding: 0 5px;
-    line-height: 80px;
 }
 ul.navbar-nav > li:last-child {
     padding-right: 0;
@@ -872,6 +879,14 @@ ul.navbar-nav > li:hover > a{
 
 #banner {
     padding: 0;
+    height: 100vh;
+}
+
+#banner .diagonal
+{
+    -webkit-box-shadow: 0px 17px 13px 0px rgba(0,0,0,0.49);
+    -moz-box-shadow: 0px 17px 13px 0px rgba(0,0,0,0.49);
+    box-shadow: 0px 17px 13px 0px rgba(0,0,0,0.49);
 }
 
 .banner-title {
@@ -879,18 +894,39 @@ ul.navbar-nav > li:hover > a{
 }
 
 .banner-item {
-    min-height: 800px;
-    color: #fff;
-    background-attachment: fixed;
+    min-height: 80vh;
+    color: var(--med-blue);
+    /* background-attachment: fixed; */
     background-position: 50% 50%;
     -webkit-background-size: cover;
     background-size: cover;
     -webkit-backface-visibility: hidden;
 }
 
+.diagonal
+{
+    -webkit-transform: skewY(-5deg);
+    -moz-transform: skewY(-5deg);
+    -ms-transform: skewY(-5deg);
+    -o-transform: skewY(-5deg);
+    transform: skewY(-5deg);
+    margin-top: -5rem;
+    margin-bottom: -5rem;
+    z-index: 1;
+
+    /* padding-top: 2rem; */
+}
+.diagonal > *
+{
+    -webkit-transform: skewY(5deg);
+    -moz-transform: skewY(5deg);
+    -ms-transform: skewY(5deg);
+    -o-transform: skewY(5deg);
+    transform: skewY(5deg);  
+}
+
 .banner-content,
 .banner-reg-form {
-    padding: 280px 0;
     width: 100%;
     vertical-align: middle;
     position: relative;
@@ -939,7 +975,6 @@ ul.navbar-nav > li:hover > a{
     font-size: 20px;
     color: #fff;
     font-weight: lighter;
-    margin-top: -20px;
 }
 .banner-desc {
     font-size: 24px;
@@ -988,6 +1023,7 @@ ul.navbar-nav > li:hover > a{
     line-height: 48px;
     margin: 0;
 }
+
 
 .hero-big-date-content .banner-subtitle{
     font-size: 20px;
@@ -1691,7 +1727,14 @@ ul.navbar-nav > li:hover > a{
 .all-speakers {
     background-color: #00abad !important;
 }
-
+@media (min-width: 576px)
+{
+    #ts-speakers
+    {
+        background-position-x: 20vw !important;
+        background-repeat: no-repeat!important; 
+    }
+}
 .ts-speakers-bg{
     background-color: #f5f5f5;
     background-image: url(../images/parallax1.jpg);
@@ -1724,7 +1767,9 @@ ul.navbar-nav > li:hover > a{
     position: relative;
     text-align: center;
 }
-
+.ts-speaker-image img {
+    max-width: 100%;
+}
 .ts-speaker-image:after {
     content: '';
     position: absolute;
@@ -1905,7 +1950,6 @@ ul.navbar-nav > li:hover > a{
 ================================================== */
 
 .ts-statics{
-    background: url(../images/pattern1.png);
     padding: 40px 0;
 }
 
@@ -2237,7 +2281,6 @@ h4.panel-title a.collapsed:before {
 
 .venu-map .container-fluid{
     padding: 25px;
-    background: #1c1c24;
 }
 
 .bottom-contact{
@@ -2278,6 +2321,8 @@ h4.panel-title a.collapsed:before {
     padding: 30px 0;
     position: relative;
     background-attachment: fixed;
+    margin-bottom: -4rem;
+    padding-bottom: 4.5rem;
 }
 
 .footer .container{
@@ -3172,4 +3217,9 @@ label {
 .error-page .error-body .btn {
     margin-top: 30px;
     font-weight: 700;
+}
+
+.blue-gradient
+{
+    background: linear-gradient(135deg, rgba(0,137,238,1) 0%, rgba(9,9,121,1) 71%, rgba(2,0,36,1) 100%) !important;
 }
