@@ -70,7 +70,7 @@
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TKGNH9W"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     {% block navbar %}
-        <nav class="navbar navbar-expand-lg  navbar-dark">
+        <nav class="navbar navbar-expand-lg  navbar-dark w-100">
             <div class="container">
                 <a class="navbar-brand" href="{% url 'wss:home' %}">
                     <img src="{% static 'images/logo.png' %}" width="50px" alt="">
@@ -98,10 +98,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <!-- Header start -->
         <header id="header" class="header-dark">
             <div class="container">
-                
-                
-
-                <!--/ Row end -->
             </div>
             <!--/ Container end -->
         </header>
@@ -110,38 +106,40 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         
         {% block content %} {% endblock %}
 
-        <footer id="footer" class="footer text-center diagonal blue-gradient mt-5">
+        <footer id="footer" class="text-white footer text-center diagonal blue-gradient pt-5" style="margin-top:4.75rem">
             <div class="container">
                 <div class="row">
                     <div class="col-md-12">
-                        <div class="footer-menu">
-                            <ul class="nav unstyled">
-                                {% block footer_menu_items %}
-                                <li><a href="{% url 'wss:home' %}">Home</a></li>
-                                <li><a href="{% url 'wss:home' %}">Visit the Latest seminar page</a></li>
-                                {% endblock %}
-                            </ul>
-                            {% if past_years %}
-                            <span>Past seminars archive:</span>
-                            <ul class="nav fa">
-                                {% for past_year in past_years %}
-                                <li><a href="{% url 'wss:home' past_year %}">{{ past_year }}</a></li>
-                                {% endfor %}
-                            </ul>
-                            {% endif %}
-                        </div>
+                        
                         <!-- Footer menu end -->
                         <div class="footer-logo">
                             <a href="{{ SITE_URL }}"><img src="{% static 'images/WSS-2018-logo-white.png' %}" alt="footer logo" width="100" /></a>
                             <a href="http://ssc.ce.sharif.edu"><img src="{% static 'images/SSC-logo-white.png' %}" alt="footer logo" width="100" /></a>
                         </div>
-                        <div class="footer-social">
-                            <ul>
-                                {% for external_link in external_links %}
-                                <li><a href="{{ external_link.url }}"><i class="fa fa-{{ external_link.type }}"></i></a>
-                                </li>
-                                {% endfor %}
-                            </ul>
+                        
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="footer-social d-flex justify-content-center justify-content-sm-start">
+                                    <ul>
+                                        {% for external_link in external_links %}
+                                        <li><a href="{{ external_link.url }}"><i class="social-icon text-white fa fa-{{ external_link.type }}"></i></a>
+                                        </li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                            {% if past_years %}
+                            <div class="d-flex justify-content-center justify-content-sm-end">
+                                <span>Past Seminars</span>
+                                <ul class="d-inline ma-0">
+                                    {% for past_year in past_years %}
+                                    <li class="d-inline"><a href="{% url 'wss:home' past_year %}">{{ past_year }}</a></li>
+                                    {% endfor %}
+                                </ul>
+                                {% endif %}
+                                </div>
+                            </div>
                         </div>
                         <!-- Footer social end -->
                         <div class="copyright-info">

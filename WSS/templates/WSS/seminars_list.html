@@ -5,11 +5,12 @@
 
 {% block title %}{{ wss }} speakers{% endblock %}
 {% block content %}
-   <section id="ts-speakers" class="ts-speakers gradient-bg">
+   <section id="ts-speakers" style="" class="blue-gradient ts-speakers diagonal ">
+      <div>
       <div class="container">
-         <div class="row text-center">
+         <div class="row">
             {% if wss.keynote_seminars.count %}
-            <h3 class="section-sub-title title-white">Keynote Speakers</h3>
+            <h3 class="mb-1 col section-sub-title title-white">Keynote Speakers</h3>
             {% endif %}
          </div>
 
@@ -23,8 +24,8 @@
          </div>
          <br>
 
-         <div class="row text-center">
-            <h3 class="section-sub-title title-white">Speakers</h3>
+         <div class="row">
+            <h3 class="mb-1 col section-sub-title title-white">Speakers</h3>
          </div>
             {% for seminar in wss.non_keynote_seminars %}
          <div class="col-xs-12 col-sm-6 col-md-3">
@@ -32,61 +33,11 @@
          </div>
             {% endfor %}
       </div>
-
+      </div>
       <!-- Content row 2 end -->
 
       <!--/ Container end -->
-   </section>
-   <!-- Speakers end -->
-   <section class="venu-map no-padding">
-   <div class="container-fluid">
-      <div class="row">
-         <div class="col-md-6">
-            <div class="bottom-contact white">
-               <h4 class="white">Organizer info</h4>
-                  <p>The event is held by the <a href="http://ssc.ce.sharif.edu">Student Scientific
-                  Chapter (SSC)</a> of <a href="http://ce.sharif.edu">Computer Engineering Department</a>
-                  of <a href="http://sharif.edu">Sharif University of Technology</a>
-               </p>
-               <br>
-               <h4 class="white">Venue Details</h4>
-               <div class="contact-info">
-                  <div class="contact-info-box">
-                     <i class="fa fa-map-marker">&nbsp;</i>
-                     <div class="contact-info-box-content">
-                        <h5 class="white">Address: </h5>
-                        <p>Sharif University of Technology, Azadi Street, Distinct 2, Tehran, Iran</p>
-                     </div>
-                  </div>
-                  <div class="contact-info-box">
-                     <i class="fa fa-envelope-o">&nbsp;</i>
-                     <div class="contact-info-box-content">
-                        <h5 class="white">Email: </h5>
-                        <p>wss@ce.sharif.edu</p>
-                     </div>
-                  </div>
-                  <div class="contact-info-box">
-                     <i class="fa fa-phone">&nbsp;</i>
-                     <div class="contact-info-box-content">
-                        <h5 class="white">Phone: </h5>
-                        <p>+98(021) 66 16 57 81</p>
-                     </div>
-                  </div>
-               </div>
-               <!-- Contact info end -->
-            </div>
-            <!-- Contact form div end -->
-         </div>
-         <!-- Col end -->
-         <div class="col-md-6">
-            <div id="map" class="map-bottom"></div>
-            <!-- Google Map -->
-         </div>
-         <!-- Col end -->
-      </div>
-      <!-- Content row end -->
-   </div>
-   <!-- Container end -->
 </section>
+
 <!-- Map end -->
 {% endblock %}
