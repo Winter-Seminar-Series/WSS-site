@@ -136,3 +136,34 @@ class ExternalLink(models.Model):
 
     def __str__(self):
         return '{}: {}'.format(self.type, self.url)
+
+
+MAJOR_CHOICES = [('ms', 'MS'), ('bs', "BS"), ('phd', 'PHD'), ('oth', 'other')]
+PAYMENT_CHOICES = [('OK', 'پرداخت شده'), ('NO', "پرداخت نشده")]
+
+
+class Grade(models.Model):
+    level = models.CharField(max_length=3, choices=MAJOR_CHOICES)
+    capacity = models.IntegerField()
+    price = models.IntegerField()
+
+
+class Exhibitor(models.Model):
+    name = models.CharField(max_length=50)
+    family = models.CharField(max_length=70)
+    student_number = models.CharField(max_length=70, blank=True)
+    email = models.EmailField(primary_key=True)
+    payment_status = models.CharField(max_length=2, default='NO', choices=PAYMENT_CHOICES)
+    grade = models.CharField(max_length=30)
+    level = models.CharField(max_length=3, choices=MAJOR_CHOICES)
+    phone_number = models.CharField(max_length=13)
+    payment_id = models.IntegerField()
+    sign_timestamp = models.DateTimeField(auto_now_add=True)
+
+
+class Reservatore(models.Model):
+    name = models.CharField(max_length=50)
+    family = models.CharField(max_length=70)
+    student_number = models.CharField(max_length=70, blank=True)
+    email = models.EmailField(primary_key=True)
+    major = models.CharField(max_length=30)
