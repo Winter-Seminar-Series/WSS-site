@@ -10,28 +10,28 @@
         <div class="container-fluid px-5 mt-5 diagonal" style="background: white;">
             <div class="container">
             <div class="row">
-                <div class="col-sm-4 m-0"><img style="border-radius: 5px; width: 100%" src="{% get_media_prefix %}{{seminar.speaker.picture}}" alt=""/>
+                <div class="col-sm-4 m-0"><img style="border-radius: 5px; width: 100%" src="{% get_media_prefix %}{{postersession.speaker.picture}}" alt=""/>
                 </div>
                 <div class="pl-sm-5 col mt-4 d-flex align-items-center"> 
                     <div class="row">
                         <div class="col">
-                            <h4>{{seminar.speaker}}</h4>
-                            <h6>{{seminar.speaker.degree}}</h6>
-                            <h3 class="session-title">{{ seminar.title }}</h3>
-                            {% if seminar.venue %}
+                            <h4>{{postersession.speaker}}</h4>
+                            <h6>{{postersession.speaker.degree}}</h6>
+                            <h3 class="session-title">{{ postersession.title }}</h3>
+                            {% if postersession.venue %}
                             <div>
                                 <i class="fa fa-map-marker">&nbsp;</i>
-                                {{ seminar.venue.address }}                            
+                                {{ postersession.venue.address }}                            
                             </div>
                             {% endif %}
-                            {% if seminar.start_time %}
+                            {% if postersession.start_time %}
                             <div>
                             <i class="fa fa-clock-o">&nbsp;</i>
-                            {% date_string seminar.start_time %}
+                            {% date_string postersession.start_time %}
                             </div>
                             <div>
                             <i class="fa fa-calendar">&nbsp;</i>
-                            {% time_string seminar.start_time %} - {% time_string seminar.end_time %}
+                            {% time_string postersession.start_time %} - {% time_string postersession.end_time %}
                             </div>{% endif %}
                         </div>
                     </div>
@@ -44,21 +44,21 @@
 
                         <h4>Abstract</h4>
                         <div class="mb-3">
-                        {{ seminar.abstract|linebreaksbr }}
+                        {{ postersession.abstract|linebreaksbr }}
                         </div>
                         <h4>Bio</h4>
                         <div class="mb-3">
-                        {{ seminar.speaker.bio|linebreaksbr }}
+                        {{ postersession.speaker.bio|linebreaksbr }}
                         </div>
                         <div>
                             <br/>
-                            {% if seminar.material %}
+                            {% if postersession.material %}
                                 <h4>Material</h4>
-                                {% if seminar.material.slides %}
-                                    <a class="btn btn-warning" href="{{ seminar.material.slides.url }}">Slides</a>
+                                {% if postersession.material.slides %}
+                                    <a class="btn btn-warning" href="{{ postersession.material.slides.url }}">Slides</a>
                                 {% endif %}
-                                {% if seminar.material.video_url %}
-                                    <a class="btn btn-danger" href="{{ seminar.material.video_url }}">Video</a>
+                                {% if postersession.material.video_url %}
+                                    <a class="btn btn-danger" href="{{ postersession.material.video_url }}">Video</a>
                                 {% endif %}
                             {% endif %}
                         </div>

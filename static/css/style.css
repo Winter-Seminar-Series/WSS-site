@@ -138,7 +138,7 @@ a.read-more:hover {
 }
 section,
 .section-padding {
-    padding: 120px 0;
+    padding: 10rem 0;
     position: relative;
 }
 .gradient-bg{
@@ -493,9 +493,16 @@ cite {
     transition: color 400ms, background-color 400ms, border-color 400ms;
 }
 
-.btn-white.btn-primary {
+.btn-white.btn-primary, .btn-white.btn-primary:hover {
     background: #fff;
     color: #446CB3;
+    transition: all 0.35s;
+}
+
+.btn-white.btn-primary:hover {
+    opacity: 0.8;
+    border-color: transparent;
+    text-decoration: none;
 }
 .btn.btn-primary {
     background: white;
@@ -510,12 +517,7 @@ cite {
     background: none;
     color: #fff;
 }
-.btn-primary:hover,
-.btn-dark:hover,
-.btn-white.btn-primary:hover {
-    background: #446CB3;
-    color: #fff;
-}
+
 .btn-border:hover {
     background: #446CB3;
     border: 2px solid transparent;
@@ -750,7 +752,7 @@ ul.navbar-nav > li.active > a {
 }
 
 ul.navbar-nav > li:hover > a{
-    background: #00728f;
+    background-color: #dfdfdf52;
     color: #fff;
 }
 
@@ -1581,7 +1583,10 @@ ul.navbar-nav > li:hover > a{
 }
 /* Facts
 ================================================== */
-
+.ts-facts
+{
+    color: #12389b;
+}
 .facts-area {
     color: #ffffff;
     background-color: #1c1c24;
@@ -1631,13 +1636,15 @@ ul.navbar-nav > li:hover > a{
     display: inline-block;
 }
 .ts-facts .ts-facts-content .ts-facts-num {
-    font-size: 36px;
+    font-size: 3rem;
+    font-weight: bolder;
     margin: 0;
 }
 .ts-facts .ts-facts-content .ts-facts-title {
-    font-size: 18px;
-    font-weight: 500;
+    font-size: 1rem;
+    font-weight: bold;
     margin: 10px 0 0;
+    color: #a5a5a5;
 }
 /* Schedule
 ================================================== */
@@ -1728,7 +1735,12 @@ ul.navbar-nav > li:hover > a{
 /* Speakers bg */
 
 .all-speakers {
-    background-color: #00abad !important;
+    background-color: var(--light-blue) !important;
+    transition: all 0.35s!important;
+}
+.all-speakers:hover {
+    opacity: 0.8;
+    border-color: transparent!important;    
 }
 @media (min-width: 576px)
 {
@@ -1953,9 +1965,6 @@ ul.navbar-nav > li:hover > a{
 /* statics
 ================================================== */
 
-.ts-statics{
-    padding: 40px 0;
-}
 
 .statics {
     position: relative;
@@ -2544,6 +2553,7 @@ h4.panel-title a.collapsed:before {
     overflow: hidden;
     margin-bottom: 30px;
     height: 300px;
+    border-radius: 5px;
 }
 .intro-gallary .gallery-container{
     height: auto;
@@ -3177,7 +3187,11 @@ label {
 
 .blue-gradient:nth-last-child(2)
 {
-    background: url('../images/h-bg-1.jpg') no-repeat center top!important;
+    background: url('../images/h-bg-1.jpg'), black no-repeat center top!important;
     background-size: cover;
 }
 
+.no-shadow .ts-speaker
+{
+    box-shadow: none;
+}

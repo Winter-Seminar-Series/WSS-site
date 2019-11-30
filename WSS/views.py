@@ -31,6 +31,15 @@ class SeminarsListView(FooterMixin, DetailView):
         return get_object_or_404(WSS, year=int(self.kwargs['year']))
 
 
+class PosterSessionsListView(FooterMixin, DetailView):
+    template_name = 'WSS/postersessions_list.html'
+    model = WSS
+    context_object_name = 'wss'
+
+    def get_object(self, queryset=None):
+        return get_object_or_404(WSS, year=int(self.kwargs['year']))
+
+
 class WorkshopsListView(FooterMixin, DetailView):
     template_name = 'WSS/workshops_list.html'
     model = WSS

@@ -6,6 +6,11 @@
     <!-- Home li end -->
     <li class="nav-item"><a class="nav-link" href="{% url 'wss:seminars-list' wss.year %}">Speakers</a></li>
     <!-- Speakers li end -->
+    
+    {% if wss.postersessions.count %}
+        <li class="nav-item"><a class="nav-link" data-scroll href="{% url 'wss:postersessions-list' wss.year %}">Poster Sessions</a></li>
+    {% endif %}
+
     {% if wss.workshops.count %}
         <li class="nav-item"><a class="nav-link" data-scroll href="{% url 'wss:workshops-list' wss.year %}">Workshops</a></li>
     {% endif %}
@@ -24,12 +29,12 @@
     {% if wss.is_active %}
         {% if wss.registration_link %}
             <li class="header-ticket">
-                <a class="ticket-btn btn-primary" href="{{ wss.registration_link }}">Register</a>
+                <a class="btn-white btn-primary" href="{{ wss.registration_link }}">Register</a>
             </li>
         {% endif %}
     {% else %}
         <li class="header-ticket">
-            <a href="{% url 'wss:home' %}" class="ticket-btn btn-primary">Visit the Latest seminar page</a>
+            <a href="{% url 'wss:home' %}" class="btn-white btn-primary">Visit the Latest seminar page</a>
         </li>
     {% endif %}
 {% endblock %}

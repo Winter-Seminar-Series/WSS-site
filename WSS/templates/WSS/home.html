@@ -79,39 +79,40 @@
 <!-- Intro area end --> {% endcomment %}
 
 
-<section id="ts-programs" class="banner-item">
+<section id="ts-programs" class="banner-item diagonal">
     <div class="container">
         <div class="row">
         <h2 class="section-title mx-auto">Programs</h2>
         </div>
         <div class="row">
             <div class="col-9 col-sm-6 mx-auto">
-                <div class="row d-flex flex-sm-row-reverse justify-content-start justify-content-sm-between mt-5">
-                    <img class="d-none d-sm-inline rounded-circle" src="{% static 'images/2-min.jpg'%}" width="10%" height="10%">
-                    <div class="mr-sm-5">
+                <div class="row d-flex flex-sm-row-reverse justify-content-start justify-content-sm-between mt-5 mb-md-5">
+                    <div class="p-5 p-md-0 col-md-4 d-flex flex-column justify-content-center"><img style="width:100%; height:auto;"class="my-auto" src="{% static 'images/seminar.png'%}"></div>
+                    <div class="col mr-md-3">
                         <h3>Seminars</h3>
-                        <p>mamad naboodi bebini</p>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
                     </div>
                 </div>
-                <div class="row justify-content-sm-start mt-5">
-                    <img class="d-none d-sm-inline rounded-circle" src="{% static 'images/2-min.jpg'%}" width="10%" height="10%">
-                    <div class="ml-sm-5">
+                <div class="row justify-content-sm-start mt-md-5 mb-md-5">
+                    <div class="p-5 p-md-0 col-md-4 d-flex flex-column justify-content-center"><img style="width:100%; height:auto;"class="my-auto" src="{% static 'images/poster_session.png'%}"></div>
+                    <div class="col ml-md-3">
                         <h3>Poster Session</h3>
-                        <p>mamad naboodi bebini</p>
+                        <p>The Poster Session advertises your research.
+For the first time, WSS has attempted  to create an opportunity for researchers who have achievements to meet others and engage with them, and build networks.</p>
                     </div>
                 </div>
-                <div class="row d-flex flex-sm-row-reverse justify-content-start justify-content-sm-between mt-5">
-                    <img class="d-none d-sm-inline rounded-circle" src="{% static 'images/2-min.jpg'%}" width="10%" height="10%">
-                    <div class="mr-sm-5">
+                <div class="row d-flex flex-sm-row-reverse justify-content-start justify-content-sm-between mt-md-5">
+                    <div class="p-5 p-md-0 col-md-4 d-flex flex-column justify-content-center"><img style="width:100%; height:auto;"class="my-auto" src="{% static 'images/workshop.png'%}"></div>
+                    <div class="col mr-md-3">
                         <h3>Workshops</h3>
-                        <p>mamad naboodi bebini</p>
+                        <p>Workshops are long form educational opportunities about technology or scientific subjects presented by the best experts our industry has to offer.</p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </section>
-<section id="ts-speakers-main" class="banner-item  diagonal blue-gradient">
+<section id="ts-speakers-main" class="banner-item  diagonal blue-gradient" style="padding: 4rem 0">
     <div class="container">
         <div class="row text-center">
             {% if wss.keynote_seminars.count %}
@@ -143,7 +144,7 @@
 
     <div class="row">
         <div class="general-btn text-center mx-auto">
-            <a class="btn btn-primary all-speakers" href="{% url 'wss:seminars-list' wss.year %}">View All Speakers</a>
+            <a class="btn btn-primary btn-white" href="{% url 'wss:seminars-list' wss.year %}">View All Speakers</a>
         </div>
     </div>
     <!-- Content row 2 end -->
@@ -151,15 +152,12 @@
 </section>
 <!-- Speakers end -->
 
-{% comment %} <section id="ts-statics" class="ts-statics diagonal">
-    <div class="container">
-        <div class="row">
-                <div class="col-md-3 col-xs-12 text-center">
+<section id="ts-statics" class="ts-statics diagonal">
+    <div class="container py-4">
+        <div class="row d-flex justify-content-center">
+                <div class="col-sm-2 text-center">
                     <a data-scroll href="#ts-speakers">
                         <div class="ts-facts">
-                            <span class="ts-facts-img">
-                        <img src="{% static 'images/icons/fact-speaker.png' %}" alt="" />
-                        </span>
                             <div class="ts-facts-content">
                                 <h2 class="ts-facts-num"><span class="counterUp">{{ wss.seminars.count }}</span></h2>
                                 <h3 class="ts-facts-title">Seminars</h3>
@@ -170,12 +168,9 @@
                 </div>
                 <!-- Col end -->
 
-                <div class="col-md-3 col-xs-12 text-center">
+                <div class="col-sm-2 text-center">
                     <a data-scroll href="{% url 'wss:workshops-list' wss.year %}">
                         <div class="ts-facts">
-                            <span class="ts-facts-img">
-                        <img src="{% static 'images/icons/fact-workshop.png' %}" alt="" />
-                        </span>
                             <div class="ts-facts-content">
                                 <h2 class="ts-facts-num"><span class="counterUp">{{ wss.workshops.count }}</span></h2>
                                 <h3 class="ts-facts-title">{% if wss.workshops.count != 1 %} Workshops {% else %} Workshop {% endif %}</h3>
@@ -184,26 +179,20 @@
                     </a>
                     <!--Facts end -->
                 </div>
-                <div class="col-md-3 col-xs-12 text-center">
-                    <a data-scroll href="#ts-sponsors">
+                <div class="col-sm-2 text-center">
+                    <a data-scroll href="{% url 'wss:postersessions-list' wss.year %}">
                         <div class="ts-facts">
-                            <span class="ts-facts-img">
-                        <img src="{% static 'images/icons/fact-sponsor.png' %}" alt="" />
-                        </span>
                             <div class="ts-facts-content">
-                                <h2 class="ts-facts-num"><span class="counterUp">{{ wss.sponsorships.count }}</span></h2>
-                                <h3 class="ts-facts-title">{% if wss.sponsorships.count != 1 %} Sponsors {% else %} Sponsor {% endif %}</h3>
+                                <h2 class="ts-facts-num"><span class="counterUp">{{ wss.postersessions.count }}</span></h2>
+                                <h3 class="ts-facts-title">{% if wss.postersessions.count != 1 %} Poster Presenters {% else %} Poster Presenter {% endif %}</h3>
                             </div>
                         </div>
                     </a>
                     <!--Facts end -->
                 </div>
                 <!-- Col end -->
-                <div class="col-md-3 col-xs-12 text-center">
+                <div class="col-sm-2 text-center">
                     <div class="ts-facts">
-                        <span class="ts-facts-img">
-                        <img src="{% static 'images/icons/fact-country.png' %}" alt="Staff" />
-                        </span>
                         <div class="ts-facts-content">
                             <h2 class="ts-facts-num"><span class="counterUp">{{ wss.participants_count }}</span></h2>
                             <h3 class="ts-facts-title">Participants</h3>
@@ -217,27 +206,25 @@
         <!-- Row end -->
     </div>
     <!--/ Container end -->
-</section> {% endcomment %}
+</section>
 <!--/ Newsletter end -->
-<section id="ts-sponsors" class="ts-sponsors">
+<section id="ts-sponsors" class="ts-sponsors diagonal pt-0">
     <div class="container">
 
-        <div class="row text-center">
             <p class="section-sub-title">Event {% if wss.sponsorships.count != 1 %}Sponsors{% else %}Sponsor{% endif %}</p>
-        </div>
 
-        <div class="row text-center">
+        <div class="row text-center d-flex align-items-center">
 
             {% if wss.not_main_sponsorships.count %}
-            <h3 class="sponsor-title" style="margin-bottom: 60px">Main {% if wss.main_sponsorships.count != 1 %}Sponsors{% else %}Sponsor{% endif %}</h3>
+            <h3 class="sponsor-title mb-5" >Main {% if wss.main_sponsorships.count != 1 %}Sponsors{% else %}Sponsor{% endif %}</h3>
             {% endif %} {% for sponsorship in wss.main_sponsorships %}
 
             <div class="col-xs-12 col-sm-4 col-md-4 align-center">
 
-                <a href="{{ sponsorship.sponsor.url }}" class="sponsor-logo" style="margin-bottom: 20px; margin-top: 0px">
+                <a href="{{ sponsorship.sponsor.url }}">
+                    <img style="width: 80%;"class="img-responsive" src="{{ sponsorship.logo_url }}" alt="" />
 
                     <!--I tried to use thumbnail with fixed size here but it did not work well! -->
-                    <img class="img-responsive" src="{{ sponsorship.logo_url }}" width="630" height="265" alt="" />
 
                 </a>
                 <a href="{{ sponsorship.sponsor.url }}">
@@ -251,7 +238,7 @@
         </div>
         {% if wss.not_main_sponsorships.count %}
 
-        <div class="row text-center sponsor-padding ">
+        <div class="row text-center ">
 
             <h3 class="sponsor-title" style="margin-bottom: 60px">Other Sponsors</h3>
             {% for sponsorship in wss.not_main_sponsorships %}

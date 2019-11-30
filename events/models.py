@@ -46,6 +46,15 @@ class Seminar(BaseEvent):
     def get_absolute_url(self):
         return reverse('events:seminar', args=[self.pk])
 
+class PosterSession(BaseEvent):
+    abstract = models.TextField()
+    speaker = models.ForeignKey(to='people.Speaker', related_name='postersessions')
+    material = models.OneToOneField(to='PosterMaterial', null=True, blank=True)
+
+    @property
+    def get_absolute_url(self):
+        return reverse('events:postersession', args=[self.pk])
+
 
 class Workshop(BaseEvent):
     syllabus = models.TextField()
@@ -75,4 +84,10 @@ class WorkshopMaterial(Material):
     def __str__(self):
         if hasattr(self, 'workshop'):
             return 'Material of {}'.format(self.workshop)
+        return 'Added Material'
+
+class PosterMaterial(Material):
+    def __str__(self):
+        if hasattr(self, 'postersession'):
+            return 'Material of {}'.format(self.postersession)
         return 'Added Material'

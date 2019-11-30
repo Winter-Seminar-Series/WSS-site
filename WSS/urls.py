@@ -1,12 +1,13 @@
 from django.conf.urls import url, include
 
-from WSS.views import HomeView, SeminarsListView, WorkshopsListView, StaffListView, \
+from WSS.views import HomeView, SeminarsListView, PosterSessionsListView, WorkshopsListView, StaffListView, \
     GalleryImageView, GalleryVideoView, \
     ScheduleView
 
 year_urlpatterns = [
     url(r'^$', HomeView.as_view(), name='home'),
     url(r'^seminars/$', SeminarsListView.as_view(), name='seminars-list'),
+    url(r'^postersessions/$', PosterSessionsListView.as_view(), name='postersessions-list'),
     url(r'^workshops/$', WorkshopsListView.as_view(), name='workshops-list'),
     url(r'^staff/$', StaffListView.as_view(), name='staff-list'),
     url(r'^gallery/images/$', GalleryImageView.as_view(), name='gallery-image'),

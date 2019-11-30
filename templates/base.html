@@ -81,10 +81,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 <div class="collapse navbar-collapse" id="wss-navbar">
                     <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
                         {% block navbar_items %}
-                            <li><a href="{% url 'wss:home' %}">Home</a></li>
+                            <li class="nav-item"><a class="nav-link" href="{% url 'wss:home' %}">Home</a></li>
                             <!-- Home li end -->
-                            <li class="header-ticket">
-                                <a href="{% url 'wss:home' %}" class="ticket-btn btn-primary">Visit the last
+                            <li class="header-ticket nav-item">
+                                <a href="{% url 'wss:home' %}" class="btn-white btn-primary">Visit the last
                                         seminar page</a>
                             </li>
                         {% endblock %}
@@ -134,7 +134,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                                 <span>Past Seminars</span>
                                 <ul class="d-inline ma-0">
                                     {% for past_year in past_years %}
-                                    <li class="d-inline"><a href="{% url 'wss:home' past_year %}">{{ past_year }}</a></li>
+                                    <li class="px-2 d-inline"><a href="{% url 'wss:home' past_year %}">{{ past_year }}</a></li>
                                     {% endfor %}
                                 </ul>
                                 {% endif %}
@@ -144,7 +144,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                         <!-- Footer social end -->
                         <div class="copyright-info">
                             <span>This website is created by <a href="{% url 'people:creators-list' %}">Moazzam Team</a>.<br>
-                  Copyright © 2015-2017 WSS. All Rights Reserved.</span>
+                  Copyright © 2015-2019 WSS. All Rights Reserved.</span>
                         </div>
                         <!-- Copyright info end -->
                     </div>
