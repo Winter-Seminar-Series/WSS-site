@@ -3,6 +3,7 @@
 
 {% block navbar_items %}
     <li class="nav-item"><a class="nav-link" href="{% url 'wss:home' wss.year %}">{{ wss }}</a></li>
+    <li class="nav-item"><a class="nav-link" href="{% url 'wss:about' %}">ABOUT WSS</a></li>
     <!-- Home li end -->
     <li class="nav-item"><a class="nav-link" href="{% url 'wss:seminars-list' wss.year %}">Speakers</a></li>
     <!-- Speakers li end -->

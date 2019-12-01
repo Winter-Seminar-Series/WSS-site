@@ -1,0 +1,56 @@
+{% extends 'wssbase.html' %}
+{% load static %}
+{% load date_tags %}
+{% load human_tags %}
+
+{% block content %}
+    <section id="main-container" class="main-container">
+        <div style="margin-top: -15rem; height: 15rem;" class="diagonal background-shafagh">
+                <div class="container section-sub-title title-white" style="padding-top: 10rem">
+                About WSS
+                </div>
+            </div>
+        
+        <div class="container-fluid px-5 pt-3 mt-5 mb-0 diagonal" style="background: white;">
+            <div class="container">
+            <!-- Speaker row 1 -->
+            <div class="row mt-5">
+                <div class="col">
+                    WSS is a two-day scientific event consisting of scientific talks, workshops, discussion panels, and poster presentations in computer science and engineering. It is aimed at providing an environment in which Iranian academics and researchers from all around the world could exchange their knowledge, present their latest work, share their experience, and expand their network. The main organizer of this event is the Students’ Scientific Chapter of the computer engineering department.
+                </div><!-- Col end -->
+            </div><!-- Speaker row 1 -->
+            </div>
+        </div><!-- Conatiner end -->
+      <div class="diagonal mt-5 mb-0">
+         <div class="container">
+            <h2 class="section-title">Programs</h2>
+            <div class="row">
+                  <div class="col mx-auto">
+                     <div class="row d-flex flex-sm-row-reverse justify-content-start justify-content-sm-between mt-5 mb-md-5">
+                        <div class="p-5 p-md-0 col-md-3 d-flex flex-column justify-content-center"><img style="width:100%; height:auto;"class="my-auto" src="{% static 'images/seminar.png'%}"></div>
+                        <div class="col mr-md-3  d-flex flex-column justify-content-center">
+                              <h3>Seminars</h3>
+                              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                        </div>
+                     </div>
+                     <div class="row d-flex flex-sm-row-reverse justify-content-start justify-content-sm-between mt-5 mb-md-5">
+                        <div class="p-5 p-md-0 col-md-3 d-flex flex-column justify-content-center"><img style="width:100%; height:auto;"class="my-auto" src="{% static 'images/poster_session.png'%}"></div>
+                        <div class="col ml-md-3  d-flex flex-column justify-content-center">
+                              <h3>Poster Session</h3>
+                              <p>The Poster Session advertises your research.
+                              For the first time, WSS has attempted  to create an opportunity for researchers who have achievements to meet others and engage with them, and build networks.</p>
+                        </div>
+                     </div>
+                     <div class="row d-flex flex-sm-row-reverse justify-content-start justify-content-sm-between mt-md-5">
+                        <div class="p-5 p-md-0 col-md-3 d-flex flex-column justify-content-center"><img style="width:100%; height:auto;"class="my-auto" src="{% static 'images/workshop.png'%}"></div>
+                        <div class="col mr-md-3  d-flex flex-column justify-content-center">
+                              <h3>Workshops</h3>
+                              <p>Workshops are long form educational opportunities about technology or scientific subjects presented by the best experts our industry has to offer.</p>
+                        </div>
+                     </div>
+                  </div>
+            </div>
+         </div>
+      </div>
+    </section><!-- Main container end -->
+{% endblock %}

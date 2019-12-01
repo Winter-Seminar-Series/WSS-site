@@ -3185,7 +3185,7 @@ label {
     background: linear-gradient(135deg, rgba(0,137,238,1) 0%, rgba(9,9,121,1) 71%, rgba(2,0,36,1) 100%) !important;
 }
 
-.blue-gradient:nth-last-child(2)
+.blue-gradient:nth-last-child(2), .background-shafagh
 {
     background: url('../images/h-bg-1.jpg'), black no-repeat center top!important;
     background-size: cover;

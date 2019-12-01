@@ -1,6 +1,6 @@
 from django.conf.urls import url, include
 
-from WSS.views import HomeView, SeminarsListView, PosterSessionsListView, WorkshopsListView, StaffListView, \
+from WSS.views import HomeView, AboutView, SeminarsListView, PosterSessionsListView, WorkshopsListView, StaffListView, \
     GalleryImageView, GalleryVideoView, \
     ScheduleView
 
@@ -18,4 +18,6 @@ year_urlpatterns = [
 urlpatterns = [
     url(r'^(?P<year>\d{4})/', include(year_urlpatterns)),
     url(r'^$', HomeView.as_view(), name='home'),
+    url(r'^about/$', AboutView.as_view(), name='about'),
+
 ]

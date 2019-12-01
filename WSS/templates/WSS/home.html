@@ -3,7 +3,7 @@
 {% block header %}
 
 <section id="banner">
-    <div class="diagonal banner-item d-flex h-100">
+    <div class="diagonal banner-item d-flex h-100" style="min-height:100vh">
         <div class="container my-auto">
             <div class="banner-content ">
                 {% if wss.is_active %} {% endif %}
@@ -44,41 +44,6 @@
 </section>
 <!-- Section banner end -->
 
-{% comment %} <section id="ts-intro" class=" ts-intro ">
-    <div class="container">
-        <div class="row">
-            <div class="col-xs-12 col-sm-12 col-md-6">
-                <h2 class="intro-title">About the Event</h2>
-                <p class="intro-desc white">{{ wss.description }}</p>
-                {% if wss.is_active %}
-                <p style="text-align: center;">
-                    {% if wss.registration_link %}
-                    <a href="{{ wss.registration_link }}" class="btn btn-primary">Register now</a> {% endif %} {% if wss.proposal_link %}
-                    <a href="{{ wss.proposal_link }}" class="btn btn-primary">Submit your proposal</a> {% endif %}
-                </p>
-                {% else %}
-                <h2 class="intro-title">This is not the last WSS!</h2>
-                <a href="{% url 'wss:home' %}" class="btn btn-primary">Visit the Latest seminar page</a> {% endif %}
-            </div>
-
-            {% if wss.main_clip_url %}
-            <div class="col-xs-12 col-sm-12 col-md-6">
-                <div class="intro-video">
-                    <video controls class="embed-responsive-item" src="{{ wss.main_clip_url }}" preload="none">
-                  </video>
-                </div>
-                {% endif %}
-
-                <!-- Col end -->
-            </div>
-            <!-- Content row 1 end -->
-        </div>
-    </div>
-    <!-- Container end -->
-</section>
-<!-- Intro area end --> {% endcomment %}
-
-
 <section id="ts-programs" class="banner-item diagonal">
     <div class="container">
         <div class="row">
@@ -88,14 +53,14 @@
             <div class="col-9 col-sm-6 mx-auto">
                 <div class="row d-flex flex-sm-row-reverse justify-content-start justify-content-sm-between mt-5 mb-md-5">
                     <div class="p-5 p-md-0 col-md-4 d-flex flex-column justify-content-center"><img style="width:100%; height:auto;"class="my-auto" src="{% static 'images/seminar.png'%}"></div>
-                    <div class="col mr-md-3">
+                    <div class="col mr-md-3 d-flex flex-column justify-content-center">
                         <h3>Seminars</h3>
                         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
                     </div>
                 </div>
                 <div class="row justify-content-sm-start mt-md-5 mb-md-5">
                     <div class="p-5 p-md-0 col-md-4 d-flex flex-column justify-content-center"><img style="width:100%; height:auto;"class="my-auto" src="{% static 'images/poster_session.png'%}"></div>
-                    <div class="col ml-md-3">
+                    <div class="col ml-md-3 d-flex flex-column justify-content-center">
                         <h3>Poster Session</h3>
                         <p>The Poster Session advertises your research.
 For the first time, WSS has attempted  to create an opportunity for researchers who have achievements to meet others and engage with them, and build networks.</p>
@@ -103,12 +68,17 @@ For the first time, WSS has attempted  to create an opportunity for researchers 
                 </div>
                 <div class="row d-flex flex-sm-row-reverse justify-content-start justify-content-sm-between mt-md-5">
                     <div class="p-5 p-md-0 col-md-4 d-flex flex-column justify-content-center"><img style="width:100%; height:auto;"class="my-auto" src="{% static 'images/workshop.png'%}"></div>
-                    <div class="col mr-md-3">
+                    <div class="col mr-md-3 d-flex flex-column justify-content-center">
                         <h3>Workshops</h3>
                         <p>Workshops are long form educational opportunities about technology or scientific subjects presented by the best experts our industry has to offer.</p>
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="row w-100">
+        <div class="general-btn text-center mx-auto">
+            <a class="btn btn-primary all-speakers" href="{% url 'wss:about' %}">More About WSS</a>
+        </div>
         </div>
     </div>
 </section>

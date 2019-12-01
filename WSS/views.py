@@ -22,6 +22,15 @@ class HomeView(FooterMixin, DetailView):
         return WSS.objects.first()
 
 
+class AboutView(FooterMixin, DetailView):
+    template_name = 'WSS/about_us.html'
+    model = WSS
+    context_object_name = 'wss'
+
+    def get_object(self, queryset=None):
+        return get_object_or_404(WSS, year=2019)
+
+
 class SeminarsListView(FooterMixin, DetailView):
     template_name = 'WSS/seminars_list.html'
     model = WSS
