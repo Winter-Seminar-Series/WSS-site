@@ -31,7 +31,13 @@
                         <p class="banner-btn">
                             <a href="{{ wss.registration_link }}" class="btn btn-primary btn-white">Register Now</a>
                         </p>
-                        {% endif %} {% endif %}
+                        {% endif %}
+                            {% if wss.proposal_link %}
+                            <p class="banner-btn">
+                                <a href="{{ wss.proposal_link }}" class="btn btn-primary btn-white">Poster Session Registration</a>
+                            </p>
+                            {% endif %}
+                        {% endif %}
                     </div>
                 </div>
                 <!-- Banner content wrap end -->
@@ -179,6 +185,7 @@ For the first time, WSS has attempted  to create an opportunity for researchers 
     <!--/ Container end -->
 </section>
 <!--/ Newsletter end -->
+{% if wss.sponsorships.count %}
 <section id="ts-sponsors" class="ts-sponsors diagonal pt-0">
     <div class="container">
 
@@ -234,6 +241,7 @@ For the first time, WSS has attempted  to create an opportunity for researchers 
         {% endif %}
     </div>
 </section>
+{% endif %}
 <section class="venu-map no-padding diagonal blue-gradient h-100 pb-2" style="min-height:30rem; background-position-y: center!important">
     <div class="container">
     

@@ -28,6 +28,7 @@ class AboutView(FooterMixin, DetailView):
     context_object_name = 'wss'
 
     def get_object(self, queryset=None):
+        #TODO: I didn't know how to handle this, so I used a simple trick.
         return get_object_or_404(WSS, year=2019)
 
 
