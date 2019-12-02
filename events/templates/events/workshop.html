@@ -6,46 +6,64 @@
 {% block title %}{{ workshop.speaker.name }}{% endblock %}
 {% block content %}
     <section id="main-container" class="main-container">
-        <div class="container">
+        <div style="margin-top: -15rem; height: 15rem;" class="diagonal blue-gradient"></div>
+        
+        <div class="container-fluid px-5 mt-5 diagonal" style="background: white;">
+            <div class="container">
             <div class="row">
-                <div class="clearfix">
-                    <div class="col-xs-12 col-md-4">
-                        {% render_human workshop.speaker subtitle=workshop.speaker.short_bio url=None %}
-                        {% if workshop.registration_link %}
-                         <p class="text-center">
-                            <a href="{{ workshop.registration_link }}" class="btn btn-primary">Register Now</a>
-                         </p>
-                        {% endif %}
-                    </div>
-                    <div class="col-xs-12 col-md-8">
-                        <div class="ts-speaker-session right">
+                <div class="col-sm-4 m-0"><img style="border-radius: 5px; width: 100%" src="{% get_media_prefix %}{{workshop.speaker.picture}}" alt=""/>
+                </div>
+                <div class="pl-sm-5 col mt-4 d-flex align-items-center"> 
+                    <div class="row">
+                        <div class="col">
+                            <h4>{{workshop.speaker}}</h4>
+                            <h6>{{workshop.speaker.degree}}</h6>
                             <h3 class="session-title">{{ workshop.title }}</h3>
                             {% if workshop.venue %}
-                            <h4>Location</h4>
-                            {{ workshop.venue.address }}
+                            <div>
+                                <i class="fa fa-map-marker">&nbsp;</i>
+                                {{ workshop.venue.address }}                            
+                            </div>
                             {% endif %}
                             {% if workshop.start_time %}
-                            <h4>Date and Time</h4>
-                            {% date_string workshop.start_time %}
-                            <br>{% time_string workshop.start_time %} - {% time_string workshop.end_time %}
-                            {% endif %}
-
-                            <h4>Syllabus</h4>
-                            {{ workshop.syllabus|linebreaksbr }}
-                            <h4>Bio</h4>
-                            {{ workshop.speaker.bio|linebreaksbr }}
-
                             <div>
-                                {% if workshop.material %}
-                                    <h4>Material</h4>
-                                    {% if workshop.material.slides %}
-                                        <a class="btn btn-warning" href="{{ workshop.material.slides.url }}">Slides</a>
-                                    {% endif %}
-                                    {% if workshop.material.video_url %}
-                                        <a class="btn btn-danger" href="{{ workshop.material.video_url }}">Video</a>
-                                    {% endif %}
-                                {% endif %}
+                            <i class="fa fa-clock-o">&nbsp;</i>
+                            {% date_string workshop.start_time %}
                             </div>
+                            <div>
+                            <i class="fa fa-calendar">&nbsp;</i>
+                            {% time_string workshop.start_time %} - {% time_string workshop.end_time %}
+                            </div>{% endif %}
+                            {% if workshop.registration_link %}
+                            <a href="{{ workshop.registration_link }}" class="mt-4 btn btn-primary all-speakers">Register Now</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-5">
+                <div class="col-xs-12 col-md-8">
+                    <div class="ts-speaker-session right">
+                        
+
+                        <h4>Syllabus</h4>
+                        <div class="mb-3">
+                        {{ workshop.syllabus|linebreaksbr }}
+                        </div>
+                        <h4>Bio</h4>
+                        {{ workshop.speaker.bio|linebreaksbr }}
+                        <div class="mb-3">
+                            <br/>
+                            {% if workshop.material %}
+                                <h4>Material</h4>
+                                {% if workshop.material.slides %}
+                                    <a class="btn btn-warning" href="{{ workshop.material.slides.url }}">Slides</a>
+                                {% endif %}
+                                {% if workshop.material.video_url %}
+                                    <a class="btn btn-danger" href="{{ workshop.material.video_url }}">Video</a>
+                                {% endif %}
+                            {% endif %}
+                        </div>
                         {% if workshop.sponsor %}
                             <h4>Sponsored by</h4>
                             <div class="col-xs-12 col-sm-4 col-md-4">
@@ -60,15 +78,10 @@
                                 </a>
                             </div>
                         {% endif %}
-                        </div><!-- Session end -->
-                    </div><!-- Col end -->
-                </div><!-- Speaker list 1 end -->
+                    </div><!-- Session end -->
+                </div><!-- Col end -->
             </div><!-- Speaker row 1 -->
-            {% for sponsorship in wss.main_sponsorships %}
-
-
-
-            {% endfor %}
+            </div>
         </div><!-- Conatiner end -->
     </section><!-- Main container end -->
 {% endblock %}

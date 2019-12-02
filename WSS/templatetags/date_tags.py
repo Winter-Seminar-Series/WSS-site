@@ -19,7 +19,7 @@ def render_date(wss):
                 'end_day': day_with_ordinal(wss.end_date.day),
                 'year': wss.start_date.year,
             }
-            return mark_safe('{month}, {start_day} - {end_day}, {year}'.format(**format_dict))
+            return mark_safe('{month} {start_day} - {end_day}, {year}'.format(**format_dict))
         else:
             format_dict = {
                 'start_month': str(wss.start_date.strftime("%B")).upper(),
