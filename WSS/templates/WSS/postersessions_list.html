@@ -14,7 +14,7 @@
          <!--/ Title row end -->
          <div class="row">
             {% for postersession in wss.postersessions %}
-            <div class="col-xs-12 col-sm-6 col-md-3">
+            <div class="col-xs-12 col-sm-6 col-lg-3">
                {% render_human postersession.speaker subtitle=postersession.speaker.short_bio url=postersession.get_absolute_url %}
             </div>
             {% endfor %}
