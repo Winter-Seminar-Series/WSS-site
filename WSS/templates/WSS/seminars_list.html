@@ -17,7 +17,7 @@
          <!--/ Title row end -->
          <div class="row">
             {% for seminar in wss.keynote_seminars %}
-            <div class="col-xs-12 col-sm-6 col-md-3">
+            <div class="col-xs-12 col-sm-6 col-lg-3">
                {% render_human seminar.speaker subtitle=seminar.speaker.short_bio url=seminar.get_absolute_url %}
             </div>
             {% endfor %}
@@ -27,11 +27,14 @@
          <div class="row">
             <h3 class="mb-1 col section-sub-title title-white">Speakers</h3>
          </div>
+         <div class="row">
+
             {% for seminar in wss.non_keynote_seminars %}
-         <div class="col-xs-12 col-sm-6 col-md-3">
+         <div class="col-xs-12 col-sm-6 col-lg-3">
             {% render_human seminar.speaker subtitle=seminar.speaker.short_bio url=seminar.get_absolute_url %}
          </div>
             {% endfor %}
+         </div>
       </div>
       </div>
       <!-- Content row 2 end -->

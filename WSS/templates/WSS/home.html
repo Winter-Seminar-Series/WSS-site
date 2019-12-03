@@ -10,7 +10,7 @@
                 <div class="row">
                     <div class="col-xs-12 col-sm-12 col-md-6 d-flex align-items-center">
                         <div class="row mb-3">
-                            <img class="col wss-image" src="{% static 'images/title.png' %}?v=1.1" />
+                            <img class="col wss-image" src="{% static 'images/new_title.png' %}?v=1.2" />
                             <div class="col">
                             <div style="font-size:1.125rem" class="row ml-4 mt-1 font-weight-bold text-uppercase d-flex justify-content-around">
                             <div>Winter</div>
@@ -100,7 +100,7 @@ For the first time, WSS has attempted  to create an opportunity for researchers 
         <!--/ Title row end -->
         <div class="row justify-content-center">
             {% for seminar in wss.keynote_seminars %}
-            <div class="col-xs-11 col-sm-6 col-md-3">
+            <div class="col-xs-11 col-sm-6 col-lg-3">
                 {% render_human seminar.speaker subtitle=seminar.speaker.short_bio url=seminar.get_absolute_url %}
             </div>
             {% endfor %}
@@ -112,7 +112,7 @@ For the first time, WSS has attempted  to create an opportunity for researchers 
         </div>
         <div class="row justify-content-center">
             {% for seminar in selected_seminars %}
-            <div class="col-xs-11 col-sm-6 col-md-3">
+            <div class="col-xs-11 col-sm-6 col-lg-3">
                 {% render_human seminar.speaker subtitle=seminar.speaker.short_bio url=seminar.get_absolute_url %}
             </div>
             {% endfor %}
