@@ -139,31 +139,45 @@ class ExternalLink(models.Model):
 
 
 MAJOR_CHOICES = [('ms', 'MS'), ('bs', "BS"), ('phd', 'PHD'), ('oth', 'other')]
-PAYMENT_CHOICES = [('OK', 'پرداخت شده'), ('NO', "پرداخت نشده")]
 
 
 class Grade(models.Model):
-    level = models.CharField(max_length=3, choices=MAJOR_CHOICES)
+    level = models.CharField(max_length=3, choices=MAJOR_CHOICES, primary_key=True)
     capacity = models.IntegerField()
-    price = models.IntegerField()
 
 
-class Exhibitor(models.Model):
-    name = models.CharField(max_length=50)
-    family = models.CharField(max_length=70)
-    student_number = models.CharField(max_length=70, blank=True)
+INTRODUCTION = [('telegram', 'تلگرام'), ('instageram', 'اینستاگرام'), ('facebook', 'فیسبوک'),
+                ('twitter', 'تویتر'), ('poster', 'پوستر تبلیغاتی'), ('friends', 'دوستان'), ('other', 'سایر')]
+GENDER = [('woman', 'زن'), ('man', 'مرد')]
+PAYMENT_CHOICES = [('OK', 'پرداخت شده'), ('NO', "پرداخت نشده")]
+
+
+class Participant(models.Model):
+    name_family = models.CharField(max_length=250)
+    phone_number = models.CharField(max_length=13)
     email = models.EmailField(primary_key=True)
+    job = models.CharField(max_length=250)
+    university = models.CharField(max_length=250)
+    introduction_method = models.CharField(max_length=250, choices=INTRODUCTION)
+    gender = models.CharField(max_length=50, choices=GENDER)
+    home_city = models.CharField(max_length=150)
+    country = models.CharField(max_length=150)
+    field_of_interest = models.CharField(max_length=1500)
     payment_status = models.CharField(max_length=2, default='NO', choices=PAYMENT_CHOICES)
     grade = models.CharField(max_length=30)
-    level = models.CharField(max_length=3, choices=MAJOR_CHOICES)
-    phone_number = models.CharField(max_length=13)
-    payment_id = models.IntegerField()
-    sign_timestamp = models.DateTimeField(auto_now_add=True)
+    is_student = models.BooleanField(default=False)
+    payment_id = models.IntegerField(null=True)
+    sign_timestamp = models.DateTimeField(auto_now=True)
 
 
-class Reservatore(models.Model):
+class Reserve(models.Model):
     name = models.CharField(max_length=50)
-    family = models.CharField(max_length=70)
+    grade = models.CharField(max_length=70)
     student_number = models.CharField(max_length=70, blank=True)
     email = models.EmailField(primary_key=True)
     major = models.CharField(max_length=30)
+
+
+class ShortLink(models.Model):
+    short_link = models.CharField(max_length=300, primary_key=True)
+    url = models.CharField(max_length=300)

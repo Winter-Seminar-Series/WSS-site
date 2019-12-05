@@ -1,7 +1,7 @@
 from django.contrib import admin
 from jet.admin import CompactInline
 
-from WSS.models import Clip, WSS, Image, Sponsor, ExternalLink, Sponsorship, Exhibitor, Reservatore
+from WSS.models import Clip, WSS, Image, Sponsor, ExternalLink, Sponsorship, Participant, Reserve, Grade, ShortLink
 from events.models import Seminar, Workshop, Event
 
 
@@ -34,6 +34,21 @@ class EventInline(CompactInline):
     model = Event
     extra = 0
 
+class GradeInline(CompactInline):
+    model = Grade
+    extra = 0
+
+
+class ParticipateInline(CompactInline):
+    model = Participant
+    extra = 0
+
+
+class ReserveInline(CompactInline):
+    model = Reserve
+    extra = 0
+
+
 
 class WSSAdmin(admin.ModelAdmin):
     inlines = (SeminarInline, WorkshopInline, EventInline, SponsorshipInline, ImageInline,
@@ -50,5 +65,7 @@ admin.site.register(Sponsor, SponsorAdmin)
 admin.site.register(WSS, WSSAdmin)
 admin.site.register(Image)
 admin.site.register(Clip)
-admin.site.register(Exhibitor)
-admin.site.register(Reservatore)
+admin.site.register(Participant)
+admin.site.register(ShortLink)
+admin.site.register(Reserve)
+admin.site.register(Grade)

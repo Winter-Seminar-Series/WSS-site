@@ -1,15 +1,16 @@
 from random import Random
 from itertools import groupby
-
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, render_to_response
 from django.views.generic.detail import DetailView
 from django.http import HttpResponse
 from django.shortcuts import redirect
 from pandas._libs import json
 from zeep import Client
+from django.views.decorators.csrf import csrf_exempt
 
+from WSS.forms import NameForm
 from WSS.mixins import FooterMixin, WSSWithYearMixin
-from WSS.models import WSS, Exhibitor, Grade, Reservatore
+from WSS.models import WSS, Participant, Grade, Reserve, ShortLink
 
 
 class HomeView(FooterMixin, DetailView):
@@ -88,59 +89,94 @@ class ScheduleView(FooterMixin, WSSWithYearMixin, DetailView):
         return context
 
 
-MERCHANT = 'XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX'
+class ReserveView(FooterMixin, WSSWithYearMixin, DetailView):
+    template_name = 'WSS/reserve.html'
+
+
+class RegisterView(FooterMixin, WSSWithYearMixin, DetailView):
+    template_name = 'WSS/register.html'
+
+
+MERCHANT = '5ff4f360-c10a-11e9-af68-000c295eb8fc'
 client = Client('https://www.zarinpal.com/pg/services/WebGate/wsdl')
 description = "توضیحات مربوط به تراکنش را در این قسمت وارد کنید"  # Required
 EMAIL = 'email@example.com'  # Optional
 mobile = '09123456789'  # Optional
-CallbackURL = 'http://localhost:8000/verify/'  # Important: need to edit for realy server.
+CallbackURL = 'http://localhost:8000/2020/verify/'  # Important: need to edit for realy server.
+student_price = 100
+other_price = 100
 
 
-def send_request(request, grade):
-    body_unicode = request.body.decode('utf-8')
-    body = json.loads(body_unicode)
-    content = body['content']
-    name = content['name']
-    email = content['email']
-    family = content['family']
-    grade = grade
-    level = content['level']
-    phone_number = content['phone_number']
-    exh = Exhibitor.objects.all().get(email=email)
-    if exh is None or exh.payment_status == 'OK':
-        return HttpResponse('ثبت نام انجام شده است')
-    gr = Grade.objects.all().get(grade=grade)
-    price = gr.price
+@csrf_exempt
+def send_request(request, year):
+    form = NameForm(request.POST)
+    if not form.is_valid():
+        return HttpResponse("form is not valid")
+    name_family = form.data['name_family']
+    email = form.data['email']
+    grade = form.data['grade']
+    phone_number = form.data['phone_number']
+    job = form.data['job']
+    university = form.data['university']
+    introduction_method = form.data['introduction_method']
+    gender = form.data['gender']
+    home_city = form.data['city']
+    country = form.data['country']
+    field_of_interest = form.data['interests']
+    is_student = bool(form.data['is_student'])
+    try:
+        exh = Participant.objects.all().get(email=email)
+    except Participant.DoesNotExist:
+        exh = None
+    if exh is not None and exh.payment_status == 'OK':
+        return HttpResponse('ثبت نام انجام شده است. ایمیل تکراری است.')
+    try:
+        gr = Grade.objects.all().get(level=grade)
+    except Grade.DoesNotExist:
+        return HttpResponse('مدرک تحصیلی درست وارد نشده است.')
+
     cap = gr.capacity
     if cap <= 0:
-        # todo redirect to RESERVE
+        return reserve(form)
         pass
-    
+    price = student_price
+    if not is_student:
+        price = other_price;
+
     payment_id = Random().randint(0, 100000000000)
-    exh = Exhibitor(name=name, email=email, family=family, grade=grade, level=level, phone_number=phone_number, 
-                    payment_id=payment_id)
+    exh = Participant(name_family=name_family, email=email, grade=grade, phone_number=phone_number, job=job,
+                      university=university, introduction_method=introduction_method, gender=gender,
+                      home_city=home_city, payment_id=payment_id,
+                      country=country, field_of_interest=field_of_interest, is_student=is_student)
     exh.save()
     result = client.service.PaymentRequest(MERCHANT, price, description, EMAIL, mobile,
-                                           CallbackURL + '?paymentid=' + payment_id)
+                                           CallbackURL + email)
     if result.Status == 100:
         return redirect('https://www.zarinpal.com/pg/StartPay/' + str(result.Authority))
     else:
         return HttpResponse('Error code: ' + str(result.Status))
 
 
-def verify(request, paymentid):
-    exh = Exhibitor.objects.all().get(payment_id=paymentid)
-    gr = Grade.objects.all().get(exh.grade)
+def verify(request, year, email):
+    try:
+        exh = Participant.objects.all().get(email=email)
+    except Participant.DoesNotExist:
+        return HttpResponse('پرداخت با خطا مواجه شد. با پشتیبانی تماس بگیرید.')
+
+    gr = Grade.objects.all().get(level=exh.grade)
     gr.capacity -= 1
     gr.save()
-    if exh is None:
-        return HttpResponse('پرداخت با خطا مواجه شد. با پشتیبانی تماس بگیرید.')
-    
+
+    price = other_price
+    if exh.is_student:
+        price = student_price
+
     if request.GET.get('Status') == 'OK':
-        result = client.service.PaymentVerification(MERCHANT, request.GET['Authority'], gr.price)
+        result = client.service.PaymentVerification(MERCHANT, request.GET['Authority'], price)
         if result.Status == 100:
             exh.payment_status = 'OK'
-            return HttpResponse('Transaction success.\nRefID: ' + str(result.RefID))
+            exh.save()
+            return HttpResponse('Transaction success.\nRefID: ' + str(result.RefID))  # todo redirect to home
         elif result.Status == 101:
             return HttpResponse('Transaction submitted : ' + str(result.Status))
         else:
@@ -149,12 +185,18 @@ def verify(request, paymentid):
         return HttpResponse('Transaction failed or canceled by user')
 
 
-def reserve(request):
-    body_unicode = request.body.decode('utf-8')
-    body = json.loads(body_unicode)
-    content = body['content']
-    name = content['name']
-    family = content['family']
-    email = content['email']
-    Reservatore(name=name, email=email, family=family).save()
+def reserve(form):
+    email = form.data['email']
+    name_family = form.data['name_family']
+    grade = form.data['grade']
+    Reserve(name=name_family, email=email, grade=grade).save()
     return HttpResponse('درصورت وجود ظرفیت مازاد به شما اطلاع رسانی خواهیم کرد.')
+
+
+def go(request, year, url):
+    link = None
+    try:
+        link = ShortLink.objects.all().get(short_link=url)
+    except:
+        return redirect()  # 404 page
+    return redirect(to=link.url)
