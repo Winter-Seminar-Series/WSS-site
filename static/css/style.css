@@ -909,6 +909,7 @@ ul.navbar-nav > li:hover > a{
 {
     height: 100%;
     min-width: 100%;
+    background: black;
 }
 
 .banner-title {
@@ -2356,6 +2357,21 @@ h4.panel-title a.collapsed:before {
     position: relative;
 }
 
+.footer a, .footer-social ul li
+{
+    transition: all 0.2s;
+}
+
+.footer a
+{
+    color: #afcbff;
+}
+
+.footer a:hover
+{
+    color: #5b94ff;
+}
+
 /*-- Footer menu --*/
 
 .footer-menu ul li {
@@ -2390,11 +2406,14 @@ h4.panel-title a.collapsed:before {
 .footer-social ul li {
     padding: 5px!important;
     display: inline-block;
-    transition: all 0.2s;
 }
 
 .footer-social ul li:hover {
     opacity: 0.8;
+}
+
+.footer-social ul li a:hover {
+    text-decoration: none;
 }
 
 .footer-social ul li a i {
