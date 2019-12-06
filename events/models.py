@@ -3,6 +3,7 @@ from datetime import timedelta
 from django.db import models
 from django.urls import reverse
 from polymorphic.models import PolymorphicModel
+from taggit.managers import TaggableManager
 
 
 class BaseEvent(PolymorphicModel):  # Is implicitly Abstract
@@ -11,6 +12,7 @@ class BaseEvent(PolymorphicModel):  # Is implicitly Abstract
     start_time = models.DateTimeField(null=True, blank=True)
     duration = models.DurationField(default=timedelta())
     venue = models.ForeignKey(to='Venue', related_name='events', null=True, blank=True)
+    key_words = TaggableManager(blank=True)
 
     class Meta:
         ordering = ('start_time',)
@@ -21,6 +23,10 @@ class BaseEvent(PolymorphicModel):  # Is implicitly Abstract
     @property
     def end_time(self):
         return self.start_time + self.duration
+        
+    @property
+    def keywords(self):
+        return self.key_words.names()
 
 
 class Event(BaseEvent):

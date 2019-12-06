@@ -46,6 +46,14 @@
                         <div class="mb-3">
                         {{ postersession.abstract|linebreaksbr }}
                         </div>
+                            {% if postersession.keywords %}
+                            <h4>Keywords</h4>
+                            <div class="mb-3">
+                                {% for keyword in postersession.keywords %}
+                                    <span class="badge badge-pill badge-blue">{{ keyword }}</span>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
                         <h4>Bio</h4>
                         <div class="mb-3">
                         {{ postersession.speaker.bio|linebreaksbr }}

@@ -50,6 +50,14 @@
                         <div class="mb-3">
                         {{ workshop.syllabus|linebreaksbr }}
                         </div>
+                        {% if workshop.keywords %}
+                            <h4>Keywords</h4>
+                            <div class="mb-3">
+                                {% for keyword in workshop.keywords %}
+                                    <span class="badge badge-pill badge-blue">{{ keyword }}</span>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
                         <h4>Bio</h4>
                         {{ workshop.speaker.bio|linebreaksbr }}
                         <div class="mb-3">
