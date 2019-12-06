@@ -39,18 +39,18 @@
     {% comment %}
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}"> {% endcomment %}
     <!--&lt;!&ndash; Template styles&ndash;&gt;-->
-    <link rel="stylesheet" href="{% static 'css/style.css' %}?v=3.6.3">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}?v=3.6.4">
     <!--&lt;!&ndash; Responsive styles&ndash;&gt;-->
-    <link rel="stylesheet" href="{% static 'css/responsive.css' %}?v=1.5.2">
+    <link rel="stylesheet" href="{% static 'css/responsive.min.css' %}?v=1.5.4">
     <!--&lt;!&ndash; FontAwesome &ndash;&gt;-->
     
-    <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}">
+    {% comment %} <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}"> {% endcomment %}
     <!--&lt;!&ndash; Animation &ndash;&gt;-->
-    <link rel="stylesheet" href="{% static 'css/animate.css' %}">
+    {% comment %} <link rel="stylesheet" href="{% static 'css/animate.css' %}">
     <!--&lt;!&ndash; Colorbox &ndash;&gt;-->
     <link rel="stylesheet" href="{% static 'css/colorbox.css' %}">
     <!--&lt;!&ndash; Plyr &ndash;&gt;-->
-    <link rel="stylesheet" href="{% static 'css/plyr.css' %}">
+    <link rel="stylesheet" href="{% static 'css/plyr.css' %}"> {% endcomment %}
 
     <!-- All css files combined into one sigle file -->
     {% comment %}
@@ -143,7 +143,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                         </div>
                         <!-- Footer social end -->
                         <div class="copyright-info">
-                            <span>This website is created by <a href="{% url 'people:creators-list' %}">Moazzam Team</a>.<br>
+                            <span><a href="{% url 'people:creators-list' %}">Website Creators</a><br>
                   Copyright © 2015-2019 WSS. All Rights Reserved.</span>
                         </div>
                         <!-- Copyright info end -->
