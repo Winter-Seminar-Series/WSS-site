@@ -3,7 +3,13 @@
 {% block header %}
 
 <section id="banner">
-    <div class="diagonal banner-item d-flex h-100" style="min-height:100vh">
+
+    <div class="diagonal banner-item d-flex h-100">
+    <div class="header-video-wrapper">
+    <video autoplay loop>
+        <source src="{% static 'images/back.mp4' %}" type="video/mp4">
+    </video>
+    </div>
         <div class="container my-auto">
             <div class="banner-content ">
                 {% if wss.is_active %} {% endif %}

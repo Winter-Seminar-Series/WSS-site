@@ -46,6 +46,14 @@
                         <div class="mb-3">
                         {{ seminar.abstract|linebreaksbr }}
                         </div>
+                        {% if seminar.keywords %}
+                            <h4>Keywords</h4>
+                            <div class="mb-3">
+                                {% for keyword in seminar.keywords %}
+                                    <span class="badge badge-pill badge-blue">{{ keyword }}</span>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
                         <h4>Bio</h4>
                         <div class="mb-3">
                         {{ seminar.speaker.bio|linebreaksbr }}
