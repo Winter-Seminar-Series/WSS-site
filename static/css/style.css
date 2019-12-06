@@ -909,7 +909,8 @@ ul.navbar-nav > li:hover > a{
 {
     height: 100%;
     min-width: 100%;
-    background: black;
+    background: url('../images/h-bg-2.jpg') no-repeat center, black;
+    background-size: cover;
 }
 
 .banner-title {
