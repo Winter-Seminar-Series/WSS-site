@@ -18,21 +18,28 @@
                             <h4>{{seminar.speaker}}</h4>
                             <h6>{{seminar.speaker.degree}}</h6>
                             <h3 class="session-title">{{ seminar.title }}</h3>
+                            {% if seminar.audience %}
+                                <div class="seminar-details">
+                                    <i class="fa fa-group">&nbsp;</i>
+                                    {{ seminar.audience }}
+                                </div>
+                            {% endif %}
                             {% if seminar.venue %}
-                            <div>
-                                <i class="fa fa-map-marker">&nbsp;</i>
-                                {{ seminar.venue.address }}                            
-                            </div>
+                                <div class="seminar-details">
+                                    <i class="fa fa-map-marker">&nbsp;</i>
+                                    {{ seminar.venue.address }}                            
+                                </div>
                             {% endif %}
                             {% if seminar.start_time %}
-                            <div>
-                            <i class="fa fa-clock-o">&nbsp;</i>
-                            {% date_string seminar.start_time %}
-                            </div>
-                            <div>
-                            <i class="fa fa-calendar">&nbsp;</i>
-                            {% time_string seminar.start_time %} - {% time_string seminar.end_time %}
-                            </div>{% endif %}
+                                <div class="seminar-details">
+                                    <i class="fa fa-clock-o">&nbsp;</i>
+                                    {% date_string seminar.start_time %}
+                                </div>
+                                <div class="seminar-details">
+                                    <i class="fa fa-calendar">&nbsp;</i>
+                                    {% time_string seminar.start_time %} - {% time_string seminar.end_time %}
+                                </div>
+                            {% endif %}
                         </div>
                     </div>
                 </div>

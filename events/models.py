@@ -13,6 +13,7 @@ class BaseEvent(PolymorphicModel):  # Is implicitly Abstract
     duration = models.DurationField(default=timedelta())
     venue = models.ForeignKey(to='Venue', related_name='events', null=True, blank=True)
     key_words = TaggableManager(blank=True)
+    audience = models.CharField(blank=True, max_length=200)
 
     class Meta:
         ordering = ('start_time',)

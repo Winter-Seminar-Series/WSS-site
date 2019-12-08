@@ -1977,6 +1977,10 @@ ul.navbar-nav > li:hover > a{
     margin-top: 0;
 }
 
+.session-title
+{
+    margin-bottom: 1.5rem;
+}
 /* statics
 ================================================== */
 
@@ -3234,4 +3238,9 @@ label {
 .no-shadow .ts-speaker
 {
     box-shadow: none;
+}
+
+.seminar-details
+{
+    margin-bottom: 0.5rem;
 }
