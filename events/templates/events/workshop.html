@@ -19,23 +19,30 @@
                             <h4>{{workshop.speaker}}</h4>
                             <h6>{{workshop.speaker.degree}}</h6>
                             <h3 class="session-title">{{ workshop.title }}</h3>
+                            {% if seminar.audience %}
+                                <div class="seminar-details">
+                                    <i class="fa fa-group">&nbsp;</i>
+                                    {{ seminar.audience }}
+                                </div>
+                            {% endif %}
                             {% if workshop.venue %}
-                            <div>
-                                <i class="fa fa-map-marker">&nbsp;</i>
-                                {{ workshop.venue.address }}                            
-                            </div>
+                                <div class="seminar-details">
+                                    <i class="fa fa-map-marker">&nbsp;</i>
+                                    {{ workshop.venue.address }}                            
+                                </div>
                             {% endif %}
                             {% if workshop.start_time %}
-                            <div>
-                            <i class="fa fa-clock-o">&nbsp;</i>
-                            {% date_string workshop.start_time %}
-                            </div>
-                            <div>
-                            <i class="fa fa-calendar">&nbsp;</i>
-                            {% time_string workshop.start_time %} - {% time_string workshop.end_time %}
-                            </div>{% endif %}
+                                <div class="seminar-details">
+                                    <i class="fa fa-clock-o">&nbsp;</i>
+                                    {% date_string workshop.start_time %}
+                                </div>
+                                <div class="seminar-details">
+                                    <i class="fa fa-calendar">&nbsp;</i>
+                                    {% time_string workshop.start_time %} - {% time_string workshop.end_time %}
+                                </div>
+                            {% endif %}
                             {% if workshop.registration_link %}
-                            <a href="{{ workshop.registration_link }}" class="mt-4 btn btn-primary all-speakers">Register Now</a>
+                                <a href="{{ workshop.registration_link }}" class="mt-4 btn btn-primary all-speakers">Register Now</a>
                             {% endif %}
                         </div>
                     </div>
