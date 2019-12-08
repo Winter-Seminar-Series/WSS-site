@@ -1,7 +1,7 @@
 from django.contrib import admin
 from jet.admin import CompactInline
 
-from WSS.models import Clip, WSS, Image, Sponsor, ExternalLink, Sponsorship
+from WSS.models import Clip, WSS, Image, Sponsor, ExternalLink, Sponsorship, Grade, Participant, ShortLink, Reserve
 from events.models import Seminar, Workshop, PosterSession, Event
 
 

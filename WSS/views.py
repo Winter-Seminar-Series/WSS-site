@@ -117,11 +117,21 @@ class ReserveView(FooterMixin, WSSWithYearMixin, DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data()
         context['form'] = ParticipantForm()
-        return render(self.request, self.template_name, {'form': ParticipantForm()})
+        return render(self.request, self.template_name)
 
 
 class RegisterView(FooterMixin, WSSWithYearMixin, DetailView):
     template_name = 'WSS/register.html'
+    context_object_name = 'wss'
+    model = WSS
+
+    def get_object(self, queryset=None):
+        return get_object_or_404(WSS, year=int(self.kwargs['year']))
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data()
+        context['form'] = ParticipantForm()
+        return context
 
 
 MERCHANT = '5ff4f360-c10a-11e9-af68-000c295eb8fc'
@@ -137,7 +147,7 @@ def send_request(request, year):
     if not form.is_valid():
         return HttpResponse("form is not valid")
 
-    CallbackURL = 'http://http://wss.ce.sharif.edu/' + str(
+    CallbackURL = 'http://wss.ce.sharif.edu/' + str(
         year) + '/verify/'  # Important: need to edit for realy server.
 
     name_family = form.data['name_family']

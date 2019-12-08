@@ -3235,3 +3235,8 @@ label {
 {
     box-shadow: none;
 }
+
+form .requiredField
+{
+    color: white;
+}

@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'polymorphic',
     'sorl.thumbnail',
     'taggit',
+    'crispy_forms',
 ]
 
 MIDDLEWARE = [
@@ -174,6 +175,7 @@ from django.utils.log import DEFAULT_LOGGING
 
 DEFAULT_LOGGING['handlers']['console']['filters'] = []
 TAGGIT_CASE_INSENSITIVE = True
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 LOGGING = {
     'version': 1,
