@@ -2,34 +2,40 @@
 {% block title %}{{ wss }}{% endblock %}
 
 {% block navbar_items %}
-    <li><a href="{% url 'wss:home' wss.year %}">{{ wss }}</a></li>
+    <li class="nav-item"><a class="nav-link" href="{% url 'wss:home' wss.year %}">{{ wss }}</a></li>
+    <li class="nav-item"><a class="nav-link" href="{% url 'wss:about' %}">ABOUT WSS</a></li>
     <!-- Home li end -->
-    <li><a href="{% url 'wss:seminars-list' wss.year %}">Speakers</a></li>
+    <li class="nav-item"><a class="nav-link" href="{% url 'wss:seminars-list' wss.year %}">Speakers</a></li>
     <!-- Speakers li end -->
-    {% if wss.workshops.count %}
-        <li><a data-scroll href="{% url 'wss:workshops-list' wss.year %}">Workshops</a></li>
+    
+    {% if wss.postersessions.count %}
+        <li class="nav-item"><a class="nav-link" data-scroll href="{% url 'wss:postersessions-list' wss.year %}">Poster Sessions</a></li>
     {% endif %}
-    <li><a href="{% url 'wss:schedule' wss.year %}">Schedule</a></li>
+
+    {% if wss.workshops.count %}
+        <li class="nav-item"><a class="nav-link" data-scroll href="{% url 'wss:workshops-list' wss.year %}">Workshops</a></li>
+    {% endif %}
+    <li class="nav-item"><a class="nav-link" href="{% url 'wss:schedule' wss.year %}">Schedule</a></li>
     <!-- Schedule li end -->
-    <li><a href="{% url 'wss:staff-list' wss.year %}">Staff</a></li>
+    <li class="nav-item"><a class="nav-link" href="{% url 'wss:staff-list' wss.year %}">Staff</a></li>
     <!-- Staff li end -->
-    <li class="dropdown">
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Gallery <i class="fa fa-angle-down"></i></a>
-        <ul class="dropdown-menu menu-center" role="menu">
-            <li><a href="{% url 'wss:gallery-image' wss.year %}">Images</a></li>
-            <li><a href="{% url 'wss:gallery-video' wss.year %}">Videos</a></li>
+    <li class="nav-item dropdown">
+        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Gallery</a>
+        <ul class="dropdown-menu " role="menu">
+            <li><a class="dropdown-item" href="{% url 'wss:gallery-image' wss.year %}">Images</a></li>
+            <li><a class="dropdown-item" href="{% url 'wss:gallery-video' wss.year %}">Videos</a></li>
         </ul>
     </li>
     <!-- Gallery li end -->
     {% if wss.is_active %}
         {% if wss.registration_link %}
             <li class="header-ticket">
-                <a class="ticket-btn btn-primary" href="{{ wss.registration_link }}">Register</a>
+                <a class="btn-white btn-primary" href="{{ wss.registration_link }}">Register</a>
             </li>
         {% endif %}
     {% else %}
         <li class="header-ticket">
-            <a href="{% url 'wss:home' %}" class="ticket-btn btn-primary">Visit the Latest seminar page</a>
+            <a href="{% url 'wss:home' %}" class="btn-white btn-primary">Visit the Latest seminar page</a>
         </li>
     {% endif %}
 {% endblock %}

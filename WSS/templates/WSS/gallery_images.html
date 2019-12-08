@@ -7,11 +7,10 @@
 {% block title %}{{ wss }} Images {% endblock %}
 
 {% block content %}
-    <section id="main-container" class="main-container">
+    <section id="main-container" class="blue-gradient diagonal ">
         <div class="container">
-            <div class="row text-center">
-                <h2 class="section-title">{{ wss }}</h2>
-                <h3 class="section-sub-title title"> Photo Gallery </h3>
+            <div class="row text-center mb-5">
+                <h3 class="mb-1 col section-sub-title title-white">{{ wss }}&nbspPhoto Gallery </h3>
             </div>
             <div class="row">
                 {% for item in wss.images.all %}

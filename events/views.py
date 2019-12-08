@@ -1,7 +1,7 @@
 from django.views.generic import DetailView
 
 from WSS.mixins import FooterMixin
-from events.models import Seminar, Workshop
+from events.models import Seminar, Workshop, PosterSession
 
 
 class SeminarView(FooterMixin, DetailView):
@@ -14,6 +14,15 @@ class SeminarView(FooterMixin, DetailView):
         context['wss'] = self.object.wss
         return context
 
+class PosterSessionView(FooterMixin, DetailView):
+    template_name = 'events/postersession.html'
+    context_object_name = 'postersession'
+    model = PosterSession
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data()
+        context['wss'] = self.object.wss
+        return context
 
 class WorkshopView(FooterMixin, DetailView):
     template_name = 'events/workshop.html'

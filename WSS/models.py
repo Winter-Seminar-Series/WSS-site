@@ -3,7 +3,7 @@ from django.utils.safestring import mark_safe
 from pip._vendor import requests
 from sorl.thumbnail import ImageField
 
-from events.models import Workshop, Seminar
+from events.models import Workshop, Seminar, PosterSession
 
 
 class WSS(models.Model):
@@ -44,6 +44,10 @@ class WSS(models.Model):
     @property
     def seminars(self):
         return Seminar.objects.filter(wss=self)
+
+    @property
+    def postersessions(self):
+        return PosterSession.objects.filter(wss=self)
 
     @property
     def staff_count(self):

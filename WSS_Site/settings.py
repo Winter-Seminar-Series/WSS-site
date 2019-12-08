@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'django_extensions',
     'polymorphic',
     'sorl.thumbnail',
+    'taggit',
 ]
 
 MIDDLEWARE = [
@@ -124,10 +125,6 @@ USE_L10N = True
 
 USE_TZ = True
 
-local_settings_path = os.path.join(os.path.dirname(__file__), 'local_settings.py')
-if os.path.exists(local_settings_path):
-    exec(open(local_settings_path, 'rb').read())
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
@@ -176,6 +173,7 @@ JET_INDEX_DASHBOARD = 'WSS_Site.dashboard.IndexDashboard'
 from django.utils.log import DEFAULT_LOGGING
 
 DEFAULT_LOGGING['handlers']['console']['filters'] = []
+TAGGIT_CASE_INSENSITIVE = True
 
 LOGGING = {
     'version': 1,
@@ -200,3 +198,7 @@ LOGGING = {
         },
     },
 }
+
+local_settings_path = os.path.join(os.path.dirname(__file__), 'local_settings.py')
+if os.path.exists(local_settings_path):
+    exec(open(local_settings_path, 'rb').read())

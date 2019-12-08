@@ -10,4 +10,5 @@ six==1.11.0
 sorl-thumbnail==12.4.1
 typing==3.6.2
 Werkzeug==0.12.2
+django-taggit==1.2.0
 psycopg2==2.8.4

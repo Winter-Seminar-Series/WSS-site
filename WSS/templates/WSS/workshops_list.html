@@ -5,26 +5,25 @@
 
 {% block title %}{{ wss }} workshops{% endblock %}
 {% block content %}
-   <section id="ts-speakers" class="ts-speakers gradient-bg">
+   <section id="ts-speakers" class="blue-gradient ts-speakers diagonal ">
       <div class="container">
          <div class="row text-center">
-            <h3 class="section-sub-title title-white">{% if wss.workshops.count != 1 %} Workshops {% else %} Workshop {% endif %}</h3>
+            <h3 class="mb-1 col section-sub-title title-white">{% if wss.workshops.count != 1 %} Workshops {% else %} Workshop {% endif %}</h3>
          </div>
 
+         <div class="mt-3 text-white">
+            <h5>For more information about each workshop, click on its image.</h5>
+         </div>
          <!--/ Title row end -->
          <div class="row">
             {% for workshop in wss.workshops %}
-             {% if forloop.counter == 1 %}
-             <div class="row text-center">
-                <h3>For more information about each workshop, click on its image</h3>
-             </div>
-             {% endif %}
-
-            <div class="col-xs-12 col-sm-6 col-md-3">
-                {% render_human workshop.speaker subtitle=workshop.title url=workshop.get_absolute_url %}
+            <div class="col-xs-12 col-sm-6 col-lg-3">
+                <div class="no-shadow">
+                  {% render_human workshop.speaker subtitle=workshop.title url=workshop.get_absolute_url %}
+                </div>
                 {% if workshop.registration_link %}
                  <p class="text-center">
-                    <a href="{{ workshop.registration_link }}" class="btn btn-primary">Register Now</a>
+                    <a href="{{ workshop.registration_link }}" class="btn btn-primary btn-white">Register Now</a>
                  </p>
                 {% endif %}
 

@@ -3,6 +3,7 @@ from datetime import timedelta
 from django.db import models
 from django.urls import reverse
 from polymorphic.models import PolymorphicModel
+from taggit.managers import TaggableManager
 
 
 class BaseEvent(PolymorphicModel):  # Is implicitly Abstract
@@ -11,6 +12,7 @@ class BaseEvent(PolymorphicModel):  # Is implicitly Abstract
     start_time = models.DateTimeField(null=True, blank=True)
     duration = models.DurationField(default=timedelta())
     venue = models.ForeignKey(to='Venue', related_name='events', null=True, blank=True)
+    key_words = TaggableManager(blank=True)
 
     class Meta:
         ordering = ('start_time',)
@@ -21,6 +23,10 @@ class BaseEvent(PolymorphicModel):  # Is implicitly Abstract
     @property
     def end_time(self):
         return self.start_time + self.duration
+        
+    @property
+    def keywords(self):
+        return self.key_words.names()
 
 
 class Event(BaseEvent):
@@ -45,6 +51,15 @@ class Seminar(BaseEvent):
     @property
     def get_absolute_url(self):
         return reverse('events:seminar', args=[self.pk])
+
+class PosterSession(BaseEvent):
+    abstract = models.TextField()
+    speaker = models.ForeignKey(to='people.Speaker', related_name='postersessions')
+    material = models.OneToOneField(to='PosterMaterial', null=True, blank=True)
+
+    @property
+    def get_absolute_url(self):
+        return reverse('events:postersession', args=[self.pk])
 
 
 class Workshop(BaseEvent):
@@ -75,4 +90,10 @@ class WorkshopMaterial(Material):
     def __str__(self):
         if hasattr(self, 'workshop'):
             return 'Material of {}'.format(self.workshop)
+        return 'Added Material'
+
+class PosterMaterial(Material):
+    def __str__(self):
+        if hasattr(self, 'postersession'):
+            return 'Material of {}'.format(self.postersession)
         return 'Added Material'
