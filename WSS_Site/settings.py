@@ -84,8 +84,12 @@ WSGI_APPLICATION = 'WSS_Site.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'org',
+        'USER': 'sarh',
+        'PASSWORD': '147852',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
 
@@ -142,6 +146,10 @@ JET_SIDE_MENU_CUSTOM_APPS = [
         'WSS',
         'Sponsor',
         'ExternalLink',
+        'Participant',
+        'ShortLink',
+        'Reserve',
+        'Grade'
     ]),
     ('people', [
         'Speaker',
@@ -168,3 +176,27 @@ JET_INDEX_DASHBOARD = 'WSS_Site.dashboard.IndexDashboard'
 from django.utils.log import DEFAULT_LOGGING
 
 DEFAULT_LOGGING['handlers']['console']['filters'] = []
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': 'debug.log',
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['file'],
+            'level': 'INFO',
+            'propagate': True,
+        },
+        'payment': {
+            'handlers': ['file'],
+            'level': 'INFO',
+            'propagate': True,
+        },
+    },
+}

@@ -1,14 +1,17 @@
 from random import Random
 from itertools import groupby
-from django.shortcuts import get_object_or_404, render_to_response
+from django.shortcuts import get_object_or_404
 from django.views.generic.detail import DetailView
 from django.http import HttpResponse
 from django.shortcuts import redirect
-from pandas._libs import json
+import logging
+
+logger = logging.getLogger('payment')
 from zeep import Client
 from django.views.decorators.csrf import csrf_exempt
+from django.shortcuts import render
 
-from WSS.forms import NameForm
+from WSS.forms import ParticipantForm
 from WSS.mixins import FooterMixin, WSSWithYearMixin
 from WSS.models import WSS, Participant, Grade, Reserve, ShortLink
 
@@ -92,6 +95,11 @@ class ScheduleView(FooterMixin, WSSWithYearMixin, DetailView):
 class ReserveView(FooterMixin, WSSWithYearMixin, DetailView):
     template_name = 'WSS/reserve.html'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data()
+        context['form'] = ParticipantForm()
+        return render(self.request, self.template_name, {'form': ParticipantForm()})
+
 
 class RegisterView(FooterMixin, WSSWithYearMixin, DetailView):
     template_name = 'WSS/register.html'
@@ -100,18 +108,19 @@ class RegisterView(FooterMixin, WSSWithYearMixin, DetailView):
 MERCHANT = '5ff4f360-c10a-11e9-af68-000c295eb8fc'
 client = Client('https://www.zarinpal.com/pg/services/WebGate/wsdl')
 description = "توضیحات مربوط به تراکنش را در این قسمت وارد کنید"  # Required
-EMAIL = 'email@example.com'  # Optional
-mobile = '09123456789'  # Optional
-CallbackURL = 'http://localhost:8000/2020/verify/'  # Important: need to edit for realy server.
 student_price = 100
 other_price = 100
 
 
 @csrf_exempt
 def send_request(request, year):
-    form = NameForm(request.POST)
+    form = ParticipantForm(request.POST)
     if not form.is_valid():
         return HttpResponse("form is not valid")
+
+    CallbackURL = 'http://http://wss.ce.sharif.edu/' + str(
+        year) + '/verify/'  # Important: need to edit for realy server.
+
     name_family = form.data['name_family']
     email = form.data['email']
     grade = form.data['grade']
@@ -124,6 +133,8 @@ def send_request(request, year):
     country = form.data['country']
     field_of_interest = form.data['interests']
     is_student = bool(form.data['is_student'])
+    logger.info("participant with email:" + email + " created.")
+
     try:
         exh = Participant.objects.all().get(email=email)
     except Participant.DoesNotExist:
@@ -141,31 +152,30 @@ def send_request(request, year):
         pass
     price = student_price
     if not is_student:
-        price = other_price;
+        price = other_price
 
-    payment_id = Random().randint(0, 100000000000)
+    payment_id = Random().randint(0, 1000000000)
     exh = Participant(name_family=name_family, email=email, grade=grade, phone_number=phone_number, job=job,
                       university=university, introduction_method=introduction_method, gender=gender,
                       home_city=home_city, payment_id=payment_id,
                       country=country, field_of_interest=field_of_interest, is_student=is_student)
     exh.save()
-    result = client.service.PaymentRequest(MERCHANT, price, description, EMAIL, mobile,
+    result = client.service.PaymentRequest(MERCHANT, price, description, email, phone_number,
                                            CallbackURL + email)
     if result.Status == 100:
+        logger.info("user with email:" + email + " connected to payment")
         return redirect('https://www.zarinpal.com/pg/StartPay/' + str(result.Authority))
     else:
-        return HttpResponse('Error code: ' + str(result.Status))
+        return HttpResponse('Error code: ' + str(result.Status))  # todo move to error page
 
 
 def verify(request, year, email):
+    logger.info("participant with email:" + email + " starting to verify.")
+
     try:
         exh = Participant.objects.all().get(email=email)
     except Participant.DoesNotExist:
-        return HttpResponse('پرداخت با خطا مواجه شد. با پشتیبانی تماس بگیرید.')
-
-    gr = Grade.objects.all().get(level=exh.grade)
-    gr.capacity -= 1
-    gr.save()
+        return HttpResponse('پرداخت با خطا مواجه شد. با پشتیبانی تماس بگیرید.')  # todo  move to error page
 
     price = other_price
     if exh.is_student:
@@ -174,15 +184,28 @@ def verify(request, year, email):
     if request.GET.get('Status') == 'OK':
         result = client.service.PaymentVerification(MERCHANT, request.GET['Authority'], price)
         if result.Status == 100:
+
             exh.payment_status = 'OK'
             exh.save()
-            return HttpResponse('Transaction success.\nRefID: ' + str(result.RefID))  # todo redirect to home
+
+            gr = Grade.objects.all().get(level=exh.grade)
+            gr.capacity -= 1
+            gr.save()
+
+            logger.info("participant with email:" + email + " verified successfully.")
+            return HttpResponse(
+                'Transaction success.\nRefID: ' + str(result.RefID))  # todo redirect secsucess full payment
         elif result.Status == 101:
+            logger.info(
+                "participant with email:" + email + " verified again. perhaps he attacking us.")  # todo redirect to tekrari
+
             return HttpResponse('Transaction submitted : ' + str(result.Status))
         else:
-            return HttpResponse('Transaction failed.\nStatus: ' + str(result.Status))
+            logger.info("participant with email:" + email + " don't verified")
+            return HttpResponse('Transaction failed.\nStatus: ' + str(result.Status)) # todo redirect to error page
     else:
-        return HttpResponse('Transaction failed or canceled by user')
+        logger.info("participant with email:" + email + " don't verified")
+        return HttpResponse('Transaction failed or canceled by user') # todo redirect to error page
 
 
 def reserve(form):
@@ -190,7 +213,7 @@ def reserve(form):
     name_family = form.data['name_family']
     grade = form.data['grade']
     Reserve(name=name_family, email=email, grade=grade).save()
-    return HttpResponse('درصورت وجود ظرفیت مازاد به شما اطلاع رسانی خواهیم کرد.')
+    return HttpResponse('درصورت وجود ظرفیت مازاد به شما اطلاع رسانی خواهیم کرد.')  # todo error page
 
 
 def go(request, year, url):
@@ -198,5 +221,9 @@ def go(request, year, url):
     try:
         link = ShortLink.objects.all().get(short_link=url)
     except:
-        return redirect()  # 404 page
+        return redirect(NotFound())  # todo 404 page
     return redirect(to=link.url)
+
+
+class NotFound(FooterMixin, WSSWithYearMixin, DetailView):
+    template_name = '../templates/404.html'
