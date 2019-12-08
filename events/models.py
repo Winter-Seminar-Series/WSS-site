@@ -68,6 +68,8 @@ class Workshop(BaseEvent):
     speaker = models.ForeignKey(to='people.Speaker', related_name='workshops')
     material = models.OneToOneField(to='WorkshopMaterial', null=True, blank=True)
     registration_link = models.URLField(null=True, blank=True)
+    price = models.IntegerField(default=0)
+
 
     @property
     def get_absolute_url(self):

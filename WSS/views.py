@@ -4,13 +4,12 @@ from django.shortcuts import get_object_or_404
 from django.views.generic.detail import DetailView
 from django.http import HttpResponse
 from django.shortcuts import redirect
+from django.http import Http404
 import logging
 
 logger = logging.getLogger('payment')
 from zeep import Client
 from django.views.decorators.csrf import csrf_exempt
-from django.shortcuts import render
-
 from WSS.forms import ParticipantForm
 from WSS.mixins import FooterMixin, WSSWithYearMixin
 from WSS.models import WSS, Participant, Grade, Reserve, ShortLink
@@ -37,7 +36,7 @@ class AboutView(FooterMixin, DetailView):
     context_object_name = 'wss'
 
     def get_object(self, queryset=None):
-        #TODO: I didn't know how to handle this, so I used a simple trick.
+        # TODO: I didn't know how to handle this, so I used a simple trick.
         return get_object_or_404(WSS, year=2019)
 
 
@@ -111,13 +110,14 @@ class ScheduleView(FooterMixin, WSSWithYearMixin, DetailView):
         return context
 
 
-class ReserveView(FooterMixin, WSSWithYearMixin, DetailView):
-    template_name = 'WSS/reserve.html'
+def compute_cost(participant):
+    price = other_price
+    if participant.is_student:
+        price = student_price
+    for i in participant.workshops.all():
+        price += i.price
+    return price
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data()
-        context['form'] = ParticipantForm()
-        return render(self.request, self.template_name)
 
 
 class RegisterView(FooterMixin, WSSWithYearMixin, DetailView):
@@ -132,6 +132,7 @@ class RegisterView(FooterMixin, WSSWithYearMixin, DetailView):
         context = super().get_context_data()
         context['form'] = ParticipantForm()
         return context
+
 
 
 MERCHANT = '5ff4f360-c10a-11e9-af68-000c295eb8fc'
@@ -150,18 +151,23 @@ def send_request(request, year):
     CallbackURL = 'http://wss.ce.sharif.edu/' + str(
         year) + '/verify/'  # Important: need to edit for realy server.
 
-    name_family = form.data['name_family']
-    email = form.data['email']
-    grade = form.data['grade']
-    phone_number = form.data['phone_number']
-    job = form.data['job']
-    university = form.data['university']
-    introduction_method = form.data['introduction_method']
-    gender = form.data['gender']
-    home_city = form.data['city']
-    country = form.data['country']
-    field_of_interest = form.data['interests']
-    is_student = bool(form.data['is_student'])
+    name_family = form.cleaned_data['name_family']
+    email = form.cleaned_data['email']
+    grade = form.cleaned_data['grade']
+    phone_number = form.cleaned_data['phone_number']
+    job = form.cleaned_data['job']
+    university = form.cleaned_data['university']
+    introduction_method = form.cleaned_data['introduction_method']
+    gender = form.cleaned_data['gender']
+    city = form.cleaned_data['city']
+    country = form.cleaned_data['country']
+    workshops = []
+    for i in form.cleaned_data['workshops']:
+        workshops.append(i.id)
+    field_of_interest = ""
+    for i in form.cleaned_data['interests']:
+        field_of_interest += ", " + i
+    is_student = form.cleaned_data['is_student']
     logger.info("participant with email:" + email + " created.")
 
     try:
@@ -179,16 +185,16 @@ def send_request(request, year):
     if cap <= 0:
         return reserve(form)
         pass
-    price = student_price
-    if not is_student:
-        price = other_price
 
     payment_id = Random().randint(0, 1000000000)
     exh = Participant(name_family=name_family, email=email, grade=grade, phone_number=phone_number, job=job,
                       university=university, introduction_method=introduction_method, gender=gender,
-                      home_city=home_city, payment_id=payment_id,
+                      city=city, payment_id=payment_id,
                       country=country, field_of_interest=field_of_interest, is_student=is_student)
     exh.save()
+    exh.workshops = workshops
+    exh.save()
+    price = compute_cost(exh)
     result = client.service.PaymentRequest(MERCHANT, price, description, email, phone_number,
                                            CallbackURL + email)
     if result.Status == 100:
@@ -198,6 +204,7 @@ def send_request(request, year):
         return HttpResponse('Error code: ' + str(result.Status))  # todo move to error page
 
 
+@csrf_exempt
 def verify(request, year, email):
     logger.info("participant with email:" + email + " starting to verify.")
 
@@ -206,9 +213,7 @@ def verify(request, year, email):
     except Participant.DoesNotExist:
         return HttpResponse('پرداخت با خطا مواجه شد. با پشتیبانی تماس بگیرید.')  # todo  move to error page
 
-    price = other_price
-    if exh.is_student:
-        price = student_price
+    price = compute_cost(exh)
 
     if request.GET.get('Status') == 'OK':
         result = client.service.PaymentVerification(MERCHANT, request.GET['Authority'], price)
@@ -231,10 +236,10 @@ def verify(request, year, email):
             return HttpResponse('Transaction submitted : ' + str(result.Status))
         else:
             logger.info("participant with email:" + email + " don't verified")
-            return HttpResponse('Transaction failed.\nStatus: ' + str(result.Status)) # todo redirect to error page
+            return HttpResponse('Transaction failed.\nStatus: ' + str(result.Status))  # todo redirect to error page
     else:
         logger.info("participant with email:" + email + " don't verified")
-        return HttpResponse('Transaction failed or canceled by user') # todo redirect to error page
+        return HttpResponse('Transaction failed or canceled by user')  # todo redirect to error page
 
 
 def reserve(form):
@@ -245,14 +250,16 @@ def reserve(form):
     return HttpResponse('درصورت وجود ظرفیت مازاد به شما اطلاع رسانی خواهیم کرد.')  # todo error page
 
 
+class NotFound(FooterMixin, WSSWithYearMixin, DetailView):
+    template_name = '../templates/404.html'
+
 def go(request, year, url):
     link = None
     try:
         link = ShortLink.objects.all().get(short_link=url)
     except:
-        return redirect(NotFound())  # todo 404 page
+        raise Http404
     return redirect(to=link.url)
 
 
-class NotFound(FooterMixin, WSSWithYearMixin, DetailView):
-    template_name = '../templates/404.html'
+

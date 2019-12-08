@@ -15,8 +15,14 @@ class ParticipantForm(forms.ModelForm):
     # is_student = forms.BooleanField(label='is_student', required=False)
     # city = forms.CharField(label='city')
     # country = forms.CharField(label='country')
-    # interests = forms.CharField(label='interests')
+    INTEREST_FIELDS = [
+        ("TECH", "technologies"),
+        ("DATA", "data mining")  # todo add more
+    ]
+    interests = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple, choices=INTEREST_FIELDS,
+                                          label='interests')
+
     class Meta:
         model = models.Participant
         fields = ['name_family', 'phone_number', 'email', 'job', 'university', 'introduction_method',
-                  'gender', 'home_city', 'country', 'field_of_interest', 'grade', 'is_student']
+                  'gender', 'city', 'country', 'grade', 'is_student', 'workshops']

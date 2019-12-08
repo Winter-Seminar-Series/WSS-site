@@ -142,18 +142,19 @@ class ExternalLink(models.Model):
         return '{}: {}'.format(self.type, self.url)
 
 
-MAJOR_CHOICES = [('ms', 'MS'), ('bs', "BS"), ('phd', 'PHD'), ('oth', 'other')]
+GRADE_CHOICES = [('ms', 'MS'), ('bs', "BS"), ('phd', 'PHD'), ('oth', 'other')]
 
 
 class Grade(models.Model):
-    level = models.CharField(max_length=3, choices=MAJOR_CHOICES, primary_key=True)
+    level = models.CharField(max_length=3, choices=GRADE_CHOICES, primary_key=True)
     capacity = models.IntegerField()
 
 
-INTRODUCTION = [('telegram', 'تلگرام'), ('instageram', 'اینستاگرام'), ('facebook', 'فیسبوک'),
-                ('twitter', 'تویتر'), ('poster', 'پوستر تبلیغاتی'), ('friends', 'دوستان'), ('other', 'سایر')]
-GENDER = [('woman', 'زن'), ('man', 'مرد')]
+INTRODUCTION = [('telegram', 'telegram'), ('instageram', 'instageram'), ('facebook', 'facebook'),
+                ('twitter', 'twitter'), ('poster', 'poster'), ('friends', 'friends'), ('other', 'other')]
+GENDER = [('woman', 'woman'), ('man', 'man')]
 PAYMENT_CHOICES = [('OK', 'پرداخت شده'), ('NO', "پرداخت نشده")]
+
 
 
 class Participant(models.Model):
@@ -164,13 +165,14 @@ class Participant(models.Model):
     university = models.CharField(max_length=250)
     introduction_method = models.CharField(max_length=250, choices=INTRODUCTION)
     gender = models.CharField(max_length=50, choices=GENDER)
-    home_city = models.CharField(max_length=150)
+    city = models.CharField(max_length=150)
     country = models.CharField(max_length=150)
     field_of_interest = models.CharField(max_length=1500)
     payment_status = models.CharField(max_length=2, default='NO', choices=PAYMENT_CHOICES)
-    grade = models.CharField(max_length=30)
+    grade = models.CharField(max_length=30, choices=GRADE_CHOICES)
     is_student = models.BooleanField(default=False)
     payment_id = models.IntegerField(null=True)
+    workshops = models.ManyToManyField(to=Workshop, blank=True, null=True)
     sign_timestamp = models.DateTimeField(auto_now=True)
 
 

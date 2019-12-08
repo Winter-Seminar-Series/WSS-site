@@ -3,7 +3,7 @@ from django.conf.urls import url, include
 import WSS
 from WSS.views import HomeView, AboutView, SeminarsListView, PosterSessionsListView, WorkshopsListView, StaffListView, \
     GalleryImageView, RegisterView, \
-    ScheduleView, ReserveView, GalleryVideoView
+    ScheduleView, GalleryVideoView
 
 year_urlpatterns = [
     url(r'^$', HomeView.as_view(), name='home'),
@@ -16,7 +16,6 @@ year_urlpatterns = [
     url(r'^schedule/$', ScheduleView.as_view(), name='schedule'),
     url(r'^register/$', RegisterView.as_view(), name='register'),
     url(r'^signup/$', WSS.views.send_request, name='register'),
-    url(r'^reserve/$', ReserveView.as_view(), name='reserve'),
     url(r'^go/(?P<url>\w+)/$', WSS.views.go, name='go'),
     url(r'^verify/(?P<email>([a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$))$', WSS.views.verify, name='go'),
 ]
