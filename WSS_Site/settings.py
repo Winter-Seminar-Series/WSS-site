@@ -87,7 +87,7 @@ WSGI_APPLICATION = 'WSS_Site.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'org',
+        'NAME': 'org2',
         'USER': 'sarh',
         'PASSWORD': '147852',
         'HOST': 'localhost',

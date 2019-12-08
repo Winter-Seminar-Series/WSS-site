@@ -119,7 +119,6 @@ def compute_cost(participant):
     return price
 
 
-
 class RegisterView(FooterMixin, WSSWithYearMixin, DetailView):
     template_name = 'WSS/register.html'
     context_object_name = 'wss'
@@ -134,10 +133,9 @@ class RegisterView(FooterMixin, WSSWithYearMixin, DetailView):
         return context
 
 
-
 MERCHANT = '5ff4f360-c10a-11e9-af68-000c295eb8fc'
 client = Client('https://www.zarinpal.com/pg/services/WebGate/wsdl')
-description = "توضیحات مربوط به تراکنش را در این قسمت وارد کنید"  # Required
+description = "توضیحات مربوط به تراکنش را در این قسمت وارد کنید"  #todo  Required
 student_price = 100
 other_price = 100
 
@@ -149,7 +147,7 @@ def send_request(request, year):
         return HttpResponse("form is not valid")
 
     CallbackURL = 'http://wss.ce.sharif.edu/' + str(
-        year) + '/verify/'  # Important: need to edit for realy server.
+        year) + '/verify/'  # todo Important: need to edit for realy server.
 
     name_family = form.cleaned_data['name_family']
     email = form.cleaned_data['email']
@@ -196,7 +194,7 @@ def send_request(request, year):
     exh.save()
     price = compute_cost(exh)
     result = client.service.PaymentRequest(MERCHANT, price, description, email, phone_number,
-                                           CallbackURL + email)
+                                           CallbackURL + email + "/" + str(payment_id))
     if result.Status == 100:
         logger.info("user with email:" + email + " connected to payment")
         return redirect('https://www.zarinpal.com/pg/StartPay/' + str(result.Authority))
@@ -205,11 +203,11 @@ def send_request(request, year):
 
 
 @csrf_exempt
-def verify(request, year, email):
-    logger.info("participant with email:" + email + " starting to verify.")
+def verify(request, year, email, payment_id):
+    logger.info("participant with email:" + email + "and payment_id: " + payment_id + " starting to verify.")
 
     try:
-        exh = Participant.objects.all().get(email=email)
+        exh = Participant.objects.all().get(email=email, payment_id=payment_id)
     except Participant.DoesNotExist:
         return HttpResponse('پرداخت با خطا مواجه شد. با پشتیبانی تماس بگیرید.')  # todo  move to error page
 
@@ -253,6 +251,7 @@ def reserve(form):
 class NotFound(FooterMixin, WSSWithYearMixin, DetailView):
     template_name = '../templates/404.html'
 
+
 def go(request, year, url):
     link = None
     try:
@@ -260,6 +259,3 @@ def go(request, year, url):
     except:
         raise Http404
     return redirect(to=link.url)
-
-
-

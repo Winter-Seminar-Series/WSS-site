@@ -156,11 +156,11 @@ GENDER = [('woman', 'woman'), ('man', 'man')]
 PAYMENT_CHOICES = [('OK', 'پرداخت شده'), ('NO', "پرداخت نشده")]
 
 
-
 class Participant(models.Model):
+    id = models.BigIntegerField(primary_key=True, default=0)
     name_family = models.CharField(max_length=250)
     phone_number = models.CharField(max_length=13)
-    email = models.EmailField(primary_key=True)
+    email = models.EmailField()
     job = models.CharField(max_length=250)
     university = models.CharField(max_length=250)
     introduction_method = models.CharField(max_length=250, choices=INTRODUCTION)
@@ -171,9 +171,12 @@ class Participant(models.Model):
     payment_status = models.CharField(max_length=2, default='NO', choices=PAYMENT_CHOICES)
     grade = models.CharField(max_length=30, choices=GRADE_CHOICES)
     is_student = models.BooleanField(default=False)
-    payment_id = models.IntegerField(null=True)
-    workshops = models.ManyToManyField(to=Workshop, blank=True, null=True)
+    payment_id = models.IntegerField(default=0)
+    workshops = models.ManyToManyField(to=Workshop, blank=True)
     sign_timestamp = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        unique_together = [['email', 'payment_id']]
 
 
 class Reserve(models.Model):
