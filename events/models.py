@@ -69,6 +69,7 @@ class Workshop(BaseEvent):
     material = models.OneToOneField(to='WorkshopMaterial', null=True, blank=True)
     registration_link = models.URLField(null=True, blank=True)
     price = models.IntegerField(default=0)
+    capacity = models.IntegerField(default=0)
 
 
     @property

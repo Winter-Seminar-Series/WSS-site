@@ -7,6 +7,8 @@ from django.shortcuts import redirect
 from django.http import Http404
 import logging
 
+from events.models import Workshop
+
 logger = logging.getLogger('payment')
 from zeep import Client
 from django.views.decorators.csrf import csrf_exempt
@@ -111,9 +113,11 @@ class ScheduleView(FooterMixin, WSSWithYearMixin, DetailView):
 
 
 def compute_cost(participant):
-    price = other_price
-    if participant.is_student:
-        price = student_price
+    price = 0
+    if participant.participate_in_wss:
+        price = other_price
+        if participant.is_student:
+            price = student_price
     for i in participant.workshops.all():
         price += i.price
     return price
@@ -135,7 +139,7 @@ class RegisterView(FooterMixin, WSSWithYearMixin, DetailView):
 
 MERCHANT = '5ff4f360-c10a-11e9-af68-000c295eb8fc'
 client = Client('https://www.zarinpal.com/pg/services/WebGate/wsdl')
-description = "توضیحات مربوط به تراکنش را در این قسمت وارد کنید"  #todo  Required
+description = "توضیحات مربوط به تراکنش را در این قسمت وارد کنید"  # todo  Required
 student_price = 100
 other_price = 100
 
@@ -159,9 +163,12 @@ def send_request(request, year):
     gender = form.cleaned_data['gender']
     city = form.cleaned_data['city']
     country = form.cleaned_data['country']
+    participate_in_wss = form.cleaned_data['participate_in_wss']
     workshops = []
     for i in form.cleaned_data['workshops']:
         workshops.append(i.id)
+        if i.capacity <= 0:
+            return HttpResponse("workshop with id: " + i.title + "is full.")
     field_of_interest = ""
     for i in form.cleaned_data['interests']:
         field_of_interest += ", " + i
@@ -180,14 +187,14 @@ def send_request(request, year):
         return HttpResponse('مدرک تحصیلی درست وارد نشده است.')
 
     cap = gr.capacity
-    if cap <= 0:
+    if participate_in_wss and cap <= 0:
         return reserve(form)
         pass
 
     payment_id = Random().randint(0, 1000000000)
     exh = Participant(name_family=name_family, email=email, grade=grade, phone_number=phone_number, job=job,
                       university=university, introduction_method=introduction_method, gender=gender,
-                      city=city, payment_id=payment_id,
+                      city=city, payment_id=payment_id, participate_in_wss=participate_in_wss,
                       country=country, field_of_interest=field_of_interest, is_student=is_student)
     exh.save()
     exh.workshops = workshops
@@ -220,9 +227,15 @@ def verify(request, year, email, payment_id):
             exh.payment_status = 'OK'
             exh.save()
 
-            gr = Grade.objects.all().get(level=exh.grade)
-            gr.capacity -= 1
-            gr.save()
+            if exh.participate_in_wss:
+                gr = Grade.objects.all().get(level=exh.grade)
+                gr.capacity -= 1
+                gr.save()
+
+            for i in exh.workshops.all():
+                i.capacity -= 1
+                i.save()
+
 
             logger.info("participant with email:" + email + " verified successfully.")
             return HttpResponse(

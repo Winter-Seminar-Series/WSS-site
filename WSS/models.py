@@ -173,6 +173,7 @@ class Participant(models.Model):
     is_student = models.BooleanField(default=False)
     payment_id = models.IntegerField(default=0)
     workshops = models.ManyToManyField(to=Workshop, blank=True)
+    participate_in_wss = models.BooleanField(default=True)
     sign_timestamp = models.DateTimeField(auto_now=True)
 
     class Meta:

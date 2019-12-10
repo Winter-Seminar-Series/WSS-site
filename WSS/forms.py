@@ -1,6 +1,14 @@
 from django import forms
 
 from WSS import models
+from events.models import Workshop
+
+
+def get_workshops():
+        workshops = []
+        for i in Workshop.objects.all():
+            workshops.append((i.title, i.title + " price(Rial): " + str(i.price)))
+        return workshops
 
 
 class ParticipantForm(forms.ModelForm):
@@ -25,4 +33,10 @@ class ParticipantForm(forms.ModelForm):
     class Meta:
         model = models.Participant
         fields = ['name_family', 'phone_number', 'email', 'job', 'university', 'introduction_method',
-                  'gender', 'city', 'country', 'grade', 'is_student', 'workshops']
+                  'gender', 'city', 'country', 'grade', 'is_student', 'workshops', 'participate_in_wss']
+
+    def __init__(self, *args, **kwargs):
+        super(ParticipantForm, self).__init__(*args, **kwargs)
+        self.fields["workshops"].widget = forms.CheckboxSelectMultiple()
+        self.fields["workshops"].queryset = Workshop.objects.all()
+
