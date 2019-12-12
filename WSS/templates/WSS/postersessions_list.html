@@ -1,0 +1,30 @@
+{% extends 'wssbase.html' %}
+{% load static %}
+{% load date_tags %}
+{% load human_tags %}
+
+{% block title %}{{ wss }} speakers{% endblock %}
+{% block content %}
+   <section id="ts-speakers" style="" class="blue-gradient ts-speakers diagonal ">
+      <div class="container">
+         <div class="row">
+            <h3 class="mb-1 col section-sub-title title-white">Poster Sessions</h3>
+         </div>
+
+         <!--/ Title row end -->
+         <div class="row">
+            {% for postersession in wss.postersessions %}
+            <div class="col-xs-12 col-sm-6 col-lg-3">
+               {% render_human postersession.speaker subtitle=postersession.speaker.short_bio url=postersession.get_absolute_url %}
+            </div>
+            {% endfor %}
+         </div>
+         <br>
+      </div>
+      <!-- Content row 2 end -->
+
+      <!--/ Container end -->
+   </section>
+
+<!-- Map end -->
+{% endblock %}

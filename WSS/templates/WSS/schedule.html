@@ -58,13 +58,11 @@
 		<div class="gap-60"></div>
 
 		<div class="container">
-			<div class="row text-center">
 				<h3 class="section-sub-title">{{ wss }} Schedule</h3>
-			</div><!--/ Title row end -->
 		</div><!-- Container 1 end -->
 
 		{% for day, events_by_time in events_by_day %}
-			<div class="schedule-content {% if forloop.counter|divisibleby:2 %} pattern-bg {% endif %}">
+			<div class="diagonal schedule-content {% if forloop.counter|divisibleby:2 %} pattern-bg {% endif %}">
 				<div class="container">
 					<div class="row">
 						<div class="col-md-12">
@@ -122,7 +120,7 @@
 
 		{% empty %}
 			<div class="row text-center">
-				<h3 class="schedule-date">TBD</h3>
+				<h3 class="schedule-date mx-auto">TBD</h3>
 			</div>
 		{% endfor %}
 

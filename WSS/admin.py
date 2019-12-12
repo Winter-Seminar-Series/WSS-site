@@ -2,7 +2,7 @@ from django.contrib import admin
 from jet.admin import CompactInline
 
 from WSS.models import Clip, WSS, Image, Sponsor, ExternalLink, Sponsorship
-from events.models import Seminar, Workshop, Event
+from events.models import Seminar, Workshop, PosterSession, Event
 
 
 class SponsorshipInline(CompactInline):
@@ -24,6 +24,10 @@ class SeminarInline(CompactInline):
     model = Seminar
     extra = 0
 
+class PosterSessionInline(CompactInline):
+    model = PosterSession
+    extra = 0
+
 
 class WorkshopInline(CompactInline):
     model = Workshop
@@ -36,7 +40,7 @@ class EventInline(CompactInline):
 
 
 class WSSAdmin(admin.ModelAdmin):
-    inlines = (SeminarInline, WorkshopInline, EventInline, SponsorshipInline, ImageInline,
+    inlines = (SeminarInline, PosterSessionInline, WorkshopInline, EventInline, SponsorshipInline, ImageInline,
                ClipInline)
     list_display = ('__str__', 'start_date', 'end_date')
 
