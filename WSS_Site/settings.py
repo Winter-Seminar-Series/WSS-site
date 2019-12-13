@@ -24,7 +24,7 @@ SECRET_KEY = 'sag'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 # Application definition
 
@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'polymorphic',
     'sorl.thumbnail',
     'taggit',
+    'crispy_forms',
 ]
 
 MIDDLEWARE = [
@@ -139,6 +140,10 @@ JET_SIDE_MENU_CUSTOM_APPS = [
         'WSS',
         'Sponsor',
         'ExternalLink',
+        'Participant',
+        'ShortLink',
+        'Reserve',
+        'Grade'
     ]),
     ('people', [
         'Speaker',
@@ -166,6 +171,31 @@ from django.utils.log import DEFAULT_LOGGING
 
 DEFAULT_LOGGING['handlers']['console']['filters'] = []
 TAGGIT_CASE_INSENSITIVE = True
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': 'debug.log',
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['file'],
+            'level': 'INFO',
+            'propagate': True,
+        },
+        'payment': {
+            'handlers': ['file'],
+            'level': 'INFO',
+            'propagate': True,
+        },
+    },
+}
 
 local_settings_path = os.path.join(os.path.dirname(__file__), 'local_settings.py')
 if os.path.exists(local_settings_path):
