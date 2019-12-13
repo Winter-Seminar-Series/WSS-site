@@ -150,7 +150,7 @@ def send_request(request, year):
     if not form.is_valid():
         return render(request, 'WSS/register.html', {'wss' : get_object_or_404(WSS, year=year), 'form': form, 'error':"Please correct the following errors."})
 
-    CallbackURL = 'http://wss.ce.sharif.edu/' + str(
+    CallbackURL = 'http://localhost:8000/' + str(
         year) + '/verify/'  # todo Important: need to edit for realy server.
 
     name = form.cleaned_data['name']
@@ -174,7 +174,9 @@ def send_request(request, year):
     for i in form.cleaned_data['workshops']:
         workshops.append(i.id)
         if i.capacity <= 0:
-            return HttpResponse("workshop with id: " + i.title + "is full.")
+            return render(request, 'WSS/register.html', {'wss': get_object_or_404(WSS, year=year), 'form': form,
+                                                         'error': "Workshop \""+ i.title+"\" is booked up."})
+
     field_of_interest = ""
     for i in form.cleaned_data['interests']:
         field_of_interest += ", " + i
@@ -186,11 +188,12 @@ def send_request(request, year):
     except Participant.DoesNotExist:
         exh = None
     if participate_in_wss and exh is not None and exh.payment_status == 'OK':
-        return HttpResponse('ثبت نام انجام شده است. ایمیل تکراری است.')
+        return render(request, 'WSS/register.html', {'wss' : get_object_or_404(WSS, year=year), 'form': form, 'error':"You have been registered successfully with this email."})
+
     try:
         gr = Grade.objects.all().get(level=grade)
     except Grade.DoesNotExist:
-        return HttpResponse('مدرک تحصیلی درست وارد نشده است.')
+        return render(request, 'WSS/register.html', {'wss' : get_object_or_404(WSS, year=year), 'form': form, 'error':"The entered grade is incorrect."})
 
     cap = gr.capacity
     if participate_in_wss and cap <= 0:
@@ -224,7 +227,7 @@ def verify(request, year, email, payment_id):
     try:
         exh = Participant.objects.all().get(email=email, payment_id=payment_id)
     except Participant.DoesNotExist:
-        return HttpResponse('پرداخت با خطا مواجه شد. با پشتیبانی تماس بگیرید.')  # todo  move to error page
+        return render(request, 'info.html', {'wss' : get_object_or_404(WSS, year=year), 'info': 'Payment was not successful. Please contact support.'}) # todo  move to error page
 
     price = compute_cost(exh)
 
@@ -245,8 +248,8 @@ def verify(request, year, email, payment_id):
                 i.save()
 
             logger.info("participant with email:" + email + " verified successfully.")
-            return HttpResponse(
-                'Transaction success.\nRefID: ' + str(result.RefID))  # todo redirect secsucess full payment
+            return render(request, 'info.html', {'wss': get_object_or_404(WSS, year=year),
+                                                 'info': 'You have registered successfully. Your tracking code is:' + str(result.RefID)})  # todo  move to error page
         elif result.Status == 101:
             logger.info(
                 "participant with email:" + email + " verified again. perhaps he attacking us.")  # todo redirect to tekrari
@@ -257,7 +260,7 @@ def verify(request, year, email, payment_id):
             return HttpResponse('Transaction failed.\nStatus: ' + str(result.Status))  # todo redirect to error page
     else:
         logger.info("participant with email:" + email + " don't verified")
-        return HttpResponse('Transaction failed or canceled by user')  # todo redirect to error page
+        return render(request, 'info.html', {'wss' : get_object_or_404(WSS, year=year), 'info': 'Payment was not successful.'}) # todo  move to error page
 
 
 def reserve(form):
