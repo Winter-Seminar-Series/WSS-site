@@ -12,20 +12,25 @@ def get_workshops():
 
 
 class ParticipantForm(forms.ModelForm):
-    # name_family = forms.CharField(label='name_family', max_length=100)
-    # email = forms.EmailField(label='email')
-    # phone_number = forms.CharField(max_length=15, label='phone_number')
-    # job = forms.CharField(max_length=100, label='job')
-    # university = forms.CharField(max_length=100, label='university')
-    # introduction_method = forms.CharField(label='introduction_method', )
-    # gender = forms.CharField(label='gender')
-    # grade = forms.CharField(label='grade')
-    # is_student = forms.BooleanField(label='is_student', required=False)
-    # city = forms.CharField(label='city')
-    # country = forms.CharField(label='country')
     INTEREST_FIELDS = [
-        ("TECH", "technologies"),
-        ("DATA", "data mining")  # todo add more
+        ("Practical Machine Learning", "Practical Machine Learning"),
+        ("Theoretical Machine learning", "Theoretical Machine learning"),
+        ("Optimization", "Optimization"),
+        ("Information Theory", "Information Theory"),
+        ("Security", "Security"),
+        ("Bioinformatics", "Bioinformatics"),
+        ("Distributed Systems", "Distributed Systems"),
+        ("Computer Vision", "Computer Vision"),
+        ("Computer Graphics", "Computer Graphics"),
+        ("Computational Social Science", "Computational Social Science"),
+        ("Quantum Computing", "Quantum Computing"),
+        ("Cloud Computing", "Cloud Computing"),
+        ("Cryptography", "Cryptography"),
+        ("Software Engineering", "Software Engineering"),
+        ("Big Data", "Big Data"),
+        ("Computer Architecture", "Computer Architecture"),
+        ("Database Theory", "Database Theory"),
+        ("Theoretical Computer Science", "Theoretical Computer Science"),
     ]
     interests = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple, choices=INTEREST_FIELDS,
                                           label='interests')

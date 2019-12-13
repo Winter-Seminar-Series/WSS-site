@@ -23,7 +23,7 @@ class BaseEvent(PolymorphicModel):  # Is implicitly Abstract
     @property
     def end_time(self):
         return self.start_time + self.duration
-        
+
     @property
     def keywords(self):
         return self.key_words.names()
@@ -52,6 +52,7 @@ class Seminar(BaseEvent):
     def get_absolute_url(self):
         return reverse('events:seminar', args=[self.pk])
 
+
 class PosterSession(BaseEvent):
     abstract = models.TextField()
     speaker = models.ForeignKey(to='people.Speaker', related_name='postersessions')
@@ -71,10 +72,12 @@ class Workshop(BaseEvent):
     price = models.IntegerField(default=0)
     capacity = models.IntegerField(default=0)
 
-
     @property
     def get_absolute_url(self):
         return reverse('events:workshop', args=[self.pk])
+
+    def __str__(self):
+        return self.title + ", " + "speaker: " + self.speaker.name + ", " + "price(Rial): " + str(self.price)
 
 
 class Material(PolymorphicModel):
@@ -94,6 +97,7 @@ class WorkshopMaterial(Material):
         if hasattr(self, 'workshop'):
             return 'Material of {}'.format(self.workshop)
         return 'Added Material'
+
 
 class PosterMaterial(Material):
     def __str__(self):

@@ -142,11 +142,11 @@ class ExternalLink(models.Model):
         return '{}: {}'.format(self.type, self.url)
 
 
-GRADE_CHOICES = [('ms', 'MS'), ('bs', "BS"), ('phd', 'PHD'), ('oth', 'other')]
+GRADE_CHOICES = [('msOrPhd', 'MS or PHD'), ('bsOrOther', "BS or Other")]
 
 
 class Grade(models.Model):
-    level = models.CharField(max_length=3, choices=GRADE_CHOICES, primary_key=True)
+    level = models.CharField(max_length=30, choices=GRADE_CHOICES, primary_key=True)
     capacity = models.IntegerField()
 
 

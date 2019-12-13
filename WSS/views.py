@@ -179,7 +179,7 @@ def send_request(request, year):
         exh = Participant.objects.all().get(email=email)
     except Participant.DoesNotExist:
         exh = None
-    if exh is not None and exh.payment_status == 'OK':
+    if participate_in_wss and exh is not None and exh.payment_status == 'OK':
         return HttpResponse('ثبت نام انجام شده است. ایمیل تکراری است.')
     try:
         gr = Grade.objects.all().get(level=grade)
