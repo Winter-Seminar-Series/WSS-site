@@ -43,8 +43,12 @@ class ParticipantForm(forms.ModelForm):
                   'gender', 'city', 'country', 'grade', 'is_student', 'participate_in_wss', 'interests', 'workshops']
 
         labels = {
-            "name_family" : "Name",
+            "name" : "First Name",
+            "family" : "Family Name",
+            "name_english" : "First Name (in English)",
+            "family_english" : "Family Name (in English)",
             "phone_number" : "Phone Number",
+            "national_id" : "National ID",
             "is_student": "I am a Student",
             "participate_in_wss": "I want to participate in WSS Seminars",
         }

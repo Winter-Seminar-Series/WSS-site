@@ -18,7 +18,7 @@
                 </div>
             {% endif %}
 
-                <form action="{% url 'wss:payment' wss.year %}" method="post" class="uniForm">
+                <form action="{% url 'wss:payment' wss.year %}" method="post" class="col-md-6">
                     {{ form | crispy }}
                     <input type="submit" value="Submit">
                 </form>
