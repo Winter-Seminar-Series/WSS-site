@@ -153,7 +153,11 @@ def send_request(request, year):
     CallbackURL = 'http://wss.ce.sharif.edu/' + str(
         year) + '/verify/'  # todo Important: need to edit for realy server.
 
-    name_family = form.cleaned_data['name_family']
+    name = form.cleaned_data['name']
+    family = form.cleaned_data['family']
+    name_eng = form.cleaned_data['name_english']
+    family_eng = form.cleaned_data['family_english']
+
     email = form.cleaned_data['email']
     age = form.cleaned_data['age']
     grade = form.cleaned_data['grade']
@@ -194,10 +198,12 @@ def send_request(request, year):
         pass
 
     payment_id = Random().randint(0, 1000000000)
-    exh = Participant(name_family=name_family, email=email, grade=grade, phone_number=phone_number, job=job,
+    exh = Participant(name=name, family=family, email=email, grade=grade, phone_number=phone_number, job=job,
                       university=university, introduction_method=introduction_method, gender=gender,
+                      name_english=name_eng, family_english=family_eng,
                       city=city, payment_id=payment_id, participate_in_wss=participate_in_wss, age=age,
-                      country=country, field_of_interest=field_of_interest, is_student=is_student, national_id=national_id)
+                      country=country, field_of_interest=field_of_interest, is_student=is_student,
+                      national_id=national_id)
     exh.save()
     exh.workshops = workshops
     exh.save()

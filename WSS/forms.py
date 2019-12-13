@@ -37,7 +37,8 @@ class ParticipantForm(forms.ModelForm):
 
     class Meta:
         model = models.Participant
-        fields = ['name_family', 'phone_number', 'national_id', 'email', 'age', 'job', 'university',
+        fields = ['name', 'family', 'name_english', 'family_english', 'phone_number', 'national_id', 'email', 'age',
+                  'job', 'university',
                   'introduction_method',
                   'gender', 'city', 'country', 'grade', 'is_student', 'workshops', 'participate_in_wss']
 
