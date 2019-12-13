@@ -3239,7 +3239,8 @@ label {
 
 .blue-gradient:nth-last-child(2), .background-shafagh
 {
-    background: url('../images/h-bg-1.jpg'), black no-repeat center top!important;
+    background: url('../images/h-bg-1.jpg'), #05050d no-repeat center top!important;
+    background-repeat: no-repeat!important;
     background-size: cover;
 }
 
@@ -3252,7 +3253,8 @@ label {
 {
     margin-bottom: 0.5rem;
 }
-form .requiredField
+
+form label
 {
-    color: white;
+    color: white!important;
 }

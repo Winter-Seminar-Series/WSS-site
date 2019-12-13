@@ -32,8 +32,8 @@ class ParticipantForm(forms.ModelForm):
         ("Database Theory", "Database Theory"),
         ("Theoretical Computer Science", "Theoretical Computer Science"),
     ]
-    interests = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple, choices=INTEREST_FIELDS,
-                                          label='interests')
+    interests = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple(attrs={'class':'form-check-inline'}), choices=INTEREST_FIELDS,
+                                          label='Interests')
 
     class Meta:
         model = models.Participant
@@ -42,6 +42,12 @@ class ParticipantForm(forms.ModelForm):
                   'introduction_method',
                   'gender', 'city', 'country', 'grade', 'is_student', 'participate_in_wss', 'interests', 'workshops']
 
+        labels = {
+            "name_family" : "Name",
+            "phone_number" : "Phone Number",
+            "is_student": "I am a Student",
+            "participate_in_wss": "I want to participate in WSS Seminars",
+        }
     def __init__(self, *args, **kwargs):
         super(ParticipantForm, self).__init__(*args, **kwargs)
         self.fields["workshops"].widget = forms.CheckboxSelectMultiple()

@@ -150,9 +150,9 @@ class Grade(models.Model):
     capacity = models.IntegerField()
 
 
-INTRODUCTION = [('telegram', 'telegram'), ('instageram', 'instageram'), ('facebook', 'facebook'),
-                ('twitter', 'twitter'), ('poster', 'poster'), ('friends', 'friends'), ('other', 'other')]
-GENDER = [('woman', 'woman'), ('man', 'man')]
+INTRODUCTION = [('telegram', 'Telegram'), ('instagram', 'Instagram'), ('facebook', 'Facebook'),
+                ('twitter', 'Twitter'), ('poster', 'Poster'), ('friends', 'Friends'), ('other', 'Other')]
+GENDER = [('female', 'Female'), ('male', 'Male')]
 PAYMENT_CHOICES = [('OK', 'پرداخت شده'), ('NO', "پرداخت نشده")]
 
 

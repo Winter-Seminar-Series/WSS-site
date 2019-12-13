@@ -1,6 +1,6 @@
 from random import Random
 from itertools import groupby
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, render
 from django.views.generic.detail import DetailView
 from django.http import HttpResponse
 from django.shortcuts import redirect
@@ -148,7 +148,7 @@ other_price = 200000
 def send_request(request, year):
     form = ParticipantForm(request.POST)
     if not form.is_valid():
-        return HttpResponse("form is not valid")
+        return render(request, 'WSS/register.html', {'wss' : get_object_or_404(WSS, year=year), 'form': form, 'error':"Please correct the following errors."})
 
     CallbackURL = 'http://wss.ce.sharif.edu/' + str(
         year) + '/verify/'  # todo Important: need to edit for realy server.
@@ -208,7 +208,7 @@ def send_request(request, year):
     exh.workshops = workshops
     exh.save()
     price = compute_cost(exh)
-    result = client.service.PaymentRequest(MERCHANT, price, description, email, phone_number,
+    result = client.service.PaymentRequest(MERCHANT, 100, description, email, phone_number,
                                            CallbackURL + email + "/" + str(payment_id))
     if result.Status == 100:
         logger.info("user with email:" + email + " connected to payment")
