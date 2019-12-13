@@ -1,0 +1,26 @@
+{% extends 'wssbase.html' %}
+{% load static %}
+
+{% block title %}{{ wss }} speakers{% endblock %}
+{% block content %}
+   <section id="ts-speakers" style="" class="blue-gradient ts-speakers diagonal ">
+      <div class="container">
+          {% block inside %}
+             <div class="row text-center">
+                <h3 class="mb-1 col section-sub-title title-white">Notice</h3>
+             </div>
+
+             <!--/ Title row end -->
+             <div class="row mt-5 text-center">
+                <p class="mb-1 col section-sub-title title-white">{{ info }}</p>
+             </div>
+             <br>
+          {% endblock %}
+      </div>
+      <!-- Content row 2 end -->
+
+      <!--/ Container end -->
+   </section>
+
+<!-- Map end -->
+{% endblock %}
