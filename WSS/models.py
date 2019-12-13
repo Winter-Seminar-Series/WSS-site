@@ -161,7 +161,7 @@ class Participant(models.Model):
     name_family = models.CharField(max_length=250)
     phone_number = models.CharField(max_length=13)
     age = models.IntegerField(default=18)
-    national_id = models.IntegerField()
+    national_id = models.CharField(max_length=10)
     email = models.EmailField()
     job = models.CharField(max_length=250)
     university = models.CharField(max_length=250)
