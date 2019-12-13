@@ -69,7 +69,7 @@ class Workshop(BaseEvent):
     speaker = models.ForeignKey(to='people.Speaker', related_name='workshops')
     material = models.OneToOneField(to='WorkshopMaterial', null=True, blank=True)
     registration_link = models.URLField(null=True, blank=True)
-    price = models.IntegerField(default=300000)
+    price = models.IntegerField(default=30000)
     capacity = models.IntegerField(default=0)
 
     @property
