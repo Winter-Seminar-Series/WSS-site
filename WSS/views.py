@@ -159,6 +159,7 @@ def send_request(request, year):
     grade = form.cleaned_data['grade']
     phone_number = form.cleaned_data['phone_number']
     job = form.cleaned_data['job']
+    national_id = form.cleaned_data['national_id']
     university = form.cleaned_data['university']
     introduction_method = form.cleaned_data['introduction_method']
     gender = form.cleaned_data['gender']
@@ -196,7 +197,7 @@ def send_request(request, year):
     exh = Participant(name_family=name_family, email=email, grade=grade, phone_number=phone_number, job=job,
                       university=university, introduction_method=introduction_method, gender=gender,
                       city=city, payment_id=payment_id, participate_in_wss=participate_in_wss, age=age,
-                      country=country, field_of_interest=field_of_interest, is_student=is_student)
+                      country=country, field_of_interest=field_of_interest, is_student=is_student, national_id=national_id)
     exh.save()
     exh.workshops = workshops
     exh.save()
