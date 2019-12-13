@@ -140,8 +140,8 @@ class RegisterView(FooterMixin, WSSWithYearMixin, DetailView):
 MERCHANT = '5ff4f360-c10a-11e9-af68-000c295eb8fc'
 client = Client('https://www.zarinpal.com/pg/services/WebGate/wsdl')
 description = "توضیحات مربوط به تراکنش را در این قسمت وارد کنید"  # todo  Required
-student_price = 100
-other_price = 100
+student_price = 170000
+other_price = 200000
 
 
 @csrf_exempt
@@ -155,6 +155,7 @@ def send_request(request, year):
 
     name_family = form.cleaned_data['name_family']
     email = form.cleaned_data['email']
+    age = form.cleaned_data['age']
     grade = form.cleaned_data['grade']
     phone_number = form.cleaned_data['phone_number']
     job = form.cleaned_data['job']
@@ -194,7 +195,7 @@ def send_request(request, year):
     payment_id = Random().randint(0, 1000000000)
     exh = Participant(name_family=name_family, email=email, grade=grade, phone_number=phone_number, job=job,
                       university=university, introduction_method=introduction_method, gender=gender,
-                      city=city, payment_id=payment_id, participate_in_wss=participate_in_wss,
+                      city=city, payment_id=payment_id, participate_in_wss=participate_in_wss, age=age,
                       country=country, field_of_interest=field_of_interest, is_student=is_student)
     exh.save()
     exh.workshops = workshops
@@ -235,7 +236,6 @@ def verify(request, year, email, payment_id):
             for i in exh.workshops.all():
                 i.capacity -= 1
                 i.save()
-
 
             logger.info("participant with email:" + email + " verified successfully.")
             return HttpResponse(

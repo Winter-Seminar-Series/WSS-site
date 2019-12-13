@@ -160,6 +160,7 @@ class Participant(models.Model):
     id = models.BigIntegerField(primary_key=True, default=0)
     name_family = models.CharField(max_length=250)
     phone_number = models.CharField(max_length=13)
+    age = models.IntegerField(default=18)
     email = models.EmailField()
     job = models.CharField(max_length=250)
     university = models.CharField(max_length=250)
