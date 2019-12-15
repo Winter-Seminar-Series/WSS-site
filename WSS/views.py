@@ -120,6 +120,11 @@ def compute_cost(participant):
             price = student_price
     for i in participant.workshops.all():
         price += i.price
+
+    if participant.participate_in_wss:
+        for i in participant.workshops.all():
+            price -= 10000
+
     return price
 
 
