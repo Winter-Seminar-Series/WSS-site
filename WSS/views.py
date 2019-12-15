@@ -139,7 +139,7 @@ class RegisterView(FooterMixin, WSSWithYearMixin, DetailView):
 
 MERCHANT = '5ff4f360-c10a-11e9-af68-000c295eb8fc'
 client = Client('https://www.zarinpal.com/pg/services/WebGate/wsdl')
-description = "توضیحات مربوط به تراکنش را در این قسمت وارد کنید"  # todo  Required
+description = "هزینه ثبت نام رویداد wss 2019"
 student_price = 170000
 other_price = 200000
 
@@ -241,9 +241,12 @@ def verify(request, year, email, payment_id):
                 gr.save()
 
             for i in exh.workshops.all():
+                exh.payed_workshops.add(i)
                 i.capacity -= 1
                 i.save()
 
+            exh.payed_amount += price
+            exh.save()
             logger.info("participant with email:" + email + " verified successfully.")
             return HttpResponse(
                 'Transaction success.\nRefID: ' + str(result.RefID))  # todo redirect secsucess full payment
