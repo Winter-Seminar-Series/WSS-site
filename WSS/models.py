@@ -149,6 +149,9 @@ class Grade(models.Model):
     level = models.CharField(max_length=30, choices=GRADE_CHOICES, primary_key=True)
     capacity = models.IntegerField()
 
+    def __str__(self):
+        return self.level
+
 
 INTRODUCTION = [('telegram', 'telegram'), ('instageram', 'instageram'), ('facebook', 'facebook'),
                 ('twitter', 'twitter'), ('poster', 'poster'), ('friends', 'friends'), ('other', 'other')]
@@ -186,6 +189,9 @@ class Participant(models.Model):
 
     class Meta:
         unique_together = [['email', 'payment_id']]
+        
+    def __str__(self):
+        return self.name + " " + self.family + " " + self.payment_status
 
 
 class Reserve(models.Model):
@@ -195,7 +201,13 @@ class Reserve(models.Model):
     email = models.EmailField(primary_key=True)
     major = models.CharField(max_length=30)
 
+    def __str__(self):
+        return self.email
+
 
 class ShortLink(models.Model):
     short_link = models.CharField(max_length=300, primary_key=True)
     url = models.CharField(max_length=300)
+
+    def __str__(self):
+        return self.url
