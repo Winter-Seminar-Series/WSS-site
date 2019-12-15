@@ -169,6 +169,7 @@ def send_request(request, year):
     gender = form.cleaned_data['gender']
     city = form.cleaned_data['city']
     country = form.cleaned_data['country']
+    question = form.cleaned_data['question']
     participate_in_wss = form.cleaned_data['participate_in_wss']
     workshops = []
     for i in form.cleaned_data['workshops']:
@@ -203,7 +204,7 @@ def send_request(request, year):
                       name_english=name_eng, family_english=family_eng,
                       city=city, payment_id=payment_id, participate_in_wss=participate_in_wss, age=age,
                       country=country, field_of_interest=field_of_interest, is_student=is_student,
-                      national_id=national_id)
+                      national_id=national_id, question=question)
     exh.save()
     exh.workshops = workshops
     exh.save()
@@ -221,12 +222,15 @@ def send_request(request, year):
 def verify(request, year, email, payment_id):
     logger.info("participant with email:" + email + "and payment_id: " + payment_id + " starting to verify.")
 
+
     try:
         exh = Participant.objects.all().get(email=email, payment_id=payment_id)
     except Participant.DoesNotExist:
         return HttpResponse('پرداخت با خطا مواجه شد. با پشتیبانی تماس بگیرید.')  # todo  move to error page
 
     price = compute_cost(exh)
+
+
 
     if request.GET.get('Status') == 'OK':
         result = client.service.PaymentVerification(MERCHANT, request.GET['Authority'], price)
@@ -241,9 +245,10 @@ def verify(request, year, email, payment_id):
                 gr.save()
 
             for i in exh.workshops.all():
-                exh.payed_workshops.add(i)
+                exh.payed_workshops.add(i.id)
                 i.capacity -= 1
                 i.save()
+
 
             exh.payed_amount += price
             exh.save()

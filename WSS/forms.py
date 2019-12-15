@@ -40,7 +40,8 @@ class ParticipantForm(forms.ModelForm):
         fields = ['name', 'family', 'name_english', 'family_english', 'phone_number', 'national_id', 'email', 'age',
                   'job', 'university',
                   'introduction_method',
-                  'gender', 'city', 'country', 'grade', 'is_student', 'participate_in_wss', 'interests', 'workshops']
+                  'gender', 'city', 'country', 'grade', 'is_student', 'participate_in_wss', 'interests', 'workshops',
+                  'question']
 
     def __init__(self, *args, **kwargs):
         super(ParticipantForm, self).__init__(*args, **kwargs)

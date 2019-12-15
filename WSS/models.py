@@ -181,6 +181,7 @@ class Participant(models.Model):
     payed_workshops = models.ManyToManyField(related_name="payed", to=Workshop, blank=True)
     payed_amount = models.IntegerField(blank=True, default=0)
     participate_in_wss = models.BooleanField(default=True)
+    question = models.CharField(max_length=500, blank=True)
     sign_timestamp = models.DateTimeField(auto_now=True)
 
     class Meta:
