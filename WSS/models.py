@@ -160,7 +160,7 @@ PAYMENT_CHOICES = [('OK', 'پرداخت شده'), ('NO', "پرداخت نشده"
 
 
 class Participant(models.Model):
-    id = models.BigIntegerField(primary_key=True, default=0)
+    id = models.BigAutoField(primary_key=True)
     name = models.CharField(max_length=250)
     family = models.CharField(max_length=250)
     name_english = models.CharField(max_length=250)
