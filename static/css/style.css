@@ -3254,7 +3254,17 @@ label {
     margin-bottom: 0.5rem;
 }
 
-form label
+input, input:focus
 {
-    color: white!important;
+    border-width: 0 0 2px!important;
+    box-shadow: none !important;
+}
+
+#div_id_interests label:before, #div_id_interests label:after
+{
+    top: 0.5rem!important;
+}
+form .row
+{
+    margin-bottom: 2rem;
 }

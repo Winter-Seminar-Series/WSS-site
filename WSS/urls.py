@@ -14,10 +14,10 @@ year_urlpatterns = [
     url(r'^gallery/images/$', GalleryImageView.as_view(), name='gallery-image'),
     url(r'^gallery/videos/$', GalleryVideoView.as_view(), name='gallery-video'),
     url(r'^schedule/$', ScheduleView.as_view(), name='schedule'),
-    # url(r'^register/$', RegisterView.as_view(), name='register'),
-    # url(r'^signup/$', WSS.views.send_request, name='payment'),
+    url(r'^register/$', RegisterView.as_view(), name='register'),
+    url(r'^signup/$', WSS.views.send_request, name='payment'),
     url(r'^go/(?P<url>\w+)/$', WSS.views.go, name='go'),
-    # url(r'^verify/(?P<email>([a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+))/(?P<payment_id>[0-9]+$)', WSS.views.verify, name='verify'),
+    url(r'^verify/(?P<email>([a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+))/(?P<payment_id>[0-9]+$)', WSS.views.verify, name='verify'),
 ]
 
 urlpatterns = [
