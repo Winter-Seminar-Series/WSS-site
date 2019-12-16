@@ -168,7 +168,7 @@ QUESTION = [(None, 'Please Select'), ('RPA', 'RPA'), ('Virtual Assistant', 'Virt
 
 
 class Participant(models.Model):
-    current_wss = models.ForeignKey(null=False, to='WSS', related_name='participants', verbose_name='WSS')
+    current_wss = models.ForeignKey(null=True,to='WSS', related_name='participants', verbose_name='WSS')
     id = models.BigAutoField(primary_key=True)
     name = models.CharField(max_length=250, verbose_name="First Name (in Persian)")
     family = models.CharField(max_length=250, verbose_name="Family Name (in Persian)")
