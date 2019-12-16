@@ -13,5 +13,5 @@ Werkzeug==0.12.2
 django-taggit==1.2.0
 psycopg2==2.8.4
 django-crispy-forms==1.8.1
-zeep=3.4.0
+zeep==3.4.0
 django-simple-captcha==0.5.12
