@@ -1,7 +1,8 @@
 {% extends 'wssbase.html' %}
 {% load static %}
-
-{% block title %}{{ wss }} speakers{% endblock %}
+{% load date_tags %}
+{% load human_tags %}
+{% block title %}Notice{% endblock %}
 {% block content %}
    <section id="ts-speakers" style="" class="blue-gradient ts-speakers diagonal ">
       <div class="container">
@@ -11,8 +12,8 @@
              </div>
 
              <!--/ Title row end -->
-             <div class="row mt-5 text-center">
-                <p class="mb-1 col section-sub-title title-white">{{ info }}</p>
+             <div class="row mt-5 text-center alert alert-{% if status %}{{ status }}{% else %}info{% endif %}">
+                <p class="mb-1 col">{{ info }}</p>
              </div>
              <br>
           {% endblock %}

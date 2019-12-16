@@ -149,40 +149,49 @@ class Grade(models.Model):
     level = models.CharField(max_length=30, choices=GRADE_CHOICES, primary_key=True)
     capacity = models.IntegerField()
 
+    def __str__(self):
+        return self.level
 
-INTRODUCTION = [('telegram', 'Telegram'), ('instagram', 'Instagram'), ('facebook', 'Facebook'),
+
+INTRODUCTION = [('', 'Please Select'), ('telegram', 'Telegram'), ('instagram', 'Instagram'), ('facebook', 'Facebook'),
                 ('twitter', 'Twitter'), ('poster', 'Poster'), ('friends', 'Friends'), ('other', 'Other')]
 GENDER = [('female', 'Female'), ('male', 'Male')]
 PAYMENT_CHOICES = [('OK', 'پرداخت شده'), ('NO', "پرداخت نشده")]
 
 
 class Participant(models.Model):
-    id = models.BigIntegerField(primary_key=True, default=0)
-    name = models.CharField(max_length=250)
-    family = models.CharField(max_length=250)
-    name_english = models.CharField(max_length=250)
-    family_english = models.CharField(max_length=250)
-    phone_number = models.CharField(max_length=13)
-    age = models.IntegerField(default=18)
-    national_id = models.CharField(max_length=10)
+    id = models.BigAutoField(primary_key=True)
+    name = models.CharField(max_length=250, verbose_name="First Name (in Persian)")
+    family = models.CharField(max_length=250, verbose_name="Family Name (in Persian)")
+    name_english = models.CharField(max_length=250, verbose_name="First Name (in English)")
+    family_english = models.CharField(max_length=250, verbose_name="Family Name (in English)")
+    phone_number = models.CharField(max_length=13, verbose_name="Phone Number")
+    age = models.PositiveSmallIntegerField()
+    national_id = models.CharField(max_length=10, verbose_name="National ID")
     email = models.EmailField()
     job = models.CharField(max_length=250)
     university = models.CharField(max_length=250)
-    introduction_method = models.CharField(max_length=250, choices=INTRODUCTION)
-    gender = models.CharField(max_length=50, choices=GENDER)
+    introduction_method = models.CharField(max_length=250, choices=INTRODUCTION,default='')
+    gender = models.CharField(max_length=50, choices=GENDER, blank=False, default=None)
     city = models.CharField(max_length=150)
     country = models.CharField(max_length=150)
-    field_of_interest = models.CharField(max_length=1500)
+    field_of_interest = models.CharField(max_length=1500, blank=True)
     payment_status = models.CharField(max_length=2, default='NO', choices=PAYMENT_CHOICES)
     grade = models.CharField(max_length=30, choices=GRADE_CHOICES)
-    is_student = models.BooleanField(default=False)
+    is_student = models.BooleanField(default=False, verbose_name="I am a Student")
     payment_id = models.IntegerField(default=0)
     workshops = models.ManyToManyField(to=Workshop, blank=True)
-    participate_in_wss = models.BooleanField(default=True)
+    payed_workshops = models.ManyToManyField(related_name="payed", to=Workshop, blank=True)
+    payed_amount = models.IntegerField(blank=True, default=0)
+    participate_in_wss = models.BooleanField(default=True, verbose_name="I want to participate in WSS Seminars")
+    question = models.CharField(max_length=500, blank=True)
     sign_timestamp = models.DateTimeField(auto_now=True)
 
     class Meta:
         unique_together = [['email', 'payment_id']]
+
+    def __str__(self):
+        return self.name + " " + self.family + " " + self.payment_status
 
 
 class Reserve(models.Model):
@@ -192,7 +201,13 @@ class Reserve(models.Model):
     email = models.EmailField(primary_key=True)
     major = models.CharField(max_length=30)
 
+    def __str__(self):
+        return self.email
+
 
 class ShortLink(models.Model):
     short_link = models.CharField(max_length=300, primary_key=True)
     url = models.CharField(max_length=300)
+
+    def __str__(self):
+        return self.url

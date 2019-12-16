@@ -14,7 +14,7 @@ from zeep import Client
 from django.views.decorators.csrf import csrf_exempt
 from WSS.forms import ParticipantForm
 from WSS.mixins import FooterMixin, WSSWithYearMixin
-from WSS.models import WSS, Participant, Grade, Reserve, ShortLink
+from WSS.models import WSS, Participant, Grade, Reserve, ShortLink, ExternalLink
 
 
 class HomeView(FooterMixin, DetailView):
@@ -120,6 +120,11 @@ def compute_cost(participant):
             price = student_price
     for i in participant.workshops.all():
         price += i.price
+
+    if participant.participate_in_wss:
+        for i in participant.workshops.all():
+            price -= 10000
+
     return price
 
 
@@ -139,7 +144,7 @@ class RegisterView(FooterMixin, WSSWithYearMixin, DetailView):
 
 MERCHANT = '5ff4f360-c10a-11e9-af68-000c295eb8fc'
 client = Client('https://www.zarinpal.com/pg/services/WebGate/wsdl')
-description = "توضیحات مربوط به تراکنش را در این قسمت وارد کنید"  # todo  Required
+description = "هزینه ثبت نام رویداد wss 2019"
 student_price = 170000
 other_price = 200000
 
@@ -169,6 +174,7 @@ def send_request(request, year):
     gender = form.cleaned_data['gender']
     city = form.cleaned_data['city']
     country = form.cleaned_data['country']
+    question = form.cleaned_data['question']
     participate_in_wss = form.cleaned_data['participate_in_wss']
     workshops = []
     for i in form.cleaned_data['workshops']:
@@ -197,7 +203,7 @@ def send_request(request, year):
 
     cap = gr.capacity
     if participate_in_wss and cap <= 0:
-        return reserve(form)
+        return reserve(request, form, year)
         pass
 
     payment_id = Random().randint(0, 1000000000)
@@ -206,7 +212,7 @@ def send_request(request, year):
                       name_english=name_eng, family_english=family_eng,
                       city=city, payment_id=payment_id, participate_in_wss=participate_in_wss, age=age,
                       country=country, field_of_interest=field_of_interest, is_student=is_student,
-                      national_id=national_id)
+                      national_id=national_id, question=question)
     exh.save()
     exh.workshops = workshops
     exh.save()
@@ -224,12 +230,20 @@ def send_request(request, year):
 def verify(request, year, email, payment_id):
     logger.info("participant with email:" + email + "and payment_id: " + payment_id + " starting to verify.")
 
+    footer = {
+        'past_years': [q[0] for q in
+         WSS.objects.exclude(pk=WSS.active_wss().pk).values_list('year')],
+        'external_links': ExternalLink.objects.all()
+    }
     try:
         exh = Participant.objects.all().get(email=email, payment_id=payment_id)
     except Participant.DoesNotExist:
-        return render(request, 'info.html', {'wss' : get_object_or_404(WSS, year=year), 'info': 'Payment was not successful. Please contact support.'}) # todo  move to error page
+        return render(request, 'info.html', {'past_years': footer['past_years'], 'external_links': footer['external_links'],
+                                             'wss' : get_object_or_404(WSS, year=year), 'status':'danger','info': 'Payment was not successful. Please contact support.'}) # todo  move to error page
 
     price = compute_cost(exh)
+
+
 
     if request.GET.get('Status') == 'OK':
         result = client.service.PaymentVerification(MERCHANT, request.GET['Authority'], price)
@@ -244,12 +258,16 @@ def verify(request, year, email, payment_id):
                 gr.save()
 
             for i in exh.workshops.all():
+                exh.payed_workshops.add(i.id)
                 i.capacity -= 1
                 i.save()
 
+
+            exh.payed_amount += price
+            exh.save()
             logger.info("participant with email:" + email + " verified successfully.")
-            return render(request, 'info.html', {'wss': get_object_or_404(WSS, year=year),
-                                                 'info': 'You have registered successfully. Your tracking code is:' + str(result.RefID)})  # todo  move to error page
+            return render(request, 'info.html', {'past_years': footer['past_years'], 'external_links': footer['external_links'], 'wss': get_object_or_404(WSS, year=year),
+                                                 'status':'success','info': 'You have registered successfully. Your tracking code is:' + str(result.RefID)})  # todo  move to error page
         elif result.Status == 101:
             logger.info(
                 "participant with email:" + email + " verified again. perhaps he attacking us.")  # todo redirect to tekrari
@@ -260,15 +278,18 @@ def verify(request, year, email, payment_id):
             return HttpResponse('Transaction failed.\nStatus: ' + str(result.Status))  # todo redirect to error page
     else:
         logger.info("participant with email:" + email + " don't verified")
-        return render(request, 'info.html', {'wss' : get_object_or_404(WSS, year=year), 'info': 'Payment was not successful.'}) # todo  move to error page
+        return render(request, 'info.html', {'past_years': footer['past_years'], 'external_links': footer['external_links'],
+                                             'wss' : get_object_or_404(WSS, year=year), 'status':'danger', 'info': 'Payment was not successful.'}) # todo  move to error page
 
 
-def reserve(form):
+def reserve(request, form, year):
     email = form.data['email']
-    name_family = form.data['name_family']
+    name = form.data['name'] + " " + form.data['family']
     grade = form.data['grade']
-    Reserve(name=name_family, email=email, grade=grade).save()
-    return HttpResponse('درصورت وجود ظرفیت مازاد به شما اطلاع رسانی خواهیم کرد.')  # todo error page
+    major = form.data['grade']
+    Reserve(name=name, email=email, grade=grade, major=major).save()
+    return render(request, 'info.html', {'wss': get_object_or_404(WSS, year=year),
+                                         'info': 'Unfortunately, the seminar\'s capacity for your grade is full. We will contact you if the capacity was increased.'})  # todo  move to error page
 
 
 class NotFound(FooterMixin, WSSWithYearMixin, DetailView):

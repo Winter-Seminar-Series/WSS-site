@@ -64,7 +64,8 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pretty-checkbox@3.0/dist/pretty-checkbox.min.css">
-
+    {% block style %}
+    {% endblock %}
 </head>
 
 <body>
@@ -143,7 +144,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                             </div>
                         </div>
                         <!-- Footer social end -->
-                        <div class="copyright-info">
+                        <div class="mx-auto copyright-info">
                             <span><a href="{% url 'people:creators-list' %}">Website Creators</a><br>
                   Copyright © 2015-2019 WSS. All Rights Reserved.</span>
                         </div>

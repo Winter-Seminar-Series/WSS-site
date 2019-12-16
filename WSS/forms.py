@@ -1,6 +1,8 @@
+from captcha.fields import CaptchaField
 from django import forms
 
 from WSS import models
+from WSS.models import GENDER, INTRODUCTION
 from events.models import Workshop
 
 
@@ -33,25 +35,22 @@ class ParticipantForm(forms.ModelForm):
         ("Theoretical Computer Science", "Theoretical Computer Science"),
     ]
     interests = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple(attrs={'class':'form-check-inline'}), choices=INTEREST_FIELDS,
-                                          label='Interests')
+                                          label='Interests', required=False)
 
+    phone_number = forms.CharField(max_length=13, widget=forms.TextInput(attrs={'placeholder': '09xx xxx xxxx'}))
+
+    captcha = CaptchaField()
     class Meta:
         model = models.Participant
         fields = ['name', 'family', 'name_english', 'family_english', 'phone_number', 'national_id', 'email', 'age',
                   'job', 'university',
                   'introduction_method',
-                  'gender', 'city', 'country', 'grade', 'is_student', 'participate_in_wss', 'interests', 'workshops']
-
-        labels = {
-            "name" : "First Name",
-            "family" : "Family Name",
-            "name_english" : "First Name (in English)",
-            "family_english" : "Family Name (in English)",
-            "phone_number" : "Phone Number",
-            "national_id" : "National ID",
-            "is_student": "I am a Student",
-            "participate_in_wss": "I want to participate in WSS Seminars",
+                  'gender', 'city', 'country', 'grade', 'is_student', 'participate_in_wss', 'interests', 'workshops',
+                  'question']
+        widgets = {
+            'gender': forms.RadioSelect
         }
+
     def __init__(self, *args, **kwargs):
         super(ParticipantForm, self).__init__(*args, **kwargs)
         self.fields["workshops"].widget = forms.CheckboxSelectMultiple()
