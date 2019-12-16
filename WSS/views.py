@@ -228,7 +228,7 @@ def send_request(request, year):
 
     try:
         exh = Participant.objects.all().get(email=email)
-    except Participant.DoesNotExist:
+    except:
         exh = None
     if participate_in_wss and exh is not None and exh.payment_status == 'OK':
         return render(request, 'WSS/register.html', {'wss' : get_object_or_404(WSS, year=year), 'form': form, 'error':"You have been registered successfully with this email."})
