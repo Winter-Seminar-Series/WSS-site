@@ -149,6 +149,9 @@ class Grade(models.Model):
     level = models.CharField(max_length=30, choices=GRADE_CHOICES, primary_key=True)
     capacity = models.IntegerField()
 
+    def __str__(self):
+        return self.level
+
 
 INTRODUCTION = [('', 'Please Select'), ('telegram', 'Telegram'), ('instagram', 'Instagram'), ('facebook', 'Facebook'),
                 ('twitter', 'Twitter'), ('poster', 'Poster'), ('friends', 'Friends'), ('other', 'Other')]
@@ -157,7 +160,7 @@ PAYMENT_CHOICES = [('OK', 'پرداخت شده'), ('NO', "پرداخت نشده"
 
 
 class Participant(models.Model):
-    id = models.BigIntegerField(primary_key=True, default=0)
+    id = models.BigAutoField(primary_key=True)
     name = models.CharField(max_length=250, verbose_name="First Name (in Persian)")
     family = models.CharField(max_length=250, verbose_name="Family Name (in Persian)")
     name_english = models.CharField(max_length=250, verbose_name="First Name (in English)")
@@ -178,11 +181,17 @@ class Participant(models.Model):
     is_student = models.BooleanField(default=False, verbose_name="I am a Student")
     payment_id = models.IntegerField(default=0)
     workshops = models.ManyToManyField(to=Workshop, blank=True)
+    payed_workshops = models.ManyToManyField(related_name="payed", to=Workshop, blank=True)
+    payed_amount = models.IntegerField(blank=True, default=0)
     participate_in_wss = models.BooleanField(default=True, verbose_name="I want to participate in WSS Seminars")
+    question = models.CharField(max_length=500, blank=True)
     sign_timestamp = models.DateTimeField(auto_now=True)
 
     class Meta:
         unique_together = [['email', 'payment_id']]
+
+    def __str__(self):
+        return self.name + " " + self.family + " " + self.payment_status
 
 
 class Reserve(models.Model):
@@ -192,7 +201,13 @@ class Reserve(models.Model):
     email = models.EmailField(primary_key=True)
     major = models.CharField(max_length=30)
 
+    def __str__(self):
+        return self.email
+
 
 class ShortLink(models.Model):
     short_link = models.CharField(max_length=300, primary_key=True)
     url = models.CharField(max_length=300)
+
+    def __str__(self):
+        return self.url

@@ -120,6 +120,11 @@ def compute_cost(participant):
             price = student_price
     for i in participant.workshops.all():
         price += i.price
+
+    if participant.participate_in_wss:
+        for i in participant.workshops.all():
+            price -= 10000
+
     return price
 
 
@@ -139,7 +144,7 @@ class RegisterView(FooterMixin, WSSWithYearMixin, DetailView):
 
 MERCHANT = '5ff4f360-c10a-11e9-af68-000c295eb8fc'
 client = Client('https://www.zarinpal.com/pg/services/WebGate/wsdl')
-description = "توضیحات مربوط به تراکنش را در این قسمت وارد کنید"  # todo  Required
+description = "هزینه ثبت نام رویداد wss 2019"
 student_price = 170000
 other_price = 200000
 
@@ -169,6 +174,7 @@ def send_request(request, year):
     gender = form.cleaned_data['gender']
     city = form.cleaned_data['city']
     country = form.cleaned_data['country']
+    question = form.cleaned_data['question']
     participate_in_wss = form.cleaned_data['participate_in_wss']
     workshops = []
     for i in form.cleaned_data['workshops']:
@@ -206,7 +212,7 @@ def send_request(request, year):
                       name_english=name_eng, family_english=family_eng,
                       city=city, payment_id=payment_id, participate_in_wss=participate_in_wss, age=age,
                       country=country, field_of_interest=field_of_interest, is_student=is_student,
-                      national_id=national_id)
+                      national_id=national_id, question=question)
     exh.save()
     exh.workshops = workshops
     exh.save()
@@ -224,12 +230,15 @@ def send_request(request, year):
 def verify(request, year, email, payment_id):
     logger.info("participant with email:" + email + "and payment_id: " + payment_id + " starting to verify.")
 
+
     try:
         exh = Participant.objects.all().get(email=email, payment_id=payment_id)
     except Participant.DoesNotExist:
         return render(request, 'info.html', {'wss' : get_object_or_404(WSS, year=year), 'info': 'Payment was not successful. Please contact support.'}) # todo  move to error page
 
     price = compute_cost(exh)
+
+
 
     if request.GET.get('Status') == 'OK':
         result = client.service.PaymentVerification(MERCHANT, request.GET['Authority'], price)
@@ -244,9 +253,13 @@ def verify(request, year, email, payment_id):
                 gr.save()
 
             for i in exh.workshops.all():
+                exh.payed_workshops.add(i.id)
                 i.capacity -= 1
                 i.save()
 
+
+            exh.payed_amount += price
+            exh.save()
             logger.info("participant with email:" + email + " verified successfully.")
             return render(request, 'info.html', {'wss': get_object_or_404(WSS, year=year),
                                                  'info': 'You have registered successfully. Your tracking code is:' + str(result.RefID)})  # todo  move to error page
