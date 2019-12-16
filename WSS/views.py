@@ -138,7 +138,9 @@ class RegisterView(FooterMixin, WSSWithYearMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data()
-        context['form'] = ParticipantForm()
+        context['form'] = ParticipantForm(initial={'year' :int(self.kwargs['year'])})
+        if not self.get_object(self).registration_open:
+            context['error'] = "Sorry, the registration has been ended."
         return context
 
 
@@ -151,13 +153,25 @@ other_price = 200000
 
 @csrf_exempt
 def send_request(request, year):
-    form = ParticipantForm(request.POST)
+    if not get_object_or_404(WSS, year=int(year)).registration_open:
+        footer = {
+            'past_years': [q[0] for q in
+                           WSS.objects.exclude(pk=WSS.active_wss().pk).values_list('year')],
+            'external_links': ExternalLink.objects.all()
+        }
+        return render(request, 'info.html',
+                      {'past_years': footer['past_years'], 'external_links': footer['external_links'],
+                       'wss': get_object_or_404(WSS, year=year), 'status': 'danger',
+                       'info': 'Sorry, the registration has been ended.'})
+
+    form = ParticipantForm(request.POST, initial={'year': year})
     if not form.is_valid():
         return render(request, 'WSS/register.html', {'wss' : get_object_or_404(WSS, year=year), 'form': form, 'error':"Please correct the following errors."})
 
     CallbackURL = 'http://localhost:8000/' + str(
         year) + '/verify/'  # todo Important: need to edit for realy server.
 
+    current_wss = get_object_or_404(WSS, year=year)
     name = form.cleaned_data['name']
     family = form.cleaned_data['family']
     name_eng = form.cleaned_data['name_english']
@@ -177,12 +191,19 @@ def send_request(request, year):
     question = form.cleaned_data['question']
     participate_in_wss = form.cleaned_data['participate_in_wss']
     workshops = []
+    full_workshops = []
     for i in form.cleaned_data['workshops']:
         workshops.append(i.id)
         if i.capacity <= 0:
-            return render(request, 'WSS/register.html', {'wss': get_object_or_404(WSS, year=year), 'form': form,
-                                                         'error': "Workshop \""+ i.title+"\" is booked up."})
+            full_workshops.append(i.title)
 
+    if len(full_workshops) > 0:
+        ret_error = ""
+        for i in full_workshops:
+            ret_error += ("Workshop \""+ i.title()+"\" is booked up.\n")
+
+        return render(request, 'WSS/register.html', {'wss': get_object_or_404(WSS, year=year), 'form': form,
+                                                 'error': ret_error})
     field_of_interest = ""
     for i in form.cleaned_data['interests']:
         field_of_interest += ", " + i
@@ -202,17 +223,19 @@ def send_request(request, year):
         return render(request, 'WSS/register.html', {'wss' : get_object_or_404(WSS, year=year), 'form': form, 'error':"The entered grade is incorrect."})
 
     cap = gr.capacity
+    exh = Participant(current_wss=current_wss, name=name, family=family, email=email, grade=grade,
+                      phone_number=phone_number, job=job,
+                      university=university, introduction_method=introduction_method, gender=gender,
+                      name_english=name_eng, family_english=family_eng,
+                      city=city, participate_in_wss=participate_in_wss, age=age,
+                      country=country, field_of_interest=field_of_interest, is_student=is_student,
+                      national_id=national_id, question=question)
     if participate_in_wss and cap <= 0:
         return reserve(request, form, year)
         pass
 
     payment_id = Random().randint(0, 1000000000)
-    exh = Participant(name=name, family=family, email=email, grade=grade, phone_number=phone_number, job=job,
-                      university=university, introduction_method=introduction_method, gender=gender,
-                      name_english=name_eng, family_english=family_eng,
-                      city=city, payment_id=payment_id, participate_in_wss=participate_in_wss, age=age,
-                      country=country, field_of_interest=field_of_interest, is_student=is_student,
-                      national_id=national_id, question=question)
+    exh.payment_id = payment_id
     exh.save()
     exh.workshops = workshops
     exh.save()
@@ -287,7 +310,8 @@ def reserve(request, form, year):
     name = form.data['name'] + " " + form.data['family']
     grade = form.data['grade']
     major = form.data['grade']
-    Reserve(name=name, email=email, grade=grade, major=major).save()
+    phone_number = form.data['phone_number']
+    Reserve(name=name, email=email, grade=grade, major=major, phone_number=phone_number).save()
     return render(request, 'info.html', {'wss': get_object_or_404(WSS, year=year),
                                          'info': 'Unfortunately, the seminar\'s capacity for your grade is full. We will contact you if the capacity was increased.'})  # todo  move to error page
 

@@ -33,7 +33,7 @@
                         <input type="hidden" value="{{ wss.start_date|date:'m/d/Y' }}" id="start-date">
                         <h2 class="banner-subtitle my-3">{% render_date wss %}</h2>
                         <h3 class="banner-desc">IRAN, TEHRAN, SHARIF UNIVERSITY OF TECHNOLOGY</h3>
-                        {% if wss.is_active %} {% if wss.registration_link %}
+                        {% if wss.is_active %} {% if wss.is_registration_open %}
                         <p class="banner-btn">
                             <a href="{% url 'wss:register' wss.year %}" class="btn btn-primary btn-white">Register Now</a>
                         </p>
