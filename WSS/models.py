@@ -162,13 +162,14 @@ INTRODUCTION = [(None, 'Please Select'), ('telegram', 'Telegram'), ('instagram',
                 ('twitter', 'Twitter'), ('poster', 'Poster'), ('friends', 'Friends'), ('other', 'Other')]
 GENDER = [('female', 'Female'), ('male', 'Male')]
 PAYMENT_CHOICES = [('OK', 'پرداخت شده'), ('NO', "پرداخت نشده")]
-QUESTION = [(None, 'Please Select'), ('RPA', 'RPA'), ('Virtual Assistant', 'Virtual Assistant'), ('AR/VR/MR', 'AR/VR/MR'),
+QUESTION = [(None, 'Please Select'), ('RPA', 'RPA'), ('Virtual Assistant', 'Virtual Assistant'),
+            ('AR/VR/MR', 'AR/VR/MR'),
             ('Driverless Cars', 'Driverless Cars'), ('Recommendation Engines', 'Recommendation Engines'),
             ('Others', 'Others')]
 
 
 class Participant(models.Model):
-    current_wss = models.ForeignKey(null=True,to='WSS', related_name='participants', verbose_name='WSS')
+    current_wss = models.ForeignKey(null=True, to='WSS', related_name='participants', verbose_name='WSS')
     id = models.BigAutoField(primary_key=True)
     name = models.CharField(max_length=250, verbose_name="First Name (in Persian)")
     family = models.CharField(max_length=250, verbose_name="Family Name (in Persian)")
@@ -180,7 +181,8 @@ class Participant(models.Model):
     email = models.EmailField()
     job = models.CharField(max_length=250)
     university = models.CharField(max_length=250)
-    introduction_method = models.CharField(max_length=250, choices=INTRODUCTION,default=None, verbose_name="How were you introduced to WSS?")
+    introduction_method = models.CharField(max_length=250, choices=INTRODUCTION, default=None,
+                                           verbose_name="How were you introduced to WSS?")
     gender = models.CharField(max_length=50, choices=GENDER, blank=False, default=None)
     city = models.CharField(max_length=150)
     country = models.CharField(max_length=150)
@@ -195,7 +197,7 @@ class Participant(models.Model):
     participate_in_wss = models.BooleanField(default=True, verbose_name="I want to participate in WSS Seminars",
                                              help_text="Price: 170,000 Tomans for students, 200,000 Tomans for non-students")
     question = models.CharField(max_length=50, blank=False, default=None, choices=QUESTION,
-                                verbose_name="Which one of these Artificial Intelligence-related technologies do you think have the most impact on Iran's market?" )
+                                verbose_name="Which one of these Artificial Intelligence-related technologies do you think have the most impact on Iran's market?")
     question_other = models.CharField(max_length=500, blank=True, verbose_name="Your answer")
     sign_timestamp = models.DateTimeField(auto_now=True)
 
@@ -205,6 +207,7 @@ class Participant(models.Model):
     def __str__(self):
         return self.name + " " + self.family + " " + self.payment_status
 
+
 class Reserve(models.Model):
     name = models.CharField(max_length=50)
     grade = models.CharField(max_length=70)
@@ -212,6 +215,7 @@ class Reserve(models.Model):
     email = models.EmailField(primary_key=True)
     phone_number = models.CharField(default=0, max_length=13, verbose_name="Phone Number")
     major = models.CharField(max_length=30)
+
     def __str__(self):
         return self.email
 
@@ -222,4 +226,4 @@ class ShortLink(models.Model):
     number_of_clicks = models.IntegerField(default=0)
 
     def __str__(self):
-        return "http://wss.ce.sharif.ir/go/" + self.short_link
+        return "http://wss.ce.sharif.ir/go/" + self.short_link + " " + self.url + " " + str(self.number_of_clicks)
