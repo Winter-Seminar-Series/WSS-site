@@ -1,5 +1,7 @@
 from random import Random
 from itertools import groupby
+
+import requests
 from django.shortcuts import get_object_or_404, render
 from django.views.generic.detail import DetailView
 from django.http import HttpResponse
@@ -7,6 +9,7 @@ from django.shortcuts import redirect
 from django.http import Http404
 import logging
 
+from WSS_Site import settings
 from events.models import Workshop
 
 logger = logging.getLogger('payment')
@@ -167,6 +170,17 @@ def send_request(request, year):
     form = ParticipantForm(request.POST, initial={'year': year})
     if not form.is_valid():
         return render(request, 'WSS/register.html', {'wss' : get_object_or_404(WSS, year=year), 'form': form, 'error':"Please correct the following errors."})
+
+    #Captcha validation
+    recaptcha_response = request.POST.get('g-recaptcha-response')
+    data = {
+        'secret': settings.GOOGLE_RECAPTCHA_SECRET_KEY,
+        'response': recaptcha_response
+    }
+    r = requests.post('https://www.google.com/recaptcha/api/siteverify', data=data)
+    result = r.json()
+    if not result['success']:
+        return render(request, 'WSS/register.html', {'wss' : get_object_or_404(WSS, year=year), 'form': form, 'error':"Captcha is invalid; Please try again."})
 
     CallbackURL = 'http://localhost:8000/' + str(
         year) + '/verify/'  # todo Important: need to edit for realy server.
