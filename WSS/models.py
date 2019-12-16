@@ -205,9 +205,13 @@ class Participant(models.Model):
     def __str__(self):
         return self.name + " " + self.family + " " + self.payment_status
 
-
-class Reserve(Participant):
-
+class Reserve(models.Model):
+    name = models.CharField(max_length=50)
+    grade = models.CharField(max_length=70)
+    student_number = models.CharField(max_length=70, blank=True)
+    email = models.EmailField(primary_key=True)
+    phone_number = models.CharField(max_length=13, verbose_name="Phone Number")
+    major = models.CharField(max_length=30)
     def __str__(self):
         return self.email
 

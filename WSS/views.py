@@ -231,7 +231,7 @@ def send_request(request, year):
                       country=country, field_of_interest=field_of_interest, is_student=is_student,
                       national_id=national_id, question=question)
     if participate_in_wss and cap <= 0:
-        return reserve(request, exh, year)
+        return reserve(request, form, year)
         pass
 
     payment_id = Random().randint(0, 1000000000)
@@ -305,9 +305,13 @@ def verify(request, year, email, payment_id):
                                              'wss' : get_object_or_404(WSS, year=year), 'status':'danger', 'info': 'Payment was not successful.'}) # todo  move to error page
 
 
-def reserve(request, participant, year):
-    my_reserve = Reserve(participant)
-    my_reserve.save()
+def reserve(request, form, year):
+    email = form.data['email']
+    name = form.data['name'] + " " + form.data['family']
+    grade = form.data['grade']
+    major = form.data['grade']
+    phone_number = form.data['phone_number']
+    Reserve(name=name, email=email, grade=grade, major=major, phone_number=phone_number).save()
     return render(request, 'info.html', {'wss': get_object_or_404(WSS, year=year),
                                          'info': 'Unfortunately, the seminar\'s capacity for your grade is full. We will contact you if the capacity was increased.'})  # todo  move to error page
 
