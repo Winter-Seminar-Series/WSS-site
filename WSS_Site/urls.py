@@ -12,7 +12,6 @@ urlpatterns = [
                   url(r'^', include('WSS.urls', namespace='wss')),
                   url(r'^', include('events.urls', namespace='events')),
                   url(r'^', include('people.urls', namespace='people')),
-                  url(r'captcha/', include('captcha.urls')),
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 admin.site.site_header = 'WSS Administration'

@@ -106,7 +106,7 @@
                         </div>
                         <div class="row">
                             <div class="col">
-                                {{ form.captcha|as_crispy_field }}
+                                <div class="g-recaptcha" data-sitekey="6Lcj-8cUAAAAADvuAPAzAOHUUplDwqmKMUb9RzAN"></div>
                             </div>
                         </div>
                         <button type="submit" class="btn btn-primary" style="background: #007bff;">Register</button>
@@ -144,4 +144,5 @@
                 })
         })
     </script>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 {% endblock %}
