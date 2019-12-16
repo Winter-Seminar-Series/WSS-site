@@ -2,7 +2,7 @@ from captcha.fields import CaptchaField
 from django import forms
 
 from WSS import models
-from WSS.models import GENDER, INTRODUCTION
+from WSS.models import GENDER, INTRODUCTION, QUESTION
 from events.models import Workshop
 
 
@@ -40,13 +40,14 @@ class ParticipantForm(forms.ModelForm):
     phone_number = forms.CharField(max_length=13, widget=forms.TextInput(attrs={'placeholder': '09xx xxx xxxx'}))
 
     captcha = CaptchaField()
+
     class Meta:
         model = models.Participant
         fields = ['name', 'family', 'name_english', 'family_english', 'phone_number', 'national_id', 'email', 'age',
                   'job', 'university',
                   'introduction_method',
                   'gender', 'city', 'country', 'grade', 'is_student', 'participate_in_wss', 'interests', 'workshops',
-                  'question']
+                  'question', 'question_other']
         widgets = {
             'gender': forms.RadioSelect
         }
@@ -55,3 +56,4 @@ class ParticipantForm(forms.ModelForm):
         super(ParticipantForm, self).__init__(*args, **kwargs)
         self.fields["workshops"].widget = forms.CheckboxSelectMultiple()
         self.fields["workshops"].queryset = Workshop.objects.all()
+

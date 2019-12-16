@@ -76,14 +76,20 @@
                         <div class="col-md-6 pr-md-5 d-flex align-items-center">
                             {{ form.is_student|as_crispy_field }}
                         </div>
-                        <div class="col-md-6 pr-md-5 d-flex">
+                    </div>
+                    <hr/>
+                    <div class="row">
+                        <div class="col-md-6 pr-md-5 d-flex w-100">
                             {{ form.introduction_method|as_crispy_field }}
                         </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col">
+                        <div class="col-12">
                             {{ form.interests|as_crispy_field }}
+                        </div>
+                        <div class="col-md-6 ">
+                            {{ form.question|as_crispy_field }}
+                        </div>
+                        <div class="col-md-6 d-flex align-items-center  ">
+                            {{ form.question_other |as_crispy_field }}
                         </div>
                     </div>
                     <hr/>
@@ -111,6 +117,7 @@
 {% block script %}
     <script>
         $(document).ready(function () {
+            $('#div_id_question_other').hide();
             $("#div_id_gender > div").addClass("form-check-inline").addClass("ml-2");
             $(".form-check").addClass("form-check-inline custom-control custom-control-inline mr-3");
             $(".form-check input").addClass("custom-control-input d-none");
@@ -119,6 +126,20 @@
             $("#div_id_interests .form-check, #div_id_is_student, #div_id_participate_in_wss, #div_id_workshops").addClass("custom-checkbox");
             $("#div_id_workshops .form-check").removeClass("custom-control-inline");
             $("#div_id_gender .form-check").addClass("custom-radio");
+            $("#div_id_introduction_method, #div_id_question_other").addClass("w-100");
+            $("#div_id_participate_in_wss").addClass("d-block");
+            $('#div_id_question select').on('change', function() {
+                var a = $(this).val();
+                if (a === 'Others')
+                {
+                    $('#div_id_question_other').show();
+                    $('#id_question_other').attr('required', true);
+                    return;
+                }
+                else
+                    $('#div_id_question_other').hide();
+                    $('#id_question_other').attr('required', false);
+                })
         })
     </script>
 {% endblock %}
