@@ -1879,7 +1879,6 @@ ul.navbar-nav > li:hover > a{
 .ts-speaker-info .ts-speaker-name {
     font-size: 15px;
     margin: 0 0 3px 0;
-    max-height: 1.3em;
     min-height: 1.3em;
     line-height: 1.3em;
     overflow: hidden;
