@@ -1,4 +1,4 @@
-Django==1.11.7
+Django==1.11.26
 django-extensions==1.9.7
 django-jet==1.0.6
 django-polymorphic==1.3
