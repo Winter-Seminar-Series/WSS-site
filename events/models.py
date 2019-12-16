@@ -78,7 +78,7 @@ class Workshop(BaseEvent):
         return reverse('events:workshop', args=[self.pk])
 
     def __str__(self):
-        return self.title + ", " + "Speaker: " + self.speaker.name + ", " + self.start_time.strftime("%A %d %B %Y, %H:%M") + ", Price: " + str(self.price) + " Tomans"
+        return self.title + ", " + "Speaker: " + self.speaker.name + ", " + (self.start_time.strftime("%A %d %B %Y, %H:%M, ") if self.start_time != None else "") + "Price: " + str(self.price) + " Tomans"
 
 
 class Material(PolymorphicModel):
