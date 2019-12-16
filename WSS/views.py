@@ -9,6 +9,8 @@ from django.shortcuts import redirect
 from django.http import Http404
 import logging
 
+from psycopg2._json import Json
+
 from WSS_Site import settings
 from events.models import Workshop
 
@@ -226,7 +228,7 @@ def send_request(request, year):
 
     try:
         exh = Participant.objects.all().get(email=email)
-    except Participant.DoesNotExist:
+    except:
         exh = None
     if participate_in_wss and exh is not None and exh.payment_status == 'OK':
         return render(request, 'WSS/register.html', {'wss' : get_object_or_404(WSS, year=year), 'form': form, 'error':"You have been registered successfully with this email."})
@@ -334,10 +336,18 @@ class NotFound(FooterMixin, WSSWithYearMixin, DetailView):
     template_name = '../templates/404.html'
 
 
-def go(request, year, url):
+def go(request, url):
     link = None
     try:
         link = ShortLink.objects.all().get(short_link=url)
     except:
         raise Http404
+    link.number_of_clicks += 1
+    link.save()
     return redirect(to=link.url)
+
+def all_links(request):
+    response = ""
+    for i in ShortLink.objects.all():
+        response += "http://wss.ce.sharif.ir/go/" + i.short_link + " - - " + i.url + " - - " + str(i.number_of_clicks) + "\n"
+    return HttpResponse(response)
