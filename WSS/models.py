@@ -219,6 +219,7 @@ class Reserve(models.Model):
 class ShortLink(models.Model):
     short_link = models.CharField(max_length=300, primary_key=True)
     url = models.CharField(max_length=300)
+    number_of_clicks = models.IntegerField(default=0)
 
     def __str__(self):
-        return self.url
+        return "http://wss.ce.sharif.ir/go/" + self.short_link

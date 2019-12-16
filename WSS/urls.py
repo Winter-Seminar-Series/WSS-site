@@ -16,7 +16,6 @@ year_urlpatterns = [
     url(r'^schedule/$', ScheduleView.as_view(), name='schedule'),
     url(r'^register/$', RegisterView.as_view(), name='register'),
     url(r'^signup/$', WSS.views.send_request, name='payment'),
-    url(r'^go/(?P<url>\w+)/$', WSS.views.go, name='go'),
     url(r'^verify/(?P<email>([a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+))/(?P<payment_id>[0-9]+$)', WSS.views.verify, name='verify'),
 ]
 
@@ -24,5 +23,5 @@ urlpatterns = [
     url(r'^(?P<year>\d{4})/', include(year_urlpatterns)),
     url(r'^$', HomeView.as_view(), name='home'),
     url(r'^about/$', AboutView.as_view(), name='about'),
-
+    url(r'^go/(?P<url>\w+)/$', WSS.views.go, name='go'),
 ]

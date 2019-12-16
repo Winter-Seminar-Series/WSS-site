@@ -334,10 +334,12 @@ class NotFound(FooterMixin, WSSWithYearMixin, DetailView):
     template_name = '../templates/404.html'
 
 
-def go(request, year, url):
+def go(request, url):
     link = None
     try:
         link = ShortLink.objects.all().get(short_link=url)
     except:
         raise Http404
+    link.number_of_clicks += 1
+    link.save()
     return redirect(to=link.url)
