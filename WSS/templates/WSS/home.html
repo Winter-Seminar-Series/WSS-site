@@ -166,7 +166,7 @@ For the first time, WSS has attempted  to create an opportunity for researchers 
                     <a data-scroll href="{% url 'wss:postersessions-list' wss.year %}">
                         <div class="ts-facts">
                             <div class="ts-facts-content">
-                                <h2 class="ts-facts-num"><span class="counterUp">{{ wss.postersessions.count }}</span></h2>
+                                <h2 class="ts-facts-num"><span class="counterUp">17{% comment %}{{ wss.postersessions.count }}{% endcomment %}</span></h2>
                                 <h3 class="ts-facts-title">{% if wss.postersessions.count != 1 %} Poster Presenters {% else %} Poster Presenter {% endif %}</h3>
                             </div>
                         </div>
@@ -203,10 +203,10 @@ For the first time, WSS has attempted  to create an opportunity for researchers 
             <h3 class="sponsor-title mb-5" >Main {% if wss.main_sponsorships.count != 1 %}Sponsors{% else %}Sponsor{% endif %}</h3>
             {% endif %} {% for sponsorship in wss.main_sponsorships %}
 
-            <div class="col-xs-12 col-sm-4 col-md-4 align-center">
+            <div class="col-xs-12 col-sm-4 col-md-2 align-center">
 
                 <a href="{{ sponsorship.sponsor.url }}">
-                    <img style="width: 80%;"class="img-responsive" src="{{ sponsorship.logo_url }}" alt="" />
+                    <img class="img-responsive" src="{{ sponsorship.logo_url }}" alt="" />
 
                     <!--I tried to use thumbnail with fixed size here but it did not work well! -->
 
