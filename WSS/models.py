@@ -89,7 +89,7 @@ class WSS(models.Model):
         try:
             return requests.get(self.participants_count_link).content
         except:
-            return 0
+            return 17
 
 
 class Clip(models.Model):
