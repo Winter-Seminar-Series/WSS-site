@@ -35,7 +35,7 @@
                         <h3 class="banner-desc">IRAN, TEHRAN, SHARIF UNIVERSITY OF TECHNOLOGY</h3>
                         {% if wss.is_active %} {% if wss.registration_link %}
                         <p class="banner-btn">
-                            <a href="{{ wss.registration_link }}" class="btn btn-primary btn-white">Register Now</a>
+                            <a href="{% url 'wss:register' wss.year %}" class="btn btn-primary btn-white">Register Now</a>
                         </p>
                         {% endif %}
                             {% if wss.proposal_link %}
