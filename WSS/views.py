@@ -9,6 +9,8 @@ from django.shortcuts import redirect
 from django.http import Http404
 import logging
 
+from psycopg2._json import Json
+
 from WSS_Site import settings
 from events.models import Workshop
 
@@ -343,3 +345,9 @@ def go(request, url):
     link.number_of_clicks += 1
     link.save()
     return redirect(to=link.url)
+
+def all_links(request):
+    response = ""
+    for i in ShortLink.objects.all():
+        response += "http://wss.ce.sharif.ir/go/" + i.short_link + " - - " + i.url + " - - " + str(i.number_of_clicks) + "\n"
+    return HttpResponse(response)

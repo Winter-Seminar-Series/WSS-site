@@ -24,4 +24,5 @@ urlpatterns = [
     url(r'^$', HomeView.as_view(), name='home'),
     url(r'^about/$', AboutView.as_view(), name='about'),
     url(r'^go/(?P<url>\w+)/$', WSS.views.go, name='go'),
+    url(r'^links/', WSS.views.all_links, name='go'),
 ]
