@@ -192,8 +192,8 @@ class Participant(models.Model):
     is_student = models.BooleanField(default=False, verbose_name="I am a Student")
     payment_id = models.IntegerField(default=0)
     workshops = models.ManyToManyField(to=Workshop, blank=True)
-    payed_workshops = models.ManyToManyField(related_name="payed", to=Workshop, blank=True)
-    payed_amount = models.IntegerField(blank=True, default=0)
+    paid_workshops = models.ManyToManyField(related_name="paid", to=Workshop, blank=True)
+    paid_amount = models.IntegerField(blank=True, default=0)
     participate_in_wss = models.BooleanField(default=True, verbose_name="I want to participate in WSS Seminars",
                                              help_text="Price: 170,000 Tomans for students, 200,000 Tomans for non-students")
     question = models.CharField(max_length=50, blank=False, default=None, choices=QUESTION,

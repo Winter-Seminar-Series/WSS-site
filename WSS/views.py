@@ -297,12 +297,12 @@ def verify(request, year, email, payment_id):
                 gr.save()
 
             for i in exh.workshops.all():
-                exh.payed_workshops.add(i.id)
+                exh.paid_workshops.add(i.id)
                 i.capacity -= 1
                 i.save()
 
 
-            exh.payed_amount += price
+            exh.paid_amount += price
             exh.save()
             logger.info("participant with email:" + email + " verified successfully.")
             return render(request, 'info.html', {'past_years': footer['past_years'], 'external_links': footer['external_links'], 'wss': get_object_or_404(WSS, year=year),
