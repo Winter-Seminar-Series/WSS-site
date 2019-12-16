@@ -210,7 +210,7 @@ class Reserve(models.Model):
     grade = models.CharField(max_length=70)
     student_number = models.CharField(max_length=70, blank=True)
     email = models.EmailField(primary_key=True)
-    phone_number = models.CharField(max_length=13, verbose_name="Phone Number")
+    phone_number = models.CharField(default=0, max_length=13, verbose_name="Phone Number")
     major = models.CharField(max_length=30)
     def __str__(self):
         return self.email
