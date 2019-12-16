@@ -226,4 +226,4 @@ class ShortLink(models.Model):
     number_of_clicks = models.IntegerField(default=0)
 
     def __str__(self):
-        return "http://wss.ce.sharif.ir/go/" + self.short_link + " " + self.url + " " + str(self.number_of_clicks)
+        return "http://wss.ce.sharif.ir/go/" + self.short_link + "  " + self.url + "    " + str(self.number_of_clicks)
