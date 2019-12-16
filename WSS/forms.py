@@ -1,8 +1,9 @@
 from captcha.fields import CaptchaField
 from django import forms
+from django.shortcuts import get_object_or_404
 
 from WSS import models
-from WSS.models import GENDER, INTRODUCTION, QUESTION
+from WSS.models import GENDER, INTRODUCTION, QUESTION, WSS
 from events.models import Workshop
 
 
@@ -54,6 +55,8 @@ class ParticipantForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(ParticipantForm, self).__init__(*args, **kwargs)
+        year = kwargs['initial']['year']
         self.fields["workshops"].widget = forms.CheckboxSelectMultiple()
-        self.fields["workshops"].queryset = Workshop.objects.all()
+        self.fields["workshops"].queryset = Workshop.objects.filter(wss__year__exact=year)
+        self.current_wss = get_object_or_404(WSS, year=year)
 

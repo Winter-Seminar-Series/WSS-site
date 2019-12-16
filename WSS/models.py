@@ -9,7 +9,8 @@ from events.models import Workshop, Seminar, PosterSession
 class WSS(models.Model):
     year = models.PositiveSmallIntegerField()
     description = models.TextField()
-    registration_link = models.URLField(null=True, blank=True)
+    registration_open = models.BooleanField(null=False, default=False)
+    # registration_link = models.URLField(null=True, blank=True)
     proposal_link = models.URLField(null=True, blank=True)
     participants_count_link = models.URLField(null=True, blank=True)
     start_date = models.DateField()
@@ -78,6 +79,10 @@ class WSS(models.Model):
     @property
     def is_active(self):
         return self.pk == WSS.active_wss().pk
+
+    @property
+    def is_registration_open(self):
+        return self.registration_open
 
     @property
     def participants_count(self):
@@ -163,6 +168,7 @@ QUESTION = [(None, 'Please Select'), ('RPA', 'RPA'), ('Virtual Assistant', 'Virt
 
 
 class Participant(models.Model):
+    current_wss = models.ForeignKey(null=False, to='WSS', related_name='participants', verbose_name='WSS')
     id = models.BigAutoField(primary_key=True)
     name = models.CharField(max_length=250, verbose_name="First Name (in Persian)")
     family = models.CharField(max_length=250, verbose_name="Family Name (in Persian)")
@@ -200,12 +206,7 @@ class Participant(models.Model):
         return self.name + " " + self.family + " " + self.payment_status
 
 
-class Reserve(models.Model):
-    name = models.CharField(max_length=50)
-    grade = models.CharField(max_length=70)
-    student_number = models.CharField(max_length=70, blank=True)
-    email = models.EmailField(primary_key=True)
-    major = models.CharField(max_length=30)
+class Reserve(Participant):
 
     def __str__(self):
         return self.email

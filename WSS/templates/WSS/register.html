@@ -19,97 +19,99 @@
                   <strong>{{ error }} </strong>
                 </div>
             {% endif %}
-            <!-- Speaker row 1 -->
-                <form action="{% url 'wss:payment' wss.year %}" method="post">
-                    {% csrf_token %}
-                    <div class="row">
-                        <div class="col-md-6 pr-md-5">
-                            {{ form.name|as_crispy_field }}
-                        </div>
-                        <div class="col-md-6 pr-md-5">
-                            {{ form.family|as_crispy_field }}
-                        </div>
+                {% if wss.is_registration_open %}
+                    <form name="myform" action="{% url 'wss:payment' wss.year %}" method="post">
 
-                        <div class="col-md-6 pr-md-5">
-                            {{ form.name_english|as_crispy_field }}
-                        </div>
-                        <div class="col-md-6 pr-md-5">
-                            {{ form.family_english|as_crispy_field }}
-                        </div>
-                        <div class="col-md-6 pr-md-5">
-                            {{ form.age|as_crispy_field }}
-                        </div>
-                        <div class="col-md-6 pr-md-5 d-flex align-items-center">
-                            {{ form.gender|as_crispy_field }}
-                        </div>
-                        <div class="col-md-6 pr-md-5">
-                            {{ form.national_id|as_crispy_field }}
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6 pr-md-5">
-                            {{ form.phone_number|as_crispy_field }}
-                        </div>
-                        <div class="col-md-6 pr-md-5">
-                            {{ form.email|as_crispy_field }}
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6 pr-md-5">
-                            {{ form.country|as_crispy_field }}
-                        </div>
-                        <div class="col-md-6 pr-md-5">
-                            {{ form.city|as_crispy_field }}
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6 pr-md-5">
-                            {{ form.university|as_crispy_field }}
-                        </div>
-                        <div class="col-md-6 pr-md-5">
-                            {{ form.grade|as_crispy_field }}
-                        </div>
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="col-md-6 pr-md-5">
+                                {{ form.name|as_crispy_field }}
+                            </div>
+                            <div class="col-md-6 pr-md-5">
+                                {{ form.family|as_crispy_field }}
+                            </div>
 
-                        <div class="col-md-6 pr-md-5">
-                            {{ form.job|as_crispy_field }}
+                            <div class="col-md-6 pr-md-5">
+                                {{ form.name_english|as_crispy_field }}
+                            </div>
+                            <div class="col-md-6 pr-md-5">
+                                {{ form.family_english|as_crispy_field }}
+                            </div>
+                            <div class="col-md-6 pr-md-5">
+                                {{ form.age|as_crispy_field }}
+                            </div>
+                            <div class="col-md-6 pr-md-5 d-flex align-items-center">
+                                {{ form.gender|as_crispy_field }}
+                            </div>
+                            <div class="col-md-6 pr-md-5">
+                                {{ form.national_id|as_crispy_field }}
+                            </div>
                         </div>
-                        <div class="col-md-6 pr-md-5 d-flex align-items-center">
-                            {{ form.is_student|as_crispy_field }}
+                        <div class="row">
+                            <div class="col-md-6 pr-md-5">
+                                {{ form.phone_number|as_crispy_field }}
+                            </div>
+                            <div class="col-md-6 pr-md-5">
+                                {{ form.email|as_crispy_field }}
+                            </div>
                         </div>
-                    </div>
-                    <hr/>
-                    <div class="row">
-                        <div class="col-md-6 pr-md-5 d-flex w-100">
-                            {{ form.introduction_method|as_crispy_field }}
+                        <div class="row">
+                            <div class="col-md-6 pr-md-5">
+                                {{ form.country|as_crispy_field }}
+                            </div>
+                            <div class="col-md-6 pr-md-5">
+                                {{ form.city|as_crispy_field }}
+                            </div>
                         </div>
-                        <div class="col-12">
-                            {{ form.interests|as_crispy_field }}
+                        <div class="row">
+                            <div class="col-md-6 pr-md-5">
+                                {{ form.university|as_crispy_field }}
+                            </div>
+                            <div class="col-md-6 pr-md-5">
+                                {{ form.grade|as_crispy_field }}
+                            </div>
+
+                            <div class="col-md-6 pr-md-5">
+                                {{ form.job|as_crispy_field }}
+                            </div>
+                            <div class="col-md-6 pr-md-5 d-flex align-items-center">
+                                {{ form.is_student|as_crispy_field }}
+                            </div>
                         </div>
-                        <div class="col-md-6 ">
-                            {{ form.question|as_crispy_field }}
+                        <hr/>
+                        <div class="row">
+                            <div class="col-md-6 pr-md-5 d-flex w-100">
+                                {{ form.introduction_method|as_crispy_field }}
+                            </div>
+                            <div class="col-12">
+                                {{ form.interests|as_crispy_field }}
+                            </div>
+                            <div class="col-md-6 ">
+                                {{ form.question|as_crispy_field }}
+                            </div>
+                            <div class="col-md-6 d-flex align-items-center  ">
+                                {{ form.question_other |as_crispy_field }}
+                            </div>
                         </div>
-                        <div class="col-md-6 d-flex align-items-center  ">
-                            {{ form.question_other |as_crispy_field }}
+                        <hr/>
+                        <div class="row">
+                            <div class="col">
+                                {{ form.participate_in_wss|as_crispy_field }}
+                            </div>
                         </div>
-                    </div>
-                    <hr/>
-                    <div class="row">
-                        <div class="col">
-                            {{ form.participate_in_wss|as_crispy_field }}
+                        <div class="row">
+                            <div class="col">
+                                {{ form.workshops|as_crispy_field }}
+                            </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col">
-                            {{ form.workshops|as_crispy_field }}
+                        <div class="row">
+                            <div class="col">
+                                {{ form.captcha|as_crispy_field }}
+                            </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col">
-                            {{ form.captcha|as_crispy_field }}
-                        </div>
-                    </div>
-                    <button type="submit" class="btn btn-primary" style="background: #007bff;">Register</button>
-                </form>
+                        <button type="submit" class="btn btn-primary" style="background: #007bff;">Register</button>
+                    </form>
+                {% endif %}
             </div>
         </div><!-- Conatiner end -->
     </section><!-- Main container end -->
