@@ -3,9 +3,9 @@
 {% load date_tags %}
 {% load human_tags %}
 {% load crispy_forms_tags %}
-
+{% block title %}Registration{% endblock %}
 {% block content %}
-    <section id="main-container" class="main-container">
+    <section id="main-container" class="main-container pb-0">
         <div style="margin-top: -15rem; height: 15rem;" class="diagonal background-shafagh">
                 <div class="container section-sub-title title-white" style="padding-top: 10rem">
                 Registration
@@ -21,6 +21,7 @@
             {% endif %}
             <!-- Speaker row 1 -->
                 <form action="{% url 'wss:payment' wss.year %}" method="post">
+                    {% csrf_token %}
                     <div class="row">
                         <div class="col-md-6 pr-md-5">
                             {{ form.name|as_crispy_field }}
@@ -94,6 +95,11 @@
                     <div class="row">
                         <div class="col">
                             {{ form.workshops|as_crispy_field }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            {{ form.captcha|as_crispy_field }}
                         </div>
                     </div>
                     <button type="submit" class="btn btn-primary" style="background: #007bff;">Register</button>

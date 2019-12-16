@@ -1,3 +1,4 @@
+from captcha.fields import CaptchaField
 from django import forms
 
 from WSS import models
@@ -37,6 +38,8 @@ class ParticipantForm(forms.ModelForm):
                                           label='Interests', required=False)
 
     phone_number = forms.CharField(max_length=13, widget=forms.TextInput(attrs={'placeholder': '09xx xxx xxxx'}))
+
+    captcha = CaptchaField()
     class Meta:
         model = models.Participant
         fields = ['name', 'family', 'name_english', 'family_english', 'phone_number', 'national_id', 'email', 'age',
