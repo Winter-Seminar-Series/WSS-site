@@ -89,7 +89,7 @@ class WSS(models.Model):
         try:
             return requests.get(self.participants_count_link).content
         except:
-            return 17
+            return Participant.objects.filter(current_wss=self, payment_status='OK').count()
 
 
 class Clip(models.Model):

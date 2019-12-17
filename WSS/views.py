@@ -44,7 +44,7 @@ class AboutView(FooterMixin, DetailView):
 
     def get_object(self, queryset=None):
         # TODO: I didn't know how to handle this, so I used a simple trick.
-        return get_object_or_404(WSS, year=2019)
+        return get_object_or_404(WSS, year=WSS.active_wss().year)
 
 
 class SeminarsListView(FooterMixin, DetailView):
@@ -109,7 +109,6 @@ class ScheduleView(FooterMixin, WSSWithYearMixin, DetailView):
         # Surprising bug made me do this! I have know idea why I should reiterate events_by_day!
         context['events_by_day'] = []
         for date, events_by_time in events_by_day:
-            print(date)
             _events_by_time = []
             for time, events in events_by_time:
                 _events_by_time.append((time, list(events)))  # OMG! casting to list is important!!
@@ -184,7 +183,7 @@ def send_request(request, year):
     if not result['success']:
         return render(request, 'WSS/register.html', {'wss' : get_object_or_404(WSS, year=year), 'form': form, 'error':"Captcha is invalid; Please try again."})
 
-    CallbackURL = 'http://wss.ce.sharif.edu/' + str(
+    CallbackURL = 'https://wss.ce.sharif.edu/' + str(
         year) + '/verify/'  # todo Important: need to edit for realy server.
 
     current_wss = get_object_or_404(WSS, year=year)
@@ -215,8 +214,10 @@ def send_request(request, year):
 
     if len(full_workshops) > 0:
         ret_error = ""
-        for i in full_workshops:
-            ret_error += ("Workshop \""+ i.title()+"\" is booked up.\n")
+        for cnt, i in enumerate(full_workshops):
+            ret_error += ("Workshop \""+ i.title()+"\" is booked up.")
+            if (cnt < len(full_workshops) - 1):
+                ret_error += "\n"
 
         return render(request, 'WSS/register.html', {'wss': get_object_or_404(WSS, year=year), 'form': form,
                                                  'error': ret_error})
@@ -349,5 +350,5 @@ def go(request, url):
 def all_links(request):
     response = ""
     for i in ShortLink.objects.all():
-        response += "http://wss.ce.sharif.ir/go/" + i.short_link + " - - " + i.url + " - - " + str(i.number_of_clicks) + "\n"
+        response += "https://wss.ce.sharif.ir/go/" + i.short_link + " - - " + i.url + " - - " + str(i.number_of_clicks) + "\n"
     return HttpResponse(response)
