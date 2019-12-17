@@ -6,8 +6,8 @@
 {% block title %}Registration{% endblock %}
 {% block content %}
     <section id="main-container" class="main-container pb-0">
-        <div style="margin-top: -15rem; height: 15rem;" class="diagonal background-shafagh">
-                <div class="container section-sub-title title-white" style="padding-top: 10rem">
+        <div style="margin-top: -15rem; height: 15rem;" class="px-5 diagonal background-shafagh">
+                <div class="container section-sub-title title-white" style="padding-top: 9rem">
                 Registration
                 </div>
             </div>
@@ -16,7 +16,7 @@
             <div class="container pt-5">
             {% if error %}
                 <div class="alert alert-danger">
-                  <strong>{{ error }} </strong>
+                  <strong style="white-space: pre-wrap">{{ error }} </strong>
                 </div>
             {% endif %}
                 {% if wss.is_registration_open %}
@@ -130,6 +130,8 @@
             $("#div_id_gender .form-check").addClass("custom-radio");
             $("#div_id_introduction_method, #div_id_question_other").addClass("w-100");
             $("#div_id_participate_in_wss").addClass("d-block");
+            $("#error_1_id_gender").addClass("ml-2 mb-0");
+
             $('#div_id_question select').on('change', function() {
                 var a = $(this).val();
                 if (a === 'Others')
