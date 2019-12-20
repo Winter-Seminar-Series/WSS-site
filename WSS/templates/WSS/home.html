@@ -139,7 +139,7 @@ For the first time, WSS has attempted  to create an opportunity for researchers 
     <div class="container py-4">
         <div class="row d-flex justify-content-center">
                 <div class="col-sm-2 text-center">
-                    <a data-scroll href="#ts-speakers">
+                    <a data-scroll href="{% url 'wss:seminars-list' wss.year %}">
                         <div class="ts-facts">
                             <div class="ts-facts-content">
                                 <h2 class="ts-facts-num"><span class="counterUp">{{ wss.seminars.count }}</span></h2>
@@ -162,7 +162,6 @@ For the first time, WSS has attempted  to create an opportunity for researchers 
                     </a>
                     <!--Facts end -->
                 </div>
-
 {#                {% if wss.postersessions.count %}#}
                     <div class="col-sm-2 text-center">
                         <a data-scroll href="{% url 'wss:postersessions-list' wss.year %}">
