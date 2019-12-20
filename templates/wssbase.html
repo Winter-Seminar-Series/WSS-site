@@ -28,9 +28,9 @@
     </li>
     <!-- Gallery li end -->
     {% if wss.is_active %}
-        {% if wss.registration_link %}
+        {% if wss.is_registration_open %}
             <li class="header-ticket">
-                <a class="btn-white btn-primary" href="{{ wss.registration_link }}">Register</a>
+                <a class="btn-white btn-primary" href="{% url 'wss:register' wss.year %}">Register</a>
             </li>
         {% endif %}
     {% else %}
@@ -44,9 +44,9 @@
     <li><a href="{% url 'wss:home' wss.year %}">Home</a>
     </li>
     {% if wss.is_active %}
-        {% if wss.registration_link %}
+        {% if wss.is_registration_open %}
             <li class="header-ticket">
-            <li><a href="{{ wss.registration_link }}">Register</a>
+            <li><a href="{% url 'wss:register' wss.year %}">Register</a>
             </li>
         {% endif %}
     {% else %}
