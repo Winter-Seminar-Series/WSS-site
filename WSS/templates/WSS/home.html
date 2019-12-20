@@ -162,27 +162,31 @@ For the first time, WSS has attempted  to create an opportunity for researchers 
                     </a>
                     <!--Facts end -->
                 </div>
-                <div class="col-sm-2 text-center">
-                    <a data-scroll href="{% url 'wss:postersessions-list' wss.year %}">
+                {% if wss.show_stats %}
+                    {% if wss.postersessions.count %}
+                        <div class="col-sm-2 text-center">
+                            <a data-scroll href="{% url 'wss:postersessions-list' wss.year %}">
+                                <div class="ts-facts">
+                                    <div class="ts-facts-content">
+                                        <h2 class="ts-facts-num"><span class="counterUp">{{ wss.postersessions.count }}</span></h2>
+                                        <h3 class="ts-facts-title">{% if wss.postersessions.count != 1 %} Poster Presenters {% else %} Poster Presenter {% endif %}</h3>
+                                    </div>
+                                </div>
+                            </a>
+                            <!--Facts end -->
+                        </div>
+                    {% endif %}
+                    <!-- Col end -->
+                    <div class="col-sm-2 text-center">
                         <div class="ts-facts">
                             <div class="ts-facts-content">
-                                <h2 class="ts-facts-num"><span class="counterUp">17{% comment %}{{ wss.postersessions.count }}{% endcomment %}</span></h2>
-                                <h3 class="ts-facts-title">{% if wss.postersessions.count != 1 %} Poster Presenters {% else %} Poster Presenter {% endif %}</h3>
+                                <h2 class="ts-facts-num"><span class="counterUp">{{ wss.participants_count }}</span></h2>
+                                <h3 class="ts-facts-title">Participants</h3>
                             </div>
                         </div>
-                    </a>
-                    <!--Facts end -->
-                </div>
-                <!-- Col end -->
-                <div class="col-sm-2 text-center">
-                    <div class="ts-facts">
-                        <div class="ts-facts-content">
-                            <h2 class="ts-facts-num"><span class="counterUp">{{ wss.participants_count }}</span></h2>
-                            <h3 class="ts-facts-title">Participants</h3>
-                        </div>
+                        <!--Facts end -->
                     </div>
-                    <!--Facts end -->
-                </div>
+                {% endif %}
                 <!-- Col end -->
             </div>
             <!-- Statics end -->
