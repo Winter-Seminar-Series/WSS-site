@@ -135,7 +135,7 @@ For the first time, WSS has attempted  to create an opportunity for researchers 
 </section>
 <!-- Speakers end -->
 
-<section id="ts-statics" class="ts-statics diagonal mb-5">
+<section id="ts-statics" class="ts-statics diagonal">
     <div class="container py-4">
         <div class="row d-flex justify-content-center">
                 <div class="col-sm-2 text-center">
@@ -162,21 +162,21 @@ For the first time, WSS has attempted  to create an opportunity for researchers 
                     </a>
                     <!--Facts end -->
                 </div>
-                {% if wss.show_stats %}
-                    {% if wss.postersessions.count %}
-                        <div class="col-sm-2 text-center">
-                            <a data-scroll href="{% url 'wss:postersessions-list' wss.year %}">
-                                <div class="ts-facts">
-                                    <div class="ts-facts-content">
-                                        <h2 class="ts-facts-num"><span class="counterUp">{{ wss.postersessions.count }}</span></h2>
-                                        <h3 class="ts-facts-title">{% if wss.postersessions.count != 1 %} Poster Presenters {% else %} Poster Presenter {% endif %}</h3>
-                                    </div>
+{#                {% if wss.postersessions.count %}#}
+                    <div class="col-sm-2 text-center">
+                        <a data-scroll href="{% url 'wss:postersessions-list' wss.year %}">
+                            <div class="ts-facts">
+                                <div class="ts-facts-content">
+                                    <h2 class="ts-facts-num"><span class="counterUp">17{% comment %}{{ wss.postersessions.count }}{% endcomment %}</span></h2>
+                                    <h3 class="ts-facts-title">{% if wss.postersessions.count != 1 %} Poster Presenters {% else %} Poster Presenter {% endif %}</h3>
                                 </div>
-                            </a>
-                            <!--Facts end -->
-                        </div>
-                    {% endif %}
+                            </div>
+                        </a>
+                        <!--Facts end -->
+                    </div>
+{#                {% endif %}#}
                     <!-- Col end -->
+                {% if wss.show_stats %}
                     <div class="col-sm-2 text-center">
                         <div class="ts-facts">
                             <div class="ts-facts-content">

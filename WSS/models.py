@@ -13,7 +13,7 @@ class WSS(models.Model):
     # registration_link = models.URLField(null=True, blank=True)
     proposal_link = models.URLField(null=True, blank=True)
     participants_count_link = models.URLField(null=True, blank=True)
-    # Show Participants and poster session in homepage
+    # Show Participants in homepage
     show_stats = models.BooleanField(null=False, default=True)
     start_date = models.DateField()
     end_date = models.DateField()
