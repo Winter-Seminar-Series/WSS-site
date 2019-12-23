@@ -1,3 +1,4 @@
+import csv
 from random import Random
 from itertools import groupby
 
@@ -142,7 +143,7 @@ class RegisterView(FooterMixin, WSSWithYearMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data()
-        context['form'] = ParticipantForm(initial={'year' :int(self.kwargs['year'])})
+        context['form'] = ParticipantForm(initial={'year': int(self.kwargs['year'])})
         if not self.get_object(self).registration_open:
             context['error'] = "Sorry, the registration has been ended."
         return context
@@ -170,9 +171,10 @@ def send_request(request, year):
 
     form = ParticipantForm(request.POST, initial={'year': year})
     if not form.is_valid():
-        return render(request, 'WSS/register.html', {'wss' : get_object_or_404(WSS, year=year), 'form': form, 'error':"Please correct the following errors."})
+        return render(request, 'WSS/register.html', {'wss': get_object_or_404(WSS, year=year), 'form': form,
+                                                     'error': "Please correct the following errors."})
 
-    #Captcha validation
+    # Captcha validation
     recaptcha_response = request.POST.get('g-recaptcha-response')
     data = {
         'secret': settings.GOOGLE_RECAPTCHA_SECRET_KEY,
@@ -181,7 +183,8 @@ def send_request(request, year):
     r = requests.post('https://www.google.com/recaptcha/api/siteverify', data=data)
     result = r.json()
     if not result['success']:
-        return render(request, 'WSS/register.html', {'wss' : get_object_or_404(WSS, year=year), 'form': form, 'error':"Captcha is invalid; Please try again."})
+        return render(request, 'WSS/register.html', {'wss': get_object_or_404(WSS, year=year), 'form': form,
+                                                     'error': "Captcha is invalid; Please try again."})
 
     CallbackURL = 'https://wss.ce.sharif.edu/' + str(
         year) + '/verify/'  # todo Important: need to edit for realy server.
@@ -215,12 +218,12 @@ def send_request(request, year):
     if len(full_workshops) > 0:
         ret_error = ""
         for cnt, i in enumerate(full_workshops):
-            ret_error += ("Workshop \""+ i.title()+"\" is booked up.")
+            ret_error += ("Workshop \"" + i.title() + "\" is booked up.")
             if (cnt < len(full_workshops) - 1):
                 ret_error += "\n"
 
         return render(request, 'WSS/register.html', {'wss': get_object_or_404(WSS, year=year), 'form': form,
-                                                 'error': ret_error})
+                                                     'error': ret_error})
     field_of_interest = ""
     for i in form.cleaned_data['interests']:
         field_of_interest += ", " + i
@@ -232,12 +235,14 @@ def send_request(request, year):
     except:
         exh = None
     if participate_in_wss and exh is not None and exh.payment_status == 'OK':
-        return render(request, 'WSS/register.html', {'wss' : get_object_or_404(WSS, year=year), 'form': form, 'error':"You have been registered successfully with this email."})
+        return render(request, 'WSS/register.html', {'wss': get_object_or_404(WSS, year=year), 'form': form,
+                                                     'error': "You have been registered successfully with this email."})
 
     try:
         gr = Grade.objects.all().get(level=grade)
     except Grade.DoesNotExist:
-        return render(request, 'WSS/register.html', {'wss' : get_object_or_404(WSS, year=year), 'form': form, 'error':"The entered grade is incorrect."})
+        return render(request, 'WSS/register.html', {'wss': get_object_or_404(WSS, year=year), 'form': form,
+                                                     'error': "The entered grade is incorrect."})
 
     cap = gr.capacity
     exh = Participant(current_wss=current_wss, name=name, family=family, email=email, grade=grade,
@@ -272,18 +277,18 @@ def verify(request, year, email, payment_id):
 
     footer = {
         'past_years': [q[0] for q in
-         WSS.objects.exclude(pk=WSS.active_wss().pk).values_list('year')],
+                       WSS.objects.exclude(pk=WSS.active_wss().pk).values_list('year')],
         'external_links': ExternalLink.objects.all()
     }
     try:
         exh = Participant.objects.all().get(email=email, payment_id=payment_id)
     except Participant.DoesNotExist:
-        return render(request, 'info.html', {'past_years': footer['past_years'], 'external_links': footer['external_links'],
-                                             'wss' : get_object_or_404(WSS, year=year), 'status':'danger','info': 'Payment was not successful. Please contact support.'}) # todo  move to error page
+        return render(request, 'info.html',
+                      {'past_years': footer['past_years'], 'external_links': footer['external_links'],
+                       'wss': get_object_or_404(WSS, year=year), 'status': 'danger',
+                       'info': 'Payment was not successful. Please contact support.'})  # todo  move to error page
 
     price = compute_cost(exh)
-
-
 
     if request.GET.get('Status') == 'OK':
         result = client.service.PaymentVerification(MERCHANT, request.GET['Authority'], price)
@@ -302,12 +307,15 @@ def verify(request, year, email, payment_id):
                 i.capacity -= 1
                 i.save()
 
-
             exh.paid_amount += price
             exh.save()
             logger.info("participant with email:" + email + " verified successfully.")
-            return render(request, 'info.html', {'past_years': footer['past_years'], 'external_links': footer['external_links'], 'wss': get_object_or_404(WSS, year=year),
-                                                 'status':'success','info': 'You have registered successfully. Your tracking code is:' + str(result.RefID)})  # todo  move to error page
+            return render(request, 'info.html',
+                          {'past_years': footer['past_years'], 'external_links': footer['external_links'],
+                           'wss': get_object_or_404(WSS, year=year),
+                           'status': 'success',
+                           'info': 'You have registered successfully. Your tracking code is:' + str(
+                               result.RefID)})  # todo  move to error page
         elif result.Status == 101:
             logger.info(
                 "participant with email:" + email + " verified again. perhaps he attacking us.")  # todo redirect to tekrari
@@ -318,8 +326,10 @@ def verify(request, year, email, payment_id):
             return HttpResponse('Transaction failed.\nStatus: ' + str(result.Status))  # todo redirect to error page
     else:
         logger.info("participant with email:" + email + " don't verified")
-        return render(request, 'info.html', {'past_years': footer['past_years'], 'external_links': footer['external_links'],
-                                             'wss' : get_object_or_404(WSS, year=year), 'status':'danger', 'info': 'Payment was not successful.'}) # todo  move to error page
+        return render(request, 'info.html',
+                      {'past_years': footer['past_years'], 'external_links': footer['external_links'],
+                       'wss': get_object_or_404(WSS, year=year), 'status': 'danger',
+                       'info': 'Payment was not successful.'})  # todo  move to error page
 
 
 def reserve(request, form, year):
@@ -347,8 +357,81 @@ def go(request, url):
     link.save()
     return redirect(to=link.url)
 
+
 def all_links(request):
     response = ""
     for i in ShortLink.objects.all():
-        response += "https://wss.ce.sharif.ir/go/" + i.short_link + " - - " + i.url + " - - " + str(i.number_of_clicks) + "\n"
+        response += "https://wss.ce.sharif.ir/go/" + i.short_link + " - - " + i.url + " - - " + str(
+            i.number_of_clicks) + "\n"
     return HttpResponse(response)
+
+
+def participants(request, year):
+    if not request.user.is_authenticated():
+        raise Http404
+    response = HttpResponse()
+    response['Content-Type'] = 'text/csv'
+    response['Content-Disposition'] = 'attachment; filename="%s.csv"' \
+                                      % 'participant'
+    writer = csv.writer(response)
+    row = ""
+    for i in WRITEABLE_FIELDS:
+        row += i + ","
+    writer.writerow([row])
+    for i in Participant.objects.all():
+        if i.participate_in_wss and i.payment_status == "OK":
+            row1 = ""
+            for field in WRITEABLE_FIELDS:
+                row1 += str(getattr(i, field)) + ","
+            writer.writerow([row1])
+    return response
+
+
+def participants_workshop(request, year, title):
+    if not request.user.is_authenticated():
+        raise Http404
+    response = HttpResponse()
+    response['Content-Type'] = 'text/csv'
+    response['Content-Disposition'] = 'attachment; filename="%s.csv"' \
+                                      % 'participant_workshop'
+    writer = csv.writer(response)
+    row = ""
+    for i in WRITEABLE_FIELDS:
+        row += i + ","
+    writer.writerow([row])
+
+    for i in Participant.objects.all():
+        try:
+            w = i.paid_workshops.all().get(title=title)
+        except:
+            w = None
+        if w is not None:
+            row1 = ""
+            for field in WRITEABLE_FIELDS:
+                row1 += str(getattr(i, field)) + ","
+            writer.writerow([row1])
+    return response
+
+
+WRITEABLE_FIELDS = [
+    "id",
+    "name",
+    "family",
+    "name_english",
+    "family_english",
+    "phone_number",
+    "age",
+    "national_id",
+    "email",
+    "job",
+    "university",
+    "introduction_method",
+    "gender",
+    "city",
+    "country",
+    "payment_status",
+    "grade",
+    "is_student",
+    "payment_id",
+    "paid_amount",
+]
