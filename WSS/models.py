@@ -197,7 +197,7 @@ class Participant(models.Model):
     paid_workshops = models.ManyToManyField(related_name="paid", to=Workshop, blank=True)
     paid_amount = models.IntegerField(blank=True, default=0)
     participate_in_wss = models.BooleanField(default=True, verbose_name="I want to participate in WSS Seminars",
-                                             help_text="Price: 170,000 Tomans for students, 200,000 Tomans for non-students")
+                                             help_text="Price: 135,000 Tomans for students, 150,000 Tomans for non-students")
     question = models.CharField(max_length=50, blank=False, default=None, choices=QUESTION,
                                 verbose_name="Which one of these Artificial Intelligence-related technologies do you think have the most impact on Iran's market?")
     question_other = models.CharField(max_length=500, blank=True, verbose_name="Your answer")
