@@ -15,6 +15,8 @@ year_urlpatterns = [
     url(r'^gallery/videos/$', GalleryVideoView.as_view(), name='gallery-video'),
     url(r'^schedule/$', ScheduleView.as_view(), name='schedule'),
     url(r'^register/$', RegisterView.as_view(), name='register'),
+    url(r'^participant/$', WSS.views.participants, name='register'),
+    url(r'^participant/workshop/(?P<title>\w+)$', WSS.views.participants_workshop, name='register'),
     url(r'^signup/$', WSS.views.send_request, name='payment'),
     url(r'^verify/(?P<email>([a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+))/(?P<payment_id>[0-9]+$)', WSS.views.verify, name='verify'),
 ]
