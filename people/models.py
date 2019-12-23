@@ -18,8 +18,8 @@ class Human(PolymorphicModel):
 
 
 class Speaker(Human):
-    degree = models.CharField(max_length=30)
-    place = models.CharField(max_length=50)
+    degree = models.CharField(max_length=100)
+    place = models.CharField(max_length=100)
     bio = models.TextField()
 
     @property
