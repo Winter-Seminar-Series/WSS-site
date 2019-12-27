@@ -508,6 +508,16 @@ cite {
     background: white;
     border: 2px solid transparent;
 }
+
+.btn.btn-blue {
+    background: #007bff;
+    color: white;
+}
+
+.btn.btn-blue:hover {
+    background: #015ad4;
+}
+
 .btn.btn-dark {
     background: #242427;
     border: 2px solid transparent;

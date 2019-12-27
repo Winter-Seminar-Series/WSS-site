@@ -4,16 +4,24 @@
 {% block content %}
 
 	<section id="main-container" class="main-container" style="padding: 40px 0 0 0">
-
+        {% if wss.calendar_link %}
+            <div class="schedule-content">
+                <div class="container mt-0">
+                    <div class="diagonal">
+                        <div class="row d-flex justify-content-center">
+                            <p><a role="button" href="{{ wss.calendar_link }}" class="btn btn-blue">Add Events to
+                                Calendar</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
 		{% if pre_wss_events.count %}
-		<div class="schedule-content  pattern-bg ">
+		<div class="diagonal schedule-content pattern-bg">
 			<div class="container">
 				<div class="row">
 					<div class="col-md-12">
-						<div class="row text-center">
-							<h3 class="section-sub-title">Pre-{{ wss }} Events</h3>
-						</div><!--/ Title row end -->
-
+                        <h3 class="section-sub-title">Pre-{{ wss }} Events</h3>
 						<div class="schedule-listing">
 						{% for event in pre_wss_events %}
 
@@ -52,15 +60,16 @@
 					</div><!-- Col end -->
 				</div><!-- Content row 1 end -->
 			</div><!-- Container 2 end -->
+            <div class="gap-60"></div>
 		</div><!-- schedule-content 1 end -->
 
 		{% endif %}
 		<div class="gap-60"></div>
-
-		<div class="container">
-				<h3 class="section-sub-title">{{ wss }} Schedule</h3>
-		</div><!-- Container 1 end -->
-
+        <div class="diagonal schedule-content">
+            <div class="container">
+                    <h3 class="section-sub-title">{{ wss }} Schedule</h3>
+            </div><!-- Container 1 end -->
+        </div>
 		{% for day, events_by_time in events_by_day %}
 			<div class="diagonal schedule-content {% if forloop.counter|divisibleby:2 %} pattern-bg {% endif %}">
 				<div class="container">
@@ -119,9 +128,11 @@
 			</div><!-- schedule-content 1 end -->
 
 		{% empty %}
-			<div class="row text-center">
-				<h3 class="schedule-date mx-auto">TBD</h3>
-			</div>
+            <div class="diagonal schedule-content">
+                <div class="row text-center">
+                    <h3 class="schedule-date mx-auto">TBD</h3>
+                </div>
+            </div>
 		{% endfor %}
 
 	</section><!-- Main container end -->

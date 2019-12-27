@@ -1,0 +1,119 @@
+{% extends 'wssbase.html' %}
+{% load static %}
+{% load thumbnail %}
+
+{% block content %}
+    <section id="main-container" class="main-container pb-0">
+        <div style="margin-top: -15rem; height: 15rem;" class="px-5 diagonal background-shafagh">
+            <div class="container section-sub-title title-white" style="padding-top: 9rem">
+                Details
+            </div>
+        </div>
+
+        <div class="container-fluid px-5 pt-3 mt-5 mb-0 diagonal" style="background: white;">
+            <div class="container">
+                <div class="row mt-5">
+                    <div class="col mx-auto">
+                        <div class="row">
+                            <div class="col">
+                                <h3 class="mt-2">Poster Session</h3>
+                                <p>A “Poster Session” is a way of giving the opportunity for members who have issues or achievements of limited interest and which are not suitable for the formalities of a conference to communicate their message in an informal manner. The hard facts of their presentation are “published” on posters adjacent to where they will deliver their message or in hand-outs.</p>
+                                <p>Each poster must include text in a large enough font (~20 point font) to be read easily by attendees from a distance of 4 to 5 feet or more. Lettering on illustrations should be large and legible. Photographs should be a minimum of 5 x 7 inches. Material should be displayed in logical sequence (introduction, development, conclusion) and each sheet should be numbered.</p>
+                                <figure class="col-lg-6 px-0 figure">
+                                    <figcaption class="figure-caption mb-2">Poster Template</figcaption>
+                                    <img class="figure-img img-fluid" src="{% static 'images/poster_template.jpg' %}" alt="Poster Template">
+                                </figure>
+                                <p><a role="button" href="{% static 'files/Poster Template.pptx' %}" class="btn btn-blue" style="">Download template</a></p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <h3 class="mt-2">Booklets</h3>
+                                <p><a role="button" href="#" class="btn btn-blue" style="">Download booklets</a></p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <h3 class="mt-2">Seminar Venue</h3>
+                                <div class="gallery-container col-sm-4" style="height: auto">
+                                    <a class="gallery-popup" href="{% static 'images/venue.jpg' %}">
+                                    {% thumbnail '{{ STATIC_URL }}/images/venue.jpg' "100x100" as img %}
+                                        <img class="img-responsive" style="width:100%;" src="{% static 'images/venue.jpg' %}" alt="Venue Map">
+                                    {% endthumbnail %}
+                                    <span class="gallery-icon"><i class="fa fa-search"></i></span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-9">
+                                <h3 class="mt-2">Registration</h3>
+                                <table class="table">
+                                    <caption>If you enroll in any workshops with the seminar, you will get 100,000 Rials discount for each workshop.</caption>
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 40%" scope="col">Event</th>
+                                            <th scope="col">Registration Fee</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <th scope="row">Seminar</th>
+                                            <td>Students: 1,350,000 Rials<br/>Others: 1,500,000 Rials</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Workshop</th>
+                                            <td>Each Workshop: 300,000 Rials</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <h2 class="mt-2 section-sub-title">Dates and Deadlines</h2>
+                        <div class="row">
+                            <div class="col-md-9">
+                                <h3 class="mb-4">Deadlines</h3>
+                                <table class="table">
+                                    <tbody>
+                                        <tr>
+                                            <th style="width: 40%" scope="row">Poster Session Registration</th>
+                                            <td>Submission Opens<br/>24th November 2019</td>
+                                            <td>Submission Deadline<br/>3rd December 2019</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Seminar and Workshops Registration</th>
+                                            <td>Registration Opens<br/>16th December 2019</td>
+                                            <td>Submission Deadline<br/>29th December 2019</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-9">
+                                <h3 class="mb-4">Dates</h3>
+                                <table class="table">
+                                    <tbody>
+                                        <tr>
+                                            <th style="width: 40%" scope="row">Workshops</th>
+                                            <td>28th December 2019 - 1st January 2020</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Seminar</th>
+                                            <td>2nd - 3rd January 2020</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Poster Session</th>
+                                            <td>3rd January 2020</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section><!-- Main container end -->
+{% endblock %}
