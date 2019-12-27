@@ -2,8 +2,7 @@ from django.conf.urls import url, include
 
 import WSS
 from WSS.views import HomeView, AboutView, SeminarsListView, PosterSessionsListView, WorkshopsListView, StaffListView, \
-    GalleryImageView, RegisterView, \
-    ScheduleView, GalleryVideoView
+    GalleryImageView, RegisterView, ScheduleView, GalleryVideoView, DetailsView
 
 year_urlpatterns = [
     url(r'^$', HomeView.as_view(), name='home'),
@@ -25,6 +24,7 @@ urlpatterns = [
     url(r'^(?P<year>\d{4})/', include(year_urlpatterns)),
     url(r'^$', HomeView.as_view(), name='home'),
     url(r'^about/$', AboutView.as_view(), name='about'),
+    url(r'^details/$', DetailsView.as_view(), name='details'),
     url(r'^go/(?P<url>\w+)/$', WSS.views.go, name='go'),
     url(r'^links/', WSS.views.all_links, name='go'),
 ]
