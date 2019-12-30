@@ -384,12 +384,15 @@ def participants(request, year):
     row = ""
     for i in WRITEABLE_FIELDS:
         row += i + ","
+    row += "interests,"
     writer.writerow([row])
     for i in Participant.objects.all():
         if i.participate_in_wss and i.payment_status == "OK":
             row1 = ""
             for field in WRITEABLE_FIELDS:
                 row1 += str(getattr(i, field)) + ","
+
+            row1 += str(getattr(i, "field_of_interest")).replace(",", "-") + ","
             writer.writerow([row1])
     return response
 
@@ -405,6 +408,7 @@ def participants_workshop(request, year, title):
     row = ""
     for i in WRITEABLE_FIELDS:
         row += i + ","
+    row += "interests,"
     writer.writerow([row])
 
     for i in Participant.objects.all():
@@ -416,6 +420,7 @@ def participants_workshop(request, year, title):
             row1 = ""
             for field in WRITEABLE_FIELDS:
                 row1 += str(getattr(i, field)) + ","
+            row1 += str(getattr(i, "field_of_interest")).replace(",", " - ") + ","
             writer.writerow([row1])
     return response
 
