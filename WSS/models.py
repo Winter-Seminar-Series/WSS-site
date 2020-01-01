@@ -19,6 +19,7 @@ class WSS(models.Model):
     start_date = models.DateField()
     end_date = models.DateField()
     main_clip = models.OneToOneField(to='Clip', null=True, blank=True, related_name='+')
+    booklet = models.OneToOneField(to='Booklet', null=True, blank=True, related_name='+')
     main_image = models.OneToOneField(to='Image', null=True, blank=True, related_name='+')
 
     class Meta:
@@ -40,6 +41,12 @@ class WSS(models.Model):
         if not self.main_clip:
             return None
         return self.main_clip.clip.url
+
+    @property
+    def booklet_url(self):
+        if not self.booklet:
+            return None
+        return self.booklet.booklet.url
 
     @property
     def workshops(self):
@@ -101,6 +108,14 @@ class Clip(models.Model):
 
     def __str__(self):
         return 'Clip of {}'.format(self.wss)
+
+
+class Booklet(models.Model):
+    wss = models.ForeignKey(to='WSS', related_name='booklets', verbose_name='WSS')
+    booklet = models.FileField(upload_to='booklets/')
+
+    def __str__(self):
+        return 'Booklet of {}'.format(self.wss)
 
 
 class Image(models.Model):

@@ -67,7 +67,7 @@
                     <div class="p-5 p-md-0 col-md-4 d-flex flex-column justify-content-center"><img style="width:100%; height:auto;"class="my-auto" src="{% static 'images/seminar.png'%}"></div>
                     <div class="col mr-md-3 d-flex flex-column justify-content-center">
                         <h3>Seminars</h3>
-                        <p>Seminars takes place as a two-day event and in each 
+                        <p>Seminars takes place as a two-day event and in each
 day speakers present their research and ideas. They also share their findings and teach related topics.</p>
                     </div>
                 </div>
@@ -204,23 +204,18 @@ For the first time, WSS has attempted  to create an opportunity for researchers 
         <div class="row text-center d-flex align-items-center">
 
             {% if wss.not_main_sponsorships.count %}
-            <h3 class="sponsor-title mb-5" >Main {% if wss.main_sponsorships.count != 1 %}Sponsors{% else %}Sponsor{% endif %}</h3>
-            {% endif %} {% for sponsorship in wss.main_sponsorships %}
+                <h3 class="sponsor-title mb-5" >Main {% if wss.main_sponsorships.count != 1 %}Sponsors{% else %}Sponsor{% endif %}</h3>
+            {% endif %}
+            {% for sponsorship in wss.main_sponsorships %}
+                <div class="col-xs-12 col-sm-4 col-md-2 align-center">
 
-            <div class="col-xs-12 col-sm-4 col-md-2 align-center">
-
-                <a href="{{ sponsorship.sponsor.url }}">
-                    <img style="max-width: 100%;" class="img-responsive" src="{{ sponsorship.logo_url }}" alt="" />
-
-                    <!--I tried to use thumbnail with fixed size here but it did not work well! -->
-
-                </a>
-                <a href="{{ sponsorship.sponsor.url }}">
-                    <h2 class="intro-title" style="margin-bottom: 60px"> {{ sponsorship.sponsor.name }}</h2>
-                </a>
-
+                    <a href="{{ sponsorship.sponsor.url }}">
+                        <img style="max-width: 100%;" class="img-responsive" src="{{ sponsorship.logo_url }}" alt="" />
+                    </a>
+                    <a href="{{ sponsorship.sponsor.url }}">
+                        <h2 class="intro-title" style="margin-bottom: 60px"> {{ sponsorship.sponsor.name }}</h2>
+                    </a>
             </div>
-
             {% endfor %}
 
         </div>
@@ -254,7 +249,7 @@ For the first time, WSS has attempted  to create an opportunity for researchers 
 {% endif %}
 <section class="venu-map no-padding diagonal blue-gradient h-100 pb-2" style="min-height:30rem; background-position-y: center!important">
     <div class="container">
-    
+
     <h3 class="section-sub-title" style="position: relative; top: -2rem">WSS Venue</h3>
     </div>
     <div class="container mt-4 mb-5">
@@ -267,11 +262,6 @@ For the first time, WSS has attempted  to create an opportunity for researchers 
                 <p>wss@ce.sharif.edu</p>
                 <p>+98(021) 66 16 57 81</p>
                 </div>
-                {% comment %} <h4 class="white">Organizer info</h4>
-                    <p>The event is held by the <a href="http://ssc.ce.sharif.edu">Student Scientific
-                  Chapter (SSC)</a> of <a href="http://ce.sharif.edu">Computer Engineering Department</a> of <a href="http://sharif.edu">Sharif University of Technology</a>
-                    </p>
-                    <br> {% endcomment %}
                 <!-- Contact form div end -->
             </div>
             <!-- Col end -->
