@@ -37,7 +37,7 @@
                                 </span>
                                 <div class="schedule-slot-info col">
 
-                                    <div class="schedule-slot-info-content">
+                                    <div> <!-- schedule-slot-info-content -->
                                         <h3 class="schedule-slot-speaker-name">{{ event.speaker }}</h3>
                                         {% if event.seminar %}
                                             <a href="{% url 'events:seminar' event.pk %}">
@@ -98,7 +98,7 @@
 										<div class="schedule-slot-info col">
 									{% endif %}
 
-											<div class="schedule-slot-info-content">
+											<div> <!-- schedule-slot-info-content -->
 												<h3 class="schedule-slot-speaker-name">{{ event.speaker }}</h3>
 												{% if event.seminar %}
 													<a href="{% url 'events:seminar' event.pk %}">
