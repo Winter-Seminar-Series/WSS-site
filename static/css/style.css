@@ -1740,7 +1740,6 @@ ul.navbar-nav > li:hover > a{
     background: #f5f5f5;
 }
 .schedule-slot-time {
-    width: 20%;
     float: left;
     font-weight: 700;
 }
@@ -1761,7 +1760,7 @@ ul.navbar-nav > li:hover > a{
     transition: all 0.3s;
 }
 .schedule-slot-info-content {
-    margin-left: 100px;
+    /*margin-left: 100px;*/
 }
 .schedule-slot-speaker-name {
     color: #446CB3;

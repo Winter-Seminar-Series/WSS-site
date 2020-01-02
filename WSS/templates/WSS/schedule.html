@@ -9,8 +9,15 @@
                 <div class="container mt-0">
                     <div class="diagonal">
                         <div class="row d-flex justify-content-center">
-                            <p><a role="button" href="{{ wss.calendar_link }}" class="btn btn-blue">Add Events to
-                                Calendar</a></p>
+                            <div class="btn-group" role="group" aria-label="Add to Calendar">
+                                {% if wss.calendar_link %}
+                                    <a role="button" href="{{ wss.calendar_link }}" class="btn btn-blue">Add Events to
+                                        Calendar</a>
+                                {% endif %}
+                                {% if wss.ical_link %}
+                                    <a role="button" href="{{ wss.ical_link }}" class="btn btn-secondary">iCal</a>
+                                {% endif %}
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -24,33 +31,33 @@
                         <h3 class="section-sub-title">Pre-{{ wss }} Events</h3>
 						<div class="schedule-listing">
 						{% for event in pre_wss_events %}
+                            <div class="row">
+                                <span class="schedule-slot-time col-sm-4">
+                                    {{event.start_time.date }}<br>{% time_string event.start_time %} - {% time_string event.end_time %}
+                                </span>
+                                <div class="schedule-slot-info col">
 
-							<span class="schedule-slot-time">
-								{{event.start_time.date }}<br>{% time_string event.start_time %} - {% time_string event.end_time %}
-							</span>
-							<div class="schedule-slot-info">
+                                    <div> <!-- schedule-slot-info-content -->
+                                        <h3 class="schedule-slot-speaker-name">{{ event.speaker }}</h3>
+                                        {% if event.seminar %}
+                                            <a href="{% url 'events:seminar' event.pk %}">
+                                        {% elif event.workshop %}
+                                            <a href="{% url 'events:workshop' event.pk %}">
+                                        {% endif %}
+                                        <h3 class="schedule-slot-title">{{ event.title }}</h3>
+                                        {% if event.seminar %}
+                                            </a>
+                                        {% elif event.workshop %}
+                                            </a>
+                                        {% endif %}
+                                        {% if event.venue %}
+                                            <span class="schedule-slot-desc" data-toggle="tooltip" title="{{ event.venue.address }}">{{ event.venue }}</span>
+                                        {% endif %}
 
-								<div class="schedule-slot-info-content">
-									<h3 class="schedule-slot-speaker-name">{{ event.speaker }}</h3>
-									{% if event.seminar %}
-										<a href="{% url 'events:seminar' event.pk %}">
-									{% elif event.workshop %}
-										<a href="{% url 'events:workshop' event.pk %}">
-									{% endif %}
-									<h3 class="schedule-slot-title">{{ event.title }}</h3>
-									{% if event.seminar %}
-										</a>
-									{% elif event.workshop %}
-										</a>
-									{% endif %}
-									{% if event.venue %}
-										<span class="schedule-slot-desc" data-toggle="tooltip" title="{{ event.venue.address }}">{{ event.venue }}</span>
-									{% endif %}
+                                    </div><!--Info content end -->
 
-								</div><!--Info content end -->
-
-							</div><!-- Slot info end -->
-
+                                </div><!-- Slot info end -->
+                            </div>
 							{% if not forloop.last %}
 							<br><br>
 							{% endif %}
@@ -81,16 +88,17 @@
 							{% for _, events in events_by_time %}
 
 								<div class="schedule-listing {% if forloop.counter|divisibleby:2 %} bg {% endif %}">
+                                <div class="row">
 								{% for event in events %}
 
 									{% if forloop.counter == 1 %}
 										{% if day %}
-											<span class="schedule-slot-time">{% time_string event.start_time %} - {% time_string event.end_time %}</span>
+											<span class="schedule-slot-time col-sm-4">{% time_string event.start_time %} - {% time_string event.end_time %}</span>
 										{% endif %}
-										<div class="schedule-slot-info">
+										<div class="schedule-slot-info col">
 									{% endif %}
 
-											<div class="schedule-slot-info-content">
+											<div> <!-- schedule-slot-info-content -->
 												<h3 class="schedule-slot-speaker-name">{{ event.speaker }}</h3>
 												{% if event.seminar %}
 													<a href="{% url 'events:seminar' event.pk %}">
@@ -117,7 +125,7 @@
 								</div><!-- Slot info end -->
 
 								</div><!-- Slot listing 1 end -->
-
+                                </div><!-- Row end -->
 
 							{% endfor %}
 

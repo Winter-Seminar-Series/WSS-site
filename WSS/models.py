@@ -12,6 +12,7 @@ class WSS(models.Model):
     registration_open = models.BooleanField(null=False, default=False)
     # registration_link = models.URLField(null=True, blank=True)
     calendar_link = models.URLField(null=True, blank=True)
+    ical_link = models.URLField(null=True, blank=True)
     proposal_link = models.URLField(null=True, blank=True)
     participants_count_link = models.URLField(null=True, blank=True)
     # Show Participants in homepage
