@@ -58,6 +58,7 @@ class PosterSession(BaseEvent):
     abstract = models.TextField()
     speaker = models.ForeignKey(to='people.Speaker', related_name='postersessions')
     material = models.OneToOneField(to='PosterMaterial', null=True, blank=True)
+    is_persian = models.BooleanField(null=False, default=False)
 
     @property
     def get_absolute_url(self):
@@ -101,6 +102,7 @@ class WorkshopMaterial(Material):
 
 
 class PosterMaterial(Material):
+    poster = models.ImageField(upload_to='poster_pictures/', null=True, blank=True)
     def __str__(self):
         if hasattr(self, 'postersession'):
             return 'Material of {}'.format(self.postersession)

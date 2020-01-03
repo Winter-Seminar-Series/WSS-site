@@ -13,7 +13,7 @@
                         <div class="col-xs-12 col-md-8 mt-lg-3">
                             <h4>{{postersession.speaker}}</h4>
                             <h6>{{postersession.speaker.degree}}</h6>
-                            <h3 class="session-title">{{ postersession.title }}</h3>
+                            <h3 {% if postersession.is_persian %}lang="fa"{% endif %} class="session-title">{{ postersession.title }}</h3>
                             {% if seminar.audience %}
                                 <div class="seminar-details">
                                     <i class="fa fa-group">&nbsp;</i>
@@ -44,7 +44,7 @@
                         
 
                         <h4>Abstract</h4>
-                        <div class="mb-3">
+                        <div {% if postersession.is_persian %}lang="fa"{% endif %} class="mb-3">
                         {{ postersession.abstract|linebreaksbr }}
                         </div>
                             {% if postersession.keywords %}
@@ -59,12 +59,15 @@
                         <div>
                             <br/>
                             {% if postersession.material %}
-                                <h4>Material</h4>
+                                <h4>Poster</h4>
                                 {% if postersession.material.slides %}
                                     <a class="btn btn-warning" href="{{ postersession.material.slides.url }}">Slides</a>
                                 {% endif %}
                                 {% if postersession.material.video_url %}
                                     <a class="btn btn-danger" href="{{ postersession.material.video_url }}">Video</a>
+                                {% endif %}
+                                {% if postersession.material.poster %}
+                                    <img src="{{ postersession.material.poster.url }}" alt="Poster" style="width: 100%;"/>
                                 {% endif %}
                             {% endif %}
                         </div>
