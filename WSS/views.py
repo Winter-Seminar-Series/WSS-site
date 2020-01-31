@@ -446,4 +446,6 @@ WRITEABLE_FIELDS = [
     "is_student",
     "payment_id",
     "paid_amount",
+    "question",
+    "question_other"
 ]
