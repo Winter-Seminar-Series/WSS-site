@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models.deletion import CASCADE
 from django.utils.safestring import mark_safe
 from pip._vendor import requests
 from sorl.thumbnail import ImageField
@@ -19,9 +20,9 @@ class WSS(models.Model):
     show_stats = models.BooleanField(null=False, default=True)
     start_date = models.DateField()
     end_date = models.DateField()
-    main_clip = models.OneToOneField(to='Clip', null=True, blank=True, related_name='+')
-    booklet = models.OneToOneField(to='Booklet', null=True, blank=True, related_name='+')
-    main_image = models.OneToOneField(to='Image', null=True, blank=True, related_name='+')
+    main_clip = models.OneToOneField(to='Clip', null=True, blank=True, related_name='+', on_delete=models.SET_NULL)
+    booklet = models.OneToOneField(to='Booklet', null=True, blank=True, related_name='+', on_delete=models.SET_NULL)
+    main_image = models.OneToOneField(to='Image', null=True, blank=True, related_name='+', on_delete=models.SET_NULL)
 
     class Meta:
         ordering = ('-year',)
@@ -104,7 +105,7 @@ class WSS(models.Model):
 
 
 class Clip(models.Model):
-    wss = models.ForeignKey(to='WSS', related_name='clips', verbose_name='WSS')
+    wss = models.ForeignKey(to='WSS', related_name='clips', verbose_name='WSS', on_delete=models.CASCADE)
     clip = models.FileField(upload_to='clips/')
 
     def __str__(self):
@@ -112,7 +113,7 @@ class Clip(models.Model):
 
 
 class Booklet(models.Model):
-    wss = models.ForeignKey(to='WSS', related_name='booklets', verbose_name='WSS')
+    wss = models.ForeignKey(to='WSS', related_name='booklets', verbose_name='WSS', on_delete=models.CASCADE)
     booklet = models.FileField(upload_to='booklets/')
 
     def __str__(self):
@@ -120,7 +121,7 @@ class Booklet(models.Model):
 
 
 class Image(models.Model):
-    wss = models.ForeignKey(to='WSS', related_name='images', verbose_name='WSS')
+    wss = models.ForeignKey(to='WSS', related_name='images', verbose_name='WSS', on_delete=models.CASCADE)
     image = ImageField(upload_to='images/')
 
     def __str__(self):
@@ -144,8 +145,8 @@ class Sponsor(models.Model):
 
 
 class Sponsorship(models.Model):
-    wss = models.ForeignKey(to='WSS', related_name='sponsorships')
-    sponsor = models.ForeignKey(to=Sponsor, related_name='sponsorships')
+    wss = models.ForeignKey(to='WSS', related_name='sponsorships', on_delete=models.CASCADE)
+    sponsor = models.ForeignKey(to=Sponsor, related_name='sponsorships', on_delete=models.RESTRICT)
     is_main = models.BooleanField()
 
     def __str__(self):
@@ -188,7 +189,7 @@ QUESTION = [(None, 'Please Select'), ('RPA', 'RPA'), ('Virtual Assistant', 'Virt
 
 
 class Participant(models.Model):
-    current_wss = models.ForeignKey(null=True, to='WSS', related_name='participants', verbose_name='WSS')
+    current_wss = models.ForeignKey(null=True, to='WSS', related_name='participants', verbose_name='WSS', on_delete=models.SET_NULL)
     id = models.BigAutoField(primary_key=True)
     name = models.CharField(max_length=250, verbose_name="First Name (in Persian)")
     family = models.CharField(max_length=250, verbose_name="Family Name (in Persian)")
