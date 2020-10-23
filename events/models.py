@@ -7,11 +7,11 @@ from taggit.managers import TaggableManager
 
 
 class BaseEvent(PolymorphicModel):  # Is implicitly Abstract
-    wss = models.ForeignKey(to='WSS.WSS', related_name='events')
+    wss = models.ForeignKey(to='WSS.WSS', related_name='events', on_delete=models.CASCADE)
     title = models.CharField(max_length=150)
     start_time = models.DateTimeField(null=True, blank=True)
     duration = models.DurationField(default=timedelta())
-    venue = models.ForeignKey(to='Venue', related_name='events', null=True, blank=True)
+    venue = models.ForeignKey(to='Venue', related_name='events', null=True, blank=True, on_delete=models.SET_NULL)
     key_words = TaggableManager(blank=True)
     audience = models.CharField(blank=True, max_length=200)
 
@@ -46,8 +46,8 @@ class Venue(models.Model):
 class Seminar(BaseEvent):
     abstract = models.TextField()
     is_keynote = models.BooleanField()
-    speaker = models.ForeignKey(to='people.Speaker', related_name='seminars')
-    material = models.OneToOneField(to='SeminarMaterial', null=True, blank=True)
+    speaker = models.ForeignKey(to='people.Speaker', related_name='seminars', on_delete=models.RESTRICT)
+    material = models.OneToOneField(to='SeminarMaterial', null=True, blank=True, on_delete=models.SET_NULL)
 
     @property
     def get_absolute_url(self):
@@ -56,8 +56,8 @@ class Seminar(BaseEvent):
 
 class PosterSession(BaseEvent):
     abstract = models.TextField()
-    speaker = models.ForeignKey(to='people.Speaker', related_name='postersessions')
-    material = models.OneToOneField(to='PosterMaterial', null=True, blank=True)
+    speaker = models.ForeignKey(to='people.Speaker', related_name='postersessions', on_delete=models.RESTRICT)
+    material = models.OneToOneField(to='PosterMaterial', null=True, blank=True, on_delete=models.SET_NULL)
     is_persian = models.BooleanField(null=False, default=False)
 
     @property
@@ -67,9 +67,9 @@ class PosterSession(BaseEvent):
 
 class Workshop(BaseEvent):
     syllabus = models.TextField()
-    sponsor = models.ForeignKey(to='WSS.Sponsor', related_name='workshops', null=True, blank=True)
-    speaker = models.ForeignKey(to='people.Speaker', related_name='workshops')
-    material = models.OneToOneField(to='WorkshopMaterial', null=True, blank=True)
+    sponsor = models.ForeignKey(to='WSS.Sponsor', related_name='workshops', null=True, blank=True, on_delete=models.SET_NULL)
+    speaker = models.ForeignKey(to='people.Speaker', related_name='workshops', on_delete=models.RESTRICT)
+    material = models.OneToOneField(to='WorkshopMaterial', null=True, blank=True, on_delete=models.SET_NULL)
     registration_link = models.URLField(null=True, blank=True)
     price = models.IntegerField(default=30000)
     capacity = models.IntegerField(default=0)

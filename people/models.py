@@ -28,7 +28,7 @@ class Speaker(Human):
 
 
 class HoldingTeam(models.Model):
-    wss = models.ForeignKey(to='WSS.WSS', related_name='holding_teams', verbose_name='WSS')
+    wss = models.ForeignKey(to='WSS.WSS', related_name='holding_teams', verbose_name='WSS', on_delete=models.CASCADE)
     name = models.CharField(max_length=50)
     staff = models.ManyToManyField(to='Staff', related_name='holding_teams', blank=True)
 
@@ -52,4 +52,4 @@ class Role(models.Model):
 
 
 class TechnicalExpert(Human):
-    role = models.ForeignKey(to=Role, related_name='technical_experts')
+    role = models.ForeignKey(to=Role, related_name='technical_experts', on_delete=models.RESTRICT)
