@@ -85,7 +85,15 @@ WSGI_APPLICATION = 'WSS_Site.wsgi.application'
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
 DATABASES = {
-    'default': {
+'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'wss_database',
+        'USER': 'wss_user',
+        'PASSWORD': os.environ.get('WSS_DB_PASSWORD'),
+        'HOST': 'database',
+        'PORT': '5432',
+    },
+    'test': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }

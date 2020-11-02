@@ -10,9 +10,10 @@ jobs:
         runs-on: ubuntu-20.04
         steps:
             - uses: actions/checkout@v2
-            - run: docker build -t wss-site .
-            - run: docker run -d -p 8000:8000 wss-site
+            - run: docker-compose up --build -d
+            - name: Wait for the app to be up
+              run: sleep 15
             - name: Check status code
               id: status_check
-              run: status_code=`wget --server-response http://localhost:8000 2>&1 | awk '/^  HTTP/{print $2}'` && echo "status_code=$status_code" >> $GITHUB_ENV
+              run: status_code=`wget --server-response http://localhost 2>&1 | awk '/^  HTTP/{print $2}'` && echo "status_code=$status_code" >> $GITHUB_ENV
             - run: '[[ "$status_code" == "200" ]] || ( echo "Request to the application failed! Status code: $status_code" && exit 1 )'
