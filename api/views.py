@@ -23,6 +23,7 @@ def apiOverview(request):
 
 @api_view(['GET'])
 def list_workshops(request):
+    print(request.__dict__)
     workshops = WSS.objects.first().workshops
     serializer = WorkshopSerializer(workshops, many=True)
     return Response(serializer.data)
