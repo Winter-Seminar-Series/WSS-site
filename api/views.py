@@ -19,7 +19,7 @@ class WorkshopViewSet(viewsets.ViewSet):
         return Response(serializer.data)
 
     def retrieve(self, request, pk=None):
-        queryset = Workshop.objects.get(pk=pk)
+        queryset = Workshop.objects.all()
         user = get_object_or_404(queryset, pk=pk)
         serializer = WorkshopSerializer(user)
         return Response(serializer.data)
