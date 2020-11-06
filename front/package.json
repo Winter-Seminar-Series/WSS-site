@@ -50,6 +50,7 @@
     ]
   },
   "devDependencies": {
+    "@types/react-router-dom": "^5.1.6",
     "eslint": "^7.12.1",
     "prettier": "^2.1.2"
   }
