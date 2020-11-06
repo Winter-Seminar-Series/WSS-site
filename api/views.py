@@ -12,17 +12,14 @@ class WorkshopViewSet(viewsets.ViewSet):
     """
     A simple ViewSet for listing or retrieving users.
     """
-    year_param = "year"
 
-    def list(self, request):
-        
-        year = int(self.kwargs.get(self.year_param))
+    def list(self, request, year):
         queryset = get_object_or_404(WSS, year=year).workshops
         serializer = WorkshopSerializer(queryset, many=True)
         return Response(serializer.data)
 
-    def retrieve(self, request, pk=None):
-        queryset = Workshop.objects.all()
+    def retrieve(self, request, year, pk=None):
+        queryset = get_object_or_404(WSS, year=year).workshops
         user = get_object_or_404(queryset, pk=pk)
         serializer = WorkshopSerializer(user)
         return Response(serializer.data)

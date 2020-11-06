@@ -1,6 +1,6 @@
-FROM python:3.8
+FROM python:3.6
 COPY requirements.txt /tmp/
-RUN pip3 install --no-cache-dir -r /tmp/requirements.txt
+RUN pip install -r /tmp/requirements.txt
 WORKDIR /app/
 COPY . ./
 
