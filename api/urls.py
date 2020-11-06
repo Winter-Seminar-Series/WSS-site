@@ -3,6 +3,7 @@ from . import views
 
 urlpatterns = [
     path('', views.apiOverview, name="api-overview"),
+    path('workshops', views.list_workshops, name="list-workshops")
     # path('task-list', views.taskList, name="task-list"),
     # path('task-detail/<str:pk>/', views.taskDetail, name="task-detail"),
     # path('task-create/', views.taskCreate, name="task-create"),
