@@ -4,7 +4,7 @@ from rest_framework.routers import DefaultRouter
 
 
 router = DefaultRouter()
-router.register(r'workshops/', WorkshopViewSet, basename='workshop')
+router.register(r'workshops/<year:year>', WorkshopViewSet, basename='user')
 urlpatterns = router.urls
 
 
