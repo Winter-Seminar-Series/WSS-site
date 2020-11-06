@@ -45,6 +45,8 @@ INSTALLED_APPS = [
     'sorl.thumbnail',
     'taggit',
     'crispy_forms',
+    'rest_framework',
+    'api'
 ]
 
 MIDDLEWARE = [
