@@ -1,10 +1,5 @@
 {
   "parser": "@typescript-eslint/parser",
-  "extends": [
-    "plugin:@typescript-eslint/eslint-recommended",
-    "plugin:@typescript-eslint/recommended",
-    "plugin:@typescript-eslint/recommended-requiring-type-checking"
-  ],
   "settings": {
     "import/resolver": {
       "node": {
@@ -59,20 +54,11 @@
     "no-unused-vars": "off",
     "no-mixed-spaces-and-tabs": "warn",
     "import/prefer-default-export": "off",
-    "@typescript-eslint/explicit-function-return-type": "off",
-    "@typescript-eslint/unbound-method": "off",
     "lines-between-class-members": "off",
     "no-useless-constructor": "off",
     "no-empty-function": "off",
     "class-methods-use-this": "off",
     "eqeqeq": ["warn", "smart"],
-    "@typescript-eslint/no-explicit-any": "off",
-    "@typescript-eslint/no-empty-function": "off",
-    "@typescript-eslint/no-inferrable-types": "warn",
-    "@typescript-eslint/no-unused-vars": "off",
-    "@typescript-eslint/no-use-before-define": "off",
-    "prefer-const": "warn",
-    "@typescript-eslint/no-empty-interface": "off",
-    "@typescript-eslint/no-non-null-assertion": "off"
+    "prefer-const": "warn"
   }
 }
