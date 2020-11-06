@@ -3,8 +3,7 @@
   "extends": [
     "plugin:@typescript-eslint/eslint-recommended",
     "plugin:@typescript-eslint/recommended",
-    "plugin:@typescript-eslint/recommended-requiring-type-checking",
-    "prettier/@typescript-eslint"
+    "plugin:@typescript-eslint/recommended-requiring-type-checking"
   ],
   "settings": {
     "import/resolver": {
@@ -25,7 +24,7 @@
     "sourceType": "module",
     "project": "./tsconfig.json"
   },
-  "plugins": ["@typescript-eslint", "prettier"],
+  "plugins": ["@typescript-eslint"],
   "env": { "browser": true },
   "rules": {
     "no-cond-assign": "warn",
@@ -59,7 +58,6 @@
     "no-undef": "off",
     "no-unused-vars": "off",
     "no-mixed-spaces-and-tabs": "warn",
-    "prettier/prettier": "warn",
     "import/prefer-default-export": "off",
     "@typescript-eslint/explicit-function-return-type": "off",
     "@typescript-eslint/unbound-method": "off",
@@ -68,7 +66,6 @@
     "no-empty-function": "off",
     "class-methods-use-this": "off",
     "eqeqeq": ["warn", "smart"],
-    "@typescript-eslint/no-misused-promises": "off",
     "@typescript-eslint/no-explicit-any": "off",
     "@typescript-eslint/no-empty-function": "off",
     "@typescript-eslint/no-inferrable-types": "warn",
