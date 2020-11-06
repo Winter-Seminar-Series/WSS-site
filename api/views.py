@@ -8,7 +8,7 @@ from api.serializer import WorkshopSerializer
 from events.models import Workshop
 from WSS.models import WSS
 
-class WorkshopViewSet(viewsets.ViewSet, FooterMixin):
+class WorkshopViewSet(viewsets.ViewSet):
     """
     A simple ViewSet for listing or retrieving users.
     """
@@ -17,8 +17,8 @@ class WorkshopViewSet(viewsets.ViewSet, FooterMixin):
         serializer = WorkshopSerializer(queryset, many=True)
         return Response(serializer.data)
 
-    def retrieve(self, request, pk=None):
-        queryset = Workshop.objects.all()
+    def retrieve(self, request, year='2020', pk=None):
+        queryset = WSS.objects.get(year=year).workshops
         user = get_object_or_404(queryset, pk=pk)
         serializer = WorkshopSerializer(user)
         return Response(serializer.data)
