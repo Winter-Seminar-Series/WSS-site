@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import Header from './views/Home/header';
-import Footer from './views/Home/footer';
+import Header from './views/Layout/header';
+import Footer from './views/Layout/footer';
 import './styles/style.scss';
 import Home from './views/Home';
 import About from './views/About';
