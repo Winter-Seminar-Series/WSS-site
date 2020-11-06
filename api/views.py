@@ -12,8 +12,9 @@ class WorkshopViewSet(viewsets.ViewSet):
     """
     A simple ViewSet for listing or retrieving users.
     """
-    def list(self, request, year):
-        queryset = WSS.objects.get(year=int(year)).workshops
+    def list(self, request):
+        year = int(self.request.query_params.get("year", None))
+        queryset = WSS.objects.get(year=year).workshops
         serializer = WorkshopSerializer(queryset, many=True)
         return Response(serializer.data)
 
