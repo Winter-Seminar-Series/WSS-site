@@ -14,7 +14,7 @@ class WorkshopViewSet(viewsets.ViewSet):
     """
     def list(self, request):
         year = int(self.request.query_params.get("year", None))
-        queryset = WSS.objects.get(year=year).workshops
+        queryset = get_object_or_404(WSS, year=year).workshops
         serializer = WorkshopSerializer(queryset, many=True)
         return Response(serializer.data)
 
