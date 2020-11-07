@@ -255,7 +255,7 @@ function Home() {
             <div className="col-xs-12 col-sm-4 col-md-2 align-center">
               <a href="{{ sponsorship.sponsor.url }}">
                 <img
-                  className="mv-100 img-responsive"
+                  className="mw-100 img-responsive"
                   src="{{ sponsorship.logo_url }}"
                   alt=""
                 />
@@ -326,7 +326,7 @@ function Home() {
           </div>
           <h3 className="section-sub-title text-white">Organizer</h3>
 
-          <p className="italic white">
+          <p className="font-italic white">
             The event is held by the Student Scientific Chapter (SSC) of
             Computer Engineering Department of Sharif University of Technology
           </p>
