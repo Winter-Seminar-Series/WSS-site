@@ -3,6 +3,7 @@ django-extensions==1.9.7
 django-3-jet===1.0.8
 django-polymorphic==3.0.0
 django-simple-history==1.9.0
+djangorestframework
 olefile==0.44
 Pillow==4.3.0
 pytz==2017.3
