@@ -1,0 +1,16 @@
+---
+all:
+  vars:
+    shecan_dns_1: 185.51.200.2
+    shecan_dns_2: 178.22.122.100
+    src_root_dir: '../'
+    dest_root_dir: '/home/{{ ansible_user }}/wss/'
+  children:
+    production:
+      hosts:
+        prod1:
+          web_image_version: '{{ lookup("env", "API_IMAGE_RELEASE_VERSION") }}'
+          sudo_pass: '{{ lookup("env", "SERVER_PROD_PASS") }}'
+          ansible_ssh_common_args: '-o StrictHostKeyChecking=no'
+          ansible_sudo_pass: '{{ sudo_pass }}'
+          ansible_become_pass: '{{ sudo_pass }}'

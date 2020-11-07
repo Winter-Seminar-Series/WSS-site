@@ -7,37 +7,62 @@ on:
   push:
     branches:
       - master
+  pull_request:
 jobs:
-  build:
+  #  build:
+  #    runs-on: ubuntu-20.04
+  #    steps:
+  #      - uses: actions/checkout@v2
+  #      - run: echo "VERSION=snapshot-$GITHUB_RUN_ID" >> $GITHUB_ENV
+  #      - run: echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u $DOCKER_USERNAME --password-stdin
+  #      - run: docker-compose build
+  #      - run: docker-compose push web
+  #  test:
+  #    needs: build
+  #    runs-on: ubuntu-20.04
+  #    steps:
+  #      - uses: actions/checkout@v2
+  #      - run: echo "VERSION=snapshot-$GITHUB_RUN_ID" >> $GITHUB_ENV
+  #      - run: echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u $DOCKER_USERNAME --password-stdin
+  #      - run: docker-compose pull
+  #      - run: docker-compose up -d --no-build
+  #      - name: Wait for the app to be up
+  #        run: sleep 20
+  #      - name: Smoke test
+  #        run: ./.github/scripts/smoke-test.sh "http://localhost"
+  #  release:
+  #    needs:
+  #      - build
+  #      - test
+  #    runs-on: ubuntu-20.04
+  #    steps:
+  #      - run: echo "SNAPSHOT_VERSION=snapshot-$GITHUB_RUN_ID" >> $GITHUB_ENV
+  #      - run: echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u $DOCKER_USERNAME --password-stdin
+  #      - run: docker pull sharifwss/web:$SNAPSHOT_VERSION
+  #      - run: docker tag sharifwss/web:$SNAPSHOT_VERSION sharifwss/web:$RELEASE_VERSION
+  #      - run: docker push sharifwss/web:$RELEASE_VERSION
+  test-deploy:
+    #    needs:
+    #      - build
+    #      - test
+    #      - release
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
-      - run: echo "VERSION=snapshot-$GITHUB_RUN_ID" >> $GITHUB_ENV
-      - run: echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u $DOCKER_USERNAME --password-stdin
-      - run: docker-compose build
-      - run: docker-compose push web
-  test:
-    needs: build
-    runs-on: ubuntu-20.04
-    steps:
-      - uses: actions/checkout@v2
-      - run: echo "VERSION=snapshot-$GITHUB_RUN_ID" >> $GITHUB_ENV
-      - run: echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u $DOCKER_USERNAME --password-stdin
-      - run: docker-compose pull
-      - run: docker-compose up -d --no-build
-      - name: Wait for the app to be up
-        run: sleep 20
-      - name: Smoke test
-        run: ./.github/scripts/smoke-test.sh "http://localhost"
-  release:
-    needs:
-      - build
-      - test
-    runs-on: ubuntu-20.04
-    steps:
-      - run: echo "SNAPSHOT_VERSION=snapshot-$GITHUB_RUN_ID" >> $GITHUB_ENV
-      - run: echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u $DOCKER_USERNAME --password-stdin
-      - run: docker pull sharifwss/web:$SNAPSHOT_VERSION
-      - run: docker tag sharifwss/web:$SNAPSHOT_VERSION sharifwss/web:$RELEASE_VERSION
-      - run: docker push sharifwss/web:$RELEASE_VERSION
+      - run: echo "TARGET_IP=192.168.2.2" >> $GITHUB_ENV
+      - run: docker network create --subnet 192.168.2.0/24 wss-net
+      - run: docker run -d --network wss-net --ip $TARGET_IP --privileged rastasheep/ubuntu-sshd:18.04
+      - run: docker run
+          --network wss-net
+          -v `pwd`:/app-src/:ro
+          --workdir /app-src/deploy/
+          spy86/ansible:latest
+          ansible-playbook
+          -i inventory.yml
+          --extra-vars="
+          ansible_host=$TARGET_IP
+          ansible_user=root
+          ansible_ssh_pass=root"
+          setup_infra.yml
+          -vv
 
