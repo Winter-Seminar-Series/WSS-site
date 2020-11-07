@@ -21,7 +21,8 @@ function VideoGallery() {
               <video
                 className="mw-100"
                 controls
-                src="{{ item.clip.url }}"></video>
+                src="{{ item.clip.url }}">
+              </video>
             </div>
           </div>
         </div>
