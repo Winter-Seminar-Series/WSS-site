@@ -1,19 +1,43 @@
 ---
 name: "Main Workflow"
+env:
+  DOCKER_USERNAME: sharifwss
+  RELEASE_VERSION: 1.0.0
 on:
-    push:
-        branches:
-            - main
-    pull_request:
+  push:
+    branches:
+      - master
 jobs:
-    build:
-        runs-on: ubuntu-20.04
-        steps:
-            - uses: actions/checkout@v2
-            - run: docker-compose up --build -d
-            - name: Wait for the app to be up
-              run: sleep 15
-            - name: Check status code
-              id: status_check
-              run: status_code=`wget --server-response http://localhost 2>&1 | awk '/^  HTTP/{print $2}'` && echo "status_code=$status_code" >> $GITHUB_ENV
-            - run: '[[ "$status_code" == "200" ]] || ( echo "Request to the application failed! Status code: $status_code" && exit 1 )'
+  build:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+      - run: echo "VERSION=snapshot-$GITHUB_RUN_ID" >> $GITHUB_ENV
+      - run: echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u $DOCKER_USERNAME --password-stdin
+      - run: docker-compose build
+      - run: docker-compose push web
+  test:
+    needs: build
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+      - run: echo "VERSION=snapshot-$GITHUB_RUN_ID" >> $GITHUB_ENV
+      - run: echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u $DOCKER_USERNAME --password-stdin
+      - run: docker-compose pull
+      - run: docker-compose up -d --no-build
+      - name: Wait for the app to be up
+        run: sleep 20
+      - name: Smoke test
+        run: ./.github/scripts/smoke-test.sh "http://localhost"
+  release:
+    needs:
+      - build
+      - test
+    runs-on: ubuntu-20.04
+    steps:
+      - run: echo "SNAPSHOT_VERSION=snapshot-$GITHUB_RUN_ID" >> $GITHUB_ENV
+      - run: echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u $DOCKER_USERNAME --password-stdin
+      - run: docker pull sharifwss/web:$SNAPSHOT_VERSION
+      - run: docker tag sharifwss/web:$SNAPSHOT_VERSION sharifwss/web:$RELEASE_VERSION
+      - run: docker push sharifwss/web:$RELEASE_VERSION
+

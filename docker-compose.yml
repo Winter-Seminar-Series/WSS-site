@@ -1,6 +1,7 @@
 version: '3.7'
 services:
   web:
+    image: sharifwss/web:$VERSION
     build: .
     ports:
       - 80:8000
