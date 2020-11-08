@@ -1,0 +1,14 @@
+---
+name: "Pull Request Workflow"
+on:
+  pull_request:
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+      - run: docker-compose up --build -d
+      - name: Wait for the app to be up
+        run: sleep 20
+      - name: Smoke test
+        run: ./.github/scripts/smoke-test.sh "http://localhost"
