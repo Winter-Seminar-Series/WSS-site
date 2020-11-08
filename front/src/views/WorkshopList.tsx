@@ -6,7 +6,9 @@ function WorkshopList() {
       <section id="ts-speakers" className="blue-gradient ts-speakers diagonal ">
         <div className="container">
           <div className="row text-center">
-            <h3 className="mb-1 col section-sub-title title-white"> {/*% if wss.workshops.count != 1 %} Workshops {% else %} Workshop {% endif %*/}</h3>
+            <h3 className="mb-1 col section-sub-title title-white">
+              {/*% if wss.workshops.count != 1 %} Workshops {% else %} Workshop {% endif %*/}
+            </h3>
           </div>
           <div className="mt-3 text-white">
             <h5>For more information about each workshop, click on its image.</h5>
@@ -18,9 +20,12 @@ function WorkshopList() {
                 {/* {% render_human workshop.speaker subtitle=workshop.title url=workshop.get_absolute_url %} */}
               </div>
               <p className="text-center">
-                <a href="{{ workshop.registration_link }}" className="btn btn-primary btn-white">Register Now</a>
+                <a href="{{ workshop.registration_link }}" className="btn btn-primary btn-white">
+                  Register Now
+                </a>
               </p>
             </div>
+            {/* else: */}
             <div className="row text-center">
               <h3>Nothing has been added yet</h3>
             </div>
