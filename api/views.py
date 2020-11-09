@@ -28,8 +28,7 @@ class WSSViewSet(viewsets.ModelViewSet):
         }
         return Response(url)
     
-    @action(detail=False, url_path="")
-    def get(self, request, year):
+    def list(self, request, year):
         return Response("hello")
 
     @action(detail=False)
