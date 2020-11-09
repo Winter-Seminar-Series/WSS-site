@@ -13,7 +13,8 @@ def get_wss_object_or_404(year):
 
 class BaseViewSet(viewsets.ViewSet):
 
-    def __init__(self, serializer, queryset_selector):
+    def __init__(self, serializer, queryset_selector, **initkwargs):
+        super().__init__(**initkwargs)
         self.serializer = serializer
         self.queryset_selector = queryset_selector
 
@@ -39,5 +40,5 @@ class BaseViewSet(viewsets.ViewSet):
 
 class WorkshopViewSet(BaseViewSet):
 
-    def __init__(self):
-        super().__init__(WorkshopSerializer, lambda wss: wss.workshops)
+    def __init__(self, **initkwargs):
+        super().__init__(WorkshopSerializer, lambda wss: wss.workshops, **initkwargs)
