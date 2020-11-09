@@ -15,7 +15,7 @@ def get_wss_object_or_404(year):
     return get_object_or_404(WSS, year=year)
 
 
-class WSSViewSet(viewsets.ModelViewSet):
+class WSSViewSet(viewsets.ViewSet):
     url_key = "url"
     count_key = "count"
     active_key = "active"
