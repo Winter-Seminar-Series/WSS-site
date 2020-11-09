@@ -133,7 +133,7 @@ class ClipViewSet(BaseViewSet):
         return wss.clips
 
 
-class ClipViewSet(BaseViewSet):
+class HoldingTeamViewSet(BaseViewSet):
     serializer = HoldingTeamSerializer
 
     def queryset_selector(self, request, wss):
