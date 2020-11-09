@@ -20,38 +20,41 @@ class BaseViewSet(viewsets.ViewSet, ABC):
         raise NotImplementedError()
     
     @abstractmethod
-    def queryset_selector(self, wss):
+    def queryset_selector(self, request, wss):
         raise NotImplementedError()
 
-    def get_list(self, wss):
-        queryset = self.queryset_selector(wss)
+    def get_list(self, request, wss):
+        queryset = self.queryset_selector(request, wss)
         serializer = self.serializer(queryset, many=True)
         return serializer.data
     
-    def get_by_pk(self, wss, pk):
-        queryset = self.queryset_selector(wss)
+    def get_by_pk(self, request, wss, pk):
+        queryset = self.queryset_selector(request, wss)
         entity = get_object_or_404(queryset, pk=pk)
         serializer = self.serializer(entity)
         return serializer.data
     
     def list(self, request, year):
         wss = get_wss_object_or_404(year)
-        return Response(self.get_list(wss))
+        return Response(self.get_list(request, wss))
     
     def retrieve(self, request, year, pk=None):
         wss = get_wss_object_or_404(year)
-        return Response(self.get_by_pk(wss, pk))
+        return Response(self.get_by_pk(request, wss, pk))
 
 
 class WorkshopViewSet(BaseViewSet):
     serializer = WorkshopSerializer
 
-    def queryset_selector(self, wss):
+    def queryset_selector(self, request, wss):
         return wss.workshops
 
 
 class SeminarViewSet(BaseViewSet):
     serializer = SeminarSerializer
-
-    def queryset_selector(self, wss):
+    
+    def queryset_selector(self, request, wss):
+        is_keynote = request.query_params.get("keynote", None)
+        if is_keynote:
+            return wss.seminars.filter(is_keynote=bool(int(is_keynote)))
         return wss.seminars
