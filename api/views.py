@@ -16,17 +16,49 @@ def get_wss_object_or_404(year):
 
 
 class WSSViewSet(viewsets.ModelViewSet):
+    url_key = "url"
+    count_key = "count"
+    active_key = "active"
+    registration_open_key = "registration_open"
 
-    def get_url_response(self, selector, year):
+    def get_premittive_response(self, name, selector, year):
         wss = get_wss_object_or_404(year)
         url = {
-            "url": selector(wss)
+            name: selector(wss)
         }
         return Response(url)
+    
+    @action(detail=False, url_path="")
+    def get(self, request, year):
+        
 
     @action(detail=False)
     def main_image_url(self, request, year):
-        return self.get_url_response(lambda wss: wss.main_image_url, year)
+        return self.get_premittive_response(self.url_key, lambda wss: wss.main_image_url, year)
+
+    @action(detail=False)
+    def main_clip_url(self, request, year):
+        return self.get_premittive_response(self.url_key, lambda  wss: wss.main_clip_url, year)
+
+    @action(detail=False)
+    def booklet_url(self, request, year):
+        return self.get_premittive_response(self.url_key, lambda wss: wss.booklet_url, year)
+
+    @action(detail=False)
+    def staff_count(self, request, year):
+        return self.get_premittive_response(self.count_key, lambda wss: wss.staff_count, year)
+    
+    @action(detail=False)
+    def is_active(self, request, year):
+        return self.get_premittive_response(self.active_key, lambda wss: wss.is_active, year)
+
+    @action(detail=False)
+    def is_registration_open(self, request, year):
+        return self.get_premittive_response(self.registration_open_key, lambda wss: wss.is_registration_open, year)
+
+    @action(detail=False)
+    def participants_count(self, request, year):
+        return self.get_premittive_response(self.count_key, lambda wss: wss.participants_count, year)
 
 
 class BaseViewSet(viewsets.ViewSet, ABC):
