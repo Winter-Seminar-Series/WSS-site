@@ -56,7 +56,7 @@ class BaseViewSet(viewsets.ViewSet, ABC):
     def count(self, request, year):
         wss = get_wss_object_or_404(year)
         return Response({
-            "count": self.queryset_selector(request, wss).count
+            "count": self.queryset_selector(request, wss).count()
         })
 
 
