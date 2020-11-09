@@ -38,7 +38,7 @@ function Home() {
         <div className="diagonal banner-item d-flex h-100">
           <div className="header-video-wrapper">
             <video autoPlay loop muted>
-              <source src="images/back-min.mp4" type="video/mp4" />
+              <source src="images/back-min.mp4?v=1.2" type="video/mp4" />
             </video>
           </div>
           <div className="container my-auto">
@@ -47,7 +47,10 @@ function Home() {
                 <div className="col-xs-12 col-sm-12 col-md-6 d-flex align-items-center">
                   <div className="row mb-3">
                     <div className="col">
-                      <img className="w-100" src="images/new_title_hq.png" />
+                      <img
+                        className="w-100"
+                        src="images/new_title_hq.png?v=1.4"
+                      />
                       <div
                         style={fontStyle}
                         className="row ml-4 mt-1 font-weight-bold text-uppercase d-flex justify-content-around">
@@ -67,12 +70,14 @@ function Home() {
                     value="{{ wss.start_date|date:'m/d/Y' }}"
                     id="start-date"
                   />
-                  <h2 className="banner-subtitle my-3"></h2>
+                  <h2 className="banner-subtitle my-3">render_date wss</h2>
                   <h3 className="banner-desc">
                     IRAN, TEHRAN, SHARIF UNIVERSITY OF TECHNOLOGY
                   </h3>
                   <p className="banner-btn">
-                    <a href="/register" className="btn btn-primary btn-white">
+                    <a
+                      href="{% url 'wss:register' wss.year %}"
+                      className="btn btn-primary btn-white">
                       Register Now
                     </a>
                   </p>
