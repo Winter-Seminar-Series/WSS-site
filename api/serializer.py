@@ -1,5 +1,6 @@
 from rest_framework.serializers import ModelSerializer
 from events.models import Workshop, Seminar, PosterSession
+from people.models import HoldingTeam
 from WSS.models import WSS, Sponsorship, Clip, Booklet
 
 
@@ -50,4 +51,11 @@ class ClipSerializer(ModelSerializer):
 class BookletSerializer(ModelSerializer):
     class Meta:
         model = Booklet
+        fields = '__all__'
+
+
+
+class HoldingTeamSerializer(ModelSerializer):
+    class Meta:
+        model = HoldingTeam
         fields = '__all__'
