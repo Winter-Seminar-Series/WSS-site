@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from django.views.generic.detail import DetailView
 from django.shortcuts import get_object_or_404
 from WSS.mixins import FooterMixin
-from api.serializer import WorkshopSerializer, SeminarSerializer
+from api.serializer import WorkshopSerializer, SeminarSerializer, PosterSessionSerializer, SponsorshipSerializer
 from events.models import Workshop
 from WSS.models import WSS
 from abc import ABC, abstractmethod
@@ -58,3 +58,20 @@ class SeminarViewSet(BaseViewSet):
         if is_keynote:
             return wss.seminars.filter(is_keynote=bool(int(is_keynote)))
         return wss.seminars
+
+
+class PosterSessionViewSet(BaseViewSet):
+    serializer = PosterSessionSerializer
+
+    def queryset_selector(self, request, wss):
+        return wss.postersessions
+
+
+class SponsorshipViewSet(BaseViewSet):
+    serializer = SponsorshipSerializer
+
+    def queryset_selector(self, request, wss):
+        is_main = request.query_params.get("main", None)
+        if is_main:
+            return wss.sponsorships.filter(is_main=bool(int(is_main)))
+        return wss.sponsorships

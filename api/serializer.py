@@ -1,5 +1,6 @@
 from rest_framework.serializers import ModelSerializer
 from events.models import Workshop, Seminar, PosterSession
+from WSS.models import Sponsorship
 
 class WorkshopSerializer(ModelSerializer):
     class Meta:
@@ -16,4 +17,10 @@ class SeminarSerializer(ModelSerializer):
 class PosterSessionSerializer(ModelSerializer):
     class Meta:
         model = PosterSession
+        fields = '__all__'
+
+
+class SponsorshipSerializer(ModelSerializer):
+    class Meta:
+        model = Sponsorship
         fields = '__all__'
