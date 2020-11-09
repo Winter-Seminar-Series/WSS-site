@@ -49,6 +49,7 @@ class WorkshopViewSet(BaseViewSet):
     def queryset_selector(self, wss):
         return wss.workshops
 
+
 class SeminarViewSet(BaseViewSet):
     serializer = SeminarSerializer
 
