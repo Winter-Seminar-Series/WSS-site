@@ -10,7 +10,7 @@ router.register(r'seminars', SeminarViewSet, basename='seminar')
 router.register(r'postersessions', PosterSessionViewSet, basename='postersession')
 router.register(r'sponsorships', SponsorshipViewSet, basename='sponsorship')
 router.register(r'clips', ClipViewSet, basename='clips')
-router.register(r'', WSSViewSet, basename='wss')
+router.register(r'wss', WSSViewSet, basename='wss')
 year_urlpatterns = router.urls
 
 
