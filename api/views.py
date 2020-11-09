@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from django.views.generic.detail import DetailView
 from django.shortcuts import get_object_or_404
 from WSS.mixins import FooterMixin
-from api.serializer import WorkshopSerializer, SeminarSerializer, PosterSessionSerializer, SponsorshipSerializer
+from api.serializer import WorkshopSerializer, SeminarSerializer, PosterSessionSerializer, SponsorshipSerializer, ClipSerializer
 from events.models import Workshop
 from WSS.models import WSS
 from abc import ABC, abstractmethod
@@ -75,3 +75,10 @@ class SponsorshipViewSet(BaseViewSet):
         if is_main:
             return wss.sponsorships.filter(is_main=bool(int(is_main)))
         return wss.sponsorships
+
+
+class ClipViewSet(BaseViewSet):
+    serializer = ClipSerializer
+
+    def queryset_selector(self, request, wss):
+        return wss.clips
