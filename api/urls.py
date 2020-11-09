@@ -1,5 +1,5 @@
 from django.urls import path
-from api.views import WorkshopViewSet, SeminarViewSet
+from api.views import WorkshopViewSet, SeminarViewSet, PosterSessionViewSet, SponsorshipViewSet
 from rest_framework.routers import DefaultRouter
 from django.conf.urls import url, include
 
@@ -7,6 +7,8 @@ from django.conf.urls import url, include
 router = DefaultRouter()
 router.register(r'workshops', WorkshopViewSet, basename='workshop')
 router.register(r'seminars', SeminarViewSet, basename='seminar')
+router.register(r'postersessions', PosterSessionViewSet, basename='postersession')
+router.register(r'sponsorships', SponsorshipViewSet, basename='sponsorship')
 year_urlpatterns = router.urls
 
 
