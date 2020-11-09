@@ -1,8 +1,11 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
-function Header() {
+const Header = () => {
+  const { t } = useTranslation('about', { useSuspense: false });
+
   return (
-    <nav className="navbar navbar-expand-xl navbar-dark w-100">
+    <nav className="navbar navbar-expand-xl navbar-dark w-100 z-index-master">
       <div className="container">
         <a className="navbar-brand" href="/home">
           <img src="images/logo.png" width="50px" alt="" />
@@ -34,6 +37,6 @@ function Header() {
       </div>
     </nav>
   );
-}
+};
 
 export default Header;

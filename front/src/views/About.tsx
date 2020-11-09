@@ -1,6 +1,9 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
-function About() {
+const About = () => {
+  const { t } = useTranslation('about', { useSuspense: false });
+
   const diagonalStyle = {
     marginTop: '-15rem',
     height: '15rem',
@@ -21,7 +24,7 @@ function About() {
           <div
             className="container section-sub-title title-white"
             style={containerStyle}>
-            About WSS
+            {t('title')}
           </div>
         </div>
         <div
@@ -30,33 +33,13 @@ function About() {
           <div className="container">
             <div className="row mt-5">
               <div className="col">
-                <p>
-                  The Winter Seminar Series (WSS) has been built to gather
-                  successful Iranians from all around the world and create a
-                  professional community in computer science and engineering
-                  topics . Over the years, this seminar has grown to become one
-                  of the best events in the Sharif University of Technology. WSS
-                  is for everyone who works on or interested in any computer
-                  science topics and wants to share and express his ideas and
-                  research.
-                </p>
-                <p>
-                  WSS was born 5 years ago by the Student Scientific Chapter in
-                  Sharif University of Technology as a worldwide effort to bring
-                  together expert researchers. Now WSS takes place as a two-day
-                  event and in each day speakers present their research and
-                  ideas. They also share their findings and teach related
-                  topics.
-                </p>
-                <p>
-                  This event consists of presentations, workshops and also a
-                  Poster Session to cover various topics in science and
-                  engineering.
-                </p>
+                <p>{t('descriptionP1')}</p>
+                <p>{t('descriptionP2')}</p>
+                <p>{t('descriptionP3')}</p>
               </div>
             </div>
 
-            <h2 className="section-title mt-2">Programs</h2>
+            <h2 className="section-title mt-2">{t('programs')}</h2>
             <div className="row">
               <div className="col mx-auto">
                 <div className="row d-flex flex-sm-row-reverse justify-content-start justify-content-sm-between mt-5 mb-md-5">
@@ -67,12 +50,8 @@ function About() {
                     />
                   </div>
                   <div className="col mr-md-3  d-flex flex-column justify-content-center">
-                    <h3>Seminars</h3>
-                    <p>
-                      Seminars takes place as a two-day event and in each day
-                      speakers present their research and ideas. They also share
-                      their findings and teach related topics.
-                    </p>
+                    <h3>{t('seminars')}</h3>
+                    <p>{t('seminarsDescription')}</p>
                   </div>
                 </div>
                 <div className="row d-flex flex-sm-row-reverse justify-content-start justify-content-sm-between mt-5 mb-md-5">
@@ -83,13 +62,8 @@ function About() {
                     />
                   </div>
                   <div className="col ml-md-3  d-flex flex-column justify-content-center">
-                    <h3>Poster Session</h3>
-                    <p>
-                      The Poster Session advertises your research. For the first
-                      time, WSS has attempted to create an opportunity for
-                      researchers who have achievements to meet others and
-                      engage with them, and build networks.
-                    </p>
+                    <h3>{t('posterSession')}</h3>
+                    <p>{t('posterSessionDescription')}</p>
                   </div>
                 </div>
                 <div className="row d-flex flex-sm-row-reverse justify-content-start justify-content-sm-between mt-md-5">
@@ -100,12 +74,8 @@ function About() {
                     />
                   </div>
                   <div className="col mr-md-3  d-flex flex-column justify-content-center">
-                    <h3>Workshops</h3>
-                    <p>
-                      Workshops are long form educational opportunities about
-                      technology or scientific subjects presented by the best
-                      experts our industry has to offer.
-                    </p>
+                    <h3>{t('workshops')}</h3>
+                    <p>{t('workshopsDescription')}</p>
                   </div>
                 </div>
               </div>
@@ -115,6 +85,6 @@ function About() {
       </section>
     </>
   );
-}
+};
 
 export default About;
