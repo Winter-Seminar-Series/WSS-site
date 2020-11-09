@@ -3,6 +3,20 @@ from events.models import Workshop, Seminar, PosterSession
 from WSS.models import WSS, Sponsorship, Clip, Booklet
 
 
+class WSSSerializer(ModelSerializer):
+    class Meta:
+        model = WSS
+        fields = [
+            'main_image_url',
+            'main_clip_url',
+            'booklet_url',
+            'staff_count',
+            'is_active',
+            'is_registration_open',
+            'participants_count'
+        ]
+
+
 class WorkshopSerializer(ModelSerializer):
     class Meta:
         model = Workshop
