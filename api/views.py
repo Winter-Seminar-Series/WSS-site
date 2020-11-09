@@ -26,7 +26,7 @@ class WSSViewSet(viewsets.ModelViewSet):
 
     @action(detail=False)
     def main_image_url(self, request, year):
-        return get_url_response(lambda wss: wss.main_image_url, year)
+        return self.get_url_response(lambda wss: wss.main_image_url, year)
 
 
 class BaseViewSet(viewsets.ViewSet, ABC):
