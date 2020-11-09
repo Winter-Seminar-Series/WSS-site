@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from django.views.generic.detail import DetailView
 from django.shortcuts import get_object_or_404
 from WSS.mixins import FooterMixin
-from api.serializer import WorkshopSerializer
+from api.serializer import WorkshopSerializer, SeminarSerializer
 from events.models import Workshop
 from WSS.models import WSS
 from abc import ABC, abstractmethod
@@ -48,3 +48,9 @@ class WorkshopViewSet(BaseViewSet):
 
     def queryset_selector(self, wss):
         return wss.workshops
+
+class SeminarViewSet(BaseViewSet):
+    serializer = SeminarSerializer
+
+    def queryset_selector(self, wss):
+        return wss.seminars
