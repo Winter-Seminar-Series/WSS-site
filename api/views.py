@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from django.views.generic.detail import DetailView
 from django.shortcuts import get_object_or_404
 from WSS.mixins import FooterMixin
-from api.serializer import WSSSerializer, WorkshopSerializer, SeminarSerializer, PosterSessionSerializer, SponsorshipSerializer, ClipSerializer, BookletSerializer, HoldingTeamSerializer
+from api.serializer import WSSSerializer, WorkshopSerializer, SeminarSerializer, PosterSessionSerializer, SponsorshipSerializer, ClipSerializer, BookletSerializer, HoldingTeamSerializer, ImageSerializer
 from events.models import Workshop
 from WSS.models import WSS
 from api.models import Url
@@ -106,3 +106,10 @@ class HoldingTeamViewSet(BaseViewSet):
 
     def queryset_selector(self, request, wss):
         return wss.holding_teams
+
+
+class ImageViewSet(BaseViewSet):
+    serializer = ImageSerializer
+
+    def queryset_selector(self, request, wss):
+        return wss.images

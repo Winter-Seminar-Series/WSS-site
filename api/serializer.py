@@ -1,7 +1,7 @@
 from rest_framework.serializers import ModelSerializer
 from events.models import Workshop, Seminar, PosterSession
 from people.models import HoldingTeam
-from WSS.models import WSS, Sponsorship, Clip, Booklet
+from WSS.models import WSS, Sponsorship, Clip, Booklet, Image
 
 
 class WSSSerializer(ModelSerializer):
@@ -17,6 +17,10 @@ class WSSSerializer(ModelSerializer):
             'participants_count',
             'ical_link',
             'year',
+            'start_date',
+            'proposal_link',
+            'show_stats',
+            'calender_link'
         ]
 
 
@@ -56,8 +60,13 @@ class BookletSerializer(ModelSerializer):
         fields = '__all__'
 
 
-
 class HoldingTeamSerializer(ModelSerializer):
     class Meta:
         model = HoldingTeam
+        fields = '__all__'
+
+
+class ImageSerializer(ModelSerializer):
+    class Meta:
+        model = Image
         fields = '__all__'
