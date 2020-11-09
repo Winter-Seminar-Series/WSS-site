@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from django.views.generic.detail import DetailView
 from django.shortcuts import get_object_or_404
 from WSS.mixins import FooterMixin
-from api.serializer import WorkshopSerializer, SeminarSerializer, PosterSessionSerializer, SponsorshipSerializer, ClipSerializer, BookletSerializer, UrlSerializer
+from api.serializer import WorkshopSerializer, SeminarSerializer, PosterSessionSerializer, SponsorshipSerializer, ClipSerializer, BookletSerializer
 from events.models import Workshop
 from WSS.models import WSS
 from api.models import Url
@@ -17,12 +17,16 @@ def get_wss_object_or_404(year):
 
 class WSSViewSet(viewsets.ModelViewSet):
 
+    def get_url_response(self, selector, year):
+        wss = get_wss_object_or_404(year)
+        url = {
+            "url": selector(wss)
+        }
+        return Response(url)
+
     @action(detail=False)
     def main_image_url(self, request, year):
-        wss = get_wss_object_or_404(year)
-        url = Url(wss.main_image_url)
-        serializer = UrlSerializer(url)
-        return Response(serializer.data)
+        return get_url_response(lambda wss: wss.main_image_url, year)
 
 
 class BaseViewSet(viewsets.ViewSet, ABC):
