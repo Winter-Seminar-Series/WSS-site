@@ -14,7 +14,9 @@ class WSSSerializer(ModelSerializer):
             'staff_count',
             'is_active',
             'is_registration_open',
-            'participants_count'
+            'participants_count',
+            'ical_link',
+            'year',
         ]
 
 

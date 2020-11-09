@@ -16,50 +16,11 @@ def get_wss_object_or_404(year):
 
 
 class WSSViewSet(viewsets.ViewSet):
-    url_key = "url"
-    count_key = "count"
-    active_key = "active"
-    registration_open_key = "registration_open"
-
-    def get_premittive_response(self, name, selector, year):
-        wss = get_wss_object_or_404(year)
-        url = {
-            name: selector(wss)
-        }
-        return Response(url)
     
     def list(self, request, year):
         wss = get_wss_object_or_404(year)
         serializer = WSSSerializer(wss)
         return Response(serializer.data)
-
-    @action(detail=False)
-    def main_image_url(self, request, year):
-        return self.get_premittive_response(self.url_key, lambda wss: wss.main_image_url, year)
-
-    @action(detail=False)
-    def main_clip_url(self, request, year):
-        return self.get_premittive_response(self.url_key, lambda  wss: wss.main_clip_url, year)
-
-    @action(detail=False)
-    def booklet_url(self, request, year):
-        return self.get_premittive_response(self.url_key, lambda wss: wss.booklet_url, year)
-
-    @action(detail=False)
-    def staff_count(self, request, year):
-        return self.get_premittive_response(self.count_key, lambda wss: wss.staff_count, year)
-    
-    @action(detail=False)
-    def is_active(self, request, year):
-        return self.get_premittive_response(self.active_key, lambda wss: wss.is_active, year)
-
-    @action(detail=False)
-    def is_registration_open(self, request, year):
-        return self.get_premittive_response(self.registration_open_key, lambda wss: wss.is_registration_open, year)
-
-    @action(detail=False)
-    def participants_count(self, request, year):
-        return self.get_premittive_response(self.count_key, lambda wss: wss.participants_count, year)
 
 
 class BaseViewSet(viewsets.ViewSet, ABC):
@@ -90,6 +51,13 @@ class BaseViewSet(viewsets.ViewSet, ABC):
     def retrieve(self, request, year, pk=None):
         wss = get_wss_object_or_404(year)
         return Response(self.get_by_pk(request, wss, pk))
+    
+    @action(detail=False)
+    def count(self, request, year):
+        wss = get_wss_object_or_404(year)
+        return Response({
+            "count": self.queryset_selector(request, wss).count
+        })
 
 
 class WorkshopViewSet(BaseViewSet):
