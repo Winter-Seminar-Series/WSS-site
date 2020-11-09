@@ -7,16 +7,19 @@ from WSS.mixins import FooterMixin
 from api.serializer import WorkshopSerializer
 from events.models import Workshop
 from WSS.models import WSS
+from abc import ABC, abstractmethod
 
 def get_wss_object_or_404(year):
     return get_object_or_404(WSS, year=year)
 
-class BaseViewSet(viewsets.ViewSet):
+
+class BaseViewSet(viewsets.ViewSet, ABC):
 
     @property
     def serializer(self):
         raise NotImplementedError()
     
+    @abstractmethod
     def queryset_selector(self, wss):
         raise NotImplementedError()
 
