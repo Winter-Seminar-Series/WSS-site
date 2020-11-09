@@ -8,19 +8,36 @@ from api.serializer import WorkshopSerializer
 from events.models import Workshop
 from WSS.models import WSS
 
-class WorkshopViewSet(viewsets.ViewSet):
-    """
-    A simple ViewSet for listing or retrieving users.
-    """
+def get_wss_object_or_404(year):
+    return get_object_or_404(WSS, year=year)
 
+class BaseViewSet(viewsets.ViewSet):
+
+    def __init__(self, serializer, queryset_selector):
+        self.serializer = serializer
+        self.queryset_selector = queryset_selector
+
+    def get_list(self, wss):
+        queryset = self.queryset_selector(wss)
+        serializer = self.serializer(queryset, many=True)
+        return serializer.data
+    
+    def get_by_pk(self, wss, pk):
+        queryset = self.queryset_selector(wss)
+        entity = get_object_or_404(queryset, pk=pk)
+        serializer = self.serializer(entity)
+        return serializer.data
+    
     def list(self, request, year):
-        queryset = get_object_or_404(WSS, year=year).workshops
-        serializer = WorkshopSerializer(queryset, many=True)
-        return Response(serializer.data)
-
+        wss = get_wss_object_or_404(year)
+        return Response(self.get_list(wss))
+    
     def retrieve(self, request, year, pk=None):
-        queryset = get_object_or_404(WSS, year=year).workshops
-        user = get_object_or_404(queryset, pk=pk)
-        serializer = WorkshopSerializer(user)
-        return Response(serializer.data)
+        wss = get_wss_object_or_404(year)
+        return Response(self.get_by_pk(wss, pk))
 
+
+class WorkshopViewSet(BaseViewSet):
+
+    def __init__(self):
+        super().__init__(WorkshopSerializer, lambda wss: wss.workshops)
