@@ -30,7 +30,7 @@ class WSSViewSet(viewsets.ModelViewSet):
     
     @action(detail=False, url_path="")
     def get(self, request, year):
-        
+        return Response("hello")
 
     @action(detail=False)
     def main_image_url(self, request, year):

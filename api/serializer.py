@@ -1,6 +1,6 @@
 from rest_framework.serializers import ModelSerializer
 from events.models import Workshop, Seminar, PosterSession
-from WSS.models import Sponsorship, Clip, Booklet
+from WSS.models import WSS, Sponsorship, Clip, Booklet
 
 
 class WorkshopSerializer(ModelSerializer):
