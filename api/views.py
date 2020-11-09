@@ -28,8 +28,7 @@ class WSSViewSet(viewsets.ViewSet):
         }
         return Response(url)
     
-    @action(detail=False, url_path="")
-    def get(self, request, year):
+    def list(self, request, year):
         wss = get_wss_object_or_404(year)
         serializer = WSSSerializer(wss)
         return Response(serializer.data)
