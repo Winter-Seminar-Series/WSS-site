@@ -1,10 +1,28 @@
 #!/bin/bash
 
-set -uo pipefail
+set -o pipefail
 
-readonly HOST=$1
+HOST=
+CHECK_LOGS=true
 
-wget_output=$(wget --server-response http://localhost 2>&1)
+while [ -n "$1" ]; do
+  case "$1" in
+  --host)
+    shift
+    HOST="$1"
+    shift
+    ;;
+  --no-check-logs)
+    CHECK_LOGS=false
+    shift
+    ;;
+  *)
+    echo "Unknown option: $1"
+    exit 1
+  esac
+done
+
+wget_output=$(wget --server-response "$HOST" 2>&1)
 status_code=$(echo "$wget_output" | awk '/^  HTTP/{print $2}')
 
 if [[ "$status_code" == "200" ]]; then
@@ -16,7 +34,9 @@ else
   echo "Status code: $status_code"
   echo "wget output:"
   echo "$wget_output"
-  echo "Services logs:"
-  docker-compose logs
+  if $CHECK_LOGS; then
+    echo "Services logs:"
+    docker-compose logs
+  fi
   exit 1
 fi

@@ -10,6 +10,8 @@
           - secret_key is defined
           - db_password is defined
           - postgres_superuser_pass is defined
+          - docker_hub_username is defined
+          - docker_hub_password is defined
 
     - name: 'Copy compose file'
       copy:
@@ -21,18 +23,24 @@
         path: '{{ dest_root_dir }}/backend/'
         state: directory
 
+    - name: 'Login to Docker Hub registry (To extend pull rate limit)'
+      community.general.docker_login:
+        username: '{{ docker_hub_username | mandatory }}'
+        password: '{{ docker_hub_password | mandatory }}'
+
     - name: 'Pull, Stop, and Start containers'
-      docker_compose:
-        project_src: '{{ dest_root_dir }}'
-        build: no
-        pull: '{{ item.pull }}'
-        state: '{{ item.state }}'
+      shell: 'cd {{ dest_root_dir }} && ls && echo "BEFORE" && df -h && docker-compose pull database && echo "MEAN" && df -h && docker-compose pull web && echo "AFTER" && df -h'
+#      docker_compose:
+#        project_src: '{{ dest_root_dir }}'
+#        build: no
+#        pull: '{{ item.pull }}'
+#        state: '{{ item.state }}'
       environment:
         WEB_IMAGE_VERSION: '{{ web_image_version | mandatory }}'
         WSS_SECRET_KEY: '{{ secret_key | mandatory }}'
         WSS_DB_PASSWORD: '{{ db_password | mandatory }}'
         POSTGRES_PASSWORD: '{{ postgres_superuser_pass | mandatory }}'
-      loop:
-        - { pull: yes, state: present }
-        - { pull: no, state: absent }
-        - { pull: no, state: present }
+#      loop:
+#        - { pull: yes, state: present }
+#        - { pull: no, state: absent }
+#        - { pull: no, state: present }

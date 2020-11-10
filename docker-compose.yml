@@ -1,4 +1,4 @@
-version: '3.7'
+version: '3.3'
 services:
   web:
     image: sharifwss/web:$WEB_IMAGE_VERSION
