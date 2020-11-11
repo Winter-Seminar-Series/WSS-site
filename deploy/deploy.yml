@@ -18,6 +18,11 @@
         src: '{{ src_root_dir | mandatory }}/docker-compose.yml'
         dest: '{{ dest_root_dir | mandatory }}'
 
+    - name: 'Copy DB first-time init script'
+      copy:
+        src: '{{ src_root_dir | mandatory }}/db-first-time-init.sh'
+        dest: '{{ dest_root_dir | mandatory }}'
+
     - name: 'Create backend directory as a hack to make docker-compose work!'
       file:
         path: '{{ dest_root_dir }}/backend/'
@@ -30,11 +35,11 @@
 
     - name: 'Pull, Stop, and Start containers'
       shell: 'cd {{ dest_root_dir }} && docker-compose pull && docker-compose up'
-#      docker_compose:
-#        project_src: '{{ dest_root_dir }}'
-#        build: no
-#        pull: '{{ item.pull }}'
-#        state: '{{ item.state }}'
+      #      docker_compose:
+      #        project_src: '{{ dest_root_dir }}'
+      #        build: no
+      #        pull: '{{ item.pull }}'
+      #        state: '{{ item.state }}'
       environment:
         WEB_IMAGE_VERSION: '{{ web_image_version | mandatory }}'
         WSS_SECRET_KEY: '{{ secret_key | mandatory }}'
