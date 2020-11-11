@@ -13,6 +13,8 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
+#      - name: Preload last stable image as a cache
+#        run: 'docker pull sharifwss/web:latest || echo "Unable to pull cache. exit code: $?"'
       - run: echo "WEB_IMAGE_VERSION=snapshot-$GITHUB_RUN_ID" >> $GITHUB_ENV
       - run: echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u $DOCKER_USERNAME --password-stdin
       - run: docker-compose build
@@ -30,17 +32,19 @@ jobs:
   #        run: sleep 20
   #      - name: Smoke test
   #        run: ./.github/scripts/smoke-test.sh "http://localhost"
-  #  release:
-  #    needs:
-  #      - build
-  #      - test
-  #    runs-on: ubuntu-20.04
-  #    steps:
-  #      - run: echo "SNAPSHOT_VERSION=snapshot-$GITHUB_RUN_ID" >> $GITHUB_ENV
-  #      - run: echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u $DOCKER_USERNAME --password-stdin
-  #      - run: docker pull sharifwss/web:$SNAPSHOT_VERSION
-  #      - run: docker tag sharifwss/web:$SNAPSHOT_VERSION sharifwss/web:$RELEASE_VERSION
-  #      - run: docker push sharifwss/web:$RELEASE_VERSION
+#    release:
+#      needs:
+#        - build
+#        - test
+#      runs-on: ubuntu-20.04
+#      steps:
+#        - run: echo "SNAPSHOT_VERSION=snapshot-$GITHUB_RUN_ID" >> $GITHUB_ENV
+#        - run: echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u $DOCKER_USERNAME --password-stdin
+#        - run: docker pull sharifwss/web:$SNAPSHOT_VERSION
+#        - run: docker tag sharifwss/web:$SNAPSHOT_VERSION sharifwss/web:$RELEASE_VERSION
+#        - run: docker tag sharifwss/web:$SNAPSHOT_VERSION sharifwss/web:latest
+#        - run: docker push sharifwss/web:$RELEASE_VERSION
+#        - run: docker push sharifwss/web:latest
   test-deploy:
     needs:
       - build
@@ -49,6 +53,11 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
+      - name: Force GitHub Actions' docker daemon to use vfs.
+        run: |
+          sudo systemctl stop docker
+          echo '{"cgroup-parent":"/actions_job","storage-driver":"vfs"}' | sudo tee /etc/docker/daemon.json
+          sudo systemctl start docker
       - run: echo "TARGET_IP=192.168.2.2" >> $GITHUB_ENV
       - run: docker network create --subnet 192.168.2.0/24 wss-net
       - run: docker run -d --network wss-net --ip $TARGET_IP --privileged rastasheep/ubuntu-sshd:18.04
