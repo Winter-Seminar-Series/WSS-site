@@ -93,7 +93,7 @@ jobs:
           deploy.yml
           '
       - name: Smoke test
-        run: docker run
+        run: sleep 25 && docker run
           --network wss-net
           -v `pwd`/.github/scripts/smoke-test.sh:/smoke-test.sh:ro
           spy86/ansible:latest
