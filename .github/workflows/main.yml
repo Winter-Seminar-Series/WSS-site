@@ -47,67 +47,67 @@ jobs:
       - run: docker tag sharifwss/web:$SNAPSHOT_VERSION sharifwss/web:latest
       - run: docker push sharifwss/web:$RELEASE_VERSION
       - run: docker push sharifwss/web:latest
-  test-deploy:
-    needs: build
-    runs-on: ubuntu-20.04
-    steps:
-      - uses: actions/checkout@v2
-      - name: Force GitHub Actions' docker daemon to use vfs.
-        run: |
-          sudo systemctl stop docker
-          echo '{"cgroup-parent":"/actions_job","storage-driver":"vfs"}' | sudo tee /etc/docker/daemon.json
-          sudo systemctl start docker
-      - run: echo "TARGET_HOST=192.168.2.2" >> $GITHUB_ENV
-      - run: docker network create --subnet 192.168.2.0/24 wss-net
-      - run: docker run -d --network wss-net --ip $TARGET_HOST --privileged rastasheep/ubuntu-sshd:18.04
-      - name: Run setup_infra.yml
-        run: docker run
-          --network wss-net
-          -v `pwd`:/app-src/:ro
-          --workdir /app-src/deploy/
-          --env TARGET_HOST=$TARGET_HOST
-          spy86/ansible:latest
-          bash -c '
-          DNS_SERVER=$(cat /etc/resolv.conf | grep -m 1 nameserver | cut -d" " -f2) &&
-          ansible-playbook
-          -i inventory.yml
-          --extra-vars="
-          shecan_dns_1=$DNS_SERVER
-          shecan_dns_2=$DNS_SERVER
-          ansible_host=$TARGET_HOST
-          ansible_user=root
-          ansible_ssh_pass=root"
-          setup_infra.yml
-          '
-      - name: Run deploy.yml
-        run: docker run
-          --network wss-net
-          -v `pwd`:/app-src/:ro
-          --workdir /app-src/deploy/
-          --env TARGET_HOST=$TARGET_HOST
-          --env GITHUB_RUN_ID=$GITHUB_RUN_ID
-          spy86/ansible:latest
-          bash -c '
-          ansible-playbook
-          -i inventory.yml
-          --extra-vars="
-          ansible_host=$TARGET_HOST
-          ansible_user=root
-          ansible_ssh_pass=root
-          web_image_version=snapshot-$GITHUB_RUN_ID
-          secret_key=dummy
-          db_password=dummy
-          postgres_superuser_pass=dummy"
-          deploy.yml
-          '
-      - name: Smoke test
-        run: sleep 20 && docker run
-          --network wss-net
-          -v `pwd`/.github/scripts/smoke-test.sh:/smoke-test.sh:ro
-          spy86/ansible:latest
-          /smoke-test.sh --host "http://$TARGET_HOST" --no-check-logs
+#  test-deploy:
+#    needs: build
+#    runs-on: ubuntu-20.04
+#    steps:
+#      - uses: actions/checkout@v2
+#      - name: Force GitHub Actions' docker daemon to use vfs.
+#        run: |
+#          sudo systemctl stop docker
+#          echo '{"cgroup-parent":"/actions_job","storage-driver":"vfs"}' | sudo tee /etc/docker/daemon.json
+#          sudo systemctl start docker
+#      - run: echo "TARGET_HOST=192.168.2.2" >> $GITHUB_ENV
+#      - run: docker network create --subnet 192.168.2.0/24 wss-net
+#      - run: docker run -d --network wss-net --ip $TARGET_HOST --privileged rastasheep/ubuntu-sshd:18.04
+#      - name: Run setup_infra.yml
+#        run: docker run
+#          --network wss-net
+#          -v `pwd`:/app-src/:ro
+#          --workdir /app-src/deploy/
+#          --env TARGET_HOST=$TARGET_HOST
+#          spy86/ansible:latest
+#          bash -c '
+#          DNS_SERVER=$(cat /etc/resolv.conf | grep -m 1 nameserver | cut -d" " -f2) &&
+#          ansible-playbook
+#          -i inventory.yml
+#          --extra-vars="
+#          shecan_dns_1=$DNS_SERVER
+#          shecan_dns_2=$DNS_SERVER
+#          ansible_host=$TARGET_HOST
+#          ansible_user=root
+#          ansible_ssh_pass=root"
+#          setup_infra.yml
+#          '
+#      - name: Run deploy.yml
+#        run: docker run
+#          --network wss-net
+#          -v `pwd`:/app-src/:ro
+#          --workdir /app-src/deploy/
+#          --env TARGET_HOST=$TARGET_HOST
+#          --env GITHUB_RUN_ID=$GITHUB_RUN_ID
+#          spy86/ansible:latest
+#          bash -c '
+#          ansible-playbook
+#          -i inventory.yml
+#          --extra-vars="
+#          ansible_host=$TARGET_HOST
+#          ansible_user=root
+#          ansible_ssh_pass=root
+#          web_image_version=snapshot-$GITHUB_RUN_ID
+#          secret_key=dummy
+#          db_password=dummy
+#          postgres_superuser_pass=dummy"
+#          deploy.yml
+#          '
+#      - name: Smoke test
+#        run: sleep 20 && docker run
+#          --network wss-net
+#          -v `pwd`/.github/scripts/smoke-test.sh:/smoke-test.sh:ro
+#          spy86/ansible:latest
+#          /smoke-test.sh --host "http://$TARGET_HOST" --no-check-logs
   deploy:
-    needs: build
+#    needs: test-deploy
     runs-on: ubuntu-20.04
     container:
       image: spy86/ansible:latest
