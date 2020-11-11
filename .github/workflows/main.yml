@@ -3,6 +3,8 @@ name: "Main Workflow"
 env:
   DOCKER_USERNAME: sharifwss
   RELEASE_VERSION: 1.0.0
+  TARGET_HOST: 1.1.1.1 # TODO replace with
+  HOST_SSH_USER: wss
 on:
   push:
     branches:
@@ -95,7 +97,6 @@ jobs:
           db_password=dummy
           postgres_superuser_pass=dummy"
           deploy.yml
-          -vvv
           '
       - name: Smoke test
         run: sleep 20 && docker run
@@ -106,4 +107,20 @@ jobs:
   deploy:
     needs: build
     runs-on: ubuntu-20.04
+    container:
+      image: spy86/ansible:latest
     steps:
+      - uses: actions/checkout@v2
+      - name: 'Deploy'
+        working-directory: ./deploy/
+        run: ansible-playbook
+          -i inventory.yml
+          --extra-vars="
+          ansible_host=$TARGET_HOST
+          ansible_user=$HOST_SSH_USER
+          ansible_ssh_pass=${{ secrets.HOST_SSH_PASSWORD }}
+          web_image_version=$RELEASE_VERSION
+          secret_key=$WSS_SECRET_KEY
+          db_password=${{ secrets.DB_PASSWORD }}
+          postgres_superuser_pass=${{ secrets.POSTGRES_SUPERUSER_PASS }}"
+          deploy.yml
