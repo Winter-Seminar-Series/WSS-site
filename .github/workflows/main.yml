@@ -96,6 +96,5 @@ jobs:
         run: docker run
           --network wss-net
           -v `pwd`/.github/scripts/smoke-test.sh:/smoke-test.sh:ro
-          --env TARGET_IP=$TARGET_IP
           spy86/ansible:latest
-          /smoke-test.sh --host "http://$TAGET_IP" --no-check-logs
+          /smoke-test.sh --host "http://$TARGET_IP" --no-check-logs
