@@ -34,18 +34,17 @@
         password: '{{ docker_hub_password | mandatory }}'
 
     - name: 'Pull, Stop, and Start containers'
-      shell: 'cd {{ dest_root_dir }} && docker-compose pull && docker-compose up'
-      #      docker_compose:
-      #        project_src: '{{ dest_root_dir }}'
-      #        build: no
-      #        pull: '{{ item.pull }}'
-      #        state: '{{ item.state }}'
+      docker_compose:
+        project_src: '{{ dest_root_dir }}'
+        build: no
+        pull: '{{ item.pull }}'
+        state: '{{ item.state }}'
       environment:
         WEB_IMAGE_VERSION: '{{ web_image_version | mandatory }}'
         WSS_SECRET_KEY: '{{ secret_key | mandatory }}'
         WSS_DB_PASSWORD: '{{ db_password | mandatory }}'
         POSTGRES_PASSWORD: '{{ postgres_superuser_pass | mandatory }}'
-#      loop:
-#        - { pull: yes, state: present }
-#        - { pull: no, state: absent }
-#        - { pull: no, state: present }
+      loop:
+        - { pull: yes, state: present }
+        - { pull: no, state: absent }
+        - { pull: no, state: present }
