@@ -33,9 +33,7 @@ jobs:
         - name: Smoke test
           run: ./.github/scripts/smoke-test.sh "http://localhost"
     release:
-      needs:
-        - build
-        - test
+      needs: test
       runs-on: ubuntu-20.04
       steps:
         - run: echo "SNAPSHOT_VERSION=snapshot-$GITHUB_RUN_ID" >> $GITHUB_ENV
@@ -46,8 +44,7 @@ jobs:
         - run: docker push sharifwss/web:$RELEASE_VERSION
         - run: docker push sharifwss/web:latest
   test-deploy:
-    needs:
-      - build
+    needs: build
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
@@ -56,15 +53,15 @@ jobs:
           sudo systemctl stop docker
           echo '{"cgroup-parent":"/actions_job","storage-driver":"vfs"}' | sudo tee /etc/docker/daemon.json
           sudo systemctl start docker
-      - run: echo "TARGET_IP=192.168.2.2" >> $GITHUB_ENV
+      - run: echo "TARGET_HOST=192.168.2.2" >> $GITHUB_ENV
       - run: docker network create --subnet 192.168.2.0/24 wss-net
-      - run: docker run -d --network wss-net --ip $TARGET_IP --privileged rastasheep/ubuntu-sshd:18.04
+      - run: docker run -d --network wss-net --ip $TARGET_HOST --privileged rastasheep/ubuntu-sshd:18.04
       - name: Run setup_infra.yml
         run: docker run
           --network wss-net
           -v `pwd`:/app-src/:ro
           --workdir /app-src/deploy/
-          --env TARGET_IP=$TARGET_IP
+          --env TARGET_HOST=$TARGET_HOST
           spy86/ansible:latest
           bash -c '
           DNS_SERVER=$(cat /etc/resolv.conf | grep -m 1 nameserver | cut -d" " -f2) &&
@@ -73,7 +70,7 @@ jobs:
           --extra-vars="
           shecan_dns_1=$DNS_SERVER
           shecan_dns_2=$DNS_SERVER
-          ansible_host=$TARGET_IP
+          ansible_host=$TARGET_HOST
           ansible_user=root
           ansible_ssh_pass=root"
           setup_infra.yml
@@ -83,14 +80,14 @@ jobs:
           --network wss-net
           -v `pwd`:/app-src/:ro
           --workdir /app-src/deploy/
-          --env TARGET_IP=$TARGET_IP
+          --env TARGET_HOST=$TARGET_HOST
           --env GITHUB_RUN_ID=$GITHUB_RUN_ID
           spy86/ansible:latest
           bash -c '
           ansible-playbook
           -i inventory.yml
           --extra-vars="
-          ansible_host=$TARGET_IP
+          ansible_host=$TARGET_HOST
           ansible_user=root
           ansible_ssh_pass=root
           web_image_version=snapshot-$GITHUB_RUN_ID
@@ -105,4 +102,8 @@ jobs:
           --network wss-net
           -v `pwd`/.github/scripts/smoke-test.sh:/smoke-test.sh:ro
           spy86/ansible:latest
-          /smoke-test.sh --host "http://$TARGET_IP" --no-check-logs
+          /smoke-test.sh --host "http://$TARGET_HOST" --no-check-logs
+  deploy:
+    needs: build
+    runs-on: ubuntu-20.04
+    steps:
