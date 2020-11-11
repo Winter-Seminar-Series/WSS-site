@@ -29,7 +29,7 @@
         password: '{{ docker_hub_password | mandatory }}'
 
     - name: 'Pull, Stop, and Start containers'
-      shell: 'cd {{ dest_root_dir }} && ls && echo "BEFORE" && df -h && docker-compose pull database && echo "MEAN" && df -h && docker-compose pull web && echo "AFTER" && df -h'
+      shell: 'cd {{ dest_root_dir }} && docker-compose pull && docker-compose up'
 #      docker_compose:
 #        project_src: '{{ dest_root_dir }}'
 #        build: no
