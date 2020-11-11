@@ -18,26 +18,21 @@ function App() {
   return (
     <>
       <Header></Header>
-      <div className="body-inner">
-        <header id="header" className="header-dark">
-          <div className="container"></div>
-        </header>
-        <Router>
-          <Switch>
-            <Route path="/details" component={Details} />
-            <Route path="/register" component={Register} />
-            <Route path="/schedule" component={Schedule} />
-            <Route path="/staff-list" component={StaffList} />
-            <Route path="/image-gallery" component={ImageGallery} />
-            <Route path="/video-gallery" component={VideoGallery} />
-            <Route path="/workshop-list" component={WorkshopList} />
-            <Route path="/seminar-list" component={SeminarList} />
-            <Route path="/about" component={About} />
-            <Route path="/" component={Home} />
-          </Switch>
-        </Router>
-        <Footer></Footer>
-      </div>
+      <Router>
+        <Switch>
+          <Route path="/details" component={Details} />
+          <Route path="/register" component={Register} />
+          <Route path="/schedule" component={Schedule} />
+          <Route path="/staff-list" component={StaffList} />
+          <Route path="/image-gallery" component={ImageGallery} />
+          <Route path="/video-gallery" component={VideoGallery} />
+          <Route path="/workshop-list" component={WorkshopList} />
+          <Route path="/seminar-list" component={SeminarList} />
+          <Route path="/about" component={About} />
+          <Route path="/" component={Home} />
+        </Switch>
+      </Router>
+      <Footer></Footer>
     </>
   );
 }
