@@ -1,5 +1,4 @@
-FROM python:3.8-alpine
-RUN apk update && apk add postgresql-dev gcc python3-dev musl-dev libxml2-dev libxslt-dev jpeg-dev zlib-dev
+FROM python:3.8
 COPY requirements.txt /tmp/
 RUN pip install -r /tmp/requirements.txt
 WORKDIR /app/
