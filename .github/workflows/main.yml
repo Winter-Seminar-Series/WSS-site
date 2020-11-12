@@ -76,7 +76,8 @@ jobs:
           shecan_dns_2=$DNS_SERVER
           ansible_host=$TARGET_HOST
           ansible_user=root
-          ansible_ssh_pass=root"
+          ansible_ssh_pass=root
+          docker_hub_password=${{ secrets.DOCKER_PASSWORD }}"
           setup_infra.yml
           '
       - name: Run deploy.yml
