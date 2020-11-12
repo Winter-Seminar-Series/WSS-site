@@ -4,7 +4,10 @@ env:
   TARGET_HOST: 1.1.1.1 # TODO replace with host address
   HOST_SSH_USER: wss
 on:
-  workflow_dispatch:
+#  workflow_dispatch: # TODO uncomment after test
+  pull_request:
+    branches:
+      - master
 jobs:
   setup-infra:
     runs-on: ubuntu-20.04
