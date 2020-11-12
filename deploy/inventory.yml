@@ -11,7 +11,7 @@ all:
     production:
       hosts:
         prod1:
-          sudo_pass: '{{ lookup("env", "SERVER_PROD_PASS") }}'
           ansible_ssh_common_args: '-o StrictHostKeyChecking=no'
-          ansible_sudo_pass: '{{ sudo_pass }}'
-          ansible_become_pass: '{{ sudo_pass }}'
+          sudo_pass: '{{ ansible_ssh_pass | mandatory }}'
+          ansible_sudo_pass: '{{ ansible_ssh_pass | mandatory }}'
+          ansible_become_pass: '{{ ansible_ssh_pass | mandatory }}'
