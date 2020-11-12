@@ -3,7 +3,7 @@ name: "Main Workflow"
 env:
   DOCKER_USERNAME: sharifwss
   RELEASE_VERSION: 1.0.0
-  TARGET_HOST: 1.1.1.1 # TODO replace with host address
+  TARGET_HOST: 37.152.187.105
   HOST_SSH_USER: wss
 on:
   push:

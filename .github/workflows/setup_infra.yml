@@ -1,7 +1,7 @@
 ---
 name: "Infra Setup Workflow"
 env:
-  TARGET_HOST: 1.1.1.1 # TODO replace with host address
+  TARGET_HOST: 37.152.187.105
   HOST_SSH_USER: wss
 on:
 #  workflow_dispatch: # TODO uncomment after test
