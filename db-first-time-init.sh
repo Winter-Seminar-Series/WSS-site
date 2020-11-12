@@ -12,8 +12,7 @@ set -o errexit
 readonly REQUIRED_ENV_VARS=(
   "WSS_DB_USER"
   "WSS_DB_PASSWORD"
-  "WSS_DB_DATABASE"
-  "POSTGRES_USER")
+  "WSS_DB_DATABASE")
 
 
 # Main execution:
@@ -46,7 +45,7 @@ Aborting."
 # Performs the initialization in the already-started PostgreSQL
 # using the preconfigured POSTGRE_USER user.
 init_user_and_db() {
-  psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" <<-EOSQL
+  psql -v ON_ERROR_STOP=1 <<-EOSQL
      CREATE USER $WSS_DB_USER WITH PASSWORD '$WSS_DB_PASSWORD';
      CREATE DATABASE $WSS_DB_DATABASE;
      GRANT ALL PRIVILEGES ON DATABASE $WSS_DB_DATABASE TO $WSS_DB_USER;
