@@ -137,7 +137,7 @@ jobs:
           ansible_user=$HOST_SSH_USER
           ansible_ssh_pass=${{ secrets.HOST_SSH_PASSWORD }}
           web_image_version=$RELEASE_VERSION
-          secret_key=$WSS_SECRET_KEY
+          secret_key=${{ secrets.WSS_SECRET_KEY }}
           db_password=${{ secrets.DB_PASSWORD }}
           postgres_superuser_pass=${{ secrets.POSTGRES_SUPERUSER_PASS }}
           docker_hub_password=${{ secrets.DOCKER_PASSWORD }}"

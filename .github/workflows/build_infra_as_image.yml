@@ -1,13 +1,9 @@
 ---
-name: "Infra Setup Workflow"
+name: "Build Infra as an Image"
 env:
   DOCKER_USERNAME: sharifwss
-#on:
-#  workflow_dispatch:
 on:
-  pull_request:
-    branches:
-      - master
+  workflow_dispatch:
 jobs:
   setup-infra:
     runs-on: ubuntu-20.04
