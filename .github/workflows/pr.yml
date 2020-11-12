@@ -35,5 +35,5 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - name: 'Check Migrations'
-        run: docker run $DOCKER_USERNAME/web:snapshot-$GITHUB_RUN_ID
+        run: docker run --env WSS_SECRET_KEY=dummy $DOCKER_USERNAME/web:snapshot-$GITHUB_RUN_ID
           ./manage.py makemigrations --dry-run --check
