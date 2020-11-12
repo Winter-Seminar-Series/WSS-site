@@ -35,7 +35,7 @@ jobs:
       - name: Wait for the app to be up
         run: sleep 20
       - name: Smoke test
-        run: ./.github/scripts/smoke-test.sh "http://localhost"
+        run: ./.github/scripts/smoke-test.sh --host "http://localhost"
   release:
     needs: test
     runs-on: ubuntu-20.04
@@ -107,7 +107,9 @@ jobs:
           spy86/ansible:latest
           /smoke-test.sh --host "http://$TARGET_HOST" --no-check-logs
   deploy:
-    needs: test-deploy
+    needs:
+      - test
+      - test-deploy
     runs-on: ubuntu-20.04
     container:
       image: spy86/ansible:latest

@@ -4,10 +4,7 @@ env:
   TARGET_HOST: 37.152.187.105
   HOST_SSH_USER: wss
 on:
-#  workflow_dispatch: # TODO uncomment after test
-  pull_request:
-    branches:
-      - master
+  workflow_dispatch:
 jobs:
   setup-infra:
     runs-on: ubuntu-20.04
