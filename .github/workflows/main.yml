@@ -9,16 +9,13 @@ on:
   push:
     branches:
       - master
-  pull_request: # TODO remove after test
-    branches:
-      - master
 jobs:
   build:
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
       - name: Preload last stable image as a cache
-        run: 'docker pull sharifwss/web:latest || echo "Unable to pull cache. exit code: $?"'
+        run: 'docker pull $DOCKER_USERNAME/web:latest || echo "Unable to pull cache. exit code: $?"'
       - run: echo "WEB_IMAGE_VERSION=snapshot-$GITHUB_RUN_ID" >> $GITHUB_ENV
       - run: echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u $DOCKER_USERNAME --password-stdin
       - run: docker-compose build
@@ -42,11 +39,11 @@ jobs:
     steps:
       - run: echo "SNAPSHOT_VERSION=snapshot-$GITHUB_RUN_ID" >> $GITHUB_ENV
       - run: echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u $DOCKER_USERNAME --password-stdin
-      - run: docker pull sharifwss/web:$SNAPSHOT_VERSION
-      - run: docker tag sharifwss/web:$SNAPSHOT_VERSION sharifwss/web:$RELEASE_VERSION
-      - run: docker tag sharifwss/web:$SNAPSHOT_VERSION sharifwss/web:latest
-      - run: docker push sharifwss/web:$RELEASE_VERSION
-      - run: docker push sharifwss/web:latest
+      - run: docker pull $DOCKER_USERNAME/web:$SNAPSHOT_VERSION
+      - run: docker tag $DOCKER_USERNAME/web:$SNAPSHOT_VERSION $DOCKER_USERNAME/web:$RELEASE_VERSION
+      - run: docker tag $DOCKER_USERNAME/web:$SNAPSHOT_VERSION $DOCKER_USERNAME/web:latest
+      - run: docker push $DOCKER_USERNAME/web:$RELEASE_VERSION
+      - run: docker push $DOCKER_USERNAME/web:latest
   test-deploy:
     needs: build
     runs-on: ubuntu-20.04
@@ -71,25 +68,6 @@ jobs:
           bash -c '
           sshpass -p root ssh -o StrictHostKeyChecking=no root@$TARGET_HOST "service docker start"
           '
-#      - name: Run setup_infra.yml
-#        run: docker run
-#          --network wss-net
-#          -v `pwd`:/app-src/:ro
-#          --workdir /app-src/deploy/
-#          --env TARGET_HOST=$TARGET_HOST
-#          spy86/ansible:latest
-#          bash -c '
-#          DNS_SERVER=$(cat /etc/resolv.conf | grep -m 1 nameserver | cut -d" " -f2) &&
-#          ansible-playbook
-#          -i inventory.yml
-#          --extra-vars="
-#          shecan_dns_1=$DNS_SERVER
-#          shecan_dns_2=$DNS_SERVER
-#          ansible_host=$TARGET_HOST
-#          ansible_user=root
-#          ansible_ssh_pass=root"
-#          setup_infra.yml
-#          '
       - name: Run deploy.yml
         run: docker run
           --network wss-net
