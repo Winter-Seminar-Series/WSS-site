@@ -1,3 +1,5 @@
+![Main Workflow Status](https://github.com/Winter-Seminar-Series/WSS-site/workflows/Main%20Workflow/badge.svg?branch=master)
+
 # WSS-site
 Source code of the official website of Winter Seminar Series.
 
