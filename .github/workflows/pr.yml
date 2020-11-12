@@ -34,6 +34,9 @@ jobs:
     needs: build
     runs-on: ubuntu-20.04
     steps:
+      - uses: actions/checkout@v2
+      - run: echo "WEB_IMAGE_VERSION=snapshot-$GITHUB_RUN_ID" >> $GITHUB_ENV
+      - run: echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u $DOCKER_USERNAME --password-stdin
+      - run: docker-compose pull
       - name: 'Check Migrations'
-        run: docker run --env WSS_SECRET_KEY=dummy $DOCKER_USERNAME/web:snapshot-$GITHUB_RUN_ID
-          ./manage.py makemigrations --dry-run --check
+        run: docker-compose run web ./manage.py makemigrations --dry-run --check
