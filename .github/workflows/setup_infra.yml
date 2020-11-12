@@ -1,0 +1,29 @@
+---
+name: "Infra Setup Workflow"
+env:
+  TARGET_HOST: 37.152.187.105
+  HOST_SSH_USER: wss
+on:
+  workflow_dispatch:
+jobs:
+  setup-infra:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+      - name: "Setup Infra From Scratch"
+        run: docker run
+          -v `pwd`:/app-src/:ro
+          --workdir /app-src/deploy/
+          --env TARGET_HOST=$TARGET_HOST
+          --env TARGET_USER=$HOST_SSH_USER
+          --env TARGET_PASS=${{ secrets.HOST_SSH_PASSWORD }}
+          spy86/ansible:latest
+          bash -c '
+          ansible-playbook
+          -i inventory.yml
+          --extra-vars="
+          ansible_host=$TARGET_HOST
+          ansible_user=$TARGET_USER
+          ansible_ssh_pass=$TARGET_PASS"
+          setup_infra.yml
+          '

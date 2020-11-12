@@ -2,6 +2,8 @@
 name: "Pull Request Workflow"
 on:
   pull_request:
+    branches:
+      - master
 jobs:
   build:
     runs-on: ubuntu-20.04
@@ -11,4 +13,4 @@ jobs:
       - name: Wait for the app to be up
         run: sleep 20
       - name: Smoke test
-        run: ./.github/scripts/smoke-test.sh "http://localhost"
+        run: ./.github/scripts/smoke-test.sh --host "http://localhost"

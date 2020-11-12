@@ -1,0 +1,16 @@
+---
+all:
+  vars:
+    shecan_dns_1: 185.51.200.2
+    shecan_dns_2: 178.22.122.100
+    src_root_dir: '../'
+    dest_root_dir: '/home/{{ ansible_user }}/wss/'
+    docker_hub_username: 'sharifwss'
+  children:
+    production:
+      hosts:
+        prod1:
+          ansible_ssh_common_args: '-o StrictHostKeyChecking=no'
+          sudo_pass: '{{ ansible_ssh_pass | mandatory }}'
+          ansible_sudo_pass: '{{ ansible_ssh_pass | mandatory }}'
+          ansible_become_pass: '{{ ansible_ssh_pass | mandatory }}'
