@@ -1,5 +1,7 @@
 ---
-name: "Pull Request Workflow"
+name: "Pull Request"
+env:
+  DOCKER_USERNAME: sharifwss
 on:
   pull_request:
     branches:
@@ -9,17 +11,31 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
-      - run: docker-compose up --build -d
+      - name: Preload last stable image as a cache
+        run: 'docker pull $DOCKER_USERNAME/web:latest || echo "Unable to pull cache. exit code: $?"'
+      - run: echo "WEB_IMAGE_VERSION=snapshot-$GITHUB_RUN_ID" >> $GITHUB_ENV
+      - run: echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u $DOCKER_USERNAME --password-stdin
+      - run: docker-compose build
+      - run: docker-compose push web
+  smoke-test:
+    needs: build
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+      - run: echo "WEB_IMAGE_VERSION=snapshot-$GITHUB_RUN_ID" >> $GITHUB_ENV
+      - run: echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u $DOCKER_USERNAME --password-stdin
+      - run: docker-compose pull
+      - run: docker-compose up -d --no-build
       - name: Wait for the app to be up
         run: sleep 20
       - name: Smoke test
         run: ./.github/scripts/smoke-test.sh --host "http://localhost"
   check-migrations:
+    needs: build
     runs-on: ubuntu-20.04
     container:
-      image: python:3.8-alpine
+      image: ${{ env.DOCKER_USERNAME }}/web:snapshot-${{ github.run_id }}
     steps:
-      - uses: actions/checkout@v2
       - name: 'Check Migrations'
-        working-directory: ./backend/
+        working-directory: /app/
         run: ./manage.py makemigrations --dry-run --check
