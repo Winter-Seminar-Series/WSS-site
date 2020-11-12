@@ -20,12 +20,12 @@ jobs:
       - run: echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u $DOCKER_USERNAME --password-stdin
       - run: docker-compose build
       - run: docker-compose push web
-  test:
+  smoke-test:
     needs: build
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
-      - run: echo "VERSION=snapshot-$GITHUB_RUN_ID" >> $GITHUB_ENV
+      - run: echo "WEB_IMAGE_VERSION=snapshot-$GITHUB_RUN_ID" >> $GITHUB_ENV
       - run: echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u $DOCKER_USERNAME --password-stdin
       - run: docker-compose pull
       - run: docker-compose up -d --no-build
@@ -34,7 +34,7 @@ jobs:
       - name: Smoke test
         run: ./.github/scripts/smoke-test.sh --host "http://localhost"
   release:
-    needs: test
+    needs: smoke-test
     runs-on: ubuntu-20.04
     steps:
       - run: echo "SNAPSHOT_VERSION=snapshot-$GITHUB_RUN_ID" >> $GITHUB_ENV
@@ -98,7 +98,7 @@ jobs:
           /smoke-test.sh --host "http://$TARGET_HOST" --no-check-logs
   deploy:
     needs:
-      - test
+      - smoke-test
       - test-deploy
       - release
     runs-on: ubuntu-20.04
