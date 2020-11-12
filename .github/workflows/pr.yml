@@ -14,3 +14,12 @@ jobs:
         run: sleep 20
       - name: Smoke test
         run: ./.github/scripts/smoke-test.sh --host "http://localhost"
+  check-migrations:
+    runs-on: ubuntu-20.04
+    container:
+      image: python:3.8-alpine
+    steps:
+      - uses: actions/checkout@v2
+      - name: 'Check Migrations'
+        working-directory: ./backend/
+        run: ./manage.py makemigrations --dry-run --check
