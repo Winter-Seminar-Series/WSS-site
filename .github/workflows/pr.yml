@@ -33,9 +33,7 @@ jobs:
   check-migrations:
     needs: build
     runs-on: ubuntu-20.04
-    container:
-      image: ${{ env.DOCKER_USERNAME }}/web:snapshot-${{ github.run_id }}
     steps:
       - name: 'Check Migrations'
-        working-directory: /app/
-        run: ./manage.py makemigrations --dry-run --check
+        run: docker run $DOCKER_USERNAME/web:snapshot-$GITHUB_RUN_ID
+          ./manage.py makemigrations --dry-run --check
