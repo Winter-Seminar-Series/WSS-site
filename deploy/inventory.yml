@@ -6,7 +6,6 @@ all:
     src_root_dir: '../'
     dest_root_dir: '/home/{{ ansible_user }}/wss/'
     docker_hub_username: 'sharifwss'
-    docker_hub_password: '{{ lookup("env", "DOCKER_PASSWORD") }}'
   children:
     production:
       hosts:

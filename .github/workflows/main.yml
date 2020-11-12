@@ -110,6 +110,7 @@ jobs:
     needs:
       - test
       - test-deploy
+      - release
     runs-on: ubuntu-20.04
     container:
       image: spy86/ansible:latest
@@ -126,5 +127,6 @@ jobs:
           web_image_version=$RELEASE_VERSION
           secret_key=$WSS_SECRET_KEY
           db_password=${{ secrets.DB_PASSWORD }}
-          postgres_superuser_pass=${{ secrets.POSTGRES_SUPERUSER_PASS }}"
+          postgres_superuser_pass=${{ secrets.POSTGRES_SUPERUSER_PASS }}
+          docker_hub_password=${{ secrets.DOCKER_PASSWORD }}"
           deploy.yml
