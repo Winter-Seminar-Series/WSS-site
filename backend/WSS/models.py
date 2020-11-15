@@ -24,7 +24,7 @@ class WSS(models.Model):
     main_clip = models.OneToOneField(to='Clip', null=True, blank=True, related_name='+', on_delete=models.SET_NULL)
     booklet = models.OneToOneField(to='Booklet', null=True, blank=True, related_name='+', on_delete=models.SET_NULL)
     main_image = models.OneToOneField(to='Image', null=True, blank=True, related_name='+', on_delete=models.SET_NULL)
-    registration_fee = models.FloatField()
+    registration_fee = models.FloatField(default=0)
 
     class Meta:
         ordering = ('-year',)
@@ -191,7 +191,7 @@ QUESTION = [(None, 'Please Select'), ('RPA', 'RPA'), ('Virtual Assistant', 'Virt
 
 
 class Participant(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='participant')
+    user = models.OneToOneField(User, null=True, default=None, on_delete=models.CASCADE, related_name='participant')
     current_wss = models.ForeignKey(null=True, to='WSS', related_name='participants', verbose_name='WSS', on_delete=models.SET_NULL)
     id = models.BigAutoField(primary_key=True)
     name = models.CharField(max_length=250, verbose_name="First Name (in Persian)")
