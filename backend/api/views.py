@@ -6,10 +6,10 @@ from django.shortcuts import get_object_or_404, redirect
 from WSS.mixins import FooterMixin
 from api.serializer import WSSSerializer, WorkshopSerializer, SeminarSerializer, PosterSessionSerializer, SponsorshipSerializer, ClipSerializer, BookletSerializer, HoldingTeamSerializer, ImageSerializer
 from events.models import Workshop
-from WSS.models import WSS
+from WSS.models import WSS, Participant
 from abc import ABC, abstractmethod
 from django.http import JsonResponse
-from WSS.payment import send_payment_request
+from WSS.payment import send_payment_request, verify
 from django.conf import settings
 
 
@@ -146,5 +146,35 @@ class PaymentViewSet(viewsets.ViewSet):
         
         return redirect(f"{payment_url}{result.Authority}")
 
-
+    @action(methods=['GET'], detail=False)
+    def verify(self, request, year):
+        wss = get_object_or_404(year)
+        if not wss.registration_open:
+            return ErrorResponse("Sorry, the registration has been ended.")
         
+        user: Participant = request.user.participant
+        amount = wss.registration_fee
+
+        if request.GET.get('Status') == 'OK':
+            result = verify(request.GET['Authority'], amount)
+            
+            if result.Status == 100:
+                user.payment_status = 'OK'
+                return Response({
+                    "status": 'OK',
+                    "RefID": result.RefID
+                })
+            
+            if result.Status == 101:
+                return Response({'status': 'SUBMITTED'}, status=202)
+            
+            return ErrorResponse({
+                'status': 'FAILED',
+                'code': result.Status
+            })
+        
+        return ErrorResponse({
+            'status': 'FAILED|CANCELLED'
+        })
+            
+            

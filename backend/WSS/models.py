@@ -1,6 +1,7 @@
 from django.db import models
 from django.db.models.deletion import CASCADE
 from django.utils.safestring import mark_safe
+from django.contrib.auth.models import User
 from pip._vendor import requests
 from sorl.thumbnail import ImageField
 
@@ -190,6 +191,7 @@ QUESTION = [(None, 'Please Select'), ('RPA', 'RPA'), ('Virtual Assistant', 'Virt
 
 
 class Participant(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='participant')
     current_wss = models.ForeignKey(null=True, to='WSS', related_name='participants', verbose_name='WSS', on_delete=models.SET_NULL)
     id = models.BigAutoField(primary_key=True)
     name = models.CharField(max_length=250, verbose_name="First Name (in Persian)")
