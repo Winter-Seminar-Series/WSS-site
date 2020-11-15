@@ -134,7 +134,7 @@ class PaymentViewSet(viewsets.ViewSet):
         
         amount = wss.registration_fee
         description = f"{settings.PAYMENT_SETTING['description']} {year}"
-        callback_url = f"https://wss.ce.sharif.edu/api/{year}/verify"
+        callback_url = f"https://wss.ce.sharif.edu/api/payment/{year}/verify"
         email = request.POST.get("email")
         mobile = request.POST.get("mobile")
         result = send_payment_request(callback_url, amount, description, email, mobile)
