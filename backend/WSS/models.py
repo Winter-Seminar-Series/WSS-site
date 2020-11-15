@@ -23,6 +23,7 @@ class WSS(models.Model):
     main_clip = models.OneToOneField(to='Clip', null=True, blank=True, related_name='+', on_delete=models.SET_NULL)
     booklet = models.OneToOneField(to='Booklet', null=True, blank=True, related_name='+', on_delete=models.SET_NULL)
     main_image = models.OneToOneField(to='Image', null=True, blank=True, related_name='+', on_delete=models.SET_NULL)
+    registration_fee = models.FloatField()
 
     class Meta:
         ordering = ('-year',)

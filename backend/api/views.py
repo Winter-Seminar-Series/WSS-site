@@ -2,15 +2,18 @@ from rest_framework.decorators import action
 from rest_framework import viewsets
 from rest_framework.response import Response
 from django.views.generic.detail import DetailView
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, redirect
 from WSS.mixins import FooterMixin
 from api.serializer import WSSSerializer, WorkshopSerializer, SeminarSerializer, PosterSessionSerializer, SponsorshipSerializer, ClipSerializer, BookletSerializer, HoldingTeamSerializer, ImageSerializer
 from events.models import Workshop
 from WSS.models import WSS
 from abc import ABC, abstractmethod
+from django.http import JsonResponse
+from WSS.payment import send_payment_request
+from django.conf import settings
 
 
-def get_wss_object_or_404(year):
+def get_wss_object_or_404(year: int) -> WSS:
     return get_object_or_404(WSS, year=year)
 
 
@@ -112,3 +115,34 @@ class ImageViewSet(BaseViewSet):
 
     def queryset_selector(self, request, wss):
         return wss.images
+
+
+class ErrorResponse(JsonResponse):
+    
+    def __init__(self, data, status_code: int = 400):
+        super().__init__(data)
+        self.status_code = status_code
+
+
+class PaymentViewSet(viewsets.ViewSet):
+
+    @action(methods=['POST'], detail=False)
+    def request(self, request, year):
+        wss = get_wss_object_or_404(year)
+        if not wss.registration_open:
+            return ErrorResponse("Sorry, the registration has been ended.")
+        
+        amount = wss.registration_fee
+        description = f"{settings.PAYMENT_SETTING['description']} {year}"
+        email = request.POST.get("email")
+        mobile = request.POST.get("mobile") 
+        result = send_payment_request(amount, description, email, mobile)
+        payment_url = settings.PAYMENT_SETTING['payment_url']
+
+        if result.Status != 100:
+            return ErrorResponse("An error occured!", status_code= result.Status)
+        
+        return redirect(f"{payment_url}{result.Authority}")
+
+
+        
