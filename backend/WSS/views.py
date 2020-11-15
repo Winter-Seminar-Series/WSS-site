@@ -269,7 +269,7 @@ def send_request(request, year):
     exh.workshops = workshops
     exh.save()
     price = compute_cost(exh)
-    result = client.service.PaymentRequest(MERCHANT, price, descriptiondescription, 'aaa@aaa.gmail.com', "09123456789",
+    result = client.service.PaymentRequest(MERCHANT, price, description, 'aaa@aaa.gmail.com', "09123456789",
                                            CallbackURL + email + "/" + str(payment_id))
     if result.Status == 100:
         logger.info("user with email:" + email + " connected to payment")

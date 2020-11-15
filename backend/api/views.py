@@ -134,9 +134,11 @@ class PaymentViewSet(viewsets.ViewSet):
         
         amount = wss.registration_fee
         description = f"{settings.PAYMENT_SETTING['description']} {year}"
+        callback_url = f"https://wss.ce.sharif.edu/api/{year}/verify"
         email = request.POST.get("email")
-        mobile = request.POST.get("mobile") 
-        result = send_payment_request(amount, description, email, mobile)
+        mobile = request.POST.get("mobile")
+        result = send_payment_request(callback_url, amount, description, email, mobile)
+
         payment_url = settings.PAYMENT_SETTING['payment_url']
 
         if result.Status != 100:
