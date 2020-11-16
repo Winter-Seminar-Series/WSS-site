@@ -134,6 +134,14 @@ class PaymentViewSet(viewsets.ViewSet):
                 'message': "Sorry, the registration has been ended."
             })
         
+        user_profile = UserProfile.objects.get(user=request.user)
+        participant = Participant.objects.filter(current_wss=wss, user_profile=user_profile).first()
+
+        if participant is not None:
+            return ErrorResponse({
+                "message": "You already have finished your payment."
+            })  
+        
         amount = wss.registration_fee
         description = f"{settings.PAYMENT_SETTING['description']} {year}"
         callback_url = f"{request.scheme}://{request.get_host()}/api/{year}/payment/verify"
@@ -162,7 +170,7 @@ class PaymentViewSet(viewsets.ViewSet):
             })
         
         user_profile = UserProfile.objects.get(user=request.user)
-        participant = Participant.objects.get(current_wss=wss, user_profile=user_profile)
+        participant = Participant.objects.filter(current_wss=wss, user_profile=user_profile).first()
 
         if participant is not None:
             return ErrorResponse({

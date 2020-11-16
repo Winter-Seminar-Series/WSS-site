@@ -191,9 +191,9 @@ QUESTION = [(None, 'Please Select'), ('RPA', 'RPA'), ('Virtual Assistant', 'Virt
 
 
 class Participant(models.Model):
-    current_wss = models.ForeignKey('WSS', related_name='participants', verbose_name='WSS', on_delete=models.SET_NULL)
+    current_wss = models.ForeignKey('WSS', null=True, related_name='participants', verbose_name='WSS', on_delete=models.SET_NULL)
     payment_status = models.CharField(max_length=2, default='NO', choices=PAYMENT_CHOICES)
-    user_profile = models.ForeignKey('UserProfile', related_name='user_profile', on_delete=models.SET_NULL)
+    user_profile = models.ForeignKey('UserProfile', null=True, related_name='user_profile', on_delete=models.SET_NULL)
     participate_in_wss = models.BooleanField(default=True, verbose_name="I want to participate in WSS Seminars",
                                              help_text="Price: 135,000 Tomans for students, 150,000 Tomans for non-students")
     

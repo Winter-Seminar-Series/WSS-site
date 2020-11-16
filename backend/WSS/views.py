@@ -18,7 +18,7 @@ from events.models import Workshop
 logger = logging.getLogger('payment')
 from zeep import Client
 from django.views.decorators.csrf import csrf_exempt
-from WSS.forms import ParticipantForm
+# from WSS.forms import ParticipantForm
 from WSS.mixins import FooterMixin, WSSWithYearMixin
 from WSS.models import WSS, Participant, Grade, Reserve, ShortLink, ExternalLink
 
@@ -150,7 +150,7 @@ class RegisterView(FooterMixin, WSSWithYearMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data()
-        context['form'] = ParticipantForm(initial={'year': int(self.kwargs['year'])})
+        # context['form'] = ParticipantForm(initial={'year': int(self.kwargs['year'])})
         if not self.get_object(self).registration_open:
             context['error'] = "Sorry, the registration has been ended."
         return context
@@ -176,7 +176,7 @@ def send_request(request, year):
                        'wss': get_object_or_404(WSS, year=year), 'status': 'danger',
                        'info': 'Sorry, the registration has been ended.'})
 
-    form = ParticipantForm(request.POST, initial={'year': year})
+    # form = ParticipantForm(request.POST, initial={'year': year})
     if not form.is_valid():
         return render(request, 'WSS/register.html', {'wss': get_object_or_404(WSS, year=year), 'form': form,
                                                      'error': "Please correct the following errors."})
