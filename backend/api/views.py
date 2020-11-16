@@ -134,6 +134,13 @@ class PaymentViewSet(viewsets.ViewSet):
                 'message': "Sorry, the registration has been ended."
             })
         
+        callback_url = request.query_params.get("callback", None)
+
+        if callback_url is None:
+            return ErrorResponse({
+                'message': "`callback_url` should be passed in query string"
+            })
+        
         user_profile = UserProfile.objects.get(user=request.user)
         participant = Participant.objects.filter(current_wss=wss, user_profile=user_profile).first()
 
@@ -144,7 +151,6 @@ class PaymentViewSet(viewsets.ViewSet):
         
         amount = wss.registration_fee
         description = f"{settings.PAYMENT_SETTING['description']} {year}"
-        callback_url = f"{request.scheme}://{request.get_host()}/api/{year}/payment/verify"
 
         result = send_payment_request(callback_url, amount, description)
 
