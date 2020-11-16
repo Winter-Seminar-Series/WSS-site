@@ -159,7 +159,8 @@ class PaymentViewSet(viewsets.ViewSet):
             result = verify(request.GET['Authority'], amount)
             
             if result.Status == 100:
-                user.payment_status = 'OK'
+                if user:
+                    user.payment_status = 'OK'
                 return Response({
                     "status": 'OK',
                     "RefID": result.RefID
