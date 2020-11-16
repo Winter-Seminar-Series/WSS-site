@@ -209,9 +209,11 @@ LOGGING = {
 
 PAYMENT_SETTING = {
     "MERCHANT": '5ff4f360-c10a-11e9-af68-000c295eb8fc',
-    "wsdl": 'https://www.zarinpal.com/pg/services/WebGate/wsdl',
+    # "wsdl": 'https://www.zarinpal.com/pg/services/WebGate/wsdl',
+    "wsdl": 'https://sandbox.zarinpal.com/pg/services/WebGate/wsdl',
     "description": "هزینه ثبت نام رویداد WSS",
-    "payment_url": 'https://www.zarinpal.com/pg/StartPay/'
+    # "payment_url": 'https://www.zarinpal.com/pg/StartPay/'
+    "payment_url": 'https://sandbox.zarinpal.com/pg/StartPay/'
 }
 
 local_settings_path = os.path.join(os.path.dirname(__file__), 'local_settings.py')
