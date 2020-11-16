@@ -191,8 +191,21 @@ QUESTION = [(None, 'Please Select'), ('RPA', 'RPA'), ('Virtual Assistant', 'Virt
 
 
 class Participant(models.Model):
-    user = models.OneToOneField(User, null=True, default=None, on_delete=models.CASCADE, related_name='participant')
-    current_wss = models.ForeignKey(null=True, to='WSS', related_name='participants', verbose_name='WSS', on_delete=models.SET_NULL)
+    current_wss = models.ForeignKey('WSS', related_name='participants', verbose_name='WSS', on_delete=models.SET_NULL)
+    payment_status = models.CharField(max_length=2, default='NO', choices=PAYMENT_CHOICES)
+    user_profile = models.ForeignKey('UserProfile', related_name='user_profile', on_delete=models.SET_NULL)
+    participate_in_wss = models.BooleanField(default=True, verbose_name="I want to participate in WSS Seminars",
+                                             help_text="Price: 135,000 Tomans for students, 150,000 Tomans for non-students")
+    
+    class Meta:
+        unique_together = [['current_wss', 'user_profile']]
+    
+    def __str__(self):
+        return self.payment_status
+
+
+class UserProfile(models.Model):
+    user = models.OneToOneField(User, null=True, default=None, on_delete=models.CASCADE, related_name='profile')
     id = models.BigAutoField(primary_key=True)
     name = models.CharField(max_length=250, verbose_name="First Name (in Persian)")
     family = models.CharField(max_length=250, verbose_name="Family Name (in Persian)")
@@ -201,34 +214,28 @@ class Participant(models.Model):
     phone_number = models.CharField(max_length=13, verbose_name="Phone Number")
     age = models.PositiveSmallIntegerField()
     national_id = models.CharField(max_length=10, verbose_name="National ID")
-    email = models.EmailField()
+    email = models.EmailField(unique=True)
     job = models.CharField(max_length=250)
     university = models.CharField(max_length=250)
-    introduction_method = models.CharField(max_length=250, choices=INTRODUCTION, default=None,
-                                           verbose_name="How were you introduced to WSS?")
+    introduction_method = models.CharField(max_length=250, choices=INTRODUCTION, default=None, verbose_name="How were you introduced to WSS?")
     gender = models.CharField(max_length=50, choices=GENDER, blank=False, default=None)
     city = models.CharField(max_length=150)
     country = models.CharField(max_length=150)
     field_of_interest = models.CharField(max_length=1500, blank=True)
-    payment_status = models.CharField(max_length=2, default='NO', choices=PAYMENT_CHOICES)
     grade = models.CharField(max_length=30, choices=GRADE_CHOICES)
     is_student = models.BooleanField(default=False, verbose_name="I am a Student")
     payment_id = models.IntegerField(default=0)
     workshops = models.ManyToManyField(to=Workshop, blank=True)
     paid_workshops = models.ManyToManyField(related_name="paid", to=Workshop, blank=True)
     paid_amount = models.IntegerField(blank=True, default=0)
-    participate_in_wss = models.BooleanField(default=True, verbose_name="I want to participate in WSS Seminars",
-                                             help_text="Price: 135,000 Tomans for students, 150,000 Tomans for non-students")
     question = models.CharField(max_length=50, blank=False, default=None, choices=QUESTION,
                                 verbose_name="Which one of these Artificial Intelligence-related technologies do you think have the most impact on Iran's market?")
     question_other = models.CharField(max_length=500, blank=True, verbose_name="Your answer")
     sign_timestamp = models.DateTimeField(auto_now=True)
 
-    class Meta:
-        unique_together = [['email', 'payment_id']]
 
     def __str__(self):
-        return self.name + " " + self.family + " " + self.payment_status
+        return self.name + " " + self.family
 
 
 class Reserve(models.Model):

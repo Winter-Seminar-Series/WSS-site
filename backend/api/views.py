@@ -6,7 +6,7 @@ from django.shortcuts import get_object_or_404, redirect
 from WSS.mixins import FooterMixin
 from api.serializer import WSSSerializer, WorkshopSerializer, SeminarSerializer, PosterSessionSerializer, SponsorshipSerializer, ClipSerializer, BookletSerializer, HoldingTeamSerializer, ImageSerializer
 from events.models import Workshop
-from WSS.models import WSS, Participant
+from WSS.models import WSS, Participant, UserProfile
 from abc import ABC, abstractmethod
 from django.http import JsonResponse
 from WSS.payment import send_payment_request, verify
@@ -148,8 +148,9 @@ class PaymentViewSet(viewsets.ViewSet):
 
         payment_url = settings.PAYMENT_SETTING['payment_url']
 
-        return redirect(f"{payment_url}{result.Authority}")
-    
+        return Response({
+            "redirect_url": f"{payment_url}{result.Authority}"
+        })
     
 
     @action(methods=['GET'], detail=False)
@@ -160,42 +161,36 @@ class PaymentViewSet(viewsets.ViewSet):
                 'message': "Sorry, the registration has been ended."
             })
         
+        user_profile = UserProfile.objects.get(user=request.user)
+        participant = Participant.objects.get(current_wss=wss, user_profile=user_profile)
 
-        # TODO: This must change after adding login register
-        if "participant" in request.user.__dict__:
-            user = request.user.participant
-        else:
-            user = Participant(current_wss=wss, user=request.user, name="name", family="family", email="email", grade="grade",
-                      phone_number="asd", job="job",
-                      university="asd", introduction_method="asd", gender="gender",
-                      name_english="asd", family_english="family_eng",
-                      city="city", participate_in_wss=True, age=22,
-                      country="country", field_of_interest="asd", is_student=True,
-                      national_id="asd", question="question")
-
-        amount = wss.registration_fee
+        if participant is not None:
+            return ErrorResponse({
+                "message": "You already have finished your payment."
+            })        
 
         if request.GET.get('Status') == 'OK':
+            amount = wss.registration_fee
             result = verify(request.GET['Authority'], amount)
             
             if result.Status == 100:
-                if user:
-                    user.payment_status = 'OK'
+                participant = Participant(current_wss=wss, payment_status='OK', participate_in_wss=True, user_profile=user_profile)
+                participant.save()
                 
-                user.save()
                 return Response({
                     "message": 'OK',
                     "RefID": result.RefID
                 })
             
             if result.Status == 101:
-                return Response({'status': 'SUBMITTED'}, status=202)
+                return ErrorResponse({'status': 'ALREADY SUBMITTED'})
             
             return ErrorResponse({
                 'message': 'FAILED',
                 'status': result.Status
             })
         
+
         return ErrorResponse({
             'message': 'FAILED|CANCELLED'
         })
