@@ -1,0 +1,48 @@
+---
+name: "Build Infra as an Image"
+env:
+  DOCKER_USERNAME: sharifwss
+on:
+  workflow_dispatch:
+jobs:
+  setup-infra:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+      - name: Force GitHub Actions' docker daemon to use vfs.
+        run: |
+          sudo systemctl stop docker
+          echo '{"cgroup-parent":"/actions_job","storage-driver":"vfs"}' | sudo tee /etc/docker/daemon.json
+          sudo systemctl start docker
+      - run: echo "TARGET_HOST=192.168.2.2" >> $GITHUB_ENV
+      - run: docker network create --subnet 192.168.2.0/24 wss-net
+      - run: docker run -d
+          --network wss-net
+          --ip $TARGET_HOST
+          --privileged
+          --name infra_container
+          rastasheep/ubuntu-sshd:18.04
+      - name: Run setup_infra.yml
+        run: docker run
+          --network wss-net
+          -v `pwd`:/app-src/:ro
+          --workdir /app-src/deploy/
+          --env TARGET_HOST=$TARGET_HOST
+          spy86/ansible:latest
+          bash -c '
+          DNS_SERVER=$(cat /etc/resolv.conf | grep -m 1 nameserver | cut -d" " -f2) &&
+          ansible-playbook
+          -i inventory.yml
+          --extra-vars="
+          shecan_dns_1=$DNS_SERVER
+          shecan_dns_2=$DNS_SERVER
+          ansible_host=$TARGET_HOST
+          ansible_user=root
+          ansible_ssh_pass=root
+          docker_hub_password=${{ secrets.DOCKER_PASSWORD }}"
+          setup_infra.yml
+          '
+      - run: docker stop infra_container
+      - run: docker commit infra_container $DOCKER_USERNAME/infra-image:latest
+      - run: echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u $DOCKER_USERNAME --password-stdin
+      - run: docker push $DOCKER_USERNAME/infra-image:latest

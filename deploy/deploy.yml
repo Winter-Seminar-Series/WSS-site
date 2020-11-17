@@ -1,0 +1,50 @@
+---
+- hosts: all
+  tasks:
+    - name: 'Check mandatory variables are defined'
+      assert:
+        that:
+          - src_root_dir is defined
+          - dest_root_dir is defined
+          - web_image_version is defined
+          - secret_key is defined
+          - db_password is defined
+          - postgres_superuser_pass is defined
+          - docker_hub_username is defined
+          - docker_hub_password is defined
+
+    - name: 'Copy compose file'
+      copy:
+        src: '{{ src_root_dir | mandatory }}/docker-compose.yml'
+        dest: '{{ dest_root_dir | mandatory }}'
+
+    - name: 'Copy DB first-time init script'
+      copy:
+        src: '{{ src_root_dir | mandatory }}/db-first-time-init.sh'
+        dest: '{{ dest_root_dir | mandatory }}'
+
+    - name: 'Create backend directory as a hack to make docker-compose work!'
+      file:
+        path: '{{ dest_root_dir }}/backend/'
+        state: directory
+
+    - name: 'Login to Docker Hub registry (To extend pull rate limit)'
+      community.general.docker_login:
+        username: '{{ docker_hub_username | mandatory }}'
+        password: '{{ docker_hub_password | mandatory }}'
+
+    - name: 'Pull, Stop, and Start containers'
+      docker_compose:
+        project_src: '{{ dest_root_dir }}'
+        build: no
+        pull: '{{ item.pull }}'
+        state: '{{ item.state }}'
+      environment:
+        WEB_IMAGE_VERSION: '{{ web_image_version | mandatory }}'
+        WSS_SECRET_KEY: '{{ secret_key | mandatory }}'
+        WSS_DB_PASSWORD: '{{ db_password | mandatory }}'
+        POSTGRES_PASSWORD: '{{ postgres_superuser_pass | mandatory }}'
+      loop:
+        - { pull: yes, state: present }
+        - { pull: no, state: absent }
+        - { pull: no, state: present }
