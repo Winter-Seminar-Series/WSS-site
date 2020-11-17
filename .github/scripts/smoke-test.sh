@@ -4,6 +4,7 @@ set -o pipefail
 
 HOST=
 CHECK_LOGS=true
+CHECK_CERT=true
 
 while [ -n "$1" ]; do
   case "$1" in
@@ -16,13 +17,21 @@ while [ -n "$1" ]; do
     CHECK_LOGS=false
     shift
     ;;
+  --no-check-certificate)
+    CHECK_CERT=false
+    shift
+    ;;
   *)
     echo "Unknown option: $1"
     exit 1
   esac
 done
 
-wget_output=$(wget --server-response "$HOST" 2>&1)
+check_cert_flag=
+if $CHECK_CERT; then
+  check_cert_flag='--no-check-certificate'
+fi
+wget_output=$(wget --server-response $check_cert_flag "$HOST" 2>&1)
 status_code=$(echo "$wget_output" | awk '/^  HTTP/{print $2}')
 
 if [[ "$status_code" == "200" ]]; then
