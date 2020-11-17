@@ -12,6 +12,10 @@
           - postgres_superuser_pass is defined
           - docker_hub_username is defined
           - docker_hub_password is defined
+          - ssl_private_key is defined
+          - ssl_fullchain is defined
+          - dest_ssl_privkey_path is defined
+          - dest_ssl_fullchain_path is defined
 
     - name: 'Copy compose file'
       copy:
@@ -22,6 +26,18 @@
       copy:
         src: '{{ src_root_dir | mandatory }}/db-first-time-init.sh'
         dest: '{{ dest_root_dir | mandatory }}'
+
+    - name: 'Copy SSL private key'
+      copy:
+        dest: '{{ dest_ssl_privkey_path | mandatory }}'
+        content: '{{ ssl_private_key | mandatory }}'
+        mode: '600'
+
+    - name: 'Copy SSL fullchain'
+      copy:
+        dest: '{{ dest_ssl_fullchain_path | mandatory }}'
+        content: '{{ ssl_fullchain | mandatory }}'
+        mode: '644'
 
     - name: 'Create backend directory as a hack to make docker-compose work!'
       file:
@@ -44,6 +60,8 @@
         WSS_SECRET_KEY: '{{ secret_key | mandatory }}'
         WSS_DB_PASSWORD: '{{ db_password | mandatory }}'
         POSTGRES_PASSWORD: '{{ postgres_superuser_pass | mandatory }}'
+        PRIVKEY_PATH: '{{ dest_ssl_privkey_path | mandatory }}'
+        FULLCHAIN_PATH: '{{ dest_ssl_fullchain_path | mandatory }}'
       loop:
         - { pull: yes, state: present }
         - { pull: no, state: absent }
