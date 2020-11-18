@@ -34,7 +34,7 @@ jobs:
       - run: docker-compose pull
       - run: docker-compose up -d --no-build
       - name: Point sharif-wss.ir to localhost
-        run: echo "127.0.0.1 sharif-wss.ir" >> /etc/hosts
+        run: echo "127.0.0.1 sharif-wss.ir" | sudo tee -a /etc/hosts
       - name: Wait for the app to be up
         run: sleep 20
       - name: Smoke test
