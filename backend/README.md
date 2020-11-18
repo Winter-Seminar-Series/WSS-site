@@ -80,14 +80,146 @@
 ## Payment API:
 
 Sending payment request:
+
 ```HTTP
 GET /api/<year>/payment/request?callback=<callback_url>
 ```
 
-If request is not authorized, the response will be 403.
+- If request is not authorized, the response will be 403.
+- If `<year>` is not valid, the response will be 404.
+- If the registration for given `<year>` is closed, the response will be as shown bellow:
 
+    ```HTTP
+    HTTP 400 Bad Request
+    Content-Type: application/json
 
-**Note: `<callback_url>` is a URL that the verification request is sent to. Suppose this URL refers to a page in frontend with url `/2020/payment/verify`. Then, after **
+    {
+        "message": "Sorry, the registration has been ended."
+    }
+    ```
+- If the `<callback_url>` parameter is not passed as query string, thr response will be as bellow:
+
+    ```HTTP
+    HTTP 400 Bad Request
+    Content-Type: application/json
+
+    {
+        "message": "`callback_url` should be passed in query string"
+    }
+    ```
+- If the user already has finished their payment for given `<year>`, the response will be as bellow:
+
+    ```HTTP
+    HTTP 400 Bad Request
+    Content-Type: application/json
+
+    {
+        "message": "You already have finished your payment."
+    }
+    ```
+- If some error occurs in sending payment request, the response will be as bellow:
+
+    ```HTTP
+    HTTP 400 Bad Request
+    Content-Type: application/json
+
+    {
+        "message": "An error occured!",
+        "code": <code_of_error>
+    }
+    ```
+- And finally, if there's no errors, The response will be as bellow:
+
+    ```HTTP
+    HTTP 200 OK
+    Content-Type: application/json
+
+    {
+        "redirect_url": <redirect_url>
+    }
+    ```
+
+    And the client should be redirected to given `<redirect_url>`.
+
+Then, the user is redirected to payment page, and after payment, the given `<callback_url>` will be called as bellow (the values are just examples):
+
+```HTTP
+GET <callback_url>?Authority=00000167354&Status=OK
+```
+
+And the frontend should call verification API as bellow:
+```HTTP
+GET /api/<year>/payment/verify?Authority=00000167354&Status=OK
+```
+
+- If request is not authorized, the response will be 403.
+- If `<year>` is not valid, the response will be 404.
+- If the registration for given `<year>` is closed, the response will be as shown bellow:
+
+    ```HTTP
+    HTTP 400 Bad Request
+    Content-Type: application/json
+
+    {
+        "message": "Sorry, the registration has been ended."
+    }
+    ```
+- If the user already has finished their payment for given `<year>`, the response will be as bellow:
+
+    ```HTTP
+    HTTP 400 Bad Request
+    Content-Type: application/json
+
+    {
+        "message": "You already have finished your payment."
+    }
+    ```
+- If the verification is fine and there's no problem, the response will be as bellow:
+
+    ```HTTP
+    HTTP 200 OK
+    Content-Type: application/json
+
+    {
+        "message": "OK",
+        "RefID": <refID of transaction>
+    }
+    ```
+- Else, the response may be one of below responses:
+
+    This Transaction is already submitted by someone and is no more valid:
+
+    ```HTTP
+    HTTP 400 Bad Request
+    Content-Type: application/json
+
+    {
+        "status": "ALREADY SUBMITTED"
+    }
+    ```
+
+    The trainsaction failed:
+
+    ```HTTP
+    HTTP 400 Bad Request
+    Content-Type: application/json
+
+    {
+        "message": "FAILED",
+        "status": <status_code>
+    }
+    ```
+
+    The transaction is failed or cancelled:
+
+    ```HTTP
+    HTTP 400 Bad Request
+    Content-Type: application/json
+
+    {
+        "message": "FAILED|CANCELLED"
+    }
+    ```
 
 
 ### Note
