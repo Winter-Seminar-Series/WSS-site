@@ -28,7 +28,7 @@ while [ -n "$1" ]; do
 done
 
 check_cert_flag=
-if $CHECK_CERT; then
+if ! $CHECK_CERT; then
   check_cert_flag='--no-check-certificate'
 fi
 wget_output=$(wget --server-response $check_cert_flag "$HOST" 2>&1)
