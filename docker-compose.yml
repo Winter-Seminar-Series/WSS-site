@@ -17,6 +17,7 @@ services:
     image: postgres:13.0-alpine
     volumes:
       - ./db-first-time-init.sh:/docker-entrypoint-initdb.d/init.sh:ro
+      - ./db-data:/var/lib/postgresql/data
     environment:
       - POSTGRES_PASSWORD
       - WSS_DB_DATABASE=wss_database
