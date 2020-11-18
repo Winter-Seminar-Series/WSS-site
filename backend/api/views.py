@@ -178,7 +178,7 @@ class PaymentViewSet(viewsets.ViewSet):
                 'message': "Sorry, the registration has been ended."
             })
         
-        user_profile = UserProfile.objects.get(user=request.user)
+        user_profile = request.user.profile
         participant = Participant.objects.filter(current_wss=wss, user_profile=user_profile).first()
 
         if participant is not None:
