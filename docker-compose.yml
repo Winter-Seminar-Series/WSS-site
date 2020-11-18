@@ -23,7 +23,7 @@ services:
     networks:
       wss_net:
   nginx:
-    image: nginx:1.19.4
+    image: nginx:1.19.4-alpine
     networks:
       wss_net:
     ports:
