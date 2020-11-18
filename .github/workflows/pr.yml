@@ -11,20 +11,16 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
-      - run: ./.github/scripts/build.sh $DOCKER_USERNAME ${{ secrets.DOCKER_PASSWORD }} $GITHUB_RUN_ID
+      - run: ./.github/scripts/build.sh $DOCKER_USERNAME ${{ secrets.DOCKER_PASSWORD }} snapshot-$GITHUB_RUN_ID
   smoke-test:
     needs: build
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
-      - run: echo "WEB_IMAGE_VERSION=snapshot-$GITHUB_RUN_ID" >> $GITHUB_ENV
-      - run: echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u $DOCKER_USERNAME --password-stdin
-      - run: docker-compose pull
-      - run: docker-compose up -d --no-build
-      - name: Wait for the app to be up
-        run: sleep 20
-      - name: Smoke test
-        run: ./.github/scripts/smoke-test.sh --host "https://localhost" --no-check-certificate
+      - run: ./.github/scripts/smoke-test.sh 
+          --tag snapshot-$GITHUB_RUN_ID
+          --docker-user $DOCKER_USERNAME
+          --docker-pass ${{ secrets.DOCKER_PASSWORD }}
   check-migrations:
     needs: build
     runs-on: ubuntu-20.04

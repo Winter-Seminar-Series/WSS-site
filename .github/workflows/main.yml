@@ -18,25 +18,16 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
-      - name: Preload last stable image as a cache
-        run: 'docker pull $DOCKER_USERNAME/web:latest || echo "Unable to pull cache. exit code: $?"'
-      - run: echo "WEB_IMAGE_VERSION=snapshot-$GITHUB_RUN_ID" >> $GITHUB_ENV
-      - run: echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u $DOCKER_USERNAME --password-stdin
-      - run: docker-compose build
-      - run: docker-compose push web
+      - run: ./.github/scripts/build.sh $DOCKER_USERNAME ${{ secrets.DOCKER_PASSWORD }} snapshot-$GITHUB_RUN_ID
   smoke-test:
     needs: build
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
-      - run: echo "WEB_IMAGE_VERSION=snapshot-$GITHUB_RUN_ID" >> $GITHUB_ENV
-      - run: echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u $DOCKER_USERNAME --password-stdin
-      - run: docker-compose pull
-      - run: docker-compose up -d --no-build
-      - name: Wait for the app to be up
-        run: sleep 20
-      - name: Smoke test
-        run: ./.github/scripts/smoke-test.sh --host "https://localhost" --no-check-certificate
+      - run: ./.github/scripts/smoke-test.sh 
+          --tag snapshot-$GITHUB_RUN_ID
+          --docker-user $DOCKER_USERNAME
+          --docker-pass ${{ secrets.DOCKER_PASSWORD }}
   release:
     needs: smoke-test
     runs-on: ubuntu-20.04
@@ -102,7 +93,7 @@ jobs:
           --add-host sharif-wss.ir:$TARGET_HOST
           -v `pwd`/.github/scripts/smoke-test.sh:/smoke-test.sh:ro
           spy86/ansible:latest
-          /smoke-test.sh --host "https://sharif-wss.ir" --no-check-logs
+          /smoke-test.sh --host "https://sharif-wss.ir"
   # deploy:
   #   needs:
   #     - smoke-test
