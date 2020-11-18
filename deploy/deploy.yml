@@ -16,6 +16,7 @@
           - ssl_fullchain is defined
           - dest_ssl_privkey_path is defined
           - dest_ssl_fullchain_path is defined
+          - src_nginx_conf_path is defined
 
     - name: 'Copy compose file'
       copy:
@@ -38,6 +39,11 @@
         dest: '{{ dest_ssl_fullchain_path | mandatory }}'
         content: '{{ ssl_fullchain | mandatory }}'
         mode: '644'
+
+    - name: 'Copy nginx config'
+        copy:
+          src: '{{ nginx_conf_path }}'
+          dest: '{{ dest_root_dir }}/'
 
     - name: 'Create backend directory as a hack to make docker-compose work!'
       file:
