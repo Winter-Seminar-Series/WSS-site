@@ -41,9 +41,9 @@
         mode: '644'
 
     - name: 'Copy nginx config'
-        copy:
-          src: '{{ nginx_conf_path }}'
-          dest: '{{ dest_root_dir }}/'
+      copy:
+        src: '{{ nginx_conf_path }}'
+        dest: '{{ dest_root_dir }}/'
 
     - name: 'Create backend directory as a hack to make docker-compose work!'
       file:
