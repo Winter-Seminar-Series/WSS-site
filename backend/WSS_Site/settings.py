@@ -207,6 +207,13 @@ LOGGING = {
     },
 }
 
+PAYMENT_SETTING = {
+    "MERCHANT": os.environ.get('PAYMENT_MERCHANT'),
+    "wsdl": os.environ.get('PAYMENT_WSDL'),
+    "description": "WSS registration fee",
+    "payment_url": os.environ.get('PAYMENT_URL')
+}
+
 local_settings_path = os.path.join(os.path.dirname(__file__), 'local_settings.py')
 if os.path.exists(local_settings_path):
     exec(open(local_settings_path, 'rb').read())

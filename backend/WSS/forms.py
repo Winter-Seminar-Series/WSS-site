@@ -40,11 +40,11 @@ class ParticipantForm(forms.ModelForm):
     phone_number = forms.CharField(max_length=13, widget=forms.TextInput(attrs={'placeholder': '09xx xxx xxxx'}))
 
     class Meta:
-        model = models.Participant
+        model = models.UserProfile
         fields = ['name', 'family', 'name_english', 'family_english', 'phone_number', 'national_id', 'email', 'age',
                   'job', 'university',
                   'introduction_method',
-                  'gender', 'city', 'country', 'grade', 'is_student', 'participate_in_wss', 'interests', 'workshops',
+                  'gender', 'city', 'country', 'grade', 'is_student', 'interests', 'workshops',
                   'question', 'question_other']
         widgets = {
             'gender': forms.RadioSelect
