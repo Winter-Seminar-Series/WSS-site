@@ -1,6 +1,15 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
+import {
+  register
+} from '../redux/actions/account'
 
-function Register() {
+function Register({ register }: any) {
+  const [email, setEmail] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [university, setUniversity] = useState('');
+
   return (
     <>
       <section id="main-container" className="main-container pb-0">
@@ -18,7 +27,8 @@ function Register() {
               </strong>
             </div>
             {/* {% if wss.is_registration_open %} */}
-            <form name="myform" action="{% url 'wss:payment' wss.year %}" method="post">
+            <form
+              onSubmit={(firstName, lastName, email, university) => }>
               {/* {% csrf_token %} */}
               <div className="row">
                 <div className="col-md-6 pr-md-5">
@@ -117,4 +127,13 @@ function Register() {
   )
 }
 
-export default Register;
+const mapStateToProps = (state: any, ownProps: any) => {
+
+}
+
+export default connect(
+  mapStateToProps,
+  {
+    register,
+  }
+)(Register);

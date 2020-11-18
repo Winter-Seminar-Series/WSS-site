@@ -1,8 +1,13 @@
 import * as actionTypes from '../actionTypes';
 
-const initState = { token: null, isFetching: false, isLoggedIn: false, user: {} };
+const initState = {
+  token: null,
+  isFetching: false,
+  isLoggedIn: false,
+  user: {}
+};
 
-function account(state = initState, action) {
+function Account(state = initState, action) {
   switch (action.type) {
     case actionTypes.LOGIN_REQUEST:
       return ({
@@ -37,10 +42,10 @@ function account(state = initState, action) {
       return ({
         isFetching: false,
       })
-      
+
     default:
       return state;
   }
 }
 
-export default account;
+export default Account;
