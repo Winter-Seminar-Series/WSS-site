@@ -1,16 +1,17 @@
 from rest_framework.decorators import action
 from rest_framework import viewsets
 from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.authentication import SessionAuthentication, BasicAuthentication
 from django.views.generic.detail import DetailView
 from django.shortcuts import get_object_or_404, redirect
-from WSS.mixins import FooterMixin
+from django.http import JsonResponse
+from django.conf import settings
+from abc import ABC, abstractmethod
 from api.serializer import WSSSerializer, WorkshopSerializer, SeminarSerializer, PosterSessionSerializer, SponsorshipSerializer, ClipSerializer, BookletSerializer, HoldingTeamSerializer, ImageSerializer
 from events.models import Workshop
 from WSS.models import WSS, Participant, UserProfile
-from abc import ABC, abstractmethod
-from django.http import JsonResponse
 from WSS.payment import send_payment_request, verify
-from django.conf import settings
 
 
 def get_wss_object_or_404(year: int) -> WSS:
@@ -125,6 +126,8 @@ class ErrorResponse(Response):
 
 
 class PaymentViewSet(viewsets.ViewSet):
+    authentication_classes = [SessionAuthentication, BasicAuthentication]
+    permission_classes = [IsAuthenticated]
 
     @action(methods=['GET'], detail=False)
     def request(self, request, year):
