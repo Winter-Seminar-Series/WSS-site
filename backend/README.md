@@ -1,6 +1,6 @@
 # WSS backend API documentation
 
-Map the old style (`Jinja2`) to `GET` requests:
+## Map the old style (`Jinja2`) to `GET` requests:
 - Primitive fields of WSS
     Fields:
     - `main_image_url`
@@ -77,7 +77,17 @@ Map the old style (`Jinja2`) to `GET` requests:
         GET /api/<year>/sponsorships/count?main=1
         ```
 
+## Payment API:
 
+Sending payment request:
+```HTTP
+GET /api/<year>/payment/request?callback=<callback_url>
+```
+
+If request is not authorized, the response will be 403.
+
+
+**Note: `<callback_url>` is a URL that the verification request is sent to. Suppose this URL refers to a page in frontend with url `/2020/payment/verify`. Then, after **
 
 
 ### Note
