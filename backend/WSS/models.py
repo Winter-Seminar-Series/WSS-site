@@ -103,7 +103,7 @@ class WSS(models.Model):
         try:
             return requests.get(self.participants_count_link).content
         except:
-            return Participant.objects.filter(current_wss=self, payment_status='OK', participate_in_wss=True).count()
+            return Participant.objects.filter(current_wss=self, payment_status='OK').count()
 
 
 class Clip(models.Model):
@@ -194,8 +194,6 @@ class Participant(models.Model):
     current_wss = models.ForeignKey('WSS', null=True, related_name='participants', verbose_name='WSS', on_delete=models.SET_NULL)
     payment_status = models.CharField(max_length=2, default='NO', choices=PAYMENT_CHOICES)
     user_profile = models.ForeignKey('UserProfile', null=True, related_name='user_profile', on_delete=models.SET_NULL)
-    participate_in_wss = models.BooleanField(default=True, verbose_name="I want to participate in WSS Seminars",
-                                             help_text="Price: 135,000 Tomans for students, 150,000 Tomans for non-students")
     
     class Meta:
         unique_together = [['current_wss', 'user_profile']]
