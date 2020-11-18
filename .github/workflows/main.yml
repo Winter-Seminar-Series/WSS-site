@@ -33,12 +33,10 @@ jobs:
       - run: echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u $DOCKER_USERNAME --password-stdin
       - run: docker-compose pull
       - run: docker-compose up -d --no-build
-      - name: Point sharif-wss.ir to localhost
-        run: echo "127.0.0.1 sharif-wss.ir" | sudo tee -a /etc/hosts
       - name: Wait for the app to be up
         run: sleep 20
       - name: Smoke test
-        run: ./.github/scripts/smoke-test.sh --host "https://sharif-wss.ir"
+        run: ./.github/scripts/smoke-test.sh --host "https://localhost" --no-check-certificate
   release:
     needs: smoke-test
     runs-on: ubuntu-20.04
