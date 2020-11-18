@@ -4,7 +4,7 @@ from django.utils.safestring import mark_safe
 from django.contrib.auth.models import User
 from pip._vendor import requests
 from sorl.thumbnail import ImageField
-
+from django.core.validators import MinValueValidator
 from events.models import Workshop, Seminar, PosterSession
 
 
@@ -24,7 +24,7 @@ class WSS(models.Model):
     main_clip = models.OneToOneField(to='Clip', null=True, blank=True, related_name='+', on_delete=models.SET_NULL)
     booklet = models.OneToOneField(to='Booklet', null=True, blank=True, related_name='+', on_delete=models.SET_NULL)
     main_image = models.OneToOneField(to='Image', null=True, blank=True, related_name='+', on_delete=models.SET_NULL)
-    registration_fee = models.FloatField(default=0)
+    registration_fee = models.PositiveIntegerField(default=10000, validators=[MinValueValidator(1000)])
 
     class Meta:
         ordering = ('-year',)
