@@ -2,11 +2,15 @@
 name: "Main Workflow"
 env:
   DOCKER_USERNAME: sharifwss
-  RELEASE_VERSION: 1.0.0
+  RELEASE_VERSION: 1.0.1
   TARGET_HOST: 37.152.187.105
   HOST_SSH_USER: wss
+# on:
+#   push:
+#     branches:
+#       - master
 on:
-  push:
+  pull_request:
     branches:
       - master
 jobs:
@@ -92,33 +96,36 @@ jobs:
           docker_hub_password=${{ secrets.DOCKER_PASSWORD }}"
           deploy.yml
           '
+      - name: Wait for the app to be up
+        run: sleep 20
       - name: Smoke test
-        run: sleep 20 && docker run
+        run: docker run
           --network wss-net
+          --add-host sharif-wss.ir:$TARGET_HOST
           -v `pwd`/.github/scripts/smoke-test.sh:/smoke-test.sh:ro
           spy86/ansible:latest
-          /smoke-test.sh --host "http://$TARGET_HOST" --no-check-logs
-  deploy:
-    needs:
-      - smoke-test
-      - test-deploy
-      - release
-    runs-on: ubuntu-20.04
-    container:
-      image: spy86/ansible:latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: 'Deploy'
-        working-directory: ./deploy/
-        run: ansible-playbook
-          -i inventory.yml
-          --extra-vars="
-          ansible_host=$TARGET_HOST
-          ansible_user=$HOST_SSH_USER
-          ansible_ssh_pass=${{ secrets.HOST_SSH_PASSWORD }}
-          web_image_version=$RELEASE_VERSION
-          secret_key=${{ secrets.WSS_SECRET_KEY }}
-          db_password=${{ secrets.DB_PASSWORD }}
-          postgres_superuser_pass=${{ secrets.POSTGRES_SUPERUSER_PASS }}
-          docker_hub_password=${{ secrets.DOCKER_PASSWORD }}"
-          deploy.yml
+          /smoke-test.sh --host "https://sharif-wss.ir" --no-check-logs
+  # deploy:
+  #   needs:
+  #     - smoke-test
+  #     - test-deploy
+  #     - release
+  #   runs-on: ubuntu-20.04
+  #   container:
+  #     image: spy86/ansible:latest
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #     - name: 'Deploy'
+  #       working-directory: ./deploy/
+  #       run: ansible-playbook
+  #         -i inventory.yml
+  #         --extra-vars="
+  #         ansible_host=$TARGET_HOST
+  #         ansible_user=$HOST_SSH_USER
+  #         ansible_ssh_pass=${{ secrets.HOST_SSH_PASSWORD }}
+  #         web_image_version=$RELEASE_VERSION
+  #         secret_key=${{ secrets.WSS_SECRET_KEY }}
+  #         db_password=${{ secrets.DB_PASSWORD }}
+  #         postgres_superuser_pass=${{ secrets.POSTGRES_SUPERUSER_PASS }}
+  #         docker_hub_password=${{ secrets.DOCKER_PASSWORD }}"
+  #         deploy.yml
