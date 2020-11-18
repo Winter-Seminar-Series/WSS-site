@@ -82,7 +82,9 @@ jobs:
           secret_key=dummy
           db_password=dummy
           postgres_superuser_pass=dummy
-          docker_hub_password=${{ secrets.DOCKER_PASSWORD }}"
+          docker_hub_password=${{ secrets.DOCKER_PASSWORD }}
+          ssl_private_key=${{ secrets.SSL_PRIV_KEY }}
+          ssl_fullchain=${{ secrets.SSL_FULL_CHAIN }}"
           deploy.yml
           '
       - name: Wait for the app to be up
