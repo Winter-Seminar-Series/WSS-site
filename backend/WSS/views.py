@@ -156,7 +156,7 @@ class RegisterView(FooterMixin, WSSWithYearMixin, DetailView):
         return context
 
 
-MERCHANT = '5ff4f360-c10a-11e9-af68-000c295eb8fc'
+MERCHANT = 'XXXXXXX'
 client = Client('https://www.zarinpal.com/pg/services/WebGate/wsdl')
 description = "هزینه ثبت نام رویداد wss 2019"
 student_price = 135000

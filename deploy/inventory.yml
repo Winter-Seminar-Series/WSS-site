@@ -6,6 +6,8 @@ all:
     src_root_dir: '../'
     dest_root_dir: '/home/{{ ansible_user }}/wss/'
     docker_hub_username: 'sharifwss'
+    payment_wsdl: 'https://www.zarinpal.com/pg/services/WebGate/wsdl'
+    payment_url: 'https://www.zarinpal.com/pg/StartPay/'
   children:
     production:
       hosts:

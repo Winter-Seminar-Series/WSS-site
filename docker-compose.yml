@@ -10,6 +10,9 @@ services:
     environment:
       - WSS_DB_PASSWORD
       - WSS_SECRET_KEY
+      - PAYMENT_MERCHANT
+      - PAYMENT_WSDL
+      - PAYMENT_URL
   database:
     image: postgres:13.0-alpine
     volumes:
