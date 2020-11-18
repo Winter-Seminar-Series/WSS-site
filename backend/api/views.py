@@ -191,7 +191,8 @@ class PaymentViewSet(viewsets.ViewSet):
             result = verify(request.GET['Authority'], amount)
             
             if result.Status == 100:
-                participant = Participant(current_wss=wss, payment_status='OK', user_profile=user_profile)
+                participant = Participant(current_wss=wss, user_profile=user_profile,
+                                          payment_ref_id=str(result.RefID), payment_amount=amount)
                 participant.save()
                 
                 return Response({

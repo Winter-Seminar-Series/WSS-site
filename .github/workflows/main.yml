@@ -85,6 +85,7 @@ jobs:
           ansible_ssh_pass=root
           web_image_version=snapshot-$GITHUB_RUN_ID
           secret_key=dummy
+          payment_merchant=${{ secrets.PAYMENT_MERCHANT }}
           db_password=dummy
           postgres_superuser_pass=dummy
           docker_hub_password=${{ secrets.DOCKER_PASSWORD }}"

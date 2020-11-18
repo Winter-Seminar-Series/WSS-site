@@ -192,14 +192,16 @@ QUESTION = [(None, 'Please Select'), ('RPA', 'RPA'), ('Virtual Assistant', 'Virt
 
 class Participant(models.Model):
     current_wss = models.ForeignKey('WSS', null=True, related_name='participants', verbose_name='WSS', on_delete=models.SET_NULL)
-    payment_status = models.CharField(max_length=2, default='NO', choices=PAYMENT_CHOICES)
     user_profile = models.ForeignKey('UserProfile', null=True, related_name='user_profile', on_delete=models.SET_NULL)
+    payment_ref_id = models.CharField(max_length=250, default="NOT_PAYED")
+    payment_amount = models.PositiveIntegerField(default=0)
+    payment_timestamp = models.DateTimeField(auto_now=True)
     
     class Meta:
         unique_together = [['current_wss', 'user_profile']]
     
     def __str__(self):
-        return self.payment_status
+        return f"{self.current_wss} - {self.user_profile}"
 
 
 class UserProfile(models.Model):
