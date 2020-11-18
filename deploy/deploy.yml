@@ -44,6 +44,9 @@
         WSS_SECRET_KEY: '{{ secret_key | mandatory }}'
         WSS_DB_PASSWORD: '{{ db_password | mandatory }}'
         POSTGRES_PASSWORD: '{{ postgres_superuser_pass | mandatory }}'
+        PAYMENT_MERCHANT: '{{ payment_merchant | mandatory }}'
+        PAYMENT_WSDL: '{{ payment_wsdl | mandatory }}'
+        PAYMENT_URL: '{{ payment_url | mandatory }}'
       loop:
         - { pull: yes, state: present }
         - { pull: no, state: absent }
