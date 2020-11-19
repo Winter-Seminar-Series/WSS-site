@@ -4,7 +4,8 @@ import {
   register
 } from '../redux/actions/account'
 
-function Register({ register }: any) {
+function Register({ register }) {
+
   const [email, setEmail] = useState('');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -27,8 +28,7 @@ function Register({ register }: any) {
               </strong>
             </div>
             {/* {% if wss.is_registration_open %} */}
-            <form
-              onSubmit={(firstName, lastName, email, university) => }>
+            <form onSubmit={() => register()}>
               {/* {% csrf_token %} */}
               <div className="row">
                 <div className="col-md-6 pr-md-5">
@@ -116,6 +116,9 @@ function Register({ register }: any) {
                   <div className="g-recaptcha" data-sitekey="6Lcj-8cUAAAAADvuAPAzAOHUUplDwqmKMUb9RzAN" />
                 </div>
               </div>
+              <button type="button" className="btn btn-primary">Primary</button>
+              <button type="button" className="btn btn-secondary">Secondary</button>
+
               <button type="submit" className="btn btn-primary" style={{ background: "#007bff" }}>
                 Register
               </button>

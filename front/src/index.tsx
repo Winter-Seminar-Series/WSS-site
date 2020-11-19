@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import App from './App';
 import './i18n';
-import configureStore from './redux/store/configureStore';
+import configureStore from './redux/store/configureStore.dev'; //todo: fix for production mode
 
 
 const persistedState = localStorage.getItem('WSS') //use local storage just to save token
@@ -16,7 +16,7 @@ store.subscribe(() => {
   localStorage.setItem(
     'WSS',
     JSON.stringify({
-      account: state.account,
+      account: state.Account,
     })
   );
 });
@@ -24,7 +24,7 @@ store.subscribe(() => {
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-    <App />
+      <App />
     </Provider>
   </React.StrictMode>,
   document.getElementById('root')
