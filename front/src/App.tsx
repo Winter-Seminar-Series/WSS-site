@@ -12,6 +12,7 @@ import ImageGallery from './views/ImageGallery';
 import StaffList from './views/StaffList';
 import Schedule from './views/Schedule';
 import Register from './views/Register';
+import Login from './views/Login';
 import Details from './views/Details';
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
         <Switch>
           <Route path="/details" component={Details} />
           <Route path="/register" component={Register} />
+          <Route path="/Login" component={Login} />
           <Route path="/schedule" component={Schedule} />
           <Route path="/staff-list" component={StaffList} />
           <Route path="/image-gallery" component={ImageGallery} />
