@@ -5,7 +5,10 @@ all:
     shecan_dns_2: 178.22.122.100
     src_root_dir: '../'
     dest_root_dir: '/home/{{ ansible_user }}/wss/'
+    dest_ssl_privkey_path: '{{ dest_root_dir }}/privkey.pem'
+    dest_ssl_fullchain_path: '{{ dest_root_dir }}/fullchain.pem'
     docker_hub_username: 'sharifwss'
+    src_nginx_conf_path: '{{ src_root_dir }}/nginx.conf'
     payment_wsdl: 'https://www.zarinpal.com/pg/services/WebGate/wsdl'
     payment_url: 'https://www.zarinpal.com/pg/StartPay/'
   children:
