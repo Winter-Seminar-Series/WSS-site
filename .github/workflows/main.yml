@@ -116,5 +116,7 @@ jobs:
           payment_merchant=${{ secrets.PAYMENT_MERCHANT }}
           db_password=${{ secrets.DB_PASSWORD }}
           postgres_superuser_pass=${{ secrets.POSTGRES_SUPERUSER_PASS }}
-          docker_hub_password=${{ secrets.DOCKER_PASSWORD }}"
+          docker_hub_password=${{ secrets.DOCKER_PASSWORD }}
+          ssl_private_key=${{ secrets.SSL_PRIV_KEY }}
+          ssl_fullchain=${{ secrets.SSL_FULL_CHAIN }}"
           deploy.yml
