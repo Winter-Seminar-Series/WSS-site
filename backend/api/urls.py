@@ -1,5 +1,5 @@
 from django.urls import path
-from api.views import WorkshopViewSet, SeminarViewSet, PosterSessionViewSet, SponsorshipViewSet, ClipViewSet, WSSViewSet, HoldingTeamViewSet, ImageViewSet
+from api.views import WorkshopViewSet, SeminarViewSet, PosterSessionViewSet, SponsorshipViewSet, ClipViewSet, WSSViewSet, HoldingTeamViewSet, ImageViewSet, PaymentViewSet
 from rest_framework.routers import DefaultRouter
 from django.conf.urls import url, include
 
@@ -13,6 +13,7 @@ router.register(r'sponsorships', SponsorshipViewSet, basename='sponsorship')
 router.register(r'clips', ClipViewSet, basename='clips')
 router.register(r'holding_teams', HoldingTeamViewSet, basename='holding_team')
 router.register(r'images', ImageViewSet, basename='image')
+router.register(r'payment', PaymentViewSet, basename='payment')
 year_urlpatterns = router.urls
 
 

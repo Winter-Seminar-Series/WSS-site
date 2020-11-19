@@ -1,8 +1,10 @@
 from django.contrib import admin
 from jet.admin import CompactInline
 
-from WSS.models import Clip, Booklet, WSS, Image, Sponsor, ExternalLink, Sponsorship, Grade, Participant, ShortLink, Reserve
+from WSS.models import Clip, Booklet, WSS, Image, Sponsor, ExternalLink, Sponsorship, Grade, Participant, UserProfile, ShortLink, Reserve
 from events.models import Seminar, Workshop, PosterSession, Event
+from django.contrib.auth.models import User
+from django.contrib.auth.admin import UserAdmin as AuthUserAdmin
 
 
 class SponsorshipInline(CompactInline):
@@ -68,6 +70,16 @@ class SponsorAdmin(admin.ModelAdmin):
     list_display = ('__str__', 'url', 'logo_tag')
 
 
+class UserProfileInline(admin.StackedInline):
+    model = UserProfile
+    max_num = 1
+    can_delete = False
+
+class UserAdmin(AuthUserAdmin):
+    inlines = [UserProfileInline]
+
+
+
 admin.site.register(ExternalLink)
 admin.site.register(Sponsor, SponsorAdmin)
 admin.site.register(WSS, WSSAdmin)
@@ -78,3 +90,8 @@ admin.site.register(Participant)
 admin.site.register(ShortLink)
 admin.site.register(Reserve)
 admin.site.register(Grade)
+
+# unregister old user admin
+admin.site.unregister(User)
+# register new user admin
+admin.site.register(User, UserAdmin)

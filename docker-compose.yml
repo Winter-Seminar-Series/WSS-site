@@ -8,6 +8,9 @@ services:
     environment:
       - WSS_DB_PASSWORD
       - WSS_SECRET_KEY
+      - PAYMENT_MERCHANT
+      - PAYMENT_WSDL
+      - PAYMENT_URL
     networks:
       wss_net:
   database:

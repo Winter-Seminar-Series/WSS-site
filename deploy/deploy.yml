@@ -68,6 +68,9 @@
         POSTGRES_PASSWORD: '{{ postgres_superuser_pass | mandatory }}'
         PRIVKEY_PATH: '{{ dest_ssl_privkey_path | mandatory }}'
         FULLCHAIN_PATH: '{{ dest_ssl_fullchain_path | mandatory }}'
+        PAYMENT_MERCHANT: '{{ payment_merchant | mandatory }}'
+        PAYMENT_WSDL: '{{ payment_wsdl | mandatory }}'
+        PAYMENT_URL: '{{ payment_url | mandatory }}'
       loop:
         - { pull: yes, state: present }
         - { pull: no, state: absent }

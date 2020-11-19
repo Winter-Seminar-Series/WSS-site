@@ -76,6 +76,7 @@ jobs:
           ansible_ssh_pass=root
           web_image_version=snapshot-$GITHUB_RUN_ID
           secret_key=dummy
+          payment_merchant=${{ secrets.PAYMENT_MERCHANT }}
           db_password=dummy
           postgres_superuser_pass=dummy
           docker_hub_password=${{ secrets.DOCKER_PASSWORD }}
@@ -92,27 +93,28 @@ jobs:
           -v `pwd`/.github/scripts/smoke-test.sh:/smoke-test.sh:ro
           spy86/ansible:latest
           /smoke-test.sh --host "https://sharif-wss.ir"
-  # deploy:
-  #   needs:
-  #     - smoke-test
-  #     - test-deploy
-  #     - release
-  #   runs-on: ubuntu-20.04
-  #   container:
-  #     image: spy86/ansible:latest
-  #   steps:
-  #     - uses: actions/checkout@v2
-  #     - name: 'Deploy'
-  #       working-directory: ./deploy/
-  #       run: ansible-playbook
-  #         -i inventory.yml
-  #         --extra-vars="
-  #         ansible_host=$TARGET_HOST
-  #         ansible_user=$HOST_SSH_USER
-  #         ansible_ssh_pass=${{ secrets.HOST_SSH_PASSWORD }}
-  #         web_image_version=$RELEASE_VERSION
-  #         secret_key=${{ secrets.WSS_SECRET_KEY }}
-  #         db_password=${{ secrets.DB_PASSWORD }}
-  #         postgres_superuser_pass=${{ secrets.POSTGRES_SUPERUSER_PASS }}
-  #         docker_hub_password=${{ secrets.DOCKER_PASSWORD }}"
-  #         deploy.yml
+  deploy:
+    needs:
+      - smoke-test
+      - test-deploy
+      - release
+    runs-on: ubuntu-20.04
+    container:
+      image: spy86/ansible:latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: 'Deploy'
+        working-directory: ./deploy/
+        run: ansible-playbook
+          -i inventory.yml
+          --extra-vars="
+          ansible_host=$TARGET_HOST
+          ansible_user=$HOST_SSH_USER
+          ansible_ssh_pass=${{ secrets.HOST_SSH_PASSWORD }}
+          web_image_version=$RELEASE_VERSION
+          secret_key=${{ secrets.WSS_SECRET_KEY }}
+          payment_merchant=${{ secrets.PAYMENT_MERCHANT }}
+          db_password=${{ secrets.DB_PASSWORD }}
+          postgres_superuser_pass=${{ secrets.POSTGRES_SUPERUSER_PASS }}
+          docker_hub_password=${{ secrets.DOCKER_PASSWORD }}"
+          deploy.yml

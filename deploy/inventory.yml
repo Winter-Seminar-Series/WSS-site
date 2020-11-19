@@ -9,6 +9,8 @@ all:
     dest_ssl_fullchain_path: '{{ dest_root_dir }}/fullchain.pem'
     docker_hub_username: 'sharifwss'
     src_nginx_conf_path: '{{ src_root_dir }}/nginx.conf'
+    payment_wsdl: 'https://www.zarinpal.com/pg/services/WebGate/wsdl'
+    payment_url: 'https://www.zarinpal.com/pg/StartPay/'
   children:
     production:
       hosts:
