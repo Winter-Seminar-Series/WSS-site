@@ -192,7 +192,7 @@ QUESTION = [(None, 'Please Select'), ('RPA', 'RPA'), ('Virtual Assistant', 'Virt
 
 class Participant(models.Model):
     current_wss = models.ForeignKey('WSS', null=True, related_name='participants', verbose_name='WSS', on_delete=models.SET_NULL)
-    user_profile = models.ForeignKey('UserProfile', null=True, related_name='user_profile', on_delete=models.SET_NULL)
+    user_profile = models.ForeignKey('UserProfile', null=True, related_name='participants', on_delete=models.SET_NULL)
     payment_ref_id = models.CharField(max_length=250, default="NOT_PAYED")
     payment_amount = models.PositiveIntegerField(default=0)
     payment_timestamp = models.DateTimeField(auto_now=True)
@@ -207,14 +207,10 @@ class Participant(models.Model):
 class UserProfile(models.Model):
     user = models.OneToOneField(User, null=True, default=None, on_delete=models.CASCADE, related_name='profile')
     id = models.BigAutoField(primary_key=True)
-    name = models.CharField(max_length=250, verbose_name="First Name (in Persian)")
-    family = models.CharField(max_length=250, verbose_name="Family Name (in Persian)")
-    name_english = models.CharField(max_length=250, verbose_name="First Name (in English)")
-    family_english = models.CharField(max_length=250, verbose_name="Family Name (in English)")
+    name = models.CharField(max_length=250, verbose_name="First Name (in English)")
+    family = models.CharField(max_length=250, verbose_name="Family Name (in English)")
     phone_number = models.CharField(max_length=13, verbose_name="Phone Number")
     age = models.PositiveSmallIntegerField()
-    national_id = models.CharField(max_length=10, verbose_name="National ID")
-    email = models.EmailField(unique=True)
     job = models.CharField(max_length=250)
     university = models.CharField(max_length=250)
     introduction_method = models.CharField(max_length=250, choices=INTRODUCTION, default=None, verbose_name="How were you introduced to WSS?")
@@ -224,14 +220,15 @@ class UserProfile(models.Model):
     field_of_interest = models.CharField(max_length=1500, blank=True)
     grade = models.CharField(max_length=30, choices=GRADE_CHOICES)
     is_student = models.BooleanField(default=False, verbose_name="I am a Student")
-    payment_id = models.IntegerField(default=0)
-    workshops = models.ManyToManyField(to=Workshop, blank=True)
-    paid_workshops = models.ManyToManyField(related_name="paid", to=Workshop, blank=True)
-    paid_amount = models.IntegerField(blank=True, default=0)
-    question = models.CharField(max_length=50, blank=False, default=None, choices=QUESTION,
-                                verbose_name="Which one of these Artificial Intelligence-related technologies do you think have the most impact on Iran's market?")
-    question_other = models.CharField(max_length=500, blank=True, verbose_name="Your answer")
     sign_timestamp = models.DateTimeField(auto_now=True)
+
+    @property
+    def email(self):
+        return self.user.email
+    
+    @property
+    def username(self):
+        return self.user.username
 
 
     def __str__(self):

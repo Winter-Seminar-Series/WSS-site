@@ -8,7 +8,7 @@ from django.shortcuts import get_object_or_404
 from django.http import JsonResponse
 from django.conf import settings
 from abc import ABC, abstractmethod
-from api.serializer import WSSSerializer, WorkshopSerializer, SeminarSerializer, PosterSessionSerializer, SponsorshipSerializer, ClipSerializer, BookletSerializer, HoldingTeamSerializer, ImageSerializer
+from api.serializer import WSSSerializer, WorkshopSerializer, SeminarSerializer, PosterSessionSerializer, SponsorshipSerializer, ClipSerializer, BookletSerializer, HoldingTeamSerializer, ImageSerializer, UserProfileSerializer
 from events.models import Workshop
 from WSS.models import WSS, Participant, UserProfile
 from WSS.payment import send_payment_request, verify
@@ -125,6 +125,34 @@ class ErrorResponse(Response):
         self.status_code = status_code
 
 
+class UserProfileViewSet(viewsets.ViewSet):
+    authentication_classes = [SessionAuthentication, BasicAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def list(self, request):
+        user_profile: UserProfile = request.user.profile
+        serializer = UserProfileSerializer(user_profile)
+        return Response(serializer.data)
+    
+    @action(methods=['PUT'], detail=False)
+    def edit(self, request):
+        user_profile: UserProfile = request.user.profile
+        user_data_parameter = request.data
+
+        fields = ['name', 'family', 'phone_number', 'age'
+                  'job', 'university', 'introduction_method',
+                  'gender', 'city', 'country', 'field_of_interest',
+                  'grade', 'is_student']
+
+        for field in fields:
+            if user_data_parameter.get(field):
+                setattr(user_profile, field, user_data_parameter[field])
+        
+        user_profile.save()
+        return Response(UserProfileSerializer(user_profile).data)
+        
+
+
 class PaymentViewSet(viewsets.ViewSet):
     authentication_classes = [SessionAuthentication, BasicAuthentication]
     permission_classes = [IsAuthenticated]
@@ -144,10 +172,9 @@ class PaymentViewSet(viewsets.ViewSet):
                 'message': "`callback_url` should be passed in query string"
             })
         
-        user_profile = UserProfile.objects.get(user=request.user)
-        participant = Participant.objects.filter(current_wss=wss, user_profile=user_profile).first()
+        user_profile: UserProfile = request.user.profile
 
-        if participant is not None:
+        if user_profile.participants.filter(current_wss=wss).count() != 0:
             return ErrorResponse({
                 "message": "You already have finished your payment."
             })  
@@ -179,9 +206,8 @@ class PaymentViewSet(viewsets.ViewSet):
             })
         
         user_profile = request.user.profile
-        participant = Participant.objects.filter(current_wss=wss, user_profile=user_profile).first()
 
-        if participant is not None:
+        if user_profile.participants.filter(current_wss=wss).count() != 0:
             return ErrorResponse({
                 "message": "You already have finished your payment."
             })        
