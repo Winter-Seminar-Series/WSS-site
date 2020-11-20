@@ -46,10 +46,13 @@
         src: '{{ src_nginx_conf_path }}'
         dest: '{{ dest_root_dir }}/'
 
-    - name: 'Create backend directory as a hack to make docker-compose work!'
+    - name: 'Create build directories as a hack to make docker-compose work!'
       file:
-        path: '{{ dest_root_dir }}/backend/'
+        path: '{{ dest_root_dir }}/{{ item }}/'
         state: directory
+      loop:
+        - backend
+        - front
 
     - name: 'Login to Docker Hub registry (To extend pull rate limit)'
       community.general.docker_login:
