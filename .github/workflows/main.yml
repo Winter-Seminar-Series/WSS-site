@@ -14,13 +14,26 @@ on:
     branches:
       - master
 jobs:
-  build:
+  build-backend:
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
-      - run: ./.github/scripts/build.sh $DOCKER_USERNAME ${{ secrets.DOCKER_PASSWORD }} snapshot-$GITHUB_RUN_ID
-  smoke-test:
-    needs: build
+      - run: ./.github/scripts/build.sh
+          --service-name web
+          --version snapshot-$GITHUB_RUN_ID
+          --docker-user $DOCKER_USERNAME
+          --docker-pass ${{ secrets.DOCKER_PASSWORD }}
+  build-frontend:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+      - run: ./.github/scripts/build.sh
+          --service-name frontend
+          --version snapshot-$GITHUB_RUN_ID
+          --docker-user $DOCKER_USERNAME
+          --docker-pass ${{ secrets.DOCKER_PASSWORD }}
+  smoke-test-backend:
+    needs: build-backend
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
@@ -29,9 +42,10 @@ jobs:
           --docker-user $DOCKER_USERNAME
           --docker-pass ${{ secrets.DOCKER_PASSWORD }}
   release-backend:
-    needs: smoke-test
+    needs: smoke-test-backend
     runs-on: ubuntu-20.04
     steps:
+      - uses: actions/checkout@v2
       - run: ./.github/scripts/release-image.sh
           --service-name web
           --src-tag snapshot-$GITHUB_RUN_ID
@@ -39,9 +53,9 @@ jobs:
           --docker-user $DOCKER_USERNAME
           --docker-pass ${{ secrets.DOCKER_PASSWORD }}
   release-frontend:
-    needs: smoke-test
     runs-on: ubuntu-20.04
     steps:
+      - uses: actions/checkout@v2
       - run: ./.github/scripts/release-image.sh
           --service-name frontend
           --src-tag snapshot-$GITHUB_RUN_ID
@@ -49,7 +63,7 @@ jobs:
           --docker-user $DOCKER_USERNAME
           --docker-pass ${{ secrets.DOCKER_PASSWORD }}
   test-deploy:
-    needs: build
+    needs: build-backend
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
@@ -109,7 +123,7 @@ jobs:
           /smoke-test.sh --host "https://sharif-wss.ir"
 #  deploy:
 #    needs:
-#      - smoke-test
+#      - smoke-test-backend
 #      - test-deploy
 #      - release-backend
 #      - release-frontend
