@@ -34,11 +34,20 @@ services:
       - 80:80
     volumes:
       - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
+      - frontend_vol:/mnt/frontend/:ro
       - $FULLCHAIN_PATH:/etc/ssl-files/fullchain.pem:ro
       - $PRIVKEY_PATH:/etc/ssl-files/privkey.pem:ro
     depends_on:
       - web
+      - frontend
+  frontend:
+    build: ./front/
+    volumes:
+      - frontend_vol:/mnt/frontend/
 
 networks:
   wss_net:
     driver: bridge
+
+volumes:
+  frontend_vol:
