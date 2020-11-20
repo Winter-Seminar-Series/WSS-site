@@ -41,7 +41,7 @@ services:
       - web
       - frontend
   frontend:
-    image: sharifwss/web:$FRONT_IMAGE_VERSION
+    image: sharifwss/frontend:$FRONT_IMAGE_VERSION
     build: ./front/
     volumes:
       - frontend_vol:/mnt/frontend/

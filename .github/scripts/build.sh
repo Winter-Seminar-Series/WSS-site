@@ -10,7 +10,6 @@ DOCKER_PASS=
 function main() {
   inflate_options "$@"
 
-  docker pull $DOCKER_USER/web:latest || echo "Unable to pull cache. exit code: $?"
   export WEB_IMAGE_VERSION=$VERSION
   export FRONT_IMAGE_VERSION=$VERSION
   echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin
