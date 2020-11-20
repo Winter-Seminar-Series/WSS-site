@@ -28,7 +28,7 @@ function main() {
 }
 
 function inflate_options() {
-  while [ -n "$1" ]; do
+  while [ -n "${1+x}" ]; do
     case "$1" in
     --service-name)
       shift
@@ -68,7 +68,7 @@ function inflate_options() {
 }
 
 function check_options() {
-  if [ -z ${SERVICE_NAME+x} ] or [ -z ${SRC_TAG} ] or [ -z ${RELEASE_TAG} ] or [ -z ${DOCKER_USER} ] or [ -z ${DOCKER_PASS} ]; then
+  if [ -z ${SERVICE_NAME+x} ] || [ -z ${SRC_TAG} ] || [ -z ${RELEASE_TAG} ] || [ -z ${DOCKER_USER} ] || [ -z ${DOCKER_PASS} ]; then
     echo "ERROR: All of inputs should be specified: --service-name --src-tag --release-tag --docker-user --docker-pass"
     exit 3
   fi
