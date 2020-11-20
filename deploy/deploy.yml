@@ -7,6 +7,7 @@
           - src_root_dir is defined
           - dest_root_dir is defined
           - web_image_version is defined
+          - front_image_version is defined
           - secret_key is defined
           - db_password is defined
           - postgres_superuser_pass is defined
@@ -63,6 +64,7 @@
         state: '{{ item.state }}'
       environment:
         WEB_IMAGE_VERSION: '{{ web_image_version | mandatory }}'
+        FRONT_IMAGE_VERSION: '{{ front_image_version | mandatory }}'
         WSS_SECRET_KEY: '{{ secret_key | mandatory }}'
         WSS_DB_PASSWORD: '{{ db_password | mandatory }}'
         POSTGRES_PASSWORD: '{{ postgres_superuser_pass | mandatory }}'
