@@ -20,7 +20,7 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
-      - run: ./.github/scripts/smoke-test.sh 
+      - run: ./.github/scripts/smoke-test.sh
           --tag snapshot-$GITHUB_RUN_ID
           --docker-user $DOCKER_USERNAME
           --docker-pass ${{ secrets.DOCKER_PASSWORD }}
@@ -65,7 +65,7 @@ jobs:
           -v `pwd`:/app-src/:ro
           --workdir /app-src/deploy/
           --env TARGET_HOST=$TARGET_HOST
-          --env GITHUB_RUN_ID=$GITHUB_RUN_ID
+          --env RELEASE_VERSION=$RELEASE_VERSION
           spy86/ansible:latest
           bash -c '
           ansible-playbook
@@ -74,14 +74,14 @@ jobs:
           ansible_host=$TARGET_HOST
           ansible_user=root
           ansible_ssh_pass=root
-          web_image_version=snapshot-$GITHUB_RUN_ID
+          web_image_version=$RELEASE_VERSION
           secret_key=dummy
           payment_merchant=${{ secrets.PAYMENT_MERCHANT }}
           db_password=dummy
           postgres_superuser_pass=dummy
           docker_hub_password=${{ secrets.DOCKER_PASSWORD }}
-          ssl_private_key=${{ secrets.SSL_PRIV_KEY }}
-          ssl_fullchain=${{ secrets.SSL_FULL_CHAIN }}"
+          ssl_private_key=\"${{ secrets.SSL_PRIV_KEY }}\"
+          ssl_fullchain=\"${{ secrets.SSL_FULL_CHAIN }}\""
           deploy.yml
           '
       - name: Wait for the app to be up
@@ -117,6 +117,6 @@ jobs:
           db_password=${{ secrets.DB_PASSWORD }}
           postgres_superuser_pass=${{ secrets.POSTGRES_SUPERUSER_PASS }}
           docker_hub_password=${{ secrets.DOCKER_PASSWORD }}
-          ssl_private_key=${{ secrets.SSL_PRIV_KEY }}
-          ssl_fullchain=${{ secrets.SSL_FULL_CHAIN }}"
+          ssl_private_key=\"${{ secrets.SSL_PRIV_KEY }}\"
+          ssl_fullchain=\"${{ secrets.SSL_FULL_CHAIN }}\""
           deploy.yml
