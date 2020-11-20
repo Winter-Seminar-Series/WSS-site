@@ -5,42 +5,38 @@ env:
   RELEASE_VERSION: 1.0.1
   TARGET_HOST: 37.152.187.105
   HOST_SSH_USER: wss
-#on:
-#  push:
-#    branches:
-#      - master
 on:
-  pull_request:
+  push:
     branches:
       - master
 jobs:
-#  build:
-#    runs-on: ubuntu-20.04
-#    steps:
-#      - uses: actions/checkout@v2
-#      - run: ./.github/scripts/build.sh $DOCKER_USERNAME ${{ secrets.DOCKER_PASSWORD }} snapshot-$GITHUB_RUN_ID
-#  smoke-test:
-#    needs: build
-#    runs-on: ubuntu-20.04
-#    steps:
-#      - uses: actions/checkout@v2
-#      - run: ./.github/scripts/smoke-test.sh
-#          --tag snapshot-$GITHUB_RUN_ID
-#          --docker-user $DOCKER_USERNAME
-#          --docker-pass ${{ secrets.DOCKER_PASSWORD }}
-#  release:
-#    needs: smoke-test
-#    runs-on: ubuntu-20.04
-#    steps:
-#      - run: echo "SNAPSHOT_VERSION=snapshot-$GITHUB_RUN_ID" >> $GITHUB_ENV
-#      - run: echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u $DOCKER_USERNAME --password-stdin
-#      - run: docker pull $DOCKER_USERNAME/web:$SNAPSHOT_VERSION
-#      - run: docker tag $DOCKER_USERNAME/web:$SNAPSHOT_VERSION $DOCKER_USERNAME/web:$RELEASE_VERSION
-#      - run: docker tag $DOCKER_USERNAME/web:$SNAPSHOT_VERSION $DOCKER_USERNAME/web:latest
-#      - run: docker push $DOCKER_USERNAME/web:$RELEASE_VERSION
-#      - run: docker push $DOCKER_USERNAME/web:latest
+  build:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+      - run: ./.github/scripts/build.sh $DOCKER_USERNAME ${{ secrets.DOCKER_PASSWORD }} snapshot-$GITHUB_RUN_ID
+  smoke-test:
+    needs: build
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+      - run: ./.github/scripts/smoke-test.sh
+          --tag snapshot-$GITHUB_RUN_ID
+          --docker-user $DOCKER_USERNAME
+          --docker-pass ${{ secrets.DOCKER_PASSWORD }}
+  release:
+    needs: smoke-test
+    runs-on: ubuntu-20.04
+    steps:
+      - run: echo "SNAPSHOT_VERSION=snapshot-$GITHUB_RUN_ID" >> $GITHUB_ENV
+      - run: echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u $DOCKER_USERNAME --password-stdin
+      - run: docker pull $DOCKER_USERNAME/web:$SNAPSHOT_VERSION
+      - run: docker tag $DOCKER_USERNAME/web:$SNAPSHOT_VERSION $DOCKER_USERNAME/web:$RELEASE_VERSION
+      - run: docker tag $DOCKER_USERNAME/web:$SNAPSHOT_VERSION $DOCKER_USERNAME/web:latest
+      - run: docker push $DOCKER_USERNAME/web:$RELEASE_VERSION
+      - run: docker push $DOCKER_USERNAME/web:latest
   test-deploy:
-#    needs: build
+    needs: build
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
@@ -99,9 +95,9 @@ jobs:
           /smoke-test.sh --host "https://sharif-wss.ir"
   deploy:
     needs:
-#      - smoke-test
+      - smoke-test
       - test-deploy
-#      - release
+      - release
     runs-on: ubuntu-20.04
     container:
       image: spy86/ansible:latest
