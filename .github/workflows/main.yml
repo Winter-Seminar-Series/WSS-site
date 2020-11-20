@@ -40,7 +40,7 @@ jobs:
 #      - run: docker push $DOCKER_USERNAME/web:$RELEASE_VERSION
 #      - run: docker push $DOCKER_USERNAME/web:latest
   test-deploy:
-    needs: build
+#    needs: build
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
@@ -99,9 +99,9 @@ jobs:
           /smoke-test.sh --host "https://sharif-wss.ir"
   deploy:
     needs:
-      - smoke-test
+#      - smoke-test
       - test-deploy
-      - release
+#      - release
     runs-on: ubuntu-20.04
     container:
       image: spy86/ansible:latest
