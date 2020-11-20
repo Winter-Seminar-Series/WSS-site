@@ -53,6 +53,7 @@ jobs:
           --docker-user $DOCKER_USERNAME
           --docker-pass ${{ secrets.DOCKER_PASSWORD }}
   release-frontend:
+    needs: build-frontend
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
