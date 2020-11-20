@@ -69,7 +69,7 @@ jobs:
           -v `pwd`:/app-src/:ro
           --workdir /app-src/deploy/
           --env TARGET_HOST=$TARGET_HOST
-          --env GITHUB_RUN_ID=$GITHUB_RUN_ID
+          --env RELEASE_VERSION=$RELEASE_VERSION
           spy86/ansible:latest
           bash -c '
           ansible-playbook
