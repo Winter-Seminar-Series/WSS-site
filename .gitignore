@@ -2,3 +2,15 @@
 .vscode
 /db-data/
 .DS_Store
+
+#front
+front/node_modules
+# production
+front/build
+
+# misc
+front/.DS_Store
+front/.env.local
+front/.env.development.local
+front/.env.test.local
+front/.env.production.local
