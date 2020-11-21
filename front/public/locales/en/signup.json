@@ -1,0 +1,9 @@
+{
+  "firstName": "first name",
+  "lastName": "last name",
+  "email": "email",
+  "password": "password",
+  "submit": "sign up",
+  "signinBefore": "if you have signed up before",
+  "click": "click here"
+}

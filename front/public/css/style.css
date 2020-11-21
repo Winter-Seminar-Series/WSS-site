@@ -5,7 +5,7 @@
 	Description: Eventor -  Conference & Event HTML Template
 	Version: 1.0
 */
-
+@import './auth.css';
 /* Table of Content
 ==================================================
 1.	Typography
@@ -32,7 +32,6 @@
 22. Error page
 
 */
-
 @import url(https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,500,500i,700,700i,900,900i|Lato:400,400i,700,700i,900,900i);
 
 /* Typography
@@ -717,6 +716,7 @@ a[href^='tel'] {
 /* Main navigation */
 
 .navbar {
+  z-index: 10;
   border-radius: 0;
   border: 0;
   margin-bottom: 0;

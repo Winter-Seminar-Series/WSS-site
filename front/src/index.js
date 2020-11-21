@@ -1,10 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux';
 import App from './App';
 import './i18n';
 import configureStore from './redux/store/configureStore';
-
 
 const persistedState = localStorage.getItem('WSS') //use local storage just to save token
   ? JSON.parse(localStorage.getItem('WSS'))
