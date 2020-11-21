@@ -7,6 +7,7 @@
           - src_root_dir is defined
           - dest_root_dir is defined
           - web_image_version is defined
+          - front_image_version is defined
           - secret_key is defined
           - db_password is defined
           - postgres_superuser_pass is defined
@@ -45,10 +46,13 @@
         src: '{{ src_nginx_conf_path }}'
         dest: '{{ dest_root_dir }}/'
 
-    - name: 'Create backend directory as a hack to make docker-compose work!'
+    - name: 'Create build directories as a hack to make docker-compose work!'
       file:
-        path: '{{ dest_root_dir }}/backend/'
+        path: '{{ dest_root_dir }}/{{ item }}/'
         state: directory
+      loop:
+        - backend
+        - front
 
     - name: 'Login to Docker Hub registry (To extend pull rate limit)'
       community.general.docker_login:
@@ -63,6 +67,7 @@
         state: '{{ item.state }}'
       environment:
         WEB_IMAGE_VERSION: '{{ web_image_version | mandatory }}'
+        FRONT_IMAGE_VERSION: '{{ front_image_version | mandatory }}'
         WSS_SECRET_KEY: '{{ secret_key | mandatory }}'
         WSS_DB_PASSWORD: '{{ db_password | mandatory }}'
         POSTGRES_PASSWORD: '{{ postgres_superuser_pass | mandatory }}'

@@ -2,12 +2,50 @@
 
 set -euo pipefail
 
-readonly DOCKER_USERNAME="$1"
-readonly DOCKER_PASSWORD="$2"
-readonly TAG="$3"
+SERVICE_NAME=
+VERSION=
+DOCKER_USER=
+DOCKER_PASS=
 
-docker pull $DOCKER_USERNAME/web:latest || echo "Unable to pull cache. exit code: $?"
-export WEB_IMAGE_VERSION=$TAG
-echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
-docker-compose build
-docker-compose push web
+function main() {
+  inflate_options "$@"
+
+  export WEB_IMAGE_VERSION=$VERSION
+  export FRONT_IMAGE_VERSION=$VERSION
+  echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin
+  docker-compose build $SERVICE_NAME
+  docker-compose push $SERVICE_NAME
+}
+
+function inflate_options() {
+  while [ -n "${1+x}" ]; do
+    case "$1" in
+    --service-name)
+      shift
+      SERVICE_NAME="$1"
+      shift
+      ;;
+    --version)
+      shift
+      VERSION="$1"
+      shift
+      ;;
+    --docker-user)
+      shift
+      DOCKER_USER="$1"
+      shift
+      ;;
+    --docker-pass)
+      shift
+      DOCKER_PASS="$1"
+      shift
+      ;;
+    *)
+      echo "Unknown option: $1"
+      exit 2
+      ;;
+    esac
+  done
+}
+
+main "$@"

@@ -2,7 +2,7 @@
 name: "Main Workflow"
 env:
   DOCKER_USERNAME: sharifwss
-  RELEASE_VERSION: 1.0.1
+  RELEASE_VERSION: 1.1.0
   TARGET_HOST: 37.152.187.105
   HOST_SSH_USER: wss
 on:
@@ -10,13 +10,26 @@ on:
     branches:
       - master
 jobs:
-  build:
+  build-backend:
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
-      - run: ./.github/scripts/build.sh $DOCKER_USERNAME ${{ secrets.DOCKER_PASSWORD }} snapshot-$GITHUB_RUN_ID
-  smoke-test:
-    needs: build
+      - run: ./.github/scripts/build.sh
+          --service-name web
+          --version snapshot-$GITHUB_RUN_ID
+          --docker-user $DOCKER_USERNAME
+          --docker-pass ${{ secrets.DOCKER_PASSWORD }}
+  build-frontend:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+      - run: ./.github/scripts/build.sh
+          --service-name frontend
+          --version snapshot-$GITHUB_RUN_ID
+          --docker-user $DOCKER_USERNAME
+          --docker-pass ${{ secrets.DOCKER_PASSWORD }}
+  smoke-test-backend:
+    needs: build-backend
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
@@ -24,19 +37,30 @@ jobs:
           --tag snapshot-$GITHUB_RUN_ID
           --docker-user $DOCKER_USERNAME
           --docker-pass ${{ secrets.DOCKER_PASSWORD }}
-  release:
-    needs: smoke-test
+  release-backend:
+    needs: smoke-test-backend
     runs-on: ubuntu-20.04
     steps:
-      - run: echo "SNAPSHOT_VERSION=snapshot-$GITHUB_RUN_ID" >> $GITHUB_ENV
-      - run: echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u $DOCKER_USERNAME --password-stdin
-      - run: docker pull $DOCKER_USERNAME/web:$SNAPSHOT_VERSION
-      - run: docker tag $DOCKER_USERNAME/web:$SNAPSHOT_VERSION $DOCKER_USERNAME/web:$RELEASE_VERSION
-      - run: docker tag $DOCKER_USERNAME/web:$SNAPSHOT_VERSION $DOCKER_USERNAME/web:latest
-      - run: docker push $DOCKER_USERNAME/web:$RELEASE_VERSION
-      - run: docker push $DOCKER_USERNAME/web:latest
+      - uses: actions/checkout@v2
+      - run: ./.github/scripts/release-image.sh
+          --service-name web
+          --src-tag snapshot-$GITHUB_RUN_ID
+          --release-tag $RELEASE_VERSION
+          --docker-user $DOCKER_USERNAME
+          --docker-pass ${{ secrets.DOCKER_PASSWORD }}
+  release-frontend:
+    needs: build-frontend
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+      - run: ./.github/scripts/release-image.sh
+          --service-name frontend
+          --src-tag snapshot-$GITHUB_RUN_ID
+          --release-tag $RELEASE_VERSION
+          --docker-user $DOCKER_USERNAME
+          --docker-pass ${{ secrets.DOCKER_PASSWORD }}
   test-deploy:
-    needs: build
+    needs: build-backend
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
@@ -65,7 +89,7 @@ jobs:
           -v `pwd`:/app-src/:ro
           --workdir /app-src/deploy/
           --env TARGET_HOST=$TARGET_HOST
-          --env RELEASE_VERSION=$RELEASE_VERSION
+          --env GITHUB_RUN_ID=$GITHUB_RUN_ID
           spy86/ansible:latest
           bash -c '
           ansible-playbook
@@ -74,7 +98,8 @@ jobs:
           ansible_host=$TARGET_HOST
           ansible_user=root
           ansible_ssh_pass=root
-          web_image_version=$RELEASE_VERSION
+          web_image_version=snapshot-$GITHUB_RUN_ID
+          front_image_version=snapshot-$GITHUB_RUN_ID
           secret_key=dummy
           payment_merchant=${{ secrets.PAYMENT_MERCHANT }}
           db_password=dummy
@@ -95,9 +120,10 @@ jobs:
           /smoke-test.sh --host "https://sharif-wss.ir"
   deploy:
     needs:
-      - smoke-test
+      - smoke-test-backend
       - test-deploy
-      - release
+      - release-backend
+      - release-frontend
     runs-on: ubuntu-20.04
     container:
       image: spy86/ansible:latest
@@ -112,6 +138,7 @@ jobs:
           ansible_user=$HOST_SSH_USER
           ansible_ssh_pass=${{ secrets.HOST_SSH_PASSWORD }}
           web_image_version=$RELEASE_VERSION
+          front_image_version=$RELEASE_VERSION
           secret_key=${{ secrets.WSS_SECRET_KEY }}
           payment_merchant=${{ secrets.PAYMENT_MERCHANT }}
           db_password=${{ secrets.DB_PASSWORD }}

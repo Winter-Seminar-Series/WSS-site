@@ -12,7 +12,7 @@ CHECK_CERT=true
 function main() {
   inflate_options "$@"
   check_options
-  if [ -n ${TAG+x} ]; then
+  if [ -n "${TAG+x}" ]; then
     run_local_server_by_tag
     HOST=https://localhost
     CHECK_LOGS=true
@@ -54,12 +54,12 @@ function inflate_options(){
 }
 
 function check_options() {
-  if [ -n ${TAG+x} ] && [ -n ${HOST+x} ]; then
+  if [ -n "${TAG+x}" ] && [ -n "${HOST+x}" ]; then
     echo "Exactly one of '--tag' or '--host' should be specified."
     exit 3
   fi
 
-  if [ -n ${TAG+x} ] && ( [ -z ${DOCKER_USER+x} ] || [ -z ${DOCKER_PASS+x} ] ); then
+  if [ -n "${TAG+x}" ] && ( [ -z ${DOCKER_USER+x} ] || [ -z ${DOCKER_PASS+x} ] ); then
     echo "Specifying '--docker-user' and '--docker-pass' is mandatory when using '--tag'."
     exit 3
   fi

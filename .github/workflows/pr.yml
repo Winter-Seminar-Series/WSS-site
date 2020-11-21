@@ -7,22 +7,35 @@ on:
     branches:
       - master
 jobs:
-  build:
+  build-backend:
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
-      - run: ./.github/scripts/build.sh $DOCKER_USERNAME ${{ secrets.DOCKER_PASSWORD }} snapshot-$GITHUB_RUN_ID
-  smoke-test:
-    needs: build
+      - run: ./.github/scripts/build.sh
+          --service-name web
+          --version snapshot-$GITHUB_RUN_ID
+          --docker-user $DOCKER_USERNAME
+          --docker-pass ${{ secrets.DOCKER_PASSWORD }}
+  build-frontend:
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
-      - run: ./.github/scripts/smoke-test.sh 
+      - run: ./.github/scripts/build.sh
+          --service-name frontend
+          --version snapshot-$GITHUB_RUN_ID
+          --docker-user $DOCKER_USERNAME
+          --docker-pass ${{ secrets.DOCKER_PASSWORD }}
+  smoke-test-backend:
+    needs: build-backend
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+      - run: ./.github/scripts/smoke-test.sh
           --tag snapshot-$GITHUB_RUN_ID
           --docker-user $DOCKER_USERNAME
           --docker-pass ${{ secrets.DOCKER_PASSWORD }}
   check-migrations:
-    needs: build
+    needs: build-backend
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
