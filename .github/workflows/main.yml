@@ -5,12 +5,8 @@ env:
   RELEASE_VERSION: 1.1.0
   TARGET_HOST: 37.152.187.105
   HOST_SSH_USER: wss
-#on:
-#  push:
-#    branches:
-#      - master
 on:
-  pull_request:
+  push:
     branches:
       - master
 jobs:
@@ -122,32 +118,32 @@ jobs:
           -v `pwd`/.github/scripts/smoke-test.sh:/smoke-test.sh:ro
           spy86/ansible:latest
           /smoke-test.sh --host "https://sharif-wss.ir"
-#  deploy:
-#    needs:
-#      - smoke-test-backend
-#      - test-deploy
-#      - release-backend
-#      - release-frontend
-#    runs-on: ubuntu-20.04
-#    container:
-#      image: spy86/ansible:latest
-#    steps:
-#      - uses: actions/checkout@v2
-#      - name: 'Deploy'
-#        working-directory: ./deploy/
-#        run: ansible-playbook
-#          -i inventory.yml
-#          --extra-vars="
-#          ansible_host=$TARGET_HOST
-#          ansible_user=$HOST_SSH_USER
-#          ansible_ssh_pass=${{ secrets.HOST_SSH_PASSWORD }}
-#          web_image_version=$RELEASE_VERSION
-#          front_image_version=$RELEASE_VERSION
-#          secret_key=${{ secrets.WSS_SECRET_KEY }}
-#          payment_merchant=${{ secrets.PAYMENT_MERCHANT }}
-#          db_password=${{ secrets.DB_PASSWORD }}
-#          postgres_superuser_pass=${{ secrets.POSTGRES_SUPERUSER_PASS }}
-#          docker_hub_password=${{ secrets.DOCKER_PASSWORD }}
-#          ssl_private_key=\"${{ secrets.SSL_PRIV_KEY }}\"
-#          ssl_fullchain=\"${{ secrets.SSL_FULL_CHAIN }}\""
-#          deploy.yml
+  deploy:
+    needs:
+      - smoke-test-backend
+      - test-deploy
+      - release-backend
+      - release-frontend
+    runs-on: ubuntu-20.04
+    container:
+      image: spy86/ansible:latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: 'Deploy'
+        working-directory: ./deploy/
+        run: ansible-playbook
+          -i inventory.yml
+          --extra-vars="
+          ansible_host=$TARGET_HOST
+          ansible_user=$HOST_SSH_USER
+          ansible_ssh_pass=${{ secrets.HOST_SSH_PASSWORD }}
+          web_image_version=$RELEASE_VERSION
+          front_image_version=$RELEASE_VERSION
+          secret_key=${{ secrets.WSS_SECRET_KEY }}
+          payment_merchant=${{ secrets.PAYMENT_MERCHANT }}
+          db_password=${{ secrets.DB_PASSWORD }}
+          postgres_superuser_pass=${{ secrets.POSTGRES_SUPERUSER_PASS }}
+          docker_hub_password=${{ secrets.DOCKER_PASSWORD }}
+          ssl_private_key=\"${{ secrets.SSL_PRIV_KEY }}\"
+          ssl_fullchain=\"${{ secrets.SSL_FULL_CHAIN }}\""
+          deploy.yml
