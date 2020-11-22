@@ -106,7 +106,8 @@ jobs:
           postgres_superuser_pass=dummy
           docker_hub_password=${{ secrets.DOCKER_PASSWORD }}
           ssl_private_key=\"${{ secrets.SSL_PRIV_KEY }}\"
-          ssl_fullchain=\"${{ secrets.SSL_FULL_CHAIN }}\""
+          ssl_fullchain=\"${{ secrets.SSL_FULL_CHAIN }}\"
+          sentry_token=${{ secrets.SENTRY_TOKEN }}"
           deploy.yml
           '
       - name: Wait for the app to be up
@@ -145,5 +146,6 @@ jobs:
           postgres_superuser_pass=${{ secrets.POSTGRES_SUPERUSER_PASS }}
           docker_hub_password=${{ secrets.DOCKER_PASSWORD }}
           ssl_private_key=\"${{ secrets.SSL_PRIV_KEY }}\"
-          ssl_fullchain=\"${{ secrets.SSL_FULL_CHAIN }}\""
+          ssl_fullchain=\"${{ secrets.SSL_FULL_CHAIN }}\"
+          sentry_token=${{ secrets.SENTRY_TOKEN }}"
           deploy.yml

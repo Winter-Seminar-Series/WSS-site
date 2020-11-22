@@ -11,6 +11,7 @@ services:
       - PAYMENT_MERCHANT
       - PAYMENT_WSDL
       - PAYMENT_URL
+      - SENTRY_TOKEN
     networks:
       wss_net:
   database:
