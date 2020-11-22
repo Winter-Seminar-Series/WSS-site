@@ -13,6 +13,7 @@ import Schedule from './views/Schedule';
 import Details from './views/Details';
 import Signup from './views/Signup';
 import Login from './views/Login';
+import './styles/style.scss';
 
 function App() {
   return (
