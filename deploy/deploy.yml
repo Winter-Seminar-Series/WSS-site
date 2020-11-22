@@ -18,6 +18,7 @@
           - dest_ssl_privkey_path is defined
           - dest_ssl_fullchain_path is defined
           - src_nginx_conf_path is defined
+          - sentry_token is defined
 
     - name: 'Copy compose file'
       copy:
@@ -76,6 +77,7 @@
         PAYMENT_MERCHANT: '{{ payment_merchant | mandatory }}'
         PAYMENT_WSDL: '{{ payment_wsdl | mandatory }}'
         PAYMENT_URL: '{{ payment_url | mandatory }}'
+        SENTRY_TOKEN: '{{ sentry_token | mandatory }}'
       loop:
         - { pull: yes, state: present }
         - { pull: no, state: absent }
