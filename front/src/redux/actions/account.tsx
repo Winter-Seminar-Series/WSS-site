@@ -2,7 +2,8 @@ import * as actionTypes from '../actionTypes';
 import * as URLs from './urls';
 import { CALL_API } from '../middleware/api/api';
 
-export const signup = (username, password) => ({
+
+export const signup = (firstName, lastName, email, password) => ({
   [CALL_API]: {
     types: [
       actionTypes.SIGNUP_REQUEST,
@@ -12,7 +13,7 @@ export const signup = (username, password) => ({
     url: URLs.SIGNUP,
     fetchOptions: {
       method: 'POST',
-      body: { username, password },
+      body: { firstName, lastName, email, password },
     },
   },
 });

@@ -1,9 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { connect } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
+import {
+  login
+} from '../redux/actions/account'
 
-function Login() {
+
+function Login({ login, isFetching }) {
   const { t } = useTranslation('login', { useSuspense: false });
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+
+  function doLogin() {
+    login(username, password)
+  }
   return (
     <>
       <section dir="rtl" className="auth-container diagonal row pb-0">
@@ -11,14 +22,26 @@ function Login() {
           <form>
             <div className="form-group mb-5">
               <label htmlFor="username">{t('username')}</label>
-              <input id="username" type="email" className="form-control" />
+              <input
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                id="username"
+                type="email"
+                className="form-control" />
             </div>
             <div className="form-group mb-5">
               <label htmlFor="password">{t('password')}</label>
-              <input type="password" className="form-control" id="password" />
+              <input
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                type="password"
+                className="form-control"
+                id="password" />
             </div>
             <button
-              type="submit"
+              // disabled={!(!!username && !!password)}
+              onClick={doLogin}
+              type="button"
               className="btn btn-lg btn-primary btn-dark mb-5">
               {t('submit')}
             </button>
@@ -43,4 +66,13 @@ function Login() {
   );
 }
 
-export default Login;
+const mapStateToProps = (state, ownProps) => ({
+  isFetching: state.Account.isFetching,
+})
+
+export default connect(
+  mapStateToProps,
+  {
+    login,
+  }
+)(Login);

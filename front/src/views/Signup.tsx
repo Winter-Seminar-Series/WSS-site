@@ -24,14 +24,10 @@ function Signup({ signup, isFetching }) {
   }
 
   function doSignup() {
-    // todo: validate email?
     if (doesPasswordAgainMatch) {
       signup(firstName, lastName, email, password)
     }
   }
-
-  console.log(doesPasswordAgainMatch)
-  console.log(isFetching)
 
   return (
     <>
@@ -85,8 +81,9 @@ function Signup({ signup, isFetching }) {
                 id="password-again" />
             </div>
             <button
+              // disabled={!(!!firstName && !!lastName && !!email && !!password) || !doesPasswordAgainMatch}
               onClick={doSignup}
-              type="submit"
+              type="button"
               className="btn btn-lg btn-primary btn-dark mb-5">
               {t('submit')}
             </button>
