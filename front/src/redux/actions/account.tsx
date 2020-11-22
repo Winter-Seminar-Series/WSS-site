@@ -2,14 +2,14 @@ import * as actionTypes from '../actionTypes';
 import * as URLs from './urls';
 import { CALL_API } from '../middleware/api/api';
 
-export const register = (username, password) => ({
+export const signup = (username, password) => ({
   [CALL_API]: {
     types: [
-      actionTypes.REGISTER_REQUEST,
-      actionTypes.REGISTER_SUCCESS,
-      actionTypes.REGISTER_FAILURE,
+      actionTypes.SIGNUP_REQUEST,
+      actionTypes.SIGNUP_SUCCESS,
+      actionTypes.SIGNUP_FAILURE,
     ],
-    url: URLs.REGISTER,
+    url: URLs.SIGNUP,
     fetchOptions: {
       method: 'POST',
       body: { username, password },

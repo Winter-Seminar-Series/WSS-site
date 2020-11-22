@@ -9,7 +9,7 @@ export const likeWorkShop = () => ({ //todo
       actionTypes.LIKE_WORKSHOP_SUCCESS,
       actionTypes.LIKE_WORKSHOP_FAILURE,
     ],
-    url: URLs.REGISTER,
+    url: URLs.ROOT,
     fetchOptions: {
       method: '', //todo
       body: {}, // todo

@@ -1,9 +1,38 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux'
+import {
+  signup,
+} from '../redux/actions/account'
 
-function Signup() {
+function Signup({ signup, isFetching }) {
   const { t } = useTranslation('signup', { useSuspense: false });
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [doesPasswordAgainMatch, setPasswordAgainMatchingStatus] = useState(true);
+
+
+  function checkPasswordAgain(passwordAgain) {
+    if (passwordAgain === password) {
+      setPasswordAgainMatchingStatus(true)
+    } else {
+      setPasswordAgainMatchingStatus(false)
+    }
+  }
+
+  function doSignup() {
+    // todo: validate email?
+    if (doesPasswordAgainMatch) {
+      signup(firstName, lastName, email, password)
+    }
+  }
+
+  console.log(doesPasswordAgainMatch)
+  console.log(isFetching)
+
   return (
     <>
       <section dir="rtl" className="auth-container diagonal row pb-0">
@@ -11,23 +40,52 @@ function Signup() {
           <form>
             <div className="form-group mb-5">
               <label htmlFor="firstName">{t('firstName')}</label>
-              <input id="firstName" type="text" className="form-control" />
+              <input
+                value={firstName}
+                onChange={(e) => setFirstName(e.target.value)}
+                id="firstName"
+                type="text"
+                className="form-control" />
             </div>
             <div className="form-group mb-5">
               <label htmlFor="lastName">{t('lastName')}</label>
-              <input id="lastName" type="text" className="form-control" />
+              <input
+                value={lastName}
+                onChange={(e) => setLastName(e.target.value)}
+                id="lastName"
+                type="text"
+                className="form-control" />
             </div>
 
             <div className="form-group mb-5">
               <label htmlFor="email">{t('email')}</label>
-              <input id="email" type="email" className="form-control" />
+              <input
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                id="email"
+                type="email"
+                className="form-control" />
             </div>
 
             <div className="form-group mb-5">
               <label htmlFor="password">{t('password')}</label>
-              <input type="password" className="form-control" id="password" />
+              <input
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                type="password"
+                className="form-control"
+                id="password" />
+            </div>
+            <div className="form-group mb-5">
+              <label htmlFor="password again">{t('passwordAgain')}</label>
+              <input
+                onChange={(e) => checkPasswordAgain(e.target.value)}
+                type="password"
+                className="form-control"
+                id="password-again" />
             </div>
             <button
+              onClick={doSignup}
               type="submit"
               className="btn btn-lg btn-primary btn-dark mb-5">
               {t('submit')}
@@ -53,4 +111,13 @@ function Signup() {
   );
 }
 
-export default Signup;
+const mapStateToProps = (state, ownProps) => ({
+  isFetching: state.Account.isFetching,
+})
+
+export default connect(
+  mapStateToProps,
+  {
+    signup,
+  }
+)(Signup);

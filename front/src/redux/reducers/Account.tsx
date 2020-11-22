@@ -9,17 +9,17 @@ const initState = {
 
 function Account(state = initState, action) {
   switch (action.type) {
-    case actionTypes.REGISTER_REQUEST:
+    case actionTypes.SIGNUP_REQUEST:
       return ({
         isFetching: true,
       })
 
-    case actionTypes.REGISTER_SUCCESS:
+    case actionTypes.SIGNUP_SUCCESS:
       return ({
         isFetching: false,
       })
 
-    case actionTypes.REGISTER_FAILURE:
+    case actionTypes.SIGNUP_FAILURE:
       return ({
         isFetching: false,
       })

@@ -3,6 +3,7 @@
   "lastName": "last name",
   "email": "email",
   "password": "password",
+  "passwordAgain": "password Again",
   "submit": "sign up",
   "signinBefore": "if you have signed up before",
   "click": "click here"
