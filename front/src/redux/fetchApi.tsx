@@ -18,7 +18,7 @@ const fetchApi = async (url, fetchOptions) => {
     if (json_response.error) {
       throw new Error(json_response.error);
     } else {
-      throw new Error(response.text);
+      throw new Error('error'); //todo: it was 'response.text' instead of 'error' at first
     }
   }
   return json_response;

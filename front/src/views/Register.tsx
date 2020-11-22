@@ -1,58 +1,29 @@
-<<<<<<< HEAD
-import React from 'react';
-import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
-
-function Login() {
-  const { t } = useTranslation('login', { useSuspense: false });
-  return (
-    <>
-      <section dir="rtl" className="auth-container diagonal row pb-0">
-        <div className="col-6 form-container">
-          <form>
-            <div className="form-group mb-5">
-              <label htmlFor="username">{t('username')}</label>
-              <input id="username" type="email" className="form-control" />
-            </div>
-            <div className="form-group mb-5">
-              <label htmlFor="password">{t('password')}</label>
-              <input type="password" className="form-control" id="password" />
-            </div>
-            <button
-              type="submit"
-              className="btn btn-lg btn-primary btn-dark mb-5">
-              {t('submit')}
-            </button>
-            <div className="linkbar">
-              <span className="mr-1">{t('hasntSignedup')}</span>
-              <Link className="link" to="/signup">
-                {t('click')}
-              </Link>
-            </div>
-          </form>
-        </div>
-        <div className="col-6 logo-container" dir="ltr">
-          <img className="logo" src="images/new_title_hq.png" alt="wss logo" />
-          <div className="row ml-4 mt-1 font-weight-bold text-uppercase d-flex justify-content-around text-white">
-            <div>Winter</div>
-            <div>Seminar</div>
-            <div>Series</div>
-=======
 import React, { useState, useEffect } from 'react';
 import { connect, connectAdvanced } from 'react-redux';
 import {
-  login
+  register
 } from '../redux/actions/account'
 
-function Login({
-  login,
+function Register({
+  register,
   isFetching,
 }) {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
 
-  function doLogin(email, password) {
-    login(email, password)
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [email, setEmail] = useState('');
+  const [university, setUniversity] = useState('');
+  const [password, setPassword] = useState('');
+  const [doesAgainPasswordMatch, setAgainPasswordMatchStatus] = useState(true);
+
+  function checkAgainPassword(e) {
+    if (e.target.value === password) {
+      setAgainPasswordMatchStatus(false)
+    }
+  }
+
+  function doRegister(firstName, lastName, email) {
+    register(firstName, lastName, email)
   }
 
   console.log(isFetching)
@@ -62,12 +33,31 @@ function Login({
       <section id="main-container" className="main-container pb-0">
         <div style={{ marginTop: "-15rem", height: "15rem" }} className="px-5 diagonal background-shafagh">
           <div className="container section-sub-title title-white" style={{ paddingTop: "9rem" }}>
-            Login
+            Registration
           </div>
         </div>
         <div className="container-fluid px-5 pt-3 mt-5 mb-0 diagonal" style={{ background: "orange" }}>
           <div className="container pt-5">
             <div className="row">
+              <div className="col-md-6 pr-md-5">
+                <input
+                  type="text"
+                  className="form-control"
+                  value={firstName}
+                  onChange={(e) => setFirstName(e.target.value)}
+                  placeholder='FirstName'
+                />
+              </div>
+              <div className="col-md-6 pr-md-5">
+                <input
+                  type="text"
+                  className="form-control"
+                  value={lastName}
+                  onChange={(e) => setLastName(e.target.value)}
+                  placeholder='LastName'
+                />
+              </div>
+
               <div className="col-md-6 pr-md-5">
                 <input
                   type="text"
@@ -79,13 +69,31 @@ function Login({
               </div>
               <div className="col-md-6 pr-md-5">
                 <input
-                  type="password"
+                  type="text"
+                  className="form-control"
+                  value={university}
+                  onChange={(e) => setUniversity(e.target.value)}
+                  placeholder='University'
+                />
+              </div>
+              <div className="col-md-6 pr-md-5">
+                <input
+                  type="text"
                   className="form-control"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder='Password'
                 />
               </div>
+              <div className="col-md-6 pr-md-5">
+                <input
+                  type="text"
+                  className="form-control"
+                  onChange={checkAgainPassword}
+                  placeholder='AgainPassword'
+                />
+              </div>
+
               <div className="col-md-6 pr-md-5">
                 {/* {{ form.age | as_crispy_field }} */}
               </div>
@@ -144,21 +152,14 @@ function Login({
             </div>
             <hr />
             <button
-              onClick={() => doLogin(email, password)}
+              onClick={() => doRegister(firstName, lastName, email)}
               className="btn btn-primary">
-              Login
+              Register
             </button>
->>>>>>> readux-thunk-api
           </div>
         </div>
       </section>
     </>
-<<<<<<< HEAD
-  );
-}
-
-export default Login;
-=======
   )
 }
 
@@ -169,7 +170,6 @@ const mapStateToProps = (state, ownProps) => ({
 export default connect(
   mapStateToProps,
   {
-    login,
+    register,
   }
-)(Login);
->>>>>>> readux-thunk-api
+)(Register);
