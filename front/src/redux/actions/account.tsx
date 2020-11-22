@@ -2,17 +2,18 @@ import * as actionTypes from '../actionTypes';
 import * as URLs from './urls';
 import { CALL_API } from '../middleware/api/api';
 
-export const register = (username, password) => ({
+
+export const signup = (firstName, lastName, email, password) => ({
   [CALL_API]: {
     types: [
-      actionTypes.REGISTER_REQUEST,
-      actionTypes.REGISTER_SUCCESS,
-      actionTypes.REGISTER_FAILURE,
+      actionTypes.SIGNUP_REQUEST,
+      actionTypes.SIGNUP_SUCCESS,
+      actionTypes.SIGNUP_FAILURE,
     ],
-    url: URLs.REGISTER,
+    url: URLs.SIGNUP,
     fetchOptions: {
       method: 'POST',
-      body: { username, password },
+      body: { firstName, lastName, email, password },
     },
   },
 });
@@ -52,27 +53,27 @@ export const logout = () => ({
 });
 
 
-export const enqueueSnackbar = ({
-  key = new Date().getTime() + Math.random(),
-  ...notification
-}) => ({
-  type: actionTypes.ENQUEUE_SNACKBAR,
-  notification: {
-    ...notification,
-    key,
-  },
-});
+// export const enqueueSnackbar = ({
+//   key = new Date().getTime() + Math.random(),
+//   ...notification
+// }) => ({
+//   type: actionTypes.ENQUEUE_SNACKBAR,
+//   notification: {
+//     ...notification,
+//     key,
+//   },
+// });
 
-export const closeSnackbar = (key) => ({
-  type: actionTypes.CLOSE_SNACKBAR,
-  dismissAll: !key,
-  key,
-});
+// export const closeSnackbar = (key) => ({
+//   type: actionTypes.CLOSE_SNACKBAR,
+//   dismissAll: !key,
+//   key,
+// });
 
-export const removeSnackbar = (key) => ({
-  type: actionTypes.REMOVE_SNACKBAR,
-  key,
-});
+// export const removeSnackbar = (key) => ({
+//   type: actionTypes.REMOVE_SNACKBAR,
+//   key,
+// });
 
 // const fetchUser = () => ({
 //   [CALL_API]: {
