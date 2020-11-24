@@ -3,7 +3,7 @@ from api.views import WorkshopViewSet, SeminarViewSet, PosterSessionViewSet, Spo
 from rest_framework.routers import DefaultRouter
 from django.conf.urls import url, include
 
-from .views import RegisterAPI, LoginAPI
+from api.views import RegisterAPI, LoginAPI
 from knox import views as knox_views
 
 

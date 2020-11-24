@@ -8,14 +8,13 @@ from django.shortcuts import get_object_or_404
 from django.http import JsonResponse
 from django.conf import settings
 from abc import ABC, abstractmethod
-from api.serializer import WSSSerializer, WorkshopSerializer, SeminarSerializer, PosterSessionSerializer, SponsorshipSerializer, ClipSerializer, BookletSerializer, HoldingTeamSerializer, ImageSerializer
+from api.serializer import WSSSerializer, WorkshopSerializer, SeminarSerializer, PosterSessionSerializer, SponsorshipSerializer, ClipSerializer, BookletSerializer, HoldingTeamSerializer, ImageSerializer, UserSerializer, RegisterSerializer
 from events.models import Workshop
 from WSS.models import WSS, Participant, UserProfile
 from WSS.payment import send_payment_request, verify
 
 from rest_framework.authtoken.serializers import AuthTokenSerializer
 from knox.models import AuthToken
-from .serializers import UserSerializer, RegisterSerializer
 from django.contrib.auth import login
 from knox.views import LoginView as KnoxLoginView
 
