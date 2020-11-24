@@ -48,7 +48,8 @@ INSTALLED_APPS = [
     'taggit',
     'crispy_forms',
     'rest_framework',
-    'api'
+    'knox',
+    'api',
 ]
 
 MIDDLEWARE = [
@@ -230,3 +231,11 @@ sentry_sdk.init(
 local_settings_path = os.path.join(os.path.dirname(__file__), 'local_settings.py')
 if os.path.exists(local_settings_path):
     exec(open(local_settings_path, 'rb').read())
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        # 'rest_framework.authentication.BasicAuthentication',
+        # 'rest_framework.authentication.SessionAuthentication',
+        'knox.auth.TokenAuthentication',
+    ]
+}
