@@ -11,6 +11,7 @@ const configureStore = (preloadedState) => {
     { ...preloadedState },
     compose(applyMiddleware(thunk, api, createLogger()), DevTools.instrument())
   );
+  
   return store;
 };
 

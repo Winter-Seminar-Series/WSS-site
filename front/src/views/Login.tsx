@@ -13,7 +13,9 @@ function Login({ login, isFetching }) {
   const [password, setPassword] = useState('');
 
   function doLogin() {
-    login(username, password)
+    if (!!username && !!password) {
+      login(username, password)
+    }
   }
   return (
     <>

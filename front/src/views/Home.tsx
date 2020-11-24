@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
+import { getWSSPrimitiveFields } from '../redux/actions/WSS'
 
 const fontStyle = {
   fontSize: '1.125rem',
@@ -31,7 +33,28 @@ const venueMapStyle = {
   backgroundPositionY: 'center !important',
 };
 
-function Home() {
+function Home({
+  getWSSPrimitiveFields,
+  isFetching,
+  mainImageURL,
+  mainClipURL,
+  bookletURL,
+  staffCount,
+  isActive,
+  isRegistrationOpen,
+  participantsCount,
+  icalLink,
+  year,
+  startDate,
+  proposalLink,
+  showStats,
+  calendarLink
+}) {
+
+  useEffect(() => {
+    getWSSPrimitiveFields(2020);
+  }, [getWSSPrimitiveFields])
+
   return (
     <>
       <section id="banner">
@@ -341,4 +364,44 @@ function Home() {
   );
 }
 
-export default Home;
+const mapStateToProps = (state, ownProps) => {
+  const {
+    isFetching,
+    mainImageURL,
+    mainClipURL,
+    bookletURL,
+    staffCount,
+    isActive,
+    isRegistrationOpen,
+    participantsCount,
+    icalLink,
+    year,
+    startDate,
+    proposalLink,
+    showStats,
+    calendarLink
+  } = state.WSS
+  return ({
+    isFetching,
+    mainImageURL,
+    mainClipURL,
+    bookletURL,
+    staffCount,
+    isActive,
+    isRegistrationOpen,
+    participantsCount,
+    icalLink,
+    year,
+    startDate,
+    proposalLink,
+    showStats,
+    calendarLink
+  })
+}
+
+export default connect(
+  mapStateToProps,
+  {
+    getWSSPrimitiveFields
+  }
+)(Home);
