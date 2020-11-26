@@ -3,8 +3,6 @@ import * as actionTypes from '../actionTypes';
 
 const initState = {
   isFetching: false,
-  allWorkShops: [],
-  allPresentations: [],
   mainImageURL: undefined,
   mainClipURL: undefined,
   bookletURL: undefined,
@@ -18,6 +16,21 @@ const initState = {
   proposalLink: undefined,
   showStats: undefined,
   calendarLink: undefined,
+
+  workshops: [],
+  workshops_count: 0,
+  seminars: [],
+  seminars_count: 0,
+  postersessions: [],
+  postersessions_count: 0,
+  sponsorships: [],
+  sponsorships_count: 0,
+  clips: [],
+  clips_count: 0,
+  holding_teams: [],
+  holding_teams_count: 0,
+  images: [],
+  images_count: 0,
 };
 
 function WSS(state = initState, action) {
@@ -87,7 +100,7 @@ function WSS(state = initState, action) {
       return ({
         ...state,
         isFetching: false,
-        [action.payload.modelListName + 'Count']: action.response,
+        [action.payload.modelListName + '_count']: action.response,
       })
 
     case actionTypes.MODEL_LIST_COUNT_FAILURE:

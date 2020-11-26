@@ -4,6 +4,7 @@ import {
   getWSSPrimitiveFields,
   MODEL_LISTS_NAMES,
   getModelList,
+  getModelListCount,
 } from '../redux/actions/WSS'
 
 const fontStyle = {
@@ -40,6 +41,7 @@ const venueMapStyle = {
 function Home({
   getWSSPrimitiveFields,
   getModelList,
+  getModelListCount,
   isFetching,
   mainImageURL,
   mainClipURL,
@@ -59,6 +61,7 @@ function Home({
   useEffect(() => {
     getWSSPrimitiveFields(2020);
     getModelList(MODEL_LISTS_NAMES.IMAGES, 2020);
+    getModelListCount(MODEL_LISTS_NAMES.IMAGES, 2020);
   }, [getWSSPrimitiveFields])
 
   return (
@@ -385,7 +388,22 @@ const mapStateToProps = (state, ownProps) => {
     startDate,
     proposalLink,
     showStats,
-    calendarLink
+    calendarLink,
+
+    workshops,
+    workshops_count,
+    seminars,
+    seminars_count,
+    postersessions,
+    postersessions_count,
+    sponsorships,
+    sponsorships_count,
+    clips,
+    clips_count,
+    holding_teams,
+    holding_teams_count,
+    images,
+    images_count,
   } = state.WSS
   return ({
     isFetching,
@@ -410,5 +428,6 @@ export default connect(
   {
     getWSSPrimitiveFields,
     getModelList,
+    getModelListCount,
   }
 )(Home);
