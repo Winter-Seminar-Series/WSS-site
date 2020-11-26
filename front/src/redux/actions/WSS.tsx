@@ -9,24 +9,59 @@ export const getWSSPrimitiveFields = (year: number) => ({
       actionTypes.PRIMITIVE_FIELDS_SUCCESS,
       actionTypes.PRIMITIVE_FIELDS_FAILURE,
     ],
-    url: `${URLs.ROOT}/${year}/wss'`,
+    url: `${URLs.ROOT}/${year}/wss`,
     fetchOptions: {
       method: 'GET',
     },
   }
 })
 
-export const getModelList = (modelList: string, year: number) => ({
+export const MODEL_LISTS_NAMES = {
+  WORKSHOPS: 'workshops',
+  SEMINARS: 'seminars',
+  POSTERSESSIONS: 'postersessions',
+  SPONSORSHIPS: 'sponsorships',
+  CLIPS: 'clips',
+  HOLDING_TEAMS: 'holding_teams',
+  IMAGES: 'images',
+}
+
+
+export const getModelList = (modelListName: string, year: number) => ({
   [CALL_API]: {
     types: [
       actionTypes.MODEL_LIST_REQUEST,
       actionTypes.MODEL_LIST_SUCCESS,
       actionTypes.MODEL_LIST_FAILURE,
     ],
-    url: `${URLs.ROOT}/${year}/${modelList}'`,
+
+    payload: {
+      modelListName,
+    },
+
+    url: `${URLs.ROOT}/${year}/${modelListName}`,
     fetchOptions: {
       method: 'GET',
     },
   },
 });
 
+
+// export const getModelListCount = (modelListName: string, year: number) => ({
+//   [CALL_API]: {
+//     types: [
+//       actionTypes.MODEL_LIST_COUNT_REQUEST,
+//       actionTypes.MODEL_LIST_COUNT_SUCCESS,
+//       actionTypes.MODEL_LIST_COUNT_FAILURE,
+//     ],
+
+//     payload: {
+//       modelListName,
+//     },
+
+//     url: `${URLs.ROOT}/${year}/${modelListName}/count`,
+//     fetchOptions: {
+//       method: 'GET',
+//     },
+//   },
+// });

@@ -1,3 +1,4 @@
+import { Action } from 'redux';
 import * as actionTypes from '../actionTypes';
 
 const initState = {
@@ -52,6 +53,31 @@ function WSS(state = initState, action) {
         ...state,
         isFetching: false,
       })
+
+    /////////////////////
+
+    case actionTypes.MODEL_LIST_REQUEST:
+      return ({
+        ...state,
+        isFetching: true,
+      })
+
+    case actionTypes.MODEL_LIST_SUCCESS:
+      return ({
+        ...state,
+        isFetching: false,
+        [action.payload.modelListName]: action.response,
+      })
+
+    case actionTypes.MODEL_LIST_FAILURE:
+      return ({
+        ...state,
+        isFetching: false,
+      })
+
+    /////////////////////
+
+
 
     default:
       return state;

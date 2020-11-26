@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { getWSSPrimitiveFields } from '../redux/actions/WSS'
+import {
+  getWSSPrimitiveFields,
+  MODEL_LISTS_NAMES,
+  getModelList,
+} from '../redux/actions/WSS'
 
 const fontStyle = {
   fontSize: '1.125rem',
@@ -35,6 +39,7 @@ const venueMapStyle = {
 
 function Home({
   getWSSPrimitiveFields,
+  getModelList,
   isFetching,
   mainImageURL,
   mainClipURL,
@@ -53,6 +58,7 @@ function Home({
 
   useEffect(() => {
     getWSSPrimitiveFields(2020);
+    getModelList(MODEL_LISTS_NAMES.IMAGES, 2020);
   }, [getWSSPrimitiveFields])
 
   return (
@@ -402,6 +408,7 @@ const mapStateToProps = (state, ownProps) => {
 export default connect(
   mapStateToProps,
   {
-    getWSSPrimitiveFields
+    getWSSPrimitiveFields,
+    getModelList,
   }
 )(Home);
