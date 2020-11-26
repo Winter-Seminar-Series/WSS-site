@@ -14,6 +14,7 @@ class BaseEvent(PolymorphicModel):  # Is implicitly Abstract
     venue = models.ForeignKey(to='Venue', related_name='events', null=True, blank=True, on_delete=models.SET_NULL)
     key_words = TaggableManager(blank=True)
     audience = models.CharField(blank=True, max_length=200)
+    link = models.URLField(null=True, max_length=256)
 
     class Meta:
         ordering = ('start_time',)
