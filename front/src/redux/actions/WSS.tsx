@@ -47,21 +47,21 @@ export const getModelList = (modelListName: string, year: number) => ({
 });
 
 
-// export const getModelListCount = (modelListName: string, year: number) => ({
-//   [CALL_API]: {
-//     types: [
-//       actionTypes.MODEL_LIST_COUNT_REQUEST,
-//       actionTypes.MODEL_LIST_COUNT_SUCCESS,
-//       actionTypes.MODEL_LIST_COUNT_FAILURE,
-//     ],
+export const getModelListCount = (modelListName: string, year: number) => ({
+  [CALL_API]: {
+    types: [
+      actionTypes.MODEL_LIST_COUNT_REQUEST,
+      actionTypes.MODEL_LIST_COUNT_SUCCESS,
+      actionTypes.MODEL_LIST_COUNT_FAILURE,
+    ],
 
-//     payload: {
-//       modelListName,
-//     },
+    payload: {
+      modelListName,
+    },
 
-//     url: `${URLs.ROOT}/${year}/${modelListName}/count`,
-//     fetchOptions: {
-//       method: 'GET',
-//     },
-//   },
-// });
+    url: `${URLs.ROOT}/${year}/${modelListName}/count`,
+    fetchOptions: {
+      method: 'GET',
+    },
+  },
+});

@@ -77,7 +77,26 @@ function WSS(state = initState, action) {
 
     /////////////////////
 
+    case actionTypes.MODEL_LIST_COUNT_REQUEST:
+      return ({
+        ...state,
+        isFetching: true,
+      })
 
+    case actionTypes.MODEL_LIST_COUNT_SUCCESS:
+      return ({
+        ...state,
+        isFetching: false,
+        [action.payload.modelListName + 'Count']: action.response,
+      })
+
+    case actionTypes.MODEL_LIST_COUNT_FAILURE:
+      return ({
+        ...state,
+        isFetching: false,
+      })
+
+    /////////////////////      
 
     default:
       return state;
