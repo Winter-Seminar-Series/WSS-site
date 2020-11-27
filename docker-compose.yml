@@ -3,8 +3,6 @@ services:
   web:
     image: sharifwss/web:$WEB_IMAGE_VERSION
     build: ./backend/
-    ports:
-      - 80:8000
     depends_on:
       - database
     environment:
@@ -13,6 +11,9 @@ services:
       - PAYMENT_MERCHANT
       - PAYMENT_WSDL
       - PAYMENT_URL
+      - SENTRY_TOKEN
+    networks:
+      wss_net:
   database:
     image: postgres:13.0-alpine
     volumes:
@@ -23,3 +24,32 @@ services:
       - WSS_DB_DATABASE=wss_database
       - WSS_DB_USER=wss_user
       - WSS_DB_PASSWORD
+    networks:
+      wss_net:
+  nginx:
+    image: nginx:1.19.4-alpine
+    networks:
+      wss_net:
+    ports:
+      - 443:443
+      - 80:80
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
+      - frontend_vol:/mnt/frontend/:ro
+      - $FULLCHAIN_PATH:/etc/ssl-files/fullchain.pem:ro
+      - $PRIVKEY_PATH:/etc/ssl-files/privkey.pem:ro
+    depends_on:
+      - web
+      - frontend
+  frontend:
+    image: sharifwss/frontend:$FRONT_IMAGE_VERSION
+    build: ./front/
+    volumes:
+      - frontend_vol:/mnt/frontend/
+
+networks:
+  wss_net:
+    driver: bridge
+
+volumes:
+  frontend_vol:

@@ -7,31 +7,35 @@ on:
     branches:
       - master
 jobs:
-  build:
+  build-backend:
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
-      - name: Preload last stable image as a cache
-        run: 'docker pull $DOCKER_USERNAME/web:latest || echo "Unable to pull cache. exit code: $?"'
-      - run: echo "WEB_IMAGE_VERSION=snapshot-$GITHUB_RUN_ID" >> $GITHUB_ENV
-      - run: echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u $DOCKER_USERNAME --password-stdin
-      - run: docker-compose build
-      - run: docker-compose push web
-  smoke-test:
-    needs: build
+      - run: ./.github/scripts/build.sh
+          --service-name web
+          --version snapshot-$GITHUB_RUN_ID
+          --docker-user $DOCKER_USERNAME
+          --docker-pass ${{ secrets.DOCKER_PASSWORD }}
+  build-frontend:
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
-      - run: echo "WEB_IMAGE_VERSION=snapshot-$GITHUB_RUN_ID" >> $GITHUB_ENV
-      - run: echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u $DOCKER_USERNAME --password-stdin
-      - run: docker-compose pull
-      - run: docker-compose up -d --no-build
-      - name: Wait for the app to be up
-        run: sleep 20
-      - name: Smoke test
-        run: ./.github/scripts/smoke-test.sh --host "http://localhost"
+      - run: ./.github/scripts/build.sh
+          --service-name frontend
+          --version snapshot-$GITHUB_RUN_ID
+          --docker-user $DOCKER_USERNAME
+          --docker-pass ${{ secrets.DOCKER_PASSWORD }}
+  smoke-test-backend:
+    needs: build-backend
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+      - run: ./.github/scripts/smoke-test.sh
+          --tag snapshot-$GITHUB_RUN_ID
+          --docker-user $DOCKER_USERNAME
+          --docker-pass ${{ secrets.DOCKER_PASSWORD }}
   check-migrations:
-    needs: build
+    needs: build-backend
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
