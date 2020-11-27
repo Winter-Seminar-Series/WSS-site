@@ -261,6 +261,16 @@ Allows POST requests containing username, password and email (application/json)
         ]
     }
     ```
+    - If a user with the email address already exists, the response will be something like this:
+    ```HTTP
+    HTTP 400 Bad Request
+    Content-Type: application/json
+    {
+        "username": [
+            "A user with that username already exists."
+        ]
+    }
+    ```
     - If the email isn't valid , the response will be as shown below:
     ```HTTP
     HTTP 400 Bad Request
