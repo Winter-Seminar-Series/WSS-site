@@ -232,11 +232,18 @@ class UserProfile(models.Model):
     def first_name(self):
         return self.user.first_name
     
+    @first_name.setter
+    def first_name(self, value):
+        self.user.first_name = value
+    
     @property
     def last_name(self):
         return self.user.last_name
-
-
+    
+    @last_name.setter
+    def last_name(self, value):
+        self.user.last_name = value
+    
     def __str__(self):
         return self.first_name + " " + self.last_name
 
