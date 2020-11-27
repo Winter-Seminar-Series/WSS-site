@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import Card from '../components/cards/Card'
+import Dialogue from '../components/dialogue/Dialogue'
+import Presenter from '../components/cards/Presenter'
 
 
 function CardHolder({
@@ -42,6 +44,17 @@ function CardHolder({
         </p>
 
         <div className="card card-4"></div>
+
+        <Dialogue />
+
+        <Presenter />
+        <Presenter />
+        <Presenter />
+        <Presenter />
+        <Presenter />
+        <Presenter />
+        <Presenter />
+        <Presenter />
 
       </div>
     </section>
