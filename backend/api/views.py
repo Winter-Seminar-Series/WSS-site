@@ -8,7 +8,7 @@ from django.shortcuts import get_object_or_404
 from django.http import JsonResponse
 from django.conf import settings
 from abc import ABC, abstractmethod
-import api.serializer as S
+from api.serializer import *
 from events.models import Workshop
 from WSS.models import WSS, Participant, UserProfile
 from WSS.payment import send_payment_request, verify
@@ -22,7 +22,7 @@ class WSSViewSet(viewsets.ViewSet):
     
     def list(self, request, year):
         wss = get_wss_object_or_404(year)
-        serializer = S.WSSSerializer(wss)
+        serializer = WSSSerializer(wss)
         return Response(serializer.data)
 
 
@@ -64,14 +64,14 @@ class BaseViewSet(viewsets.ViewSet, ABC):
 
 
 class WorkshopViewSet(BaseViewSet):
-    serializer = S.WorkshopSerializer
+    serializer = WorkshopSerializer
 
     def queryset_selector(self, request, wss):
         return wss.workshops
 
 
 class SeminarViewSet(BaseViewSet):
-    serializer = S.SeminarSerializer
+    serializer = SeminarSerializer
 
     def queryset_selector(self, request, wss):
         is_keynote = request.query_params.get("keynote", None)
@@ -81,14 +81,14 @@ class SeminarViewSet(BaseViewSet):
 
 
 class PosterSessionViewSet(BaseViewSet):
-    serializer = S.PosterSessionSerializer
+    serializer = PosterSessionSerializer
 
     def queryset_selector(self, request, wss):
         return wss.postersessions
 
 
 class SponsorshipViewSet(BaseViewSet):
-    serializer = S.SponsorshipSerializer
+    serializer = SponsorshipSerializer
 
     def queryset_selector(self, request, wss):
         is_main = request.query_params.get("main", None)
@@ -98,21 +98,21 @@ class SponsorshipViewSet(BaseViewSet):
 
 
 class ClipViewSet(BaseViewSet):
-    serializer = S.ClipSerializer
+    serializer = ClipSerializer
 
     def queryset_selector(self, request, wss):
         return wss.clips
 
 
 class HoldingTeamViewSet(BaseViewSet):
-    serializer = S.HoldingTeamSerializer
+    serializer = HoldingTeamSerializer
 
     def queryset_selector(self, request, wss):
         return wss.holding_teams
 
 
 class ImageViewSet(BaseViewSet):
-    serializer = S.ImageSerializer
+    serializer = ImageSerializer
 
     def queryset_selector(self, request, wss):
         return wss.images
@@ -128,7 +128,7 @@ class ErrorResponse(Response):
 class UserProfileViewSet(viewsets.ViewSet):
     authentication_classes = [SessionAuthentication, BasicAuthentication]
     permission_classes = [IsAuthenticated]
-    serializer = S.UserProfileSerializer
+    serializer = UserProfileSerializer
 
     def list(self, request):
         user_profile: UserProfile = request.user.profile

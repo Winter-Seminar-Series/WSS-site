@@ -41,7 +41,7 @@ class ParticipantForm(forms.ModelForm):
 
     class Meta:
         model = models.UserProfile
-        fields = ['name', 'family', 'phone_number', 'age', 'job', 'university',
+        fields = ['phone_number', 'age', 'job', 'university',
                   'introduction_method', 'gender', 'city', 'country', 'grade', 'is_student', 'interests']
         widgets = {
             'gender': forms.RadioSelect

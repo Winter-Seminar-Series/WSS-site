@@ -207,8 +207,6 @@ class Participant(models.Model):
 class UserProfile(models.Model):
     user = models.OneToOneField(User, null=True, default=None, on_delete=models.CASCADE, related_name='profile')
     id = models.BigAutoField(primary_key=True)
-    name = models.CharField(max_length=250, verbose_name="First Name (in English)")
-    family = models.CharField(max_length=250, verbose_name="Family Name (in English)")
     phone_number = models.CharField(max_length=13, verbose_name="Phone Number")
     age = models.PositiveSmallIntegerField()
     job = models.CharField(max_length=250)
@@ -230,9 +228,17 @@ class UserProfile(models.Model):
     def username(self):
         return self.user.username
 
+    @property
+    def first_name(self):
+        return self.user.first_name
+    
+    @property
+    def last_name(self):
+        return self.user.last_name
+
 
     def __str__(self):
-        return self.name + " " + self.family
+        return self.first_name + " " + self.last_name
 
 
 class Reserve(models.Model):
