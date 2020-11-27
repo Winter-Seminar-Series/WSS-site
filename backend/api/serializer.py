@@ -4,7 +4,6 @@ from people.models import HoldingTeam
 from WSS.models import WSS, Sponsorship, Clip, Booklet, Image, UserProfile
 
 from django.contrib.auth.models import User
-User._meta.get_field('email')._unique = True
 
 
 class WSSSerializer(ModelSerializer):

@@ -224,6 +224,13 @@ class RegisterAPI(generics.GenericAPIView):
 
     def post(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
+
+        # email field in User isn't unique & setting it manually caused failure in CI, so ...
+        if UserProfile.objects.filter(email=request.data['email']).exists():
+            return Response({
+                "email": ["user with this email address already exists."]
+            }, status=400)
+
         serializer.is_valid(raise_exception=True)
         user = serializer.save()
         return Response({
