@@ -1,7 +1,7 @@
 from rest_framework.serializers import ModelSerializer
 from events.models import Workshop, Seminar, PosterSession
 from people.models import HoldingTeam
-from WSS.models import WSS, Sponsorship, Clip, Booklet, Image
+from WSS.models import WSS, Sponsorship, Clip, Booklet, Image, UserProfile
 
 from django.contrib.auth.models import User
 User._meta.get_field('email')._unique = True
@@ -92,5 +92,9 @@ class RegisterSerializer(ModelSerializer):
     def create(self, validated_data):
         user = User.objects.create_user(
             validated_data['username'], validated_data['email'], validated_data['password'])
-        # TODO UserProfile object should be created right about here I suppose..
+        
+        # email field in UserProfile is redundant -_-
+        user_profile = UserProfile(user=user, email=user.email)
+        user_profile.save()
+
         return user
