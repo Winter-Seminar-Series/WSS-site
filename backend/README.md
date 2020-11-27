@@ -266,8 +266,8 @@ Allows POST requests containing username, password and email (application/json)
     HTTP 400 Bad Request
     Content-Type: application/json
     {
-        "username": [
-            "A user with that username already exists."
+        "email": [
+            "user with this email address already exists."
         ]
     }
     ```
