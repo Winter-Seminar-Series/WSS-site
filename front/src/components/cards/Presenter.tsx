@@ -18,15 +18,9 @@ function Presenter({
   var icon = iconRef.current; //document.getElementById("presenter-card-icon");
 
   function onClick() {
-    console.log(card)
-
-    console.log(icon)
-
     icon.classList.add('fa-spin-fast')
 
     if (card.classList.contains('mc-active')) {
-
-
       card.classList.remove('mc-active');
       setTimeout(() => {
         icon.classList.remove('fa-arrow-left');
@@ -43,10 +37,9 @@ function Presenter({
     }
   }
 
-  console.log(card)
 
   return (
-    <div className="col-md-6 col-sm-9 col-xs-12">
+    <div className="col-lg-4 col-md-6 col-sm-9 col-xs-12">
       <article ref={cardRef} id="presenter-card" className="material-card Blue" >
         <h2>
           <span>{name}</span>
