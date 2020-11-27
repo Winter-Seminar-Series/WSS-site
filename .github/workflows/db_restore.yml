@@ -1,0 +1,16 @@
+---
+name: "Restore Database Last Backup"
+env:
+  TARGET_HOST: sharif-wss.ir
+  HOST_SSH_USER: wss
+on:
+  workflow_dispatch:
+jobs:
+  restore:
+    runs-on: ubuntu-20.04
+    container:
+      image: spy86/ansible:latest
+    steps:
+      - name: Restore database from WSS Dropbox (latest file)
+        run: sshpass -p ${{ secrets.HOST_SSH_PASSWORD }} ssh $HOST_SSH_USER@$TARGET_HOST bash -c "
+          cd wss/ && docker-compose exec web python ./manage.py dbrestore --noinput"

@@ -19,6 +19,7 @@
           - dest_ssl_fullchain_path is defined
           - src_nginx_conf_path is defined
           - sentry_token is defined
+          - dropbox_auth_token is defined
 
     - name: 'Copy compose file'
       copy:
@@ -78,6 +79,7 @@
         PAYMENT_WSDL: '{{ payment_wsdl | mandatory }}'
         PAYMENT_URL: '{{ payment_url | mandatory }}'
         SENTRY_TOKEN: '{{ sentry_token | mandatory }}'
+        DROPBOX_AUTH_TOKEN: '{{ dropbox_auth_token | mandatory }}'
       loop:
         - { pull: yes, state: present }
         - { pull: no, state: absent }
