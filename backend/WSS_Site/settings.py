@@ -31,6 +31,13 @@ CORS_ORIGIN_ALLOW_ALL = True
 
 # Application definition
 
+WSS_APPS = [
+    'WSS',
+    'events',
+    'people',
+    'api',
+]
+
 INSTALLED_APPS = [
     'jet.dashboard',
     'jet',
@@ -41,9 +48,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'corsheaders',
-    'WSS',
-    'events',
-    'people',
     'django_extensions',
     'polymorphic',
     'sorl.thumbnail',
@@ -51,8 +55,8 @@ INSTALLED_APPS = [
     'crispy_forms',
     'rest_framework',
     'knox',
-    'api',
-]
+    'dbbackup',
+] + WSS_APPS
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -100,10 +104,6 @@ DATABASES = {
         'PASSWORD': os.environ.get('WSS_DB_PASSWORD'),
         'HOST': 'database',
         'PORT': '5432',
-    },
-    'test': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
 
@@ -231,10 +231,6 @@ sentry_sdk.init(
     send_default_pii=True
 )
 
-local_settings_path = os.path.join(os.path.dirname(__file__), 'local_settings.py')
-if os.path.exists(local_settings_path):
-    exec(open(local_settings_path, 'rb').read())
-
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         # 'rest_framework.authentication.BasicAuthentication',
@@ -242,3 +238,12 @@ REST_FRAMEWORK = {
         'knox.auth.TokenAuthentication',
     ]
 }
+
+DBBACKUP_STORAGE = 'storages.backends.dropbox.DropBoxStorage'
+DBBACKUP_STORAGE_OPTIONS = {
+    'oauth2_access_token': os.environ.get('DROPBOX_AUTH_TOKEN'),
+}
+
+local_settings_path = os.path.join(os.path.dirname(__file__), 'local_settings.py')
+if os.path.exists(local_settings_path):
+    exec(open(local_settings_path, 'rb').read())

@@ -107,7 +107,8 @@ jobs:
           docker_hub_password=${{ secrets.DOCKER_PASSWORD }}
           ssl_private_key=\"${{ secrets.SSL_PRIV_KEY }}\"
           ssl_fullchain=\"${{ secrets.SSL_FULL_CHAIN }}\"
-          sentry_token=${{ secrets.SENTRY_TOKEN }}"
+          sentry_token=${{ secrets.SENTRY_TOKEN }}
+          dropbox_auth_token=${{ secrets.DROPBOX_AUTH_TOKEN }}"
           deploy.yml
           '
       - name: Wait for the app to be up
@@ -147,5 +148,6 @@ jobs:
           docker_hub_password=${{ secrets.DOCKER_PASSWORD }}
           ssl_private_key=\"${{ secrets.SSL_PRIV_KEY }}\"
           ssl_fullchain=\"${{ secrets.SSL_FULL_CHAIN }}\"
-          sentry_token=${{ secrets.SENTRY_TOKEN }}"
+          sentry_token=${{ secrets.SENTRY_TOKEN }}
+          dropbox_auth_token=${{ secrets.DROPBOX_AUTH_TOKEN }}"
           deploy.yml
