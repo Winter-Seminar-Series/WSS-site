@@ -15,6 +15,6 @@ jobs:
     container:
       image: spy86/ansible:latest
     steps:
-      - run: sshpass -p ${{ secrets.HOST_SSH_PASSWORD }} ssh -o StrictHostKeyChecking=no $HOST_SSH_USER@$TARGET_HOST bash -c"
-          cd wss/ && docker-compose exec -T web \"echo from django.contrib.auth import get_user_model\; User = get_user_model()\; User.objects.create_superuser(\'$WSS_ADMIN_USER\', \'super@user.com\', \'${{ secrets.WSS_ADMIN_PASS }}\') | python manage.py shell\"
+      - run: sshpass -p ${{ secrets.HOST_SSH_PASSWORD }} ssh -o StrictHostKeyChecking=no $HOST_SSH_USER@$TARGET_HOST "
+          cd wss/ && docker-compose exec -T web bash -c \"echo from django.contrib.auth import get_user_model\; User = get_user_model()\; User.objects.create_superuser(\'$WSS_ADMIN_USER\', \'super@user.com\', \'${{ secrets.WSS_ADMIN_PASS }}\') | python manage.py shell\"
           "
