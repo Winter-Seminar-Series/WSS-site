@@ -17,5 +17,6 @@ jobs:
       image: spy86/ansible:latest
     steps:
       - name: Backup database to WSS Dropbox
-        run: sshpass -p ${{ secrets.HOST_SSH_PASSWORD }} ssh $HOST_SSH_USER@$TARGET_HOST bash -c "
-          cd wss/ && docker-compose exec web python ./manage.py dbbackup --clean"
+        run: sshpass -p ${{ secrets.HOST_SSH_PASSWORD }} ssh -o StrictHostKeyChecking=no $HOST_SSH_USER@$TARGET_HOST "
+          cd wss/ && docker-compose exec -T web bash -c 'python ./manage.py dbbackup --clean'
+          "
