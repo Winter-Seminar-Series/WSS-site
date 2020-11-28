@@ -1,0 +1,20 @@
+---
+name: "Create Super User"
+env:
+  TARGET_HOST: sharif-wss.ir
+  HOST_SSH_USER: wss
+  WSS_ADMIN_USER: wss-admin
+on:
+  workflow_dispatch:
+  pull_request:
+    branches:
+      - master
+jobs:
+  create-super-user:
+    runs-on: ubuntu-20.04
+    container:
+      image: spy86/ansible:latest
+    steps:
+      - run: sshpass -p ${{ secrets.HOST_SSH_PASSWORD }} ssh -o StrictHostKeyChecking=no $HOST_SSH_USER@$TARGET_HOST bash -c "
+          cd wss/ && docker-compose exec web \"echo \\"from django.contrib.auth import get_user_model; User = get_user_model(); User.objects.create_superuser('$WSS_ADMIN_USER', 'super@user.com', '${{ secrets.WSS_ADMIN_PASS }}')\\" | python manage.py shell\"
+          "
