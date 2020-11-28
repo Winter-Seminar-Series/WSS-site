@@ -6,9 +6,6 @@ env:
   WSS_ADMIN_USER: wss-admin
 on:
   workflow_dispatch:
-  pull_request:
-    branches:
-      - master
 jobs:
   create-super-user:
     runs-on: ubuntu-20.04
