@@ -25,6 +25,14 @@ class WSSSerializer(ModelSerializer):
             'calendar_link'
         ]
 
+class UserProfileSerializer(ModelSerializer):
+    class Meta:
+        model = UserProfile
+        fields = [
+            'username', 'email', 'first_name', 'last_name', 'phone_number', 'age', 'job', 'university',
+            'introduction_method', 'gender', 'city', 'country',
+            'field_of_interest', 'grade', 'is_student'
+        ]
 
 class WorkshopSerializer(ModelSerializer):
     class Meta:
@@ -92,8 +100,7 @@ class RegisterSerializer(ModelSerializer):
         user = User.objects.create_user(
             validated_data['username'], validated_data['email'], validated_data['password'])
         
-        # email field in UserProfile is redundant -_-
-        user_profile = UserProfile(user=user, email=user.email)
+        user_profile = UserProfile(user=user)
         user_profile.save()
 
         return user

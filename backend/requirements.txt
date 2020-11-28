@@ -17,3 +17,4 @@ django-crispy-forms==1.9.2
 zeep==4.0.0
 requests==2.25.0
 sentry-sdk==0.19.4
+django-cors-headers==3.5.0

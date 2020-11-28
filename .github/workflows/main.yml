@@ -3,7 +3,7 @@ name: "Main Workflow"
 env:
   DOCKER_USERNAME: sharifwss
   RELEASE_VERSION: 1.1.0
-  TARGET_HOST: 37.152.187.105
+  TARGET_HOST: sharif-wss.ir
   HOST_SSH_USER: wss
 on:
   push:
