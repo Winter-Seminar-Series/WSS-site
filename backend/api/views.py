@@ -1,5 +1,5 @@
 from rest_framework.decorators import action
-from rest_framework import viewsets
+from rest_framework import viewsets, generics, permissions
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication
@@ -12,6 +12,12 @@ from api import serializers
 from events.models import Workshop
 from WSS.models import WSS, Participant, UserProfile
 from WSS.payment import send_payment_request, verify
+
+from rest_framework.authtoken.serializers import AuthTokenSerializer
+from knox.models import AuthToken
+from django.contrib.auth import login
+from knox.views import LoginView as KnoxLoginView
+from django.contrib.auth.models import User
 
 
 def get_wss_object_or_404(year: int) -> WSS:
@@ -242,3 +248,32 @@ class PaymentViewSet(viewsets.ViewSet):
         })
             
             
+class RegisterAPI(generics.GenericAPIView):
+    serializer_class = serializers.RegisterSerializer
+
+    def post(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+
+        # email field in User isn't unique & setting it manually caused failure in CI, so ...
+        if User.objects.filter(email=request.data['email']).exists():
+            return Response({
+                "email": ["user with this email address already exists."]
+            }, status=400)
+
+        serializer.is_valid(raise_exception=True)
+        user = serializer.save()
+        return Response({
+            "user": serializers.UserSerializer(user, context=self.get_serializer_context()).data,
+            "token": AuthToken.objects.create(user)[1]
+        })
+
+
+class LoginAPI(KnoxLoginView):
+    permission_classes = (permissions.AllowAny,)
+
+    def post(self, request, format=None):
+        serializer = AuthTokenSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user = serializer.validated_data['user']
+        login(request, user)
+        return super(LoginAPI, self).post(request, format=None)

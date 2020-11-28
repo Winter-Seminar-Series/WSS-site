@@ -224,3 +224,137 @@ GET /api/<year>/payment/verify?Authority=00000167354&Status=OK
 
 ### Note
 - `<year>` is necessary for requests.
+
+## Authentication API
+### Register
+Allows POST requests containing username, password and email (application/json)
+  - Example:
+  ```HTTP
+  POST /api/register/
+  {
+    "username": "testUser",
+    "password": "testUser",
+    "email": "test@test.test"
+  }
+  ```
+  - Success
+    - If no field is malformatted or missing and the username isn't already used, the response will be like this:
+    ```HTTP
+    HTTP 200 OK
+    {
+    "user": {
+        "id": 1,
+        "username": "testUser",
+        "email": "test@test.test"
+    },
+    "token": "a5bd6e4d524366b2b7952d68916725fe6f5f1cab5bc0bb0ccd20b077ca2d3d63"
+    }
+    ```
+  - Failure
+    - If username is already taken, the response will be something like this:
+    ```HTTP
+    HTTP 400 Bad Request
+    Content-Type: application/json
+    {
+        "username": [
+            "A user with that username already exists."
+        ]
+    }
+    ```
+    - If a user with the email address already exists, the response will be something like this:
+    ```HTTP
+    HTTP 400 Bad Request
+    Content-Type: application/json
+    {
+        "email": [
+            "user with this email address already exists."
+        ]
+    }
+    ```
+    - If the email isn't valid , the response will be as shown below:
+    ```HTTP
+    HTTP 400 Bad Request
+    Content-Type: application/json
+    {
+        "email": [
+            "Enter a valid email address."
+        ]
+    }
+    ```
+    - If username isn't provided, the response will be like this:
+    ```HTTP
+    HTTP 400 Bad Request
+    Content-Type: application/json
+    {
+        "username": [
+            "This field is required."
+        ]
+    }
+    ```
+    - If password isn't provided, the response will be like this:
+    ```HTTP
+    HTTP 400 Bad Request
+    Content-Type: application/json
+    {
+        "password": [
+            "This field is required."
+        ]
+    }
+    ```
+### Login
+Allows POST requests containing username and password (application/json)
+  - Example:
+  ```HTTP
+  POST /api/login/
+  {
+    "username": "testUser",
+    "password": "testUser"
+  }
+  ```
+  - Success
+    - If there's nothing wrong, the response will be like this:
+    ```HTTP
+    HTTP 200 OK
+    Content-Type: application/json
+    {
+        "expiry": "2020-11-25T00:32:52.122115Z",
+        "token": "306a694898caf75366777452edc91132b74663ad2065f9923d0f6cb9cc5c43de"
+    }
+    ```
+  - Failure
+    - If no user exists having the provided information, the response will be like this:
+    ```HTTP
+    HTTP 400 Bad Request
+    Content-Type: application/json
+    {
+        "non_field_errors": [
+            "Unable to log in with provided credentials."
+        ]
+    }
+    ```
+### Logout
+Allows a POST request containing an Authorization header
+  - Example
+  ```HTTP
+  POST /api/logout/
+  Authorization: Token b236f6c76fd603712a57e56eeb71e20f59bac0e42e897bc913afcf46566ede4c
+  ```
+  - Success
+  ```HTTP
+  HTTP 204 No Content
+  ```
+  - Failure
+      - If the header isn't provided:
+      ```HTTP
+      HTTP 401 Unauthorized
+      {
+          "detail": "Authentication credentials were not provided."
+      }
+      ```
+      - If the token is invalid (doesn't match the client's login token):
+      ```HTTP
+      HTTP 401 Unauthorized
+      {
+          "detail": "Invalid token."
+      }
+      ```

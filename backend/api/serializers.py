@@ -3,6 +3,8 @@ from events.models import Workshop, Seminar, PosterSession
 from people.models import HoldingTeam
 from WSS.models import WSS, Sponsorship, Clip, Booklet, Image, UserProfile
 
+from django.contrib.auth.models import User
+
 
 class WSSSerializer(ModelSerializer):
     class Meta:
@@ -78,3 +80,27 @@ class ImageSerializer(ModelSerializer):
     class Meta:
         model = Image
         fields = '__all__'
+
+
+# User Serializer
+class UserSerializer(ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('id', 'username', 'email')
+
+
+# Register Serializer
+class RegisterSerializer(ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('id', 'username', 'email', 'password')
+        extra_kwargs = {'password': {'write_only': True}}
+
+    def create(self, validated_data):
+        user = User.objects.create_user(
+            validated_data['username'], validated_data['email'], validated_data['password'])
+        
+        user_profile = UserProfile(user=user)
+        user_profile.save()
+
+        return user
