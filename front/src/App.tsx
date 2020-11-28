@@ -17,7 +17,7 @@ import './styles/style.scss';
 function App() {
   return (
     <>
-      <Header></Header>
+      <Header />
       <Router>
         <Switch>
           <Route path="/cardholder" component={CardHolder} />
@@ -31,7 +31,7 @@ function App() {
           <Route path="/" component={Home} />
         </Switch>
       </Router>
-      <Footer></Footer>
+      <Footer />
     </>
   );
 }
