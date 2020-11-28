@@ -6,7 +6,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('events', '0005_auto_20201128_2048'),
+        ('events', '0005_event_tag'),
         ('WSS', '0013_making_userprofile_fields_nullable'),
     ]
 
