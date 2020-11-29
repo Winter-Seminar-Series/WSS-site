@@ -6,6 +6,11 @@ from polymorphic.models import PolymorphicModel
 from taggit.managers import TaggableManager
 
 
+class WssTag(models.Model):
+    wss = models.ForeignKey(to='WSS.WSS', related_name='tag', on_delete=models.CASCADE)
+    name = models.CharField(max_length=100, verbose_name="Tag", primary_key=True)
+
+
 class BaseEvent(PolymorphicModel):  # Is implicitly Abstract
     wss = models.ForeignKey(to='WSS.WSS', related_name='events', on_delete=models.CASCADE)
     title = models.CharField(max_length=150)
@@ -15,6 +20,7 @@ class BaseEvent(PolymorphicModel):  # Is implicitly Abstract
     key_words = TaggableManager(blank=True)
     audience = models.CharField(blank=True, max_length=200)
     link = models.URLField(null=True, max_length=256)
+    tags = models.ManyToManyField(WssTag, null=True, blank=True)
 
     class Meta:
         ordering = ('start_time',)

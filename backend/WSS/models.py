@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 from pip._vendor import requests
 from sorl.thumbnail import ImageField
 from django.core.validators import MinValueValidator
-from events.models import Workshop, Seminar, PosterSession
+from events.models import Workshop, Seminar, PosterSession, WssTag
 
 
 class WSS(models.Model):
@@ -217,13 +217,14 @@ class UserProfile(models.Model):
     country = models.CharField(max_length=150)
     field_of_interest = models.CharField(max_length=1500, blank=True)
     grade = models.CharField(max_length=30, choices=GRADE_CHOICES, null=True)
+    favorite_tags = models.ManyToManyField(WssTag, null=True, blank=True, verbose_name="Favorite tags")
     is_student = models.BooleanField(default=False, verbose_name="I am a Student")
     sign_timestamp = models.DateTimeField(auto_now=True)
 
     @property
     def email(self):
         return self.user.email
-    
+
     @property
     def username(self):
         return self.user.username
@@ -231,19 +232,19 @@ class UserProfile(models.Model):
     @property
     def first_name(self):
         return self.user.first_name
-    
+
     @first_name.setter
     def first_name(self, value):
         self.user.first_name = value
-    
+
     @property
     def last_name(self):
         return self.user.last_name
-    
+
     @last_name.setter
     def last_name(self, value):
         self.user.last_name = value
-    
+
     def __str__(self):
         return self.first_name + " " + self.last_name
 
