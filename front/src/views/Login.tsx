@@ -2,10 +2,7 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-import {
-  login
-} from '../redux/actions/account'
-
+import { login } from '../redux/actions/account';
 
 function Login({ login, isFetching }) {
   const { t } = useTranslation('login', { useSuspense: false });
@@ -14,7 +11,7 @@ function Login({ login, isFetching }) {
 
   function doLogin() {
     if (!!username && !!password) {
-      login(username, password)
+      login(username, password);
     }
   }
   return (
@@ -29,7 +26,8 @@ function Login({ login, isFetching }) {
                 onChange={(e) => setUsername(e.target.value)}
                 id="username"
                 type="email"
-                className="form-control" />
+                className="form-control"
+              />
             </div>
             <div className="form-group mb-5">
               <label htmlFor="password">{t('password')}</label>
@@ -38,7 +36,8 @@ function Login({ login, isFetching }) {
                 onChange={(e) => setPassword(e.target.value)}
                 type="password"
                 className="form-control"
-                id="password" />
+                id="password"
+              />
             </div>
             <button
               // disabled={!(!!username && !!password)}
@@ -70,11 +69,8 @@ function Login({ login, isFetching }) {
 
 const mapStateToProps = (state, ownProps) => ({
   isFetching: state.Account.isFetching,
-})
+});
 
-export default connect(
-  mapStateToProps,
-  {
-    login,
-  }
-)(Login);
+export default connect(mapStateToProps, {
+  login,
+})(Login);

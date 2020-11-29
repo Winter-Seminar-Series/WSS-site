@@ -54,7 +54,7 @@ const Header = () => {
             <ul className="navbar-nav ml-auto mt-2 mt-lg-0">
               {navbarItems.map((i) =>
                 i.children ? (
-                  <li className="nav-item dropdown">
+                  <li key={i.title} className="nav-item dropdown">
                     <a
                       href={i.link}
                       className={`nav-link dropdown-toggle ${i.style || ''}`}
