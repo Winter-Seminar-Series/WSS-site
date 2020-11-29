@@ -1,4 +1,3 @@
-import { Action } from 'redux';
 import * as actionTypes from '../actionTypes';
 
 const initState = {
@@ -35,15 +34,14 @@ const initState = {
 
 function WSS(state = initState, action) {
   switch (action.type) {
-
     case actionTypes.PRIMITIVE_FIELDS_REQUEST:
       return {
         ...state,
         isFetching: true,
-      }
+      };
 
     case actionTypes.PRIMITIVE_FIELDS_SUCCESS:
-      return ({
+      return {
         ...state,
         isFetching: false,
         mainImageURL: action.response.main_image_url,
@@ -59,57 +57,57 @@ function WSS(state = initState, action) {
         proposalLink: action.response.proposal_link,
         showStats: action.response.show_stats,
         calendarLink: action.response.calender_link,
-      })
+      };
 
     case actionTypes.PRIMITIVE_FIELDS_FAILURE:
-      return ({
+      return {
         ...state,
         isFetching: false,
-      })
+      };
 
     /////////////////////
 
     case actionTypes.MODEL_LIST_REQUEST:
-      return ({
+      return {
         ...state,
         isFetching: true,
-      })
+      };
 
     case actionTypes.MODEL_LIST_SUCCESS:
-      return ({
+      return {
         ...state,
         isFetching: false,
         [action.payload.modelListName]: action.response,
-      })
+      };
 
     case actionTypes.MODEL_LIST_FAILURE:
-      return ({
+      return {
         ...state,
         isFetching: false,
-      })
+      };
 
     /////////////////////
 
     case actionTypes.MODEL_LIST_COUNT_REQUEST:
-      return ({
+      return {
         ...state,
         isFetching: true,
-      })
+      };
 
     case actionTypes.MODEL_LIST_COUNT_SUCCESS:
-      return ({
+      return {
         ...state,
         isFetching: false,
         [action.payload.modelListName + '_count']: action.response,
-      })
+      };
 
     case actionTypes.MODEL_LIST_COUNT_FAILURE:
-      return ({
+      return {
         ...state,
         isFetching: false,
-      })
+      };
 
-    /////////////////////      
+    /////////////////////
 
     default:
       return state;
@@ -117,4 +115,3 @@ function WSS(state = initState, action) {
 }
 
 export default WSS;
-
