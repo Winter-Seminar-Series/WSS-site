@@ -7,7 +7,7 @@ function Presenter({
   name = 'Omid Jafari',
   title = 'Teacher',
   image = 'http://u.lorenzoferrara.net/marlenesco/material-card/thumb-christopher-walken.jpg',
-  description = ' Annie Hall, The Prophecy trilogy, The Dogs of War ..Annie Hall, The Prophecy trilogy, The Dogs of War ..Annie Hall, The Prophecy trilogy, The Dogs of War ..Annie Hall, The Prophecy trilogy, The Dogs of War ..Annie Hall, The Prophecy trilogy, The Dogs of War ..Annie Hall, The Prophecy trilogy, The Dogs of War ..Annie Hall, The Prophecy trilogy, The Dogs of War ..Annie Hall, The Prophecy trilogy, The Dogs of War ..Annie Hall, The Prophecy trilogy, The Dogs of War ..Annie Hall, The Prophecy trilogy, The Dogs of War ..Annie Hall, The Prophecy trilogy, The Dogs of War ..Annie Hall, The Prophecy trilogy, The Dogs of War ...',
+  description = ' Lab lab  lab lab Lab l lab...',
 }) {
   const cardRef = useRef(null);
   const iconRef = useRef(null);

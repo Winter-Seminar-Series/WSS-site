@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import Card from '../components/cards/Card'
 import Dialogue from '../components/dialogue/Dialogue'
 import Presenter from '../components/cards/Presenter'
+import Snackbar from '../components/toast/Toast'
 
 
 function CardHolder({
@@ -45,6 +46,7 @@ function CardHolder({
 
         <div className="card card-4"></div>
 
+        <Snackbar />
         <Dialogue />
 
         <Presenter />
