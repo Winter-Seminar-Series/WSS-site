@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+import Presenter from '../components/cards/Presenter';
 import {
   getWSSPrimitiveFields,
   MODEL_LISTS_NAMES,
   getModelList,
   getModelListCount,
-} from '../redux/actions/WSS'
+} from '../redux/actions/WSS';
 
 const fontStyle = {
   fontSize: '1.125rem',
@@ -55,15 +57,73 @@ function Home({
   startDate,
   proposalLink,
   showStats,
-  calendarLink
+  calendarLink,
 }) {
-
   useEffect(() => {
     getWSSPrimitiveFields(2020);
     getModelList(MODEL_LISTS_NAMES.IMAGES, 2020);
     getModelListCount(MODEL_LISTS_NAMES.IMAGES, 2020);
-  }, [getWSSPrimitiveFields])
+  }, [getWSSPrimitiveFields]);
+  const date = 'JANUARY 2nd - 3rd, 2021';
+  const register = false;
+  const posterSessionRegister = false;
+  const keynoteSpeakers = [
+    {
+      name: 'Hamed Saleh',
+      picUrl: '',
+      description: 'PhD student, University of Maryland',
+    },
+    {
+      name: 'Zahra Nazari',
+      picUrl: '',
+      description: 'Research Scientist, Spotify',
+    },
+    {
+      name: 'Hamed Saleh',
+      picUrl: '',
+      description: 'PhD student, University of Maryland',
+    },
+  ];
+  const speakers = [
+    {
+      name: 'Hamed Saleh',
+      picUrl: '',
+      description: 'PhD student, University of Maryland',
+    },
+    {
+      name: 'Zahra Nazari',
+      picUrl: '',
+      description: 'Research Scientist, Spotify',
+    },
+    {
+      name: 'Hamed Saleh',
+      picUrl: '',
+      description: 'PhD student, University of Maryland',
+    },
+    {
+      name: 'Hamed Saleh',
+      picUrl: '',
+      description: 'PhD student, University of Maryland',
+    },
+  ];
 
+  const sponser = true;
+  const mainSponsers = [
+    {
+      title: 'google',
+      url: 'https://www.google.com',
+      logo:
+        'https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png',
+    },
+  ];
+  const otherSponsers = [
+    {
+      title: 'google',
+      url: 'https://www.google.com',
+      logo:
+        'https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png',
+    },
+  ];
   return (
     <>
       <section id="banner">
@@ -94,32 +154,33 @@ function Home({
                   </div>
                 </div>
                 <div className="col-xs-12 col-sm-12 col-md-6 mt-5 px-4">
-                  <h2 className="banner-subtitle2">
+                  <h2 className="banner-subtitle2 font-weight-bold">
                     Advanced Topics in Computer Science and Engineering
                   </h2>
-                  <input
-                    type="hidden"
-                    value="{{ wss.start_date|date:'m/d/Y' }}"
-                    id="start-date"
-                  />
-                  <h2 className="banner-subtitle my-3">render_date wss</h2>
-                  <h3 className="banner-desc">
+                  <h2 className="banner-subtitle my-3 font-weight-bold">
+                    {date}
+                  </h2>
+                  <h3 className="banner-desc font-weight-bold">
                     IRAN, TEHRAN, SHARIF UNIVERSITY OF TECHNOLOGY
                   </h3>
-                  <p className="banner-btn">
-                    <a
-                      href="{% url 'wss:register' wss.year %}"
-                      className="btn btn-primary btn-white">
-                      Register Now
-                    </a>
-                  </p>
-                  <p className="banner-btn">
-                    <a
-                      href="{{ wss.proposal_link }}"
-                      className="btn btn-primary btn-white">
-                      Poster Session Registration
-                    </a>
-                  </p>
+                  {register && (
+                    <p className="banner-btn">
+                      <a
+                        href="{% url 'wss:register' wss.year %}"
+                        className="btn btn-primary btn-white">
+                        Register Now
+                      </a>
+                    </p>
+                  )}
+                  {posterSessionRegister && (
+                    <p className="banner-btn">
+                      <a
+                        href="{{ wss.proposal_link }}"
+                        className="btn btn-primary btn-white">
+                        Poster Session Registration
+                      </a>
+                    </p>
+                  )}
                 </div>
               </div>
             </div>
@@ -187,46 +248,64 @@ function Home({
           </div>
           <div className="row">
             <div className="general-btn text-center mx-auto">
-              <a className="btn btn-primary all-speakers" href="/about">
+              <Link className="btn btn-primary all-speakers" to="about">
                 More About WSS
-              </a>
+              </Link>
             </div>
           </div>
         </div>
       </section>
 
-      <section
-        id="ts-speakers-main"
-        className="banner-item  diagonal blue-gradient"
-        style={bannerPadding}>
-        <div className="container">
-          <div className="row text-center">
-            <h3 className="section-sub-title title-white mx-auto">
-              Keynote Speakers
-            </h3>
+      {((keynoteSpeakers && keynoteSpeakers) ||
+        (speakers && speakers.length)) && (
+        <section
+          id="ts-speakers-main"
+          className="banner-item  diagonal blue-gradient"
+          style={bannerPadding}>
+          <div className="container">
+            {keynoteSpeakers && keynoteSpeakers.length && (
+              <>
+                <div className="row text-center">
+                  <h3 className="section-sub-title title-white mx-auto font-weight-light">
+                    Keynote Speakers
+                  </h3>
+                </div>
+                <div className="row justify-content-center">
+                  {keynoteSpeakers.map((s) => (
+                    <div className="col-xs-11 col-sm-6 col-lg-3">
+                      <Presenter></Presenter>
+                    </div>
+                  ))}
+                </div>
+              </>
+            )}
+            {speakers && speakers.length && (
+              <>
+                <div className="row text-center">
+                  <h3 className="section-sub-title title-white mx-auto font-weight-light">
+                    Speakers
+                  </h3>
+                </div>
+                <div className="row justify-content-center">
+                  {speakers.map((s) => (
+                    <div className="col-xs-11 col-sm-6 col-lg-3">
+                      <Presenter></Presenter>
+                    </div>
+                  ))}
+                </div>
+              </>
+            )}
           </div>
-          <div className="row justify-content-center">
-            <div className="col-xs-11 col-sm-6 col-lg-3"></div>
-          </div>
-          <br />
-          <div className="row text-center">
-            <h3 className="section-sub-title title-white mx-auto">Speakers</h3>
-          </div>
-          <div className="row justify-content-center">
-            <div className="col-xs-11 col-sm-6 col-lg-3"></div>
-          </div>
-        </div>
 
-        <div className="row">
-          <div className="general-btn text-center mx-auto">
-            <a
-              className="btn btn-primary btn-white"
-              href="{% url 'wss:seminars-list' wss.year %}">
-              View All Speakers
-            </a>
+          <div className="row">
+            <div className="general-btn text-center mx-auto">
+              <Link className="btn btn-primary btn-white" to="speakers">
+                View All Speakers
+              </Link>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       <section id="ts-statics" className="z-1 ts-statics diagonal">
         <div className="container py-4">
@@ -284,52 +363,57 @@ function Home({
         </div>
       </section>
 
-      <section id="ts-sponsors" className="ts-sponsors diagonal pt-0">
-        <div className="container">
-          <p className="section-sub-title">Event Sponsors</p>
-          <div className="row text-center d-flex align-items-center">
-            <h3 className="sponsor-title mb-5">Main sponsers</h3>
-            <div className="col-xs-12 col-sm-4 col-md-2 align-center">
-              <a href="{{ sponsorship.sponsor.url }}">
-                <img
-                  className="mw-100 img-responsive"
-                  src="{{ sponsorship.logo_url }}"
-                  alt=""
-                />
-              </a>
-              <a href="{{ sponsorship.sponsor.url }}">
-                <h2 className="intro-title" style={margin60}>
-                  sponsorship.sponsor.name
-                </h2>
-              </a>
-            </div>
+      {sponser && (
+        <section id="ts-sponsors" className="ts-sponsors diagonal pt-0">
+          <div className="container">
+            <p className="section-sub-title">Event Sponsors</p>
+            {mainSponsers && mainSponsers.length && (
+              <div className="row text-center d-flex align-items-center">
+                <h3 className="sponsor-title mb-5">Main sponsers</h3>
+                {mainSponsers.map((ms) => (
+                  <div className="col-xs-12 col-sm-4 col-md-2 align-center">
+                    <a href={ms.url}>
+                      <img
+                        className="mw-100 img-responsive"
+                        src={ms.logo}
+                        alt=""
+                      />
+                    </a>
+                    <a href={ms.url}>
+                      <h2 className="intro-title" style={margin60}>
+                        {ms.title}
+                      </h2>
+                    </a>
+                  </div>
+                ))}
+              </div>
+            )}
+            {otherSponsers && otherSponsers.length && (
+              <div className="row text-center ">
+                <h3 className="sponsor-title" style={margin60}>
+                  Other Sponsors
+                </h3>
+                {otherSponsers.map((ms) => (
+                  <div className="col-xs-12 col-sm-4 col-md-2 align-center">
+                    <a href={ms.url}>
+                      <img
+                        className="mw-100 img-responsive"
+                        src={ms.logo}
+                        alt=""
+                      />
+                    </a>
+                    <a href={ms.url}>
+                      <h2 className="intro-title" style={margin60}>
+                        {ms.title}
+                      </h2>
+                    </a>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
-          <div className="row text-center ">
-            <h3 className="sponsor-title" style={margin60}>
-              Other Sponsors
-            </h3>
-            <div className="col-xs-12 col-sm-4 col-md-4 align-center">
-              <a
-                href="{{ sponsorship.sponsor.url }}"
-                className="sponsor-logo"
-                style={mb20mt0}>
-                <img
-                  className="img-responsive"
-                  src="sponsorship.logo_url"
-                  width="630"
-                  height="265"
-                  alt=""
-                />
-              </a>
-              <a href="{{ sponsorship.sponsor.url }}">
-                <h2 className="intro-title" style={margin60}>
-                  sponsorship.sponsor.name
-                </h2>
-              </a>
-            </div>
-          </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       <section
         className="venu-map no-padding diagonal blue-gradient h-100 pb-2"
@@ -340,8 +424,9 @@ function Home({
           </h3>
         </div>
         <div className="container mt-4 mb-5">
+          <h5 className="section-sub-title text-white">Info</h5>
           <div className="row mb-5">
-            <div className="col-md-6">
+            <div className="col-md-6 font-weight-bold">
               <div className="white">
                 <p>Sharif University of Technology </p>
                 <p>Azadi Street, District 2, Tehran, Iran</p>
@@ -350,20 +435,9 @@ function Home({
                 <p>+98(021) 66 16 57 81</p>
               </div>
             </div>
-            <div className="col-md-6 map">
-              <iframe
-                style={noBorder}
-                className="embed-responsive-item"
-                src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d6479.848007952863!2d51.3476417!3d35.7034877!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3f8e00a8bc1a7e63%3A0x61a5a909b878501!2sSharif+University+of+Technology!5e0!3m2!1sen!2s!4v1564664895486!5m2!1sen!2s"
-                width="100%"
-                height="100%"
-                frameBorder="0"
-                allowFullScreen={undefined}></iframe>
-            </div>
           </div>
-          <h3 className="section-sub-title text-white">Organizer</h3>
-
-          <p className="font-italic white">
+          <h5 className="section-sub-title text-white">Organizer</h5>
+          <p className="font-italic white pb-3">
             The event is held by the Student Scientific Chapter (SSC) of
             Computer Engineering Department of Sharif University of Technology
           </p>
@@ -404,8 +478,8 @@ const mapStateToProps = (state, ownProps) => {
     holding_teams_count,
     images,
     images_count,
-  } = state.WSS
-  return ({
+  } = state.WSS;
+  return {
     isFetching,
     mainImageURL,
     mainClipURL,
@@ -419,15 +493,12 @@ const mapStateToProps = (state, ownProps) => {
     startDate,
     proposalLink,
     showStats,
-    calendarLink
-  })
-}
+    calendarLink,
+  };
+};
 
-export default connect(
-  mapStateToProps,
-  {
-    getWSSPrimitiveFields,
-    getModelList,
-    getModelListCount,
-  }
-)(Home);
+export default connect(mapStateToProps, {
+  getWSSPrimitiveFields,
+  getModelList,
+  getModelListCount,
+})(Home);
