@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-import { connect } from 'react-redux'
+import { connect } from 'react-redux';
+import { toast } from 'react-toastify';
 import {
   signup,
 } from '../redux/actions/account'
@@ -24,9 +25,15 @@ function Signup({ signup, isFetching }) {
   }
 
   function doSignup() {
-    if (doesPasswordAgainMatch) {
-      signup(firstName, lastName, email, password)
+    if (!firstName || !lastName || !email || !password) {
+      toast.error("Please fill all the required fields")
+      return;
     }
+    if (!doesPasswordAgainMatch) {
+      toast.error('Passwords doesn\'t match');
+      return;
+    }
+    signup(firstName, lastName, email, password);
   }
 
   return (
@@ -72,8 +79,9 @@ function Signup({ signup, isFetching }) {
                 className="form-control"
                 id="password" />
             </div>
+
             <div className="form-group mb-5">
-              <label htmlFor="password again">{t('passwordAgain')}</label>
+              <label htmlFor="confirm password">{t('confirmPassword')}</label>
               <input
                 onChange={(e) => checkPasswordAgain(e.target.value)}
                 type="password"
@@ -81,7 +89,7 @@ function Signup({ signup, isFetching }) {
                 id="password-again" />
             </div>
             <button
-              // disabled={!(!!firstName && !!lastName && !!email && !!password) || !doesPasswordAgainMatch}
+              disabled={isFetching}
               onClick={doSignup}
               type="button"
               className="btn btn-lg btn-primary btn-dark mb-5">

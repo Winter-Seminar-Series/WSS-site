@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import {
   login
 } from '../redux/actions/account'
@@ -13,10 +14,13 @@ function Login({ login, isFetching }) {
   const [password, setPassword] = useState('');
 
   function doLogin() {
-    if (!!username && !!password) {
-      login(username, password)
+    if (!username || !password) {
+      toast.error("Please fill all the required fields")
+      return;
     }
+    login(username, password)
   }
+  
   return (
     <>
       <section dir="rtl" className="auth-container diagonal row pb-0">
@@ -41,7 +45,7 @@ function Login({ login, isFetching }) {
                 id="password" />
             </div>
             <button
-              // disabled={!(!!username && !!password)}
+              disabled={isFetching}
               onClick={doLogin}
               type="button"
               className="btn btn-lg btn-primary btn-dark mb-5">

@@ -12,15 +12,15 @@ function Notification(state = {}, action) {
       return { ...state };
 
     case actionTypes.LOGIN_FAILURE:
-      toast.error('Login Failed')
+      toast.error('Login failed')
       return { ...state };
 
     case actionTypes.SIGNUP_SUCCESS:
-      toast.success('Successful!')
+      toast.success('Registration completed successfully!')
       return { ...state };
 
     case actionTypes.SIGNUP_FAILURE:
-      toast.error('Signup Failed')
+      toast.error('Signup failed')
       return { ...state };
 
     default:
