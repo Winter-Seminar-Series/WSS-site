@@ -1,0 +1,29 @@
+.auth-container {
+  position: relative;
+  background-color: white;
+}
+
+.auth-container .form-container {
+  clip-path: polygon(5% 0, 100% 0%, 100% 90%, 0% 100%);
+  background: white;
+  margin-top: -10px;
+  margin-bottom: -32px;
+  padding: 100px;
+  padding-top: 190px;
+}
+
+.auth-container .logo-container {
+  margin-top: -50px;
+  padding: 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.auth-container .logo-container .logo {
+  max-width: 100%;
+}
+
+.linkbar .link {
+  text-decoration: none;
+}

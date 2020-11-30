@@ -1,4 +1,4 @@
-FROM node:14.15.1-alpine3.12
+FROM node:10.23.0
 WORKDIR /app/
 COPY . .
 RUN npm install --no-dev
