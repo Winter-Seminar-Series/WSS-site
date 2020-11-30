@@ -2,16 +2,9 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-<<<<<<< HEAD
 import Card from '../components/cards/Card'
 import Dialogue from '../components/dialogue/Dialogue'
 import Presenter from '../components/cards/Presenter'
-=======
-import Card from '../components/cards/Card';
-import Dialogue from '../components/dialogue/Dialogue';
-import Presenter from '../components/cards/Presenter';
-// import Snackbar from '../components/toast/Toast'
->>>>>>> 2d4ef4d1d85dd9d1b2bc5d0e5f2f2b96f1181872
 
 function CardHolder({ title = 'Talks' }) {
   const { t } = useTranslation('cardHolder', { useSuspense: false });

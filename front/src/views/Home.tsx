@@ -288,7 +288,7 @@ function Home({
                 </div>
                 <div className="row justify-content-center">
                   {speakers.map((s) => (
-                    <div className="col-xs-11 col-sm-6 col-lg-3">
+                    <div className="col-xs-11 col-sm-6 col-lg-4">
                       <Presenter></Presenter>
                     </div>
                   ))}

@@ -6,7 +6,7 @@ import Like from './Like'
 
 function Presenter({
   name = 'Omid Jafari',
-  title = 'Teacher',
+  title = 'Assistant professor at university of Canada',
   image = 'http://u.lorenzoferrara.net/marlenesco/material-card/thumb-christopher-walken.jpg',
   description = ' Lab lab  lab lab Lab lab  lab lab Lab l Lab lab  lab lab Lab l Lab lab  lab lab Lab l Lab lab  lab lab Lab l Lab l lab...',
   isLoggedIn = 'false',
@@ -16,19 +16,11 @@ function Presenter({
   const cardRef = useRef(null);
   const iconRef = useRef(null);
 
-<<<<<<< HEAD
   function onClick() {
     var card = cardRef.current;
     var icon = iconRef.current;
 
     icon.classList.add('fa-spin-fast')
-=======
-  var card = cardRef.current; //document.getElementById("presenter-card");
-  var icon = iconRef.current; //document.getElementById("presenter-card-icon");
-
-  function onClick() {
-    icon.classList.add('fa-spin-fast');
->>>>>>> 2d4ef4d1d85dd9d1b2bc5d0e5f2f2b96f1181872
 
     if (card.classList.contains('mc-active')) {
       card.classList.remove('mc-active');
@@ -48,7 +40,7 @@ function Presenter({
   }
 
   return (
-    <div className="col-lg-4 col-md-6 col-sm-9 col-xs-12">
+    // <div className="col-lg-4 col-md-6 col-sm-9 col-xs-12">
       <article ref={cardRef} id="presenter-card" className="material-card Blue">
         <h2>
           <span>{name}</span>
@@ -76,11 +68,10 @@ function Presenter({
           <Like />
         </div>
       </article>
-    </div>
+    // </div>
   );
 }
 
-<<<<<<< HEAD
 const mapStateToProps = (state, ownProps) => {
   const { name, title, image, description, didLikedThis, showButton } = ownProps;
   const { isLoggedIn } = state.Account;
@@ -99,6 +90,3 @@ export default connect(
   mapStateToProps,
   {}
 )(Presenter);
-=======
-export default Presenter;
->>>>>>> 2d4ef4d1d85dd9d1b2bc5d0e5f2f2b96f1181872
