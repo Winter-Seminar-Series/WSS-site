@@ -1,0 +1,24 @@
+#like {
+  .ico {
+    border-radius: 50%;
+    cursor: pointer;
+    fill: #757b86;
+    transition: .4s;
+    weight: 45px;
+    height: 45px;
+  }
+
+  @media screen and (max-width:400px) {
+    .ico {
+      weight: 30px;
+      height: 30px;
+    }
+  }
+
+  .liked {
+    // transform: scale(1.05) rotate(360deg);
+    // background-color: #C62828;
+    // padding: .2rem;
+    fill: #C62828;
+  }
+}

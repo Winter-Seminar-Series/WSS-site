@@ -47,7 +47,7 @@ function CardHolder({
 
         <Dialogue />
 
-        <Presenter />
+        <Presenter name='Seyyed Alireza Hashemi' showButton={false} description=':)))' />
         <Presenter />
         <Presenter />
         <Presenter />

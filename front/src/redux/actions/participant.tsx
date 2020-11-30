@@ -5,9 +5,9 @@ import { CALL_API } from '../middleware/api/api';
 export const likeWorkShop = () => ({ //todo
   [CALL_API]: {
     types: [
-      actionTypes.LIKE_WORKSHOP_REQUEST,
-      actionTypes.LIKE_WORKSHOP_SUCCESS,
-      actionTypes.LIKE_WORKSHOP_FAILURE,
+      actionTypes.LIKE_CARD_REQUEST,
+      actionTypes.LIKE_CARD_SUCCESS,
+      actionTypes.LIKE_CARD_FAILURE,
     ],
     url: URLs.ROOT,
     fetchOptions: {

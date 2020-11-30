@@ -2,22 +2,25 @@ import React, { useState, useRef } from 'react';
 import { connect } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
+import Like from './Like'
 
 
 function Presenter({
   name = 'Omid Jafari',
   title = 'Teacher',
   image = 'http://u.lorenzoferrara.net/marlenesco/material-card/thumb-christopher-walken.jpg',
-  description = ' Lab lab  lab lab Lab l lab...',
+  description = ' Lab lab  lab lab Lab lab  lab lab Lab l Lab lab  lab lab Lab l Lab lab  lab lab Lab l Lab lab  lab lab Lab l Lab l lab...',
+  isLoggedIn = 'false',
+  didLikedThis = 'false',
+  showButton = true,
 }) {
   const cardRef = useRef(null);
   const iconRef = useRef(null);
 
-
-  var card = cardRef.current;//document.getElementById("presenter-card");
-  var icon = iconRef.current; //document.getElementById("presenter-card-icon");
-
   function onClick() {
+    var card = cardRef.current;
+    var icon = iconRef.current;
+
     icon.classList.add('fa-spin-fast')
 
     if (card.classList.contains('mc-active')) {
@@ -51,25 +54,43 @@ function Presenter({
           <div className="img-container">
             <img style={{ height: '100%', width: '100%' }} src={image} />
           </div>
-          <div className="mc-description">
+          <div className=" mc-description">
             {description}
           </div>
         </div>
-        <a onClick={onClick} className="mc-btn-action" >
-          <i ref={iconRef} id='presenter-card-icon' className="fa fa-bars" />
-        </a>
-        {/* <div className="mc-footer">
-          <h4>
-            Social
-          </h4>
-          <a className="fa fa-fw fa-facebook"></a>
-          <a className="fa fa-fw fa-twitter"></a>
-          <a className="fa fa-fw fa-linkedin"></a>
-          <a className="fa fa-fw fa-google-plus"></a>
-        </div> */}
+        {showButton &&
+          <a onClick={onClick} className="mc-btn-action" >
+            <i ref={iconRef} id='presenter-card-icon' className="fa fa-bars" />
+          </a>
+        }
+        <div className="mc-footer">
+          <div className='col'>
+            <span>
+              Add to your favorite:
+            </span>
+          </div>
+          <Like />
+        </div>
       </article>
     </div>
   )
 }
 
-export default Presenter;
+const mapStateToProps = (state, ownProps) => {
+  const { name, title, image, description, didLikedThis, showButton } = ownProps;
+  const { isLoggedIn } = state.Account;
+  return ({
+    name,
+    title,
+    image,
+    description,
+    didLikedThis,
+    showButton,
+    isLoggedIn,
+  })
+}
+
+export default connect(
+  mapStateToProps,
+  {}
+)(Presenter);
