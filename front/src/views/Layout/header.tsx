@@ -63,7 +63,7 @@ const Header = () => {
                     </a>
                     <ul className="dropdown-menu" role="menu">
                       {i.children.map((c) => (
-                        <li>
+                        <li key={c.title}>
                           <a className="dropdown-item" href={c.link}>
                             {c.title}
                           </a>
