@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { idText } from 'typescript';
 import Presenter from '../components/cards/Presenter';
 import {
   getWSSPrimitiveFields,
@@ -124,13 +125,23 @@ function Home({
         'https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png',
     },
   ];
+  const videoRef = useRef<HTMLVideoElement>();
+  const setVideoPlayBackRate = () => {
+    if (!videoRef) return;
+    videoRef.current.playbackRate = 0.6;
+  };
   return (
     <>
       <section id="banner">
         <div className="banner-item diagonal d-flex h-100">
           <div className="header-video-wrapper">
-            <video autoPlay loop muted>
-              {/* <source src="images/back-min.mp4?v=1.2" type="video/mp4" /> */}
+            <video
+              autoPlay
+              loop
+              muted
+              ref={videoRef}
+              onCanPlay={setVideoPlayBackRate}>
+              <source src="images/back-min.mp4?v=1.2" type="video/mp4" />
             </video>
           </div>
           <div className="container my-auto">
