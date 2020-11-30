@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
 import os
+import sentry_sdk
+from sentry_sdk.integrations.django import DjangoIntegration
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -25,8 +27,16 @@ SECRET_KEY = os.environ.get('WSS_SECRET_KEY')
 DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
+CORS_ORIGIN_ALLOW_ALL = True
 
 # Application definition
+
+WSS_APPS = [
+    'WSS',
+    'events',
+    'people',
+    'api',
+]
 
 INSTALLED_APPS = [
     'jet.dashboard',
@@ -37,17 +47,16 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'WSS',
-    'events',
-    'people',
+    'corsheaders',
     'django_extensions',
     'polymorphic',
     'sorl.thumbnail',
     'taggit',
     'crispy_forms',
     'rest_framework',
-    'api'
-]
+    'knox',
+    'dbbackup',
+] + WSS_APPS
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -57,6 +66,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = 'WSS_Site.urls'
@@ -94,10 +104,6 @@ DATABASES = {
         'PASSWORD': os.environ.get('WSS_DB_PASSWORD'),
         'HOST': 'database',
         'PORT': '5432',
-    },
-    'test': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
 
@@ -212,6 +218,30 @@ PAYMENT_SETTING = {
     "wsdl": os.environ.get('PAYMENT_WSDL'),
     "description": "WSS registration fee",
     "payment_url": os.environ.get('PAYMENT_URL')
+}
+
+SENTRY_TOKEN= os.environ.get('SENTRY_TOKEN')
+sentry_sdk.init(
+    dsn=f"https://{SENTRY_TOKEN}@o445959.ingest.sentry.io/5527905",
+    integrations=[DjangoIntegration()],
+    traces_sample_rate=0.0,
+
+    # If you wish to associate users to errors (assuming you are using
+    # django.contrib.auth) you may enable sending PII data.
+    send_default_pii=True
+)
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        # 'rest_framework.authentication.BasicAuthentication',
+        # 'rest_framework.authentication.SessionAuthentication',
+        'knox.auth.TokenAuthentication',
+    ]
+}
+
+DBBACKUP_STORAGE = 'storages.backends.dropbox.DropBoxStorage'
+DBBACKUP_STORAGE_OPTIONS = {
+    'oauth2_access_token': os.environ.get('DROPBOX_AUTH_TOKEN'),
 }
 
 local_settings_path = os.path.join(os.path.dirname(__file__), 'local_settings.py')
