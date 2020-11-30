@@ -5,7 +5,7 @@ env:
   HOST_SSH_USER: wss
 on:
   schedule:
-    - cron: "0 3 * * *"
+    - cron: "30 23 * * *" # every night 23:30 UTC = 03:00 ASIA/TEHRAN
   push:
     branches:
       - master
