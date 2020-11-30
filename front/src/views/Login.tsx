@@ -3,10 +3,7 @@ import { connect } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import {
-  login
-} from '../redux/actions/account'
-
+import { login } from '../redux/actions/account';
 
 function Login({ login, isFetching }) {
   const { t } = useTranslation('login', { useSuspense: false });
@@ -15,16 +12,18 @@ function Login({ login, isFetching }) {
 
   function doLogin() {
     if (!username || !password) {
-      toast.error("Please fill all the required fields")
+      toast.error('Please fill all the required fields');
       return;
     }
-    login(username, password)
+    login(username, password);
   }
-  
+
   return (
     <>
-      <section dir="rtl" className="auth-container diagonal row pb-0">
-        <div className="col-6 form-container">
+      <section
+        dir="rtl"
+        className="auth-container diagonal background-theme row py-0">
+        <div className="col-6 form-container" dir="ltr">
           <form>
             <div className="form-group mb-5">
               <label htmlFor="username">{t('username')}</label>
@@ -55,9 +54,9 @@ function Login({ login, isFetching }) {
             </button>
             <div className="linkbar">
               <span className="mr-1">{t('hasntSignedup')}</span>
-              <Link className="link" to="/signup">
+              <a className="link" href="/signup">
                 {t('click')}
-              </Link>
+              </a>
             </div>
           </form>
         </div>

@@ -40,7 +40,7 @@ function Signup({ signup, isFetching }) {
       <section
         dir="rtl"
         className="auth-container diagonal background-theme row py-0">
-        <div className="col-6 form-container">
+        <div className="col-6 form-container" dir="ltr">
           <form>
             <div className="form-group mb-5">
               <label htmlFor="firstName">{t('firstName')}</label>
@@ -103,9 +103,9 @@ function Signup({ signup, isFetching }) {
             </button>
             <div className="linkbar">
               <span className="mr-1">{t('signinBefore')}</span>
-              <Link className="link" to="/login">
+              <a className="link" href="/login">
                 {t('click')}
-              </Link>
+              </a>
             </div>
           </form>
         </div>
