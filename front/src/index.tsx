@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
+import { BrowserRouter as Router } from 'react-router-dom';
 import { Slide, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import App from './App';
@@ -37,10 +38,12 @@ const Toast = () => (
 
 ReactDOM.render(
   <React.StrictMode>
-    <Provider store={store}>
-      <App />
-      <Toast />
-    </Provider>
+    <Router>
+      <Provider store={store}>
+        <App />
+        <Toast />
+      </Provider>
+    </Router>
   </React.StrictMode>,
   document.getElementById('root')
 );

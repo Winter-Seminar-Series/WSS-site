@@ -5,13 +5,13 @@
   top: 0;
   right: 0;
   bottom: 0;
-  width: 150px;
+  width: 250px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   .sidebar-item {
     display: flex;
-    justify-content: start;
+    justify-content: flex-start;
     align-items: center;
     color: inherit;
     padding: 10px 20px;
@@ -22,11 +22,14 @@
     &:hover {
       background-color: #79869a;
     }
+    &.deactive {
+      color: rgba(0, 0, 0, 0.4);
+    }
   }
 }
 
 .dashboard-container {
   min-height: 100vh;
   padding: 20px;
-  padding-right: 150px;
+  padding-right: 250px;
 }

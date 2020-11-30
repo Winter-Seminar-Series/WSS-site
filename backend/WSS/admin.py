@@ -1,7 +1,8 @@
 from django.contrib import admin
 from jet.admin import CompactInline
 
-from WSS.models import Clip, Booklet, WSS, Image, Sponsor, ExternalLink, Sponsorship, Grade, Participant, UserProfile, ShortLink, Reserve
+from WSS.models import Clip, Booklet, WSS, Image, Sponsor, ExternalLink, Sponsorship, Grade, Participant, UserProfile, \
+    ShortLink, Reserve, WssTag
 from events.models import Seminar, Workshop, PosterSession, Event
 from django.contrib.auth.models import User
 from django.contrib.auth.admin import UserAdmin as AuthUserAdmin
@@ -21,6 +22,7 @@ class ClipInline(CompactInline):
     model = Clip
     extra = 0
 
+
 class BookletInline(CompactInline):
     model = Booklet
     extra = 0
@@ -29,6 +31,7 @@ class BookletInline(CompactInline):
 class SeminarInline(CompactInline):
     model = Seminar
     extra = 0
+
 
 class PosterSessionInline(CompactInline):
     model = PosterSession
@@ -59,10 +62,14 @@ class ReserveInline(CompactInline):
     extra = 0
 
 
+class TagInline(CompactInline):
+    model = WssTag
+    extra = 0
+
 
 class WSSAdmin(admin.ModelAdmin):
     inlines = (SeminarInline, PosterSessionInline, WorkshopInline, EventInline, SponsorshipInline, ImageInline,
-               ClipInline, BookletInline)
+               ClipInline, BookletInline, TagInline)
     list_display = ('__str__', 'start_date', 'end_date')
 
 
@@ -75,9 +82,9 @@ class UserProfileInline(admin.StackedInline):
     max_num = 1
     can_delete = False
 
+
 class UserAdmin(AuthUserAdmin):
     inlines = [UserProfileInline]
-
 
 
 admin.site.register(ExternalLink)
@@ -90,7 +97,7 @@ admin.site.register(Participant)
 admin.site.register(ShortLink)
 admin.site.register(Reserve)
 admin.site.register(Grade)
-
+admin.site.register(WssTag)
 # unregister old user admin
 admin.site.unregister(User)
 # register new user admin

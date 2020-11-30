@@ -1,5 +1,5 @@
 from rest_framework.decorators import action
-from rest_framework import viewsets
+from rest_framework import viewsets, generics, permissions
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication
@@ -8,10 +8,16 @@ from django.shortcuts import get_object_or_404
 from django.http import JsonResponse
 from django.conf import settings
 from abc import ABC, abstractmethod
-from api.serializer import WSSSerializer, WorkshopSerializer, SeminarSerializer, PosterSessionSerializer, SponsorshipSerializer, ClipSerializer, BookletSerializer, HoldingTeamSerializer, ImageSerializer
+from api import serializers
 from events.models import Workshop
 from WSS.models import WSS, Participant, UserProfile
 from WSS.payment import send_payment_request, verify
+
+from rest_framework.authtoken.serializers import AuthTokenSerializer
+from knox.models import AuthToken
+from django.contrib.auth import login
+from knox.views import LoginView as KnoxLoginView
+from django.contrib.auth.models import User
 
 
 def get_wss_object_or_404(year: int) -> WSS:
@@ -22,7 +28,7 @@ class WSSViewSet(viewsets.ViewSet):
     
     def list(self, request, year):
         wss = get_wss_object_or_404(year)
-        serializer = WSSSerializer(wss)
+        serializer = serializers.WSSSerializer(wss)
         return Response(serializer.data)
 
 
@@ -64,14 +70,14 @@ class BaseViewSet(viewsets.ViewSet, ABC):
 
 
 class WorkshopViewSet(BaseViewSet):
-    serializer = WorkshopSerializer
+    serializer = serializers.WorkshopSerializer
 
     def queryset_selector(self, request, wss):
         return wss.workshops
 
 
 class SeminarViewSet(BaseViewSet):
-    serializer = SeminarSerializer
+    serializer = serializers.SeminarSerializer
 
     def queryset_selector(self, request, wss):
         is_keynote = request.query_params.get("keynote", None)
@@ -81,14 +87,14 @@ class SeminarViewSet(BaseViewSet):
 
 
 class PosterSessionViewSet(BaseViewSet):
-    serializer = PosterSessionSerializer
+    serializer = serializers.PosterSessionSerializer
 
     def queryset_selector(self, request, wss):
         return wss.postersessions
 
 
 class SponsorshipViewSet(BaseViewSet):
-    serializer = SponsorshipSerializer
+    serializer = serializers.SponsorshipSerializer
 
     def queryset_selector(self, request, wss):
         is_main = request.query_params.get("main", None)
@@ -98,21 +104,21 @@ class SponsorshipViewSet(BaseViewSet):
 
 
 class ClipViewSet(BaseViewSet):
-    serializer = ClipSerializer
+    serializer = serializers.ClipSerializer
 
     def queryset_selector(self, request, wss):
         return wss.clips
 
 
 class HoldingTeamViewSet(BaseViewSet):
-    serializer = HoldingTeamSerializer
+    serializer = serializers.HoldingTeamSerializer
 
     def queryset_selector(self, request, wss):
         return wss.holding_teams
 
 
 class ImageViewSet(BaseViewSet):
-    serializer = ImageSerializer
+    serializer = serializers.ImageSerializer
 
     def queryset_selector(self, request, wss):
         return wss.images
@@ -123,6 +129,36 @@ class ErrorResponse(Response):
     def __init__(self, data, status_code: int = 400):
         super().__init__(data)
         self.status_code = status_code
+
+
+class UserProfileViewSet(viewsets.ViewSet):
+    authentication_classes = [SessionAuthentication, BasicAuthentication]
+    permission_classes = [IsAuthenticated]
+    serializer = serializers.UserProfileSerializer
+
+    def list(self, request):
+        user_profile: UserProfile = request.user.profile
+        serializer = self.serializer(user_profile)
+        return Response(serializer.data)
+    
+    @action(methods=['PUT'], detail=False)
+    def edit(self, request):
+        user_profile: UserProfile = request.user.profile
+        user_data_parameter = request.data
+
+        fields = ['first_name', 'last_name', 'phone_number', 'age'
+                  'job', 'university', 'introduction_method',
+                  'gender', 'city', 'country', 'field_of_interest',
+                  'grade', 'is_student']
+
+        for field in fields:
+            if user_data_parameter.get(field):
+                setattr(user_profile, field, user_data_parameter[field])
+        
+        user_profile.save()
+        request.user.save()
+        return Response(self.serializer(user_profile).data)
+        
 
 
 class PaymentViewSet(viewsets.ViewSet):
@@ -144,10 +180,9 @@ class PaymentViewSet(viewsets.ViewSet):
                 'message': "`callback_url` should be passed in query string"
             })
         
-        user_profile = UserProfile.objects.get(user=request.user)
-        participant = Participant.objects.filter(current_wss=wss, user_profile=user_profile).first()
+        user_profile: UserProfile = request.user.profile
 
-        if participant is not None:
+        if user_profile.participants.filter(current_wss=wss).count() != 0:
             return ErrorResponse({
                 "message": "You already have finished your payment."
             })  
@@ -179,9 +214,8 @@ class PaymentViewSet(viewsets.ViewSet):
             })
         
         user_profile = request.user.profile
-        participant = Participant.objects.filter(current_wss=wss, user_profile=user_profile).first()
 
-        if participant is not None:
+        if user_profile.participants.filter(current_wss=wss).count() != 0:
             return ErrorResponse({
                 "message": "You already have finished your payment."
             })        
@@ -214,3 +248,32 @@ class PaymentViewSet(viewsets.ViewSet):
         })
             
             
+class RegisterAPI(generics.GenericAPIView):
+    serializer_class = serializers.RegisterSerializer
+
+    def post(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+
+        # email field in User isn't unique & setting it manually caused failure in CI, so ...
+        if User.objects.filter(email=request.data['email']).exists():
+            return Response({
+                "email": ["user with this email address already exists."]
+            }, status=400)
+
+        serializer.is_valid(raise_exception=True)
+        user = serializer.save()
+        return Response({
+            "user": serializers.UserSerializer(user, context=self.get_serializer_context()).data,
+            "token": AuthToken.objects.create(user)[1]
+        })
+
+
+class LoginAPI(KnoxLoginView):
+    permission_classes = (permissions.AllowAny,)
+
+    def post(self, request, format=None):
+        serializer = AuthTokenSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user = serializer.validated_data['user']
+        login(request, user)
+        return super(LoginAPI, self).post(request, format=None)

@@ -9,19 +9,19 @@ function Footer() {
       icon: 'instagram',
     },
     {
-      title: 'instagram',
+      title: 'youtube',
       persianTitle: 'اینستاگرام',
       link: 'https://instagram.com',
       icon: 'youtube',
     },
     {
-      title: 'instagram',
+      title: 'facebook',
       persianTitle: 'اینستاگرام',
       link: 'https://instagram.com',
       icon: 'facebook',
     },
     {
-      title: 'instagram',
+      title: 'linkedin',
       persianTitle: 'اینستاگرام',
       link: 'https://instagram.com',
       icon: 'linkedin',

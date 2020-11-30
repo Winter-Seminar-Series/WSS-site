@@ -1,7 +1,9 @@
 from rest_framework.serializers import ModelSerializer
 from events.models import Workshop, Seminar, PosterSession
 from people.models import HoldingTeam
-from WSS.models import WSS, Sponsorship, Clip, Booklet, Image
+from WSS.models import WSS, Sponsorship, Clip, Booklet, Image, UserProfile
+
+from django.contrib.auth.models import User
 
 
 class WSSSerializer(ModelSerializer):
@@ -23,6 +25,14 @@ class WSSSerializer(ModelSerializer):
             'calendar_link'
         ]
 
+class UserProfileSerializer(ModelSerializer):
+    class Meta:
+        model = UserProfile
+        fields = [
+            'username', 'email', 'first_name', 'last_name', 'phone_number', 'age', 'job', 'university',
+            'introduction_method', 'gender', 'city', 'country',
+            'field_of_interest', 'grade', 'is_student'
+        ]
 
 class WorkshopSerializer(ModelSerializer):
     class Meta:
@@ -70,3 +80,27 @@ class ImageSerializer(ModelSerializer):
     class Meta:
         model = Image
         fields = '__all__'
+
+
+# User Serializer
+class UserSerializer(ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('id', 'username', 'email')
+
+
+# Register Serializer
+class RegisterSerializer(ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('id', 'username', 'email', 'password')
+        extra_kwargs = {'password': {'write_only': True}}
+
+    def create(self, validated_data):
+        user = User.objects.create_user(
+            validated_data['username'], validated_data['email'], validated_data['password'])
+        
+        user_profile = UserProfile(user=user)
+        user_profile.save()
+
+        return user

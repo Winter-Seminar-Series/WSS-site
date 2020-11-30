@@ -3,9 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { toast } from 'react-toastify';
-import {
-  signup,
-} from '../redux/actions/account'
+import { signup } from '../redux/actions/account';
 
 function Signup({ signup, isFetching }) {
   const { t } = useTranslation('signup', { useSuspense: false });
@@ -13,24 +11,25 @@ function Signup({ signup, isFetching }) {
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [doesPasswordAgainMatch, setPasswordAgainMatchingStatus] = useState(true);
-
+  const [doesPasswordAgainMatch, setPasswordAgainMatchingStatus] = useState(
+    true
+  );
 
   function checkPasswordAgain(passwordAgain) {
     if (passwordAgain === password) {
-      setPasswordAgainMatchingStatus(true)
+      setPasswordAgainMatchingStatus(true);
     } else {
-      setPasswordAgainMatchingStatus(false)
+      setPasswordAgainMatchingStatus(false);
     }
   }
 
   function doSignup() {
     if (!firstName || !lastName || !email || !password) {
-      toast.error("Please fill all the required fields")
+      toast.error('Please fill all the required fields');
       return;
     }
     if (!doesPasswordAgainMatch) {
-      toast.error('Passwords doesn\'t match');
+      toast.error("Passwords doesn't match");
       return;
     }
     signup(firstName, lastName, email, password);
@@ -38,8 +37,10 @@ function Signup({ signup, isFetching }) {
 
   return (
     <>
-      <section dir="rtl" className="auth-container diagonal row pb-0">
-        <div className="col-6 form-container">
+      <section
+        dir="rtl"
+        className="auth-container diagonal background-theme row py-0">
+        <div className="col-6 form-container" dir="ltr">
           <form>
             <div className="form-group mb-5">
               <label htmlFor="firstName">{t('firstName')}</label>
@@ -48,7 +49,8 @@ function Signup({ signup, isFetching }) {
                 onChange={(e) => setFirstName(e.target.value)}
                 id="firstName"
                 type="text"
-                className="form-control" />
+                className="form-control"
+              />
             </div>
             <div className="form-group mb-5">
               <label htmlFor="lastName">{t('lastName')}</label>
@@ -57,7 +59,8 @@ function Signup({ signup, isFetching }) {
                 onChange={(e) => setLastName(e.target.value)}
                 id="lastName"
                 type="text"
-                className="form-control" />
+                className="form-control"
+              />
             </div>
 
             <div className="form-group mb-5">
@@ -67,7 +70,8 @@ function Signup({ signup, isFetching }) {
                 onChange={(e) => setEmail(e.target.value)}
                 id="email"
                 type="email"
-                className="form-control" />
+                className="form-control"
+              />
             </div>
 
             <div className="form-group mb-5">
@@ -77,7 +81,8 @@ function Signup({ signup, isFetching }) {
                 onChange={(e) => setPassword(e.target.value)}
                 type="password"
                 className="form-control"
-                id="password" />
+                id="password"
+              />
             </div>
 
             <div className="form-group mb-5">
@@ -86,7 +91,8 @@ function Signup({ signup, isFetching }) {
                 onChange={(e) => checkPasswordAgain(e.target.value)}
                 type="password"
                 className="form-control"
-                id="password-again" />
+                id="password-again"
+              />
             </div>
             <button
               disabled={isFetching}
@@ -97,9 +103,9 @@ function Signup({ signup, isFetching }) {
             </button>
             <div className="linkbar">
               <span className="mr-1">{t('signinBefore')}</span>
-              <Link className="link" to="/login">
+              <a className="link" href="/login">
                 {t('click')}
-              </Link>
+              </a>
             </div>
           </form>
         </div>
@@ -118,11 +124,8 @@ function Signup({ signup, isFetching }) {
 
 const mapStateToProps = (state, ownProps) => ({
   isFetching: state.Account.isFetching,
-})
+});
 
-export default connect(
-  mapStateToProps,
-  {
-    signup,
-  }
-)(Signup);
+export default connect(mapStateToProps, {
+  signup,
+})(Signup);

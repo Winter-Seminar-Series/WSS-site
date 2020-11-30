@@ -3293,9 +3293,9 @@ label {
 }
 
 .blue-gradient:nth-last-child(2),
-.background-shafagh {
+.background-theme {
   background: url('../images/bg1.jpg'), #05050d no-repeat center top !important;
-  background-size: cover;
+  background-size: cover !important;
 }
 
 .no-shadow .ts-speaker {

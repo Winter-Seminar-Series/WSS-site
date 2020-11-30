@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Presenter from '../components/cards/Presenter';
 import {
-  getWSSPrimitiveFields,
-  MODEL_LISTS_NAMES,
   getModelList,
   getModelListCount,
+  getWSSPrimitiveFields,
+  MODEL_LISTS_NAMES,
 } from '../redux/actions/WSS';
 
 const fontStyle = {
@@ -19,15 +19,6 @@ const bannerPadding = {
 
 const margin60 = {
   marginBottom: '60px',
-};
-
-const mb20mt0 = {
-  marginBottom: '20px',
-  marginTop: '0px',
-};
-
-const noBorder = {
-  border: '0',
 };
 
 const sectionSubtitleStyle: { position: 'relative'; top: string } = {
@@ -69,7 +60,7 @@ function Home({
   const posterSessionRegister = false;
   const keynoteSpeakers = [
     {
-      name: 'Hamed Saleh',
+      name: 'Hamed',
       picUrl: '',
       description: 'PhD student, University of Maryland',
     },
@@ -79,14 +70,14 @@ function Home({
       description: 'Research Scientist, Spotify',
     },
     {
-      name: 'Hamed Saleh',
+      name: 'Hamedh',
       picUrl: '',
       description: 'PhD student, University of Maryland',
     },
   ];
   const speakers = [
     {
-      name: 'Hamed Saleh',
+      name: 'Hamed S',
       picUrl: '',
       description: 'PhD student, University of Maryland',
     },
@@ -96,12 +87,12 @@ function Home({
       description: 'Research Scientist, Spotify',
     },
     {
-      name: 'Hamed Saleh',
+      name: 'Hamed Sa',
       picUrl: '',
       description: 'PhD student, University of Maryland',
     },
     {
-      name: 'Hamed Saleh',
+      name: 'Hamed Sal',
       picUrl: '',
       description: 'PhD student, University of Maryland',
     },
@@ -110,7 +101,7 @@ function Home({
   const sponser = true;
   const mainSponsers = [
     {
-      title: 'google',
+      title: 'googlee',
       url: 'https://www.google.com',
       logo:
         'https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png',
@@ -124,13 +115,23 @@ function Home({
         'https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png',
     },
   ];
+  const videoRef = useRef<HTMLVideoElement>();
+  const setVideoPlayBackRate = () => {
+    if (!videoRef) return;
+    videoRef.current.playbackRate = 0.6;
+  };
   return (
     <>
       <section id="banner">
         <div className="banner-item diagonal d-flex h-100">
           <div className="header-video-wrapper">
-            <video autoPlay loop muted>
-              {/* <source src="images/back-min.mp4?v=1.2" type="video/mp4" /> */}
+            <video
+              autoPlay
+              loop
+              muted
+              ref={videoRef}
+              onCanPlay={setVideoPlayBackRate}>
+              <source src="images/back-min.mp4?v=1.2" type="video/mp4" />
             </video>
           </div>
           <div className="container my-auto">
@@ -272,7 +273,7 @@ function Home({
                 </div>
                 <div className="row justify-content-center">
                   {keynoteSpeakers.map((s) => (
-                    <div className="col-xs-11 col-sm-6 col-lg-3">
+                    <div key={s.name} className="col-xs-11 col-sm-6 col-lg-3">
                       <Presenter></Presenter>
                     </div>
                   ))}
@@ -288,7 +289,7 @@ function Home({
                 </div>
                 <div className="row justify-content-center">
                   {speakers.map((s) => (
-                    <div className="col-xs-11 col-sm-6 col-lg-4">
+                    <div key={s.name} className="col-xs-11 col-sm-6 col-lg-4">
                       <Presenter></Presenter>
                     </div>
                   ))}
@@ -371,7 +372,9 @@ function Home({
               <div className="row text-center d-flex align-items-center">
                 <h3 className="sponsor-title mb-5">Main sponsers</h3>
                 {mainSponsers.map((ms) => (
-                  <div className="col-xs-12 col-sm-4 col-md-2 align-center">
+                  <div
+                    key={ms.title}
+                    className="col-xs-12 col-sm-4 col-md-2 align-center">
                     <a href={ms.url}>
                       <img
                         className="mw-100 img-responsive"
@@ -394,7 +397,9 @@ function Home({
                   Other Sponsors
                 </h3>
                 {otherSponsers.map((ms) => (
-                  <div className="col-xs-12 col-sm-4 col-md-2 align-center">
+                  <div
+                    key={ms.title}
+                    className="col-xs-12 col-sm-4 col-md-2 align-center">
                     <a href={ms.url}>
                       <img
                         className="mw-100 img-responsive"
@@ -416,7 +421,7 @@ function Home({
       )}
 
       <section
-        className="venu-map no-padding diagonal blue-gradient h-100 pb-2"
+        className="venu-map no-padding diagonal background-theme h-100 pb-2"
         style={venueMapStyle}>
         <div className="container">
           <h3 className="section-sub-title" style={sectionSubtitleStyle}>
