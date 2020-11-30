@@ -11,6 +11,7 @@ import Login from './views/Login';
 import CardHolder from './views/CardHolder';
 import './styles/style.scss';
 import Dashboard from './views/Dashboard/Dashboard';
+import { PrivateRoute } from './auth-guard';
 
 function App() {
   return (
@@ -23,7 +24,7 @@ function App() {
         <Route path="/signup" component={Signup} />
         <Route path="/login" component={Login} />
         <Route path="/about" component={About} />
-        <Route path="/dashboard" component={Dashboard} />
+        <PrivateRoute path="/dashboard" component={Dashboard}></PrivateRoute>
         <Route path="/" component={Home} />
       </Switch>
       <Footer />
