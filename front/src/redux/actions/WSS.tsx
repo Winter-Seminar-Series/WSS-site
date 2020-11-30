@@ -39,7 +39,7 @@ export const getModelList = (modelListName: string, year: number) => ({
       modelListName,
     },
 
-    url: `${URLs.ROOT}/${year}/${modelListName}`,
+    url: `${URLs.ROOT}${year}/${modelListName}`,
     fetchOptions: {
       method: 'GET',
     },
@@ -59,7 +59,7 @@ export const getModelListCount = (modelListName: string, year: number) => ({
       modelListName,
     },
 
-    url: `${URLs.ROOT}/${year}/${modelListName}/count`,
+    url: `${URLs.ROOT}${year}/${modelListName}/count`,
     fetchOptions: {
       method: 'GET',
     },
