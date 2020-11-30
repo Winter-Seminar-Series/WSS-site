@@ -16,18 +16,16 @@ function App() {
   return (
     <>
       <Header />
-      <Router>
-        <Switch>
-          <Route path="/cardholder" component={CardHolder} />
-          <Route path="/details" component={Details} />
-          <Route path="/schedule" component={Schedule} />
-          <Route path="/signup" component={Signup} />
-          <Route path="/login" component={Login} />
-          <Route path="/about" component={About} />
-          <Route path="/dashboard" component={Dashboard} />
-          <Route path="/" component={Home} />
-        </Switch>
-      </Router>
+      <Switch>
+        <Route path="/cardholder" component={CardHolder} />
+        <Route path="/details" component={Details} />
+        <Route path="/schedule" component={Schedule} />
+        <Route path="/signup" component={Signup} />
+        <Route path="/login" component={Login} />
+        <Route path="/about" component={About} />
+        <Route path="/dashboard" component={Dashboard} />
+        <Route path="/" component={Home} />
+      </Switch>
       <Footer />
     </>
   );

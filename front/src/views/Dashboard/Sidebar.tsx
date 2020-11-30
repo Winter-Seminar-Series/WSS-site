@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 function Sidebar() {
   const sidebarItems: SidebarItem[] = [
@@ -45,10 +46,10 @@ function Sidebar() {
               <span>{s.title}</span>
             </span>
           ) : (
-            <a key={s.title} className="sidebar-item" href={s.link}>
+            <Link key={s.title} className="sidebar-item" to={s.link}>
               <span className={`icon ml-2 fa fa-${s.icon}`}></span>
               <span>{s.title}</span>
-            </a>
+            </Link>
           )
         )}
       </div>
