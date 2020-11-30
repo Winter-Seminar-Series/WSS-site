@@ -2,8 +2,12 @@ import * as actionTypes from '../actionTypes';
 import * as URLs from './urls';
 import { CALL_API } from '../middleware/api/api';
 
-
-export const signup = (firstName, lastName, email, password) => ({
+export const signup = (
+  firstName: string,
+  lastName: string,
+  email: string,
+  password: string
+) => ({
   [CALL_API]: {
     types: [
       actionTypes.SIGNUP_REQUEST,
@@ -18,8 +22,7 @@ export const signup = (firstName, lastName, email, password) => ({
   },
 });
 
-
-export const login = (username, password) => ({
+export const login = (username: string, password: string) => ({
   [CALL_API]: {
     types: [
       actionTypes.LOGIN_REQUEST,
@@ -37,7 +40,6 @@ export const login = (username, password) => ({
   },
 });
 
-
 export const logout = () => ({
   [CALL_API]: {
     types: [
@@ -51,7 +53,6 @@ export const logout = () => ({
     },
   },
 });
-
 
 // export const enqueueSnackbar = ({
 //   key = new Date().getTime() + Math.random(),
@@ -88,7 +89,6 @@ export const logout = () => ({
 //     },
 //   },
 // });
-
 
 // export const loadUser = () => (
 //   dispatch,

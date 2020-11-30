@@ -1,0 +1,32 @@
+.sidebar {
+  direction: rtl;
+  position: fixed;
+  background-color: #949fb120;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 150px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  .sidebar-item {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    color: inherit;
+    padding: 10px 20px;
+    text-decoration: none;
+    > .icon {
+      color: inherit;
+    }
+    &:hover {
+      background-color: #79869a;
+    }
+  }
+}
+
+.dashboard-container {
+  min-height: 100vh;
+  padding: 20px;
+  padding-right: 150px;
+}

@@ -15,7 +15,7 @@ export default ({ getState }) => (next) => async (action) => {
     return finalAction;
   };
 
-  let { fetchOptions } = callAPI;
+  const { fetchOptions } = callAPI;
   const { url, types, payload } = callAPI;
   const [requestType, successType, failureType] = types;
   next(actionWith({ payload, type: requestType }));
@@ -34,7 +34,7 @@ export default ({ getState }) => (next) => async (action) => {
         Authorization: 'JWT ' + account.token, //todo
       };
     }
-    let response = await fetchApi(url, fetchOptions);
+    const response = await fetchApi(url, fetchOptions);
     return next(
       actionWith({
         payload,

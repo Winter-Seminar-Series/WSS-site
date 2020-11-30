@@ -33,7 +33,8 @@ function Login({ login, isFetching }) {
                 onChange={(e) => setUsername(e.target.value)}
                 id="username"
                 type="email"
-                className="form-control" />
+                className="form-control"
+              />
             </div>
             <div className="form-group mb-5">
               <label htmlFor="password">{t('password')}</label>
@@ -42,7 +43,8 @@ function Login({ login, isFetching }) {
                 onChange={(e) => setPassword(e.target.value)}
                 type="password"
                 className="form-control"
-                id="password" />
+                id="password"
+              />
             </div>
             <button
               disabled={isFetching}
@@ -74,11 +76,8 @@ function Login({ login, isFetching }) {
 
 const mapStateToProps = (state, ownProps) => ({
   isFetching: state.Account.isFetching,
-})
+});
 
-export default connect(
-  mapStateToProps,
-  {
-    login,
-  }
-)(Login);
+export default connect(mapStateToProps, {
+  login,
+})(Login);

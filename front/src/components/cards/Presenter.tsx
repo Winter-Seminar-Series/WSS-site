@@ -4,7 +4,6 @@ import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import Like from './Like'
 
-
 function Presenter({
   name = 'Omid Jafari',
   title = 'Teacher',
@@ -17,38 +16,43 @@ function Presenter({
   const cardRef = useRef(null);
   const iconRef = useRef(null);
 
+<<<<<<< HEAD
   function onClick() {
     var card = cardRef.current;
     var icon = iconRef.current;
 
     icon.classList.add('fa-spin-fast')
+=======
+  var card = cardRef.current; //document.getElementById("presenter-card");
+  var icon = iconRef.current; //document.getElementById("presenter-card-icon");
+
+  function onClick() {
+    icon.classList.add('fa-spin-fast');
+>>>>>>> 2d4ef4d1d85dd9d1b2bc5d0e5f2f2b96f1181872
 
     if (card.classList.contains('mc-active')) {
       card.classList.remove('mc-active');
       setTimeout(() => {
         icon.classList.remove('fa-arrow-left');
-        icon.classList.remove('fa-spin-fast')
-        icon.classList.add('fa-bars')
-      }, 800)
+        icon.classList.remove('fa-spin-fast');
+        icon.classList.add('fa-bars');
+      }, 800);
     } else {
       card.classList.add('mc-active');
       setTimeout(() => {
         icon.classList.add('fa-arrow-left');
-        icon.classList.remove('fa-spin-fast')
-        icon.classList.remove('fa-bars')
-      }, 800)
+        icon.classList.remove('fa-spin-fast');
+        icon.classList.remove('fa-bars');
+      }, 800);
     }
   }
 
-
   return (
     <div className="col-lg-4 col-md-6 col-sm-9 col-xs-12">
-      <article ref={cardRef} id="presenter-card" className="material-card Blue" >
+      <article ref={cardRef} id="presenter-card" className="material-card Blue">
         <h2>
           <span>{name}</span>
-          <strong>
-            {title}
-          </strong>
+          <strong>{title}</strong>
         </h2>
         <div className="mc-content">
           <div className="img-container">
@@ -73,9 +77,10 @@ function Presenter({
         </div>
       </article>
     </div>
-  )
+  );
 }
 
+<<<<<<< HEAD
 const mapStateToProps = (state, ownProps) => {
   const { name, title, image, description, didLikedThis, showButton } = ownProps;
   const { isLoggedIn } = state.Account;
@@ -94,3 +99,6 @@ export default connect(
   mapStateToProps,
   {}
 )(Presenter);
+=======
+export default Presenter;
+>>>>>>> 2d4ef4d1d85dd9d1b2bc5d0e5f2f2b96f1181872
