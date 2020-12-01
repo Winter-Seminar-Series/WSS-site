@@ -74,15 +74,15 @@
         state: present
 
     - name: 'Stop containers'
-        docker_compose:
-          project_src: '{{ dest_root_dir }}'
-          build: no
-          pull: no
-          state: absent
+      docker_compose:
+        project_src: '{{ dest_root_dir }}'
+        build: no
+        pull: no
+        state: absent
 
     - name: 'Start containers'
-        docker_compose:
-          project_src: '{{ dest_root_dir }}'
-          build: no
-          pull: no
-          state: present
+      docker_compose:
+        project_src: '{{ dest_root_dir }}'
+        build: no
+        pull: no
+        state: present
