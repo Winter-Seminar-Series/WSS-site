@@ -195,7 +195,7 @@ class Participant(models.Model):
     user_profile = models.ForeignKey('UserProfile', null=True, related_name='participants', on_delete=models.SET_NULL)
     payment_ref_id = models.CharField(max_length=250, default="NOT_PAYED")
     payment_amount = models.PositiveIntegerField(default=0)
-    payment_timestamp = models.DateTimeField(auto_now=True)
+    payment_timestamp = models.DateTimeField(auto_now_add=True)
     
     class Meta:
         unique_together = [['current_wss', 'user_profile']]
