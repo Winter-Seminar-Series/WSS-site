@@ -19,21 +19,21 @@ function Sidebar() {
       title: 'Your Seminars',
       persianTitle: 'سمینار‌های شما',
       link: '/dashboard/seminar-list',
-      icon: 'star',
+      icon: '',
       deactive: true,
     },
     {
       title: 'Your Workshops',
       persianTitle: 'کارگاه‌های شما',
       link: '/dashboard/workshop-list',
-      icon: 'star',
+      icon: '',
       deactive: true,
     },
     {
       title: 'profile',
       persianTitle: 'پروفایل',
       link: '/dashboard/profile',
-      icon: 'star',
+      icon: 'user-circle-o',
     },
   ];
   return (
