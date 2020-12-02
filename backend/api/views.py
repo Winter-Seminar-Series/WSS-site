@@ -158,7 +158,14 @@ class UserProfileViewSet(viewsets.ViewSet):
         user_profile.save()
         request.user.save()
         return Response(self.serializer(user_profile).data)
-        
+
+
+class TagsViewSet(BaseViewSet):
+    serializer = serializers.WssTagSerializer
+
+    def queryset_selector(self, request, wss):
+        return wss.tag
+
 
 
 class PaymentViewSet(viewsets.ViewSet):
