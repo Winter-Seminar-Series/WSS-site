@@ -156,7 +156,8 @@ JET_SIDE_MENU_CUSTOM_APPS = [
         'Participant',
         'ShortLink',
         'Reserve',
-        'Grade'
+        'Grade',
+        'Announcement'
     ]),
     ('people', [
         'Speaker',
@@ -234,6 +235,10 @@ REST_FRAMEWORK = {
         # 'rest_framework.authentication.SessionAuthentication',
         'knox.auth.TokenAuthentication',
     ]
+}
+
+REST_FRAMEWORK = {
+ 
 }
 
 DBBACKUP_STORAGE = 'storages.backends.dropbox.DropBoxStorage'

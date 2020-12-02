@@ -2,7 +2,7 @@ from django.contrib import admin
 from jet.admin import CompactInline
 
 from WSS.models import Clip, Booklet, WSS, Image, Sponsor, ExternalLink, Sponsorship, Grade, Participant, UserProfile, \
-    ShortLink, Reserve, WssTag
+    ShortLink, Reserve, WssTag, Announcement
 from events.models import Seminar, Workshop, PosterSession, Event
 from django.contrib.auth.models import User
 from django.contrib.auth.admin import UserAdmin as AuthUserAdmin
@@ -52,13 +52,12 @@ class GradeInline(CompactInline):
     extra = 0
 
 
-class ParticipateInline(CompactInline):
-    model = Participant
-    extra = 0
-
-
 class ParticipantAdmin(admin.ModelAdmin):
     readonly_fields = ('payment_timestamp',)
+
+
+class AnnouncementAdmin(admin.ModelAdmin):
+    readonly_fields = ('create_timestamp', 'last_modify_timestamp')
 
 
 class ReserveInline(CompactInline):
@@ -98,6 +97,7 @@ admin.site.register(Image)
 admin.site.register(Clip)
 admin.site.register(Booklet)
 admin.site.register(Participant, ParticipantAdmin)
+admin.site.register(Announcement, AnnouncementAdmin)
 admin.site.register(ShortLink)
 admin.site.register(Reserve)
 admin.site.register(Grade)

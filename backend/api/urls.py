@@ -17,6 +17,7 @@ year_router.register(r'clips', views.ClipViewSet, basename='clips')
 year_router.register(r'holding_teams', views.HoldingTeamViewSet, basename='holding_team')
 year_router.register(r'images', views.ImageViewSet, basename='image')
 year_router.register(r'payment', views.PaymentViewSet, basename='payment')
+year_router.register(r'announcements', views.AnnouncementViewSet, basename='announcement')
 year_urlpatterns = year_router.urls
 
 base_router = DefaultRouter()
