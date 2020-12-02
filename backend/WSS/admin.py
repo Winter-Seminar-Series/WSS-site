@@ -57,6 +57,10 @@ class ParticipateInline(CompactInline):
     extra = 0
 
 
+class ParticipantAdmin(admin.ModelAdmin):
+    readonly_fields = ('payment_timestamp',)
+
+
 class ReserveInline(CompactInline):
     model = Reserve
     extra = 0
@@ -93,7 +97,7 @@ admin.site.register(WSS, WSSAdmin)
 admin.site.register(Image)
 admin.site.register(Clip)
 admin.site.register(Booklet)
-admin.site.register(Participant)
+admin.site.register(Participant, ParticipantAdmin)
 admin.site.register(ShortLink)
 admin.site.register(Reserve)
 admin.site.register(Grade)
