@@ -5,6 +5,53 @@ from django.db import migrations, models
 import django.db.models.deletion
 
 
+def create_user(User, participant):
+    return User.objects.create_user(
+        username=participant.national_id,
+        email=participant.email,
+        password=participant.national_id
+    )
+
+def create_user_profile(UserProfile, participant, user):
+    return UserProfile.objects.create(
+        name=participant.name,
+        family=participant.family,
+        name_english=participant.name_english,
+        family_english=participant.family_english,
+        phone_number=participant.phone_number,
+        age=participant.age,
+        national_id=participant.national_id,
+        email=participant.email,
+        job=participant.job,
+        university=participant.university,
+        introduction_method=participant.introduction_method,
+        gender=participant.gender,
+        city=participant.city,
+        country=participant.country,
+        field_of_interest=participant.field_of_interest,
+        grade=participant.grade,
+        is_student=participant.is_student,
+        payment_id=participant.payment_id,
+        paid_amount=participant.paid_amount,
+        question=participant.question,
+        question_other=participant.question_other,
+        sign_timestamp=participant.sign_timestamp,
+        paid_workshops=participant.paid_workshops,
+        user=user,
+        workshops=participant.workshops
+    )
+
+def add_user_profiles(apps, schema_editor):
+    Participant = apps.get_model('WSS', 'Participant')
+    UserProfile = apps.get_model('WSS', 'UserProfile')
+    User = apps.get_model('auth', 'User')
+    for participant in Participant.objects.all():
+        user = create_user(User, participant)
+        user_profile = create_user_profile(UserProfile, participant, user)
+        participant.user_profile = user_profile
+        participant.save()
+
+
 class Migration(migrations.Migration):
 
     dependencies = [
@@ -59,6 +106,7 @@ class Migration(migrations.Migration):
             name='participant',
             unique_together={('current_wss', 'user_profile')},
         ),
+        migrations.RunPython(add_user_profiles),
         migrations.RemoveField(
             model_name='participant',
             name='age',
