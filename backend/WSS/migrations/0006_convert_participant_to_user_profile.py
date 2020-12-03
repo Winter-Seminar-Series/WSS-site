@@ -3,9 +3,11 @@
 from django.conf import settings
 from django.db import migrations, models
 import django.db.models.deletion
+from django.contrib.auth.models import User
+from WSS.models import UserProfile, Participant, WSS
 
 
-def create_user(User, participant):
+def create_user(participant):
     return User.objects.create_user(
         username=participant.national_id,
         email=participant.email,
@@ -15,7 +17,7 @@ def create_user(User, participant):
         date_joined=participant.payment_timestamp
     )
 
-def create_user_profile(UserProfile, participant, user):
+def create_user_profile(participant, user):
     return UserProfile.objects.create(
         phone_number=participant.phone_number,
         age=participant.age,
@@ -31,26 +33,33 @@ def create_user_profile(UserProfile, participant, user):
         user=user,
     )
 
-def set_participant_new_fields(participant, user_profile):
-    participant.user_profile = user_profile
-    participant.payment_amount = participant.paid_amount
-    participant.payment_ref_id = int(participant.payment_id)
-    participant.save()
+def set_participant_new_fields(participant, user_profile, payment_amount):
+    new_participant = Participant.objects.get(id=participant.id)
+    new_participant.user_profile = user_profile
+    new_participant.payment_amount = payment_amount
+    new_participant.payment_ref_id = str(participant.payment_id)
+    new_participant.save()
 
 def add_user_profiles(apps, schema_editor):
-    Participant = apps.get_model('WSS', 'Participant')
-    UserProfile = apps.get_model('WSS', 'UserProfile')
-    User = apps.get_model('auth', 'User')
+    CurrentParticipant = apps.get_model('WSS', 'Participant')
+    
+    CurrentParticipant.objects.filter(payment_status='NO').delete()
 
-    for national_id in Participant.objects.values_list('national_id').distinct():
-        participants = Participant.objects.filter(national_id=national_id).order_by('-wss.year')
+    for national_id in CurrentParticipant.objects.values_list('national_id', flat=True).distinct():
+        participants = CurrentParticipant.objects.filter(national_id=national_id).order_by('-current_wss__year')
         last_participant = participants.first()
 
-        user = create_user(User, last_participant)
-        user_profile = create_user_profile(UserProfile, last_participant, user)
+        user = create_user(last_participant)
+        user_profile = create_user_profile(last_participant, user)
 
         for participant in participants:
-            set_participant_new_fields(participant, user_profile)
+            wss = WSS.objects.get(year=participant.current_wss.year)
+            already_participant = Participant.objects.filter(current_wss=wss, user_profile=user_profile).first()
+            if already_participant is None:
+                payment_amount = participants.filter(current_wss=participant.current_wss).aggregate(payment_amount=models.Sum('paid_amount'))['payment_amount']
+                set_participant_new_fields(participant, user_profile, payment_amount)
+            else:
+                Participant.objects.get(id=participant.id).delete()
 
 
 class Migration(migrations.Migration):
@@ -86,10 +95,6 @@ class Migration(migrations.Migration):
                 ('favorite_tags', models.ManyToManyField(blank=True, null=True, to='events.WssTag', verbose_name='Favorite tags')),
             ],
         ),
-        migrations.RemoveField(
-            model_name='participant',
-            name='payment_status',
-        ),
         migrations.AddField(
             model_name='participant',
             name='user_profile',
@@ -115,6 +120,10 @@ class Migration(migrations.Migration):
             unique_together={('current_wss', 'user_profile')},
         ),
         migrations.RunPython(add_user_profiles),
+        migrations.RemoveField(
+            model_name='participant',
+            name='payment_status',
+        ),
         migrations.RemoveField(
             model_name='participant',
             name='age',

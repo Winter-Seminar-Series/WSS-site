@@ -7,7 +7,7 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('WSS', '0015_auto_convert_participant_timestamp_to_auto_now_add'),
+        ('WSS', '0008_auto_convert_participant_timestamp_to_auto_now_add'),
     ]
 
     operations = [
