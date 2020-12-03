@@ -24,6 +24,10 @@ def get_wss_object_or_404(year: int) -> WSS:
     return get_object_or_404(WSS, year=year)
 
 
+def user_is_participant(user: User, wss: WSS):
+    return user.is_authenticated and wss.participants.filter(user_profile=user.profile).count() == 1
+
+
 class WSSViewSet(viewsets.ViewSet):
     
     def list(self, request, year):
@@ -69,14 +73,31 @@ class BaseViewSet(viewsets.ViewSet, ABC):
         })
 
 
-class WorkshopViewSet(BaseViewSet):
+class EventViewSet(BaseViewSet, ABC):
+    authentication_classes = [SessionAuthentication, BasicAuthentication]
+
+    def get_list(self, request, wss):
+        queryset = self.queryset_selector(request, wss)
+        is_participant = user_is_participant(request.user, wss)
+        serializer = self.serializer(queryset, many=True, serialize_link=is_participant)
+        return serializer.data
+
+    def get_by_pk(self, request, wss, pk):
+        queryset = self.queryset_selector(request, wss)
+        is_participant = user_is_participant(request.user, wss)
+        entity = get_object_or_404(queryset, pk=pk)
+        serializer = self.serializer(entity, serialize_link=is_participant)
+        return serializer.data
+
+
+class WorkshopViewSet(EventViewSet):
     serializer = serializers.WorkshopSerializer
 
     def queryset_selector(self, request, wss):
         return wss.workshops
 
 
-class SeminarViewSet(BaseViewSet):
+class SeminarViewSet(EventViewSet):
     serializer = serializers.SeminarSerializer
 
     def queryset_selector(self, request, wss):
@@ -86,7 +107,7 @@ class SeminarViewSet(BaseViewSet):
         return wss.seminars
 
 
-class PosterSessionViewSet(BaseViewSet):
+class PosterSessionViewSet(EventViewSet):
     serializer = serializers.PosterSessionSerializer
 
     def queryset_selector(self, request, wss):
@@ -158,6 +179,13 @@ class UserProfileViewSet(viewsets.ViewSet):
         user_profile.save()
         request.user.save()
         return Response(self.serializer(user_profile).data)
+
+
+class AnnouncementViewSet(BaseViewSet):
+    serializer = serializers.AnnouncementSerializer
+
+    def queryset_selector(self, request, wss):
+        return wss.announcements.order_by('-create_timestamp')
     
     @action(methods=['POST'], detail=False)
     def add_favorite_tag(self, request):

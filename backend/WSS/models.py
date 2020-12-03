@@ -267,3 +267,14 @@ class ShortLink(models.Model):
 
     def __str__(self):
         return "http://wss.ce.sharif.ir/go/" + self.short_link
+
+
+class Announcement(models.Model):
+    wss = models.ForeignKey('WSS', null=True, related_name='announcements', verbose_name='WSS', on_delete=models.CASCADE)
+    create_timestamp = models.DateTimeField(auto_now_add=True)
+    last_modify_timestamp = models.DateTimeField(auto_now=True)
+    title = models.CharField(max_length=200)
+    description = models.TextField()
+
+    def __str__(self):
+        return f"{self.wss}{self.create_timestamp}: {self.title}"
