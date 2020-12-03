@@ -10,7 +10,7 @@ from django.http import JsonResponse
 from django.conf import settings
 from abc import ABC, abstractmethod
 from api import serializers
-from events.models import Workshop
+from events.models import Workshop, WssTag
 from WSS.models import WSS, Participant, UserProfile
 from WSS.payment import send_payment_request, verify
 
@@ -166,6 +166,42 @@ class AnnouncementViewSet(BaseViewSet):
 
     def queryset_selector(self, request, wss):
         return wss.announcements.order_by('-create_timestamp')
+    
+    @action(methods=['POST'], detail=False)
+    def add_favorite_tag(self, request):
+        user_profile: UserProfile = request.user.profile
+
+        wss = get_wss_object_or_404(year=request.query_params.get('year'))
+        tag = wss.tag.get(pk=request.query_params.get('tag'))
+
+        if tag in user_profile.favorite_tags.all():
+            return ErrorResponse({
+                "message": "this tag is already in your list!"
+            })
+
+        user_profile.favorite_tags.add(tag)
+        user_profile.save()
+
+        return Response(self.serializer(user_profile).data)
+    
+    @action(methods=['DELETE'], detail=False)
+    def remove_favorite_tag(self, request):
+        user_profile: UserProfile = request.user.profile
+        tag_pk = request.query_params.get('tag')
+
+        tag = WssTag.objects.get(pk=tag_pk)
+
+        user_profile.favorite_tags.remove(tag)
+        user_profile.save()
+
+        return Response(self.serializer(user_profile).data)
+
+
+class TagsViewSet(BaseViewSet):
+    serializer = serializers.WssTagSerializer
+
+    def queryset_selector(self, request, wss):
+        return wss.tag
 
 
 class PaymentViewSet(viewsets.ViewSet):

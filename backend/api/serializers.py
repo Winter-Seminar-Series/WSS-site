@@ -1,5 +1,5 @@
 from rest_framework.serializers import ModelSerializer
-from events.models import Workshop, Seminar, PosterSession
+from events.models import Workshop, Seminar, PosterSession, WssTag
 from people.models import HoldingTeam
 from WSS.models import WSS, Sponsorship, Clip, Booklet, Image, UserProfile, Announcement
 
@@ -25,13 +25,20 @@ class WSSSerializer(ModelSerializer):
             'calendar_link'
         ]
 
+
+class WssTagSerializer(ModelSerializer):
+    class Meta:
+        model = WssTag
+        fields = ['wss', 'name']
+
+
 class UserProfileSerializer(ModelSerializer):
     class Meta:
         model = UserProfile
         fields = [
             'username', 'email', 'first_name', 'last_name', 'phone_number', 'age', 'job', 'university',
             'introduction_method', 'gender', 'city', 'country',
-            'field_of_interest', 'grade', 'is_student'
+            'field_of_interest', 'grade', 'is_student', 'favorite_tags'
         ]
 
 class AnnouncementSerializer(ModelSerializer):
