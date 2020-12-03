@@ -3,7 +3,6 @@ from rest_framework import viewsets, generics, permissions
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication
-from rest_framework.pagination import PageNumberPagination
 from django.views.generic.detail import DetailView
 from django.shortcuts import get_object_or_404
 from django.http import JsonResponse
