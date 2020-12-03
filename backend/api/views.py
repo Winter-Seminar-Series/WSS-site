@@ -19,6 +19,9 @@ from django.contrib.auth import login
 from knox.views import LoginView as KnoxLoginView
 from django.contrib.auth.models import User
 
+from django.core.mail import send_mail
+from templates.consts import *
+
 
 def get_wss_object_or_404(year: int) -> WSS:
     return get_object_or_404(WSS, year=year)
@@ -228,6 +231,16 @@ class PaymentViewSet(viewsets.ViewSet):
                 participant = Participant(current_wss=wss, user_profile=user_profile,
                                           payment_ref_id=str(result.RefID), payment_amount=amount)
                 participant.save()
+
+                # Notify user about successful payment
+                user = participant.user_profile.user
+                send_mail(
+                    PAYMENT_HEADER, 'text content',
+                    settings.EMAIL_HOST_USER,
+                    [user.email],
+                    fail_silently=False,
+                    html_message=PAYMENT_HTML_CONTENT.format(user.first_name, participant.payment_ref_id)
+                )
                 
                 return Response({
                     "message": 'OK',
