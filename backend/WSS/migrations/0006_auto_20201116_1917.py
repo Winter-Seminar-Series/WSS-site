@@ -9,7 +9,10 @@ def create_user(User, participant):
     return User.objects.create_user(
         username=participant.national_id,
         email=participant.email,
-        password=participant.national_id
+        password=participant.national_id,
+        first_name=participant.name_english,
+        last_name=participant.family_english,
+        date_joined=participant.sign_timestamp
     )
 
 def create_user_profile(UserProfile, participant, user):
