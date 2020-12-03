@@ -28,6 +28,8 @@
     - `clips`
     - `holding_teams`
     - `images`
+    - `tags`
+    - `announcements`
 
     Get the whole list:
 
@@ -104,7 +106,7 @@ GET /api/<year>/payment/request?callback=<callback_url>
     Content-Type: application/json
 
     {
-        "message": "`callback_url` should be passed in query string"
+        "message": "`callback` should be passed in query string"
     }
     ```
 - If the user already has finished their payment for given `<year>`, the response will be as bellow:
@@ -358,3 +360,181 @@ Allows a POST request containing an Authorization header
           "detail": "Invalid token."
       }
       ```
+
+
+## User Profile APIs
+
+These API set is authorized, i.e. the user should be logged in to use these APIs.
+
+### Get Profile Info
+
+Returns currently logged in user profile info.
+
+```HTTP
+GET /api/profile
+```
+
+Which returns:
+
+```HTTP
+HTTP 200 OK
+Content-Type: application/json
+{
+    "username": "the_user",
+    "email": "the_user@gmail.com",
+    "first_name": "The",
+    "last_name": "User",
+    "phone_number": "09123456789",
+    "age": 22,
+    "job": "The Job",
+    "university": "The University",
+    "introduction_method": "poster",
+    "gender": "male",
+    "city": "Tehran",
+    "country": "Iran",
+    "field_of_interest": "",
+    "grade": "bsOrOther",
+    "is_student": true,
+    "favorite_tags": [
+        "Tag1",
+        "Tag2"
+    ]
+}
+```
+
+### Update User Profile
+
+This API updates currently logged in profile info. **Note that only fields that need to be changed should be sent.**
+
+Modifiable fields:
+
+- `first_name`
+- `last_name`
+- `phone_number`
+- `age`
+- `job`
+- `university`
+- `introduction_method`
+- `gender`
+- `city`
+- `country`
+- `field_of_interest`
+- `grade`
+- `is_student`
+
+An Example to change the user name and last name:
+
+```HTTP
+POST /api/profile/edit
+{
+    "first_name": "The First Name",
+    "last_name": "The Last Name"
+}
+```
+
+Which returns the updated user profile as shown bellow:
+
+```HTTP
+HTTP 200 OK
+Content-Type: application/json
+{
+    "username": "the_user",
+    "email": "the_user@gmail.com",
+    "first_name": "The First Name",
+    "last_name": "The Last Name",
+    "phone_number": "09123456789",
+    "age": 22,
+    "job": "The Job",
+    "university": "The University",
+    "introduction_method": "poster",
+    "gender": "male",
+    "city": "Tehran",
+    "country": "Iran",
+    "field_of_interest": "",
+    "grade": "bsOrOther",
+    "is_student": true,
+    "favorite_tags": [
+        "Tag1",
+        "Tag2"
+    ]
+}
+```
+
+### Add a favourite tag
+
+This API adds the given tag to user's favourite tags.
+
+```HTTP
+POST /api/profile/add_favorite_tag?year=2020&tag=Tag3
+```
+
+If the given tag is already in user's list, the response will be:
+
+```HTTP
+HTTP 400 Bad Request
+Content-Type: application/json
+{
+    "message": "this tag is already in your list!"
+}
+```
+
+Otherwize, returns the updated user profile as shown bellow:
+```HTTP
+HTTP 200 OK
+{
+    "username": "the_user",
+    "email": "the_user@gmail.com",
+    "first_name": "The First Name",
+    "last_name": "The Last Name",
+    "phone_number": "09123456789",
+    "age": 22,
+    "job": "The Job",
+    "university": "The University",
+    "introduction_method": "poster",
+    "gender": "male",
+    "city": "Tehran",
+    "country": "Iran",
+    "field_of_interest": "",
+    "grade": "bsOrOther",
+    "is_student": true,
+    "favorite_tags": [
+        "Tag1",
+        "Tag2",
+        "Tag3"
+    ]
+}
+```
+
+### Remove a favourite tag
+
+Removes the given tag from user's list
+
+```HTTP
+DELETE /api/profile/remove_favorite_tag?tag=Tag3
+```
+
+Which returns the updated user profile as shown bellow:
+```HTTP
+HTTP 200 OK
+{
+    "username": "the_user",
+    "email": "the_user@gmail.com",
+    "first_name": "The First Name",
+    "last_name": "The Last Name",
+    "phone_number": "09123456789",
+    "age": 22,
+    "job": "The Job",
+    "university": "The University",
+    "introduction_method": "poster",
+    "gender": "male",
+    "city": "Tehran",
+    "country": "Iran",
+    "field_of_interest": "",
+    "grade": "bsOrOther",
+    "is_student": true,
+    "favorite_tags": [
+        "Tag1",
+        "Tag2"
+    ]
+}
+```

@@ -212,7 +212,7 @@ class PaymentViewSet(viewsets.ViewSet):
 
         if callback_url is None:
             return ErrorResponse({
-                'message': "`callback_url` should be passed in query string"
+                'message': "`callback` should be passed in query string"
             })
         
         user_profile: UserProfile = request.user.profile
