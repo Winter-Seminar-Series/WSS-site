@@ -2,6 +2,14 @@
 
 from django.db import migrations, models
 
+def set_payment_data(apps, schema_editor):
+    Participant = apps.get_model('WSS', 'Participant')
+    for participant in Participant.objects.all():
+        participant.payment_amount = participant.user_profile.paid_amount
+        participant.payment_ref_id = participant.user_profile.payment_id
+        participant.payment_timestamp = participant.user_profile.sign_timestamp
+        participant.save()
+
 
 class Migration(migrations.Migration):
 
@@ -29,4 +37,5 @@ class Migration(migrations.Migration):
             name='payment_timestamp',
             field=models.DateTimeField(auto_now=True),
         ),
+        migrations.RunPython(set_payment_data)
     ]
