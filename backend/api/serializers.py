@@ -2,7 +2,6 @@ from rest_framework.serializers import ModelSerializer
 from events.models import Workshop, Seminar, PosterSession, WssTag
 from people.models import HoldingTeam
 from WSS.models import WSS, Sponsorship, Clip, Booklet, Image, UserProfile, Announcement
-
 from django.contrib.auth.models import User
 
 
@@ -47,19 +46,28 @@ class AnnouncementSerializer(ModelSerializer):
         fields = '__all__'
 
 
-class WorkshopSerializer(ModelSerializer):
+class EventSerializer(ModelSerializer):
+
+    def __init__(self, *args, **kwargs):
+        serialize_link = kwargs.pop('serialize_link', False)
+        super().__init__(*args, **kwargs)
+        if not serialize_link:
+            self.fields.pop('link')
+
+
+class WorkshopSerializer(EventSerializer):
     class Meta:
         model = Workshop
         fields = '__all__'
 
 
-class SeminarSerializer(ModelSerializer):
+class SeminarSerializer(EventSerializer):
     class Meta:
         model = Seminar
         fields = '__all__'
 
 
-class PosterSessionSerializer(ModelSerializer):
+class PosterSessionSerializer(EventSerializer):
     class Meta:
         model = PosterSession
         fields = '__all__'
