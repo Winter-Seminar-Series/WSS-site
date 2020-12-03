@@ -7,7 +7,7 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('WSS', '0013_making_userprofile_fields_nullable'),
+        ('WSS', '0008_making_userprofile_fields_nullable'),
         ('events', '0004_baseevent_link'),
     ]
 

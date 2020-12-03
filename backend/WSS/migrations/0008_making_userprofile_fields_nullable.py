@@ -6,7 +6,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('WSS', '0012_auto_remove_name_and_family_from_user_profile'),
+        ('WSS', '0007_convert_registration_fee_to_positive_integer'),
     ]
 
     operations = [

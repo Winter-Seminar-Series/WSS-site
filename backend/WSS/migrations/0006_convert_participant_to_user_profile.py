@@ -12,7 +12,7 @@ def create_user(User, participant):
         password=participant.national_id,
         first_name=participant.name_english,
         last_name=participant.family_english,
-        date_joined=participant.sign_timestamp
+        date_joined=participant.payment_timestamp
     )
 
 def create_user_profile(UserProfile, participant, user):
@@ -28,15 +28,13 @@ def create_user_profile(UserProfile, participant, user):
         field_of_interest=participant.field_of_interest,
         grade=participant.grade,
         is_student=participant.is_student,
-        sign_timestamp=participant.sign_timestamp,
         user=user,
     )
 
 def set_participant_new_fields(participant, user_profile):
     participant.user_profile = user_profile
     participant.payment_amount = participant.paid_amount
-    participant.payment_ref_id = participant.payment_id
-    participant.payment_timestamp = participant.sign_timestamp
+    participant.payment_ref_id = int(participant.payment_id)
     participant.save()
 
 def add_user_profiles(apps, schema_editor):
@@ -84,7 +82,6 @@ class Migration(migrations.Migration):
                 ('field_of_interest', models.CharField(blank=True, max_length=1500)),
                 ('grade', models.CharField(choices=[(None, 'Please Select'), ('msOrPhd', 'MS or PHD'), ('bsOrOther', 'BS or Other')], max_length=30)),
                 ('is_student', models.BooleanField(default=False, verbose_name='I am a Student')),
-                ('sign_timestamp', models.DateTimeField(auto_now=True)),
                 ('user', models.OneToOneField(default=None, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='profile', to=settings.AUTH_USER_MODEL)),
             ],
         ),
@@ -107,10 +104,10 @@ class Migration(migrations.Migration):
             name='payment_ref_id',
             field=models.CharField(default='NOT_PAYED', max_length=250),
         ),
-        migrations.AddField(
+        migrations.RenameField(
             model_name='participant',
-            name='payment_timestamp',
-            field=models.DateTimeField(auto_now=True),
+            old_name='sign_timestamp',
+            new_name='payment_timestamp',
         ),
         migrations.AlterUniqueTogether(
             name='participant',
@@ -200,10 +197,6 @@ class Migration(migrations.Migration):
         migrations.RemoveField(
             model_name='participant',
             name='question_other',
-        ),
-        migrations.RemoveField(
-            model_name='participant',
-            name='sign_timestamp',
         ),
         migrations.RemoveField(
             model_name='participant',

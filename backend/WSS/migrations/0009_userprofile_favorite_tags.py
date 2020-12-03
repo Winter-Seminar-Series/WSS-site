@@ -7,7 +7,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('events', '0005_event_tag'),
-        ('WSS', '0013_making_userprofile_fields_nullable'),
+        ('WSS', '0008_making_userprofile_fields_nullable'),
     ]
 
     operations = [

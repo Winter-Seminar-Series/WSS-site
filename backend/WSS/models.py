@@ -219,7 +219,6 @@ class UserProfile(models.Model):
     grade = models.CharField(max_length=30, choices=GRADE_CHOICES, null=True)
     favorite_tags = models.ManyToManyField(WssTag, null=True, blank=True, verbose_name="Favorite tags")
     is_student = models.BooleanField(default=False, verbose_name="I am a Student")
-    sign_timestamp = models.DateTimeField(auto_now=True)
 
     @property
     def email(self):
