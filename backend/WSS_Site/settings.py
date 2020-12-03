@@ -244,3 +244,10 @@ DBBACKUP_STORAGE_OPTIONS = {
 local_settings_path = os.path.join(os.path.dirname(__file__), 'local_settings.py')
 if os.path.exists(local_settings_path):
     exec(open(local_settings_path, 'rb').read())
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'TODO@EMRAN.MERCI'
+EMAIL_HOST_PASSWORD = 'WSS_PASSWORD'
