@@ -179,6 +179,13 @@ class UserProfileViewSet(viewsets.ViewSet):
         user_profile.save()
         request.user.save()
         return Response(self.serializer(user_profile).data)
+
+
+class AnnouncementViewSet(BaseViewSet):
+    serializer = serializers.AnnouncementSerializer
+
+    def queryset_selector(self, request, wss):
+        return wss.announcements.order_by('-create_timestamp')
     
     @action(methods=['POST'], detail=False)
     def add_favorite_tag(self, request):

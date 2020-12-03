@@ -1,7 +1,7 @@
 from rest_framework.serializers import ModelSerializer
 from events.models import Workshop, Seminar, PosterSession, WssTag
 from people.models import HoldingTeam
-from WSS.models import WSS, Sponsorship, Clip, Booklet, Image, UserProfile
+from WSS.models import WSS, Sponsorship, Clip, Booklet, Image, UserProfile, Announcement
 from django.contrib.auth.models import User
 
 
@@ -39,6 +39,11 @@ class UserProfileSerializer(ModelSerializer):
             'introduction_method', 'gender', 'city', 'country',
             'field_of_interest', 'grade', 'is_student', 'favorite_tags'
         ]
+
+class AnnouncementSerializer(ModelSerializer):
+    class Meta:
+        model = Announcement
+        fields = '__all__'
 
 
 class EventSerializer(ModelSerializer):
