@@ -57,7 +57,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('events', '0003_auto_20201112_1807'),
+        ('events', '0005_event_tag'),
         ('WSS', '0005_add_participant_user_and_wss_fee'),
     ]
 
@@ -72,17 +72,18 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.BigAutoField(primary_key=True, serialize=False)),
                 ('phone_number', models.CharField(max_length=13, verbose_name='Phone Number')),
-                ('age', models.PositiveSmallIntegerField()),
+                ('age', models.PositiveSmallIntegerField(null=True)),
                 ('job', models.CharField(max_length=250)),
                 ('university', models.CharField(max_length=250)),
-                ('introduction_method', models.CharField(choices=[(None, 'Please Select'), ('telegram', 'Telegram'), ('instagram', 'Instagram'), ('facebook', 'Facebook'), ('twitter', 'Twitter'), ('poster', 'Poster'), ('friends', 'Friends'), ('other', 'Other')], default=None, max_length=250, verbose_name='How were you introduced to WSS?')),
-                ('gender', models.CharField(choices=[('female', 'Female'), ('male', 'Male')], default=None, max_length=50)),
+                ('introduction_method', models.CharField(choices=[(None, 'Please Select'), ('telegram', 'Telegram'), ('instagram', 'Instagram'), ('facebook', 'Facebook'), ('twitter', 'Twitter'), ('poster', 'Poster'), ('friends', 'Friends'), ('other', 'Other')], default=None, max_length=250, null=True, verbose_name='How were you introduced to WSS?')),
+                ('gender', models.CharField(choices=[('female', 'Female'), ('male', 'Male')], default=None, max_length=50, null=True)),
                 ('city', models.CharField(max_length=150)),
                 ('country', models.CharField(max_length=150)),
                 ('field_of_interest', models.CharField(blank=True, max_length=1500)),
-                ('grade', models.CharField(choices=[(None, 'Please Select'), ('msOrPhd', 'MS or PHD'), ('bsOrOther', 'BS or Other')], max_length=30)),
+                ('grade', models.CharField(choices=[(None, 'Please Select'), ('msOrPhd', 'MS or PHD'), ('bsOrOther', 'BS or Other')], max_length=30, null=True)),
                 ('is_student', models.BooleanField(default=False, verbose_name='I am a Student')),
                 ('user', models.OneToOneField(default=None, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='profile', to=settings.AUTH_USER_MODEL)),
+                ('favorite_tags', models.ManyToManyField(blank=True, null=True, to='events.WssTag', verbose_name='Favorite tags')),
             ],
         ),
         migrations.RemoveField(

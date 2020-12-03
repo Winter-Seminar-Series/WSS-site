@@ -6,7 +6,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('WSS', '0009_userprofile_favorite_tags'),
+        ('WSS', '0007_convert_registration_fee_to_positive_integer'),
     ]
 
     operations = [
