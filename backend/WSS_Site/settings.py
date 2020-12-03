@@ -156,7 +156,8 @@ JET_SIDE_MENU_CUSTOM_APPS = [
         'Participant',
         'ShortLink',
         'Reserve',
-        'Grade'
+        'Grade',
+        'Announcement'
     ]),
     ('people', [
         'Speaker',

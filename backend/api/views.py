@@ -9,7 +9,7 @@ from django.http import JsonResponse
 from django.conf import settings
 from abc import ABC, abstractmethod
 from api import serializers
-from events.models import Workshop
+from events.models import Workshop, WssTag
 from WSS.models import WSS, Participant, UserProfile
 from WSS.payment import send_payment_request, verify
 
@@ -25,6 +25,10 @@ from templates.consts import *
 
 def get_wss_object_or_404(year: int) -> WSS:
     return get_object_or_404(WSS, year=year)
+
+
+def user_is_participant(user: User, wss: WSS):
+    return user.is_authenticated and wss.participants.filter(user_profile=user.profile).count() == 1
 
 
 class WSSViewSet(viewsets.ViewSet):
@@ -72,14 +76,31 @@ class BaseViewSet(viewsets.ViewSet, ABC):
         })
 
 
-class WorkshopViewSet(BaseViewSet):
+class EventViewSet(BaseViewSet, ABC):
+    authentication_classes = [SessionAuthentication, BasicAuthentication]
+
+    def get_list(self, request, wss):
+        queryset = self.queryset_selector(request, wss)
+        is_participant = user_is_participant(request.user, wss)
+        serializer = self.serializer(queryset, many=True, serialize_link=is_participant)
+        return serializer.data
+
+    def get_by_pk(self, request, wss, pk):
+        queryset = self.queryset_selector(request, wss)
+        is_participant = user_is_participant(request.user, wss)
+        entity = get_object_or_404(queryset, pk=pk)
+        serializer = self.serializer(entity, serialize_link=is_participant)
+        return serializer.data
+
+
+class WorkshopViewSet(EventViewSet):
     serializer = serializers.WorkshopSerializer
 
     def queryset_selector(self, request, wss):
         return wss.workshops
 
 
-class SeminarViewSet(BaseViewSet):
+class SeminarViewSet(EventViewSet):
     serializer = serializers.SeminarSerializer
 
     def queryset_selector(self, request, wss):
@@ -89,7 +110,7 @@ class SeminarViewSet(BaseViewSet):
         return wss.seminars
 
 
-class PosterSessionViewSet(BaseViewSet):
+class PosterSessionViewSet(EventViewSet):
     serializer = serializers.PosterSessionSerializer
 
     def queryset_selector(self, request, wss):
@@ -161,7 +182,49 @@ class UserProfileViewSet(viewsets.ViewSet):
         user_profile.save()
         request.user.save()
         return Response(self.serializer(user_profile).data)
-        
+
+
+class AnnouncementViewSet(BaseViewSet):
+    serializer = serializers.AnnouncementSerializer
+
+    def queryset_selector(self, request, wss):
+        return wss.announcements.order_by('-create_timestamp')
+    
+    @action(methods=['POST'], detail=False)
+    def add_favorite_tag(self, request):
+        user_profile: UserProfile = request.user.profile
+
+        wss = get_wss_object_or_404(year=request.query_params.get('year'))
+        tag = wss.tag.get(pk=request.query_params.get('tag'))
+
+        if tag in user_profile.favorite_tags.all():
+            return ErrorResponse({
+                "message": "this tag is already in your list!"
+            })
+
+        user_profile.favorite_tags.add(tag)
+        user_profile.save()
+
+        return Response(self.serializer(user_profile).data)
+    
+    @action(methods=['DELETE'], detail=False)
+    def remove_favorite_tag(self, request):
+        user_profile: UserProfile = request.user.profile
+        tag_pk = request.query_params.get('tag')
+
+        tag = WssTag.objects.get(pk=tag_pk)
+
+        user_profile.favorite_tags.remove(tag)
+        user_profile.save()
+
+        return Response(self.serializer(user_profile).data)
+
+
+class TagsViewSet(BaseViewSet):
+    serializer = serializers.WssTagSerializer
+
+    def queryset_selector(self, request, wss):
+        return wss.tag
 
 
 class PaymentViewSet(viewsets.ViewSet):
@@ -180,7 +243,7 @@ class PaymentViewSet(viewsets.ViewSet):
 
         if callback_url is None:
             return ErrorResponse({
-                'message': "`callback_url` should be passed in query string"
+                'message': "`callback` should be passed in query string"
             })
         
         user_profile: UserProfile = request.user.profile
