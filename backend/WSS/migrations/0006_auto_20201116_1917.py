@@ -17,14 +17,8 @@ def create_user(User, participant):
 
 def create_user_profile(UserProfile, participant, user):
     return UserProfile.objects.create(
-        name=participant.name,
-        family=participant.family,
-        name_english=participant.name_english,
-        family_english=participant.family_english,
         phone_number=participant.phone_number,
         age=participant.age,
-        national_id=participant.national_id,
-        email=participant.email,
         job=participant.job,
         university=participant.university,
         introduction_method=participant.introduction_method,
@@ -34,25 +28,31 @@ def create_user_profile(UserProfile, participant, user):
         field_of_interest=participant.field_of_interest,
         grade=participant.grade,
         is_student=participant.is_student,
-        payment_id=participant.payment_id,
-        paid_amount=participant.paid_amount,
-        question=participant.question,
-        question_other=participant.question_other,
         sign_timestamp=participant.sign_timestamp,
-        paid_workshops=participant.paid_workshops,
         user=user,
-        workshops=participant.workshops
     )
+
+def set_participant_new_fields(participant, user_profile):
+    participant.user_profile = user_profile
+    participant.payment_amount = participant.paid_amount
+    participant.payment_ref_id = participant.payment_id
+    participant.payment_timestamp = participant.sign_timestamp
+    participant.save()
 
 def add_user_profiles(apps, schema_editor):
     Participant = apps.get_model('WSS', 'Participant')
     UserProfile = apps.get_model('WSS', 'UserProfile')
     User = apps.get_model('auth', 'User')
-    for participant in Participant.objects.all():
-        user = create_user(User, participant)
-        user_profile = create_user_profile(UserProfile, participant, user)
-        participant.user_profile = user_profile
-        participant.save()
+
+    for national_id in Participant.objects.values_list('national_id').distinct():
+        participants = Participant.objects.filter(national_id=national_id).order_by('-wss.year')
+        last_participant = participants.first()
+
+        user = create_user(User, last_participant)
+        user_profile = create_user_profile(UserProfile, last_participant, user)
+
+        for participant in participants:
+            set_participant_new_fields(participant, user_profile)
 
 
 class Migration(migrations.Migration):
@@ -73,14 +73,8 @@ class Migration(migrations.Migration):
             name='UserProfile',
             fields=[
                 ('id', models.BigAutoField(primary_key=True, serialize=False)),
-                ('name', models.CharField(max_length=250, verbose_name='First Name (in Persian)')),
-                ('family', models.CharField(max_length=250, verbose_name='Family Name (in Persian)')),
-                ('name_english', models.CharField(max_length=250, verbose_name='First Name (in English)')),
-                ('family_english', models.CharField(max_length=250, verbose_name='Family Name (in English)')),
                 ('phone_number', models.CharField(max_length=13, verbose_name='Phone Number')),
                 ('age', models.PositiveSmallIntegerField()),
-                ('national_id', models.CharField(max_length=10, verbose_name='National ID')),
-                ('email', models.EmailField(max_length=254, unique=True)),
                 ('job', models.CharField(max_length=250)),
                 ('university', models.CharField(max_length=250)),
                 ('introduction_method', models.CharField(choices=[(None, 'Please Select'), ('telegram', 'Telegram'), ('instagram', 'Instagram'), ('facebook', 'Facebook'), ('twitter', 'Twitter'), ('poster', 'Poster'), ('friends', 'Friends'), ('other', 'Other')], default=None, max_length=250, verbose_name='How were you introduced to WSS?')),
@@ -90,20 +84,33 @@ class Migration(migrations.Migration):
                 ('field_of_interest', models.CharField(blank=True, max_length=1500)),
                 ('grade', models.CharField(choices=[(None, 'Please Select'), ('msOrPhd', 'MS or PHD'), ('bsOrOther', 'BS or Other')], max_length=30)),
                 ('is_student', models.BooleanField(default=False, verbose_name='I am a Student')),
-                ('payment_id', models.IntegerField(default=0)),
-                ('paid_amount', models.IntegerField(blank=True, default=0)),
-                ('question', models.CharField(choices=[(None, 'Please Select'), ('RPA', 'RPA'), ('Virtual Assistant', 'Virtual Assistant'), ('AR/VR/MR', 'AR/VR/MR'), ('Driverless Cars', 'Driverless Cars'), ('Recommendation Engines', 'Recommendation Engines'), ('Others', 'Others')], default=None, max_length=50, verbose_name="Which one of these Artificial Intelligence-related technologies do you think have the most impact on Iran's market?")),
-                ('question_other', models.CharField(blank=True, max_length=500, verbose_name='Your answer')),
                 ('sign_timestamp', models.DateTimeField(auto_now=True)),
-                ('paid_workshops', models.ManyToManyField(blank=True, related_name='paid', to='events.Workshop')),
                 ('user', models.OneToOneField(default=None, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='profile', to=settings.AUTH_USER_MODEL)),
-                ('workshops', models.ManyToManyField(blank=True, to='events.Workshop')),
             ],
+        ),
+        migrations.RemoveField(
+            model_name='participant',
+            name='payment_status',
         ),
         migrations.AddField(
             model_name='participant',
             name='user_profile',
-            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='user_profile', to='WSS.userprofile'),
+            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='participants', to='WSS.userprofile'),
+        ),
+        migrations.AddField(
+            model_name='participant',
+            name='payment_amount',
+            field=models.PositiveIntegerField(default=0),
+        ),
+        migrations.AddField(
+            model_name='participant',
+            name='payment_ref_id',
+            field=models.CharField(default='NOT_PAYED', max_length=250),
+        ),
+        migrations.AddField(
+            model_name='participant',
+            name='payment_timestamp',
+            field=models.DateTimeField(auto_now=True),
         ),
         migrations.AlterUniqueTogether(
             name='participant',
@@ -209,5 +216,9 @@ class Migration(migrations.Migration):
         migrations.RemoveField(
             model_name='participant',
             name='workshops',
+        ),
+        migrations.RemoveField(
+            model_name='participant',
+            name='participate_in_wss',
         ),
     ]
