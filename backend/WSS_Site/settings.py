@@ -237,10 +237,6 @@ REST_FRAMEWORK = {
     ]
 }
 
-REST_FRAMEWORK = {
- 
-}
-
 DBBACKUP_STORAGE = 'storages.backends.dropbox.DropBoxStorage'
 DBBACKUP_STORAGE_OPTIONS = {
     'oauth2_access_token': os.environ.get('DROPBOX_AUTH_TOKEN'),
