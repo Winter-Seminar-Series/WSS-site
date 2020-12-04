@@ -1,7 +1,7 @@
 from rest_framework.serializers import ModelSerializer
-from events.models import Workshop, Seminar, PosterSession, WssTag
-from people.models import HoldingTeam
-from WSS.models import WSS, Sponsorship, Clip, Booklet, Image, UserProfile, Announcement
+from events.models import *
+from people.models import HoldingTeam, Speaker, Staff
+from WSS.models import *
 from django.contrib.auth.models import User
 
 
@@ -125,3 +125,44 @@ class RegisterSerializer(ModelSerializer):
         user_profile.save()
 
         return user
+
+class VenueSerializer(ModelSerializer):
+    class Meta:
+        model = Venue
+        fields = '__all__'
+
+
+class SponsorSerializer(ModelSerializer):
+    class Meta:
+        model = Sponsor
+        fields = '__all__'
+
+
+class SpeakerSerializer(ModelSerializer):
+    class Meta:
+        model = Speaker
+        fields = '__all__'
+
+
+class SeminarMaterialSerializer(ModelSerializer):
+    class Meta:
+        model = SeminarMaterial
+        fields = '__all__'
+
+
+class WorkshopMaterialSerializer(ModelSerializer):
+    class Meta:
+        model = WorkshopMaterial
+        fields = '__all__'
+
+
+class PosterMaterialSerializer(ModelSerializer):
+    class Meta:
+        model = PosterMaterial
+        fields = '__all__'
+
+
+class StaffSerializer(ModelSerializer):
+    class Meta:
+        model = Staff
+        fields = '__all__'
