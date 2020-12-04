@@ -8,6 +8,8 @@ import App from './App';
 import './i18n';
 import configureStore from './redux/store/configureStore.dev'; //todo: fix for production mode
 
+localStorage.clear();
+
 const persistedState = localStorage.getItem('WSS') //use local storage just to save token
   ? JSON.parse(localStorage.getItem('WSS'))
   : {};

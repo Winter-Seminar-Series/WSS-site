@@ -27,6 +27,10 @@ function Notification(state = {}, action) {
       toast.error("You logged out successfully")
       return { ...state };
 
+    case actionTypes.REDIRECT_WHEN_USER_IS_NOT_LOGGED:
+      toast.warning("You must log in before see that page")
+      return { ...state };
+
     default:
       return state;
   }

@@ -53,27 +53,16 @@ export const logout = () => ({
   },
 });
 
-// export const enqueueSnackbar = ({
-//   key = new Date().getTime() + Math.random(),
-//   ...notification
-// }) => ({
-//   type: actionTypes.ENQUEUE_SNACKBAR,
-//   notification: {
-//     ...notification,
-//     key,
-//   },
-// });
+export const redirectWhenUserIsNotLoggedIn = () => (
+  dispatch,
+  getState
+) => {
+  const toast = {
+    type: actionTypes.REDIRECT_WHEN_USER_IS_NOT_LOGGED,
+  }
+  return dispatch(toast);
+};
 
-// export const closeSnackbar = (key) => ({
-//   type: actionTypes.CLOSE_SNACKBAR,
-//   dismissAll: !key,
-//   key,
-// });
-
-// export const removeSnackbar = (key) => ({
-//   type: actionTypes.REMOVE_SNACKBAR,
-//   key,
-// });
 
 // const fetchUser = () => ({
 //   [CALL_API]: {

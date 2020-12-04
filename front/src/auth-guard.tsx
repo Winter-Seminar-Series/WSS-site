@@ -1,24 +1,44 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Redirect, Route } from 'react-router-dom';
+import { connect } from 'react-redux'
+import {
+  redirectWhenUserIsNotLoggedIn
+} from './redux/actions/account'
 
-export function PrivateRoute({ ...rest }) {
-  const auth = true;
+function PrivateRoute({ isLoggedIn, redirectWhenUserIsNotLoggedIn, ...rest }) {
+  useEffect(() => {
+    setTimeout(() => {
+      redirectWhenUserIsNotLoggedIn();
+    }, 500)
+  }, [redirectWhenUserIsNotLoggedIn])
+
   return (
     <>
-      {auth ? (
+      {isLoggedIn ? (
         <Route {...rest} />
       ) : (
-        <Route
-          render={({ location }) => (
-            <Redirect
-              to={{
-                pathname: '/login',
-                state: { from: location },
-              }}
-            />
-          )}
-        />
-      )}
+          <Route
+            render={({ location }) => (
+              <Redirect
+                to={{
+                  pathname: '/login',
+                  state: { from: location },
+                }}
+              />
+            )}
+          />
+        )}
     </>
   );
 }
+
+const mapStateToProps = (state, ownProps) => ({
+  isLoggedIn: state.account.isLoggedIn,
+})
+
+export default connect(
+  mapStateToProps,
+  {
+    redirectWhenUserIsNotLoggedIn,
+  }
+)(PrivateRoute)

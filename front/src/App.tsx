@@ -11,7 +11,7 @@ import Login from './views/Login';
 import CardHolder from './views/CardHolder';
 import './styles/style.scss';
 import Dashboard from './views/Dashboard/Dashboard';
-import { PrivateRoute } from './auth-guard';
+import PrivateRoute from './auth-guard';
 
 function App() {
   return (
