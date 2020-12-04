@@ -5,7 +5,6 @@
 	Description: Eventor -  Conference & Event HTML Template
 	Version: 1.0
 */
-
 /* Table of Content
 ==================================================
 1.	Typography
@@ -32,7 +31,6 @@
 22. Error page
 
 */
-
 @import url(https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,500,500i,700,700i,900,900i|Lato:400,400i,700,700i,900,900i);
 
 /* Typography
@@ -717,6 +715,7 @@ a[href^='tel'] {
 /* Main navigation */
 
 .navbar {
+  z-index: 10;
   border-radius: 0;
   border: 0;
   margin-bottom: 0;
@@ -947,7 +946,7 @@ ul.navbar-nav > li:hover > a {
 .header-video-wrapper video {
   min-height: 100%;
   width: 100%;
-  background: url('../images/h-bg-2.jpg') no-repeat center, black;
+  background: url('../images/bg2.jpg') no-repeat center, black;
   background-size: cover;
 }
 @media (max-width: 1400px) {
@@ -964,7 +963,6 @@ ul.navbar-nav > li:hover > a {
 .banner-item {
   min-height: 80vh;
   color: var(--med-blue);
-  /* background-attachment: fixed; */
   background-position: 50% 50%;
   -webkit-background-size: cover;
   background-size: cover;
@@ -1667,7 +1665,7 @@ ul.navbar-nav > li:hover > a {
 .facts-area {
   color: #ffffff;
   background-color: #1c1c24;
-  background-image: url(../images/parallax1.jpg);
+  // background-image: url(../../public/images/parallax1.jpg);
   background-repeat: no-repeat;
   background-size: cover;
   background-attachment: fixed;
@@ -2147,7 +2145,7 @@ ul.navbar-nav > li:hover > a {
 
 .ts-pricing {
   background-color: #f5f5f5;
-  background-image: url(../images/parallax2.jpg);
+  // background-image: url(../../public/images/parallax2.jpg);
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-size: cover;
@@ -2410,9 +2408,11 @@ h4.panel-title a.collapsed:before {
 ================================================== */
 
 .footer {
-  background-color: #101015;
+  z-index: 2;
+  clip-path: polygon(0 30%, 100% 0, 100% 100%, 0% 100%);
+  background-color: #09263d;
   color: #666666;
-  padding: 30px 0;
+  padding: 70px 0;
   position: relative;
   background-attachment: fixed;
   margin-bottom: -4rem;
@@ -2422,6 +2422,9 @@ h4.panel-title a.collapsed:before {
 .footer .container {
   z-index: 10;
   position: relative;
+}
+.footer-social {
+  margin-top: 20px;
 }
 
 .footer a,
@@ -2457,7 +2460,7 @@ h4.panel-title a.collapsed:before {
 /*-- Footer logo */
 
 .footer-logo {
-  margin: 30px 0;
+  margin-top: 20px;
 }
 
 /* Footer social */
@@ -2492,7 +2495,7 @@ h4.panel-title a.collapsed:before {
 /*-- Copyright --*/
 
 .copyright-info {
-  margin: 40px 0 0;
+  margin: 20px 0 0;
 }
 
 #back-to-top {
@@ -2621,7 +2624,7 @@ h4.panel-title a.collapsed:before {
 
 .ts-action.bg-image {
   background-color: #f5f5f5;
-  background-image: url(../images/parallax2.jpg);
+  // background-image: url(../../public/images/parallax2.jpg);
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-size: cover;
@@ -3277,9 +3280,9 @@ label {
 .blue-gradient {
   background: linear-gradient(
     135deg,
-    rgba(0, 137, 238, 1) 0%,
-    rgba(9, 9, 121, 1) 71%,
-    rgba(2, 0, 36, 1) 100%
+    #1c4668 0%,
+    #09263d 71%,
+    #0f131f 100%
   ) !important;
 }
 
@@ -3290,10 +3293,9 @@ label {
 }
 
 .blue-gradient:nth-last-child(2),
-.background-shafagh {
-  background: url('../images/h-bg-1.jpg'), #05050d no-repeat center top !important;
-  background-repeat: no-repeat !important;
-  background-size: cover;
+.background-theme {
+  background: url('../images/bg1.jpg'), #05050d no-repeat center top !important;
+  background-size: cover !important;
 }
 
 .no-shadow .ts-speaker {

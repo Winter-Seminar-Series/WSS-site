@@ -41,13 +41,11 @@ class ParticipantForm(forms.ModelForm):
 
     class Meta:
         model = models.UserProfile
-        fields = ['name', 'family', 'name_english', 'family_english', 'phone_number', 'national_id', 'email', 'age',
-                  'job', 'university',
-                  'introduction_method',
-                  'gender', 'city', 'country', 'grade', 'is_student', 'interests', 'workshops',
-                  'question', 'question_other']
+        fields = ['phone_number', 'age', 'job', 'university', 'introduction_method',
+                  'gender', 'city', 'country', 'grade', 'is_student', 'interests', 'favorite_tags']
         widgets = {
-            'gender': forms.RadioSelect
+            'gender': forms.RadioSelect,
+            'favorite_tags': forms.CheckboxSelectMultiple
         }
 
     def __init__(self, *args, **kwargs):
