@@ -1,4 +1,4 @@
-import fetchApi from '../../fetchApi';
+import fetchApi from './fetchApi';
 import * as actionTypes from '../../actionTypes';
 
 export const CALL_API = 'Call API';
@@ -21,6 +21,9 @@ export default ({ getState }) => (next) => async (action) => {
   next(actionWith({ payload, type: requestType }));
 
   try {
+
+    fetchOptions.body = JSON.stringify(fetchOptions.body);
+
     if (!fetchOptions.dontContentType) {
       fetchOptions.headers = {
         'Content-Type': 'application/json',
@@ -31,9 +34,12 @@ export default ({ getState }) => (next) => async (action) => {
     if (!!account && !!account.token) {
       fetchOptions.headers = {
         ...fetchOptions.headers,
-        Authorization: 'JWT ' + account.token, //todo
+        Authorization: 'Token ' + account.token,
       };
     }
+
+    console.log(fetchOptions)
+
     const response = await fetchApi(url, fetchOptions);
     return next(
       actionWith({

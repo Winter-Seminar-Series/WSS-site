@@ -75,7 +75,7 @@ function Presenter({
 
 const mapStateToProps = (state, ownProps) => {
   const { name, title, image, description, didLikedThis, showButton } = ownProps;
-  const { isLoggedIn } = state.Account;
+  const { isLoggedIn } = state.account;
   return ({
     name,
     title,

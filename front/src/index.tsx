@@ -18,7 +18,7 @@ store.subscribe(() => {
   localStorage.setItem(
     'WSS',
     JSON.stringify({
-      Account: state.Account,
+      account: state.account,
     })
   );
 });
