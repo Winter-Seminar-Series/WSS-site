@@ -7,7 +7,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('WSS', '0006_auto_20201116_1917'),
+        ('WSS', '0006_convert_participant_to_user_profile'),
     ]
 
     operations = [

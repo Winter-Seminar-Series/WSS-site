@@ -31,6 +31,13 @@ CORS_ORIGIN_ALLOW_ALL = True
 
 # Application definition
 
+WSS_APPS = [
+    'WSS',
+    'events',
+    'people',
+    'api',
+]
+
 INSTALLED_APPS = [
     'jet.dashboard',
     'jet',
@@ -40,18 +47,15 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'corsheaders',
-    'WSS',
-    'events',
-    'people',
     'django_extensions',
     'polymorphic',
     'sorl.thumbnail',
     'taggit',
     'crispy_forms',
     'rest_framework',
-    'api'
-]
+    'knox',
+    'dbbackup',
+] + WSS_APPS
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -99,10 +103,6 @@ DATABASES = {
         'PASSWORD': os.environ.get('WSS_DB_PASSWORD'),
         'HOST': 'database',
         'PORT': '5432',
-    },
-    'test': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
 
@@ -158,7 +158,8 @@ JET_SIDE_MENU_CUSTOM_APPS = [
         'Participant',
         'ShortLink',
         'Reserve',
-        'Grade'
+        'Grade',
+        'Announcement'
     ]),
     ('people', [
         'Speaker',
@@ -229,6 +230,19 @@ sentry_sdk.init(
     # django.contrib.auth) you may enable sending PII data.
     send_default_pii=True
 )
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        # 'rest_framework.authentication.BasicAuthentication',
+        # 'rest_framework.authentication.SessionAuthentication',
+        'knox.auth.TokenAuthentication',
+    ]
+}
+
+DBBACKUP_STORAGE = 'storages.backends.dropbox.DropBoxStorage'
+DBBACKUP_STORAGE_OPTIONS = {
+    'oauth2_access_token': os.environ.get('DROPBOX_AUTH_TOKEN'),
+}
 
 local_settings_path = os.path.join(os.path.dirname(__file__), 'local_settings.py')
 if os.path.exists(local_settings_path):

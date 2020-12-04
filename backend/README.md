@@ -24,10 +24,19 @@
     - `workshops`
     - `seminars`
     - `postersessions`
+    - `sponsors`
     - `sponsorships`
     - `clips`
     - `holding_teams`
     - `images`
+    - `tags`
+    - `announcements`
+    - `venues`
+    - `speakers`
+    - `seminar_materials`
+    - `workshop_materials`
+    - `poster_materials`
+    - `staff`
 
     Get the whole list:
 
@@ -104,7 +113,7 @@ GET /api/<year>/payment/request?callback=<callback_url>
     Content-Type: application/json
 
     {
-        "message": "`callback_url` should be passed in query string"
+        "message": "`callback` should be passed in query string"
     }
     ```
 - If the user already has finished their payment for given `<year>`, the response will be as bellow:
@@ -224,3 +233,315 @@ GET /api/<year>/payment/verify?Authority=00000167354&Status=OK
 
 ### Note
 - `<year>` is necessary for requests.
+
+## Authentication API
+### Register
+Allows POST requests containing username, password and email (application/json)
+  - Example:
+  ```HTTP
+  POST /api/register/
+  {
+    "username": "testUser",
+    "password": "testUser",
+    "email": "test@test.test"
+  }
+  ```
+  - Success
+    - If no field is malformatted or missing and the username isn't already used, the response will be like this:
+    ```HTTP
+    HTTP 200 OK
+    {
+    "user": {
+        "id": 1,
+        "username": "testUser",
+        "email": "test@test.test"
+    },
+    "token": "a5bd6e4d524366b2b7952d68916725fe6f5f1cab5bc0bb0ccd20b077ca2d3d63"
+    }
+    ```
+  - Failure
+    - If username is already taken, the response will be something like this:
+    ```HTTP
+    HTTP 400 Bad Request
+    Content-Type: application/json
+    {
+        "username": [
+            "A user with that username already exists."
+        ]
+    }
+    ```
+    - If a user with the email address already exists, the response will be something like this:
+    ```HTTP
+    HTTP 400 Bad Request
+    Content-Type: application/json
+    {
+        "email": [
+            "user with this email address already exists."
+        ]
+    }
+    ```
+    - If the email isn't valid , the response will be as shown below:
+    ```HTTP
+    HTTP 400 Bad Request
+    Content-Type: application/json
+    {
+        "email": [
+            "Enter a valid email address."
+        ]
+    }
+    ```
+    - If username isn't provided, the response will be like this:
+    ```HTTP
+    HTTP 400 Bad Request
+    Content-Type: application/json
+    {
+        "username": [
+            "This field is required."
+        ]
+    }
+    ```
+    - If password isn't provided, the response will be like this:
+    ```HTTP
+    HTTP 400 Bad Request
+    Content-Type: application/json
+    {
+        "password": [
+            "This field is required."
+        ]
+    }
+    ```
+### Login
+Allows POST requests containing username and password (application/json)
+  - Example:
+  ```HTTP
+  POST /api/login/
+  {
+    "username": "testUser",
+    "password": "testUser"
+  }
+  ```
+  - Success
+    - If there's nothing wrong, the response will be like this:
+    ```HTTP
+    HTTP 200 OK
+    Content-Type: application/json
+    {
+        "expiry": "2020-11-25T00:32:52.122115Z",
+        "token": "306a694898caf75366777452edc91132b74663ad2065f9923d0f6cb9cc5c43de"
+    }
+    ```
+  - Failure
+    - If no user exists having the provided information, the response will be like this:
+    ```HTTP
+    HTTP 400 Bad Request
+    Content-Type: application/json
+    {
+        "non_field_errors": [
+            "Unable to log in with provided credentials."
+        ]
+    }
+    ```
+### Logout
+Allows a POST request containing an Authorization header
+  - Example
+  ```HTTP
+  POST /api/logout/
+  Authorization: Token b236f6c76fd603712a57e56eeb71e20f59bac0e42e897bc913afcf46566ede4c
+  ```
+  - Success
+  ```HTTP
+  HTTP 204 No Content
+  ```
+  - Failure
+      - If the header isn't provided:
+      ```HTTP
+      HTTP 401 Unauthorized
+      {
+          "detail": "Authentication credentials were not provided."
+      }
+      ```
+      - If the token is invalid (doesn't match the client's login token):
+      ```HTTP
+      HTTP 401 Unauthorized
+      {
+          "detail": "Invalid token."
+      }
+      ```
+
+
+## User Profile APIs
+
+These API set is authorized, i.e. the user should be logged in to use these APIs.
+
+### Get Profile Info
+
+Returns currently logged in user profile info.
+
+```HTTP
+GET /api/profile
+```
+
+Which returns:
+
+```HTTP
+HTTP 200 OK
+Content-Type: application/json
+{
+    "username": "the_user",
+    "email": "the_user@gmail.com",
+    "first_name": "The",
+    "last_name": "User",
+    "phone_number": "09123456789",
+    "age": 22,
+    "job": "The Job",
+    "university": "The University",
+    "introduction_method": "poster",
+    "gender": "male",
+    "city": "Tehran",
+    "country": "Iran",
+    "field_of_interest": "",
+    "grade": "bsOrOther",
+    "is_student": true,
+    "favorite_tags": [
+        "Tag1",
+        "Tag2"
+    ]
+}
+```
+
+### Update User Profile
+
+This API updates currently logged in profile info. **Note that only fields that need to be changed should be sent.**
+
+Modifiable fields:
+
+- `first_name`
+- `last_name`
+- `phone_number`
+- `age`
+- `job`
+- `university`
+- `introduction_method`
+- `gender`
+- `city`
+- `country`
+- `field_of_interest`
+- `grade`
+- `is_student`
+
+An Example to change the user name and last name:
+
+```HTTP
+POST /api/profile/edit
+{
+    "first_name": "The First Name",
+    "last_name": "The Last Name"
+}
+```
+
+Which returns the updated user profile as shown bellow:
+
+```HTTP
+HTTP 200 OK
+Content-Type: application/json
+{
+    "username": "the_user",
+    "email": "the_user@gmail.com",
+    "first_name": "The First Name",
+    "last_name": "The Last Name",
+    "phone_number": "09123456789",
+    "age": 22,
+    "job": "The Job",
+    "university": "The University",
+    "introduction_method": "poster",
+    "gender": "male",
+    "city": "Tehran",
+    "country": "Iran",
+    "field_of_interest": "",
+    "grade": "bsOrOther",
+    "is_student": true,
+    "favorite_tags": [
+        "Tag1",
+        "Tag2"
+    ]
+}
+```
+
+### Add a favourite tag
+
+This API adds the given tag to user's favourite tags.
+
+```HTTP
+POST /api/profile/add_favorite_tag?year=2020&tag=Tag3
+```
+
+If the given tag is already in user's list, the response will be:
+
+```HTTP
+HTTP 400 Bad Request
+Content-Type: application/json
+{
+    "message": "this tag is already in your list!"
+}
+```
+
+Otherwize, returns the updated user profile as shown bellow:
+```HTTP
+HTTP 200 OK
+{
+    "username": "the_user",
+    "email": "the_user@gmail.com",
+    "first_name": "The First Name",
+    "last_name": "The Last Name",
+    "phone_number": "09123456789",
+    "age": 22,
+    "job": "The Job",
+    "university": "The University",
+    "introduction_method": "poster",
+    "gender": "male",
+    "city": "Tehran",
+    "country": "Iran",
+    "field_of_interest": "",
+    "grade": "bsOrOther",
+    "is_student": true,
+    "favorite_tags": [
+        "Tag1",
+        "Tag2",
+        "Tag3"
+    ]
+}
+```
+
+### Remove a favourite tag
+
+Removes the given tag from user's list
+
+```HTTP
+DELETE /api/profile/remove_favorite_tag?tag=Tag3
+```
+
+Which returns the updated user profile as shown bellow:
+```HTTP
+HTTP 200 OK
+{
+    "username": "the_user",
+    "email": "the_user@gmail.com",
+    "first_name": "The First Name",
+    "last_name": "The Last Name",
+    "phone_number": "09123456789",
+    "age": 22,
+    "job": "The Job",
+    "university": "The University",
+    "introduction_method": "poster",
+    "gender": "male",
+    "city": "Tehran",
+    "country": "Iran",
+    "field_of_interest": "",
+    "grade": "bsOrOther",
+    "is_student": true,
+    "favorite_tags": [
+        "Tag1",
+        "Tag2"
+    ]
+}
+```

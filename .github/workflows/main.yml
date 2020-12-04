@@ -3,7 +3,7 @@ name: "Main Workflow"
 env:
   DOCKER_USERNAME: sharifwss
   RELEASE_VERSION: 1.1.0
-  TARGET_HOST: 37.152.187.105
+  TARGET_HOST: sharif-wss.ir
   HOST_SSH_USER: wss
 on:
   push:
@@ -107,7 +107,8 @@ jobs:
           docker_hub_password=${{ secrets.DOCKER_PASSWORD }}
           ssl_private_key=\"${{ secrets.SSL_PRIV_KEY }}\"
           ssl_fullchain=\"${{ secrets.SSL_FULL_CHAIN }}\"
-          sentry_token=${{ secrets.SENTRY_TOKEN }}"
+          sentry_token=${{ secrets.SENTRY_TOKEN }}
+          dropbox_auth_token=${{ secrets.DROPBOX_AUTH_TOKEN }}"
           deploy.yml
           '
       - name: Wait for the app to be up
@@ -147,5 +148,6 @@ jobs:
           docker_hub_password=${{ secrets.DOCKER_PASSWORD }}
           ssl_private_key=\"${{ secrets.SSL_PRIV_KEY }}\"
           ssl_fullchain=\"${{ secrets.SSL_FULL_CHAIN }}\"
-          sentry_token=${{ secrets.SENTRY_TOKEN }}"
+          sentry_token=${{ secrets.SENTRY_TOKEN }}
+          dropbox_auth_token=${{ secrets.DROPBOX_AUTH_TOKEN }}"
           deploy.yml
