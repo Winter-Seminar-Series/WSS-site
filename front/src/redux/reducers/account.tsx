@@ -1,12 +1,6 @@
 import * as actionTypes from '../actionTypes';
 
 const initState = {
-<<<<<<< HEAD:front/src/redux/reducers/Account.tsx
-  token: null,
-  isFetching: false,
-  isLoggedIn: false,
-  user: {}
-=======
   isFetching: false,
   isLoggedIn: false,
   id: '',
@@ -14,27 +8,10 @@ const initState = {
   email: '',
   token: '',
   expiry: '',
->>>>>>> temporary_front:front/src/redux/reducers/account.tsx
 };
 
 function Account(state = initState, action) {
   switch (action.type) {
-<<<<<<< HEAD:front/src/redux/reducers/Account.tsx
-    case actionTypes.SIGNUP_REQUEST:
-      return ({
-        isFetching: true,
-      })
-
-    case actionTypes.SIGNUP_SUCCESS:
-      return ({
-        isFetching: false,
-      })
-
-    case actionTypes.SIGNUP_FAILURE:
-      return ({
-        isFetching: false,
-      })
-=======
     case actionTypes.REGISTER_REQUEST:
       return ({
         isFetching: true,
@@ -54,7 +31,6 @@ function Account(state = initState, action) {
     case actionTypes.REGISTER_FAILURE:
       console.log(action.response)
       return (initState)
->>>>>>> temporary_front:front/src/redux/reducers/account.tsx
 
     case actionTypes.LOGIN_REQUEST:
       return ({
