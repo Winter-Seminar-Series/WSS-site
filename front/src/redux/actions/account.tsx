@@ -3,21 +3,20 @@ import * as URLs from './urls';
 import { CALL_API } from '../middleware/api/api';
 
 export const signup = (
-  firstName: string,
-  lastName: string,
+  username: string,
   email: string,
   password: string
 ) => ({
   [CALL_API]: {
     types: [
-      actionTypes.SIGNUP_REQUEST,
-      actionTypes.SIGNUP_SUCCESS,
-      actionTypes.SIGNUP_FAILURE,
+      actionTypes.REGISTER_REQUEST,
+      actionTypes.REGISTER_SUCCESS,
+      actionTypes.REGISTER_FAILURE,
     ],
-    url: URLs.SIGNUP,
+    url: URLs.REGISTER,
     fetchOptions: {
       method: 'POST',
-      body: { firstName, lastName, email, password },
+      body: { username, password, email },
     },
   },
 });
@@ -49,7 +48,7 @@ export const logout = () => ({
     ],
     url: URLs.LOGOUT,
     fetchOptions: {
-      method: 'POST', //todo?
+      method: 'POST',
     },
   },
 });

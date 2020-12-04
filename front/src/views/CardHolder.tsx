@@ -51,7 +51,7 @@ function CardHolder({ title = 'Talks' }) {
 }
 
 const mapStateToProps = (state, ownProps) => ({
-  isFetching: state.Account.isFetching,
+  isFetching: state.account.isFetching,
 });
 
 export default connect(mapStateToProps, {})(CardHolder);

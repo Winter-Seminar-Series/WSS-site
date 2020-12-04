@@ -1,0 +1,21 @@
+---
+name: "Backup Database"
+env:
+  TARGET_HOST: sharif-wss.ir
+  HOST_SSH_USER: wss
+on:
+  schedule:
+    - cron: "0 3 * * *"
+  push:
+    branches:
+      - master
+  workflow_dispatch:
+jobs:
+  backup:
+    runs-on: ubuntu-20.04
+    container:
+      image: spy86/ansible:latest
+    steps:
+      - name: Backup database to WSS Dropbox
+        run: sshpass -p ${{ secrets.HOST_SSH_PASSWORD }} ssh $HOST_SSH_USER@$TARGET_HOST bash -c "
+          cd wss/ && docker-compose exec web python ./manage.py dbbackup --clean"

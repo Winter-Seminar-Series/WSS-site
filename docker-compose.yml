@@ -11,10 +11,11 @@ services:
       - PAYMENT_MERCHANT
       - PAYMENT_WSDL
       - PAYMENT_URL
+      - SENTRY_TOKEN
     networks:
       wss_net:
   database:
-    image: postgres:13.0-alpine
+    image: postgres:11.10-alpine
     volumes:
       - ./db-first-time-init.sh:/docker-entrypoint-initdb.d/init.sh:ro
       - ./db-data:/var/lib/postgresql/data

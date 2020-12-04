@@ -1,17 +1,17 @@
 import React from 'react';
-import { Route, Switch } from 'react-router-dom';
-import { PrivateRoute } from './auth-guard';
-import './styles/style.scss';
-import About from './views/About';
-import CardHolder from './views/CardHolder';
-import Dashboard from './views/Dashboard/Dashboard';
-import Details from './views/Details';
-import Home from './views/Home';
-import Footer from './views/Layout/footer';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Header from './views/Layout/header';
-import Login from './views/Login';
+import Footer from './views/Layout/footer';
+import Home from './views/Home';
+import About from './views/About';
 import Schedule from './views/Schedule';
-import Signup from './views/Signup';
+import Details from './views/Details';
+import Registration from './views/Registration';
+import Login from './views/Login';
+import CardHolder from './views/CardHolder';
+import './styles/style.scss';
+import Dashboard from './views/Dashboard/Dashboard';
+import { PrivateRoute } from './auth-guard';
 
 function App() {
   return (
@@ -21,7 +21,7 @@ function App() {
         <Route path="/cardholder" component={CardHolder} />
         <Route path="/details" component={Details} />
         <Route path="/schedule" component={Schedule} />
-        <Route path="/signup" component={Signup} />
+        <Route path="/registration" component={Registration} />
         <Route path="/login" component={Login} />
         <Route path="/about" component={About} />
         <PrivateRoute path="/dashboard" component={Dashboard}></PrivateRoute>

@@ -41,7 +41,8 @@ function Presenter({
 
   return (
     // <div className="col-lg-4 col-md-6 col-sm-9 col-xs-12">
-      <article ref={cardRef} id="presenter-card" className="material-card Blue">
+    <div id="card">
+      <article ref={cardRef} className="material-card Blue">
         <h2>
           <span>{name}</span>
           <strong>{title}</strong>
@@ -68,13 +69,13 @@ function Presenter({
           <Like />
         </div>
       </article>
-    // </div>
+    </div>
   );
 }
 
 const mapStateToProps = (state, ownProps) => {
   const { name, title, image, description, didLikedThis, showButton } = ownProps;
-  const { isLoggedIn } = state.Account;
+  const { isLoggedIn } = state.account;
   return ({
     name,
     title,

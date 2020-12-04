@@ -1,5 +1,8 @@
-export const ROOT = 'http://sharif-wss.ir/api'; // todo
+export const ROOT =
+  process.env.NODE_ENV === 'production'
+    ? 'https://localhost/api/'
+    : 'https://localhost/api/';
 
-export const SIGNUP = ROOT.concat('signup/')
+export const REGISTER = ROOT.concat('register/')
 export const LOGIN = ROOT.concat('login/')
 export const LOGOUT = ROOT.concat('logout/')
