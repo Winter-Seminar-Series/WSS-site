@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { login } from '../redux/actions/account';
+import { Redirect, Link } from 'react-router-dom';
 
-function Login({ login, isFetching }) {
+
+function Login({ login, isLoggedIn, isFetching }) {
   const { t } = useTranslation('login', { useSuspense: false });
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -16,6 +17,12 @@ function Login({ login, isFetching }) {
       return;
     }
     login(username, password);
+  }
+
+  if (isLoggedIn) {
+    return (
+      <Redirect to='/' />
+    )
   }
 
   return (
@@ -74,7 +81,8 @@ function Login({ login, isFetching }) {
 }
 
 const mapStateToProps = (state, ownProps) => ({
-  isFetching: state.Account.isFetching,
+  isFetching: state.account.isFetching,
+  isLoggedIn: state.account.isLoggedIn,
 });
 
 export default connect(mapStateToProps, {

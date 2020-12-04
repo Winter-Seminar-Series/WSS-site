@@ -8,7 +8,7 @@ const initState = {
 function Notification(state = {}, action) {
   switch (action.type) {
     case actionTypes.LOGIN_SUCCESS:
-      toast.success('Welcome to WSS')
+      toast.success('Welcome back!')
       return { ...state };
 
     case actionTypes.LOGIN_FAILURE:
@@ -16,11 +16,15 @@ function Notification(state = {}, action) {
       return { ...state };
 
     case actionTypes.REGISTER_SUCCESS:
-      toast.success('Registration completed successfully!')
+      toast.success('Welcome to WSS!')
       return { ...state };
 
     case actionTypes.REGISTER_FAILURE:
       toast.error('Registration failed')
+      return { ...state };
+
+    case actionTypes.LOGOUT_SUCCESS:
+      toast.error("You logged out successfully")
       return { ...state };
 
     default:

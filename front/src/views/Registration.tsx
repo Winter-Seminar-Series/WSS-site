@@ -1,14 +1,13 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
+import { Redirect, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { toast } from 'react-toastify';
 import { signup } from '../redux/actions/account';
 
-function Signup({ signup, isFetching }) {
+function Registration({ signup, isLoggedIn, isFetching }) {
   const { t } = useTranslation('signup', { useSuspense: false });
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
+  const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [doesPasswordAgainMatch, setPasswordAgainMatchingStatus] = useState(
@@ -24,15 +23,21 @@ function Signup({ signup, isFetching }) {
   }
 
   function doSignup() {
-    if (!firstName || !lastName || !email || !password) {
-      toast.error('Please fill all the required fields');
+    if (!username || !email || !password) {
+      toast.error('Please fill all the fields');
       return;
     }
     if (!doesPasswordAgainMatch) {
       toast.error("Passwords doesn't match");
       return;
     }
-    signup(firstName, lastName, email, password);
+    signup(username, email, password);
+  }
+
+  if (isLoggedIn) {
+    return (
+      <Redirect to='/' />
+    )
   }
 
   return (
@@ -43,26 +48,15 @@ function Signup({ signup, isFetching }) {
         <div className="col-6 form-container" dir="ltr">
           <form>
             <div className="form-group mb-5">
-              <label htmlFor="firstName">{t('firstName')}</label>
+              <label htmlFor="username">{t('username')}</label>
               <input
-                value={firstName}
-                onChange={(e) => setFirstName(e.target.value)}
-                id="firstName"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                id="username"
                 type="text"
                 className="form-control"
               />
             </div>
-            <div className="form-group mb-5">
-              <label htmlFor="lastName">{t('lastName')}</label>
-              <input
-                value={lastName}
-                onChange={(e) => setLastName(e.target.value)}
-                id="lastName"
-                type="text"
-                className="form-control"
-              />
-            </div>
-
             <div className="form-group mb-5">
               <label htmlFor="email">{t('email')}</label>
               <input
@@ -73,7 +67,6 @@ function Signup({ signup, isFetching }) {
                 className="form-control"
               />
             </div>
-
             <div className="form-group mb-5">
               <label htmlFor="password">{t('password')}</label>
               <input
@@ -84,7 +77,6 @@ function Signup({ signup, isFetching }) {
                 id="password"
               />
             </div>
-
             <div className="form-group mb-5">
               <label htmlFor="confirm password">{t('confirmPassword')}</label>
               <input
@@ -94,6 +86,7 @@ function Signup({ signup, isFetching }) {
                 id="password-again"
               />
             </div>
+
             <button
               disabled={isFetching}
               onClick={doSignup}
@@ -123,9 +116,10 @@ function Signup({ signup, isFetching }) {
 }
 
 const mapStateToProps = (state, ownProps) => ({
-  isFetching: state.Account.isFetching,
+  isLoggedIn: state.account.isLoggedIn,
+  isFetching: state.account.isFetching,
 });
 
 export default connect(mapStateToProps, {
   signup,
-})(Signup);
+})(Registration);

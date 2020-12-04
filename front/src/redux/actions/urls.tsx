@@ -1,6 +1,6 @@
 export const ROOT =
   process.env.NODE_ENV === 'production'
-    ? 'https://wss-sharif.ir/api/'
+    ? 'https://localhost/api/'
     : 'https://localhost/api/';
 
 

@@ -1,11 +1,13 @@
 import * as actionTypes from '../actionTypes';
 
 const initState = {
-  token: null,
-
   isFetching: false,
   isLoggedIn: false,
-  user: {}
+  id: '',
+  username: '',
+  email: '',
+  token: '',
+  expiry: '',
 };
 
 function account(state = initState, action) {
@@ -13,6 +15,7 @@ function account(state = initState, action) {
     case actionTypes.REGISTER_REQUEST:
       return ({
         isFetching: true,
+        isLoggedIn: false,
       })
 
     case actionTypes.REGISTER_SUCCESS:
@@ -21,32 +24,31 @@ function account(state = initState, action) {
         username: action.response.user.username,
         email: action.response.user.email,
         token: action.response.token,
+        isLoggedIn: true,
         isFetching: false,
       })
 
     case actionTypes.REGISTER_FAILURE:
       console.log(action.response)
-      return ({
-        isFetching: false,
-      })
+      return (initState)
 
     case actionTypes.LOGIN_REQUEST:
       return ({
+        isLoggedIn: false,
         isFetching: true,
       })
 
     case actionTypes.LOGIN_SUCCESS:
       return ({
         isFetching: false,
+        isLoggedIn: true,
         expiry: action.response.expiry,
         token: action.response.token,
       })
 
     case actionTypes.LOGIN_FAILURE:
       console.log(action.response)
-      return ({
-        isFetching: false,
-      })
+      return (initState)
 
     case actionTypes.LOGOUT_REQUEST:
       return ({
@@ -54,11 +56,7 @@ function account(state = initState, action) {
       })
 
     case actionTypes.LOGOUT_SUCCESS:
-      return ({
-        isFetching: false,
-        isLoggedIn: false,
-        user: {},
-      })
+      return (initState)
 
     case actionTypes.LOGOUT_FAILURE:
       return ({

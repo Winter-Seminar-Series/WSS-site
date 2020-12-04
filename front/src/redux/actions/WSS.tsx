@@ -9,7 +9,7 @@ export const getWSSPrimitiveFields = (year: number) => ({
       actionTypes.PRIMITIVE_FIELDS_SUCCESS,
       actionTypes.PRIMITIVE_FIELDS_FAILURE,
     ],
-    url: `${URLs.ROOT}/${year}/wss`,
+    url: `${URLs.ROOT}${year}/wss`,
     fetchOptions: {
       method: 'GET',
     },
