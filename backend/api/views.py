@@ -9,8 +9,9 @@ from django.http import JsonResponse
 from django.conf import settings
 from abc import ABC, abstractmethod
 from api import serializers
-from events.models import Workshop, WssTag
-from WSS.models import WSS, Participant, UserProfile
+from events.models import Workshop, WssTag, Venue, SeminarMaterial, PosterMaterial, WorkshopMaterial
+from people.models import Speaker, Staff
+from WSS.models import WSS, Participant, UserProfile, Sponsor
 from WSS.payment import send_payment_request, verify
 
 from rest_framework.authtoken.serializers import AuthTokenSerializer
@@ -143,6 +144,55 @@ class ImageViewSet(BaseViewSet):
 
     def queryset_selector(self, request, wss):
         return wss.images
+
+
+class VenueViewSet(BaseViewSet):
+    serializer = serializers.VenueSerializer
+
+    def queryset_selector(self, request, wss):
+        return Venue.objects.all()
+
+
+class SponsorViewSet(BaseViewSet):
+    serializer = serializers.SponsorSerializer
+
+    def queryset_selector(self, request, wss):
+        return Sponsor.objects.all()
+
+
+class SpeakerViewSet(BaseViewSet):
+    serializer = serializers.SpeakerSerializer
+
+    def queryset_selector(self, request, wss):
+        return Speaker.objects.all()
+
+
+class SeminarMaterialViewSet(BaseViewSet):
+    serializer = serializers.SeminarMaterialSerializer
+
+    def queryset_selector(self, request, wss):
+        return SeminarMaterial.objects.all()
+
+
+class WorkshopMaterialViewSet(BaseViewSet):
+    serializer = serializers.WorkshopMaterialSerializer
+
+    def queryset_selector(self, request, wss):
+        return WorkshopMaterial.objects.all()
+
+
+class PosterMaterialViewSet(BaseViewSet):
+    serializer = serializers.PosterMaterialSerializer
+
+    def queryset_selector(self, request, wss):
+        return PosterMaterial.objects.all()
+
+
+class StaffViewSet(BaseViewSet):
+    serializer = serializers.StaffSerializer
+
+    def queryset_selector(self, request, wss):
+        return Staff.objects.filter(holding_teams__wss=wss).distinct()
 
 
 class ErrorResponse(Response):
