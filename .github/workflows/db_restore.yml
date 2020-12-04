@@ -12,5 +12,6 @@ jobs:
       image: spy86/ansible:latest
     steps:
       - name: Restore database from WSS Dropbox (latest file)
-        run: sshpass -p ${{ secrets.HOST_SSH_PASSWORD }} ssh $HOST_SSH_USER@$TARGET_HOST bash -c "
-          cd wss/ && docker-compose exec web python ./manage.py dbrestore --noinput"
+        run: sshpass -p ${{ secrets.HOST_SSH_PASSWORD }} ssh -o StrictHostKeyChecking=no $HOST_SSH_USER@$TARGET_HOST "
+          cd wss/ && docker-compose exec -T web bash -c 'python ./manage.py dbrestore --noinput'
+          "
