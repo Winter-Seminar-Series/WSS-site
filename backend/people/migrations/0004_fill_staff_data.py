@@ -222,7 +222,7 @@ def rollback(apps, schema_editor):
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('people', '0002_auto_20201112_1807'),
+        ('people', '0003_fill_speakers_data'),
     ]
 
     operations = [
