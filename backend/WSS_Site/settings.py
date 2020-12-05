@@ -242,13 +242,15 @@ DBBACKUP_STORAGE_OPTIONS = {
     'oauth2_access_token': os.environ.get('DROPBOX_AUTH_TOKEN'),
 }
 
-local_settings_path = os.path.join(os.path.dirname(__file__), 'local_settings.py')
-if os.path.exists(local_settings_path):
-    exec(open(local_settings_path, 'rb').read())
-
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'wss.sharif@gmail.com'
-EMAIL_HOST_PASSWORD = 'WSS_PASSWORD'
+EMAIL_HOST_PASSWORD = os.environ.get('WSS_EMAIL_PASSWORD')
+
+# Keep this portion of code always at the end of this file,
+# for the sake of being able to override everything by local_settings.py
+local_settings_path = os.path.join(os.path.dirname(__file__), 'local_settings.py')
+if os.path.exists(local_settings_path):
+    exec(open(local_settings_path, 'rb').read())
