@@ -6,217 +6,217 @@ from django.db import migrations
 def forwards(apps, schema_editor):
     Staff = apps.get_model('people', 'Staff')
     Staff.objects.create(
-        name='علیرضا ایلامی'
+        name='Alireza Ilami'
     )
     Staff.objects.create(
-        name='مهدی فروردین'
+        name='Mehdi Farvardin'
     )
     Staff.objects.create(
-        name='حسین فیروز'
+        name='Hossein Firooz'
     )
     Staff.objects.create(
-        name='سپهر امینی افشار'
+        name='Sepehr Amini Afshar'
     )
     Staff.objects.create(
-        name='فرزام زهدی نسب'
+        name='Farzam Zohdinasab'
     )
     Staff.objects.create(
-        name='پویا معینی'
+        name='Pooya Moeini'
     )
     Staff.objects.create(
-        name='سید محمدمهدی حاتمی'
+        name='Seyed Mohammad mehdi Hatami'
     )
     Staff.objects.create(
-        name='عمران باتمان غلیچ'
+        name='Emran Batman ghelich'
     )
     Staff.objects.create(
-        name='احمد سلیمی'
+        name='Ahmad Salimi'
     )
     Staff.objects.create(
-        name='علی اصغر قناتی'
+        name='Ali asghar Ghanati'
     )
     Staff.objects.create(
-        name='فاطمه خاشعی'
+        name='Fateme Khashei'
     )
     Staff.objects.create(
-        name='علیرضا تاجمیر ریاحی'
+        name='Alireza Tajmir riahi'
     )
     Staff.objects.create(
-        name='محمدمهدی برقی'
+        name='Mohammad mehdi Barghi'
     )
     Staff.objects.create(
-        name='سید علیرضا هاشمی'
+        name='Seyed Alireza Hashemi'
     )
     Staff.objects.create(
-        name='امیرحسین هادیان'
+        name='Amirhossein Hadian'
     )
     Staff.objects.create(
-        name='امیرمحمد ایمانی'
+        name='Amirmohammad Imani'
     )
     Staff.objects.create(
-        name='سجاد رضوانی'
+        name='Sajjad Rezvani'
     )
     Staff.objects.create(
-        name='شیما رمدانی'
+        name='Shima Ramadani'
     )
     Staff.objects.create(
-        name='مهدی جلالی'
+        name='Mehdi Jalali'
     )
     Staff.objects.create(
-        name='سید علیرضا حسینی'
+        name='Seyed Alireza Hosseini'
     )
     Staff.objects.create(
-        name='سارا آذرنوش'
+        name='Sara Azarnoosh'
     )
     Staff.objects.create(
-        name='درنا دهقانی'
+        name='Dorna Dehghani'
     )
     Staff.objects.create(
-        name='غزل شناور'
+        name='Ghazal Shenavar'
     )
     Staff.objects.create(
-        name='هلیا اخترکاویان'
+        name='Helia Akhtarkavian'
     )
     Staff.objects.create(
-        name='صبیحه تاجداری'
+        name='Sabiheh Tajdari'
     )
     Staff.objects.create(
-        name='ساحل مس فروش'
+        name='Sahel Messforoosh'
     )
     Staff.objects.create(
-        name='اسماعیل پاهنگ'
+        name='Esmaeil Pahang'
     )
     Staff.objects.create(
-        name='همیلا میلی'
+        name='Hamila Meili'
     )
     Staff.objects.create(
-        name='مهدیه ابراهیم پور'
+        name='Mahdieh Ebrahimpoor'
     )
     Staff.objects.create(
-        name='رویا اقوامی'
+        name='Roya Aghvami'
     )
     Staff.objects.create(
-        name='سارا زاهدی'
+        name='Sara Zahedi'
     )
     Staff.objects.create(
-        name='حسین آقامحمدی'
+        name='Hossein Aghamohammadi'
     )
     Staff.objects.create(
-        name='وحید زهتاب'
+        name='Vahid Zehtab'
     )
     Staff.objects.create(
-        name='امیرحسین عاصم یوسفی'
+        name='Amirhossein Asem Yousefi'
     )
     Staff.objects.create(
-        name='علیرضا ضیایی'
+        name='Alireza Ziaei'
     )
 
 def rollback(apps, schema_editor):
     Staff = apps.get_model('people', 'Speaker')
     Staff.objects.get(
-        name='علیرضا ایلامی'
+        name='Alireza Ilami'
     ).delete()
     Staff.objects.get(
-        name='مهدی فروردین'
+        name='Mehdi Farvardin'
     ).delete()
     Staff.objects.get(
-        name='حسین فیروز'
+        name='Hossein Firooz'
     ).delete()
     Staff.objects.get(
-        name='سپهر امینی افشار'
+        name='Sepehr Amini Afshar'
     ).delete()
     Staff.objects.get(
-        name='فرزام زهدی نسب'
+        name='Farzam Zohdinasab'
     ).delete()
     Staff.objects.get(
-        name='پویا معینی'
+        name='Pooya Moeini'
     ).delete()
     Staff.objects.get(
-        name='سید محمدمهدی حاتمی'
+        name='Seyed Mohammad mehdi Hatami'
     ).delete()
     Staff.objects.get(
-        name='عمران باتمان غلیچ'
+        name='Emran Batman ghelich'
     ).delete()
     Staff.objects.get(
-        name='احمد سلیمی'
+        name='Ahmad Salimi'
     ).delete()
     Staff.objects.get(
-        name='علی اصغر قناتی'
+        name='Ali asghar Ghanati'
     ).delete()
     Staff.objects.get(
-        name='فاطمه خاشعی'
+        name='Fateme Khashei'
     ).delete()
     Staff.objects.get(
-        name='علیرضا تاجمیر ریاحی'
+        name='Alireza Tajmir riahi'
     ).delete()
     Staff.objects.get(
-        name='محمدمهدی برقی'
+        name='Mohammad mehdi Barghi'
     ).delete()
     Staff.objects.get(
-        name='سید علیرضا هاشمی'
+        name='Seyed Alireza Hashemi'
     ).delete()
     Staff.objects.get(
-        name='امیرحسین هادیان'
+        name='Amirhossein Hadian'
     ).delete()
     Staff.objects.get(
-        name='امیرمحمد ایمانی'
+        name='Amirmohammad Imani'
     ).delete()
     Staff.objects.get(
-        name='سجاد رضوانی'
+        name='Sajjad Rezvani'
     ).delete()
     Staff.objects.get(
-        name='شیما رمدانی'
+        name='Shima Ramadani'
     ).delete()
     Staff.objects.get(
-        name='مهدی جلالی'
+        name='Mehdi Jalali'
     ).delete()
     Staff.objects.get(
-        name='سید علیرضا حسینی'
+        name='Seyed Alireza Hosseini'
     ).delete()
     Staff.objects.get(
-        name='سارا آذرنوش'
+        name='Sara Azarnoosh'
     ).delete()
     Staff.objects.get(
-        name='درنا دهقانی'
+        name='Dorna Dehghani'
     ).delete()
     Staff.objects.get(
-        name='غزل شناور'
+        name='Ghazal Shenavar'
     ).delete()
     Staff.objects.get(
-        name='هلیا اخترکاویان'
+        name='Helia Akhtarkavian'
     ).delete()
     Staff.objects.get(
-        name='صبیحه تاجداری'
+        name='Sabiheh Tajdari'
     ).delete()
     Staff.objects.create(
-        name='ساحل مس فروش'
+        name='Sahel Messforoosh'
     ).delete()
     Staff.objects.get(
-        name='اسماعیل پاهنگ'
+        name='Esmaeil Pahang'
     ).delete()
     Staff.objects.get(
-        name='همیلا میلی'
+        name='Hamila Meili'
     ).delete()
     Staff.objects.get(
-        name='مهدیه ابراهیم پور'
+        name='Mahdieh Ebrahimpoor'
     ).delete()
     Staff.objects.get(
-        name='رویا اقوامی'
+        name='Roya Aghvami'
     ).delete()
     Staff.objects.get(
-        name='سارا زاهدی'
+        name='Sara Zahedi'
     ).delete()
     Staff.objects.get(
-        name='حسین آقامحمدی'
+        name='Hossein Aghamohammadi'
     ).delete()
     Staff.objects.get(
-        name='وحید زهتاب'
+        name='Vahid Zehtab'
     ).delete()
     Staff.objects.get(
-        name='امیرحسین عاصم یوسفی'
+        name='Amirhossein Asem Yousefi'
     ).delete()
     Staff.objects.get(
-        name='علیرضا ضیایی'
+        name='Alireza Ziaei'
     ).delete()
 
 class Migration(migrations.Migration):
