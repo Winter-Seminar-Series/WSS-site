@@ -27,7 +27,7 @@ def forwards(apps, schema_editor):
         name='Seyed Mohammad mehdi Hatami'
     )
     Staff.objects.create(
-        name='Emran Batman ghelich'
+        name='Emran Batmanghelich'
     )
     Staff.objects.create(
         name='Ahmad Salimi'
@@ -128,7 +128,7 @@ def rollback(apps, schema_editor):
             'Farzam Zohdinasab',
             'Pooya Moeini',
             'Seyed Mohammad mehdi Hatami',
-            'Emran Batman ghelich',
+            'Emran Batmanghelich',
             'Ahmad Salimi',
             'Ali asghar Ghanati',
             'Fatemeh Khashei',
