@@ -19,6 +19,13 @@ year_router.register(r'images', views.ImageViewSet, basename='image')
 year_router.register(r'payment', views.PaymentViewSet, basename='payment')
 year_router.register(r'announcements', views.AnnouncementViewSet, basename='announcement')
 year_router.register(r'tags', views.TagsViewSet, basename='tag')
+year_router.register(r'venus', views.VenueViewSet, basename='venue')
+year_router.register(r'sponsors', views.SponsorViewSet, basename='sponsor')
+year_router.register(r'speakers', views.SpeakerViewSet, basename='speaker')
+year_router.register(r'seminar_materials', views.SeminarMaterialViewSet, basename='seminar_material')
+year_router.register(r'workshop_materials', views.WorkshopMaterialViewSet, basename='workshop_material')
+year_router.register(r'poster_materials', views.PosterMaterialViewSet, basename='poster_material')
+year_router.register(r'staff', views.StaffViewSet, basename='staff')
 year_urlpatterns = year_router.urls
 
 base_router = DefaultRouter()

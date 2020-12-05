@@ -24,12 +24,19 @@
     - `workshops`
     - `seminars`
     - `postersessions`
+    - `sponsors`
     - `sponsorships`
     - `clips`
     - `holding_teams`
     - `images`
     - `tags`
     - `announcements`
+    - `venues`
+    - `speakers`
+    - `seminar_materials`
+    - `workshop_materials`
+    - `poster_materials`
+    - `staff`
 
     Get the whole list:
 
