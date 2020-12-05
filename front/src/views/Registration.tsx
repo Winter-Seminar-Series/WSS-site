@@ -12,8 +12,6 @@ function Registration({ signup, isLoggedIn, isFetching }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [doesPasswordAgainMatch, setPasswordAgainMatchingStatus] = useState(true);
-  const [recaptcha, setRecaptcha] = useState(false);
-
 
   function checkPasswordAgain(passwordAgain) {
     if (passwordAgain === password) {
@@ -30,10 +28,6 @@ function Registration({ signup, isLoggedIn, isFetching }) {
     }
     if (!doesPasswordAgainMatch) {
       toast.error("Passwords doesn't match");
-      return;
-    }
-    if (!recaptcha) {
-      toast.error("Please resolve the security key");
       return;
     }
     signup(username, email, password);
@@ -91,25 +85,18 @@ function Registration({ signup, isLoggedIn, isFetching }) {
                 id="password-again"
               />
             </div>
-
-            <div className='row'>
-              <ReCAPTCHA
-                sitekey='6LeJjvkZAAAAAG_zYBjD4DRE3fEh9d9EdHn1TZls'
-                onChange={() => setRecaptcha(true)}
-              />
-              <button
-                disabled={isFetching}
-                onClick={doSignup}
-                type="button"
-                className="btn btn-lg btn-primary btn-dark mb-5">
-                {t('submit')}
-              </button>
-              <div className="linkbar">
-                <span className="mr-1">{t('signinBefore')}</span>
-                <a className="link" href="/login">
-                  {t('click')}
-                </a>
-              </div>
+            <button
+              disabled={isFetching}
+              onClick={doSignup}
+              type="button"
+              className="btn btn-lg btn-primary btn-dark mb-5">
+              {t('submit')}
+            </button>
+            <div className="linkbar">
+              <span className="mr-1">{t('signinBefore')}</span>
+              <a className="link" href="/login">
+                {t('click')}
+              </a>
             </div>
           </form>
         </div>

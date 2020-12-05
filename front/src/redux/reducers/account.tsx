@@ -63,6 +63,21 @@ function Account(state = initState, action) {
         isFetching: false,
       })
 
+    case actionTypes.VERIFY_PAYMENT_SUCCESS:
+      return {
+        ...state,
+        payment: {
+          // url: action.response.message,
+          // amount: action.response.amount,
+          // typePayment: action.response.typePayment,
+        },
+      };
+    case actionTypes.REMOVE_PAYMENT_DATA:
+      return {
+        ...state,
+        payment: null,
+      };
+
     default:
       return state;
   }

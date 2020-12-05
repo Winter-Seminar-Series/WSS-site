@@ -11,15 +11,10 @@ function Login({ login, isLoggedIn, isFetching }) {
   const { t } = useTranslation('login', { useSuspense: false });
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [recaptcha, setRecaptcha] = useState(false);
 
   function doLogin() {
     if (!username || !password) {
       toast.error('Please fill all the required fields');
-      return;
-    }
-    if (!recaptcha) {
-      toast.error("Please resolve the security key");
       return;
     }
     login(username, password);
@@ -58,24 +53,18 @@ function Login({ login, isLoggedIn, isFetching }) {
                 id="password"
               />
             </div>
-            <div className='row'>
-              <ReCAPTCHA
-                sitekey='6LeJjvkZAAAAAG_zYBjD4DRE3fEh9d9EdHn1TZls'
-                onChange={() => setRecaptcha(true)}
-              />
-              <button
-                disabled={isFetching}
-                onClick={doLogin}
-                type="button"
-                className="btn btn-lg btn-primary btn-dark mb-5">
-                {t('submit')}
-              </button>
-              <div className="linkbar">
-                <span className="mr-1">{t('hasntSignedup')}</span>
-                <a className="link" href="/signup">
-                  {t('click')}
-                </a>
-              </div>
+            <button
+              disabled={isFetching}
+              onClick={doLogin}
+              type="button"
+              className="btn btn-lg btn-primary btn-dark mb-5">
+              {t('submit')}
+            </button>
+            <div className="linkbar">
+              <span className="mr-1">{t('hasntSignedup')}</span>
+              <a className="link" href="/signup">
+                {t('click')}
+              </a>
             </div>
           </form>
         </div>

@@ -53,38 +53,39 @@ export const logout = () => ({
   },
 });
 
-export const redirectWhenUserIsNotLoggedIn = () => (
-  dispatch,
-  getState
-) => {
-  const toast = {
-    type: actionTypes.REDIRECT_WHEN_USER_IS_NOT_LOGGED,
-  }
-  return dispatch(toast);
-};
+export const redirectWhenUserIsNotLoggedIn = () => ({
+  type: actionTypes.REDIRECT_WHEN_USER_IS_NOT_LOGGED,
+})
 
 
-// const fetchUser = () => ({
-//   [CALL_API]: {
-//     types: [
-//       actionTypes.USER_REQUEST,
-//       actionTypes.USER_SUCCESS,
-//       actionTypes.USER_FAILURE,
-//     ],
-//     url: URLs.GET_ACCOUNT_BY_USERNAME,
-//     fetchOptions: {
-//       method: 'GET',
-//     },
-//   },
-// });
+export const sendPaymentRequest = (year = 2020) => ({
+  [CALL_API]: {
+    types: [
+      actionTypes.SEND_PAYMENT_REQUEST,
+      actionTypes.SEND_PAYMENT_SUCCESS,
+      actionTypes.SEND_PAYMENT_FAILURE,
+    ],
+    url: `${URLs.ROOT}${year}/payment/request?callback=${URLs.ROOT}`,
+    fetchOptions: {
+      method: 'GET',
+    },
+  },
+});
 
-// export const loadUser = () => (
-//   dispatch,
-//   getState
-// ) => {
-//   const user = getState().users[getState().account.username];
-//   if (user) {
-//     return null;
-//   }
-//   return dispatch(fetchUser());
-// };
+export const verifyPayment = (year = 2020, verificationCode) => ({
+  [CALL_API]: {
+    types: [
+      actionTypes.VERIFY_PAYMENT_REQUEST,
+      actionTypes.VERIFY_PAYMENT_SUCCESS,
+      actionTypes.VERIFY_PAYMENT_FAILURE,
+    ],
+    url: `${URLs.ROOT}${year}/payment/verify?Authority=${verificationCode}&Status=ok`,
+    fetchOptions: {
+      method: 'GET',
+    },
+  },
+});
+
+export const removePaymentData = () => ({
+  type: actionTypes.REMOVE_PAYMENT_DATA,
+});
