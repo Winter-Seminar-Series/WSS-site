@@ -59,6 +59,12 @@ def forwards(apps, schema_editor):
         place='assistant professor at Sharif University of Technology',
         bio='Mohammad Hossein Rohban received his BS, MS ad PhD degrees in Computer Engineering from Sharif University of Technology. Currently, he is an assistant professor in the Department of Computer Engineering at Sharif University of Technology. His current research interests include interpretable and robust machine learning, anomaly detection, and computational Biology. He previously spent three years as a postdoctoral associate at the Broad In- stitute of Harvard and MIT and focused on various problems at the intersection of machine learning and image-based computational Biology, where he published several pres- tigious papers on the mentioned subjects in the relevant journals.'
     )
+    Speakers.objects.create(
+        name='Mehrdad Farajtabar',
+        degree='Ph.D.',
+        place='research scientist at Google DeepMind',
+        bio='Mehrdad Farajtabar is a research scientist at Google DeepMind working on machine learning and applications. His recent research interests are continual learning of neural networks, learning under evolving data distributions, causal inference and reinforcement learning. He has graduated with PhD in computational science and engineering from Georgia Tech in 2018 and holds M.Sc. and B.Sc. degrees in Artificial Intelligence and Software Engineering from Sharif University of Technology.'
+    )
 
 def rollback(apps, schema_editor):
     Speakers = apps.get_model('people', 'Speaker')
@@ -88,6 +94,9 @@ def rollback(apps, schema_editor):
     ).delete()
     Speakers.objects.get(
         name='Mohammad Hossein Rohban'
+    ).delete()
+    Speakers.objects.get(
+        name='Mehrdad Farajtabar'
     ).delete()
 
 class Migration(migrations.Migration):

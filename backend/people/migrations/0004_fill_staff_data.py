@@ -110,6 +110,12 @@ def forwards(apps, schema_editor):
     Staff.objects.create(
         name='Alireza Ziaei'
     )
+    Staff.objects.create(
+        name='Ehsan Movafagh'
+    )
+    Staff.objects.create(
+        name='ArhsiA Akhavan'
+    )
 
 def rollback(apps, schema_editor):
     Staff = apps.get_model('people', 'Staff')
@@ -217,6 +223,12 @@ def rollback(apps, schema_editor):
     ).delete()
     Staff.objects.get(
         name='Alireza Ziaei'
+    ).delete()
+    Staff.objects.get(
+        name='Ehsan Movafagh'
+    ).delete()
+    Staff.objects.get(
+        name='ArshiA Akhavan'
     ).delete()
 
 class Migration(migrations.Migration):

@@ -30,6 +30,7 @@ def forwards(apps, schema_editor):
         Staff.objects.get(name='Alireza Tajmir riahi'),
         Staff.objects.get(name='Mohammad mehdi Barghi'),
         Staff.objects.get(name='Seyed Alireza Hashemi'),
+        Staff.objects.get(name='ArhsiA Akhavan')
     )
     teams.objects.create(
         name='network'
@@ -41,7 +42,8 @@ def forwards(apps, schema_editor):
         Staff.objects.get(name='Sajjad Rezvani'),
         Staff.objects.get(name='Shima Ramadani'),
         Staff.objects.get(name='Mehdi Jalali'),
-        Staff.objects.get(name='Sara Azarnoosh')
+        Staff.objects.get(name='Sara Azarnoosh'),
+        Staff.objects.get(name='Ehsan Movafagh')
     )
     teams.objects.create(
         name='branding'
