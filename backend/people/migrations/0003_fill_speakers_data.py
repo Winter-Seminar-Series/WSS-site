@@ -68,36 +68,7 @@ def forwards(apps, schema_editor):
 
 def rollback(apps, schema_editor):
     Speakers = apps.get_model('people', 'Speaker')
-    Speakers.objects.get(
-        name='Shahram Ghandeharizadeh'
-    ).delete()
-    Speakers.objects.get(
-        name='Rad Niazadeh'
-    ).delete()
-    Speakers.objects.get(
-        name='Amir Shaikhha'
-    ).delete()
-    Speakers.objects.get(
-        name='Ehsan Kazemi'
-    ).delete()
-    Speakers.objects.get(
-        name='Alexandre Alahi'
-    ).delete()
-    Speakers.objects.get(
-        name='Vijay Vazirani'
-    ).delete()
-    Speakers.objects.get(
-        name='Dorsa Sadigh'
-    ).delete()
-    Speakers.objects.get(
-        name='Seyed-Mohsen Moosavi-Dezfooli'
-    ).delete()
-    Speakers.objects.get(
-        name='Mohammad Hossein Rohban'
-    ).delete()
-    Speakers.objects.get(
-        name='Mehrdad Farajtabar'
-    ).delete()
+    Speakers.objects.filter(name__in=['Shahram Ghandeharizadeh', 'Rad Niazadeh', 'Amir Shaikhha', 'Ehsan Kazemi', 'Alexandre Alahi', 'Vijay Vazirani', 'Dorsa Sadigh', 'Seyed-Mohsen Moosavi-Dezfooli', 'Mohammad Hossein Rohban', 'Mehrdad Farajtabar']).delete()
 
 class Migration(migrations.Migration):
 

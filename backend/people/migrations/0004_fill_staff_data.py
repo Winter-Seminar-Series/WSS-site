@@ -119,116 +119,46 @@ def forwards(apps, schema_editor):
 
 def rollback(apps, schema_editor):
     Staff = apps.get_model('people', 'Staff')
-    Staff.objects.get(
-        name='Alireza Ilami'
-    ).delete()
-    Staff.objects.get(
-        name='Mehdi Farvardin'
-    ).delete()
-    Staff.objects.get(
-        name='Hossein Firooz'
-    ).delete()
-    Staff.objects.get(
-        name='Sepehr Amini Afshar'
-    ).delete()
-    Staff.objects.get(
-        name='Farzam Zohdinasab'
-    ).delete()
-    Staff.objects.get(
-        name='Pooya Moeini'
-    ).delete()
-    Staff.objects.get(
-        name='Seyed Mohammad mehdi Hatami'
-    ).delete()
-    Staff.objects.get(
-        name='Emran Batman ghelich'
-    ).delete()
-    Staff.objects.get(
-        name='Ahmad Salimi'
-    ).delete()
-    Staff.objects.get(
-        name='Ali asghar Ghanati'
-    ).delete()
-    Staff.objects.get(
-        name='Fatemeh Khashei'
-    ).delete()
-    Staff.objects.get(
-        name='Alireza Tajmir riahi'
-    ).delete()
-    Staff.objects.get(
-        name='Mohammad mehdi Barghi'
-    ).delete()
-    Staff.objects.get(
-        name='Seyed Alireza Hashemi'
-    ).delete()
-    Staff.objects.get(
-        name='Amirhossein Hadian'
-    ).delete()
-    Staff.objects.get(
-        name='Amirmohammad Imani'
-    ).delete()
-    Staff.objects.get(
-        name='Sajjad Rezvani'
-    ).delete()
-    Staff.objects.get(
-        name='Shima Ramadani'
-    ).delete()
-    Staff.objects.get(
-        name='Mehdi Jalali'
-    ).delete()
-    Staff.objects.get(
-        name='Seyed Alireza Hosseini'
-    ).delete()
-    Staff.objects.get(
-        name='Sara Azarnoosh'
-    ).delete()
-    Staff.objects.get(
-        name='Dorna Dehghani'
-    ).delete()
-    Staff.objects.get(
-        name='Ghazal Shenavar'
-    ).delete()
-    Staff.objects.get(
-        name='Helia Akhtarkavian'
-    ).delete()
-    Staff.objects.get(
-        name='Sabiheh Tajdari'
-    ).delete()
-    Staff.objects.create(
-        name='Sahel Messforoosh'
-    ).delete()
-    Staff.objects.get(
-        name='Esmaeil Pahang'
-    ).delete()
-    Staff.objects.get(
-        name='Hamila Meili'
-    ).delete()
-    Staff.objects.get(
-        name='Mahdieh Ebrahimpoor'
-    ).delete()
-    Staff.objects.get(
-        name='Roya Aghvami'
-    ).delete()
-    Staff.objects.get(
-        name='Sara Zahedi'
-    ).delete()
-    Staff.objects.get(
-        name='Hossein Aghamohammadi'
-    ).delete()
-    Staff.objects.get(
-        name='Vahid Zehtab'
-    ).delete()
-    Staff.objects.get(
-        name='Amirhossein Asem Yousefi'
-    ).delete()
-    Staff.objects.get(
-        name='Alireza Ziaei'
-    ).delete()
-    Staff.objects.get(
-        name='Ehsan Movafagh'
-    ).delete()
-    Staff.objects.get(
-        name='ArshiA Akhavan'
+    Staff.objects.filter(
+        name__in=[
+            'Alireza Ilami',
+            'Mehdi Farvardin',
+            'Hossein Firooz',
+            'Sepehr Amini Afshar',
+            'Farzam Zohdinasab',
+            'Pooya Moeini',
+            'Seyed Mohammad mehdi Hatami',
+            'Emran Batman ghelich',
+            'Ahmad Salimi',
+            'Ali asghar Ghanati',
+            'Fatemeh Khashei',
+            'Alireza Tajmir riahi',
+            'Mohammad mehdi Barghi',
+            'Seyed Alireza Hashemi',
+            'Amirhossein Hadian',
+            'Amirmohammad Imani',
+            'Sajjad Rezvani',
+            'Shima Ramadani',
+            'Mehdi Jalali',
+            'Seyed Alireza Hosseini',
+            'Sara Azarnoosh',
+            'Dorna Dehghani',
+            'Ghazal Shenavar',
+            'Helia Akhtarkavian',
+            'Sabiheh Tajdari',
+            'Sahel Messforoosh',
+            'Esmaeil Pahang',
+            'Hamila Meili',
+            'Mahdieh Ebrahimpoor',
+            'Roya Aghvami',
+            'Sara Zahedi',
+            'Hossein Aghamohammadi',
+            'Vahid Zehtab',
+            'Amirhossein Asem Yousefi',
+            'Alireza Ziaei',
+            'Ehsan Movafagh',
+            'ArshiA Akhavan'
+        ]
     ).delete()
 
 class Migration(migrations.Migration):

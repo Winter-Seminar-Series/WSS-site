@@ -5,59 +5,53 @@ from django.db import migrations
 
 def forwards(apps, schema_editor):
     Staff = apps.get_model('people', 'Staff')
+    WSS = apps.get_model('WSS', 'WSS')
+
+    wss = WSS.objects.get(year=2020)
     teams = apps.get_model('people', 'HoldingTeam')
     team = teams.objects.create(
-        name='content'
-    )
-    team.staff.add(
-        Staff.objects.filter(name__in=['Mehdi Farvardin', 'Hossein Firooz', 'Sepehr Amini Afshar', 'Farzam Zohdinasab', 'Pooya Moeini', 'Seyed Mohammad mehdi Hatami'])
-    )
-    team = teams.objects.create(
-        name='technical'
-    )
-    team.staff.add(
-        Staff.objects.filter(name__in=['Emran Batman ghelich', 'Ahmad Salimi', 'Ali asghar Ghanati', 'Fateme Khashei', 'Alireza Tajmir riahi', 'Mohammad mehdi Barghi', 'Seyed Alireza Hashemi', 'ArhsiA Akhavan'])
+        wss=wss,
+        name='content',
+        staff=Staff.objects.filter(name__in=['Mehdi Farvardin', 'Hossein Firooz', 'Sepehr Amini Afshar', 'Farzam Zohdinasab', 'Pooya Moeini', 'Seyed Mohammad mehdi Hatami'])
     )
     team = teams.objects.create(
-        name='network'
-    )
-    team.staff.add(
-        Staff.objects.filter(name__in=['Amirhossein Hadian', 'Amirmohammad Imani', 'Sajjad Rezvani', 'Shima Ramadani', 'Mehdi Jalali', 'Sara Azarnoosh', 'Ehsan Movafagh'])
-    )
-    team = teams.objects.create(
-        name='branding'
-    )
-    team.staff.add(
-        Staff.objects.get(name='Seyed Alireza Hosseini')
+        wss=wss,
+        name='technical',
+        staff=Staff.objects.filter(name__in=['Emran Batman ghelich', 'Ahmad Salimi', 'Ali asghar Ghanati', 'Fateme Khashei', 'Alireza Tajmir riahi', 'Mohammad mehdi Barghi', 'Seyed Alireza Hashemi', 'ArhsiA Akhavan'])
     )
     team = teams.objects.create(
-        name='social'
-    )
-    team.staff.add(
-        Staff.objects.filter(name__in=['Sara Azarnoosh', 'Dorna Dehghani', 'Ghazal Shenavar', 'Helia Akhtarkavian', 'Sabiheh Tajdari', 'Sahel Messforoosh', 'Esmaeil Pahang'])
-    )
-    team = teams.objects.create(
-        name='media'
-    )
-    team.staff.add(
-        Staff.objects.filter(name__in=['Hamila Meili', 'Mahdieh Ebrahimpoor', 'Roya Aghvami', 'Sara Zahedi', 'Hossein Aghamohammadi'])
+        wss=wss,
+        name='network',
+        staff=Staff.objects.filter(name__in=['Amirhossein Hadian', 'Amirmohammad Imani', 'Sajjad Rezvani', 'Shima Ramadani', 'Mehdi Jalali', 'Sara Azarnoosh', 'Ehsan Movafagh'])
     )
     team = teams.objects.create(
-        name='presentation management'
+        wss=wss,
+        name='branding',
+        staff=Staff.objects.get(name='Seyed Alireza Hosseini')
     )
-    team.staff.add(
-        Staff.objects.filter(name__in=['Alireza Ziaei', 'Amirhossein Asem Yousefi', 'Vahid Zehtab', 'Sajjad Rezvani'])
+    team = teams.objects.create(
+        wss=wss,
+        name='social',
+        staff=Staff.objects.filter(name__in=['Sara Azarnoosh', 'Dorna Dehghani', 'Ghazal Shenavar', 'Helia Akhtarkavian', 'Sabiheh Tajdari', 'Sahel Messforoosh', 'Esmaeil Pahang'])
+    )
+    team = teams.objects.create(
+        wss=wss,
+        name='media',
+        staff=Staff.objects.filter(name__in=['Hamila Meili', 'Mahdieh Ebrahimpoor', 'Roya Aghvami', 'Sara Zahedi', 'Hossein Aghamohammadi'])
+    )
+    team = teams.objects.create(
+        wss=wss,
+        name='presentation management',
+        staff=Staff.objects.filter(name__in=['Alireza Ziaei', 'Amirhossein Asem Yousefi', 'Vahid Zehtab', 'Sajjad Rezvani'])
     )
 
 
 def rollback(apps, schema_editor):
-    teams.objects.get(name='content').delete()
-    teams.objects.get(name='technical').delete()
-    teams.objects.get(name='network').delete()
-    teams.objects.get(name='branding').delete()
-    teams.objects.get(name='social').delete()
-    teams.objects.get(name='media').delete()
-    teams.objects.get(name='presentation management').delete()
+    WSS = apps.get_model('WSS', 'WSS')
+
+    wss = WSS.objects.get(year=2020)
+
+    teams.objects.filter(wss=wss, name__in=['content', 'technical', 'network', 'branding', 'social', 'media', 'presentation management']).delete()
 
 class Migration(migrations.Migration):
 
