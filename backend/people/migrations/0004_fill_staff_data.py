@@ -36,7 +36,7 @@ def forwards(apps, schema_editor):
         name='Ali asghar Ghanati'
     )
     Staff.objects.create(
-        name='Fateme Khashei'
+        name='Fatemeh Khashei'
     )
     Staff.objects.create(
         name='Alireza Tajmir riahi'
@@ -112,7 +112,7 @@ def forwards(apps, schema_editor):
     )
 
 def rollback(apps, schema_editor):
-    Staff = apps.get_model('people', 'Speaker')
+    Staff = apps.get_model('people', 'Staff')
     Staff.objects.get(
         name='Alireza Ilami'
     ).delete()
@@ -144,7 +144,7 @@ def rollback(apps, schema_editor):
         name='Ali asghar Ghanati'
     ).delete()
     Staff.objects.get(
-        name='Fateme Khashei'
+        name='Fatemeh Khashei'
     ).delete()
     Staff.objects.get(
         name='Alireza Tajmir riahi'
