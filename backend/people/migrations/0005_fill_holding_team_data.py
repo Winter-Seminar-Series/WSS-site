@@ -6,85 +6,47 @@ from django.db import migrations
 def forwards(apps, schema_editor):
     Staff = apps.get_model('people', 'Staff')
     teams = apps.get_model('people', 'HoldingTeam')
-    teams.objects.create(
+    team = teams.objects.create(
         name='content'
     )
-    team = teams.objects.get(name='content')
     team.staff.add(
-        Staff.objects.get(name='Mehdi Farvardin'),
-        Staff.objects.get(name='Hossein Firooz'),
-        Staff.objects.get(name='Sepehr Amini Afshar'),
-        Staff.objects.get(name='Farzam Zohdinasab'),
-        Staff.objects.get(name='Pooya Moeini'),
-        Staff.objects.get(name='Seyed Mohammad mehdi Hatami')
+        Staff.objects.filter(name__in=['Mehdi Farvardin', 'Hossein Firooz', 'Sepehr Amini Afshar', 'Farzam Zohdinasab', 'Pooya Moeini', 'Seyed Mohammad mehdi Hatami'])
     )
-    teams.objects.create(
+    team = teams.objects.create(
         name='technical'
     )
-    team = teams.objects.get(name='technical')
     team.staff.add(
-        Staff.objects.get(name='Emran Batman ghelich'),
-        Staff.objects.get(name='Ahmad Salimi'),
-        Staff.objects.get(name='Ali asghar Ghanati'),
-        Staff.objects.get(name='Fateme Khashei'),
-        Staff.objects.get(name='Alireza Tajmir riahi'),
-        Staff.objects.get(name='Mohammad mehdi Barghi'),
-        Staff.objects.get(name='Seyed Alireza Hashemi'),
-        Staff.objects.get(name='ArhsiA Akhavan')
+        Staff.objects.filter(name__in=['Emran Batman ghelich', 'Ahmad Salimi', 'Ali asghar Ghanati', 'Fateme Khashei', 'Alireza Tajmir riahi', 'Mohammad mehdi Barghi', 'Seyed Alireza Hashemi', 'ArhsiA Akhavan'])
     )
-    teams.objects.create(
+    team = teams.objects.create(
         name='network'
     )
-    team = teams.objects.get(name='network')
     team.staff.add(
-        Staff.objects.get(name='Amirhossein Hadian'),
-        Staff.objects.get(name='Amirmohammad Imani'),
-        Staff.objects.get(name='Sajjad Rezvani'),
-        Staff.objects.get(name='Shima Ramadani'),
-        Staff.objects.get(name='Mehdi Jalali'),
-        Staff.objects.get(name='Sara Azarnoosh'),
-        Staff.objects.get(name='Ehsan Movafagh')
+        Staff.objects.filter(name__in=['Amirhossein Hadian', 'Amirmohammad Imani', 'Sajjad Rezvani', 'Shima Ramadani', 'Mehdi Jalali', 'Sara Azarnoosh', 'Ehsan Movafagh'])
     )
-    teams.objects.create(
+    team = teams.objects.create(
         name='branding'
     )
-    team = teams.objects.get(name='branding')
     team.staff.add(
         Staff.objects.get(name='Seyed Alireza Hosseini')
     )
-    teams.objects.create(
+    team = teams.objects.create(
         name='social'
     )
-    team = teams.objects.get(name='social')
     team.staff.add(
-        Staff.objects.get(name='Sara Azarnoosh'),
-        Staff.objects.get(name='Dorna Dehghani'),
-        Staff.objects.get(name='Ghazal Shenavar'),
-        Staff.objects.get(name='Helia Akhtarkavian'),
-        Staff.objects.get(name='Sabiheh Tajdari'),
-        Staff.objects.get(name='Sahel Messforoosh'),
-        Staff.objects.get(name='Esmaeil Pahang')
+        Staff.objects.filter(name__in=['Sara Azarnoosh', 'Dorna Dehghani', 'Ghazal Shenavar', 'Helia Akhtarkavian', 'Sabiheh Tajdari', 'Sahel Messforoosh', 'Esmaeil Pahang'])
     )
-    teams.objects.create(
+    team = teams.objects.create(
         name='media'
     )
-    team = teams.objects.get(name='media')
     team.staff.add(
-        Staff.objects.get(name='Hamila Meili'),
-        Staff.objects.get(name='Mahdieh Ebrahimpoor'),
-        Staff.objects.get(name='Roya Aghvami'),
-        Staff.objects.get(name='Sara Zahedi'),
-        Staff.objects.get(name='Hossein Aghamohammadi')
+        Staff.objects.filter(name__in=['Hamila Meili', 'Mahdieh Ebrahimpoor', 'Roya Aghvami', 'Sara Zahedi', 'Hossein Aghamohammadi'])
     )
-    teams.objects.create(
+    team = teams.objects.create(
         name='presentation management'
     )
-    team = teams.objects.get(name='presentation management')
     team.staff.add(
-        Staff.objects.get(name='Alireza Ziaei'),
-        Staff.objects.get(name='Amirhossein Asem Yousefi'),
-        Staff.objects.get(name='Vahid Zehtab'),
-        Staff.objects.get(name='Sajjad Rezvani')
+        Staff.objects.filter(name__in=['Alireza Ziaei', 'Amirhossein Asem Yousefi', 'Vahid Zehtab', 'Sajjad Rezvani'])
     )
 
 
