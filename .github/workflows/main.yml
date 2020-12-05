@@ -108,7 +108,8 @@ jobs:
           ssl_private_key=\"${{ secrets.SSL_PRIV_KEY }}\"
           ssl_fullchain=\"${{ secrets.SSL_FULL_CHAIN }}\"
           sentry_token=${{ secrets.SENTRY_TOKEN }}
-          dropbox_auth_token=${{ secrets.DROPBOX_AUTH_TOKEN }}"
+          dropbox_auth_token=${{ secrets.DROPBOX_AUTH_TOKEN }}
+          wss_email_password=${{ secrets.WSS_EMAIL_PASSWORD }}"
           deploy.yml
           '
       - name: Wait for the app to be up
@@ -149,5 +150,6 @@ jobs:
           ssl_private_key=\"${{ secrets.SSL_PRIV_KEY }}\"
           ssl_fullchain=\"${{ secrets.SSL_FULL_CHAIN }}\"
           sentry_token=${{ secrets.SENTRY_TOKEN }}
-          dropbox_auth_token=${{ secrets.DROPBOX_AUTH_TOKEN }}"
+          dropbox_auth_token=${{ secrets.DROPBOX_AUTH_TOKEN }}
+          wss_email_password=${{ secrets.WSS_EMAIL_PASSWORD }}"
           deploy.yml
