@@ -1,18 +1,19 @@
 import React from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import Header from './views/Layout/header';
-import Footer from './views/Layout/footer';
-import Home from './views/Home';
-import About from './views/About';
-import Schedule from './views/Schedule';
-import Details from './views/Details';
-import Registration from './views/Registration';
-import Login from './views/Login';
-import CardHolder from './views/CardHolder';
-import './styles/style.scss';
-import Dashboard from './views/Dashboard/Dashboard';
+import { Route, Switch } from 'react-router-dom';
 import PrivateRoute from './auth-guard';
+import './styles/style.scss';
+import About from './views/About';
+import CardHolder from './views/CardHolder';
+import Dashboard from './views/Dashboard/Dashboard';
 import SeminarDetail from './views/SeminarDetail'
+import Home from './views/Home';
+import Footer from './views/Layout/footer';
+import Header from './views/Layout/header';
+import Login from './views/Login';
+import Registration from './views/Registration';
+import Speakers from './views/Speakers';
+import StaffList from './views/StaffList';
+import Workshops from './views/Workshops';
 
 function App() {
   return (
@@ -22,12 +23,13 @@ function App() {
         <Route path="/seminar/:id" component={SeminarDetail} />
         <Route path="/workshop/:id" component={SeminarDetail} />
         <Route path="/postersession/:id" component={SeminarDetail} />
+        <Route path="/workshops" component={Workshops} />
         <Route path="/cardholder" component={CardHolder} />
-        <Route path="/details" component={Details} />
-        <Route path="/schedule" component={Schedule} />
-        <Route path="/registration" component={Registration} />
-        <Route path="/login" component={Login} />
         <Route path="/about" component={About} />
+        <Route path="/speakers" component={Speakers} />
+        <Route path="/staff" component={StaffList} />
+        <Route path="/signup" component={Registration} />
+        <Route path="/login" component={Login} />
         <PrivateRoute path="/dashboard" component={Dashboard}></PrivateRoute>
         <Route path="/" component={Home} />
       </Switch>

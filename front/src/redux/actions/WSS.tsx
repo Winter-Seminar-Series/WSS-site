@@ -13,23 +13,23 @@ export const getWSSPrimitiveFields = (year: number) => ({
     fetchOptions: {
       method: 'GET',
     },
-  }
-})
+  },
+});
 
 export const MODEL_LISTS_NAMES = {
   WORKSHOPS: 'workshops',
-  SEMINARS: 'seminars',
   SPEAKERS: 'speakers',
+  SEMINARS: 'seminars',
   POSTERSESSIONS: 'postersessions',
   ANNOUNCEMENT: 'announcements',
   VENUES: 'venues',
+  STAFF: 'staff',
   SPONSORS: 'sponsors',
   SPONSORSHIPS: 'sponsorships',
   CLIPS: 'clips',
   TAGS: 'tags',
   IMAGES: 'images',
   HOLDING_TEAMS: 'holding_teams',
-  STAFF: 'staff',
   SEMINAR_MATERIALS: 'seminar_materials',
   WORKSHOP_MATERIALS: 'workshop_materials',
   POSTER_MATERIALS: 'poster_materials',
@@ -73,7 +73,6 @@ export const getModelList = (modelListName: string, year: number) => ({
     },
   },
 });
-
 
 export const getModelListCount = (modelListName: string, year: number) => ({
   [CALL_API]: {
