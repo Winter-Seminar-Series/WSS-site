@@ -130,7 +130,7 @@ function Home({
   return (
     <>
       <section id="banner">
-        <div className="banner-item diagonal d-flex h-100">
+        <div className="banner-item d-flex h-100">
           <div className="header-video-wrapper">
             <video
               autoPlay
@@ -256,9 +256,9 @@ function Home({
           </div>
           <div className="row">
             <div className="general-btn text-center mx-auto">
-              <Link className="btn btn-primary all-speakers" to="about">
+              <a href="/about" className="btn btn-primary all-speakers">
                 More About WSS
-              </Link>
+              </a>
             </div>
           </div>
         </div>

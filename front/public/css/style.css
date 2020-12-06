@@ -946,7 +946,7 @@ ul.navbar-nav > li:hover > a {
 .header-video-wrapper video {
   min-height: 100%;
   width: 100%;
-  background: url('../images/bg2.jpg') no-repeat center, black;
+  background: url('../images/bg1.jpg') no-repeat center, black;
   background-size: cover;
 }
 @media (max-width: 1400px) {
@@ -961,6 +961,7 @@ ul.navbar-nav > li:hover > a {
 }
 
 .banner-item {
+  clip-path: polygon(0 0, 100% 0, 100% 85%, 0% 100%);
   min-height: 80vh;
   color: var(--med-blue);
   background-position: 50% 50%;
@@ -1489,8 +1490,6 @@ ul.navbar-nav > li:hover > a {
   color: #ffc107;
 }
 
-/* banner-content-left */
-
 .banner-content-left .countdown > div {
   margin-left: 0;
   margin-right: 100px;
@@ -1665,7 +1664,7 @@ ul.navbar-nav > li:hover > a {
 .facts-area {
   color: #ffffff;
   background-color: #1c1c24;
-  // background-image: url(../../public/images/parallax1.jpg);
+  /* background-image: url(../../public/images/parallax1.jpg); */
   background-repeat: no-repeat;
   background-size: cover;
   background-attachment: fixed;
@@ -1790,9 +1789,6 @@ ul.navbar-nav > li:hover > a {
   -moz-transition: all 0.3s;
   -o-transition: all 0.3s;
   transition: all 0.3s;
-}
-.schedule-slot-info-content {
-  /*margin-left: 100px;*/
 }
 .schedule-slot-speaker-name {
   color: #446cb3;
