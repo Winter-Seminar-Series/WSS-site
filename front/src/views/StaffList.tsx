@@ -5,9 +5,9 @@ import { THIS_YEAR } from '../constants/info';
 import { Speaker } from '../models/wss';
 import { getModelList, MODEL_LISTS_NAMES } from '../redux/actions/WSS';
 
-const Speakers = ({ getWSSPrimitiveFields, getModelList, speakers }) => {
+const StaffList = ({ getWSSPrimitiveFields, getModelList, staff }) => {
   useEffect(() => {
-    getModelList(MODEL_LISTS_NAMES.SPEAKERS, THIS_YEAR);
+    getModelList(MODEL_LISTS_NAMES.STAFF, THIS_YEAR);
   }, [getWSSPrimitiveFields]);
   return (
     <>
@@ -16,18 +16,18 @@ const Speakers = ({ getWSSPrimitiveFields, getModelList, speakers }) => {
         className="background-theme ts-speakers diagonal">
         <div className="container text-white">
           <div className="row mb-3">
-            <h3 className="mb-1 col section-sub-title title-white">Speakers</h3>
+            <h3 className="mb-1 col section-sub-title title-white">Staff</h3>
           </div>
-          {speakers && speakers.length && (
+          {staff && staff.length && (
             <div className="row">
-              {speakers.map((s: Speaker) => (
+              {staff.map((s: Speaker) => (
                 <div key={s.id} className="col-xs-12 col-sm-6 col-lg-3">
                   <Presenter speaker={s}></Presenter>
                 </div>
               ))}
             </div>
           )}
-          {!speakers?.length && (
+          {(!staff || !staff.length) && (
             <div className="row">
               <div className="col">Nothing has been added yet</div>
             </div>
@@ -39,13 +39,13 @@ const Speakers = ({ getWSSPrimitiveFields, getModelList, speakers }) => {
 };
 
 const mapStateToProps = (state, ownProps) => {
-  const { isFetching, speakers } = state.WSS;
+  const { isFetching, staff } = state.WSS;
   return {
     isFetching,
-    speakers,
+    staff,
   };
 };
 
 export default connect(mapStateToProps, {
   getModelList,
-})(Speakers);
+})(StaffList);

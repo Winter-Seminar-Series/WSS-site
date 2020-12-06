@@ -1,33 +1,25 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
 
 const Header = () => {
   const { t } = useTranslation('header', { useSuspense: false });
   const navbarItems: NavBarItem[] = [
     { title: 'WSS 2020', persianTitle: 'WSS 2020', link: '/' },
-    {
-      title: 'Information',
-      persianTitle: 'اطلاعات',
-      link: '#',
-      children: [
-        { title: 'About Us', persianTitle: 'درباره ما', link: '/about' },
-        { title: 'Details', persianTitle: 'اطلاعات', link: '/details' },
-      ],
-    },
+    { title: 'About Us', persianTitle: 'درباره ما', link: '/about' },
     { title: 'Speakers', persianTitle: 'سمینارها', link: '/speakers' },
-    { title: 'Workshops', persianTitle: 'کارگاه‌ها', link: '/workshop-list' },
-    {
-      title: 'Poster Sessions',
-      persianTitle: 'پوستر‌ها',
-      link: '/poster-session-list',
-    },
-    { title: 'Schedule', persianTitle: 'برنامه زمانی', link: '/schedule' },
-    { title: 'Staff', persianTitle: 'استف', link: '/staff-list' },
+    { title: 'Workshops', persianTitle: 'کارگاه‌ها', link: '/workshops' },
+    // { title: 'Schedule', persianTitle: 'برنامه زمانی', link: '/schedule' },
+    { title: 'Staff', persianTitle: 'استف', link: '/staff' },
     {
       title: 'Sign Up',
       persianTitle: 'ثبت‌نام',
       link: '/signup',
+      style: 'active',
+    },
+    {
+      title: 'Login',
+      persianTitle: 'ورود',
+      link: '/login',
       style: 'active',
     },
   ];
