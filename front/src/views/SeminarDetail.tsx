@@ -8,7 +8,6 @@ import {
   MODEL_LISTS_NAMES,
 } from '../redux/actions/WSS';
 
-const id = useParams()['id'];
 
 function SeminarDetail({
   getAnEntityOfModelList,
@@ -21,9 +20,11 @@ function SeminarDetail({
   pk = 2,
 }) {
   const { t } = useTranslation('cardDescription', { useSuspense: false });
+  const id = useParams()['id'];
+
   console.log(id);
   useEffect(() => {
-     getAnEntityOfModelList(MODEL_LISTS_NAMES.SEMINARS, 2020, id);
+    getAnEntityOfModelList(MODEL_LISTS_NAMES.SEMINARS, 2020, id);
   }, [getAnEntityOfModelList])
 
   return (

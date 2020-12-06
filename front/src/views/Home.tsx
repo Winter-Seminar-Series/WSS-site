@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { connect } from 'react-redux';
-import Presenter from '../components/cards/Presenter';
+import PublicCard from '../components/cards/PublicCard';
 import { BASE_URL, THIS_YEAR } from '../constants/info';
 import { Sponsor } from '../models/wss';
 import {
@@ -217,7 +217,7 @@ function Home({
                 <div
                   key={s.name}
                   className="col-xs-11 col-sm-6 col-lg-4 col-xl-3">
-                  <Presenter speaker={s}></Presenter>
+                  <PublicCard speaker={s} />
                 </div>
               ))}
             </div>

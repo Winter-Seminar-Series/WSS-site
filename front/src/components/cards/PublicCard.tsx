@@ -4,14 +4,17 @@ import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import Like from './Like';
 
-function PublicCard({
-  name = 'Omid Jafari',
-  title = 'Assistant professor at university of Canada',
-  image = 'http://u.lorenzoferrara.net/marlenesco/material-card/thumb-christopher-walken.jpg',
-  isLoggedIn = 'false',
-  didLikedThis = 'false',
-  showLikeButton = true,
-}) {
+function PublicCard(speaker) {
+
+  const {
+    name = 'Omid Jafari',
+    title = 'Assistant professor at university of Canada',
+    image = 'https://wss.ce.sharif.edu/media/human_pictures/moshiri.jpg',
+    isLoggedIn = 'false',
+    didLikedThis = 'false',
+    showLikeButton = true,
+  } = speaker;
+
   const cardRef = useRef(null);
 
   useEffect(() => {
@@ -25,10 +28,7 @@ function PublicCard({
     <div id="public-card">
       <div className="card">
         <a className="card-image" ref={cardRef} href="#">
-          <img
-            src="https://wss.ce.sharif.edu/media/human_pictures/moshiri.jpg"
-            alt=""
-          />
+          <img src={image} alt="" />
         </a>
         <div className="card-description">
           <h2>{name}</h2>
