@@ -359,7 +359,7 @@ class PaymentViewSet(viewsets.ViewSet):
                     PAYMENT_HEADER, 'text content',
                     settings.EMAIL_HOST_USER,
                     [user.email],
-                    fail_silently=False,
+                    fail_silently=True,
                     html_message=PAYMENT_HTML_CONTENT.format(user.first_name, participant.payment_ref_id)
                 )
                 
