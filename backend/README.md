@@ -360,13 +360,16 @@ Allows a POST request containing an Authorization header
           "detail": "Authentication credentials were not provided."
       }
       ```
-      - If the token is invalid (doesn't match the client's login token):
+      - If the token is invalid (doesn't match the client's login token) or has expired:
       ```HTTP
       HTTP 401 Unauthorized
       {
           "detail": "Invalid token."
       }
       ```
+  - Note:
+      - Tokens expire after 10 hours (which can be modified)
+  
 
 
 ## User Profile APIs
