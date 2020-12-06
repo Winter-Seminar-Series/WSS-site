@@ -123,7 +123,7 @@ function Home({
   return (
     <>
       <section id="banner">
-        <div className="banner-item diagonal d-flex h-100">
+        <div className="banner-item d-flex h-100">
           <div className="header-video-wrapper">
             <video
               autoPlay
