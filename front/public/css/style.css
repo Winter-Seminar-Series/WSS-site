@@ -961,6 +961,7 @@ ul.navbar-nav > li:hover > a {
 }
 
 .banner-item {
+  margin-top: -90px !important;
   min-height: 80vh;
   color: var(--med-blue);
   background-position: 50% 50%;
