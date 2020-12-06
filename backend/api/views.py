@@ -356,7 +356,7 @@ class PaymentViewSet(viewsets.ViewSet):
                 # Notify user about successful payment
                 user = participant.user_profile.user
                 send_mail(
-                    PAYMENT_HEADER, 'text content',
+                    PAYMENT_SUBJECT, 'text content',
                     settings.EMAIL_HOST_USER,
                     [user.email],
                     fail_silently=True,
