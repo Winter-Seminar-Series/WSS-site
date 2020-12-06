@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import Presenter from '../components/cards/Presenter';
+import PublicCard from '../components/cards/PublicCard';
 import {
   getModelList,
   getModelListCount,
@@ -281,7 +281,7 @@ function Home({
                 <div className="row justify-content-center">
                   {keynoteSpeakers.map((s) => (
                     <div key={s.name} className="col-xs-11 col-sm-6 col-lg-3">
-                      <Presenter></Presenter>
+                      <PublicCard/>
                     </div>
                   ))}
                 </div>
@@ -297,7 +297,7 @@ function Home({
                 <div className="row justify-content-center">
                   {speakers.map((s) => (
                     <div key={s.name} className="col-xs-11 col-sm-6 col-lg-4">
-                      <Presenter></Presenter>
+                      <PublicCard/>
                     </div>
                   ))}
                 </div>

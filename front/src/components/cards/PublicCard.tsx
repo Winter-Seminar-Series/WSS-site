@@ -4,14 +4,13 @@ import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import Like from './Like'
 
-function Presenter({
+function PublicCard({
   name = 'Omid Jafari',
   title = 'Assistant professor at university of Canada',
   image = 'http://u.lorenzoferrara.net/marlenesco/material-card/thumb-christopher-walken.jpg',
-  description = ' Lab lab  lab lab Lab lab  lab lab Lab l Lab lab  lab lab Lab l Lab lab  lab lab Lab l Lab lab  lab lab Lab l Lab l lab...',
   isLoggedIn = 'false',
   didLikedThis = 'false',
-  showButton = true,
+  showLikeButton = true,
 }) {
   const cardRef = useRef(null);
 
@@ -55,4 +54,4 @@ const mapStateToProps = (state, ownProps) => {
 export default connect(
   mapStateToProps,
   {}
-)(Presenter);
+)(PublicCard);

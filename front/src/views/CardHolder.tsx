@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import Dialogue from '../components/dialogue/Dialogue'
-import Presenter from '../components/cards/Presenter'
+import PublicCard from '../components/cards/PublicCard'
 
 function CardHolder({ title = 'Talks' }) {
   const { t } = useTranslation('cardHolder', { useSuspense: false });
@@ -35,7 +35,7 @@ function CardHolder({ title = 'Talks' }) {
 
         <Dialogue />
 
-        <Presenter />
+        <PublicCard />
 
       </div>
     </section>
