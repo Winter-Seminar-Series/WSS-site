@@ -7,11 +7,12 @@ import Like from './Like'
 function Presenter({
   name = 'Omid Jafari',
   title = 'Assistant professor at university of Canada',
-  image = 'http://u.lorenzoferrara.net/marlenesco/material-card/thumb-christopher-walken.jpg',
+  image = 'https://wss.ce.sharif.edu/media/human_pictures/moshiri.jpg',
   description = ' Lab lab  lab lab Lab lab  lab lab Lab l Lab lab  lab lab Lab l Lab lab  lab lab Lab l Lab lab  lab lab Lab l Lab l lab...',
   isLoggedIn = 'false',
   didLikedThis = 'false',
   showButton = true,
+  
 }) {
   const cardRef = useRef(null);
   const iconRef = useRef(null);

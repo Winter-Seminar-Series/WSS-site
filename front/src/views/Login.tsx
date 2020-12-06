@@ -4,7 +4,6 @@ import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import { login } from '../redux/actions/account';
 import { Redirect, Link } from 'react-router-dom';
-import ReCAPTCHA from "react-google-recaptcha";
 
 
 function Login({ login, isLoggedIn, isFetching }) {
