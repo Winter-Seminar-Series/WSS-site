@@ -2,7 +2,9 @@ from rest_framework.decorators import action
 from rest_framework import viewsets, generics, permissions
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
-from rest_framework.authentication import SessionAuthentication, BasicAuthentication
+from rest_framework.authentication import BasicAuthentication
+from knox.auth import TokenAuthentication
+
 from django.views.generic.detail import DetailView
 from django.shortcuts import get_object_or_404
 from django.http import JsonResponse
@@ -19,6 +21,9 @@ from knox.models import AuthToken
 from django.contrib.auth import login
 from knox.views import LoginView as KnoxLoginView
 from django.contrib.auth.models import User
+
+from django.core.mail import send_mail
+from templates.consts import *
 
 
 def get_wss_object_or_404(year: int) -> WSS:
@@ -75,7 +80,7 @@ class BaseViewSet(viewsets.ViewSet, ABC):
 
 
 class EventViewSet(BaseViewSet, ABC):
-    authentication_classes = [SessionAuthentication, BasicAuthentication]
+    authentication_classes = [BasicAuthentication, TokenAuthentication]
 
     def get_list(self, request, wss):
         queryset = self.queryset_selector(request, wss)
@@ -203,7 +208,7 @@ class ErrorResponse(Response):
 
 
 class UserProfileViewSet(viewsets.ViewSet):
-    authentication_classes = [SessionAuthentication, BasicAuthentication]
+    authentication_classes = [BasicAuthentication, TokenAuthentication]
     permission_classes = [IsAuthenticated]
     serializer = serializers.UserProfileSerializer
 
@@ -275,7 +280,7 @@ class TagsViewSet(BaseViewSet):
 
 
 class PaymentViewSet(viewsets.ViewSet):
-    authentication_classes = [SessionAuthentication, BasicAuthentication]
+    authentication_classes = [BasicAuthentication, TokenAuthentication]
     permission_classes = [IsAuthenticated]
 
     @action(methods=['GET'], detail=False)
@@ -341,6 +346,16 @@ class PaymentViewSet(viewsets.ViewSet):
                 participant = Participant(current_wss=wss, user_profile=user_profile,
                                           payment_ref_id=str(result.RefID), payment_amount=amount)
                 participant.save()
+
+                # Notify user about successful payment
+                user = participant.user_profile.user
+                send_mail(
+                    PAYMENT_HEADER, 'text content',
+                    settings.EMAIL_HOST_USER,
+                    [user.email],
+                    fail_silently=False,
+                    html_message=PAYMENT_HTML_CONTENT.format(user.first_name, participant.payment_ref_id)
+                )
                 
                 return Response({
                     "message": 'OK',
