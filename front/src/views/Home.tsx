@@ -1,7 +1,8 @@
 import React, { useEffect, useRef } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 import Presenter from '../components/cards/Presenter';
+import { BASE_URL, THIS_YEAR } from '../constants/info';
+import { Sponsor } from '../models/wss';
 import {
   getModelList,
   getModelListCount,
@@ -11,10 +12,6 @@ import {
 
 const fontStyle = {
   fontSize: '1.125rem',
-};
-
-const bannerPadding = {
-  padding: '4rem 0',
 };
 
 const margin60 = {
@@ -35,6 +32,11 @@ function Home({
   getWSSPrimitiveFields,
   getModelList,
   getModelListCount,
+  speakers,
+  seminars_count,
+  workshops_count,
+  participantsCount,
+  sponsors,
   isFetching,
   mainImageURL,
   mainClipURL,
@@ -42,7 +44,6 @@ function Home({
   staffCount,
   isActive,
   isRegistrationOpen,
-  participantsCount,
   icalLink,
   year,
   startDate,
@@ -51,75 +52,21 @@ function Home({
   calendarLink,
 }) {
   useEffect(() => {
-    getWSSPrimitiveFields(2020);
-    getModelList(MODEL_LISTS_NAMES.IMAGES, 2020);
-    getModelListCount(MODEL_LISTS_NAMES.IMAGES, 2020);
+    getWSSPrimitiveFields(THIS_YEAR);
+    getModelList(MODEL_LISTS_NAMES.SPEAKERS, THIS_YEAR);
+    getModelList(MODEL_LISTS_NAMES.SPONSORS, THIS_YEAR);
+    // getModelList(MODEL_LISTS_NAMES.IMAGES, 2020);
+    // getModelListCount(MODEL_LISTS_NAMES.IMAGES, 2020);
   }, [getWSSPrimitiveFields]);
   const date = 'JANUARY 2nd - 3rd, 2021';
   const register = false;
   const posterSessionRegister = false;
-  const keynoteSpeakers = [
-    {
-      name: 'Hamed',
-      picUrl: '',
-      description: 'PhD student, University of Maryland',
-    },
-    {
-      name: 'Zahra Nazari',
-      picUrl: '',
-      description: 'Research Scientist, Spotify',
-    },
-    {
-      name: 'Hamedh',
-      picUrl: '',
-      description: 'PhD student, University of Maryland',
-    },
-  ];
-  const speakers = [
-    {
-      name: 'Hamed S',
-      picUrl: '',
-      description: 'PhD student, University of Maryland',
-    },
-    {
-      name: 'Zahra Nazari',
-      picUrl: '',
-      description: 'Research Scientist, Spotify',
-    },
-    {
-      name: 'Hamed Sa',
-      picUrl: '',
-      description: 'PhD student, University of Maryland',
-    },
-    {
-      name: 'Hamed Sal',
-      picUrl: '',
-      description: 'PhD student, University of Maryland',
-    },
-  ];
-
-  const sponser = true;
-  const mainSponsers = [
-    {
-      title: 'googlee',
-      url: 'https://www.google.com',
-      logo:
-        'https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png',
-    },
-  ];
-  const otherSponsers = [
-    {
-      title: 'google',
-      url: 'https://www.google.com',
-      logo:
-        'https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png',
-    },
-  ];
   const videoRef = useRef<HTMLVideoElement>();
   const setVideoPlayBackRate = () => {
     if (!videoRef) return;
     videoRef.current.playbackRate = 0.6;
   };
+
   return (
     <>
       <section id="banner">
@@ -189,7 +136,7 @@ function Home({
         </div>
       </section>
 
-      <section id="ts-programs" className="banner-item diagonal">
+      <section id="ts-programs" className="diagonal">
         <div className="container">
           <div className="row">
             <h2 className="section-title mx-auto">Programs</h2>
@@ -257,52 +204,29 @@ function Home({
         </div>
       </section>
 
-      {((keynoteSpeakers && keynoteSpeakers) ||
-        (speakers && speakers.length)) && (
-        <section
-          id="ts-speakers-main"
-          className="banner-item  diagonal blue-gradient"
-          style={bannerPadding}>
+      {speakers && speakers.length && (
+        <section id="ts-speakers-main" className="diagonal blue-gradient">
           <div className="container">
-            {keynoteSpeakers && keynoteSpeakers.length && (
-              <>
-                <div className="row text-center">
-                  <h3 className="section-sub-title title-white mx-auto font-weight-light">
-                    Keynote Speakers
-                  </h3>
+            <div className="row text-center">
+              <h3 className="section-sub-title title-white mx-auto font-weight-light">
+                Speakers
+              </h3>
+            </div>
+            <div className="row justify-content-center">
+              {speakers.slice(0, 8).map((s) => (
+                <div
+                  key={s.name}
+                  className="col-xs-11 col-sm-6 col-lg-4 col-xl-3">
+                  <Presenter speaker={s}></Presenter>
                 </div>
-                <div className="row justify-content-center">
-                  {keynoteSpeakers.map((s) => (
-                    <div key={s.name} className="col-xs-11 col-sm-6 col-lg-3">
-                      <Presenter></Presenter>
-                    </div>
-                  ))}
-                </div>
-              </>
-            )}
-            {speakers && speakers.length && (
-              <>
-                <div className="row text-center">
-                  <h3 className="section-sub-title title-white mx-auto font-weight-light">
-                    Speakers
-                  </h3>
-                </div>
-                <div className="row justify-content-center">
-                  {speakers.map((s) => (
-                    <div key={s.name} className="col-xs-11 col-sm-6 col-lg-4">
-                      <Presenter></Presenter>
-                    </div>
-                  ))}
-                </div>
-              </>
-            )}
+              ))}
+            </div>
           </div>
-
           <div className="row">
             <div className="general-btn text-center mx-auto">
-              <Link className="btn btn-primary btn-white" to="speakers">
+              <a href="/speakers" className="btn btn-primary btn-white">
                 View All Speakers
-              </Link>
+              </a>
             </div>
           </div>
         </section>
@@ -316,7 +240,7 @@ function Home({
                 <div className="ts-facts">
                   <div className="ts-facts-content">
                     <h2 className="ts-facts-num">
-                      <span className="counterUp">10</span>
+                      <span className="counterUp">{seminars_count}</span>
                     </h2>
                     <h3 className="ts-facts-title">Seminars</h3>
                   </div>
@@ -328,7 +252,7 @@ function Home({
                 <div className="ts-facts">
                   <div className="ts-facts-content">
                     <h2 className="ts-facts-num">
-                      <span className="counterUp">12</span>
+                      <span className="counterUp">{workshops_count}</span>
                     </h2>
                     <h3 className="ts-facts-title"> Workshops</h3>
                   </div>
@@ -336,7 +260,7 @@ function Home({
               </a>
             </div>
 
-            <div className="col-sm-2 text-center">
+            {/* <div className="col-sm-2 text-center">
               <a
                 data-scroll
                 href="{% url 'wss:postersessions-list' wss.year %}">
@@ -349,12 +273,12 @@ function Home({
                   </div>
                 </div>
               </a>
-            </div>
+            </div> */}
             <div className="col-sm-2 text-center">
               <div className="ts-facts">
                 <div className="ts-facts-content">
                   <h2 className="ts-facts-num">
-                    <span className="counterUp">500</span>
+                    <span className="counterUp">{participantsCount}</span>
                   </h2>
                   <h3 className="ts-facts-title">Participants</h3>
                 </div>
@@ -364,58 +288,32 @@ function Home({
         </div>
       </section>
 
-      {sponser && (
+      {sponsors && sponsors.length && (
         <section id="ts-sponsors" className="ts-sponsors diagonal pt-0">
           <div className="container">
-            <p className="section-sub-title">Event Sponsors</p>
-            {mainSponsers && mainSponsers.length && (
-              <div className="row text-center d-flex align-items-center">
-                <h3 className="sponsor-title mb-5">Main sponsers</h3>
-                {mainSponsers.map((ms) => (
-                  <div
-                    key={ms.title}
-                    className="col-xs-12 col-sm-4 col-md-2 align-center">
-                    <a href={ms.url}>
-                      <img
-                        className="mw-100 img-responsive"
-                        src={ms.logo}
-                        alt=""
-                      />
-                    </a>
-                    <a href={ms.url}>
-                      <h2 className="intro-title" style={margin60}>
-                        {ms.title}
-                      </h2>
-                    </a>
-                  </div>
-                ))}
-              </div>
-            )}
-            {otherSponsers && otherSponsers.length && (
-              <div className="row text-center ">
-                <h3 className="sponsor-title" style={margin60}>
-                  Other Sponsors
-                </h3>
-                {otherSponsers.map((ms) => (
-                  <div
-                    key={ms.title}
-                    className="col-xs-12 col-sm-4 col-md-2 align-center">
-                    <a href={ms.url}>
-                      <img
-                        className="mw-100 img-responsive"
-                        src={ms.logo}
-                        alt=""
-                      />
-                    </a>
-                    <a href={ms.url}>
-                      <h2 className="intro-title" style={margin60}>
-                        {ms.title}
-                      </h2>
-                    </a>
-                  </div>
-                ))}
-              </div>
-            )}
+            <p className="section-sub-title">
+              {sponsors.length === 1 ? 'Event Sponsor' : 'Event Sponsors'}
+            </p>
+            <div className="row text-center d-flex align-items-center">
+              {sponsors.map((s: Sponsor) => (
+                <div
+                  key={s.id}
+                  className="col-xs-12 col-sm-4 col-md-2 align-center">
+                  <a href={s.url} target="_blank">
+                    <img
+                      className="mw-100 img-responsive"
+                      src={BASE_URL + s.logo}
+                      alt=""
+                    />
+                  </a>
+                  <a href={s.url} target="_blank">
+                    <h2 className="intro-title" style={margin60}>
+                      {s.name}
+                    </h2>
+                  </a>
+                </div>
+              ))}
+            </div>
           </div>
         </section>
       )}
@@ -468,11 +366,12 @@ const mapStateToProps = (state, ownProps) => {
     proposalLink,
     showStats,
     calendarLink,
-
-    workshops,
+    speakers,
     workshops_count,
-    seminars,
     seminars_count,
+    sponsors,
+    workshops,
+    seminars,
     postersessions,
     postersessions_count,
     sponsorships,
@@ -486,13 +385,17 @@ const mapStateToProps = (state, ownProps) => {
   } = state.WSS;
   return {
     isFetching,
+    speakers,
+    seminars_count,
+    workshops_count,
+    participantsCount,
+    sponsors,
     mainImageURL,
     mainClipURL,
     bookletURL,
     staffCount,
     isActive,
     isRegistrationOpen,
-    participantsCount,
     icalLink,
     year,
     startDate,

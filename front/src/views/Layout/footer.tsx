@@ -5,26 +5,38 @@ function Footer() {
     {
       title: 'instagram',
       persianTitle: 'اینستاگرام',
-      link: 'https://instagram.com',
+      link: 'https://instagram.com/wss_sut',
       icon: 'instagram',
     },
     {
       title: 'youtube',
-      persianTitle: 'اینستاگرام',
-      link: 'https://instagram.com',
+      persianTitle: 'یوتیوب',
+      link: 'https://www.youtube.com/channel/UC5-ct_yxHQJTYJP3TkeEDmQ',
       icon: 'youtube',
     },
     {
       title: 'facebook',
-      persianTitle: 'اینستاگرام',
-      link: 'https://instagram.com',
+      persianTitle: 'فیسبوک',
+      link: 'https://www.facebook.com/wss.sharif',
       icon: 'facebook',
     },
     {
       title: 'linkedin',
-      persianTitle: 'اینستاگرام',
-      link: 'https://instagram.com',
+      persianTitle: 'لینکدین',
+      link: 'https://www.linkedin.com/company/wss-sut',
       icon: 'linkedin',
+    },
+    {
+      title: 'twitter',
+      persianTitle: 'توییتر',
+      link: 'https://twitter.com/WSS_SUT',
+      icon: 'twitter',
+    },
+    {
+      title: 'telegram',
+      persianTitle: 'تلگرام',
+      link: 'https://t.me/wss_sut',
+      icon: 'telegram',
     },
   ];
   return (
@@ -45,7 +57,7 @@ function Footer() {
           <ul>
             {socialAccounts.map((s) => (
               <li key={s.title}>
-                <a href={s.link}>
+                <a href={s.link} target="_blank">
                   <i className={'social-icon text-white fa fa-' + s.icon} />
                 </a>
               </li>

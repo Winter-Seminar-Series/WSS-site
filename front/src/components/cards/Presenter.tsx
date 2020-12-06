@@ -1,18 +1,25 @@
-import React, { useState, useRef } from 'react';
+import React, { useRef } from 'react';
 import { connect } from 'react-redux';
-import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
-import Like from './Like'
+import { BASE_URL } from '../../constants/info';
+import { Speaker } from '../../models/wss';
 
 function Presenter({
-  name = 'Omid Jafari',
-  title = 'Assistant professor at university of Canada',
-  image = 'http://u.lorenzoferrara.net/marlenesco/material-card/thumb-christopher-walken.jpg',
-  description = ' Lab lab  lab lab Lab lab  lab lab Lab l Lab lab  lab lab Lab l Lab lab  lab lab Lab l Lab lab  lab lab Lab l Lab l lab...',
-  isLoggedIn = 'false',
-  didLikedThis = 'false',
-  showButton = true,
+  speaker = {
+    id: 0,
+    name: 'Omid Jafari',
+    picture:
+      'http://u.lorenzoferrara.net/marlenesco/material-card/thumb-christopher-walken.jpg',
+    degree: 'phd',
+    place: 'Iran, Tehran',
+    bio: ' Lab lab  lab lab Lab lab',
+    polymorphic_ctype: 0,
+  },
+}: {
+  speaker: Speaker;
 }) {
+  const showButton = false;
+  // isLoggedIn = 'false',
+  // didLikedThis = 'false',
   const cardRef = useRef(null);
   const iconRef = useRef(null);
 
@@ -20,7 +27,7 @@ function Presenter({
     var card = cardRef.current;
     var icon = iconRef.current;
 
-    icon.classList.add('fa-spin-fast')
+    icon.classList.add('fa-spin-fast');
 
     if (card.classList.contains('mc-active')) {
       card.classList.remove('mc-active');
@@ -40,43 +47,50 @@ function Presenter({
   }
 
   return (
-    // <div className="col-lg-4 col-md-6 col-sm-9 col-xs-12">
     <div id="card">
       <article ref={cardRef} className="material-card Blue">
         <h2>
-          <span>{name}</span>
-          <strong>{title}</strong>
+          <span>{speaker.name}</span>
+          <strong>
+            {speaker.degree}, {speaker.place}
+          </strong>
         </h2>
         <div className="mc-content">
           <div className="img-container">
-            <img style={{ height: '100%', width: '100%' }} src={image} />
+            <img
+              style={{ height: '100%', width: '100%' }}
+              src={BASE_URL + speaker.picture}
+            />
           </div>
-          <div className=" mc-description">
-            {description}
-          </div>
+          {/* <div className=" mc-description">{speaker.bio}</div> */}
         </div>
-        {showButton &&
-          <a onClick={onClick} className="mc-btn-action" >
-            <i ref={iconRef} id='presenter-card-icon' className="fa fa-bars" />
+        {/* {showButton && (
+          <a onClick={onClick} className="mc-btn-action">
+            <i ref={iconRef} id="presenter-card-icon" className="fa fa-bars" />
           </a>
-        }
+        )} 
         <div className="mc-footer">
-          <div className='col'>
-            <span>
-              Add to your favorite:
-            </span>
+          <div className="col">
+            <span>Add to your favorite:</span>
           </div>
           <Like />
-        </div>
+        </div> */}
       </article>
     </div>
   );
 }
 
 const mapStateToProps = (state, ownProps) => {
-  const { name, title, image, description, didLikedThis, showButton } = ownProps;
+  const {
+    name,
+    title,
+    image,
+    description,
+    didLikedThis,
+    showButton,
+  } = ownProps;
   const { isLoggedIn } = state.account;
-  return ({
+  return {
     name,
     title,
     image,
@@ -84,10 +98,7 @@ const mapStateToProps = (state, ownProps) => {
     didLikedThis,
     showButton,
     isLoggedIn,
-  })
-}
+  };
+};
 
-export default connect(
-  mapStateToProps,
-  {}
-)(Presenter);
+export default connect(mapStateToProps, {})(Presenter);
