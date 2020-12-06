@@ -249,9 +249,9 @@ function Home({
           </div>
           <div className="row">
             <div className="general-btn text-center mx-auto">
-              <Link className="btn btn-primary all-speakers" to="about">
+              <a href="/about" className="btn btn-primary all-speakers">
                 More About WSS
-              </Link>
+              </a>
             </div>
           </div>
         </div>
