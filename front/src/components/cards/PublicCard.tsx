@@ -4,16 +4,19 @@ import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import Like from './Like';
 
-function PublicCard(speaker) {
+function PublicCard({ speaker }) {
+  console.log(speaker)
 
   const {
-    name = 'Omid Jafari',
-    title = 'Assistant professor at university of Canada',
-    image = 'https://wss.ce.sharif.edu/media/human_pictures/moshiri.jpg',
+    name,
+    degree,
+    place,
+    picture = 'https://wss.ce.sharif.edu/media/human_pictures/moshiri.jpg',
     isLoggedIn = 'false',
     didLikedThis = 'false',
     showLikeButton = true,
   } = speaker;
+
 
   const cardRef = useRef(null);
 
@@ -21,18 +24,18 @@ function PublicCard(speaker) {
     setTimeout(() => {
       var card = cardRef.current;
       card.classList.add('is-loaded');
-    }, 2000);
+    }, 1000);
   }, [cardRef]);
 
   return (
     <div id="public-card">
       <div className="card">
         <a className="card-image" ref={cardRef} href="#">
-          <img src={image} alt="" />
+          <img src={picture} alt="" />
         </a>
         <div className="card-description">
           <h2>{name}</h2>
-          <p>{title}</p>
+          <p>{`${degree}, ${place}`}</p>
           {/* <div className='like'>
               <span>
                 add to your favorite

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import Presenter from '../components/cards/Presenter';
+import PublicCard from '../components/cards/PublicCard';
 import { THIS_YEAR } from '../constants/info';
 import { getModelList, MODEL_LISTS_NAMES } from '../redux/actions/WSS';
 
@@ -32,7 +32,7 @@ const Workshops = ({ getWSSPrimitiveFields, getModelList, workshops }) => {
                 {workshops.map((w) => (
                   <div className="col-xs-12 col-sm-6 col-lg-3">
                     <div className="no-shadow">
-                      <Presenter speaker={w.speaker} />
+                      <PublicCard speaker={w.speaker} />
                     </div>
                     {w.registration_link && (
                       <p className="text-center">
