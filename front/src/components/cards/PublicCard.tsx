@@ -24,14 +24,19 @@ function PublicCard({
   return (
     <div id='public-card'>
       <div className="card">
-        <a className='card-image' ref={cardRef}>
+        <a className='card-image' ref={cardRef} href='#'>
           <img src="https://wss.ce.sharif.edu/media/human_pictures/moshiri.jpg" alt="" />
         </a>
-        <a className="card-description" href="#">
+        <div className="card-description">
           <h2>{name}</h2>
           <p>{title}</p>
-        </a>
-        <Like />
+          {/* <div className='like'>
+              <span>
+                add to your favorite
+            </span>
+              <Like />
+            </div> */}
+        </div>
       </div>
     </div>
   );
