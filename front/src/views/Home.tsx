@@ -53,6 +53,13 @@ function Home({
   useEffect(() => {
     getWSSPrimitiveFields(2020);
     getModelList(MODEL_LISTS_NAMES.IMAGES, 2020);
+    getModelList(MODEL_LISTS_NAMES.CLIPS, 2020);
+    getModelList(MODEL_LISTS_NAMES.HOLDING_TEAMS, 2020);
+    getModelList(MODEL_LISTS_NAMES.POSTERSESSIONS, 2020);
+    getModelList(MODEL_LISTS_NAMES.SEMINARS, 2020);
+    getModelList(MODEL_LISTS_NAMES.SPONSORSHIPS, 2020);
+    getModelList(MODEL_LISTS_NAMES.WORKSHOPS, 2020);
+
     getModelListCount(MODEL_LISTS_NAMES.IMAGES, 2020);
   }, [getWSSPrimitiveFields]);
   const date = 'JANUARY 2nd - 3rd, 2021';
