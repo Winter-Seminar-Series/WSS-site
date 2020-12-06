@@ -15,6 +15,7 @@
     - `start_date`
     - `proposal_link`
     - `show_stats`
+    - `registration_fee`
     - `calendar_link`
 
     For getting the above fields, just send a `GET` request to URL `/api/<year>/wss`
