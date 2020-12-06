@@ -13,7 +13,7 @@
 4.	Banner area
 5.  Slider
 6.	Countdown
-7.  Features
+7.  Features  
 8.  Facts
 9.	Schedule
 10.	Speakers
@@ -80,7 +80,7 @@ h4,
 h5,
 h6 {
   color: #1c1c24;
-  font-family: 'Roboto', sans-serif;
+  /* font-family: 'Roboto', sans-serif; */
 }
 h1 {
   font-family: 'Lato', sans-serif;

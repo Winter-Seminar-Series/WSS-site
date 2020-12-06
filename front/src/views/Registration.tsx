@@ -4,7 +4,6 @@ import { Redirect, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { toast } from 'react-toastify';
 import { signup } from '../redux/actions/account';
-import ReCAPTCHA from "react-google-recaptcha";
 
 function Registration({ signup, isLoggedIn, isFetching }) {
   const { t } = useTranslation('signup', { useSuspense: false });

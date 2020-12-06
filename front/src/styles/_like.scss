@@ -4,21 +4,14 @@
     cursor: pointer;
     fill: #757b86;
     transition: .4s;
-    weight: 40px;
-    height: 40px;
-  }
-
-  @media screen and (max-width:400px) {
-    .ico {
-      weight: 30px;
-      height: 30px;
-    }
+    width: 35px;
+    height: 35px;
   }
 
   .liked {
-    // transform: scale(1.05) rotate(360deg);
+    transform: scale(1.2) rotate(360deg);
     // background-color: #C62828;
-    // padding: .2rem;
-    fill: #C62828;
+    padding: .2rem;
+    fill: #b40606;
   }
 }

@@ -13,12 +13,14 @@ import Login from './views/Login';
 import Registration from './views/Registration';
 import Schedule from './views/Schedule';
 import Speakers from './views/Speakers';
+import CardDescription from './views/CardDescription';
 
 function App() {
   return (
     <>
       <Header />
       <Switch>
+        <Route path="/workshops/:id" component={CardDescription} />
         <Route path="/cardholder" component={CardHolder} />
         <Route path="/details" component={Details} />
         <Route path="/schedule" component={Schedule} />

@@ -2,9 +2,8 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-import Card from '../components/cards/Card'
 import Dialogue from '../components/dialogue/Dialogue'
-import Presenter from '../components/cards/Presenter'
+import PublicCard from '../components/cards/PublicCard'
 
 function CardHolder({ title = 'Talks' }) {
   const { t } = useTranslation('cardHolder', { useSuspense: false });
@@ -25,7 +24,6 @@ function CardHolder({ title = 'Talks' }) {
           <div className="col col-xs-4" style={{ backgroundColor: 'blue' }}>
             salam
           </div>
-          <Card />
         </div>
         <p className="text-center">
           <a href="#" className="btn btn-primary btn-white">
@@ -37,14 +35,8 @@ function CardHolder({ title = 'Talks' }) {
 
         <Dialogue />
 
-        <Presenter name='Seyyed Alireza Hashemi' showButton={false} description=':)))' />
-        <Presenter />
-        <Presenter />
-        <Presenter />
-        <Presenter />
-        <Presenter />
-        <Presenter />
-        <Presenter />
+        <PublicCard />
+
       </div>
     </section>
   );
