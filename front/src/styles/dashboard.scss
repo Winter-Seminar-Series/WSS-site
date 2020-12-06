@@ -16,6 +16,7 @@
     color: inherit;
     padding: 10px 20px;
     text-decoration: none;
+    cursor: pointer;
     > .icon {
       color: inherit;
     }
@@ -23,6 +24,7 @@
       background-color: #79869a;
     }
     &.deactive {
+      cursor: default;
       color: rgba(0, 0, 0, 0.4);
     }
   }
