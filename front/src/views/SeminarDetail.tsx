@@ -2,18 +2,29 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
-import { Redirect, Link } from 'react-router-dom';
+import { Redirect, Link, useParams } from 'react-router-dom';
+import {
+  getAnEntityOfModelList,
+  MODEL_LISTS_NAMES,
+} from '../redux/actions/WSS';
 
+const id = useParams()['id'];
 
-function CardDescription({
+function SeminarDetail({
+  getAnEntityOfModelList,
   image = 'https://wss.ce.sharif.edu/media/human_pictures/moshiri.jpg',
   name = 'Seyyed Alireza Hashemi',
   degree = 'Master',
   title = 'How to fail a event!',
   date = 'Monday, 24 December 2018',
-  time = '16:30 - 19:30'
+  time = '16:30 - 19:30',
+  pk = 2,
 }) {
   const { t } = useTranslation('cardDescription', { useSuspense: false });
+  console.log(id);
+  useEffect(() => {
+     getAnEntityOfModelList(MODEL_LISTS_NAMES.SEMINARS, 2020, id);
+  }, [getAnEntityOfModelList])
 
   return (
     <section id="main-container" className="main-container">
@@ -64,10 +75,18 @@ function CardDescription({
   );
 }
 
-const mapStateToProps = (state, ownProps) => ({
-  isFetching: state.account.isFetching,
-  isLoggedIn: state.account.isLoggedIn,
-});
+const mapStateToProps = (state, ownProps) => {
 
-export default connect(mapStateToProps, {
-})(CardDescription);
+
+  return ({
+    isFetching: state.account.isFetching,
+    isLoggedIn: state.account.isLoggedIn,
+    speakers: state.account.speakers
+      ? state.account.speakers
+      : [],
+  })
+}
+
+export default connect(mapStateToProps,
+  { getAnEntityOfModelList }
+)(SeminarDetail);

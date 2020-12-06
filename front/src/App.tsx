@@ -12,14 +12,16 @@ import CardHolder from './views/CardHolder';
 import './styles/style.scss';
 import Dashboard from './views/Dashboard/Dashboard';
 import PrivateRoute from './auth-guard';
-import CardDescription from './views/CardDescription'
+import SeminarDetail from './views/SeminarDetail'
 
 function App() {
   return (
     <>
       <Header />
       <Switch>
-        <Route path="/workshops/:id" component={CardDescription} />
+        <Route path="/seminar/:id" component={SeminarDetail} />
+        <Route path="/workshop/:id" component={SeminarDetail} />
+        <Route path="/postersession/:id" component={SeminarDetail} />
         <Route path="/cardholder" component={CardHolder} />
         <Route path="/details" component={Details} />
         <Route path="/schedule" component={Schedule} />

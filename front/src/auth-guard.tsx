@@ -8,7 +8,9 @@ import {
 function PrivateRoute({ isLoggedIn, redirectWhenUserIsNotLoggedIn, ...rest }) {
   useEffect(() => {
     setTimeout(() => {
-      redirectWhenUserIsNotLoggedIn();
+      if (!isLoggedIn) {
+        redirectWhenUserIsNotLoggedIn();
+      }
     }, 500)
   }, [redirectWhenUserIsNotLoggedIn])
 
