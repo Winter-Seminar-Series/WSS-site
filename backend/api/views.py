@@ -2,7 +2,9 @@ from rest_framework.decorators import action
 from rest_framework import viewsets, generics, permissions
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
-from rest_framework.authentication import SessionAuthentication, BasicAuthentication
+from rest_framework.authentication import BasicAuthentication
+from knox.auth import TokenAuthentication
+
 from django.views.generic.detail import DetailView
 from django.shortcuts import get_object_or_404
 from django.http import JsonResponse
@@ -78,7 +80,7 @@ class BaseViewSet(viewsets.ViewSet, ABC):
 
 
 class EventViewSet(BaseViewSet, ABC):
-    authentication_classes = [SessionAuthentication, BasicAuthentication]
+    authentication_classes = [BasicAuthentication, TokenAuthentication]
 
     def get_list(self, request, wss):
         queryset = self.queryset_selector(request, wss)
@@ -206,7 +208,7 @@ class ErrorResponse(Response):
 
 
 class UserProfileViewSet(viewsets.ViewSet):
-    authentication_classes = [SessionAuthentication, BasicAuthentication]
+    authentication_classes = [BasicAuthentication, TokenAuthentication]
     permission_classes = [IsAuthenticated]
     serializer = serializers.UserProfileSerializer
 
@@ -278,7 +280,7 @@ class TagsViewSet(BaseViewSet):
 
 
 class PaymentViewSet(viewsets.ViewSet):
-    authentication_classes = [SessionAuthentication, BasicAuthentication]
+    authentication_classes = [BasicAuthentication, TokenAuthentication]
     permission_classes = [IsAuthenticated]
 
     @action(methods=['GET'], detail=False)

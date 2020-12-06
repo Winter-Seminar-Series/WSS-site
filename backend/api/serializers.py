@@ -21,6 +21,7 @@ class WSSSerializer(ModelSerializer):
             'start_date',
             'proposal_link',
             'show_stats',
+            'registration_fee',
             'calendar_link'
         ]
 
