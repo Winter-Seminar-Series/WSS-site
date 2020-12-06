@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-import Like from './Like'
+import Like from './Like';
 
 function PublicCard({
   name = 'Omid Jafari',
@@ -18,14 +18,17 @@ function PublicCard({
     setTimeout(() => {
       var card = cardRef.current;
       card.classList.add('is-loaded');
-    }, 2000)
-  }, [cardRef])
+    }, 2000);
+  }, [cardRef]);
 
   return (
-    <div id='public-card'>
+    <div id="public-card">
       <div className="card">
-        <a className='card-image' ref={cardRef} href='#'>
-          <img src="https://wss.ce.sharif.edu/media/human_pictures/moshiri.jpg" alt="" />
+        <a className="card-image" ref={cardRef} href="#">
+          <img
+            src="https://wss.ce.sharif.edu/media/human_pictures/moshiri.jpg"
+            alt=""
+          />
         </a>
         <div className="card-description">
           <h2>{name}</h2>
@@ -43,9 +46,16 @@ function PublicCard({
 }
 
 const mapStateToProps = (state, ownProps) => {
-  const { name, title, image, description, didLikedThis, showButton } = ownProps;
+  const {
+    name,
+    title,
+    image,
+    description,
+    didLikedThis,
+    showButton,
+  } = ownProps;
   const { isLoggedIn } = state.account;
-  return ({
+  return {
     name,
     title,
     image,
@@ -53,10 +63,7 @@ const mapStateToProps = (state, ownProps) => {
     didLikedThis,
     showButton,
     isLoggedIn,
-  })
-}
+  };
+};
 
-export default connect(
-  mapStateToProps,
-  {}
-)(PublicCard);
+export default connect(mapStateToProps, {})(PublicCard);

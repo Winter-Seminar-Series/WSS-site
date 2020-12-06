@@ -23,28 +23,28 @@ function Presenter({
   const cardRef = useRef(null);
   const iconRef = useRef(null);
 
-  function onClick() {
-    var card = cardRef.current;
-    var icon = iconRef.current;
+  // function onClick() {
+  //   var card = cardRef.current;
+  //   var icon = iconRef.current;
 
-    icon.classList.add('fa-spin-fast');
+  //   icon.classList.add('fa-spin-fast');
 
-    if (card.classList.contains('mc-active')) {
-      card.classList.remove('mc-active');
-      setTimeout(() => {
-        icon.classList.remove('fa-arrow-left');
-        icon.classList.remove('fa-spin-fast');
-        icon.classList.add('fa-bars');
-      }, 800);
-    } else {
-      card.classList.add('mc-active');
-      setTimeout(() => {
-        icon.classList.add('fa-arrow-left');
-        icon.classList.remove('fa-spin-fast');
-        icon.classList.remove('fa-bars');
-      }, 800);
-    }
-  }
+  //   if (card.classList.contains('mc-active')) {
+  //     card.classList.remove('mc-active');
+  //     setTimeout(() => {
+  //       icon.classList.remove('fa-arrow-left');
+  //       icon.classList.remove('fa-spin-fast');
+  //       icon.classList.add('fa-bars');
+  //     }, 800);
+  //   } else {
+  //     card.classList.add('mc-active');
+  //     setTimeout(() => {
+  //       icon.classList.add('fa-arrow-left');
+  //       icon.classList.remove('fa-spin-fast');
+  //       icon.classList.remove('fa-bars');
+  //     }, 800);
+  //   }
+  // }
 
   return (
     <div id="card">

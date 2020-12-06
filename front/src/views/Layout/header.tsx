@@ -15,9 +15,8 @@ const Header = () => {
         { title: 'Details', persianTitle: 'اطلاعات', link: '/details' },
       ],
     },
-    { title: 'Speakers', persianTitle: 'سخنران‌ها', link: '/speakers' },
+    { title: 'Speakers', persianTitle: 'سمینارها', link: '/speakers' },
     { title: 'Workshops', persianTitle: 'کارگاه‌ها', link: '/workshop-list' },
-    { title: 'Seminars', persianTitle: 'سمینار‌ها', link: '/seminar-list' },
     {
       title: 'Poster Sessions',
       persianTitle: 'پوستر‌ها',

@@ -1819,8 +1819,9 @@ ul.navbar-nav > li:hover > a {
   }
 }
 #ts-speakers {
+  background-size: initial !important;
   background-repeat: no-repeat !important;
-  min-height: 75vh;
+  min-height: 80vh;
 }
 
 /* Speaker item */
