@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { login } from '../redux/actions/account';
+import { Redirect, Link, useHistory } from 'react-router-dom';
 
-function Login({ login, isFetching }) {
+function Login({ login, isLoggedIn, isFetching }) {
   const { t } = useTranslation('login', { useSuspense: false });
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -18,47 +18,49 @@ function Login({ login, isFetching }) {
     login(username, password);
   }
 
+  if (isLoggedIn) {
+    return <Redirect to="/dashboard" />;
+  }
+
   return (
     <>
       <section
         dir="rtl"
         className="auth-container diagonal background-theme row py-0">
-        <div className="col-6 form-container" dir="ltr">
-          <form>
-            <div className="form-group mb-5">
-              <label htmlFor="username">{t('username')}</label>
-              <input
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                id="username"
-                type="email"
-                className="form-control"
-              />
-            </div>
-            <div className="form-group mb-5">
-              <label htmlFor="password">{t('password')}</label>
-              <input
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                type="password"
-                className="form-control"
-                id="password"
-              />
-            </div>
-            <button
-              disabled={isFetching}
-              onClick={doLogin}
-              type="button"
-              className="btn btn-lg btn-primary btn-dark mb-5">
-              {t('submit')}
-            </button>
-            <div className="linkbar">
-              <span className="mr-1">{t('hasntSignedup')}</span>
-              <a className="link" href="/signup">
-                {t('click')}
-              </a>
-            </div>
-          </form>
+        <div className="col-xs-12 col-sm-6 form-container" dir="ltr">
+          <div className="form-group mb-5">
+            <label htmlFor="username">{t('username')}</label>
+            <input
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              id="username"
+              type="text"
+              className="form-control"
+            />
+          </div>
+          <div className="form-group mb-5">
+            <label htmlFor="password">{t('password')}</label>
+            <input
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              type="password"
+              className="form-control"
+              id="password"
+            />
+          </div>
+          <button
+            onClick={doLogin}
+            disabled={isFetching}
+            type="submit"
+            className="btn btn-lg btn-primary btn-dark mb-5">
+            {t('submit')}
+          </button>
+          <div className="linkbar">
+            <span className="mr-1">{t('hasntSignedup')}</span>
+            <a className="link" href="/register">
+              {t('click')}
+            </a>
+          </div>
         </div>
         <div className="col-6 logo-container" dir="ltr">
           <img className="logo" src="images/new_title_hq.png" alt="wss logo" />
@@ -74,7 +76,8 @@ function Login({ login, isFetching }) {
 }
 
 const mapStateToProps = (state, ownProps) => ({
-  isFetching: state.Account.isFetching,
+  isFetching: state.account.isFetching,
+  isLoggedIn: state.account.isLoggedIn,
 });
 
 export default connect(mapStateToProps, {

@@ -13,12 +13,13 @@ const persistedState = localStorage.getItem('WSS') //use local storage just to s
   : {};
 
 const store = configureStore(persistedState);
+
 store.subscribe(() => {
   const state = store.getState();
   localStorage.setItem(
     'WSS',
     JSON.stringify({
-      Account: state.Account,
+      account: state.account,
     })
   );
 });

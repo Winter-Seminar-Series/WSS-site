@@ -2,7 +2,9 @@ from rest_framework.decorators import action
 from rest_framework import viewsets, generics, permissions
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
-from rest_framework.authentication import SessionAuthentication, BasicAuthentication
+from rest_framework.authentication import BasicAuthentication
+from knox.auth import TokenAuthentication
+
 from django.views.generic.detail import DetailView
 from django.shortcuts import get_object_or_404
 from django.http import JsonResponse
@@ -20,13 +22,29 @@ from django.contrib.auth import login
 from knox.views import LoginView as KnoxLoginView
 from django.contrib.auth.models import User
 
+from django.core.mail import send_mail
+from templates.consts import *
+
 
 def get_wss_object_or_404(year: int) -> WSS:
     return get_object_or_404(WSS, year=year)
 
 
+def get_user_profile(user: User) -> UserProfile:
+    if UserProfile.objects.filter(user=user).count() > 0:
+        return user.profile
+    return UserProfile.objects.create(user=user)
+
+
 def user_is_participant(user: User, wss: WSS):
-    return user.is_authenticated and wss.participants.filter(user_profile=user.profile).count() == 1
+    return user.is_authenticated and not user.is_anonymous and wss.participants.filter(user_profile=get_user_profile(user)).count() == 1
+
+
+class ErrorResponse(Response):
+    
+    def __init__(self, data, status_code: int = 400):
+        super().__init__(data)
+        self.status_code = status_code
 
 
 class WSSViewSet(viewsets.ViewSet):
@@ -75,7 +93,7 @@ class BaseViewSet(viewsets.ViewSet, ABC):
 
 
 class EventViewSet(BaseViewSet, ABC):
-    authentication_classes = [SessionAuthentication, BasicAuthentication]
+    authentication_classes = [BasicAuthentication, TokenAuthentication]
 
     def get_list(self, request, wss):
         queryset = self.queryset_selector(request, wss)
@@ -195,26 +213,19 @@ class StaffViewSet(BaseViewSet):
         return Staff.objects.filter(holding_teams__wss=wss).distinct()
 
 
-class ErrorResponse(Response):
-    
-    def __init__(self, data, status_code: int = 400):
-        super().__init__(data)
-        self.status_code = status_code
-
-
 class UserProfileViewSet(viewsets.ViewSet):
-    authentication_classes = [SessionAuthentication, BasicAuthentication]
+    authentication_classes = [BasicAuthentication, TokenAuthentication]
     permission_classes = [IsAuthenticated]
     serializer = serializers.UserProfileSerializer
 
     def list(self, request):
-        user_profile: UserProfile = request.user.profile
+        user_profile = get_user_profile(request.user)
         serializer = self.serializer(user_profile)
         return Response(serializer.data)
     
     @action(methods=['PUT'], detail=False)
     def edit(self, request):
-        user_profile: UserProfile = request.user.profile
+        user_profile = get_user_profile(request.user)
         user_data_parameter = request.data
 
         fields = ['first_name', 'last_name', 'phone_number', 'age'
@@ -239,7 +250,7 @@ class AnnouncementViewSet(BaseViewSet):
     
     @action(methods=['POST'], detail=False)
     def add_favorite_tag(self, request):
-        user_profile: UserProfile = request.user.profile
+        user_profile = get_user_profile(request.user)
 
         wss = get_wss_object_or_404(year=request.query_params.get('year'))
         tag = wss.tag.get(pk=request.query_params.get('tag'))
@@ -256,7 +267,7 @@ class AnnouncementViewSet(BaseViewSet):
     
     @action(methods=['DELETE'], detail=False)
     def remove_favorite_tag(self, request):
-        user_profile: UserProfile = request.user.profile
+        user_profile = get_user_profile(request.user)
         tag_pk = request.query_params.get('tag')
 
         tag = WssTag.objects.get(pk=tag_pk)
@@ -275,7 +286,7 @@ class TagsViewSet(BaseViewSet):
 
 
 class PaymentViewSet(viewsets.ViewSet):
-    authentication_classes = [SessionAuthentication, BasicAuthentication]
+    authentication_classes = [BasicAuthentication, TokenAuthentication]
     permission_classes = [IsAuthenticated]
 
     @action(methods=['GET'], detail=False)
@@ -293,7 +304,7 @@ class PaymentViewSet(viewsets.ViewSet):
                 'message': "`callback` should be passed in query string"
             })
         
-        user_profile: UserProfile = request.user.profile
+        user_profile = get_user_profile(request.user)
 
         if user_profile.participants.filter(current_wss=wss).count() != 0:
             return ErrorResponse({
@@ -326,7 +337,7 @@ class PaymentViewSet(viewsets.ViewSet):
                 'message': "Sorry, the registration has been ended."
             })
         
-        user_profile = request.user.profile
+        user_profile = get_user_profile(request.user)
 
         if user_profile.participants.filter(current_wss=wss).count() != 0:
             return ErrorResponse({
@@ -341,6 +352,16 @@ class PaymentViewSet(viewsets.ViewSet):
                 participant = Participant(current_wss=wss, user_profile=user_profile,
                                           payment_ref_id=str(result.RefID), payment_amount=amount)
                 participant.save()
+
+                # Notify user about successful payment
+                user = participant.user_profile.user
+                send_mail(
+                    PAYMENT_HEADER, 'text content',
+                    settings.EMAIL_HOST_USER,
+                    [user.email],
+                    fail_silently=False,
+                    html_message=PAYMENT_HTML_CONTENT.format(user.first_name, participant.payment_ref_id)
+                )
                 
                 return Response({
                     "message": 'OK',

@@ -1,23 +1,23 @@
 import * as actionTypes from '../actionTypes';
 import * as URLs from './urls';
-import { CALL_API } from '../middleware/api/api';
+import { CALL_API } from './middleware/api/api';
+import { BASE_URL } from '../../constants/info';
 
-export const signup = (
-  firstName: string,
-  lastName: string,
+export const register = (
+  username: string,
   email: string,
   password: string
 ) => ({
   [CALL_API]: {
     types: [
-      actionTypes.SIGNUP_REQUEST,
-      actionTypes.SIGNUP_SUCCESS,
-      actionTypes.SIGNUP_FAILURE,
+      actionTypes.REGISTER_REQUEST,
+      actionTypes.REGISTER_SUCCESS,
+      actionTypes.REGISTER_FAILURE,
     ],
-    url: URLs.SIGNUP,
+    url: URLs.REGISTER,
     fetchOptions: {
       method: 'POST',
-      body: { firstName, lastName, email, password },
+      body: { username, password, email },
     },
   },
 });
@@ -49,54 +49,43 @@ export const logout = () => ({
     ],
     url: URLs.LOGOUT,
     fetchOptions: {
-      method: 'POST', //todo?
+      method: 'POST',
     },
   },
 });
 
-// export const enqueueSnackbar = ({
-//   key = new Date().getTime() + Math.random(),
-//   ...notification
-// }) => ({
-//   type: actionTypes.ENQUEUE_SNACKBAR,
-//   notification: {
-//     ...notification,
-//     key,
-//   },
-// });
+export const redirectWhenUserIsNotLoggedIn = () => ({
+  type: actionTypes.REDIRECT_WHEN_USER_IS_NOT_LOGGED,
+});
 
-// export const closeSnackbar = (key) => ({
-//   type: actionTypes.CLOSE_SNACKBAR,
-//   dismissAll: !key,
-//   key,
-// });
+export const sendPaymentRequest = (year = 2020) => ({
+  [CALL_API]: {
+    types: [
+      actionTypes.SEND_PAYMENT_REQUEST,
+      actionTypes.SEND_PAYMENT_SUCCESS,
+      actionTypes.SEND_PAYMENT_FAILURE,
+    ],
+    url: `${URLs.ROOT}${year}/payment/request?callback=${BASE_URL}/dashboard`,
+    fetchOptions: {
+      method: 'GET',
+    },
+  },
+});
 
-// export const removeSnackbar = (key) => ({
-//   type: actionTypes.REMOVE_SNACKBAR,
-//   key,
-// });
+export const verifyPayment = (verificationCode, year = 2020) => ({
+  [CALL_API]: {
+    types: [
+      actionTypes.VERIFY_PAYMENT_REQUEST,
+      actionTypes.VERIFY_PAYMENT_SUCCESS,
+      actionTypes.VERIFY_PAYMENT_FAILURE,
+    ],
+    url: `${URLs.ROOT}${year}/payment/verify${verificationCode}`,
+    fetchOptions: {
+      method: 'GET',
+    },
+  },
+});
 
-// const fetchUser = () => ({
-//   [CALL_API]: {
-//     types: [
-//       actionTypes.USER_REQUEST,
-//       actionTypes.USER_SUCCESS,
-//       actionTypes.USER_FAILURE,
-//     ],
-//     url: URLs.GET_ACCOUNT_BY_USERNAME,
-//     fetchOptions: {
-//       method: 'GET',
-//     },
-//   },
-// });
-
-// export const loadUser = () => (
-//   dispatch,
-//   getState
-// ) => {
-//   const user = getState().users[getState().account.username];
-//   if (user) {
-//     return null;
-//   }
-//   return dispatch(fetchUser());
-// };
+export const removePaymentData = () => ({
+  type: actionTypes.REMOVE_PAYMENT_DATA,
+});
