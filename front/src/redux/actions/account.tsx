@@ -1,6 +1,7 @@
 import * as actionTypes from '../actionTypes';
 import * as URLs from './urls';
-import { CALL_API } from '../middleware/api/api';
+import { CALL_API } from './middleware/api/api';
+import { BASE_URL } from '../../constants/info';
 
 export const register = (
   username: string,
@@ -55,8 +56,7 @@ export const logout = () => ({
 
 export const redirectWhenUserIsNotLoggedIn = () => ({
   type: actionTypes.REDIRECT_WHEN_USER_IS_NOT_LOGGED,
-})
-
+});
 
 export const sendPaymentRequest = (year = 2020) => ({
   [CALL_API]: {
@@ -65,7 +65,7 @@ export const sendPaymentRequest = (year = 2020) => ({
       actionTypes.SEND_PAYMENT_SUCCESS,
       actionTypes.SEND_PAYMENT_FAILURE,
     ],
-    url: `${URLs.ROOT}${year}/payment/request?callback=${URLs.ROOT}`,
+    url: `${URLs.ROOT}${year}/payment/request?callback=${BASE_URL}/dashboard`,
     fetchOptions: {
       method: 'GET',
     },

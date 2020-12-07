@@ -1,15 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
-import {
-  logout
-} from '../../redux/actions/account'
+import { logout } from '../../redux/actions/account';
 
 function Sidebar({ logout }) {
   const history = useHistory();
 
   const doLogout = () => {
-    logout()
+    logout();
     history.push('/');
   };
 
@@ -18,26 +16,26 @@ function Sidebar({ logout }) {
       title: 'Seminar Registration',
       persianTitle: 'ثبت‌نام رویداد',
       link: '/dashboard/seminar-registration',
-      icon: 'star',
+      icon: 'calendar-o',
     },
     {
       title: 'Workshop Registration',
       persianTitle: 'ثبت‌نام کارگاه',
       link: '/dashboard/workshop-registration',
-      icon: 'star',
+      icon: 'calendar',
     },
     {
       title: 'Your Seminars',
       persianTitle: 'سمینار‌های شما',
       link: '/dashboard/seminar-list',
-      icon: '',
+      icon: 'bookmark-o',
       deactive: true,
     },
     {
       title: 'Your Workshops',
       persianTitle: 'کارگاه‌های شما',
       link: '/dashboard/workshop-list',
-      icon: '',
+      icon: 'bookmark-o',
       deactive: true,
     },
     {
@@ -54,31 +52,27 @@ function Sidebar({ logout }) {
           s.deactive ? (
             <span key={s.title} className="sidebar-item deactive">
               <span className={`icon ml-2 fa fa-${s.icon}`}></span>
-              <span>{s.title}</span>
+              <span className="d-none d-md-block">{s.title}</span>
             </span>
           ) : (
-              <Link key={s.title} className="sidebar-item" to={s.link}>
-                <span className={`icon ml-2 fa fa-${s.icon}`}></span>
-                <span>{s.title}</span>
-              </Link>
-            )
+            <a href={s.link} key={s.title} className="sidebar-item">
+              <span className={`icon ml-2 fa fa-${s.icon}`}></span>
+              <span className="d-none d-md-block">{s.title}</span>
+            </a>
+          )
         )}
         <span key="logout" className="sidebar-item" onClick={doLogout}>
-          <span className={`icon ml-2 fa fa-exit`}></span>
-          <span>logout</span>
+          <span className={`icon ml-2 fa fa-sign-out`}></span>
+          <span className="d-none d-md-block">logout</span>
         </span>
       </div>
     </>
   );
 }
 
-
-export default connect(
-  () => { },
-  {
-    logout,
-  }
-)(Sidebar);
+export default connect(() => {}, {
+  logout,
+})(Sidebar);
 
 interface SidebarItem {
   title: string;

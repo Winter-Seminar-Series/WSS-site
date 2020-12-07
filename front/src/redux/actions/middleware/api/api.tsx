@@ -1,5 +1,5 @@
 import fetchApi from './fetchApi';
-import * as actionTypes from '../../actionTypes';
+import * as actionTypes from '../../../actionTypes';
 
 export const CALL_API = 'Call API';
 
@@ -21,7 +21,6 @@ export default ({ getState }) => (next) => async (action) => {
   next(actionWith({ payload, type: requestType }));
 
   try {
-
     fetchOptions.body = JSON.stringify(fetchOptions.body);
 
     if (!fetchOptions.dontContentType) {
@@ -38,7 +37,7 @@ export default ({ getState }) => (next) => async (action) => {
       };
     }
 
-    console.log(fetchOptions)
+    console.log(fetchOptions);
 
     const response = await fetchApi(url, fetchOptions);
     return next(
