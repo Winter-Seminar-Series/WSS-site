@@ -45,10 +45,14 @@ function Footer() {
         <div className="col-12">
           <div className="footer-logo d-flex justify-content-center align-items-end">
             <a href="\">
-              <img src="images/logo.png" alt="wss logo" width="100" />
+              <img src="/images/logo.png" alt="wss logo" width="100" />
             </a>
             <a href="http://ssc.ce.sharif.edu">
-              <img src="images/SSC-logo-white.png" alt="ssc logo" width="100" />
+              <img
+                src="/images/SSC-logo-white.png"
+                alt="ssc logo"
+                width="100"
+              />
             </a>
           </div>
         </div>
