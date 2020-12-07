@@ -16,20 +16,20 @@ const initState = {
   showStats: undefined,
   calendarLink: undefined,
 
-  workshops: [],
-  workshops_count: 0,
-  seminars: [],
-  seminars_count: 0,
-  postersessions: [],
-  postersessions_count: 0,
-  sponsorships: [],
-  sponsorships_count: 0,
-  clips: [],
-  clips_count: 0,
-  holding_teams: [],
-  holding_teams_count: 0,
-  images: [],
-  images_count: 0,
+  // workshops: [],
+  // workshops_count: 0,
+  // seminars: [],
+  // seminars_count: 0,
+  // postersessions: [],
+  // postersessions_count: 0,
+  // sponsorships: [],
+  // sponsorships_count: 0,
+  // clips: [],
+  // clips_count: 0,
+  // holding_teams: [],
+  // holding_teams_count: 0,
+  // images: [],
+  // images_count: 0,
 };
 
 function WSS(state = initState, action) {
@@ -108,6 +108,26 @@ function WSS(state = initState, action) {
       };
 
     /////////////////////
+
+    case actionTypes.AN_ENTITY_OF_MODEL_LIST_REQUEST:
+      return {
+        ...state,
+        isFetching: false,
+      };
+
+    case actionTypes.AN_ENTITY_OF_MODEL_LIST_SUCCESS:
+      const newModelList = state[action.payload.modelListName];
+      newModelList[action.payload.pk] = action.response;
+      return {
+        ...state,
+        [action.payload.modelListName]: newModelList,
+      };
+
+    case actionTypes.AN_ENTITY_OF_MODEL_LIST_FAILURE:
+      return {
+        ...state,
+        isFetching: false,
+      };
 
     default:
       return state;
