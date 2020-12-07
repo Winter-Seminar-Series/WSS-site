@@ -30,7 +30,7 @@ function SeminarRegistration({
   //todo autofill
   const register = () => {
     if (!agree) {
-      toast.error('You should agree to Terms and Conditions');
+      toast.error('You should agree to terms and conditions');
       return;
     } else if (
       !(
@@ -172,7 +172,7 @@ function SeminarRegistration({
               id="gridCheck1"
             />
             <label className="form-check-label" htmlFor="gridCheck1">
-              I Agree to Terms and Conditions
+              I Agree to terms and conditions
             </label>
           </div>
         </div>
