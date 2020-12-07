@@ -49,7 +49,7 @@ function Login({ login, isLoggedIn, isFetching }) {
             />
           </div>
           <button
-            onClick={login}
+            onClick={doLogin}
             disabled={isFetching}
             type="submit"
             className="btn btn-lg btn-primary btn-dark mb-5">
