@@ -2,7 +2,7 @@ import * as actionTypes from '../actionTypes';
 import * as URLs from './urls';
 import { CALL_API } from '../middleware/api/api';
 
-export const signup = (
+export const register = (
   username: string,
   email: string,
   password: string

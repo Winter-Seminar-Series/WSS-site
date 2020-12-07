@@ -6,7 +6,7 @@ import {
 } from './redux/actions/account'
 
 function PrivateRoute({ isLoggedIn, redirectWhenUserIsNotLoggedIn, ...rest }) {
-  isLoggedIn = localStorage.getItem('WSS') && true;
+  // isLoggedIn = localStorage.getItem('WSS') && true;
   useEffect(() => {
     setTimeout(() => {
       if (!isLoggedIn) {
@@ -34,4 +34,16 @@ function PrivateRoute({ isLoggedIn, redirectWhenUserIsNotLoggedIn, ...rest }) {
   );
 }
 
-export default PrivateRoute;
+const mapStateToProps = (state, ownProps) => ({
+  isLoggedIn: state.account.isLoggedIn,
+  ownProps,
+})
+
+
+
+export default connect(
+  mapStateToProps,
+  {
+    redirectWhenUserIsNotLoggedIn,
+  }
+)(PrivateRoute);

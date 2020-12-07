@@ -10,7 +10,7 @@ import Home from './views/Home';
 import Footer from './views/Layout/footer';
 import Header from './views/Layout/header';
 import Login from './views/Login';
-import Registration from './views/Registration';
+import Register from './views/Register';
 import Speakers from './views/Speakers';
 import StaffList from './views/StaffList';
 import Workshops from './views/Workshops';
@@ -28,7 +28,7 @@ function App() {
         <Route path="/about" component={About} />
         <Route path="/speakers" component={Speakers} />
         <Route path="/staff" component={StaffList} />
-        <Route path="/signup" component={Registration} />
+        <Route path="/register" component={Register} />
         <Route path="/login" component={Login} />
         <PrivateRoute path="/dashboard" component={Dashboard}></PrivateRoute>
         <Route path="/" component={Home} />
