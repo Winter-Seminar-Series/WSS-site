@@ -5,13 +5,16 @@ from django.db import migrations
 
 def forwards(apps, schema_editor):
     apps.get_model('events', 'Workshop').objects.create(
-        title='test workshop'
+        title='test workshop',
+        speaker=apps.get_model('people', 'Speaker').objects.get(name='Shahram Ghandeharizadeh')
     )
     apps.get_model('events', 'Seminar').objects.create(
-        title='test seminar'
+        title='test seminar',
+        speaker=apps.get_model('people', 'Speaker').objects.get(name='Shahram Ghandeharizadeh')
     )
     apps.get_model('events', 'PosterSession').objects.create(
-        title='test poster session'
+        title='test poster session',
+        speaker=apps.get_model('people', 'Speaker').objects.get(name='Shahram Ghandeharizadeh')
     )
 
 def rollback(apps, schema_editor):
