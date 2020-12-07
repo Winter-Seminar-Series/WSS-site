@@ -37,8 +37,6 @@ export default ({ getState }) => (next) => async (action) => {
       };
     }
 
-    console.log(fetchOptions);
-
     const response = await fetchApi(url, fetchOptions);
     return next(
       actionWith({

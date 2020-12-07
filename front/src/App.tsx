@@ -5,7 +5,9 @@ import './styles/style.scss';
 import About from './views/About';
 import CardHolder from './views/CardHolder';
 import Dashboard from './views/Dashboard/Dashboard';
-import SeminarDetail from './views/SeminarDetail'
+import SeminarDetail from './views/Details/SeminarDetail'
+import PostersessionDetail from './views/Details/PostersessionDetail'
+import WorkshopDetail from './views/Details/WorkshopDetail'
 import Home from './views/Home';
 import Footer from './views/Layout/footer';
 import Header from './views/Layout/header';
@@ -21,8 +23,8 @@ function App() {
       <Header />
       <Switch>
         <Route path="/seminar/:id" component={SeminarDetail} />
-        <Route path="/workshop/:id" component={SeminarDetail} />
-        <Route path="/postersession/:id" component={SeminarDetail} />
+        <Route path="/workshop/:id" component={WorkshopDetail} />
+        <Route path="/postersession/:id" component={PostersessionDetail} />
         <Route path="/workshops" component={Workshops} />
         <Route path="/cardholder" component={CardHolder} />
         <Route path="/about" component={About} />
