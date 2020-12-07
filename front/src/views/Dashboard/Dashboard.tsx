@@ -1,5 +1,5 @@
 import React from 'react';
-import { Redirect, Route, Switch } from 'react-router-dom';
+import { Redirect, Route, Switch, useLocation } from 'react-router-dom';
 import '../../../node_modules/bootstrap/scss/bootstrap.scss';
 import Profile from './Profile';
 import SeminarRegistration from './SeminarRegistration';
@@ -7,8 +7,15 @@ import Sidebar from './Sidebar';
 import UserSeminarList from './UserSeminarList';
 import UserWorkshopList from './UserWorkshopList';
 import WorkshopRegistration from './WorkshopRegistration';
+import { verifyPayment } from '../../redux/actions/account';
+import { connect } from 'react-redux';
 
-function Dashboard({ match }) {
+function Dashboard({ match, verifyPayment }) {
+  const location = useLocation();
+  if (location.search.startsWith('?Authority=')) {
+    console.log('im sending the request');
+    verifyPayment(location.search);
+  }
   return (
     <>
       <Sidebar></Sidebar>
@@ -40,4 +47,8 @@ function Dashboard({ match }) {
   );
 }
 
-export default Dashboard;
+const mapStateToProps = (state, ownProps) => ({});
+
+export default connect(mapStateToProps, {
+  verifyPayment,
+})(Dashboard);
