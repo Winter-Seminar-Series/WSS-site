@@ -2407,7 +2407,7 @@ h4.panel-title a.collapsed:before {
 .footer {
   z-index: 2;
   clip-path: polygon(0 30%, 100% 0, 100% 100%, 0% 100%);
-  background-color: #09263d;
+  background-color: #222645;
   color: #666666;
   padding: 70px 0;
   position: relative;
