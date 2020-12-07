@@ -3,16 +3,28 @@ import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { toast } from 'react-toastify';
 import { sendPaymentRequest } from '../../redux/actions/account';
+import { updateProfile } from '../../redux/actions/participant';
 
-function SeminarRegistration({ sendPaymentRequest, isFetching }) {
+function SeminarRegistration({
+  sendPaymentRequest,
+  updateProfile,
+  isFetching,
+  username,
+  email,
+  first_name,
+  last_name,
+  phone_number,
+  job,
+  university,
+}) {
   const { t } = useTranslation('seminarRegistration', { useSuspense: false });
   const degreeTypes = ['Doctorate', 'Master', 'Bachelor', 'Other'];
-  const [email, setEmail] = React.useState('');
-  const [first_name, setFirstName] = React.useState('');
-  const [last_name, setLastName] = React.useState('');
-  const [phone_number, setPhoneNumber] = React.useState('');
-  const [university, setUniversity] = React.useState('');
-  const [job, setJob] = React.useState('');
+  const [form_email, setEmail] = React.useState(email);
+  const [form_first_name, setFirstName] = React.useState(first_name);
+  const [form_last_name, setLastName] = React.useState(last_name);
+  const [form_phone_number, setPhoneNumber] = React.useState(phone_number);
+  const [form_university, setUniversity] = React.useState(university);
+  const [form_job, setJob] = React.useState(job);
   const [degree, setDegree] = React.useState(degreeTypes[0]);
   const [agree, setAgree] = React.useState(false);
   //todo autofill
@@ -22,35 +34,52 @@ function SeminarRegistration({ sendPaymentRequest, isFetching }) {
       return;
     } else if (
       !(
-        email &&
-        first_name &&
-        last_name &&
-        phone_number &&
-        university &&
-        job &&
+        form_email &&
+        form_first_name &&
+        form_last_name &&
+        form_phone_number &&
+        form_university &&
+        form_job &&
         degree
       )
     ) {
       toast.error('Please fill all the fields');
       return;
     }
-    // editProfile({email, first_name, last_name, phone_number, university, job, degree});
+    // updateProfile({
+    //   email,
+    //   first_name,
+    //   last_name,
+    //   phone_number,
+    //   university,
+    //   job,
+    //   degree,
+    // });
     sendPaymentRequest();
   };
   return (
     <>
       <div className="seminar-register-title background-theme d-flex align-items-center">
         <div className="header ml-3">
-          <div className="event">{t('event')}</div>
-          <div className="title">{t('title')}</div>
-          <div className="date">{t('date')}</div>
+          <div className="event">
+            WSS 2020
+            {/* {t('event')} */}
+          </div>
+          <div className="title">
+            Seminar Registration
+            {/* {t('title')} */}
+          </div>
+          <div className="date">
+            23 december, 2020
+            {/* {t('date')} */}
+          </div>
         </div>
       </div>
       <form className="seminar-register-form">
         <div className="row">
           <div className="col-12 mb-3 col-lg mb-lg-0">
             <input
-              value={first_name}
+              value={form_first_name}
               onChange={(e) => setFirstName(e.target.value)}
               type="text"
               className="text-input form-control"
@@ -59,7 +88,7 @@ function SeminarRegistration({ sendPaymentRequest, isFetching }) {
           </div>
           <div className="col-12 col-lg">
             <input
-              value={last_name}
+              value={form_last_name}
               onChange={(e) => setLastName(e.target.value)}
               type="text"
               className="text-input form-control"
@@ -70,7 +99,7 @@ function SeminarRegistration({ sendPaymentRequest, isFetching }) {
         <div className="row">
           <div className="col-12 mb-3 col-lg mb-lg-0">
             <input
-              value={email}
+              value={form_email}
               onChange={(e) => setEmail(e.target.value)}
               type="email"
               className="text-input form-control"
@@ -79,7 +108,7 @@ function SeminarRegistration({ sendPaymentRequest, isFetching }) {
           </div>
           <div className="col-12 col-lg">
             <input
-              value={phone_number}
+              value={form_phone_number}
               onChange={(e) => setPhoneNumber(e.target.value)}
               type="tel"
               className="text-input form-control"
@@ -90,7 +119,7 @@ function SeminarRegistration({ sendPaymentRequest, isFetching }) {
         <div className="row">
           <div className="col-12 mb-3 col-lg mb-lg-0">
             <input
-              value={university}
+              value={form_university}
               onChange={(e) => setUniversity(e.target.value)}
               type="text"
               className="text-input form-control"
@@ -99,7 +128,7 @@ function SeminarRegistration({ sendPaymentRequest, isFetching }) {
           </div>
           <div className="col-12 col-lg">
             <input
-              value={job}
+              value={form_job}
               onChange={(e) => setJob(e.target.value)}
               type="text"
               className="text-input form-control"
@@ -158,10 +187,48 @@ function SeminarRegistration({ sendPaymentRequest, isFetching }) {
   );
 }
 
-const mapStateToProps = (state, ownProps) => ({
-  isFetching: state.account.isFetching,
-});
+const mapStateToProps = (state, ownProps) => {
+  const {
+    isFetching,
+    username,
+    email,
+    first_name,
+    last_name,
+    phone_number,
+    age,
+    job,
+    university,
+    introduction_method,
+    gender,
+    city,
+    country,
+    field_of_interest,
+    grade,
+    is_student,
+    favorite_tags,
+  } = state.Participant;
+  return {
+    isFetching,
+    username,
+    email,
+    first_name,
+    last_name,
+    phone_number,
+    age,
+    job,
+    university,
+    introduction_method,
+    gender,
+    city,
+    country,
+    field_of_interest,
+    grade,
+    is_student,
+    favorite_tags,
+  };
+};
 
 export default connect(mapStateToProps, {
   sendPaymentRequest,
+  updateProfile,
 })(SeminarRegistration);

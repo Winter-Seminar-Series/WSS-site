@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import { login } from '../redux/actions/account';
-import { Redirect, Link } from 'react-router-dom';
+import { Redirect, Link, useHistory } from 'react-router-dom';
 
 function Login({ login, isLoggedIn, isFetching }) {
   const { t } = useTranslation('login', { useSuspense: false });
