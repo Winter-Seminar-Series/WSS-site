@@ -40,7 +40,7 @@ const Header = ({ isLoggedIn }) => {
       <nav className="navbar navbar-expand-xl navbar-dark w-100 z-index-master">
         <div className="container">
           <a className="navbar-brand" href="/">
-            <img src="images/logo.png" height="40" alt="" />
+            <img src="/images/logo.png" height="40" alt="" />
           </a>
           <button
             className="navbar-toggler"
