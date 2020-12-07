@@ -22,7 +22,7 @@ def forwards(apps, schema_editor):
     team = teams.objects.create(
         wss=wss,
         name='network',
-        staff=Staff.objects.filter(name__in=['Amirhossein Hadian', 'Amirmohammad Imani', 'Sajjad Rezvani', 'Shima Ramadani', 'Mehdi Jalali', 'Sara Azarnoosh', 'Ehsan Movafagh'])
+        staff=Staff.objects.filter(name__in=['Amirhossein Hadian', 'Amirmohammad Imani', 'Sajjad Rezvani', 'Shima Ramadani', 'Mehdi Jalali', 'Sara Azarnoosh', 'Ehsan Movafagh', 'Fatemeh Asgari'])
     )
     team = teams.objects.create(
         wss=wss,

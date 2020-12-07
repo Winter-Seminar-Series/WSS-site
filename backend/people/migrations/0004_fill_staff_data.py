@@ -6,121 +6,162 @@ from django.db import migrations
 def forwards(apps, schema_editor):
     Staff = apps.get_model('people', 'Staff')
     Staff.objects.create(
-        name='Alireza Ilami'
+        name='Alireza Ilami',
+        picture='media/2020/staff/Alireza-Ilami.jpg'
     )
     Staff.objects.create(
-        name='Mehdi Farvardin'
+        name='Mehdi Farvardin',
+        picture='media/2020/staff/Mehdi-Farvardin.jpg'
     )
     Staff.objects.create(
-        name='Hossein Firooz'
+        name='Hossein Firooz',
+        picture='media/2020/staff/Hossein-Firooz.jpg'
     )
     Staff.objects.create(
-        name='Sepehr Amini Afshar'
+        name='Sepehr Amini Afshar',
+        picture='media/2020/staff/Sepehr-Amini Afshar.jpg'
     )
     Staff.objects.create(
-        name='Farzam Zohdinasab'
+        name='Farzam Zohdinasab',
+        picture='media/2020/staff/Farzam-Zohdinasab.jpg'
     )
     Staff.objects.create(
-        name='Pooya Moeini'
+        name='Pooya Moeini',
+        picture='media/2020/staff/Pooya-Moeini.jpg'
     )
     Staff.objects.create(
-        name='Seyed Mohammad mehdi Hatami'
+        name='Seyed Mohammad mehdi Hatami',
+        picture='media/2020/staff/Seyed-Mohammad-mehdi-Hatami.jpg'
     )
     Staff.objects.create(
-        name='Emran Batmanghelich'
+        name='Emran Batmanghelich',
+        picture='media/2020/staff/Emran-Batmanghelich.jpg'
     )
     Staff.objects.create(
-        name='Ahmad Salimi'
+        name='Ahmad Salimi',
+        picture='media/2020/staff/Ahmad-Salimi.jpg'
     )
     Staff.objects.create(
-        name='Ali asghar Ghanati'
+        name='Ali asghar Ghanati',
+        picture='media/2020/staff/Ali-asghar-Ghanati.jpg'
     )
     Staff.objects.create(
-        name='Fatemeh Khashei'
+        name='Fatemeh Khashei',
+        picture='media/2020/staff/Fatemeh-Khashei.jpg'
     )
     Staff.objects.create(
-        name='Alireza Tajmir riahi'
+        name='Alireza Tajmir riahi',
+        picture='media/2020/staff/Alireza-Tajmir-riahi.jpg'
     )
     Staff.objects.create(
-        name='Mohammad mehdi Barghi'
+        name='Mohammad mehdi Barghi',
+        picture='media/2020/staff/Mohammad-mehdi-Barghi.jpg'
     )
     Staff.objects.create(
-        name='Seyed Alireza Hashemi'
+        name='Seyed Alireza Hashemi',
+        picture='media/2020/staff/Seyed-Alireza-Hashemi.jpeg'
     )
     Staff.objects.create(
-        name='Amirhossein Hadian'
+        name='Amirhossein Hadian',
+        picture='media/2020/staff/Amirhossein-Hadian.jpg'
     )
     Staff.objects.create(
-        name='Amirmohammad Imani'
+        name='Amirmohammad Imani',
+        picture='media/2020/staff/Amirmohammad-Imani.jpg'
     )
     Staff.objects.create(
-        name='Sajjad Rezvani'
+        name='Sajjad Rezvani',
+        picture='media/2020/staff/Sajjad-Rezvani.jpg'
     )
     Staff.objects.create(
-        name='Shima Ramadani'
+        name='Shima Ramadani',
+        picture='media/2020/staff/Shima-Ramadani.jpg'
     )
     Staff.objects.create(
-        name='Mehdi Jalali'
+        name='Mehdi Jalali',
+        picture='media/2020/staff/Mehdi-Jalali.jpg'
     )
     Staff.objects.create(
-        name='Seyed Alireza Hosseini'
+        name='Seyed Alireza Hosseini',
+        picture='media/2020/staff/Seyed-Alireza-Hosseini.jpg'
     )
     Staff.objects.create(
-        name='Sara Azarnoosh'
+        name='Sara Azarnoosh',
+        picture='media/2020/staff/Sara-Azarnoosh.jpg'
     )
     Staff.objects.create(
-        name='Dorna Dehghani'
+        name='Dorna Dehghani',
+        picture='media/2020/staff/Dorna-Dehghani.jpg'
     )
     Staff.objects.create(
-        name='Ghazal Shenavar'
+        name='Ghazal Shenavar',
+        picture='media/2020/staff/Ghazal-Shenavar.jpg'
     )
     Staff.objects.create(
-        name='Helia Akhtarkavian'
+        name='Helia Akhtarkavian',
+        picture='media/2020/staff/Helia-Akhtarkavian.jpg'
     )
     Staff.objects.create(
-        name='Sabiheh Tajdari'
+        name='Sabiheh Tajdari',
+        picture='media/2020/staff/Sabiheh-Tajdari.jpg'
     )
     Staff.objects.create(
-        name='Sahel Messforoosh'
+        name='Sahel Messforoosh',
+        picture='media/2020/staff/Sahel-Messforoosh.jpg'
     )
     Staff.objects.create(
-        name='Esmaeil Pahang'
+        name='Esmaeil Pahang',
+        picture='media/2020/staff/Esmaeil-Pahang.jpg'
     )
     Staff.objects.create(
-        name='Hamila Meili'
+        name='Hamila Meili',
+        picture='media/2020/staff/Hamila-Meili.jpg'
     )
     Staff.objects.create(
-        name='Mahdieh Ebrahimpoor'
+        name='Mahdieh Ebrahimpoor',
+        picture='media/2020/staff/Mahdieh-Ebrahimpoor.jpg'
     )
     Staff.objects.create(
-        name='Roya Aghvami'
+        name='Roya Aghvami',
+        picture='media/2020/staff/Roya-Aghvami.jpg'
     )
     Staff.objects.create(
-        name='Sara Zahedi'
+        name='Sara Zahedi',
+        picture='media/2020/staff/Sara-Zahedi.jpg'
     )
     Staff.objects.create(
-        name='Hossein Aghamohammadi'
+        name='Hossein Aghamohammadi',
+        picture='media/2020/staff/Hossein-Aghamohammadi.jpg'
     )
     Staff.objects.create(
-        name='Vahid Zehtab'
+        name='Vahid Zehtab',
+        picture='media/2020/staff/Vahid-Zehtab.jpg'
     )
     Staff.objects.create(
-        name='Amirhossein Asem Yousefi'
+        name='Amirhossein Asem Yousefi',
+        picture='media/2020/staff/Amirhossein-Asem-Yousefi.jpg'
     )
     Staff.objects.create(
-        name='Alireza Ziaei'
+        name='Alireza Ziaei',
+        picture='media/2020/staff/Alireza-Ziaei.jpg'
     )
     Staff.objects.create(
-        name='Ehsan Movafagh'
+        name='Ehsan Movafagh',
+        picture='media/2020/staff/Ehsan-Movafagh.jpg'
     )
     Staff.objects.create(
-        name='ArhsiA Akhavan'
+        name='ArhsiA Akhavan',
+        picture='media/2020/staff/ArhsiA-Akhavan.jpg'
+    )
+    Staff.objects.create(
+        name='Fatemeh Asgari',
+        picture='media/2020/staff/Fatemeh-Asgari.jpg'
     )
 
 def rollback(apps, schema_editor):
     Staff = apps.get_model('people', 'Staff')
     Staff.objects.filter(
-        name__in=[
+        name_in=[
             'Alireza Ilami',
             'Mehdi Farvardin',
             'Hossein Firooz',
@@ -157,7 +198,8 @@ def rollback(apps, schema_editor):
             'Amirhossein Asem Yousefi',
             'Alireza Ziaei',
             'Ehsan Movafagh',
-            'ArshiA Akhavan'
+            'ArshiA Akhavan',
+            'Fatemeh Asgari'
         ]
     ).delete()
 
