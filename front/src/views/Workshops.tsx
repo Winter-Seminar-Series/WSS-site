@@ -18,7 +18,7 @@ const Workshops = ({ getWSSPrimitiveFields, getModelList, workshops }) => {
         <div className="container text-white">
           <div className="row mb-3">
             <div className="mb-1 col section-sub-title title-white">
-              {workshops.length === 1 ? 'Workshop' : 'Workshops'}
+              {workshops && workshops.length === 1 ? 'Workshop' : 'Workshops'}
             </div>
           </div>
           {workshops && workshops.length && (
