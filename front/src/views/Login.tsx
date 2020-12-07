@@ -5,7 +5,6 @@ import { toast } from 'react-toastify';
 import { login } from '../redux/actions/account';
 import { Redirect, Link } from 'react-router-dom';
 
-
 function Login({ login, isLoggedIn, isFetching }) {
   const { t } = useTranslation('login', { useSuspense: false });
   const [username, setUsername] = useState('');
@@ -20,9 +19,7 @@ function Login({ login, isLoggedIn, isFetching }) {
   }
 
   if (isLoggedIn) {
-    return (
-      <Redirect to='/' />
-    )
+    return <Redirect to="/dashboard" />;
   }
 
   return (
@@ -31,14 +28,14 @@ function Login({ login, isLoggedIn, isFetching }) {
         dir="rtl"
         className="auth-container diagonal background-theme row py-0">
         <div className="col-xs-12 col-sm-6 form-container" dir="ltr">
-          <form>
+          <form onSubmit={doLogin}>
             <div className="form-group mb-5">
               <label htmlFor="username">{t('username')}</label>
               <input
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 id="username"
-                type="email"
+                type="text"
                 className="form-control"
               />
             </div>
@@ -54,8 +51,7 @@ function Login({ login, isLoggedIn, isFetching }) {
             </div>
             <button
               disabled={isFetching}
-              onClick={doLogin}
-              type="button"
+              type="submit"
               className="btn btn-lg btn-primary btn-dark mb-5">
               {t('submit')}
             </button>

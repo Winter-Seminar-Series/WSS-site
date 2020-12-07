@@ -1,7 +1,14 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 function Sidebar() {
+  const history = useHistory();
+
+  const logout = () => {
+    //todo logout
+    // localStorage.setItem('WSS', JSON.stringify(undefined));
+    history.push('/');
+  };
   const sidebarItems: SidebarItem[] = [
     {
       title: 'Seminar Registration',
@@ -52,6 +59,10 @@ function Sidebar() {
             </Link>
           )
         )}
+        <span key="logout" className="sidebar-item" onClick={logout}>
+          <span className={`icon ml-2 fa fa-exit`}></span>
+          <span>logout</span>
+        </span>
       </div>
     </>
   );

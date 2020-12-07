@@ -10,7 +10,9 @@ function Registration({ signup, isLoggedIn, isFetching }) {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [doesPasswordAgainMatch, setPasswordAgainMatchingStatus] = useState(true);
+  const [doesPasswordAgainMatch, setPasswordAgainMatchingStatus] = useState(
+    true
+  );
 
   function checkPasswordAgain(passwordAgain) {
     if (passwordAgain === password) {
@@ -33,9 +35,7 @@ function Registration({ signup, isLoggedIn, isFetching }) {
   }
 
   if (isLoggedIn) {
-    return (
-      <Redirect to='/' />
-    )
+    return <Redirect to="/dashboard" />;
   }
 
   return (
@@ -44,7 +44,7 @@ function Registration({ signup, isLoggedIn, isFetching }) {
         dir="rtl"
         className="auth-container diagonal background-theme row py-0">
         <div className="col-6 form-container" dir="ltr">
-          <form>
+          <form onSubmit={doSignup}>
             <div className="form-group mb-5">
               <label htmlFor="username">{t('username')}</label>
               <input
@@ -86,8 +86,7 @@ function Registration({ signup, isLoggedIn, isFetching }) {
             </div>
             <button
               disabled={isFetching}
-              onClick={doSignup}
-              type="button"
+              type="submit"
               className="btn btn-lg btn-primary btn-dark mb-5">
               {t('submit')}
             </button>
