@@ -3,55 +3,38 @@
 from __future__ import unicode_literals
 from django.db import migrations
 
+
 def forwards(apps, schema_editor):
     Staff = apps.get_model('people', 'Staff')
     WSS = apps.get_model('WSS', 'WSS')
+    HoldingTeam = apps.get_model('people', 'HoldingTeam')
+
+    teams_staff = {
+        'Content': ['Mehdi Farvardin', 'Hossein Firooz', 'Sepehr Amini Afshar', 'Farzam Zohdinasab', 'Pooya Moeini', 'Seyed Mohammad mehdi Hatami'],
+        'Technical': ['Emran Batmanghelich', 'Ahmad Salimi', 'Ali asghar Ghanati', 'Fateme Khashei', 'Alireza Tajmir riahi', 'Mohammad mehdi Barghi', 'Seyed Alireza Hashemi', 'ArhsiA Akhavan'],
+        'Network': ['Amirhossein Hadian', 'Amirmohammad Imani', 'Sajjad Rezvani', 'Shima Ramadani', 'Mehdi Jalali', 'Sara Azarnoosh', 'Ehsan Movafagh', 'Fatemeh Asgari'],
+        'Branding': ['Seyed Alireza Hosseini'],
+        'Social': ['Sara Azarnoosh', 'Dorna Dehghani', 'Ghazal Shenavar', 'Helia Akhtarkavian', 'Sabiheh Tajdari', 'Sahel Messforoosh', 'Esmaeil Pahang'],
+        'Media': ['Hamila Meili', 'Mahdieh Ebrahimpoor', 'Roya Aghvami', 'Sara Zahedi', 'Hossein Aghamohammadi'],
+        'Presentation Management': ['Alireza Ziaei', 'Amirhossein Asem Yousefi', 'Vahid Zehtab', 'Sajjad Rezvani'],
+    }
 
     wss = WSS.objects.get(year=2020)
-    teams = apps.get_model('people', 'HoldingTeam')
-    team = teams.objects.create(
-        wss=wss,
-        name='content',
-        staff=Staff.objects.filter(name__in=['Mehdi Farvardin', 'Hossein Firooz', 'Sepehr Amini Afshar', 'Farzam Zohdinasab', 'Pooya Moeini', 'Seyed Mohammad mehdi Hatami'])
-    )
-    team = teams.objects.create(
-        wss=wss,
-        name='technical',
-        staff=Staff.objects.filter(name__in=['Emran Batmanghelich', 'Ahmad Salimi', 'Ali asghar Ghanati', 'Fateme Khashei', 'Alireza Tajmir riahi', 'Mohammad mehdi Barghi', 'Seyed Alireza Hashemi', 'ArhsiA Akhavan'])
-    )
-    team = teams.objects.create(
-        wss=wss,
-        name='network',
-        staff=Staff.objects.filter(name__in=['Amirhossein Hadian', 'Amirmohammad Imani', 'Sajjad Rezvani', 'Shima Ramadani', 'Mehdi Jalali', 'Sara Azarnoosh', 'Ehsan Movafagh', 'Fatemeh Asgari'])
-    )
-    team = teams.objects.create(
-        wss=wss,
-        name='branding',
-        staff=Staff.objects.get(name='Seyed Alireza Hosseini')
-    )
-    team = teams.objects.create(
-        wss=wss,
-        name='social',
-        staff=Staff.objects.filter(name__in=['Sara Azarnoosh', 'Dorna Dehghani', 'Ghazal Shenavar', 'Helia Akhtarkavian', 'Sabiheh Tajdari', 'Sahel Messforoosh', 'Esmaeil Pahang'])
-    )
-    team = teams.objects.create(
-        wss=wss,
-        name='media',
-        staff=Staff.objects.filter(name__in=['Hamila Meili', 'Mahdieh Ebrahimpoor', 'Roya Aghvami', 'Sara Zahedi', 'Hossein Aghamohammadi'])
-    )
-    team = teams.objects.create(
-        wss=wss,
-        name='presentation management',
-        staff=Staff.objects.filter(name__in=['Alireza Ziaei', 'Amirhossein Asem Yousefi', 'Vahid Zehtab', 'Sajjad Rezvani'])
-    )
+
+    for team_name in teams_staff:
+        team = HoldingTeam.objects.create(wss=wss, name=team_name)
+        team.staff.set(Staff.objects.filter(name__in=teams_staff[team_name]))
 
 
 def rollback(apps, schema_editor):
     WSS = apps.get_model('WSS', 'WSS')
+    HoldingTeam = apps.get_model('people', 'HoldingTeam')
 
     wss = WSS.objects.get(year=2020)
 
-    teams.objects.filter(wss=wss, name__in=['content', 'technical', 'network', 'branding', 'social', 'media', 'presentation management']).delete()
+    team_names = ['Content', 'Technical', 'Network', 'Branding', 'Social', 'Media', 'Presentation Management']
+    HoldingTeam.objects.filter(wss=wss, name__in=team_names).delete()
+
 
 class Migration(migrations.Migration):
 
