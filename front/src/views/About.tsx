@@ -5,8 +5,8 @@ const About = () => {
   const { t } = useTranslation('about', { useSuspense: false });
 
   const diagonalStyle = {
-    marginTop: '-15rem',
-    height: '15rem',
+    marginTop: '-18rem',
+    height: '18rem',
   };
 
   const containerStyle = {
@@ -28,7 +28,7 @@ const About = () => {
           </div>
         </div>
         <div
-          className="container-fluid px-2 pt-3 mt-5 mb-0 diagonal"
+          className="container-fluid px-2 pt-4 mt-5 mb-0 diagonal"
           style={whiteBackground}>
           <div className="container">
             <div className="row mt-5">
