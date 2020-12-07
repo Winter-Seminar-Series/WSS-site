@@ -3,7 +3,11 @@ import * as URLs from './urls';
 import { CALL_API } from '../middleware/api/api';
 import { BASE_URL } from '../../constants/info';
 
-export const signup = (username: string, email: string, password: string) => ({
+export const register = (
+  username: string,
+  email: string,
+  password: string
+) => ({
   [CALL_API]: {
     types: [
       actionTypes.REGISTER_REQUEST,

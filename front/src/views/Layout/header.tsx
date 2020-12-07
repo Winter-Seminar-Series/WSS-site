@@ -13,7 +13,7 @@ const Header = () => {
     {
       title: 'Sign Up',
       persianTitle: 'ثبت‌نام',
-      link: '/signup',
+      link: '/register',
       style: 'active',
       loggedIn: false,
     },

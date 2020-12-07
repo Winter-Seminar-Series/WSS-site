@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import Presenter from '../components/cards/Presenter';
+import PublicCard from '../components/cards/PublicCard';
 import { THIS_YEAR } from '../constants/info';
 import { Speaker } from '../models/wss';
 import { getModelList, MODEL_LISTS_NAMES } from '../redux/actions/WSS';
@@ -22,7 +22,7 @@ const StaffList = ({ getWSSPrimitiveFields, getModelList, staff }) => {
             <div className="row">
               {staff.map((s: Speaker) => (
                 <div key={s.id} className="col-xs-12 col-sm-6 col-lg-3">
-                  <Presenter speaker={s}></Presenter>
+                  <PublicCard speaker={s}></PublicCard>
                 </div>
               ))}
             </div>

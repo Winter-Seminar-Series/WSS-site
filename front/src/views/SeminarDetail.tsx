@@ -2,18 +2,46 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
-import { Redirect, Link } from 'react-router-dom';
+import { Redirect, Link, useParams } from 'react-router-dom';
+import {
+  getAnEntityOfModelList,
+  getModelList,
+  getModelListCount,
+  MODEL_LISTS_NAMES,
+} from '../redux/actions/WSS';
 
+let global_id;
 
-function CardDescription({
-  image = 'https://wss.ce.sharif.edu/media/human_pictures/moshiri.jpg',
+function SeminarDetail({
+  getAnEntityOfModelList,
+  getModelList,
+  seminars,
+  speakers,
+
+  image = 'https://WSS.ce.sharif.edu/media/human_pictures/moshiri.jpg',
   name = 'Seyyed Alireza Hashemi',
   degree = 'Master',
-  title = 'How to fail a event!',
+  title = 'How to fail an event!',
   date = 'Monday, 24 December 2018',
-  time = '16:30 - 19:30'
+  time = '16:30 - 19:30',
+  pk = 2,
 }) {
   const { t } = useTranslation('cardDescription', { useSuspense: false });
+  const id = useParams()['id'];
+  global_id = id;
+
+  useEffect(() => {
+    getAnEntityOfModelList(MODEL_LISTS_NAMES.SEMINARS, 2020, id);
+    getModelList(MODEL_LISTS_NAMES.SEMINARS, 2020);
+    getModelList(MODEL_LISTS_NAMES.SPEAKERS, 2020);
+    getModelList(MODEL_LISTS_NAMES.WORKSHOPS, 2020);
+    getModelList(MODEL_LISTS_NAMES.POSTERSESSIONS, 2020);
+
+  }, [getAnEntityOfModelList])
+
+  console.log(seminars)
+  console.log(speakers)
+
 
   return (
     <section id="main-container" className="main-container">
@@ -64,10 +92,26 @@ function CardDescription({
   );
 }
 
-const mapStateToProps = (state, ownProps) => ({
-  isFetching: state.account.isFetching,
-  isLoggedIn: state.account.isLoggedIn,
-});
+const mapStateToProps = (state, ownProps) => {
+  const seminar = state.WSS.seminars
+    ? state.WSS.seminars[global_id]
+    : {};
+  return ({
+    isFetching: state.WSS.isFetching,
+    isLoggedIn: state.WSS.isLoggedIn,
+    seminars: state.WSS.seminars
+      ? state.WSS.seminars
+      : [],
+    speakers: state.WSS.speakers
+      ? state.WSS.speakers
+      : [],
+  })
+}
 
-export default connect(mapStateToProps, {
-})(CardDescription);
+export default connect(
+  mapStateToProps,
+  {
+    getAnEntityOfModelList,
+    getModelList,
+  }
+)(SeminarDetail);

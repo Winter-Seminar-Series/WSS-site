@@ -30,7 +30,11 @@ function Account(state = initState, action) {
 
     case actionTypes.REGISTER_FAILURE:
       console.log(action.response)
-      return (initState)
+      return ({
+        isFetching: false,
+      })
+
+    ///////////////////
 
     case actionTypes.LOGIN_REQUEST:
       return ({
@@ -48,7 +52,11 @@ function Account(state = initState, action) {
 
     case actionTypes.LOGIN_FAILURE:
       console.log(action.response)
-      return (initState)
+      return ({
+        isFetching: false,
+      })
+
+    ///////////////////
 
     case actionTypes.LOGOUT_REQUEST:
       return ({
@@ -62,6 +70,8 @@ function Account(state = initState, action) {
       return ({
         isFetching: false,
       })
+
+    ///////////////////
 
     case actionTypes.VERIFY_PAYMENT_SUCCESS:
       return {

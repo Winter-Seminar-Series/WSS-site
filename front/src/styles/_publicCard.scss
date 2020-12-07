@@ -3,7 +3,7 @@
   /* Lazy Load Styles */
   .card-image {
     display: block;
-    min-height: 20rem;
+    // min-height: 20rem;
     /* layout hack */
     background: #fff center center no-repeat;
     background-size: cover;
@@ -59,10 +59,10 @@
   .card-description>.like {
     display: flex;
     border: 1px solid #ccc !important;
-    margin-left: auto;
+    // margin-left: auto;
     border-radius: 16px;
-    width: 70%;
-    justify-content: space-evenly;
+    width: 100%;
+    justify-content: center;
     align-content: center;
     align-items: center;
     flex-wrap: wrap;
