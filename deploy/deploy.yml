@@ -20,6 +20,7 @@
           - src_nginx_conf_path is defined
           - sentry_token is defined
           - dropbox_auth_token is defined
+          - wss_email_password is defined
 
     - name: 'Copy compose file'
       copy:

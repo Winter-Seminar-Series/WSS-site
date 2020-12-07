@@ -12,6 +12,8 @@ services:
       - PAYMENT_WSDL
       - PAYMENT_URL
       - SENTRY_TOKEN
+      - DROPBOX_AUTH_TOKEN
+      - WSS_EMAIL_PASSWORD
     networks:
       wss_net:
   database:
