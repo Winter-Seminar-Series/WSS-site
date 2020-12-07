@@ -5,26 +5,38 @@ function Footer() {
     {
       title: 'instagram',
       persianTitle: 'اینستاگرام',
-      link: 'https://instagram.com',
+      link: 'https://instagram.com/wss_sut',
       icon: 'instagram',
     },
     {
       title: 'youtube',
-      persianTitle: 'اینستاگرام',
-      link: 'https://instagram.com',
+      persianTitle: 'یوتیوب',
+      link: 'https://www.youtube.com/channel/UC5-ct_yxHQJTYJP3TkeEDmQ',
       icon: 'youtube',
     },
     {
       title: 'facebook',
-      persianTitle: 'اینستاگرام',
-      link: 'https://instagram.com',
+      persianTitle: 'فیسبوک',
+      link: 'https://www.facebook.com/wss.sharif',
       icon: 'facebook',
     },
     {
       title: 'linkedin',
-      persianTitle: 'اینستاگرام',
-      link: 'https://instagram.com',
+      persianTitle: 'لینکدین',
+      link: 'https://www.linkedin.com/company/wss-sut',
       icon: 'linkedin',
+    },
+    {
+      title: 'twitter',
+      persianTitle: 'توییتر',
+      link: 'https://twitter.com/WSS_SUT',
+      icon: 'twitter',
+    },
+    {
+      title: 'telegram',
+      persianTitle: 'تلگرام',
+      link: 'https://t.me/wss_sut',
+      icon: 'telegram',
     },
   ];
   return (
@@ -33,10 +45,14 @@ function Footer() {
         <div className="col-12">
           <div className="footer-logo d-flex justify-content-center align-items-end">
             <a href="\">
-              <img src="images/logo.png" alt="wss logo" width="100" />
+              <img src="/images/logo.png" alt="wss logo" width="100" />
             </a>
             <a href="http://ssc.ce.sharif.edu">
-              <img src="images/SSC-logo-white.png" alt="ssc logo" width="100" />
+              <img
+                src="/images/SSC-logo-white.png"
+                alt="ssc logo"
+                width="100"
+              />
             </a>
           </div>
         </div>
@@ -45,7 +61,7 @@ function Footer() {
           <ul>
             {socialAccounts.map((s) => (
               <li key={s.title}>
-                <a href={s.link}>
+                <a href={s.link} target="_blank">
                   <i className={'social-icon text-white fa fa-' + s.icon} />
                 </a>
               </li>

@@ -1,29 +1,37 @@
 import React from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import Header from './views/Layout/header';
-import Footer from './views/Layout/footer';
-import Home from './views/Home';
-import About from './views/About';
-import Schedule from './views/Schedule';
-import Details from './views/Details';
-import Signup from './views/Signup';
-import Login from './views/Login';
-import CardHolder from './views/CardHolder';
+import { Route, Switch } from 'react-router-dom';
+import PrivateRoute from './auth-guard';
 import './styles/style.scss';
+import About from './views/About';
+import CardHolder from './views/CardHolder';
 import Dashboard from './views/Dashboard/Dashboard';
-import { PrivateRoute } from './auth-guard';
+import SeminarDetail from './views/Details/SeminarDetail'
+import PostersessionDetail from './views/Details/PostersessionDetail'
+import WorkshopDetail from './views/Details/WorkshopDetail'
+import Home from './views/Home';
+import Footer from './views/Layout/footer';
+import Header from './views/Layout/header';
+import Login from './views/Login';
+import Register from './views/Register';
+import Speakers from './views/Speakers';
+import StaffList from './views/StaffList';
+import Workshops from './views/Workshops';
 
 function App() {
   return (
     <>
       <Header />
       <Switch>
+        <Route path="/seminar/:id" component={SeminarDetail} />
+        <Route path="/workshop/:id" component={WorkshopDetail} />
+        <Route path="/postersession/:id" component={PostersessionDetail} />
+        <Route path="/workshops" component={Workshops} />
         <Route path="/cardholder" component={CardHolder} />
-        <Route path="/details" component={Details} />
-        <Route path="/schedule" component={Schedule} />
-        <Route path="/signup" component={Signup} />
-        <Route path="/login" component={Login} />
         <Route path="/about" component={About} />
+        <Route path="/speakers" component={Speakers} />
+        <Route path="/staff" component={StaffList} />
+        <Route path="/register" component={Register} />
+        <Route path="/login" component={Login} />
         <PrivateRoute path="/dashboard" component={Dashboard}></PrivateRoute>
         <Route path="/" component={Home} />
       </Switch>

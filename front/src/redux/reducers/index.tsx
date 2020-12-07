@@ -1,11 +1,11 @@
 import { combineReducers } from 'redux';
-import Account from './Account';
+import account from './account';
 import WSS from './WSS';
 import Participant from './Participant';
 import Notification from './Notification';
 
 const allReducers = combineReducers({
-  Account,
+  account,
   WSS,
   Participant,
   Notification,

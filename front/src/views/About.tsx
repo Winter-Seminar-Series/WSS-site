@@ -20,7 +20,7 @@ const About = () => {
   return (
     <>
       <section id="main-container" className="main-container pb-0">
-        <div style={diagonalStyle} className="px-2 diagonal background-shafagh">
+        <div style={diagonalStyle} className="px-2 diagonal background-theme">
           <div
             className="container section-sub-title title-white"
             style={containerStyle}>
@@ -49,23 +49,23 @@ const About = () => {
                       src="images/seminar.png"
                     />
                   </div>
-                  <div className="col mr-md-3  d-flex flex-column justify-content-center">
+                  <div className="col mr-md-3  d-flex flex-column justify-content-start">
                     <h3>{t('seminars')}</h3>
                     <p>{t('seminarsDescription')}</p>
                   </div>
                 </div>
-                <div className="row d-flex flex-sm-row-reverse justify-content-start justify-content-sm-between mt-5 mb-md-5">
+                {/* <div className="row d-flex flex-sm-row-reverse justify-content-start justify-content-sm-between mt-5 mb-md-5">
                   <div className="p-5 p-md-0 col-md-3 d-flex flex-column justify-content-center">
                     <img
                       className="w-100 h-auto my-auto"
                       src="images/poster_session.png"
                     />
                   </div>
-                  <div className="col ml-md-3  d-flex flex-column justify-content-center">
+                  <div className="col ml-md-3  d-flex flex-column justify-content-start">
                     <h3>{t('posterSession')}</h3>
                     <p>{t('posterSessionDescription')}</p>
                   </div>
-                </div>
+                </div> */}
                 <div className="row d-flex flex-sm-row-reverse justify-content-start justify-content-sm-between mt-md-5">
                   <div className="p-5 p-md-0 col-md-3 d-flex flex-column justify-content-center">
                     <img
@@ -73,7 +73,7 @@ const About = () => {
                       src="images/workshop.png"
                     />
                   </div>
-                  <div className="col mr-md-3  d-flex flex-column justify-content-center">
+                  <div className="col mr-md-3  d-flex flex-column justify-content-start">
                     <h3>{t('workshops')}</h3>
                     <p>{t('workshopsDescription')}</p>
                   </div>
