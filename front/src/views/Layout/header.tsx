@@ -15,12 +15,21 @@ const Header = () => {
       persianTitle: 'ثبت‌نام',
       link: '/signup',
       style: 'active',
+      loggedIn: false,
     },
     {
       title: 'Login',
       persianTitle: 'ورود',
       link: '/login',
       style: 'active',
+      loggedIn: false,
+    },
+    {
+      title: 'Dashboard',
+      persianTitle: 'داشبورد',
+      link: '/dashboard',
+      style: 'active',
+      loggedIn: true,
     },
   ];
   return (
@@ -90,4 +99,5 @@ interface NavBarItem {
     persianTitle: string;
     link: string;
   }[];
+  loggedIn?: boolean;
 }

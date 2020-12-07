@@ -1,14 +1,19 @@
 .sidebar {
+  z-index: 2;
   direction: rtl;
-  position: fixed;
-  background-color: #949fb120;
+  position: absolute;
+  background-color: #e0e1e4;
   top: 0;
   right: 0;
   bottom: 0;
   width: 250px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: start;
+  padding-top: 90px;
+  @media (max-width: 768px) {
+    width: 50px;
+  }
   .sidebar-item {
     display: flex;
     justify-content: flex-start;
@@ -16,6 +21,7 @@
     color: inherit;
     padding: 10px 20px;
     text-decoration: none;
+    margin-bottom: 15px;
     cursor: pointer;
     > .icon {
       color: inherit;
@@ -34,6 +40,9 @@
   min-height: 80vh;
   padding: 0px;
   padding-right: 250px;
+  @media (max-width: 768px) {
+    padding-right: 50px;
+  }
   .seminar-register-title {
     justify-content: center;
     color: white;
@@ -69,6 +78,7 @@
     flex-direction: column;
     justify-content: center;
     padding: 40px;
+    max-width: 100%;
     .degree {
       button {
         border: 2px solid #ced4da;
