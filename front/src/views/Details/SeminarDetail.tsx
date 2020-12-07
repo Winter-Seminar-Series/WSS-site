@@ -8,7 +8,7 @@ import {
   getModelList,
   getModelListCount,
   MODEL_LISTS_NAMES,
-} from '../redux/actions/WSS';
+} from '../../redux/actions/WSS';
 
 let global_id;
 
