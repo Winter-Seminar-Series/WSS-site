@@ -38,16 +38,23 @@ services:
     volumes:
       - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
       - frontend_vol:/mnt/frontend/:ro
+      - media_vol:/mnt/media/:ro
       - $FULLCHAIN_PATH:/etc/ssl-files/fullchain.pem:ro
       - $PRIVKEY_PATH:/etc/ssl-files/privkey.pem:ro
     depends_on:
       - web
       - frontend
+      - static-data-provider
   frontend:
     image: sharifwss/frontend:$FRONT_IMAGE_VERSION
     build: ./front/
     volumes:
       - frontend_vol:/mnt/frontend/
+  static-data-provider:
+    image: sharifwss/static-data-provider:latest
+    build: ./static-data-provider/
+    volumes:
+      - media_vol:/mnt/media/
 
 networks:
   wss_net:
@@ -55,3 +62,4 @@ networks:
 
 volumes:
   frontend_vol:
+  media_vol:
