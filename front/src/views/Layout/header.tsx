@@ -10,6 +10,7 @@ const Header = ({ isLoggedIn }) => {
     { title: 'About Us', persianTitle: 'درباره ما', link: '/about' },
     { title: 'Speakers', persianTitle: 'سمینارها', link: '/speakers' },
     { title: 'Workshops', persianTitle: 'کارگاه‌ها', link: '/workshops' },
+    { title: 'PosterSession', persianTitle: 'پوسترسشن', link: '/postersessions' },
     // { title: 'Schedule', persianTitle: 'برنامه زمانی', link: '/schedule' },
     { title: 'Staff', persianTitle: 'استف', link: '/staff' },
     {

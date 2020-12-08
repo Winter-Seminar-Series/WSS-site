@@ -1,4 +1,5 @@
 import * as actionTypes from '../actionTypes';
+const ARRAY_SIZE = 200;
 
 const initState = {
   isFetching: false,
@@ -16,20 +17,38 @@ const initState = {
   showStats: undefined,
   calendarLink: undefined,
 
-  // workshops: [],
-  // workshops_count: 0,
-  // seminars: [],
-  // seminars_count: 0,
-  // postersessions: [],
-  // postersessions_count: 0,
-  // sponsorships: [],
-  // sponsorships_count: 0,
-  // clips: [],
-  // clips_count: 0,
-  // holding_teams: [],
-  // holding_teams_count: 0,
-  // images: [],
-  // images_count: 0,
+  workshops: new Array(ARRAY_SIZE),
+  workshops_count: 0,
+  workshop_materials: new Array(ARRAY_SIZE),
+  workshop_materials_count: 0,
+  seminars: new Array(ARRAY_SIZE),
+  seminars_count: 0,
+  seminar_materials: new Array(ARRAY_SIZE),
+  seminar_materials_count: 0,
+  speakers: new Array(ARRAY_SIZE),
+  speakers_count: 0,
+  postersessions: new Array(ARRAY_SIZE),
+  postersessions_count: 0,
+  poster_materials: new Array(ARRAY_SIZE),
+  poster_materials_count: 0,
+  sponsors: new Array(ARRAY_SIZE),
+  sponsors_count: 0,
+  sponsorships: new Array(ARRAY_SIZE),
+  sponsorships_count: 0,
+  clips: new Array(ARRAY_SIZE),
+  clips_count: 0,
+  holding_teams: new Array(ARRAY_SIZE),
+  holding_teams_count: 0,
+  staff: new Array(ARRAY_SIZE),
+  staff_count: 0,
+  images: new Array(ARRAY_SIZE),
+  images_count: 0,
+  tags: new Array(ARRAY_SIZE),
+  tags_count: 0,
+  announcements: new Array(ARRAY_SIZE),
+  announcements_count: 0,
+  venues: new Array(ARRAY_SIZE),
+  venues_count: 0,
 };
 
 function WSS(state = initState, action) {
@@ -112,15 +131,16 @@ function WSS(state = initState, action) {
     case actionTypes.AN_ENTITY_OF_MODEL_LIST_REQUEST:
       return {
         ...state,
-        isFetching: false,
+        isFetching: true,
       };
 
     case actionTypes.AN_ENTITY_OF_MODEL_LIST_SUCCESS:
-      const newModelList = state[action.payload.modelListName];
-      newModelList[action.payload.pk] = action.response;
+      const modelList = state[action.payload.modelListName];
+      const pk = action.payload.pk;
       return {
         ...state,
-        [action.payload.modelListName]: newModelList,
+        [action.payload.modelListName]:
+          [...modelList.slice(0, pk), action.response, ...modelList.slice(pk + 1, modelList.length)],
       };
 
     case actionTypes.AN_ENTITY_OF_MODEL_LIST_FAILURE:
