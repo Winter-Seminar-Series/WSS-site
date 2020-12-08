@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { useTranslation } from 'react-i18next';
-import { toast } from 'react-toastify';
-import { Redirect, Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
+import { BASE_URL } from '../../constants/info'
 import {
   getAnEntityOfModelList,
   MODEL_LISTS_NAMES,
@@ -44,7 +43,7 @@ function WorkshopDetail({
           <div className="row pt-5">
             {speaker.picture &&
               <div className="col-md-4 m-0">
-                <img style={{ borderRadius: '5px', width: '100%', boxShadow: '2px -2px 5px gray' }} src={speaker.picture} alt='' />
+                <img style={{ borderRadius: '5px', width: '100%', boxShadow: '2px -2px 5px gray' }} src={BASE_URL + speaker.picture} alt='' />
               </div>
             }
             <div className="col mt-4 d-flex align-items-center">

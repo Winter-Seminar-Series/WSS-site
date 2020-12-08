@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import Like from './Like';
+import { BASE_URL } from '../../constants/info'
+
 
 function PublicCard({
   id,
@@ -35,7 +37,7 @@ function PublicCard({
     <div id="public-card">
       <div className="card">
         <a className="card-image" ref={cardRef} href={presentationLink}>
-          <img src={person.picture} alt="" />
+          <img src={BASE_URL + person.picture} alt="" />
         </a>
         <div className="card-description">
           <h2>{person.name}</h2>
