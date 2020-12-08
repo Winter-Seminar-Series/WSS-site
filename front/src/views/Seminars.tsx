@@ -2,11 +2,16 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import PublicCard from '../components/cards/PublicCard';
 import { THIS_YEAR } from '../constants/info';
-import { Speaker } from '../models/wss';
 import { getModelList, MODEL_LISTS_NAMES } from '../redux/actions/WSS';
 
-const Speakers = ({ getWSSPrimitiveFields, getModelList, speakers, isFetching }) => {
+const Seminars = ({
+  getWSSPrimitiveFields,
+  getModelList,
+  seminars,
+  isFetching
+}) => {
   useEffect(() => {
+    getModelList(MODEL_LISTS_NAMES.SEMINARS, THIS_YEAR);
     getModelList(MODEL_LISTS_NAMES.SPEAKERS, THIS_YEAR);
   }, [getWSSPrimitiveFields]);
 
@@ -19,25 +24,25 @@ const Speakers = ({ getWSSPrimitiveFields, getModelList, speakers, isFetching })
           <div className="row mb-3">
             <h3 className="mb-1 col section-sub-title title-white">Speakers</h3>
           </div>
-          {speakers && speakers.length && (
+          {seminars.length > 0 && !isFetching &&
             <div className="row">
-              {speakers.map((s: Speaker) => (
-                <div key={s.id} className="col-xs-12 col-sm-6 col-lg-3">
-                  <PublicCard speaker={s}></PublicCard>
+              {seminars.map((seminar) => (
+                <div key={seminar.id} className="col-xs-12 col-sm-6 col-lg-3">
+                  <PublicCard person={seminar.speaker} presentationLink={'/seminar/' + seminar.id}></PublicCard>
                 </div>
               ))}
             </div>
-          )}
+          }
           {isFetching && (
             <div className="row">
               <div className="col">Loading...</div>
             </div>
           )}
-          {!speakers && !isFetching && (
+          {seminars.length === 0 && !isFetching &&
             <div className="row">
               <div className="col">Nothing has been added yet</div>
             </div>
-          )}
+          }
         </div>
       </section>
     </>
@@ -45,13 +50,13 @@ const Speakers = ({ getWSSPrimitiveFields, getModelList, speakers, isFetching })
 };
 
 const mapStateToProps = (state, ownProps) => {
-  const { isFetching, speakers } = state.WSS;
+  const { isFetching, seminars } = state.WSS;
   return {
     isFetching,
-    speakers,
+    seminars,
   };
 };
 
 export default connect(mapStateToProps, {
   getModelList,
-})(Speakers);
+})(Seminars);

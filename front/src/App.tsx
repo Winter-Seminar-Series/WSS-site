@@ -3,7 +3,6 @@ import { Route, Switch } from 'react-router-dom';
 import PrivateRoute from './auth-guard';
 import './styles/style.scss';
 import About from './views/About';
-import CardHolder from './views/CardHolder';
 import Dashboard from './views/Dashboard/Dashboard';
 import SeminarDetail from './views/Details/SeminarDetail'
 import PostersessionDetail from './views/Details/PostersessionDetail'
@@ -13,8 +12,9 @@ import Footer from './views/Layout/footer';
 import Header from './views/Layout/header';
 import Login from './views/Login';
 import Register from './views/Register';
-import Speakers from './views/Speakers';
-import StaffList from './views/StaffList';
+import Seminars from './views/Seminars';
+import Staffs from './views/Staffs';
+import Postersessions from './views/Postersessions';
 import Workshops from './views/Workshops';
 
 function App() {
@@ -26,10 +26,10 @@ function App() {
         <Route path="/workshop/:id" component={WorkshopDetail} />
         <Route path="/postersession/:id" component={PostersessionDetail} />
         <Route path="/workshops" component={Workshops} />
-        <Route path="/cardholder" component={CardHolder} />
         <Route path="/about" component={About} />
-        <Route path="/speakers" component={Speakers} />
-        <Route path="/staff" component={StaffList} />
+        <Route path="/seminars" component={Seminars} />
+        <Route path="/staffs" component={Staffs} />
+        <Route path="/postersessions/" component={Postersessions} />
         <Route path="/register" component={Register} />
         <Route path="/login" component={Login} />
         <PrivateRoute path="/dashboard" component={Dashboard}></PrivateRoute>

@@ -1,44 +1,40 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import { Redirect, Link, useParams } from 'react-router-dom';
 import {
   getAnEntityOfModelList,
-  getModelList,
-  getModelListCount,
   MODEL_LISTS_NAMES,
 } from '../../redux/actions/WSS';
+import moment from 'moment'
+import { THIS_YEAR } from '../../constants/info'
 
-let global_id;
-
-function PostersessionDetail({
+function SeminarDetail({
   getAnEntityOfModelList,
-  duration,
-  speaker,
-  place = 'sharif',
-  picture = 'https://WSS.ce.sharif.edu/media/human_pictures/moshiri.jpg',
-  name = 'Seyyed Alireza Hashemi',
-  degree = 'Master',
-  title = 'How to fail an event!',
-  date = 'Monday, 24 December 2018',
-  start_time = '16:30',
-  abstract = 'faile Agha faile!',
-  bio = 'Majid Abdollahkhani is an enterprise architect with over 16 years of experience in core banking and FinTech industry fields. He is graduated of Computer Science (information technology) and master of business administration. He joined TOSAN 12 years ago and participated in production and implementation of many banking projects as business and framework developer and later on as software architect and manager, now he is manager of digital banking strategic business unit. He is in charge of implementing the first fully Digital Bank Platform in TOSAN.',
+  postersessions,
+  speakers,
 }) {
-  const { t } = useTranslation('cardDescription', { useSuspense: false });
+  const [postersession, setPostersession] = useState({ title: '', duration: '', start_time: '', abstract: '', speaker: '', tags: [] });
+  const [speaker, setSpeaker] = useState({ picture: '', degree: '', place: '', bio: '', name: '' });
   const id = useParams()['id'];
-  global_id = id;
 
   useEffect(() => {
-    getAnEntityOfModelList(MODEL_LISTS_NAMES.SEMINARS, 2020, id);
+    getAnEntityOfModelList(MODEL_LISTS_NAMES.POSTERSESSIONS, THIS_YEAR, id);
   }, [getAnEntityOfModelList])
 
   useEffect(() => {
-    if (speaker) {
-      getAnEntityOfModelList(MODEL_LISTS_NAMES.SPEAKERS, 2020, speaker);
+    if (postersessions[id]) {
+      setPostersession(postersessions[id]);
+      getAnEntityOfModelList(MODEL_LISTS_NAMES.SPEAKERS, THIS_YEAR, postersessions[id].speaker);
     }
-  }, [speaker])
+  }, [postersessions])
+
+  useEffect(() => {
+    if (speakers.find(s => s.id === postersession.speaker)) {
+      setSpeaker(speakers.find(s => s.id === postersession.speaker))
+    }
+  }, [speakers])
 
   return (
     <section id="main-container" className="main-container">
@@ -46,24 +42,28 @@ function PostersessionDetail({
       <div className="container-fluid px-sm-5 mt-5 diagonal" style={{ background: 'white' }}>
         <div className="container">
           <div className="row pt-5">
-            {picture &&
+            {speaker.picture &&
               <div className="col-md-4 m-0">
-                <img style={{ borderRadius: '5px', width: '100%', boxShadow: '2px -2px 5px gray' }} src={picture} alt='dd' />
+                <img style={{ borderRadius: '5px', width: '100%', boxShadow: '2px -2px 5px gray' }} src={speaker.picture} alt='' />
               </div>
             }
             <div className="col mt-4 d-flex align-items-center">
               <div className="row">
                 <div className="col">
-                  <h4>{name}</h4>
-                  <h6>{`${degree}, ${place}`}</h6>
-                  <h3 className="session-title">{title}</h3>
+                  <h4>{speaker.name}</h4>
+                  <h6>{`${speaker.degree}, ${speaker.place}`}</h6>
+                  <h3 className="session-title">{postersession.title}</h3>
                   <div className="seminar-details">
                     <i className="fa fa-clock-o">&nbsp;</i>
-                    {date}
+                    {
+                      parseInt(moment(postersession.duration, "hh:mm:ss").format(`hh`)) === 12
+                        ? parseInt(moment(postersession.duration, "hh:mm:ss").format(`mm`)) + " minutes"
+                        : parseInt(moment(postersession.duration, "hh:mm:ss").format(`hh`)) * 60 + parseInt(moment(postersession.duration, "hh:mm:ss").format(`mm`)) + " minutes"
+                    }
                   </div>
                   <div className="seminar-details">
                     <i className="fa fa-calendar">&nbsp;</i>
-                    {start_time}
+                    {moment(postersession.start_time, "YYYY-MM-DD hh:mm:ss").format("dddd, MMMM Do, hh:mm a")}
                   </div>
                 </div>
               </div>
@@ -74,12 +74,12 @@ function PostersessionDetail({
               <div className="ts-speaker-session right">
                 <h4>Abstract</h4>
                 <div className="mb-3">
-                  {abstract}
+                  {postersession.abstract}
                 </div>
-                <h4>Bio</h4>
+                {/* <h4>Bio</h4>
                 <span>
-                  {bio}
-                </span>
+                  {speaker.bio}
+                </span> */}
               </div>
             </div>
           </div>
@@ -90,22 +90,11 @@ function PostersessionDetail({
 }
 
 const mapStateToProps = (state, ownProps) => {
-  const seminar = state.WSS.seminars
-    ? state.WSS.seminars[global_id]
-    : {};
-
-  const { title, start_time, duration, abstract, speaker } = seminar;
-
-  const speakerObject = state.WSS.speakers && speaker
-    ? state.WSS.speakers[speaker]
-    : {};
-
-  const { bio, degree, name, picture, place } = speakerObject;
-
   return ({
     isFetching: state.WSS.isFetching,
     isLoggedIn: state.WSS.isLoggedIn,
-    title, start_time, duration, abstract, bio, degree, name, picture, place,
+    speakers: state.WSS.speakers,
+    postersessions: state.WSS.postersessions,
   })
 }
 
@@ -113,6 +102,5 @@ export default connect(
   mapStateToProps,
   {
     getAnEntityOfModelList,
-    getModelList,
   }
-)(PostersessionDetail);
+)(SeminarDetail);

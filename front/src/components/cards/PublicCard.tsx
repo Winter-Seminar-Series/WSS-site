@@ -4,25 +4,29 @@ import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import Like from './Like';
 
-function PublicCard({ speaker }) {
-  console.log(speaker)
-
-  const {
-    name,
-    degree,
-    place,
-    picture = 'https://wss.ce.sharif.edu/media/human_pictures/moshiri.jpg',
-    isLoggedIn = 'false',
-    didLikedThis = 'false',
-    showLikeButton = true,
-  } = speaker;
-
-
-  const cardRef = useRef(null);
+function PublicCard({
+  id,
+  presentationLink = '',
+  isStaff = false,
+  speakers,
+  staff,
+}) {
+  const [person, setPerson] = useState({ picture: 'https://wss.ce.sharif.edu/media/human_pictures/moshiri.jpg', name: 'ali', degree: 'coder', place: 'isfahan' });
 
   useEffect(() => {
+    if (isStaff && staff.find(s => s.id === id)) {
+      setPerson(staff.find(s => s.id === id));
+    }
+    if (!isStaff && speakers.find(s => s.id === id)) {
+      setPerson(speakers.find(s => s.id === id));
+    }
+  }, [speakers, staff])
+
+  const cardRef = useRef(null);
+  useEffect(() => {
+    var card = cardRef.current;
+    if (!card) return;
     setTimeout(() => {
-      var card = cardRef.current;
       card.classList.add('is-loaded');
     }, 1000);
   }, [cardRef]);
@@ -30,12 +34,14 @@ function PublicCard({ speaker }) {
   return (
     <div id="public-card">
       <div className="card">
-        <a className="card-image" ref={cardRef} href="#">
-          <img src={picture} alt="" />
+        <a className="card-image" ref={cardRef} href={presentationLink}>
+          <img src={person.picture} alt="" />
         </a>
         <div className="card-description">
-          <h2>{name}</h2>
-          <p>{`${degree}, ${place}`}</p>
+          <h2>{person.name}</h2>
+          {!isStaff &&
+            <p>{`${person.degree}, ${person.place}`}</p>
+          }
           {/* <div className='like'>
               <span>
                 add to your favorite
@@ -48,25 +54,13 @@ function PublicCard({ speaker }) {
   );
 }
 
-const mapStateToProps = (state, ownProps) => {
-  const {
-    name,
-    title,
-    image,
-    description,
-    didLikedThis,
-    showButton,
-  } = ownProps;
-  const { isLoggedIn } = state.account;
-  return {
-    name,
-    title,
-    image,
-    description,
-    didLikedThis,
-    showButton,
-    isLoggedIn,
-  };
-};
+const mapStateToProps = (state, ownProps) => ({
+  id: ownProps.id,
+  person: ownProps,
+  speakers: state.WSS.speakers,
+  staff: state.WSS.staff,
+});
 
-export default connect(mapStateToProps, {})(PublicCard);
+export default connect(
+  mapStateToProps,
+  {})(PublicCard);
