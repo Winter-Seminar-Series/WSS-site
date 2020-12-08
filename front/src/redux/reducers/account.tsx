@@ -32,6 +32,7 @@ function Account(state = initState, action) {
       console.log(action.response);
       return {
         isFetching: false,
+        isLoggedIn: false,
       };
 
     ///////////////////
@@ -53,6 +54,7 @@ function Account(state = initState, action) {
     case actionTypes.LOGIN_FAILURE:
       console.log(action.response);
       return {
+        isLoggedIn: false,
         isFetching: false,
       };
 
@@ -94,6 +96,7 @@ function Account(state = initState, action) {
           // typePayment: action.response.typePayment,
         },
       };
+
     case actionTypes.REMOVE_PAYMENT_DATA:
       return {
         ...state,

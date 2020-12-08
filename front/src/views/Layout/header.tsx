@@ -13,7 +13,7 @@ const Header = ({ isLoggedIn }) => {
     // { title: 'Schedule', persianTitle: 'برنامه زمانی', link: '/schedule' },
     { title: 'Staff', persianTitle: 'استف', link: '/staff' },
     {
-      title: 'Sign Up',
+      title: 'Register',
       persianTitle: 'ثبت‌نام',
       link: '/register',
       style: 'active',

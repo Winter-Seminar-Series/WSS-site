@@ -55,11 +55,11 @@ function Sidebar({ logout }) {
               <span className="d-none d-md-block">{s.title}</span>
             </span>
           ) : (
-            <a href={s.link} key={s.title} className="sidebar-item">
-              <span className={`icon ml-2 fa fa-${s.icon}`}></span>
-              <span className="d-none d-md-block">{s.title}</span>
-            </a>
-          )
+              <a href={s.link} key={s.title} className="sidebar-item">
+                <span className={`icon ml-2 fa fa-${s.icon}`}></span>
+                <span className="d-none d-md-block">{s.title}</span>
+              </a>
+            )
         )}
         <span key="logout" className="sidebar-item" onClick={doLogout}>
           <span className={`icon ml-2 fa fa-sign-out`}></span>
@@ -70,9 +70,15 @@ function Sidebar({ logout }) {
   );
 }
 
-export default connect(() => {}, {
-  logout,
-})(Sidebar);
+const mapStateToProps = (state, ownProps) => {
+
+}
+
+export default connect(
+  mapStateToProps,
+  {
+    logout,
+  })(Sidebar);
 
 interface SidebarItem {
   title: string;
