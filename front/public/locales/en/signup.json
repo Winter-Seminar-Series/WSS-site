@@ -4,7 +4,7 @@
   "email": "email",
   "password": "password",
   "confirmPassword": "confirm password",
-  "submit": "sign up",
+  "submit": "register",
   "signinBefore": "if you have signed up before",
   "click": "click here"
 }
