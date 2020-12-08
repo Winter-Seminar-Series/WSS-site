@@ -5,10 +5,11 @@ import { THIS_YEAR } from '../constants/info';
 import { Speaker } from '../models/wss';
 import { getModelList, MODEL_LISTS_NAMES } from '../redux/actions/WSS';
 
-const Speakers = ({ getWSSPrimitiveFields, getModelList, speakers }) => {
+const Speakers = ({ getWSSPrimitiveFields, getModelList, speakers, isFetching }) => {
   useEffect(() => {
     getModelList(MODEL_LISTS_NAMES.SPEAKERS, THIS_YEAR);
   }, [getWSSPrimitiveFields]);
+
   return (
     <>
       <section
@@ -27,7 +28,12 @@ const Speakers = ({ getWSSPrimitiveFields, getModelList, speakers }) => {
               ))}
             </div>
           )}
-          {!speakers?.length && (
+          {isFetching && (
+            <div className="row">
+              <div className="col">Loading...</div>
+            </div>
+          )}
+          {!speakers && !isFetching && (
             <div className="row">
               <div className="col">Nothing has been added yet</div>
             </div>
