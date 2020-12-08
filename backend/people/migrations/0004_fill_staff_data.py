@@ -122,8 +122,8 @@ def forwards(apps, schema_editor):
         picture='media/2020/staff/Mahdieh-Ebrahimpoor.jpg'
     )
     Staff.objects.create(
-        name='Roya Aghvami',
-        picture='media/2020/staff/Roya-Aghvami.jpg'
+        name='Roya Ghavami',
+        picture='media/2020/staff/Roya-Ghavami.jpg'
     )
     Staff.objects.create(
         name='Sara Zahedi',
@@ -191,7 +191,7 @@ def rollback(apps, schema_editor):
             'Esmaeil Pahang',
             'Hamila Meili',
             'Mahdieh Ebrahimpoor',
-            'Roya Aghvami',
+            'Roya Ghavami',
             'Sara Zahedi',
             'Hossein Aghamohammadi',
             'Vahid Zehtab',

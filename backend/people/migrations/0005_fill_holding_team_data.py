@@ -15,7 +15,7 @@ def forwards(apps, schema_editor):
         'Network': ['Amirhossein Hadian', 'Amirmohammad Imani', 'Sajjad Rezvani', 'Shima Ramadani', 'Mehdi Jalali', 'Sara Azarnoosh', 'Ehsan Movafagh', 'Fatemeh Asgari'],
         'Branding': ['Seyed Alireza Hosseini'],
         'Social': ['Sara Azarnoosh', 'Dorna Dehghani', 'Ghazal Shenavar', 'Helia Akhtarkavian', 'Sabiheh Tajdari', 'Sahel Messforoosh', 'Esmaeil Pahang'],
-        'Media': ['Hamila Meili', 'Mahdieh Ebrahimpoor', 'Roya Aghvami', 'Sara Zahedi', 'Hossein Aghamohammadi'],
+        'Media': ['Hamila Meili', 'Mahdieh Ebrahimpoor', 'Roya Ghavami', 'Sara Zahedi', 'Hossein Aghamohammadi'],
         'Presentation Management': ['Alireza Ziaei', 'Amirhossein Asem Yousefi', 'Vahid Zehtab', 'Sajjad Rezvani'],
     }
 
