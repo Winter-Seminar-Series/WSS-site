@@ -4,7 +4,7 @@ from polymorphic.models import PolymorphicModel
 
 class Human(PolymorphicModel):
     name = models.CharField(max_length=40)
-    picture = models.ImageField(upload_to='human_pictures/', null=True, blank=True)
+    picture = models.CharField(max_length=200, null=True, blank=True)
 
     def __str__(self):
         return self.name
@@ -14,7 +14,7 @@ class Human(PolymorphicModel):
 
     @property
     def picture_url(self):
-        return self.picture.url if self.picture else None
+        return self.picture
 
 
 class Speaker(Human):
