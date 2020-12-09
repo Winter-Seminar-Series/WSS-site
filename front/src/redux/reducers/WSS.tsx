@@ -16,20 +16,38 @@ const initState = {
   showStats: undefined,
   calendarLink: undefined,
 
-  // workshops: [],
-  // workshops_count: 0,
-  // seminars: [],
-  // seminars_count: 0,
-  // postersessions: [],
-  // postersessions_count: 0,
-  // sponsorships: [],
-  // sponsorships_count: 0,
-  // clips: [],
-  // clips_count: 0,
-  // holding_teams: [],
-  // holding_teams_count: 0,
-  // images: [],
-  // images_count: 0,
+  workshops: [],
+  workshops_count: 0,
+  workshop_materials: [],
+  workshop_materials_count: 0,
+  seminars: [],
+  seminars_count: 0,
+  seminar_materials: [],
+  seminar_materials_count: 0,
+  speakers: [],
+  speakers_count: 0,
+  postersessions: [],
+  postersessions_count: 0,
+  poster_materials: [],
+  poster_materials_count: 0,
+  sponsors: [],
+  sponsors_count: 0,
+  sponsorships: [],
+  sponsorships_count: 0,
+  clips: [],
+  clips_count: 0,
+  holding_teams: [],
+  holding_teams_count: 0,
+  staff: [],
+  staff_count: 0,
+  images: [],
+  images_count: 0,
+  tags: [],
+  tags_count: 0,
+  announcements: [],
+  announcements_count: 0,
+  venues: [],
+  venues_count: 0,
 };
 
 function WSS(state = initState, action) {
@@ -112,15 +130,17 @@ function WSS(state = initState, action) {
     case actionTypes.AN_ENTITY_OF_MODEL_LIST_REQUEST:
       return {
         ...state,
-        isFetching: false,
+        isFetching: true,
       };
 
     case actionTypes.AN_ENTITY_OF_MODEL_LIST_SUCCESS:
-      const newModelList = state[action.payload.modelListName];
-      newModelList[action.payload.pk] = action.response;
+      const pk = action.payload.pk;
       return {
         ...state,
-        [action.payload.modelListName]: newModelList,
+        [action.payload.modelListName]: {
+          ...[action.payload.modelListName],
+          [pk]: action.response,
+        }
       };
 
     case actionTypes.AN_ENTITY_OF_MODEL_LIST_FAILURE:

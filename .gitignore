@@ -14,3 +14,4 @@ front/.env.local
 front/.env.development.local
 front/.env.test.local
 front/.env.production.local
+front/package-lock.json

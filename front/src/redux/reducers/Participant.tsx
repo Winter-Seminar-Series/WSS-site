@@ -29,6 +29,7 @@ function Participant(state = initState, action) {
       };
     case actionTypes.GET_PROFILE_SUCCESS:
       return {
+        ...state,
         isFetching: false,
         username: action.response.username,
         email: action.response.email,
@@ -45,13 +46,15 @@ function Participant(state = initState, action) {
         field_of_interest: action.response.field_of_interest,
         grade: action.response.grade,
         is_student: action.response.is_student,
-        favorite_tags: action.response.favourite_tags,
+        favorite_tags: action.response.favorite_tags,
       };
 
     case actionTypes.GET_PROFILE_FAILURE:
       return {
         isFetching: false,
       };
+
+    /////////////////////////
 
     case actionTypes.UPDATE_PROFILE_REQUEST:
       return {
@@ -60,6 +63,7 @@ function Participant(state = initState, action) {
 
     case actionTypes.UPDATE_PROFILE_SUCCESS:
       return {
+        ...state,
         isFetching: false,
         username: action.response.username,
         email: action.response.email,
@@ -76,13 +80,14 @@ function Participant(state = initState, action) {
         field_of_interest: action.response.field_of_interest,
         grade: action.response.grade,
         is_student: action.response.is_student,
-        favorite_tags: action.response.favourite_tags,
+        favorite_tags: action.response.favorite_tags,
       };
 
     case actionTypes.UPDATE_PROFILE_FAILURE:
       return {
         isFetching: false,
       };
+
     default:
       return state;
   }

@@ -56,9 +56,11 @@ function Login({ login, isLoggedIn, isFetching }) {
             {t('submit')}
           </button>
           <div className="linkbar">
-            <span className="mr-1">{t('hasntSignedup')}</span>
-            <a className="link" href="/register">
-              {t('click')}
+            <span className="mr-1">
+              If you haven't signed up yet,
+            </span>
+            <a className="link" href="/pre-registration">
+              click here
             </a>
           </div>
         </div>

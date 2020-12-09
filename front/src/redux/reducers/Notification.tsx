@@ -34,6 +34,15 @@ function Notification(state = {}, action) {
     case actionTypes.VERIFY_PAYMENT_SUCCESS:
       toast.success('Your payment has been successfully done');
       return { ...state };
+
+    case actionTypes.UPDATE_PROFILE_SUCCESS:
+      toast.success('Your profile updated successfully');
+      return { ...state };
+
+    case actionTypes.UPDATE_PROFILE_FAILURE:
+      toast.success('Something went wrong, your profile didn\'t update');
+      return { ...state };
+
     default:
       return state;
   }
