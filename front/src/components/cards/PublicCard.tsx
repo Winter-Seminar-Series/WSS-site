@@ -13,7 +13,7 @@ function PublicCard({
   speakers,
   staff,
 }) {
-  const [person, setPerson] = useState({ picture: 'https://wss.ce.sharif.edu/media/human_pictures/moshiri.jpg', name: 'ali', degree: 'coder', place: 'isfahan' });
+  const [person, setPerson] = useState({ picture: '', name: 'ali', degree: 'coder', place: 'isfahan' });
 
   useEffect(() => {
     if (isStaff && staff.find(s => s.id === id)) {
@@ -33,11 +33,12 @@ function PublicCard({
     }, 1000);
   }, [cardRef]);
 
+
   return (
     <div id="public-card">
       <div className="card">
         <a className="card-image" ref={cardRef} href={presentationLink}>
-          <img src={BASE_URL + person.picture} alt="" />
+          <img src={person.picture ? process.env.PUBLIC_URL + person.picture : `${process.env.PUBLIC_URL + '/images/icons/avatar.jpg'}`} alt="" />
         </a>
         <div className="card-description">
           <h2>{person.name}</h2>

@@ -13,33 +13,33 @@ function Sidebar({ logout }) {
 
   const sidebarItems: SidebarItem[] = [
     {
-      title: 'Seminar Registration',
+      title: 'Registration',
       persianTitle: 'ثبت‌نام رویداد',
       link: '/dashboard/seminar-registration',
       icon: 'calendar-o',
     },
+    // {
+    //   title: 'Workshop Registration',
+    //   persianTitle: 'ثبت‌نام کارگاه',
+    //   link: '/dashboard/workshop-registration',
+    //   icon: 'calendar',
+    // },
+    // {
+    //   title: 'Your Seminars',
+    //   persianTitle: 'سمینار‌های شما',
+    //   link: '/dashboard/seminar-list',
+    //   icon: 'bookmark-o',
+    //   deactive: true,
+    // },
+    // {
+    //   title: 'Your Workshops',
+    //   persianTitle: 'کارگاه‌های شما',
+    //   link: '/dashboard/workshop-list',
+    //   icon: 'bookmark-o',
+    //   deactive: true,
+    // },
     {
-      title: 'Workshop Registration',
-      persianTitle: 'ثبت‌نام کارگاه',
-      link: '/dashboard/workshop-registration',
-      icon: 'calendar',
-    },
-    {
-      title: 'Your Seminars',
-      persianTitle: 'سمینار‌های شما',
-      link: '/dashboard/seminar-list',
-      icon: 'bookmark-o',
-      deactive: true,
-    },
-    {
-      title: 'Your Workshops',
-      persianTitle: 'کارگاه‌های شما',
-      link: '/dashboard/workshop-list',
-      icon: 'bookmark-o',
-      deactive: true,
-    },
-    {
-      title: 'profile',
+      title: 'Profile',
       persianTitle: 'پروفایل',
       link: '/dashboard/profile',
       icon: 'user-circle-o',
@@ -63,7 +63,7 @@ function Sidebar({ logout }) {
         )}
         <span key="logout" className="sidebar-item" onClick={doLogout}>
           <span className={`icon ml-2 fa fa-sign-out`}></span>
-          <span className="d-none d-md-block">logout</span>
+          <span className="d-none d-md-block">Logout</span>
         </span>
       </div>
     </>

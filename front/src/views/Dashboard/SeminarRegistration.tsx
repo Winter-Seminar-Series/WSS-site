@@ -1,77 +1,85 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { toast } from 'react-toastify';
-import { sendPaymentRequest } from '../../redux/actions/account';
-import { updateProfile } from '../../redux/actions/participant';
-
-function SeminarRegistration({
+import { THIS_YEAR } from '../../constants/info';
+import {
+  getProfile,
+  updateProfile
+} from '../../redux/actions/participant';
+import {
   sendPaymentRequest,
+} from '../../redux/actions/account'
+
+function Registration({
   updateProfile,
+  getProfile,
+  sendPaymentRequest,
   isFetching,
-  username,
-  email,
-  first_name,
-  last_name,
-  phone_number,
-  job,
-  university,
+  first_name: inputFirstName,
+  last_name: inputLastName,
+  university: inputUniversity,
+  introduction_method: inputIntroductionMethod,
+  gender: inputGender,
+  grade: inputGrade,
+  city: inputCity,
+  email: inputEmail,
 }) {
   const { t } = useTranslation('seminarRegistration', { useSuspense: false });
-  const degreeTypes = ['Doctorate', 'Master', 'Bachelor', 'Other'];
-  const [form_email, setEmail] = React.useState(email);
-  const [form_first_name, setFirstName] = React.useState(first_name);
-  const [form_last_name, setLastName] = React.useState(last_name);
-  const [form_phone_number, setPhoneNumber] = React.useState(phone_number);
-  const [form_university, setUniversity] = React.useState(university);
-  const [form_job, setJob] = React.useState(job);
-  const [degree, setDegree] = React.useState(degreeTypes[0]);
+  const gradeTypes = ['Doctorate', 'Master', 'Bachelor', 'Other'];
+  const genderTypes = ['Male', 'Female'];
+  const [first_name, setFirstName] = React.useState(inputFirstName);
+  const [last_name, setLastName] = React.useState(inputLastName);
+  const [gender, setGender] = React.useState(inputGender ? inputGender : genderTypes[0]);
+  const [grade, setGrade] = React.useState(inputGrade ? inputGrade : gradeTypes[0]);
+  const [university, setUniversity] = React.useState(inputUniversity);
+  const [email, setEmail] = React.useState(inputEmail);
+  const [introduction_method, setIntroduction_method] = React.useState(inputIntroductionMethod);
+  const [city, setCity] = React.useState(inputCity);
   const [agree, setAgree] = React.useState(false);
-  //todo autofill
-  const register = () => {
-    if (!agree) {
-      toast.error('You should agree to terms and conditions');
-      return;
-    } else if (
+
+
+  useEffect(() => {
+    getProfile();
+  }, [getProfile])
+
+  const submitInfo = () => {
+    if (
       !(
-        form_email &&
-        form_first_name &&
-        form_last_name &&
-        form_phone_number &&
-        form_university &&
-        form_job &&
-        degree
+        first_name &&
+        last_name &&
+        gender &&
+        grade &&
+        university &&
+        city &&
+        introduction_method
       )
     ) {
-      toast.error('Please fill all the fields');
+      toast.error('Please fill all the required fields');
+      return;
+    } else if (agree) {
+      toast.error('You should agree to our terms and conditions');
       return;
     }
-    // updateProfile({
-    //   email,
-    //   first_name,
-    //   last_name,
-    //   phone_number,
-    //   university,
-    //   job,
-    //   degree,
-    // });
-    sendPaymentRequest();
+
+    updateProfile({
+      first_name,
+      last_name,
+      gender,
+      grade,
+      university,
+      city,
+      introduction_method,
+    });
+
+    sendPaymentRequest(THIS_YEAR);
   };
   return (
     <>
       <div className="seminar-register-title background-theme d-flex align-items-center">
         <div className="header ml-3">
-          <div className="event">
-            WSS 2020
-            {/* {t('event')} */}
-          </div>
           <div className="title">
-            Seminar Registration
-            {/* {t('title')} */}
-          </div>
-          <div className="date">
-            23 december, 2020
-            {/* {t('date')} */}
+            Registration
           </div>
         </div>
       </div>
@@ -79,7 +87,7 @@ function SeminarRegistration({
         <div className="row">
           <div className="col-12 mb-3 col-lg mb-lg-0">
             <input
-              value={form_first_name}
+              value={first_name}
               onChange={(e) => setFirstName(e.target.value)}
               type="text"
               className="text-input form-control"
@@ -88,7 +96,7 @@ function SeminarRegistration({
           </div>
           <div className="col-12 col-lg">
             <input
-              value={form_last_name}
+              value={last_name}
               onChange={(e) => setLastName(e.target.value)}
               type="text"
               className="text-input form-control"
@@ -96,30 +104,12 @@ function SeminarRegistration({
             />
           </div>
         </div>
+
+
         <div className="row">
           <div className="col-12 mb-3 col-lg mb-lg-0">
             <input
-              value={form_email}
-              onChange={(e) => setEmail(e.target.value)}
-              type="email"
-              className="text-input form-control"
-              placeholder="Email"
-            />
-          </div>
-          <div className="col-12 col-lg">
-            <input
-              value={form_phone_number}
-              onChange={(e) => setPhoneNumber(e.target.value)}
-              type="tel"
-              className="text-input form-control"
-              placeholder="Phone Number"
-            />
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-12 mb-3 col-lg mb-lg-0">
-            <input
-              value={form_university}
+              value={university}
               onChange={(e) => setUniversity(e.target.value)}
               type="text"
               className="text-input form-control"
@@ -128,36 +118,84 @@ function SeminarRegistration({
           </div>
           <div className="col-12 col-lg">
             <input
-              value={form_job}
-              onChange={(e) => setJob(e.target.value)}
+              value={city}
+              onChange={(e) => setCity(e.target.value)}
               type="text"
               className="text-input form-control"
-              placeholder="Job"
+              placeholder="City"
             />
           </div>
         </div>
 
-        <div className="degree row align-items-center">
-          <div className="col-auto form-label pt-0 mr-3">Degree</div>
-          <div className="col-auto dropdown">
-            <button
-              className="btn dropdown-toggle"
-              type="button"
-              id="dropdownMenuButton"
-              data-toggle="dropdown"
-              aria-haspopup="true"
-              aria-expanded="false">
-              {degree}
-            </button>
-            <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-              {degreeTypes.map((d, index) => (
-                <a
-                  key={index}
-                  className="dropdown-item"
-                  onClick={() => setDegree(d)}>
-                  {d}
-                </a>
-              ))}
+
+        <div className="row">
+          <div className="col-12 mb-3 col-lg mb-lg-0">
+            <input
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              type="email"
+              className="text-input form-control"
+              placeholder="Email"
+            />
+          </div>
+          <div className="col-12 mb-3 col-lg mb-lg-0">
+            <input
+              value={introduction_method}
+              onChange={(e) => setIntroduction_method(e.target.value)}
+              type="text"
+              className="text-input form-control"
+              placeholder="Introduction method"
+            />
+          </div>
+        </div>
+
+        <div className="row">
+          <div className='col-6 col-lg'>
+            <div className="form-label pt-0 mr-3">Gender:</div>
+            <div className="dropdown">
+              <button
+                className="btn dropdown-toggle"
+                type="button"
+                id="dropdownMenuButton"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false">
+                {gender}
+              </button>
+              <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                {genderTypes.map((d, index) => (
+                  <a
+                    key={index}
+                    className="dropdown-item"
+                    onClick={() => setGender(d)}>
+                    {d}
+                  </a>
+                ))}
+              </div>
+            </div>
+          </div>
+          <div className='col-6 col-lg'>
+            <div className="form-label pt-0 mr-3">Grade:</div>
+            <div className="dropdown">
+              <button
+                className="btn dropdown-toggle"
+                type="button"
+                id="dropdownMenuButton"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false">
+                {grade}
+              </button>
+              <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                {gradeTypes.map((d, index) => (
+                  <a
+                    key={index}
+                    className="dropdown-item"
+                    onClick={() => setGrade(d)}>
+                    {d}
+                  </a>
+                ))}
+              </div>
             </div>
           </div>
         </div>
@@ -177,10 +215,11 @@ function SeminarRegistration({
           </div>
         </div>
         <button
+          disabled={isFetching}
           type="button"
           className="btn btn-lg btn-primary btn-dark mb-5"
-          onClick={register}>
-          {t('submit')}
+          onClick={submitInfo}>
+          Go For Payment
         </button>
       </form>
     </>
@@ -190,45 +229,32 @@ function SeminarRegistration({
 const mapStateToProps = (state, ownProps) => {
   const {
     isFetching,
-    username,
-    email,
     first_name,
     last_name,
-    phone_number,
-    age,
-    job,
     university,
     introduction_method,
     gender,
     city,
-    country,
-    field_of_interest,
     grade,
-    is_student,
-    favorite_tags,
+    email,
   } = state.Participant;
   return {
     isFetching,
-    username,
-    email,
     first_name,
     last_name,
-    phone_number,
-    age,
-    job,
     university,
     introduction_method,
     gender,
     city,
-    country,
-    field_of_interest,
     grade,
-    is_student,
-    favorite_tags,
+    email,
   };
 };
 
-export default connect(mapStateToProps, {
-  sendPaymentRequest,
-  updateProfile,
-})(SeminarRegistration);
+export default connect(
+  mapStateToProps,
+  {
+    getProfile,
+    updateProfile,
+    sendPaymentRequest,
+  })(Registration);

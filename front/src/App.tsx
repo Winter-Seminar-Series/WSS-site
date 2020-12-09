@@ -24,13 +24,13 @@ function App() {
       <Switch>
         <Route path="/seminar/:id" component={SeminarDetail} />
         <Route path="/workshop/:id" component={WorkshopDetail} />
-        <Route path="/postersession/:id" component={PostersessionDetail} />
+        {/* <Route path="/postersession/:id" component={PostersessionDetail} /> */}
         <Route path="/workshops" component={Workshops} />
         <Route path="/about" component={About} />
         <Route path="/seminars" component={Seminars} />
         <Route path="/staffs" component={Staffs} />
-        <Route path="/postersessions/" component={Postersessions} />
-        <Route path="/register" component={Register} />
+        {/* <Route path="/postersessions/" component={Postersessions} /> */}
+        <Route path="/pre-registration" component={Register} />
         <Route path="/login" component={Login} />
         <PrivateRoute path="/dashboard" component={Dashboard}></PrivateRoute>
         <Route path="/" component={Home} />

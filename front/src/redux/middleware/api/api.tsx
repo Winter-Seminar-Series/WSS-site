@@ -55,6 +55,7 @@ export default ({ getState }) => (next) => async (action) => {
         })
       );
     }
+    console.log("SSS")
     return next(
       actionWith({
         payload,
