@@ -55,7 +55,7 @@ function Registration({
         introduction_method
       )
     ) {
-      toast.error('Please fill all the required fields');
+      toast.error('Please fill all the fields');
       return;
     } else if (agree) {
       toast.error('You should agree to our terms and conditions');
