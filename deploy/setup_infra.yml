@@ -77,9 +77,22 @@
           - docker
           - sudo
 
+    - name: Create docker config parent directory
+      file:
+        path: /etc/systemd/system/docker.service.d/
+        state: directory
+
+    - name: Add docker.ir proxy config
+      copy:
+        content: |
+          [Service]
+          Environment="HTTP_PROXY=http://Proxy.Docker.ir:5555"
+        dest: /etc/systemd/system/docker.service.d/http-proxy.conf
+        
+
     # Ansible 'service' module didn't work after 1 week try!
     - name: Restart docker manually!
-      shell: "service docker start"
+      shell: "systemctl daemon-reload && service docker restart"
 
     - name: Post check
       command: "{{ item }}"

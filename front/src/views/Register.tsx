@@ -88,12 +88,14 @@ function Register({ register, isLoggedIn, isFetching }) {
             disabled={isFetching}
             type="submit"
             className="btn btn-lg btn-primary btn-dark mb-5">
-            {t('submit')}
+            Register
           </button>
           <div className="linkbar">
-            <span className="mr-1">{t('signinBefore')}</span>
+            <span className="mr-1">
+              If you haven't signed up yet,
+            </span>
             <a className="link" href="/login">
-              {t('click')}
+              click here
             </a>
           </div>
         </div>
