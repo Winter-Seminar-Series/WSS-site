@@ -51,7 +51,7 @@ services:
     volumes:
       - frontend_vol:/mnt/frontend/
   static-data-provider:
-    image: sharifwss/static-data-provider:latest
+    image: sharifwss/static-data-provider:$STATIC_DATA_PROVIDER_IMAGE_VERSION
     build: ./static-data-provider/
     volumes:
       - media_vol:/mnt/media/

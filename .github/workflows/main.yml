@@ -28,6 +28,15 @@ jobs:
           --version snapshot-$GITHUB_RUN_ID
           --docker-user $DOCKER_USERNAME
           --docker-pass ${{ secrets.DOCKER_PASSWORD }}
+  build-static-data-provider:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+      - run: ./.github/scripts/build.sh
+          --service-name static-data-provider
+          --version snapshot-$GITHUB_RUN_ID
+          --docker-user $DOCKER_USERNAME
+          --docker-pass ${{ secrets.DOCKER_PASSWORD }}
   smoke-test-backend:
     needs: build-backend
     runs-on: ubuntu-20.04
@@ -57,6 +66,17 @@ jobs:
           --service-name frontend
           --src-tag snapshot-$GITHUB_RUN_ID
           --release-tag $RELEASE_VERSION
+          --docker-user $DOCKER_USERNAME
+          --docker-pass ${{ secrets.DOCKER_PASSWORD }}
+  release-static-data-provider:
+    needs: build-static-data-provider
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+      - run: ./.github/scripts/release-image.sh
+          --service-name static-data-provider
+          --src-tag snapshot-$GITHUB_RUN_ID
+          --release-tag latest
           --docker-user $DOCKER_USERNAME
           --docker-pass ${{ secrets.DOCKER_PASSWORD }}
   test-deploy:
