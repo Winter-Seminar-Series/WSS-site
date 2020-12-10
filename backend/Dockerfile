@@ -8,6 +8,7 @@ RUN apt-get update && cat /tmp/requirements-apt.txt | xargs apt-get install -y
 COPY requirements-pip.txt /tmp/
 RUN pip install -r /tmp/requirements-pip.txt
 COPY . ./
+RUN WSS_SECRET_KEY=dummy python manage.py collectstatic
 RUN chmod +x ./run.sh
 
 CMD ./run.sh
