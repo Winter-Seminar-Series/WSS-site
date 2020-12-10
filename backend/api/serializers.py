@@ -1,4 +1,4 @@
-from rest_framework.serializers import ModelSerializer
+from rest_framework.serializers import ModelSerializer, Serializer, CharField
 from events.models import *
 from people.models import HoldingTeam, Speaker, Staff
 from WSS.models import *
@@ -104,14 +104,12 @@ class ImageSerializer(ModelSerializer):
         fields = '__all__'
 
 
-# User Serializer
 class UserSerializer(ModelSerializer):
     class Meta:
         model = User
         fields = ('id', 'username', 'email')
 
 
-# Register Serializer
 class RegisterSerializer(ModelSerializer):
     class Meta:
         model = User
@@ -126,6 +124,14 @@ class RegisterSerializer(ModelSerializer):
         user_profile.save()
 
         return user
+
+
+class ChangePasswordSerializer(Serializer):
+    model = User
+
+    old_password = CharField(required=True)
+    new_password = CharField(required=True)
+
 
 class VenueSerializer(ModelSerializer):
     class Meta:
