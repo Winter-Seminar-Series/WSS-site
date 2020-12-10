@@ -416,6 +416,67 @@ Allows to update an authenticated user's password
   }
   ```
 
+### Reset Password
+Sends a token to the user's email to verify and set a new password
+  - Example
+  ```HTTP
+  POST /api/password_reset/
+  {
+    "email": "user@email.wss"
+  }
+  ```
+  - Success
+  ```HTTP
+  HTTP 200 OK
+  {
+    "status": "OK"
+  }
+  ```
+  - Failure: no user with that email exists:
+  ```HTTP
+  HTTP 400 Bad Request
+  {
+    "email": [
+      "There is no active user associated with this e-mail address or the password can not be changed"
+    ]
+  }
+  ```
+Now sending the token and the new password should be as described below:
+  - Example
+  ```HTTP
+  POST /api/password_reset/confirm/
+  {
+    "password": "newpassword",
+    "token": "31198ab141"
+  }
+  ```
+  - Success
+  ```HTTP
+  HTTP 200 OK
+  {
+    "status": "OK"
+  }
+  ```
+  - Failure: 
+      - invalid token:
+      ```HTTP
+      HTTP 400 Bad Request
+      {
+        "status": "notfound"
+      }
+      ```
+      - not strong enough password!:
+      ```HTTP
+      HTTP 400 Bad Request
+      {
+        "password": [
+           "The password is too similar to the username.",
+           "This password is too short. It must contain at least 8 characters.",
+           "This password is too common."
+        ]
+      }
+      ```
+
 ## User Profile APIs
 
 These API set is authorized, i.e. the user should be logged in to use these APIs.
