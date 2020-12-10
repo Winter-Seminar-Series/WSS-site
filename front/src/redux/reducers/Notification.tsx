@@ -23,9 +23,9 @@ function Notification(state = {}, action) {
       toast.error('Registration failed');
       return { ...state };
 
-    case actionTypes.LOGOUT_SUCCESS:
-      toast.error('You logged out successfully');
-      return { ...state };
+    // case actionTypes.LOGOUT_SUCCESS:
+    //   toast.success('Hope you comeback soon');
+    //   return { ...state };
 
     // case actionTypes.REDIRECT_WHEN_USER_IS_NOT_LOGGED:
     //   toast.warning('You must log in before see that page');
@@ -36,11 +36,11 @@ function Notification(state = {}, action) {
       return { ...state };
 
     case actionTypes.UPDATE_PROFILE_SUCCESS:
-      toast.success('Your profile updated successfully');
+      toast.success('Your information updated successfully');
       return { ...state };
 
     case actionTypes.UPDATE_PROFILE_FAILURE:
-      toast.success('Something went wrong, your profile didn\'t update');
+      toast.error('Something went wrong, your information didn\'t update');
       return { ...state };
 
     default:
