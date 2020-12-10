@@ -368,13 +368,17 @@ class PaymentViewSet(viewsets.ViewSet):
 
                 # Notify user about successful payment
                 user = participant.user_profile.user
-                send_mail(
+                
+                import threading
+                threading.Thread(target=lambda: send_mail(
                     PAYMENT_SUBJECT, 'text content',
                     settings.EMAIL_HOST_USER,
                     [user.email],
                     fail_silently=True,
-                    html_message=PAYMENT_HTML_CONTENT.format(user.first_name, participant.payment_ref_id)
+                    html_message=PAYMENT_HTML_CONTENT.format(
+                        user.first_name, participant.payment_ref_id)
                 )
+                ).start()
                 
                 return Response({
                     "message": 'OK',
