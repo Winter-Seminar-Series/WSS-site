@@ -10,8 +10,11 @@ DOCKER_PASS=
 function main() {
   inflate_options "$@"
 
+  # Set all versions to the given version, so that any of them if built is tagged by that version.
   export WEB_IMAGE_VERSION=$VERSION
   export FRONT_IMAGE_VERSION=$VERSION
+  export STATIC_DATA_PROVIDER_IMAGE_VERSION=$VERSION
+
   echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin
   docker-compose build $SERVICE_NAME
   docker-compose push $SERVICE_NAME

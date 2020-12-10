@@ -11,7 +11,7 @@ from django.http import JsonResponse
 from django.conf import settings
 from abc import ABC, abstractmethod
 from api import serializers
-from events.models import Workshop, WssTag, Venue, SeminarMaterial, PosterMaterial, WorkshopMaterial
+from events.models import Workshop, WssTag, Venue, SeminarMaterial, PosterMaterial, WorkshopMaterial, BaseEvent
 from people.models import Speaker, Staff
 from WSS.models import WSS, Participant, UserProfile, Sponsor
 from WSS.payment import send_payment_request, verify
@@ -168,42 +168,45 @@ class VenueViewSet(BaseViewSet):
     serializer = serializers.VenueSerializer
 
     def queryset_selector(self, request, wss):
-        return Venue.objects.all()
+        return wss.events.values_list('venue', flat=True).distinct()
 
 
 class SponsorViewSet(BaseViewSet):
     serializer = serializers.SponsorSerializer
 
     def queryset_selector(self, request, wss):
-        return Sponsor.objects.all()
+        return wss.sponsorships.values_list('sponsor', flat=True).distinct()
 
 
 class SpeakerViewSet(BaseViewSet):
     serializer = serializers.SpeakerSerializer
 
     def queryset_selector(self, request, wss):
-        return Speaker.objects.all()
+        return wss.seminars.values_list('speaker', flat=True)\
+            .union(wss.workshops.values_list('speaker', flat=True))\
+            .union(wss.postersessions.values_list('speaker', flat=True))\
+            .distinct()
 
 
 class SeminarMaterialViewSet(BaseViewSet):
     serializer = serializers.SeminarMaterialSerializer
 
     def queryset_selector(self, request, wss):
-        return SeminarMaterial.objects.all()
+        return wss.seminars.values_list('material', flat=True).distinct()
 
 
 class WorkshopMaterialViewSet(BaseViewSet):
     serializer = serializers.WorkshopMaterialSerializer
 
     def queryset_selector(self, request, wss):
-        return WorkshopMaterial.objects.all()
+        return wss.workshops.values_list('material', flat=True).distinct()
 
 
 class PosterMaterialViewSet(BaseViewSet):
     serializer = serializers.PosterMaterialSerializer
 
     def queryset_selector(self, request, wss):
-        return PosterMaterial.objects.all()
+        return wss.postersessions.values_list('material', flat=True).distinct()
 
 
 class StaffViewSet(BaseViewSet):
@@ -309,7 +312,17 @@ class PaymentViewSet(viewsets.ViewSet):
         if user_profile.participants.filter(current_wss=wss).count() != 0:
             return ErrorResponse({
                 "message": "You already have finished your payment."
-            })  
+            })
+
+        if user_profile.grade is None:
+            return ErrorResponse({
+                "message": "You must specify your grade in your profile before registration."
+            }, status_code=403)
+        
+        if wss.is_capacity_full(user_profile.grade):
+            return ErrorResponse({
+                "message": f"Sorry, {wss} has no more registration capacity."
+            })
         
         amount = wss.registration_fee
         description = f"{settings.PAYMENT_SETTING['description']} {year}"

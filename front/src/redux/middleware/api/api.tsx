@@ -14,7 +14,7 @@ export default ({ getState }) => (next) => async (action) => {
     delete finalAction[CALL_API];
     return finalAction;
   };
-
+  
   const { fetchOptions } = callAPI;
   const { url, types, payload } = callAPI;
   const [requestType, successType, failureType] = types;
@@ -55,6 +55,7 @@ export default ({ getState }) => (next) => async (action) => {
         })
       );
     }
+    console.log("SSS")
     return next(
       actionWith({
         payload,

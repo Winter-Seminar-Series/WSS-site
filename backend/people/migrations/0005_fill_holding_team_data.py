@@ -10,12 +10,12 @@ def forwards(apps, schema_editor):
     HoldingTeam = apps.get_model('people', 'HoldingTeam')
 
     teams_staff = {
-        'Content': ['Mehdi Farvardin', 'Hossein Firooz', 'Sepehr Amini Afshar', 'Farzam Zohdinasab', 'Pooya Moeini', 'Seyed Mohammad mehdi Hatami'],
+        'Content': ['Mahdi Farvardin', 'Hossein Firooz', 'Sepehr Amini Afshar', 'Farzam Zohdinasab', 'Pooya Moeini', 'Seyed Mohammad mehdi Hatami'],
         'Technical': ['Emran Batmanghelich', 'Ahmad Salimi', 'Ali asghar Ghanati', 'Fateme Khashei', 'Alireza Tajmir riahi', 'Mohammad mehdi Barghi', 'Seyed Alireza Hashemi', 'ArhsiA Akhavan'],
         'Network': ['Amirhossein Hadian', 'Amirmohammad Imani', 'Sajjad Rezvani', 'Shima Ramadani', 'Mehdi Jalali', 'Sara Azarnoosh', 'Ehsan Movafagh', 'Fatemeh Asgari'],
         'Branding': ['Seyed Alireza Hosseini'],
         'Social': ['Sara Azarnoosh', 'Dorna Dehghani', 'Ghazal Shenavar', 'Helia Akhtarkavian', 'Sabiheh Tajdari', 'Sahel Messforoosh', 'Esmaeil Pahang'],
-        'Media': ['Hamila Meili', 'Mahdieh Ebrahimpoor', 'Roya Aghvami', 'Sara Zahedi', 'Hossein Aghamohammadi'],
+        'Media': ['Hamila Meili', 'Mahdieh Ebrahimpoor', 'Roya Ghavami', 'Sara Zahedi', 'Hossein Aghamohammadi'],
         'Presentation Management': ['Alireza Ziaei', 'Amirhossein Asem Yousefi', 'Vahid Zehtab', 'Sajjad Rezvani'],
     }
 
