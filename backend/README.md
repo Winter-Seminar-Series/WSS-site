@@ -391,7 +391,30 @@ Allows a POST request containing an Authorization header
   - Note:
       - Tokens expire after 10 hours (which can be modified)
   
-
+### Change Password
+Allows to update an authenticated user's password
+  - Example
+  ```HTTP
+  PUT /api/change-password/
+  {
+    "old_password": "someoldpass",
+    "new_password": "anewpass"
+  }
+  ```
+  - Success
+  ```HTTP
+  HTTP 200 OK
+  {
+    "message": "Password updated successfully"
+  }
+  ```
+  - Failure: if the old password isn't proper:
+  ```HTTP
+  HTTP 400 Bad Request
+  {
+    "message": "Wrong password"
+  }
+  ```
 
 ## User Profile APIs
 
