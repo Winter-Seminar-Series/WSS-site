@@ -1,5 +1,7 @@
 PAYMENT_SUBJECT = 'تاییدیه پرداخت رویداد WSS'
-PAYMENT_HTML_CONTENT  = '''<!DOCTYPE html>
+RESET_PASSWORD_SUBJECT = 'WSS تنظیم مجدد رمز'
+
+BASE_HTML_CONTENT = '''<!DOCTYPE html>
 <html>
     <head>
         <meta name="ROBOTS" content="NOINDEX, NOFOLLOW">
@@ -101,11 +103,7 @@ PAYMENT_HTML_CONTENT  = '''<!DOCTYPE html>
                 <a href="http://wss.ce.sharif.edu" target="_blank" style="text-decoration: none;"><img src="https://s16.picofile.com/file/8414283942/WSS.png" border="0" width="123.5" height="123.25" alt="WSS 2020"></a>
               </div>
           </div>
-          <div class="px-1 py-1" dir="rtl" style="text-align: right;">         
-    شرکت کننده‌ی محترم، {}<br />
-    با تشکر از پرداخت شما<br />
-    شماره‌ی پیگیری: {}
-          </div>
+          <div class="px-1 py-1" dir="rtl" style="text-align: right;">{}</div>
           <footer>
             <div class="text-center px-1 py-1">
                 <div class="py-2 p-relative" id="site">
@@ -123,4 +121,16 @@ PAYMENT_HTML_CONTENT  = '''<!DOCTYPE html>
       </div>
   </body>
 </html>
+'''
+
+PAYMENT_EMAIL = '''
+    شرکت کننده‌ی محترم، {}<br />
+    با تشکر از پرداخت شما<br />
+    شماره‌ی پیگیری: {}
+'''
+
+RESET_PASSWORD_EMAIL = '''
+با سلام، برای تنظیم مجدد رمز خود
+<a href="{}">اینجا</a>
+کلیک کنید
 '''
