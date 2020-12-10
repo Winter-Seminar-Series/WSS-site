@@ -358,8 +358,15 @@ class PaymentViewSet(viewsets.ViewSet):
             })        
 
         if request.query_params.get('Status', None) == 'OK':
+            authority = request.query_params.get('Authority', None)
+            if authority is None:
+                return ErrorResponse({
+                    'message': 'Authority should be passed in query string'
+                }, status_code=403)
+            
             amount = wss.registration_fee
-            result = verify(request.query_params.get('Authority', None), amount)
+
+            result = verify(authority, amount)
             
             if result.Status == 100:
                 participant = Participant(current_wss=wss, user_profile=user_profile,
