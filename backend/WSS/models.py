@@ -25,6 +25,8 @@ class WSS(models.Model):
     booklet = models.OneToOneField(to='Booklet', null=True, blank=True, related_name='+', on_delete=models.SET_NULL)
     main_image = models.OneToOneField(to='Image', null=True, blank=True, related_name='+', on_delete=models.SET_NULL)
     registration_fee = models.PositiveIntegerField(default=10000, validators=[MinValueValidator(1000)])
+    bsOrOther_participant_limit = models.PositiveIntegerField(default=100)
+    msOrPhd_participant_limit = models.PositiveIntegerField(default=100)
 
     class Meta:
         ordering = ('-year',)
@@ -33,6 +35,9 @@ class WSS(models.Model):
 
     def __str__(self):
         return 'WSS {}'.format(self.year)
+    
+    def is_capacity_full(self, grade: str):
+        return Participant.objects.filter(current_wss=self, user_profile__grade=grade).count() >= getattr(self, f"{grade}_participant_limit")
 
     @property
     def main_image_url(self):

@@ -47,7 +47,10 @@ services:
       - static-data-provider
   frontend:
     image: sharifwss/frontend:$FRONT_IMAGE_VERSION
-    build: ./front/
+    build:
+      context: ./front/
+      args:
+        BASE_URL: $BASE_URL
     volumes:
       - frontend_vol:/mnt/frontend/
   static-data-provider:
