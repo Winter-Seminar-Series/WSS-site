@@ -33,10 +33,27 @@ function Profile({
   const [city, setCity] = React.useState(inputCity);
   const [email, setEmail] = React.useState(inputEmail);
 
-
   useEffect(() => {
     getProfile();
   }, [getProfile])
+
+  useEffect(() => {
+    setFirstName(inputFirstName);
+    setLastName(inputLastName);
+    inputGender ? setGender(inputGender) : setGender(genderTypes[0]);
+    inputGrade ? setGrade(inputGrade) : setGrade(gradeTypes[2]);
+    setUniversity(inputUniversity);
+    setEmail(inputEmail);
+    setIntroduction_method(inputIntroductionMethod);
+    setCity(inputCity);
+  }, [inputFirstName,
+    inputLastName,
+    inputUniversity,
+    inputIntroductionMethod,
+    inputGender,
+    inputGrade,
+    inputCity,
+    inputEmail,])
 
   const doUpdateProfile = () => {
     if (
@@ -47,13 +64,13 @@ function Profile({
         grade &&
         university &&
         city &&
-        introduction_method
+        introduction_method &&
+        email
       )
     ) {
       toast.error('Please fill all the required fields');
       return;
     }
-
     updateProfile({
       first_name,
       last_name,
@@ -62,8 +79,10 @@ function Profile({
       university,
       city,
       introduction_method,
+      email,
     });
   };
+
   return (
     <>
       <div className="seminar-register-title background-theme d-flex align-items-center">
@@ -129,7 +148,7 @@ function Profile({
               onChange={(e) => setEmail(e.target.value)}
               type="email"
               className="text-input form-control"
-              placeholder="Introduction method"
+              placeholder="Email"
             />
           </div>
           <div className="col-12 mb-3 col-lg mb-lg-0">
@@ -145,7 +164,7 @@ function Profile({
 
         <div className="row">
           <div className='col-6 col-lg'>
-            <div className="form-label pt-0 mr-3">Gender: *</div>
+            <div className="form-label pt-0 mr-3">Gender:</div>
             <div className="dropdown">
               <button
                 className="btn dropdown-toggle"
@@ -169,7 +188,7 @@ function Profile({
             </div>
           </div>
           <div className='col-6 col-lg'>
-            <div className="form-label pt-0 mr-3">Grade: *</div>
+            <div className="form-label pt-0 mr-3">Grade:</div>
             <div className="dropdown">
               <button
                 className="btn dropdown-toggle"
