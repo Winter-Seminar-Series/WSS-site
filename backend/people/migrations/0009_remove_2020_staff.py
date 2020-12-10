@@ -16,7 +16,7 @@ def forwards(apps, schema_editor):
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('people', '0007_add_ctype_to_speakers'),
+        ('people', '0008_change_picture_to_char'),
     ]
 
     operations = [
