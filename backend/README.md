@@ -140,7 +140,7 @@ GET /api/<year>/payment/request?callback=<callback_url>
 - If the registration's capacity is full, the response will be as bellow:
 
     ```HTTP
-    HTTP 400 Bad Request
+    HTTP 403 Bad Request
     Content-Type: application/json
 
     {

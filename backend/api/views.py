@@ -317,7 +317,7 @@ class PaymentViewSet(viewsets.ViewSet):
         if user_profile.grade is None:
             return ErrorResponse({
                 "message": "You must specify your grade in your profile before registration."
-            })
+            }, status_code=403)
         
         if wss.is_capacity_full(user_profile.grade):
             return ErrorResponse({
