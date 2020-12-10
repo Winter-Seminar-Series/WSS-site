@@ -7,7 +7,7 @@ main() {
   wait_for_db_service
   "$CWD"/manage.py migrate
   sync_static_files
-  "$CWD"/manage.py runserver 0.0.0.0:8000
+  gunicorn --bind :8000 --workers 8 WSS_Site.wsgi:application
 }
 
 wait_for_db_service() {
