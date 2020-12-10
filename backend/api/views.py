@@ -183,10 +183,10 @@ class SpeakerViewSet(BaseViewSet):
     serializer = serializers.SpeakerSerializer
 
     def queryset_selector(self, request, wss):
-        return wss.seminars.values_list('speaker', flat=True)\
+        return Speaker.objects.filter(id__in=wss.seminars.values_list('speaker', flat=True)\
             .union(wss.workshops.values_list('speaker', flat=True))\
             .union(wss.postersessions.values_list('speaker', flat=True))\
-            .distinct()
+            .distinct())
 
 
 class SeminarMaterialViewSet(BaseViewSet):
