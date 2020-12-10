@@ -249,7 +249,7 @@ function Registration({
               id="gridCheck1"
             />
             <label className="form-check-label" htmlFor="gridCheck1">
-              By checking this, I aggree NOT to record any seminars or workshops.
+              By checking this, I agree NOT to record any seminars or workshops.
             </label>
           </div>
         </div>
