@@ -46,20 +46,20 @@ services:
       - $PRIVKEY_PATH:/etc/ssl-files/privkey.pem:ro
     depends_on:
       - web
-  #     - frontend
-  #     - static-data-provider
-  # frontend:
-  #   image: sharifwss/frontend:$FRONT_IMAGE_VERSION
-  #   build: ./front/
-  #   environment:
-  #     - BASE_URL
-  #   volumes:
-  #     - frontend_vol:/mnt/frontend/
-  # static-data-provider:
-  #   image: sharifwss/static-data-provider:$STATIC_DATA_PROVIDER_IMAGE_VERSION
-  #   build: ./static-data-provider/
-  #   volumes:
-  #     - media_vol:/mnt/media/
+      - frontend
+      - static-data-provider
+  frontend:
+    image: sharifwss/frontend:$FRONT_IMAGE_VERSION
+    build: ./front/
+    environment:
+      - BASE_URL
+    volumes:
+      - frontend_vol:/mnt/frontend/
+  static-data-provider:
+    image: sharifwss/static-data-provider:$STATIC_DATA_PROVIDER_IMAGE_VERSION
+    build: ./static-data-provider/
+    volumes:
+      - media_vol:/mnt/media/
 
 networks:
   wss_net:
