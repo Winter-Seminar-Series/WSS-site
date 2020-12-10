@@ -21,7 +21,6 @@ function Profile({
   city: inputCity,
   email: inputEmail,
 }) {
-  const { t } = useTranslation('Registration', { useSuspense: false });
   const gradeTypes = ['PhD or Higher', 'Master', 'Bachelor'];
   const genderTypes = ['Male', 'Female'];
   const introductionTypes = ['Telegram', 'Instagram', 'Facebook', 'Twitter', 'Poster', 'Friends', 'Other'];
@@ -42,7 +41,7 @@ function Profile({
   useEffect(() => {
     setFirstName(inputFirstName);
     setLastName(inputLastName);
-    inputIntroductionMethod ? setIntroduction_method(inputIntroductionMethod) : setIntroduction_method(introductionTypes[0]);
+    inputIntroductionMethod ? setIntroduction_method(inputIntroductionMethod) : setIntroduction_method(introduction_method[0]);
     inputGender ? setGender(inputGender) : setGender(genderTypes[0]);
     inputGrade ? setGrade(inputGrade) : setGrade(gradeTypes[2]);
     setUniversity(inputUniversity);

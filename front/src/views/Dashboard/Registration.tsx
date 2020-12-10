@@ -1,11 +1,13 @@
 import React, { useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { toast } from 'react-toastify';
+import { Redirect } from 'react-router-dom';
+
 import { THIS_YEAR } from '../../constants/info';
 import {
   getProfile,
-  updateProfile
+  updateProfile,
+  doesUserHaveRegistered,
 } from '../../redux/actions/participant';
 import {
   sendPaymentRequest,
@@ -14,6 +16,8 @@ import {
 function Registration({
   updateProfile,
   getProfile,
+  doesUserHaveRegistered,
+  isRegistered,
   sendPaymentRequest,
   isFetching,
   first_name: inputFirstName,
@@ -41,14 +45,15 @@ function Registration({
 
   useEffect(() => {
     getProfile();
+    doesUserHaveRegistered(THIS_YEAR);
   }, [getProfile])
 
   useEffect(() => {
     setFirstName(inputFirstName);
     setLastName(inputLastName);
-    setIntroduction_method(inputIntroductionMethod);
-    setGender(inputGender);
-    setGrade(inputGrade);
+    inputIntroductionMethod ? setIntroduction_method(inputIntroductionMethod) : setIntroduction_method(introduction_method[0]);
+    inputGender ? setGender(inputGender) : setGender(genderTypes[0]);
+    inputGrade ? setGrade(inputGrade) : setGrade(gradeTypes[2]);
     setUniversity(inputUniversity);
     setEmail(inputEmail);
     setIntroduction_method(inputIntroductionMethod);
@@ -80,13 +85,13 @@ function Registration({
       toast.error('You should agree to our conditions');
       return;
     }
-    if (first_name != inputFirstName
-      || last_name != inputLastName
-      || gender != inputGender
-      || grade != inputGrade
-      || university != inputUniversity
-      || city != inputCity
-      || introduction_method != inputIntroductionMethod) {
+    if (first_name !== inputFirstName
+      || last_name !== inputLastName
+      || gender !== inputGender
+      || grade !== inputGrade
+      || university !== inputUniversity
+      || city !== inputCity
+      || introduction_method !== inputIntroductionMethod) {
       updateProfile({
         first_name,
         last_name,
@@ -99,6 +104,14 @@ function Registration({
     }
     sendPaymentRequest(THIS_YEAR);
   };
+
+
+  if (isRegistered) {
+    return (
+      <Redirect to='/profile' />
+    )
+  }
+
   return (
     <>
       <div className="seminar-register-title background-theme d-flex align-items-center">
@@ -108,6 +121,7 @@ function Registration({
           </div>
         </div>
       </div>
+
       <form className="seminar-register-form">
         <div className="row">
           <div className="col-12 mb-3 col-lg mb-lg-0">
@@ -259,7 +273,7 @@ function Registration({
           className="btn btn-lg btn-primary btn-dark mb-5"
           onClick={submitInfo}>
           Go For Payment
-        </button>
+            </button>
       </form>
     </>
   );
@@ -276,6 +290,7 @@ const mapStateToProps = (state, ownProps) => {
     city,
     grade,
     email,
+    isRegistered,
   } = state.Participant;
   return {
     isFetching,
@@ -287,6 +302,7 @@ const mapStateToProps = (state, ownProps) => {
     city,
     grade,
     email,
+    isRegistered,
   };
 };
 
@@ -296,4 +312,5 @@ export default connect(
     getProfile,
     updateProfile,
     sendPaymentRequest,
+    doesUserHaveRegistered,
   })(Registration);

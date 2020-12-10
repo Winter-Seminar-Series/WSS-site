@@ -67,15 +67,6 @@ function Account(state = initState, action) {
     case actionTypes.LOGOUT_REQUEST:
       return initState;
 
-    // case actionTypes.LOGOUT_SUCCESS:
-    //   return initState;
-
-    // case actionTypes.LOGOUT_FAILURE:
-    //   return {
-    //     ...state,
-    //     isFetching: false,
-    //   };
-
     ///////////////////
 
     case actionTypes.SEND_PAYMENT_SUCCESS:
@@ -90,22 +81,10 @@ function Account(state = initState, action) {
       };
 
     case actionTypes.VERIFY_PAYMENT_SUCCESS:
-      console.log('hey');
       return {
         ...state,
-        payment: {
-          // url: action.response.message,
-          // amount: action.response.amount,
-          // typePayment: action.response.typePayment,
-        },
       };
-
-    case actionTypes.REMOVE_PAYMENT_DATA:
-      return {
-        ...state,
-        payment: null,
-      };
-
+    
     default:
       return state;
   }

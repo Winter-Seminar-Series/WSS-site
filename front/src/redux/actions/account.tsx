@@ -54,10 +54,6 @@ export const logout = () => ({
   },
 });
 
-export const redirectWhenUserIsNotLoggedIn = () => ({
-  type: actionTypes.REDIRECT_WHEN_USER_IS_NOT_LOGGED,
-});
-
 export const sendPaymentRequest = (year = 2020) => ({
   [CALL_API]: {
     types: [
@@ -84,8 +80,4 @@ export const verifyPayment = (authority, status, year = 2020) => ({
       method: 'GET',
     },
   },
-});
-
-export const removePaymentData = () => ({
-  type: actionTypes.REMOVE_PAYMENT_DATA,
 });

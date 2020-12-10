@@ -3,6 +3,7 @@ import * as actionTypes from '../actionTypes';
 const initState = {
   isFetching: false,
   isLoggedIn: false,
+  isRegistered: false,
   username: '',
   email: '',
   first_name: '',
@@ -17,7 +18,7 @@ const initState = {
   country: '',
   field_of_interest: '',
   grade: '',
-  is_student: true,
+  is_student: false,
   favorite_tags: '',
 };
 
@@ -87,6 +88,12 @@ function Participant(state = initState, action) {
       return {
         isFetching: false,
       };
+
+    case actionTypes.CHECK_USER_REGISTRATION_STATUS_SUCCESS:
+      return {
+        ...state,
+        isRegistered: true,
+      }
 
     default:
       return state;

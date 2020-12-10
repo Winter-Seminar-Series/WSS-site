@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 import { logout } from '../../redux/actions/account';
 
-function Sidebar({ logout }) {
+function Sidebar({ logout, isRegistered }) {
   const history = useHistory();
 
   const doLogout = () => {
@@ -12,12 +12,6 @@ function Sidebar({ logout }) {
   };
 
   const sidebarItems: SidebarItem[] = [
-    {
-      title: 'Registration',
-      persianTitle: 'ثبت‌نام رویداد',
-      link: '/dashboard/seminar-registration',
-      icon: 'calendar-o',
-    },
     // {
     //   title: 'Workshop Registration',
     //   persianTitle: 'ثبت‌نام کارگاه',
@@ -45,6 +39,18 @@ function Sidebar({ logout }) {
       icon: 'user-circle-o',
     },
   ];
+
+  if (!isRegistered) {
+    sidebarItems.push(
+      {
+        title: 'Registration',
+        persianTitle: 'ثبت‌نام رویداد',
+        link: '/dashboard/seminar-registration',
+        icon: 'calendar-o',
+      },
+    )
+  }
+
   return (
     <>
       <div className="sidebar">
@@ -70,9 +76,9 @@ function Sidebar({ logout }) {
   );
 }
 
-const mapStateToProps = (state, ownProps) => {
-
-}
+const mapStateToProps = (state, ownProps) => ({
+  isRegistered: state.Participant.isRegistered,
+})
 
 export default connect(
   mapStateToProps,
