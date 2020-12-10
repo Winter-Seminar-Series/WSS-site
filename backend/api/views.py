@@ -22,6 +22,7 @@ from django.contrib.auth import login
 from knox.views import LoginView as KnoxLoginView
 from django.contrib.auth.models import User
 
+import threading
 from django.core.mail import send_mail
 from templates.consts import *
 
@@ -369,7 +370,6 @@ class PaymentViewSet(viewsets.ViewSet):
                 # Notify user about successful payment
                 user = participant.user_profile.user
                 
-                import threading
                 threading.Thread(target=lambda: send_mail(
                     PAYMENT_SUBJECT, 'text content',
                     settings.EMAIL_HOST_USER,
