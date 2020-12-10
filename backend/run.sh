@@ -6,6 +6,7 @@ readonly CWD=$(dirname "$0")
 main() {
   wait_for_db_service
   "$CWD"/manage.py migrate
+  sync_static_files
   "$CWD"/manage.py runserver 0.0.0.0:8000
 }
 
@@ -20,6 +21,11 @@ wait_for_db_service() {
     WAIT_SLEEP_INTERVAL=5 \
     WAIT_HOST_CONNECT_TIMEOUT=5 \
     "$CWD"/wait
+}
+
+sync_static_files() {
+  # TODO use rsync instead of cp
+  cp -rf /app/collected_static/* /mnt/backend-statics/
 }
 
 main "$@"

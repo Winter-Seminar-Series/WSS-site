@@ -25,23 +25,42 @@ function Registration({
   city: inputCity,
   email: inputEmail,
 }) {
-  const { t } = useTranslation('seminarRegistration', { useSuspense: false });
-  const gradeTypes = ['Doctorate', 'Master', 'Bachelor', 'Other'];
+  const gradeTypes = ['PhD or Higher', 'Master', 'Bachelor'];
   const genderTypes = ['Male', 'Female'];
-  const [first_name, setFirstName] = React.useState(inputFirstName);
-  const [last_name, setLastName] = React.useState(inputLastName);
-  const [gender, setGender] = React.useState(inputGender ? inputGender : genderTypes[0]);
-  const [grade, setGrade] = React.useState(inputGrade ? inputGrade : gradeTypes[0]);
-  const [university, setUniversity] = React.useState(inputUniversity);
-  const [email, setEmail] = React.useState(inputEmail);
-  const [introduction_method, setIntroduction_method] = React.useState(inputIntroductionMethod);
-  const [city, setCity] = React.useState(inputCity);
-  const [agree, setAgree] = React.useState(false);
+  const introductionTypes = ['Telegram', 'Instagram', 'Facebook', 'Twitter', 'Poster', 'Friends', 'Other'];
 
+  const [first_name, setFirstName] = React.useState('');
+  const [last_name, setLastName] = React.useState('');
+  const [gender, setGender] = React.useState('');
+  const [grade, setGrade] = React.useState('');
+  const [university, setUniversity] = React.useState('');
+  const [email, setEmail] = React.useState('');
+  const [introduction_method, setIntroduction_method] = React.useState('');
+  const [city, setCity] = React.useState('');
+  const [agree, setAgree] = React.useState(false);
 
   useEffect(() => {
     getProfile();
   }, [getProfile])
+
+  useEffect(() => {
+    setFirstName(inputFirstName);
+    setLastName(inputLastName);
+    setIntroduction_method(inputIntroductionMethod);
+    setGender(inputGender);
+    setGrade(inputGrade);
+    setUniversity(inputUniversity);
+    setEmail(inputEmail);
+    setIntroduction_method(inputIntroductionMethod);
+    setCity(inputCity);
+  }, [inputFirstName,
+    inputLastName,
+    inputUniversity,
+    inputIntroductionMethod,
+    inputGender,
+    inputGrade,
+    inputCity,
+    inputEmail,])
 
   const submitInfo = () => {
     if (
@@ -57,21 +76,27 @@ function Registration({
     ) {
       toast.error('Please fill all the fields');
       return;
-    } else if (agree) {
-      toast.error('You should agree to our terms and conditions');
+    } else if (!agree) {
+      toast.error('You should agree to our conditions');
       return;
     }
-
-    updateProfile({
-      first_name,
-      last_name,
-      gender,
-      grade,
-      university,
-      city,
-      introduction_method,
-    });
-
+    if (first_name != inputFirstName
+      || last_name != inputLastName
+      || gender != inputGender
+      || grade != inputGrade
+      || university != inputUniversity
+      || city != inputCity
+      || introduction_method != inputIntroductionMethod) {
+      updateProfile({
+        first_name,
+        last_name,
+        gender,
+        grade,
+        university,
+        city,
+        introduction_method,
+      });
+    }
     sendPaymentRequest(THIS_YEAR);
   };
   return (
@@ -127,30 +152,20 @@ function Registration({
           </div>
         </div>
 
-
         <div className="row">
           <div className="col-12 mb-3 col-lg mb-lg-0">
             <input
+              disabled={true}
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
               type="email"
               className="text-input form-control"
               placeholder="Email"
             />
           </div>
-          <div className="col-12 mb-3 col-lg mb-lg-0">
-            <input
-              value={introduction_method}
-              onChange={(e) => setIntroduction_method(e.target.value)}
-              type="text"
-              className="text-input form-control"
-              placeholder="Introduction method"
-            />
-          </div>
         </div>
 
         <div className="row">
-          <div className='col-6 col-lg'>
+          <div className='col-6 col-md-4'>
             <div className="form-label pt-0 mr-3">Gender:</div>
             <div className="dropdown">
               <button
@@ -163,18 +178,18 @@ function Registration({
                 {gender}
               </button>
               <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                {genderTypes.map((d, index) => (
+                {genderTypes.map((g, index) => (
                   <a
                     key={index}
                     className="dropdown-item"
-                    onClick={() => setGender(d)}>
-                    {d}
+                    onClick={() => setGender(g)}>
+                    {g}
                   </a>
                 ))}
               </div>
             </div>
           </div>
-          <div className='col-6 col-lg'>
+          <div className='col-6  col-md-4'>
             <div className="form-label pt-0 mr-3">Grade:</div>
             <div className="dropdown">
               <button
@@ -198,6 +213,30 @@ function Registration({
               </div>
             </div>
           </div>
+          <div className='col-12 col-md-4'>
+            <div className="form-label pt-0 mr-3">Introduction method:</div>
+            <div className="dropdown">
+              <button
+                className="btn dropdown-toggle"
+                type="button"
+                id="dropdownMenuButton"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false">
+                {introduction_method}
+              </button>
+              <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                {introductionTypes.map((i, index) => (
+                  <a
+                    key={index}
+                    className="dropdown-item"
+                    onClick={() => setIntroduction_method(i)}>
+                    {i}
+                  </a>
+                ))}
+              </div>
+            </div>
+          </div>
         </div>
 
         <div className="form-group mb-4">
@@ -210,7 +249,7 @@ function Registration({
               id="gridCheck1"
             />
             <label className="form-check-label" htmlFor="gridCheck1">
-              I Agree to terms and conditions
+              By checking this, I promise to record no workshop nor seminar.
             </label>
           </div>
         </div>

@@ -52,7 +52,7 @@ class Venue(models.Model):
 
 class Seminar(BaseEvent):
     abstract = models.TextField()
-    is_keynote = models.BooleanField()
+    is_keynote = models.BooleanField(default=False)
     speaker = models.ForeignKey(to='people.Speaker', related_name='seminars', on_delete=models.RESTRICT)
     material = models.OneToOneField(to='SeminarMaterial', null=True, blank=True, on_delete=models.SET_NULL)
 

@@ -2,7 +2,7 @@ from django import forms
 from django.shortcuts import get_object_or_404
 
 from WSS import models
-from WSS.models import GENDER, INTRODUCTION, QUESTION, WSS
+from WSS.models import GENDER, INTRODUCTION, WSS
 from events.models import Workshop
 
 

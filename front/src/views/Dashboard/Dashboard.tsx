@@ -1,21 +1,24 @@
 import React from 'react';
 import { Redirect, Route, Switch, useLocation } from 'react-router-dom';
-import '../../../node_modules/bootstrap/scss/bootstrap.scss';
+// import '../../../node_modules/bootstrap/scss/bootstrap.scss';
 import Profile from './Profile';
-import SeminarRegistration from './SeminarRegistration';
+import Registration from './Registration';
 import Sidebar from './Sidebar';
 import UserSeminarList from './UserSeminarList';
 import UserWorkshopList from './UserWorkshopList';
-import WorkshopRegistration from './WorkshopRegistration';
 import { verifyPayment } from '../../redux/actions/account';
 import { connect } from 'react-redux';
+import { THIS_YEAR } from '../../constants/info';
 
 function Dashboard({ match, verifyPayment }) {
   const location = useLocation();
-  if (location.search.startsWith('?Authority=')) {
-    console.log('im sending the request');
-    verifyPayment(location.search);
+  const urlParams = new URLSearchParams(location.search);
+  const authority = urlParams.get('Authority');
+  const status = urlParams.get('Status');
+  if (authority && status) {
+    verifyPayment(authority, status, THIS_YEAR);
   }
+
   return (
     <>
       <Sidebar></Sidebar>
@@ -23,11 +26,7 @@ function Dashboard({ match, verifyPayment }) {
         <Switch>
           <Route
             path={match.url + '/seminar-registration'}
-            component={SeminarRegistration}
-          />
-          <Route
-            path={match.url + '/workshop-registration'}
-            component={WorkshopRegistration}
+            component={Registration}
           />
           <Route
             path={match.url + '/seminar-list'}
