@@ -456,7 +456,7 @@ Modifiable fields:
 An Example to change the user name and last name:
 
 ```HTTP
-POST /api/profile/edit
+PUT /api/profile/edit
 {
     "first_name": "The First Name",
     "last_name": "The Last Name"
