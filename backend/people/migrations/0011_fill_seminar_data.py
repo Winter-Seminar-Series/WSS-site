@@ -61,7 +61,7 @@ def forwards(apps, schema_editor):
         title='Neural anisotropy directions',
         audience='graduate students',
         abstract='One, somewhat overlooked, aspect of deep learning algorithms is their inductive bias in learning various tasks. Though many deep architectures have successfully been applied to many visual and linguistic tasks, we do not have a comprehensive set of tools to choose the right architecture for a given learning problem. Instead, we rely mainly on heuristics and trial-and-error to pick the right architecture. \nIn this talk, I start by focusing on a very simple problem, i.e., classifying a class of linearly separable distributions, and show that, depending on the direction of the discriminative feature of the distribution, many state-of-the-art deep convolutional neural networks (CNNs) have a surprisingly hard time solving this simple task. I show how the directional inductive bias of an architecture can be encapsulated by an orthonormal basis, coined as neural anisotropy directions (NADs). NADs, which are specific for each architecture and hence act as a signature, encode the preference of a network to separate the input data based on some particular features. I provide an efficient method to identify NADs for several CNN architectures and thus reveal their directional inductive biases.',
-        speaker=Speaker.objects.get(name='Seyed Mohsen Moosavi Dezfooli')
+        speaker=Speaker.objects.get(name='Seyed-Mohsen Moosavi-Dezfooli')
     )
 
     Seminar.objects.create(
@@ -140,7 +140,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('people', '0010_fill_staff_data_again'),
-        ('events', '0005_event_tag'),
+        ('events', '0006_add_default_to_keynote'),
     ]
 
     operations = [
