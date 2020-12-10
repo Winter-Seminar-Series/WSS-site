@@ -569,3 +569,26 @@ HTTP 200 OK
     ]
 }
 ```
+
+### Check if user is participant of a WSS
+
+```HTTP
+GET /api/profile/is_registered/?year=<year>
+```
+
+If year is null, response is:
+
+```HTTP
+HTTP 400 Bad Request
+{
+    'message': '`year` should be passed in query string.'
+}
+```
+
+else:
+```HTTP
+HTTP 200 OK
+{
+    'is_registered': true
+}
+```
