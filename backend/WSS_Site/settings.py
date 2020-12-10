@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'rest_framework',
     'knox',
+    'django_rest_passwordreset',
     'dbbackup',
 ] + WSS_APPS
 
