@@ -31,8 +31,24 @@ function Notification(state = {}, action) {
     //   toast.warning('You must log in before see that page');
     //   return { ...state };
 
+    case actionTypes.VERIFY_PAYMENT_REQUEST:
+      toast.warning('Your payment is in process',
+        {
+          autoClose: false,
+          closeOnClick: false,
+          draggable: false,
+        }
+      );
+      return { ...state };
+
     case actionTypes.VERIFY_PAYMENT_SUCCESS:
-      toast.success('Your payment has been successfully done');
+      toast.success('Your payment has been successfully done!',
+        {
+          autoClose: false,
+          closeOnClick: false,
+          draggable: false,
+        }
+      );
       return { ...state };
 
     case actionTypes.UPDATE_PROFILE_SUCCESS:
