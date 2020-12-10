@@ -7,6 +7,17 @@ from sorl.thumbnail import ImageField
 from django.core.validators import MinValueValidator
 from events.models import Workshop, Seminar, PosterSession, WssTag
 
+GRADE_GROUPS = {
+    'Bachelor': ['Bachelor'],
+    'Master': ['Master', 'PhD or Higher'],
+    'PhD or Higher': ['Master', 'PhD or Higher']
+}
+
+GRADE_GROUP_LIMITS = {
+    'Bachelor': 'bs_participant_limit',
+    'Master': 'msOrPhd_participant_limit',
+    'PhD or Higher': 'msOrPhd_participant_limit'
+}
 
 class WSS(models.Model):
     year = models.PositiveSmallIntegerField()
@@ -25,7 +36,7 @@ class WSS(models.Model):
     booklet = models.OneToOneField(to='Booklet', null=True, blank=True, related_name='+', on_delete=models.SET_NULL)
     main_image = models.OneToOneField(to='Image', null=True, blank=True, related_name='+', on_delete=models.SET_NULL)
     registration_fee = models.PositiveIntegerField(default=10000, validators=[MinValueValidator(1000)])
-    bsOrOther_participant_limit = models.PositiveIntegerField(default=100)
+    bs_participant_limit = models.PositiveIntegerField(default=100)
     msOrPhd_participant_limit = models.PositiveIntegerField(default=100)
 
     class Meta:
@@ -37,7 +48,9 @@ class WSS(models.Model):
         return 'WSS {}'.format(self.year)
     
     def is_capacity_full(self, grade: str):
-        return Participant.objects.filter(current_wss=self, user_profile__grade=grade).count() >= getattr(self, f"{grade}_participant_limit")
+        if grade not in GRADE_GROUPS:
+            return False
+        return Participant.objects.filter(current_wss=self, user_profile__grade__in=GRADE_GROUPS[grade]).count() >= getattr(self, GRADE_GROUP_LIMITS[grade])
 
     @property
     def main_image_url(self):
@@ -174,7 +187,7 @@ class ExternalLink(models.Model):
         return '{}: {}'.format(self.type, self.url)
 
 
-GRADE_CHOICES = [(None, "Please Select"), ('msOrPhd', 'MS or PHD'), ('bsOrOther', "BS or Other")]
+GRADE_CHOICES = [(None, "Please Select"), ('Bachelor', 'Bachelor'), ('Master', "Master"), ('PhD or Higher', "PhD or Higher")]
 
 
 class Grade(models.Model):
@@ -185,14 +198,9 @@ class Grade(models.Model):
         return self.level
 
 
-INTRODUCTION = [(None, 'Please Select'), ('telegram', 'Telegram'), ('instagram', 'Instagram'), ('facebook', 'Facebook'),
-                ('twitter', 'Twitter'), ('poster', 'Poster'), ('friends', 'Friends'), ('other', 'Other')]
-GENDER = [('female', 'Female'), ('male', 'Male')]
-PAYMENT_CHOICES = [('OK', 'پرداخت شده'), ('NO', "پرداخت نشده")]
-QUESTION = [(None, 'Please Select'), ('RPA', 'RPA'), ('Virtual Assistant', 'Virtual Assistant'),
-            ('AR/VR/MR', 'AR/VR/MR'),
-            ('Driverless Cars', 'Driverless Cars'), ('Recommendation Engines', 'Recommendation Engines'),
-            ('Others', 'Others')]
+INTRODUCTION = [(None, 'Please Select'), ('Telegram', 'Telegram'), ('Instagram', 'Instagram'), ('Facebook', 'Facebook'),
+                ('Twitter', 'Twitter'), ('Poster', 'Poster'), ('Friends', 'Friends'), ('Other', 'Other')]
+GENDER = [('Female', 'Female'), ('Male', 'Male')]
 
 
 class Participant(models.Model):
