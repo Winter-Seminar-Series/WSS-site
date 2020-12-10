@@ -46,7 +46,7 @@ export default ({ getState }) => (next) => async (action) => {
       })
     );
   } catch (error) {
-    if (error.message === 'TOKEN_EXPIRED') {
+    if (error.message === 'Your token has been expired') {
       return next(
         actionWith({
           payload,
@@ -55,7 +55,6 @@ export default ({ getState }) => (next) => async (action) => {
         })
       );
     }
-    console.log("SSS")
     return next(
       actionWith({
         payload,
