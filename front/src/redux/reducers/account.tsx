@@ -14,12 +14,14 @@ function Account(state = initState, action) {
   switch (action.type) {
     case actionTypes.REGISTER_REQUEST:
       return {
+        ...state,
         isFetching: true,
         isLoggedIn: false,
       };
 
     case actionTypes.REGISTER_SUCCESS:
       return {
+        ...state,
         id: action.response.user.id,
         username: action.response.user.username,
         email: action.response.user.email,
@@ -29,8 +31,8 @@ function Account(state = initState, action) {
       };
 
     case actionTypes.REGISTER_FAILURE:
-      console.log(action.response);
       return {
+        ...state,
         isFetching: false,
         isLoggedIn: false,
       };
@@ -39,12 +41,14 @@ function Account(state = initState, action) {
 
     case actionTypes.LOGIN_REQUEST:
       return {
+        ...state,
         isLoggedIn: false,
         isFetching: true,
       };
 
     case actionTypes.LOGIN_SUCCESS:
       return {
+        ...state,
         isFetching: false,
         isLoggedIn: true,
         expiry: action.response.expiry,
@@ -52,8 +56,8 @@ function Account(state = initState, action) {
       };
 
     case actionTypes.LOGIN_FAILURE:
-      console.log(action.response);
       return {
+        ...state,
         isLoggedIn: false,
         isFetching: false,
       };
@@ -61,17 +65,16 @@ function Account(state = initState, action) {
     ///////////////////
 
     case actionTypes.LOGOUT_REQUEST:
-      return {
-        isFetching: true,
-      };
-
-    case actionTypes.LOGOUT_SUCCESS:
       return initState;
 
-    case actionTypes.LOGOUT_FAILURE:
-      return {
-        isFetching: false,
-      };
+    // case actionTypes.LOGOUT_SUCCESS:
+    //   return initState;
+
+    // case actionTypes.LOGOUT_FAILURE:
+    //   return {
+    //     ...state,
+    //     isFetching: false,
+    //   };
 
     ///////////////////
 
