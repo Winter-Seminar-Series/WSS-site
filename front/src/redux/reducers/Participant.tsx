@@ -26,6 +26,7 @@ function Participant(state = initState, action) {
   switch (action.type) {
     case actionTypes.GET_PROFILE_REQUEST:
       return {
+        ...state,
         isFetching: true,
       };
     case actionTypes.GET_PROFILE_SUCCESS:
@@ -52,6 +53,7 @@ function Participant(state = initState, action) {
 
     case actionTypes.GET_PROFILE_FAILURE:
       return {
+        ...state,
         isFetching: false,
       };
 
@@ -59,6 +61,7 @@ function Participant(state = initState, action) {
 
     case actionTypes.UPDATE_PROFILE_REQUEST:
       return {
+        ...state,
         isFetching: true,
       };
 
@@ -86,13 +89,14 @@ function Participant(state = initState, action) {
 
     case actionTypes.UPDATE_PROFILE_FAILURE:
       return {
+        ...state,
         isFetching: false,
       };
 
     case actionTypes.CHECK_USER_REGISTRATION_STATUS_SUCCESS:
       return {
         ...state,
-        isRegistered: true,
+        isRegistered: action.response.is_registered,
       }
 
     default:

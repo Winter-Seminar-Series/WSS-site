@@ -30,7 +30,7 @@ function App() {
         <Route path="/staffs" component={Staffs} />
         <Route path="/create-account" component={CreateAccount} />
         <Route path="/login" component={Login} />
-        <Route path="/dashboard" component={Dashboard} />
+        <PrivateRoute path="/dashboard" component={Dashboard} />
         <Route path="/" component={Home} />
       </Switch>
       <Footer />

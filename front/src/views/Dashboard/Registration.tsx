@@ -105,10 +105,9 @@ function Registration({
     sendPaymentRequest(THIS_YEAR);
   };
 
-
   if (isRegistered) {
     return (
-      <Redirect to='/profile' />
+      <Redirect to='/dashboard/profile' />
     )
   }
 

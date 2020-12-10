@@ -68,6 +68,11 @@ function Account(state = initState, action) {
       return initState;
 
     ///////////////////
+    case actionTypes.SEND_PAYMENT_REQUEST:
+      return ({
+        ...state,
+        isFetching: true,
+      })
 
     case actionTypes.SEND_PAYMENT_SUCCESS:
       var link = document.createElement('a');
@@ -80,11 +85,6 @@ function Account(state = initState, action) {
         redirect_url: action.response.redirect_url,
       };
 
-    case actionTypes.VERIFY_PAYMENT_SUCCESS:
-      return {
-        ...state,
-      };
-    
     default:
       return state;
   }

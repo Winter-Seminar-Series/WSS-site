@@ -11,34 +11,7 @@ function Sidebar({ logout, isRegistered }) {
     history.push('/');
   };
 
-  const sidebarItems: SidebarItem[] = [
-    // {
-    //   title: 'Workshop Registration',
-    //   persianTitle: 'ثبت‌نام کارگاه',
-    //   link: '/dashboard/workshop-registration',
-    //   icon: 'calendar',
-    // },
-    // {
-    //   title: 'Your Seminars',
-    //   persianTitle: 'سمینار‌های شما',
-    //   link: '/dashboard/seminar-list',
-    //   icon: 'bookmark-o',
-    //   deactive: true,
-    // },
-    // {
-    //   title: 'Your Workshops',
-    //   persianTitle: 'کارگاه‌های شما',
-    //   link: '/dashboard/workshop-list',
-    //   icon: 'bookmark-o',
-    //   deactive: true,
-    // },
-    {
-      title: 'Profile',
-      persianTitle: 'پروفایل',
-      link: '/dashboard/profile',
-      icon: 'user-circle-o',
-    },
-  ];
+  var sidebarItems = [];
 
   if (!isRegistered) {
     sidebarItems.push(
@@ -50,6 +23,16 @@ function Sidebar({ logout, isRegistered }) {
       },
     )
   }
+
+  sidebarItems.push(
+    {
+      title: 'Profile',
+      persianTitle: 'پروفایل',
+      link: '/dashboard/profile',
+      icon: 'user-circle-o',
+    }
+  )
+
 
   return (
     <>
