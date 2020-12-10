@@ -28,10 +28,6 @@ function Dashboard({ match, verifyPayment }) {
             path={match.url + '/seminar-registration'}
             component={Registration}
           />
-          {/* <Route
-            path={match.url + '/workshop-registration'}
-            component={WorkshopRegistration}
-          /> */}
           <Route
             path={match.url + '/seminar-list'}
             component={UserSeminarList}

@@ -148,7 +148,6 @@ function Profile({
             <input
               disabled={true}
               value={email}
-              // onChange={(e) => setEmail(e.target.value)}
               type="email"
               className="text-input form-control"
               placeholder="Email"
