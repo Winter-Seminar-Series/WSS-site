@@ -10,6 +10,7 @@ class WSSSerializer(ModelSerializer):
         model = WSS
         fields = [
             'main_image_url',
+            'description',
             'main_clip_url',
             'booklet_url',
             'staff_count',
