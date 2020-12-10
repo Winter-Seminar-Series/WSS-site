@@ -28,20 +28,37 @@ function Registration({
   const { t } = useTranslation('seminarRegistration', { useSuspense: false });
   const gradeTypes = ['Doctorate', 'Master', 'Bachelor', 'Other'];
   const genderTypes = ['Male', 'Female'];
-  const [first_name, setFirstName] = React.useState(inputFirstName);
-  const [last_name, setLastName] = React.useState(inputLastName);
-  const [gender, setGender] = React.useState(inputGender ? inputGender : genderTypes[0]);
-  const [grade, setGrade] = React.useState(inputGrade ? inputGrade : gradeTypes[0]);
-  const [university, setUniversity] = React.useState(inputUniversity);
-  const [email, setEmail] = React.useState(inputEmail);
-  const [introduction_method, setIntroduction_method] = React.useState(inputIntroductionMethod);
-  const [city, setCity] = React.useState(inputCity);
+  const [first_name, setFirstName] = React.useState('');
+  const [last_name, setLastName] = React.useState('');
+  const [gender, setGender] = React.useState('');
+  const [grade, setGrade] = React.useState('');
+  const [university, setUniversity] = React.useState('');
+  const [email, setEmail] = React.useState('');
+  const [introduction_method, setIntroduction_method] = React.useState('');
+  const [city, setCity] = React.useState('');
   const [agree, setAgree] = React.useState(false);
-
 
   useEffect(() => {
     getProfile();
   }, [getProfile])
+
+  useEffect(() => {
+    setFirstName(inputFirstName);
+    setLastName(inputLastName);
+    inputGender ? setGender(inputGender) : setGender(genderTypes[0]);
+    inputGrade ? setGrade(inputGrade) : setGrade(gradeTypes[2]);
+    setUniversity(inputUniversity);
+    setEmail(inputEmail);
+    setIntroduction_method(inputIntroductionMethod);
+    setCity(inputCity);
+  }, [inputFirstName,
+    inputLastName,
+    inputUniversity,
+    inputIntroductionMethod,
+    inputGender,
+    inputGrade,
+    inputCity,
+    inputEmail,])
 
   const submitInfo = () => {
     if (
@@ -57,7 +74,7 @@ function Registration({
     ) {
       toast.error('Please fill all the fields');
       return;
-    } else if (agree) {
+    } else if (!agree) {
       toast.error('You should agree to our terms and conditions');
       return;
     }
@@ -70,6 +87,7 @@ function Registration({
       university,
       city,
       introduction_method,
+      email,
     });
 
     sendPaymentRequest(THIS_YEAR);
@@ -210,7 +228,7 @@ function Registration({
               id="gridCheck1"
             />
             <label className="form-check-label" htmlFor="gridCheck1">
-              I Agree to terms and conditions
+              By checking this, I promise to record no workshop nor seminar.
             </label>
           </div>
         </div>
