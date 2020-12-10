@@ -19,6 +19,9 @@ GRADE_GROUP_LIMITS = {
     'PhD or Higher': 'msOrPhd_participant_limit'
 }
 
+class GradeDoesNotSpecifiedException(Exception):
+    pass
+
 class WSS(models.Model):
     year = models.PositiveSmallIntegerField()
     description = models.TextField()
@@ -49,8 +52,9 @@ class WSS(models.Model):
     
     def is_capacity_full(self, grade: str):
         if grade not in GRADE_GROUPS:
-            return False
-        return Participant.objects.filter(current_wss=self, user_profile__grade__in=GRADE_GROUPS[grade]).count() >= getattr(self, GRADE_GROUP_LIMITS[grade])
+            raise GradeDoesNotSpecifiedException()
+        
+        return self.participants.filter(user_profile__grade__in=GRADE_GROUPS[grade]).count() >= getattr(self, GRADE_GROUP_LIMITS[grade])
 
     @property
     def main_image_url(self):
@@ -118,10 +122,7 @@ class WSS(models.Model):
 
     @property
     def participants_count(self):
-        try:
-            return requests.get(self.participants_count_link).content
-        except:
-            return Participant.objects.filter(current_wss=self).count()
+        return self.participants.count()
 
 
 class Clip(models.Model):
