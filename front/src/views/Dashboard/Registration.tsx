@@ -19,6 +19,7 @@ function Registration({
   doesUserHaveRegistered,
   isRegistered,
   sendPaymentRequest,
+  paymentProcess,
   isFetching,
   first_name: inputFirstName,
   last_name: inputLastName,
@@ -267,7 +268,7 @@ function Registration({
           </div>
         </div>
         <button
-          disabled={isFetching}
+          disabled={isFetching || paymentProcess}
           type="button"
           className="btn btn-lg btn-primary btn-dark mb-5"
           onClick={submitInfo}>
@@ -291,7 +292,9 @@ const mapStateToProps = (state, ownProps) => {
     email,
     isRegistered,
   } = state.Participant;
+  const { isFetching: paymentProcess } = state.account;
   return {
+    paymentProcess,
     isFetching,
     first_name,
     last_name,

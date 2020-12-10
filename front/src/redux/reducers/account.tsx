@@ -83,7 +83,14 @@ function Account(state = initState, action) {
       return {
         ...state,
         redirect_url: action.response.redirect_url,
+        isFetching: false,
       };
+
+    case actionTypes.SEND_PAYMENT_FAILURE:
+      return ({
+        ...state,
+        isFetching: false,
+      })
 
     default:
       return state;
