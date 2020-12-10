@@ -22,8 +22,8 @@ function Profile({
   email: inputEmail,
 }) {
   const gradeTypes = ['PhD or Higher', 'Master', 'Bachelor'];
-  const genderTypes = ['Male', 'Female'];
-  const introductionTypes = ['Telegram', 'Instagram', 'Facebook', 'Twitter', 'Poster', 'Friends', 'Other'];
+  const genderTypes = ['Male', 'Female', 'Other'];
+  const introductionTypes = ['Telegram', 'Instagram', 'Facebook', 'Twitter', 'Linkedin', 'YouTube', 'Friends', 'Other'];
 
   const [first_name, setFirstName] = React.useState('');
   const [last_name, setLastName] = React.useState('');

@@ -4,6 +4,7 @@
 - Primitive fields of WSS
     Fields:
     - `main_image_url`
+    - `description`
     - `main_clip_url`
     - `booklet_url`
     - `staff_count`
