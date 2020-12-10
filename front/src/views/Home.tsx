@@ -204,7 +204,7 @@ function Home({
         </div>
       </section>
 
-      {speakers && speakers.length && (
+      {speakers.length > 0 && (
         <section id="ts-speakers-main" className="diagonal blue-gradient">
           <div className="container">
             <div className="row text-center">
@@ -288,7 +288,7 @@ function Home({
         </div>
       </section>
 
-      {sponsors && sponsors.length && (
+      {sponsors.length > 0 && (
         <section id="ts-sponsors" className="ts-sponsors diagonal pt-0">
           <div className="container">
             <p className="section-sub-title">

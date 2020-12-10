@@ -25,9 +25,10 @@ function Registration({
   city: inputCity,
   email: inputEmail,
 }) {
-  const { t } = useTranslation('seminarRegistration', { useSuspense: false });
-  const gradeTypes = ['Doctorate', 'Master', 'Bachelor', 'Other'];
+  const gradeTypes = ['PhD or Higher', 'Master', 'Bachelor'];
   const genderTypes = ['Male', 'Female'];
+  const introductionTypes = ['Telegram', 'Instagram', 'Facebook', 'Twitter', 'Poster', 'Friends', 'Other'];
+
   const [first_name, setFirstName] = React.useState('');
   const [last_name, setLastName] = React.useState('');
   const [gender, setGender] = React.useState('');
@@ -45,8 +46,9 @@ function Registration({
   useEffect(() => {
     setFirstName(inputFirstName);
     setLastName(inputLastName);
-    inputGender ? setGender(inputGender) : setGender(genderTypes[0]);
-    inputGrade ? setGrade(inputGrade) : setGrade(gradeTypes[2]);
+    setIntroduction_method(inputIntroductionMethod);
+    setGender(inputGender);
+    setGrade(inputGrade);
     setUniversity(inputUniversity);
     setEmail(inputEmail);
     setIntroduction_method(inputIntroductionMethod);
@@ -75,21 +77,26 @@ function Registration({
       toast.error('Please fill all the fields');
       return;
     } else if (!agree) {
-      toast.error('You should agree to our terms and conditions');
+      toast.error('You should agree to our conditions');
       return;
     }
-
-    updateProfile({
-      first_name,
-      last_name,
-      gender,
-      grade,
-      university,
-      city,
-      introduction_method,
-      email,
-    });
-
+    if (first_name != inputFirstName
+      || last_name != inputLastName
+      || gender != inputGender
+      || grade != inputGrade
+      || university != inputUniversity
+      || city != inputCity
+      || introduction_method != inputIntroductionMethod) {
+      updateProfile({
+        first_name,
+        last_name,
+        gender,
+        grade,
+        university,
+        city,
+        introduction_method,
+      });
+    }
     sendPaymentRequest(THIS_YEAR);
   };
   return (
@@ -145,30 +152,20 @@ function Registration({
           </div>
         </div>
 
-
         <div className="row">
           <div className="col-12 mb-3 col-lg mb-lg-0">
             <input
+              disabled={true}
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
               type="email"
               className="text-input form-control"
               placeholder="Email"
             />
           </div>
-          <div className="col-12 mb-3 col-lg mb-lg-0">
-            <input
-              value={introduction_method}
-              onChange={(e) => setIntroduction_method(e.target.value)}
-              type="text"
-              className="text-input form-control"
-              placeholder="Introduction method"
-            />
-          </div>
         </div>
 
         <div className="row">
-          <div className='col-6 col-lg'>
+          <div className='col-6 col-md-4'>
             <div className="form-label pt-0 mr-3">Gender:</div>
             <div className="dropdown">
               <button
@@ -181,18 +178,18 @@ function Registration({
                 {gender}
               </button>
               <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                {genderTypes.map((d, index) => (
+                {genderTypes.map((g, index) => (
                   <a
                     key={index}
                     className="dropdown-item"
-                    onClick={() => setGender(d)}>
-                    {d}
+                    onClick={() => setGender(g)}>
+                    {g}
                   </a>
                 ))}
               </div>
             </div>
           </div>
-          <div className='col-6 col-lg'>
+          <div className='col-6  col-md-4'>
             <div className="form-label pt-0 mr-3">Grade:</div>
             <div className="dropdown">
               <button
@@ -211,6 +208,30 @@ function Registration({
                     className="dropdown-item"
                     onClick={() => setGrade(d)}>
                     {d}
+                  </a>
+                ))}
+              </div>
+            </div>
+          </div>
+          <div className='col-12 col-md-4'>
+            <div className="form-label pt-0 mr-3">Introduction method:</div>
+            <div className="dropdown">
+              <button
+                className="btn dropdown-toggle"
+                type="button"
+                id="dropdownMenuButton"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false">
+                {introduction_method}
+              </button>
+              <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                {introductionTypes.map((i, index) => (
+                  <a
+                    key={index}
+                    className="dropdown-item"
+                    onClick={() => setIntroduction_method(i)}>
+                    {i}
                   </a>
                 ))}
               </div>
