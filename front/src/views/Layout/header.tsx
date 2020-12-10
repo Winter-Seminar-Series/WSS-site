@@ -14,9 +14,9 @@ const Header = ({ isLoggedIn }) => {
     // { title: 'Schedule', persianTitle: 'برنامه زمانی', link: '/schedule' },
     { title: 'Staffs', persianTitle: 'استف‌ها', link: '/staffs' },
     {
-      title: 'Pre-Registration',
+      title: 'Create Account',
       persianTitle: 'ثبت‌نام',
-      link: '/pre-registration',
+      link: '/create-account',
       style: 'active',
       loggedIn: 'notAuthorized',
     },
