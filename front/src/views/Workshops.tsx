@@ -1,15 +1,18 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import PublicCard from '../components/cards/PublicCard';
 import { THIS_YEAR } from '../constants/info';
+import { Speaker } from '../models/wss';
 import { getModelList, MODEL_LISTS_NAMES } from '../redux/actions/WSS';
 
-const Workshops = ({ getWSSPrimitiveFields, getModelList, workshops }) => {
+const Workshops = ({ getModelList, workshops, isFetching }) => {
+  const [renderOnce, setRenderOnce] = useState(false);
+
   useEffect(() => {
     getModelList(MODEL_LISTS_NAMES.WORKSHOPS, THIS_YEAR);
-  }, [getWSSPrimitiveFields]);
-  //todo check workshop object
-  //todo it shows 0 instead of nothing
+    getModelList(MODEL_LISTS_NAMES.SPEAKERS, THIS_YEAR);
+  }, [getModelList]);
+
   return (
     <>
       <section
@@ -17,42 +20,27 @@ const Workshops = ({ getWSSPrimitiveFields, getModelList, workshops }) => {
         className="background-theme ts-speakers diagonal">
         <div className="container text-white">
           <div className="row mb-3">
-            <div className="mb-1 col section-sub-title title-white">
-              {workshops && workshops.length === 1 ? 'Workshop' : 'Workshops'}
-            </div>
+            <h3 className="mb-1 col section-sub-title title-white">Workshops</h3>
           </div>
-          {workshops && workshops.length && (
-            <>
-              <div className="mt-3">
-                <div>
-                  For more information about each workshop, click on its image.
+          {workshops.length > 0 && !isFetching &&
+            <div className="row">
+              {workshops.map((workshop) => (
+                <div key={workshop.id} className="col-xs-12 col-sm-6 col-lg-3">
+                  <PublicCard id={workshop.speaker} presentationLink={'/workshop/' + workshop.id}></PublicCard>
                 </div>
-              </div>
-              <div className="row">
-                {workshops.map((w) => (
-                  <div className="col-xs-12 col-sm-6 col-lg-3">
-                    <div className="no-shadow">
-                      <PublicCard speaker={w.speaker} />
-                    </div>
-                    {w.registration_link && (
-                      <p className="text-center">
-                        <a
-                          href="dashboard/workshop-registration"
-                          className="btn btn-primary btn-white">
-                          Register Now
-                        </a>
-                      </p>
-                    )}
-                  </div>
-                ))}
-              </div>
-            </>
+              ))}
+            </div>
+          }
+          {isFetching && (
+            <div className="row">
+              <div className="col">Loading...</div>
+            </div>
           )}
-          {(!workshops || workshops.length) && (
+          {workshops.length === 0 && !isFetching &&
             <div className="row">
               <div className="col">Nothing has been added yet</div>
             </div>
-          )}
+          }
         </div>
       </section>
     </>
