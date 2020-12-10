@@ -133,7 +133,7 @@ def rollback(apps, schema_editor):
     Seminar = apps.get_model('events', 'Seminar')
     wss = WSS.objects.get(year=2020)
 
-    Seminar.objects.get(wss=wss).delete()
+    Seminar.objects.filter(wss=wss).delete()
 
 
 class Migration(migrations.Migration):
