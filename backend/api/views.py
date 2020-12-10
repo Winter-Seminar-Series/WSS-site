@@ -312,7 +312,17 @@ class PaymentViewSet(viewsets.ViewSet):
         if user_profile.participants.filter(current_wss=wss).count() != 0:
             return ErrorResponse({
                 "message": "You already have finished your payment."
-            })  
+            })
+
+        if user_profile.grade is None:
+            return ErrorResponse({
+                "message": "You must specify your grade in your profile before registration."
+            })
+        
+        if wss.is_capacity_full(user_profile.grade):
+            return ErrorResponse({
+                "message": f"Sorry, {wss} has no more registration capacity."
+            })
         
         amount = wss.registration_fee
         description = f"{settings.PAYMENT_SETTING['description']} {year}"
