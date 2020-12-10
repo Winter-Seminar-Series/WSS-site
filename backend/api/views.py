@@ -244,13 +244,6 @@ class UserProfileViewSet(viewsets.ViewSet):
         request.user.save()
         return Response(self.serializer(user_profile).data)
 
-
-class AnnouncementViewSet(BaseViewSet):
-    serializer = serializers.AnnouncementSerializer
-
-    def queryset_selector(self, request, wss):
-        return wss.announcements.order_by('-create_timestamp')
-    
     @action(methods=['POST'], detail=False)
     def add_favorite_tag(self, request):
         user_profile = get_user_profile(request.user)
@@ -279,6 +272,28 @@ class AnnouncementViewSet(BaseViewSet):
         user_profile.save()
 
         return Response(self.serializer(user_profile).data)
+
+    @action(methods=['GET'], detail=False)
+    def is_registered(self, request):
+        user_profile = get_user_profile(request.user)
+        year = request.query_params.get('year', 0)
+        wss = get_wss_object_or_404(year)
+
+        if year is None:
+            return ErrorResponse({
+                'message': '`year` should be passed in query string.'
+            })
+        
+        return Response({
+            'is_registered': user_profile.participants.filter(current_wss=wss).count() > 0
+        })
+
+
+class AnnouncementViewSet(BaseViewSet):
+    serializer = serializers.AnnouncementSerializer
+
+    def queryset_selector(self, request, wss):
+        return wss.announcements.order_by('-create_timestamp')
 
 
 class TagsViewSet(BaseViewSet):
