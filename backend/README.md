@@ -127,6 +127,26 @@ GET /api/<year>/payment/request?callback=<callback_url>
         "message": "You already have finished your payment."
     }
     ```
+- If user's profile does not finished its payment, the response will be as bellow:
+
+    ```HTTP
+    HTTP 400 Bad Request
+    Content-Type: application/json
+
+    {
+        "message": "You must specify your grade in your profile before registration."
+    }
+    ```
+- If the registration's capacity is full, the response will be as bellow:
+
+    ```HTTP
+    HTTP 403 Bad Request
+    Content-Type: application/json
+
+    {
+        "message": "Sorry, WSS <year> has no more registration capacity."
+    }
+    ```
 - If some error occurs in sending payment request, the response will be as bellow:
 
     ```HTTP
@@ -436,7 +456,7 @@ Modifiable fields:
 An Example to change the user name and last name:
 
 ```HTTP
-POST /api/profile/edit
+PUT /api/profile/edit
 {
     "first_name": "The First Name",
     "last_name": "The Last Name"
@@ -547,5 +567,28 @@ HTTP 200 OK
         "Tag1",
         "Tag2"
     ]
+}
+```
+
+### Check if user is participant of a WSS
+
+```HTTP
+GET /api/profile/is_registered/?year=<year>
+```
+
+If year is null, response is:
+
+```HTTP
+HTTP 400 Bad Request
+{
+    'message': '`year` should be passed in query string.'
+}
+```
+
+else:
+```HTTP
+HTTP 200 OK
+{
+    'is_registered': true
 }
 ```

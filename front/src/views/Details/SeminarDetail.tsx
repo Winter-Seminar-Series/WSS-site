@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { useTranslation } from 'react-i18next';
-import { toast } from 'react-toastify';
-import { Redirect, Link, useParams } from 'react-router-dom';
+import { BASE_URL } from '../../constants/info'
+import { useParams } from 'react-router-dom';
 import {
   getAnEntityOfModelList,
   MODEL_LISTS_NAMES,
@@ -15,7 +14,7 @@ function SeminarDetail({
   seminars,
   speakers,
 }) {
-  const [seminar, setSeminar] = useState({ title: '', date: '', start_time: '', abstract: '', speaker: '' });
+  const [seminar, setSeminar] = useState({ title: '', duration: '', start_time: '', abstract: '', audience: '', speaker: '', tags: [] });
   const [speaker, setSpeaker] = useState({ picture: '', degree: '', place: '', bio: '', name: '' });
   const id = useParams()['id'];
 
@@ -24,15 +23,15 @@ function SeminarDetail({
   }, [getAnEntityOfModelList])
 
   useEffect(() => {
-    if (seminars && seminars[id]) {
+    if (seminars[id]) {
       setSeminar(seminars[id]);
       getAnEntityOfModelList(MODEL_LISTS_NAMES.SPEAKERS, THIS_YEAR, seminars[id].speaker);
     }
   }, [seminars])
 
   useEffect(() => {
-    if (speakers[seminar.speaker]) {
-      setSpeaker(speakers[seminar.speaker])
+    if (speakers.find(s => s.id === seminar.speaker)) {
+      setSpeaker(speakers.find(s => s.id === seminar.speaker))
     }
   }, [speakers])
 
@@ -44,7 +43,7 @@ function SeminarDetail({
           <div className="row pt-5">
             {speaker.picture &&
               <div className="col-md-4 m-0">
-                <img style={{ borderRadius: '5px', width: '100%', boxShadow: '2px -2px 5px gray' }} src={speaker.picture} alt='' />
+                <img style={{ borderRadius: '5px', width: '100%', boxShadow: '2px -2px 5px gray' }} src={BASE_URL + speaker.picture} alt='' />
               </div>
             }
             <div className="col mt-4 d-flex align-items-center">
@@ -55,11 +54,15 @@ function SeminarDetail({
                   <h3 className="session-title">{seminar.title}</h3>
                   <div className="seminar-details">
                     <i className="fa fa-clock-o">&nbsp;</i>
-                    {seminar.date}
+                    {
+                      parseInt(moment(seminar.duration, "hh:mm:ss").format(`hh`)) === 12
+                        ? parseInt(moment(seminar.duration, "hh:mm:ss").format(`mm`)) + " minutes"
+                        : parseInt(moment(seminar.duration, "hh:mm:ss").format(`hh`)) * 60 + parseInt(moment(seminar.duration, "hh:mm:ss").format(`mm`)) + " minutes"
+                    }
                   </div>
                   <div className="seminar-details">
                     <i className="fa fa-calendar">&nbsp;</i>
-                    {seminar.start_time}
+                    {moment(seminar.start_time, "YYYY-MM-DD hh:mm:ss").format("dddd, MMMM Do, hh:mm a")}
                   </div>
                 </div>
               </div>
@@ -71,6 +74,10 @@ function SeminarDetail({
                 <h4>Abstract</h4>
                 <div className="mb-3">
                   {seminar.abstract}
+                </div>
+                <h4>Audience</h4>
+                <div className="mb-3">
+                  {seminar.audience}
                 </div>
                 <h4>Bio</h4>
                 <span>

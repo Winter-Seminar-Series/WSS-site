@@ -8,15 +8,15 @@ const Header = ({ isLoggedIn }) => {
   const navbarItems: NavBarItem[] = [
     { title: 'WSS 2020', persianTitle: 'WSS 2020', link: '/' },
     { title: 'About Us', persianTitle: 'درباره ما', link: '/about' },
-    { title: 'Speakers', persianTitle: 'سمینارها', link: '/speakers' },
+    { title: 'Speakers', persianTitle: 'سمینارها', link: '/seminars' },
     { title: 'Workshops', persianTitle: 'کارگاه‌ها', link: '/workshops' },
-    { title: 'PosterSession', persianTitle: 'پوسترسشن', link: '/postersessions' },
+    // { title: 'PosterSession', persianTitle: 'پوسترسشن', link: '/postersessions' },
     // { title: 'Schedule', persianTitle: 'برنامه زمانی', link: '/schedule' },
-    { title: 'Staff', persianTitle: 'استف', link: '/staff' },
+    { title: 'Staffs', persianTitle: 'استف‌ها', link: '/staffs' },
     {
-      title: 'Register',
+      title: 'Create Account',
       persianTitle: 'ثبت‌نام',
-      link: '/register',
+      link: '/create-account',
       style: 'active',
       loggedIn: 'notAuthorized',
     },
@@ -79,12 +79,12 @@ const Header = ({ isLoggedIn }) => {
                       </ul>
                     </li>
                   ) : (
-                    <li key={i.title} className={`nav-item ${i.style || ''}`}>
-                      <a className="nav-link" href={i.link}>
-                        {i.title}
-                      </a>
-                    </li>
-                  ))
+                      <li key={i.title} className={`nav-item ${i.style || ''}`}>
+                        <a className="nav-link" href={i.link}>
+                          {i.title}
+                        </a>
+                      </li>
+                    ))
               )}
             </ul>
           </div>

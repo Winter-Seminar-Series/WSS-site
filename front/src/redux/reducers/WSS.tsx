@@ -17,37 +17,37 @@ const initState = {
   showStats: undefined,
   calendarLink: undefined,
 
-  workshops: new Array(ARRAY_SIZE),
+  workshops: [],
   workshops_count: 0,
-  workshop_materials: new Array(ARRAY_SIZE),
+  workshop_materials: [],
   workshop_materials_count: 0,
-  seminars: new Array(ARRAY_SIZE),
+  seminars: [],
   seminars_count: 0,
-  seminar_materials: new Array(ARRAY_SIZE),
+  seminar_materials: [],
   seminar_materials_count: 0,
-  speakers: new Array(ARRAY_SIZE),
+  speakers: [],
   speakers_count: 0,
-  postersessions: new Array(ARRAY_SIZE),
+  postersessions: [],
   postersessions_count: 0,
-  poster_materials: new Array(ARRAY_SIZE),
+  poster_materials: [],
   poster_materials_count: 0,
-  sponsors: new Array(ARRAY_SIZE),
+  sponsors: [],
   sponsors_count: 0,
-  sponsorships: new Array(ARRAY_SIZE),
+  sponsorships: [],
   sponsorships_count: 0,
-  clips: new Array(ARRAY_SIZE),
+  clips: [],
   clips_count: 0,
-  holding_teams: new Array(ARRAY_SIZE),
+  holding_teams: [],
   holding_teams_count: 0,
-  staff: new Array(ARRAY_SIZE),
+  staff: [],
   staff_count: 0,
-  images: new Array(ARRAY_SIZE),
+  images: [],
   images_count: 0,
-  tags: new Array(ARRAY_SIZE),
+  tags: [],
   tags_count: 0,
-  announcements: new Array(ARRAY_SIZE),
+  announcements: [],
   announcements_count: 0,
-  venues: new Array(ARRAY_SIZE),
+  venues: [],
   venues_count: 0,
 };
 
@@ -135,12 +135,13 @@ function WSS(state = initState, action) {
       };
 
     case actionTypes.AN_ENTITY_OF_MODEL_LIST_SUCCESS:
-      const modelList = state[action.payload.modelListName];
       const pk = action.payload.pk;
       return {
         ...state,
-        [action.payload.modelListName]:
-          [...modelList.slice(0, pk), action.response, ...modelList.slice(pk + 1, modelList.length)],
+        [action.payload.modelListName]: {
+          ...[action.payload.modelListName],
+          [pk]: action.response,
+        }
       };
 
     case actionTypes.AN_ENTITY_OF_MODEL_LIST_FAILURE:

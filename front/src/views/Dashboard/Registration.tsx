@@ -7,10 +7,14 @@ import {
   getProfile,
   updateProfile
 } from '../../redux/actions/participant';
+import {
+  sendPaymentRequest,
+} from '../../redux/actions/account'
 
-function Profile({
+function Registration({
   updateProfile,
   getProfile,
+  sendPaymentRequest,
   isFetching,
   first_name: inputFirstName,
   last_name: inputLastName,
@@ -21,7 +25,6 @@ function Profile({
   city: inputCity,
   email: inputEmail,
 }) {
-  const { t } = useTranslation('Registration', { useSuspense: false });
   const gradeTypes = ['PhD or Higher', 'Master', 'Bachelor'];
   const genderTypes = ['Male', 'Female'];
   const introductionTypes = ['Telegram', 'Instagram', 'Facebook', 'Twitter', 'Poster', 'Friends', 'Other'];
@@ -31,9 +34,10 @@ function Profile({
   const [gender, setGender] = React.useState('');
   const [grade, setGrade] = React.useState('');
   const [university, setUniversity] = React.useState('');
-  const [introduction_method, setIntroduction_method] = React.useState('');
-  const [city, setCity] = React.useState(inputCity);
   const [email, setEmail] = React.useState('');
+  const [introduction_method, setIntroduction_method] = React.useState('');
+  const [city, setCity] = React.useState('');
+  const [agree, setAgree] = React.useState(false);
 
   useEffect(() => {
     getProfile();
@@ -42,9 +46,9 @@ function Profile({
   useEffect(() => {
     setFirstName(inputFirstName);
     setLastName(inputLastName);
-    inputIntroductionMethod ? setIntroduction_method(inputIntroductionMethod) : setIntroduction_method(introductionTypes[0]);
-    inputGender ? setGender(inputGender) : setGender(genderTypes[0]);
-    inputGrade ? setGrade(inputGrade) : setGrade(gradeTypes[2]);
+    setIntroduction_method(inputIntroductionMethod);
+    setGender(inputGender);
+    setGrade(inputGrade);
     setUniversity(inputUniversity);
     setEmail(inputEmail);
     setIntroduction_method(inputIntroductionMethod);
@@ -58,7 +62,7 @@ function Profile({
     inputCity,
     inputEmail,])
 
-  const doUpdateProfile = () => {
+  const submitInfo = () => {
     if (
       !(
         first_name &&
@@ -67,39 +71,44 @@ function Profile({
         grade &&
         university &&
         city &&
-        introduction_method &&
-        email
+        introduction_method
       )
     ) {
-      toast.error('Please fill all the required fields');
+      toast.error('Please fill all the fields');
+      return;
+    } else if (!agree) {
+      toast.error('You should agree to our conditions');
       return;
     }
-    updateProfile({
-      first_name,
-      last_name,
-      gender,
-      grade,
-      university,
-      city,
-      introduction_method,
-      email,
-    });
+    if (first_name != inputFirstName
+      || last_name != inputLastName
+      || gender != inputGender
+      || grade != inputGrade
+      || university != inputUniversity
+      || city != inputCity
+      || introduction_method != inputIntroductionMethod) {
+      updateProfile({
+        first_name,
+        last_name,
+        gender,
+        grade,
+        university,
+        city,
+        introduction_method,
+      });
+    }
+    sendPaymentRequest(THIS_YEAR);
   };
-
   return (
     <>
       <div className="seminar-register-title background-theme d-flex align-items-center">
         <div className="header ml-3">
           <div className="title">
-            Profile
+            Registration
           </div>
         </div>
       </div>
       <form className="seminar-register-form">
-        <h3>
-          Required fields
-        </h3>
-        <br />
         <div className="row">
           <div className="col-12 mb-3 col-lg mb-lg-0">
             <input
@@ -230,12 +239,26 @@ function Profile({
           </div>
         </div>
 
+        <div className="form-group mb-4">
+          <div className="form-check">
+            <input
+              checked={agree}
+              onChange={(e) => setAgree(!agree)}
+              className="form-check-input"
+              type="checkbox"
+              id="gridCheck1"
+            />
+            <label className="form-check-label" htmlFor="gridCheck1">
+              By checking this, I promise to record no workshop nor seminar.
+            </label>
+          </div>
+        </div>
         <button
           disabled={isFetching}
           type="button"
           className="btn btn-lg btn-primary btn-dark mb-5"
-          onClick={doUpdateProfile}>
-          Update
+          onClick={submitInfo}>
+          Go For Payment
         </button>
       </form>
     </>
@@ -245,41 +268,25 @@ function Profile({
 const mapStateToProps = (state, ownProps) => {
   const {
     isFetching,
-    username,
-    email,
     first_name,
     last_name,
-    phone_number,
-    age,
-    job,
     university,
     introduction_method,
     gender,
     city,
-    country,
-    field_of_interest,
     grade,
-    is_student,
-    favorite_tags,
+    email,
   } = state.Participant;
   return {
     isFetching,
-    username,
-    email,
     first_name,
     last_name,
-    phone_number,
-    age,
-    job,
     university,
     introduction_method,
     gender,
     city,
-    country,
-    field_of_interest,
     grade,
-    is_student,
-    favorite_tags,
+    email,
   };
 };
 
@@ -288,4 +295,5 @@ export default connect(
   {
     getProfile,
     updateProfile,
-  })(Profile);
+    sendPaymentRequest,
+  })(Registration);

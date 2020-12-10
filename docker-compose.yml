@@ -16,6 +16,8 @@ services:
       - WSS_EMAIL_PASSWORD
     networks:
       wss_net:
+    volumes:
+      - backend_statics_vol:/mnt/backend-statics/
   database:
     image: postgres:11.10-alpine
     volumes:
@@ -38,16 +40,26 @@ services:
     volumes:
       - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
       - frontend_vol:/mnt/frontend/:ro
+      - media_vol:/mnt/media/:ro
+      - backend_statics_vol:/mnt/backend-statics/:ro
       - $FULLCHAIN_PATH:/etc/ssl-files/fullchain.pem:ro
       - $PRIVKEY_PATH:/etc/ssl-files/privkey.pem:ro
     depends_on:
       - web
       - frontend
+      - static-data-provider
   frontend:
     image: sharifwss/frontend:$FRONT_IMAGE_VERSION
     build: ./front/
+    environment:
+      - BASE_URL
     volumes:
       - frontend_vol:/mnt/frontend/
+  static-data-provider:
+    image: sharifwss/static-data-provider:$STATIC_DATA_PROVIDER_IMAGE_VERSION
+    build: ./static-data-provider/
+    volumes:
+      - media_vol:/mnt/media/
 
 networks:
   wss_net:
@@ -55,3 +67,5 @@ networks:
 
 volumes:
   frontend_vol:
+  media_vol:
+  backend_statics_vol:

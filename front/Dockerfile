@@ -4,5 +4,7 @@ COPY package.json .
 RUN npm install --no-dev
 COPY . .
 RUN npm run-script build
+RUN chmod +x sync-production-files.sh
 
-CMD cp -rf /app/build/* /mnt/frontend/ && echo "Frontend files updated."
+ENV BASE_URL="https:\/\/localhost"
+CMD ./sync-production-files.sh
