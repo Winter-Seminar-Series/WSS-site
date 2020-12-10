@@ -1,4 +1,5 @@
 import * as actionTypes from '../actionTypes';
+const ARRAY_SIZE = 200;
 
 const initState = {
   isFetching: false,

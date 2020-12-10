@@ -72,14 +72,14 @@ export const sendPaymentRequest = (year = 2020) => ({
   },
 });
 
-export const verifyPayment = (verificationCode, year = 2020) => ({
+export const verifyPayment = (authority, status, year = 2020) => ({
   [CALL_API]: {
     types: [
       actionTypes.VERIFY_PAYMENT_REQUEST,
       actionTypes.VERIFY_PAYMENT_SUCCESS,
       actionTypes.VERIFY_PAYMENT_FAILURE,
     ],
-    url: `${URLs.ROOT}${year}/payment/verify${verificationCode}`,
+    url: `${URLs.ROOT}${year}/payment/verify/?Authority=${authority}&Status=${status}`,
     fetchOptions: {
       method: 'GET',
     },

@@ -9,7 +9,7 @@ export const getProfile = () => ({
       actionTypes.GET_PROFILE_SUCCESS,
       actionTypes.GET_PROFILE_FAILURE,
     ],
-    url: `${URLs.ROOT}profile`,
+    url: `${URLs.ROOT}profile/`,
     fetchOptions: {
       method: 'GET',
     },
@@ -37,9 +37,9 @@ export const updateProfile = (updatedData: {
       actionTypes.UPDATE_PROFILE_SUCCESS,
       actionTypes.UPDATE_PROFILE_FAILURE,
     ],
-    url: `${URLs.ROOT}profile/edit`,
+    url: `${URLs.ROOT}profile/edit/`,
     fetchOptions: {
-      method: 'POST',
+      method: 'PUT',
       body: updatedData,
     },
   },

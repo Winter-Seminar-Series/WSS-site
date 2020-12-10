@@ -1,4 +1,5 @@
 const checkErrorsStatusCode = (response) => {
+  console.log(response)
   if (response.status === 500) {
     // throw new Error('ایراد سروری رخ داده‌است! ما رو مطلع کنید.');
     throw new Error('Internal Server Error! Contact Us!');
@@ -13,7 +14,7 @@ const checkErrorsStatusCode = (response) => {
   }
   if (response.status === 403) {
     // throw new Error('شما دسترسی ندارید!');
-    throw new Error('You dont have access!');
+    throw new Error('You don\'t have access!');
   }
 };
 
@@ -25,7 +26,7 @@ const fetchApi = async (url: RequestInfo, fetchOptions?: RequestInit) => {
     if (json_response.error) {
       throw new Error(json_response.error);
     } else {
-      throw new Error('error'); //todo: it was 'response.text' instead of 'error' at first
+      throw new Error('error');
     }
   }
   return json_response;

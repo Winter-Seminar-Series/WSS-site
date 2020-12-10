@@ -243,6 +243,7 @@ DBBACKUP_STORAGE = 'storages.backends.dropbox.DropBoxStorage'
 DBBACKUP_STORAGE_OPTIONS = {
     'oauth2_access_token': os.environ.get('DROPBOX_AUTH_TOKEN'),
 }
+DBBACKUP_CLEANUP_KEEP = 100 # Number of backups to keep when running `dbbackup --clean`
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_USE_TLS = True
