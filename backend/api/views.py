@@ -13,7 +13,7 @@ from abc import ABC, abstractmethod
 from api import serializers
 from events.models import Workshop, WssTag, Venue, SeminarMaterial, PosterMaterial, WorkshopMaterial, BaseEvent
 from people.models import Speaker, Staff
-from WSS.models import WSS, Participant, UserProfile, Sponsor
+from WSS.models import WSS, Participant, UserProfile, Sponsor, GradeDoesNotSpecifiedException
 from WSS.payment import send_payment_request, verify
 
 from rest_framework.authtoken.serializers import AuthTokenSerializer
@@ -314,15 +314,15 @@ class PaymentViewSet(viewsets.ViewSet):
                 "message": "You already have finished your payment."
             })
 
-        if user_profile.grade is None:
+        try:
+            if wss.is_capacity_full(user_profile.grade):
+                return ErrorResponse({
+                    "message": f"Sorry, {wss} has no more registration capacity."
+                })
+        except GradeDoesNotSpecifiedException:
             return ErrorResponse({
                 "message": "You must specify your grade in your profile before registration."
             }, status_code=403)
-        
-        if wss.is_capacity_full(user_profile.grade):
-            return ErrorResponse({
-                "message": f"Sorry, {wss} has no more registration capacity."
-            })
         
         amount = wss.registration_fee
         description = f"{settings.PAYMENT_SETTING['description']} {year}"
