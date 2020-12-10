@@ -400,8 +400,10 @@ class PaymentViewSet(viewsets.ViewSet):
                     settings.EMAIL_HOST_USER,
                     [user.email],
                     fail_silently=True,
-                    html_message=PAYMENT_HTML_CONTENT.format(
-                        user.first_name, participant.payment_ref_id)
+                    html_message=BASE_HTML_CONTENT.format(
+                        PAYMENT_EMAIL.format(
+                            user.first_name, participant.payment_ref_id)
+                    )
                 )
                 ).start()
                 
