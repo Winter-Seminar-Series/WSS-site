@@ -200,8 +200,8 @@ class Grade(models.Model):
 
 
 INTRODUCTION = [(None, 'Please Select'), ('Telegram', 'Telegram'), ('Instagram', 'Instagram'), ('Facebook', 'Facebook'),
-                ('Twitter', 'Twitter'), ('Poster', 'Poster'), ('Friends', 'Friends'), ('Other', 'Other')]
-GENDER = [('Female', 'Female'), ('Male', 'Male')]
+                ('Twitter', 'Twitter'), ('Poster', 'Poster'), ('Linkedin', 'Linkedin'), ('YouTube', 'YouTube'), ('Friends', 'Friends'), ('Other', 'Other')]
+GENDER = [('Female', 'Female'), ('Male', 'Male'), ('Other', 'Other')]
 
 
 class Participant(models.Model):
