@@ -1,4 +1,5 @@
 import * as actionTypes from '../actionTypes';
+const ARRAY_SIZE = 200;
 
 const initState = {
   isFetching: false,
@@ -134,13 +135,9 @@ function WSS(state = initState, action) {
       };
 
     case actionTypes.AN_ENTITY_OF_MODEL_LIST_SUCCESS:
-      const pk = action.payload.pk;
       return {
         ...state,
-        [action.payload.modelListName]: {
-          ...[action.payload.modelListName],
-          [pk]: action.response,
-        }
+        [action.payload.modelListName]: [...state[action.payload.modelListName], action.response],
       };
 
     case actionTypes.AN_ENTITY_OF_MODEL_LIST_FAILURE:

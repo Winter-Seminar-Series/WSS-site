@@ -4,6 +4,7 @@
 - Primitive fields of WSS
     Fields:
     - `main_image_url`
+    - `description`
     - `main_clip_url`
     - `booklet_url`
     - `staff_count`
@@ -456,7 +457,7 @@ Modifiable fields:
 An Example to change the user name and last name:
 
 ```HTTP
-POST /api/profile/edit
+PUT /api/profile/edit
 {
     "first_name": "The First Name",
     "last_name": "The Last Name"
@@ -567,5 +568,28 @@ HTTP 200 OK
         "Tag1",
         "Tag2"
     ]
+}
+```
+
+### Check if user is participant of a WSS
+
+```HTTP
+GET /api/profile/is_registered/?year=<year>
+```
+
+If year is null, response is:
+
+```HTTP
+HTTP 400 Bad Request
+{
+    'message': '`year` should be passed in query string.'
+}
+```
+
+else:
+```HTTP
+HTTP 200 OK
+{
+    'is_registered': true
 }
 ```

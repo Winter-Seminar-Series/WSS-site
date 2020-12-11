@@ -10,6 +10,7 @@ class WSSSerializer(ModelSerializer):
         model = WSS
         fields = [
             'main_image_url',
+            'description',
             'main_clip_url',
             'booklet_url',
             'staff_count',
@@ -19,6 +20,7 @@ class WSSSerializer(ModelSerializer):
             'ical_link',
             'year',
             'start_date',
+            'end_date',
             'proposal_link',
             'show_stats',
             'registration_fee',

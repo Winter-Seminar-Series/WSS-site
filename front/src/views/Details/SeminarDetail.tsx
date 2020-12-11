@@ -23,14 +23,15 @@ function SeminarDetail({
   }, [getAnEntityOfModelList])
 
   useEffect(() => {
-    if (seminars[id]) {
-      setSeminar(seminars[id]);
-      getAnEntityOfModelList(MODEL_LISTS_NAMES.SPEAKERS, THIS_YEAR, seminars[id].speaker);
+    if (!!seminars.find(s => s.id == id)) {
+      const seminar = seminars.find(s => s.id == id);
+      setSeminar(seminar);
+      getAnEntityOfModelList(MODEL_LISTS_NAMES.SPEAKERS, THIS_YEAR, seminar.speaker);
     }
   }, [seminars])
 
   useEffect(() => {
-    if (speakers.find(s => s.id === seminar.speaker)) {
+    if (!!speakers.find(s => s.id == seminar.speaker)) {
       setSpeaker(speakers.find(s => s.id === seminar.speaker))
     }
   }, [speakers])
@@ -43,7 +44,7 @@ function SeminarDetail({
           <div className="row pt-5">
             {speaker.picture &&
               <div className="col-md-4 m-0">
-                <img style={{ borderRadius: '5px', width: '100%', boxShadow: '2px -2px 5px gray' }} src={BASE_URL + speaker.picture} alt='' />
+                <img style={{ borderRadius: '5px', width: '100%', boxShadow: '2px -2px 5px gray' }} src={`${BASE_URL}/${speaker.picture}`} alt='' />
               </div>
             }
             <div className="col mt-4 d-flex align-items-center">

@@ -23,14 +23,15 @@ function WorkshopDetail({
   }, [getAnEntityOfModelList])
 
   useEffect(() => {
-    if (workshops[id]) {
-      setWorkshop(workshops[id]);
-      getAnEntityOfModelList(MODEL_LISTS_NAMES.SPEAKERS, THIS_YEAR, workshops[id].speaker);
+    if (!!workshops.find(s => s.id == id)) {
+      const workshop = workshops.find(s => s.id == id);
+      setWorkshop(workshop);
+      getAnEntityOfModelList(MODEL_LISTS_NAMES.SPEAKERS, THIS_YEAR, workshop.speaker);
     }
   }, [workshops])
 
   useEffect(() => {
-    if (speakers.find(s => s.id === workshop.speaker)) {
+    if (!!speakers.find(s => s.id == workshop.speaker)) {
       setSpeaker(speakers.find(s => s.id === workshop.speaker))
     }
   }, [speakers])
@@ -43,7 +44,7 @@ function WorkshopDetail({
           <div className="row pt-5">
             {speaker.picture &&
               <div className="col-md-4 m-0">
-                <img style={{ borderRadius: '5px', width: '100%', boxShadow: '2px -2px 5px gray' }} src={BASE_URL + speaker.picture} alt='' />
+                <img style={{ borderRadius: '5px', width: '100%', boxShadow: '2px -2px 5px gray' }} src={`${BASE_URL}/${speaker.picture}`} alt='' />
               </div>
             }
             <div className="col mt-4 d-flex align-items-center">

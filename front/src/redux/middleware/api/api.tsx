@@ -14,7 +14,7 @@ export default ({ getState }) => (next) => async (action) => {
     delete finalAction[CALL_API];
     return finalAction;
   };
-  
+
   const { fetchOptions } = callAPI;
   const { url, types, payload } = callAPI;
   const [requestType, successType, failureType] = types;
@@ -46,7 +46,7 @@ export default ({ getState }) => (next) => async (action) => {
       })
     );
   } catch (error) {
-    if (error.message === 'TOKEN_EXPIRED') {
+    if (error.message === 'TOKEN EXPIRED') {
       return next(
         actionWith({
           payload,
@@ -55,7 +55,6 @@ export default ({ getState }) => (next) => async (action) => {
         })
       );
     }
-    console.log("SSS")
     return next(
       actionWith({
         payload,

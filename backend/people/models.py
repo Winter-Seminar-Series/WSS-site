@@ -31,6 +31,7 @@ class HoldingTeam(models.Model):
     wss = models.ForeignKey(to='WSS.WSS', related_name='holding_teams', verbose_name='WSS', on_delete=models.CASCADE)
     name = models.CharField(max_length=50)
     staff = models.ManyToManyField(to='Staff', related_name='holding_teams', blank=True)
+    order = models.PositiveIntegerField(default=1)
 
     class Meta:
         ordering = ('pk',)
