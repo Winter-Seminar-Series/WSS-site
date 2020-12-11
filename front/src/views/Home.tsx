@@ -32,7 +32,7 @@ function Home({
   getWSSPrimitiveFields,
   getModelList,
   getModelListCount,
-  speakers,
+  seminars,
   seminars_count,
   workshops_count,
   participantsCount,
@@ -53,19 +53,17 @@ function Home({
 }) {
   useEffect(() => {
     getWSSPrimitiveFields(THIS_YEAR);
+    getModelList(MODEL_LISTS_NAMES.SEMINARS, THIS_YEAR);
     getModelList(MODEL_LISTS_NAMES.SPEAKERS, THIS_YEAR);
-    getModelList(MODEL_LISTS_NAMES.SPONSORS, THIS_YEAR);
-    // getModelList(MODEL_LISTS_NAMES.IMAGES, 2020);
-    // getModelListCount(MODEL_LISTS_NAMES.IMAGES, 2020);
   }, [getWSSPrimitiveFields]);
   const date = 'JANUARY 2nd - 3rd, 2021';
   const register = false;
-  const posterSessionRegister = false;
   const videoRef = useRef<HTMLVideoElement>();
   const setVideoPlayBackRate = () => {
     if (!videoRef) return;
     videoRef.current.playbackRate = 0.6;
   };
+
 
   return (
     <>
@@ -109,7 +107,10 @@ function Home({
                     {date}
                   </h2>
                   <h3 className="banner-desc font-weight-bold">
-                    IRAN, TEHRAN, SHARIF UNIVERSITY OF TECHNOLOGY
+                    IRAN, TEHRAN,
+                  </h3>
+                  <h3 className="banner-desc font-weight-bold">
+                    SHARIF UNIVERSITY OF TECHNOLOGY
                   </h3>
                   {register && (
                     <p className="banner-btn">
@@ -120,7 +121,7 @@ function Home({
                       </a>
                     </p>
                   )}
-                  {posterSessionRegister && (
+                  {/* {posterSessionRegister && (
                     <p className="banner-btn">
                       <a
                         href="{{ wss.proposal_link }}"
@@ -128,7 +129,7 @@ function Home({
                         Poster Session Registration
                       </a>
                     </p>
-                  )}
+                  )} */}
                 </div>
               </div>
             </div>
@@ -204,7 +205,7 @@ function Home({
         </div>
       </section>
 
-      {speakers.length > 0 && (
+      {seminars.length > 0 && (
         <section id="ts-speakers-main" className="diagonal blue-gradient">
           <div className="container">
             <div className="row text-center">
@@ -213,18 +214,16 @@ function Home({
               </h3>
             </div>
             <div className="row justify-content-center">
-              {speakers.slice(0, 8).map((s) => (
-                <div
-                  key={s.name}
-                  className="col-xs-11 col-sm-6 col-lg-4 col-xl-3">
-                  <PublicCard speaker={s} />
+              {seminars.slice(0, 8).map((seminar) => (
+                <div key={seminar.id} className="col-xs-10 col-sm-6 col-lg-3">
+                  <PublicCard id={seminar.speaker} presentationLink={'/seminar/' + seminar.id}></PublicCard>
                 </div>
               ))}
             </div>
           </div>
           <div className="row">
             <div className="general-btn text-center mx-auto">
-              <a href="/speakers" className="btn btn-primary btn-white">
+              <a href="/seminars" className="btn btn-primary btn-white">
                 View All Speakers
               </a>
             </div>
@@ -274,7 +273,7 @@ function Home({
                 </div>
               </a>
             </div> */}
-            <div className="col-sm-2 text-center">
+            {/* <div className="col-sm-2 text-center">
               <div className="ts-facts">
                 <div className="ts-facts-content">
                   <h2 className="ts-facts-num">
@@ -283,12 +282,12 @@ function Home({
                   <h3 className="ts-facts-title">Participants</h3>
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       </section>
 
-      {sponsors.length > 0 && (
+      {/* {sponsors.length > 0 && (
         <section id="ts-sponsors" className="ts-sponsors diagonal pt-0">
           <div className="container">
             <p className="section-sub-title">
@@ -316,18 +315,18 @@ function Home({
             </div>
           </div>
         </section>
-      )}
+      )} */}
 
       <section
         className="venu-map no-padding diagonal background-theme h-100 pb-2"
         style={venueMapStyle}>
-        <div className="container">
+        {/* <div className="container">
           <h3 className="section-sub-title" style={sectionSubtitleStyle}>
             WSS Venue
           </h3>
-        </div>
-        <div className="container mt-4 mb-5">
-          <h5 className="section-sub-title text-white">Info</h5>
+        </div> */}
+        <div className="container pt-5 mb-5">
+          <h5 className="section-sub-title mt-5 text-white">Info</h5>
           <div className="row mb-5">
             <div className="col-md-6 font-weight-bold">
               <div className="white">
@@ -349,6 +348,7 @@ function Home({
     </>
   );
 }
+
 
 const mapStateToProps = (state, ownProps) => {
   const {
@@ -386,6 +386,7 @@ const mapStateToProps = (state, ownProps) => {
   return {
     isFetching,
     speakers,
+    seminars,
     seminars_count,
     workshops_count,
     participantsCount,
@@ -409,4 +410,4 @@ export default connect(mapStateToProps, {
   getWSSPrimitiveFields,
   getModelList,
   getModelListCount,
-})(Home);
+})(Home)
