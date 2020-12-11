@@ -16,7 +16,7 @@ def forwards(apps, schema_editor):
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('people', '0013_update_holding_teams_2020'),
+        ('people', '0014_remove_second_Mahdi_Farvardin'),
     ]
 
     operations = [
