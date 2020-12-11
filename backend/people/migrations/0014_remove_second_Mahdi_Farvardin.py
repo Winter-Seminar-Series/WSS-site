@@ -21,10 +21,6 @@ def forwards(apps, schema_editor):
         team.save()
 
 
-def rollback(apps, schema_editor):
-    pass
-
-
 class Migration(migrations.Migration):
 
     dependencies = [
@@ -32,5 +28,5 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RunPython(forwards, rollback)
+        migrations.RunPython(forwards)
     ]
