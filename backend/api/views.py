@@ -155,7 +155,7 @@ class HoldingTeamViewSet(BaseViewSet):
     serializer = serializers.HoldingTeamSerializer
 
     def queryset_selector(self, request, wss):
-        return wss.holding_teams
+        return wss.holding_teams.order_by('order')
 
 
 class ImageViewSet(BaseViewSet):
