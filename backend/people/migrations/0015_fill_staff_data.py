@@ -169,7 +169,7 @@ def forwards(apps, schema_editor):
 
     teams_staff = {
         'Content': ['Mahdi Farvardin', 'Hossein Firooz', 'Sepehr Amini Afshar', 'Farzam Zohdinasab', 'Pooya Moeini', 'Seyed Mohammad mehdi Hatami'],
-        'Technical': ['Emran Batmanghelich', 'Ahmad Salimi', 'Ali asghar Ghanati', 'Fateme Khashei', 'Alireza Tajmir riahi', 'Seyed Alireza Hashemi', 'Mohammad mehdi Barghi', 'ArhsiA Akhavan'],
+        'Technical': ['Emran Batmanghelich', 'Ahmad Salimi', 'Ali asghar Ghanati', 'Fateme Khashei', 'Alireza Tajmir riahi', 'Seyed Alireza Hashemi', 'Mohammad mehdi Barghi'],
         'Network': ['Amirhossein Hadian', 'Shima Ramadani', 'Sara Azarnoosh', 'Ehsan Movafagh', 'Fatemeh Asgari', 'Sajjad Rezvani', 'Amirmohammad Imani', 'Mehdi Jalali'],
         'Branding': ['Seyed Alireza Hosseini'],
         'Social': ['Sara Azarnoosh', 'Dorna Dehghani', 'Ghazal Shenavar', 'Helia Akhtarkavian', 'Sabiheh Tajdari', 'Sahel Messforoosh', 'Esmaeil Pahang'],
@@ -195,7 +195,7 @@ def rollback(apps, schema_editor):
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('people', '0012_remove_staff_data'),
+        ('people', '0014_remove_staff_data'),
     ]
 
     operations = [

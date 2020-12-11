@@ -24,6 +24,12 @@ def forwards(apps, schema_editor):
         bio='Mohammad Haft-Javaherian is Bullock Postdoctoral Research Fellow at Wellman Center, Harvard Medical School and MIT Computer Science & Artificial Intelligence Lab, where he works with Brett Bouma and Polina Golland. He received his Ph.D. in Biomedical engineering from Cornell University, where he worked with Nozomi Nishimura and Chris Schaffer and had close collaboration with Mert Sabuncu.'
     )
     Speakers.objects.create(
+        name='Mohamad Kazem Shirani Faradonbeh',
+        degree='Ph.D.',
+        place='assistant professor at the University of Georgia.',
+        bio='received the Ph.D. degree in Statistics from the University of Michigan in 2017, and the B.Sc. degree in Electrical Engineering from Sharif University of Technology in 2012. He is currently an assistant professor of data science in the Department of Statistics at the University of Georgia.'
+    )
+    Speakers.objects.create(
         name='Mohammad Dehghani',
         degree='Master',
         place='Tarbiat Modares University',
@@ -48,25 +54,32 @@ def forwards(apps, schema_editor):
         degree='Ph.D.',
         place='Sharif University of Technology',
     )
+    Speakers.objects.create(
+        name='Mohammadhossein Bahari',
+        degree='Master',
+        place='EPFL',
+    )
     
 
 def rollback(apps, schema_editor):
     Speakers = apps.get_model('people', 'Speaker')
     Speakers.objects.filter(name__in=[
-        'Mostafa Rezazad', 
-        'Mehraveh Salehi', 
-        'Mohammad Haft-Javaheiran', 
+        'Mostafa Rezazad',
+        'Mehraveh Salehi',
+        'Mohammad Haft-Javaheiran',
+        'Mohamad Kazem Shirani Faradonbeh',
         'Mohammad Dehghani',
         'Mohammad Fazeli',
         'Mohammad Heydari',
         'Maryam Sadat Eslami',
         'Mohammad Mahdi Samiei',
+        'Mohammadhossein Bahari',
     ]).delete()
 
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('people', '0013_fill_staff_data'),
+        ('people', '0015_fill_staff_data'),
     ]
 
     operations = [
