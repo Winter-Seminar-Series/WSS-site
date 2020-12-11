@@ -13,7 +13,7 @@ from abc import ABC, abstractmethod
 from api import serializers
 from events.models import Workshop, WssTag, Venue, SeminarMaterial, PosterMaterial, WorkshopMaterial, BaseEvent
 from people.models import Speaker, Staff
-from WSS.models import WSS, Participant, UserProfile, Sponsor
+from WSS.models import WSS, Participant, UserProfile, Sponsor, GradeDoesNotSpecifiedException
 from WSS.payment import send_payment_request, verify
 
 from rest_framework.authtoken.serializers import AuthTokenSerializer
@@ -22,6 +22,7 @@ from django.contrib.auth import login
 from knox.views import LoginView as KnoxLoginView
 from django.contrib.auth.models import User
 
+import threading
 from django.core.mail import send_mail
 from templates.consts import *
 
@@ -182,10 +183,10 @@ class SpeakerViewSet(BaseViewSet):
     serializer = serializers.SpeakerSerializer
 
     def queryset_selector(self, request, wss):
-        return wss.seminars.values_list('speaker', flat=True)\
+        return Speaker.objects.filter(id__in=wss.seminars.values_list('speaker', flat=True)\
             .union(wss.workshops.values_list('speaker', flat=True))\
             .union(wss.postersessions.values_list('speaker', flat=True))\
-            .distinct()
+            .distinct())
 
 
 class SeminarMaterialViewSet(BaseViewSet):
@@ -244,13 +245,6 @@ class UserProfileViewSet(viewsets.ViewSet):
         request.user.save()
         return Response(self.serializer(user_profile).data)
 
-
-class AnnouncementViewSet(BaseViewSet):
-    serializer = serializers.AnnouncementSerializer
-
-    def queryset_selector(self, request, wss):
-        return wss.announcements.order_by('-create_timestamp')
-    
     @action(methods=['POST'], detail=False)
     def add_favorite_tag(self, request):
         user_profile = get_user_profile(request.user)
@@ -279,6 +273,28 @@ class AnnouncementViewSet(BaseViewSet):
         user_profile.save()
 
         return Response(self.serializer(user_profile).data)
+
+    @action(methods=['GET'], detail=False)
+    def is_registered(self, request):
+        user_profile = get_user_profile(request.user)
+        year = request.query_params.get('year', 0)
+        wss = get_wss_object_or_404(year)
+
+        if year is None:
+            return ErrorResponse({
+                'message': '`year` should be passed in query string.'
+            })
+        
+        return Response({
+            'is_registered': user_profile.participants.filter(current_wss=wss).count() > 0
+        })
+
+
+class AnnouncementViewSet(BaseViewSet):
+    serializer = serializers.AnnouncementSerializer
+
+    def queryset_selector(self, request, wss):
+        return wss.announcements.order_by('-create_timestamp')
 
 
 class TagsViewSet(BaseViewSet):
@@ -314,15 +330,15 @@ class PaymentViewSet(viewsets.ViewSet):
                 "message": "You already have finished your payment."
             })
 
-        if user_profile.grade is None:
+        try:
+            if wss.is_capacity_full(user_profile.grade):
+                return ErrorResponse({
+                    "message": f"Sorry, {wss} has no more registration capacity."
+                })
+        except GradeDoesNotSpecifiedException:
             return ErrorResponse({
                 "message": "You must specify your grade in your profile before registration."
             }, status_code=403)
-        
-        if wss.is_capacity_full(user_profile.grade):
-            return ErrorResponse({
-                "message": f"Sorry, {wss} has no more registration capacity."
-            })
         
         amount = wss.registration_fee
         description = f"{settings.PAYMENT_SETTING['description']} {year}"
@@ -357,9 +373,16 @@ class PaymentViewSet(viewsets.ViewSet):
                 "message": "You already have finished your payment."
             })        
 
-        if request.GET.get('Status') == 'OK':
+        if request.query_params.get('Status', None) == 'OK':
+            authority = request.query_params.get('Authority', None)
+            if authority is None:
+                return ErrorResponse({
+                    'message': 'Authority should be passed in query string'
+                }, status_code=403)
+            
             amount = wss.registration_fee
-            result = verify(request.GET['Authority'], amount)
+
+            result = verify(authority, amount)
             
             if result.Status == 100:
                 participant = Participant(current_wss=wss, user_profile=user_profile,
@@ -368,13 +391,16 @@ class PaymentViewSet(viewsets.ViewSet):
 
                 # Notify user about successful payment
                 user = participant.user_profile.user
-                send_mail(
+                
+                threading.Thread(target=lambda: send_mail(
                     PAYMENT_SUBJECT, 'text content',
                     settings.EMAIL_HOST_USER,
                     [user.email],
                     fail_silently=True,
-                    html_message=PAYMENT_HTML_CONTENT.format(user.first_name, participant.payment_ref_id)
+                    html_message=PAYMENT_HTML_CONTENT.format(
+                        user.first_name, participant.payment_ref_id)
                 )
+                ).start()
                 
                 return Response({
                     "message": 'OK',

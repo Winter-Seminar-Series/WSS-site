@@ -12,7 +12,7 @@ function Notification(state = {}, action) {
       return { ...state };
 
     case actionTypes.LOGIN_FAILURE:
-      toast.error('Login failed');
+      toast.error('Wrong username or password');
       return { ...state };
 
     case actionTypes.REGISTER_SUCCESS:
@@ -20,27 +20,46 @@ function Notification(state = {}, action) {
       return { ...state };
 
     case actionTypes.REGISTER_FAILURE:
-      toast.error('Registration failed');
+      toast.error(action.error);
       return { ...state };
 
-    case actionTypes.LOGOUT_SUCCESS:
-      toast.error('You logged out successfully');
+    case actionTypes.VERIFY_PAYMENT_REQUEST:
+      toast.warning('Your payment is in process',
+        {
+          autoClose: false,
+          closeOnClick: false,
+          draggable: false,
+        }
+      );
       return { ...state };
-
-    // case actionTypes.REDIRECT_WHEN_USER_IS_NOT_LOGGED:
-    //   toast.warning('You must log in before see that page');
-    //   return { ...state };
 
     case actionTypes.VERIFY_PAYMENT_SUCCESS:
-      toast.success('Your payment has been successfully done');
+      toast.success('Your payment has been successfully done!',
+        {
+          autoClose: false,
+          closeOnClick: false,
+          draggable: false,
+        }
+      );
+      return { ...state };
+
+    case actionTypes.SEND_PAYMENT_FAILURE:
+    case actionTypes.VERIFY_PAYMENT_FAILURE:
+      toast.error(action.error,
+        {
+          autoClose: false,
+          closeOnClick: false,
+          draggable: false,
+        }
+      );
       return { ...state };
 
     case actionTypes.UPDATE_PROFILE_SUCCESS:
-      toast.success('Your profile updated successfully');
+      toast.success('Your information updated successfully');
       return { ...state };
 
     case actionTypes.UPDATE_PROFILE_FAILURE:
-      toast.success('Something went wrong, your profile didn\'t update');
+      toast.error('Something went wrong, your information didn\'t update');
       return { ...state };
 
     default:
