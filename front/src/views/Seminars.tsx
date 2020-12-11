@@ -27,7 +27,7 @@ const Seminars = ({
           {seminars.length > 0 && !isFetching &&
             <div className="row">
               {seminars.map((seminar) => (
-                <div key={seminar.id} className="col-xs-12 col-sm-6 col-lg-3">
+                <div key={seminar.id} className="col-xs-12 col-sm-6 col-lg-3 mt-2 mb-4">
                   <PublicCard id={seminar.speaker} presentationLink={'/seminar/' + seminar.id}></PublicCard>
                 </div>
               ))}

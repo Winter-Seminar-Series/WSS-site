@@ -35,6 +35,7 @@ function Home({
   seminars,
   seminars_count,
   workshops_count,
+  speakers_count,
   participantsCount,
   sponsors,
   isFetching,
@@ -55,6 +56,9 @@ function Home({
     getWSSPrimitiveFields(THIS_YEAR);
     getModelList(MODEL_LISTS_NAMES.SEMINARS, THIS_YEAR);
     getModelList(MODEL_LISTS_NAMES.SPEAKERS, THIS_YEAR);
+    getModelListCount(MODEL_LISTS_NAMES.SEMINARS, THIS_YEAR);
+    getModelListCount(MODEL_LISTS_NAMES.WORKSHOPS, THIS_YEAR);
+    getModelListCount(MODEL_LISTS_NAMES.SPEAKERS, THIS_YEAR);
   }, [getWSSPrimitiveFields]);
   const date = 'JANUARY 2nd - 3rd, 2021';
   const register = false;
@@ -217,7 +221,7 @@ function Home({
               {
                 Array.from(Array(seminars.length).keys()).sort(() => Math.random() - 0.5).slice(0, 8)
                   .map((index) =>
-                    <div key={index} className="col-xs-10 col-sm-6 col-lg-3">
+                    <div key={index} className="col-xs-10 col-sm-6 col-lg-3 mt-2 mb-4">
                       <PublicCard id={seminars[index].speaker} presentationLink={'/seminar/' + seminars[index].id} />
                     </div>
                   )
@@ -238,8 +242,8 @@ function Home({
       <section id="ts-statics" className="z-1 ts-statics diagonal">
         <div className="container py-4">
           <div className="row d-flex justify-content-center">
-            <div className="col-sm-2 text-center">
-              <a data-scroll href="{% url 'wss:seminars-list' wss.year %}">
+            <div className="col-sm-2 m-2 text-center">
+              <a data-scroll>
                 <div className="ts-facts">
                   <div className="ts-facts-content">
                     <h2 className="ts-facts-num">
@@ -250,8 +254,8 @@ function Home({
                 </div>
               </a>
             </div>
-            <div className="col-sm-2 text-center">
-              <a data-scroll href="{% url 'wss:workshops-list' wss.year %}">
+            <div className="col-sm-2 m-2 text-center">
+              <a data-scroll>
                 <div className="ts-facts">
                   <div className="ts-facts-content">
                     <h2 className="ts-facts-num">
@@ -263,21 +267,20 @@ function Home({
               </a>
             </div>
 
-            {/* <div className="col-sm-2 text-center">
-              <a
-                data-scroll
-                href="{% url 'wss:postersessions-list' wss.year %}">
+            {/* <div className="col-sm-2 m-2 text-center">
+              <a data-scroll>
                 <div className="ts-facts">
                   <div className="ts-facts-content">
                     <h2 className="ts-facts-num">
-                      <span className="counterUp">18</span>
+                      <span className="counterUp">{speakers_count}</span>
                     </h2>
-                    <h3 className="ts-facts-title">Poster Presenters</h3>
+                    <h3 className="ts-facts-title">Speakers</h3>
                   </div>
                 </div>
               </a>
             </div> */}
-            {/* <div className="col-sm-2 text-center">
+
+            <div className="col-sm-2 m-2 text-center">
               <div className="ts-facts">
                 <div className="ts-facts-content">
                   <h2 className="ts-facts-num">
@@ -286,7 +289,7 @@ function Home({
                   <h3 className="ts-facts-title">Participants</h3>
                 </div>
               </div>
-            </div> */}
+            </div>
           </div>
         </div>
       </section>
@@ -373,6 +376,7 @@ const mapStateToProps = (state, ownProps) => {
     speakers,
     workshops_count,
     seminars_count,
+    speakers_count,
     sponsors,
     workshops,
     seminars,
@@ -393,6 +397,7 @@ const mapStateToProps = (state, ownProps) => {
     seminars,
     seminars_count,
     workshops_count,
+    speakers_count,
     participantsCount,
     sponsors,
     mainImageURL,
