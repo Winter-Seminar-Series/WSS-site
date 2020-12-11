@@ -4,7 +4,7 @@ import PublicCard from '../components/cards/PublicCard';
 import { THIS_YEAR } from '../constants/info';
 import { getModelList, MODEL_LISTS_NAMES } from '../redux/actions/WSS';
 
-const Staffs = ({
+const Staff = ({
   getWSSPrimitiveFields,
   getModelList,
   staff,
@@ -16,10 +16,6 @@ const Staffs = ({
     getModelList(MODEL_LISTS_NAMES.STAFF, THIS_YEAR);
   }, [getWSSPrimitiveFields]);
 
-  console.log(isFetching)
-
-
-
   return (
     <>
       <section
@@ -27,7 +23,7 @@ const Staffs = ({
         className="background-theme ts-speakers diagonal">
         <div className="container text-white">
           <div className="row mb-3">
-            <h2 className="mb-1 col section-sub-title title-white">Staffs</h2>
+            <h2 className="mb-1 col section-sub-title title-white">Staff</h2>
           </div>
           {holding_teams.map((team) => (
             <>
@@ -37,18 +33,18 @@ const Staffs = ({
               {staff.length > 0 && !isFetching &&
                 <div className="row">
                   {staff.filter((staff) => team.staff.includes(staff.id)).map((staff) => (
-                    <div key={staff.id} className="col-xs-12 col-sm-6 col-lg-3">
+                    <div key={staff.id} className="col-xs-12 col-sm-6 col-lg-3 mt-2 mb-4">
                       <PublicCard id={staff.id} isStaff='true'></PublicCard>
                     </div>
                   ))}
                 </div>
               }
-              {isFetching && (
+              {isFetching && 
                 <div className="row">
                   <div className="col mb-3">Loading...</div>
                 </div>
-              )}
-              {staff.length === 0 && !isFetching &&
+              }
+              {staff.length == 0 && !isFetching &&
                 <div className="row">
                   <div className="col">Nothing has been added yet</div>
                 </div>
@@ -72,4 +68,4 @@ const mapStateToProps = (state, ownProps) => {
 
 export default connect(mapStateToProps, {
   getModelList,
-})(Staffs);
+})(Staff);
