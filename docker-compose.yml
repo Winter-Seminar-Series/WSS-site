@@ -40,7 +40,7 @@ services:
     volumes:
       - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
       - frontend_vol:/mnt/frontend/:ro
-      - media_vol:/mnt/media/:ro
+      - media_vol:/mnt/media/ # TODO nginx doesn't work with readonly (644 permission) files for only this volume!
       - backend_statics_vol:/mnt/backend-statics/:ro
       - $FULLCHAIN_PATH:/etc/ssl-files/fullchain.pem:ro
       - $PRIVKEY_PATH:/etc/ssl-files/privkey.pem:ro
