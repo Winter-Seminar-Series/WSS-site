@@ -137,13 +137,13 @@ function Home({
         </div>
       </section>
 
-      <section id="ts-programs" className="diagonal">
+      <section id="ts-programs" className="diagonal mb-5">
         <div className="container">
           <div className="row">
             <h2 className="section-title mx-auto">Programs</h2>
           </div>
           <div className="row">
-            <div className="col-11 col-sm-9 col-lg-6 mx-auto">
+            <div className="col-12 col-sm-9 col-lg-8 mx-auto">
               <div className="row d-flex flex-sm-row-reverse justify-content-start justify-content-sm-between mt-5 mb-md-5">
                 <div className="p-5 p-md-0 col-md-4 d-flex flex-column justify-content-center">
                   <img
@@ -178,7 +178,7 @@ function Home({
                 </div>
               </div> */}
               <div className="row d-flex flex-sm-row-reverse justify-content-start justify-content-sm-between mt-md-5">
-                <div className="col mr-md-3 d-flex flex-column justify-content-center">
+                <div className="col mr-md-3 d-flex flex-column justify-content-center order-1">
                   <h3>Workshops</h3>
                   <p>
                     Workshops are long form educational opportunities about
@@ -186,7 +186,7 @@ function Home({
                     experts our industry has to offer.
                   </p>
                 </div>
-                <div className="p-5 p-md-0 col-md-4 d-flex flex-column justify-content-center">
+                <div className="p-5 p-md-0 col-md-4 d-flex flex-column justify-content-center order-0 order-md-1">
                   <img
                     className="w-100 h-auto my-auto"
                     src="images/workshop.png"
@@ -206,7 +206,7 @@ function Home({
       </section>
 
       {seminars.length > 0 && (
-        <section id="ts-speakers-main" className="diagonal blue-gradient">
+        <section id="ts-speakers-main" className="diagonal blue-gradient my-5">
           <div className="container">
             <div className="row text-center">
               <h3 className="section-sub-title title-white mx-auto font-weight-light">
@@ -231,7 +231,7 @@ function Home({
         </section>
       )}
 
-      <section id="ts-statics" className="z-1 ts-statics diagonal">
+      <section id="ts-statics" className="z-1 ts-statics diagonal my-5">
         <div className="container py-4">
           <div className="row d-flex justify-content-center">
             <div className="col-sm-2 text-center">
@@ -318,17 +318,17 @@ function Home({
       )} */}
 
       <section
-        className="venu-map no-padding diagonal background-theme h-100 pb-2"
+        className="venu-map no-padding diagonal background-theme h-100 pb-2 mt-1"
         style={venueMapStyle}>
         {/* <div className="container">
           <h3 className="section-sub-title" style={sectionSubtitleStyle}>
             WSS Venue
           </h3>
         </div> */}
-        <div className="container pt-5 mb-5">
-          <h5 className="section-sub-title mt-5 text-white">Info</h5>
-          <div className="row mb-5">
+        <div className="container pb-5">
+          <div className="row my-5">
             <div className="col-md-6 font-weight-bold">
+              <h5 className="section-sub-title text-white mb-3 mt-5">Info</h5>
               <div className="white">
                 <p>Sharif University of Technology </p>
                 <p>Azadi Street, District 2, Tehran, Iran</p>
@@ -337,12 +337,16 @@ function Home({
                 <p>+98(021) 66 16 57 81</p>
               </div>
             </div>
+
+            <div className="col-md-6 font-weight-bold">
+
+              <h5 className="section-sub-title text-white mb-3 mt-5">Organizer</h5>
+              <p className="font-italic white pb-3">
+                The event is held by the Student Scientific Chapter (SSC) of
+                Computer Engineering Department of Sharif University of Technology
+              </p>
+            </div>
           </div>
-          <h5 className="section-sub-title text-white">Organizer</h5>
-          <p className="font-italic white pb-3">
-            The event is held by the Student Scientific Chapter (SSC) of
-            Computer Engineering Department of Sharif University of Technology
-          </p>
         </div>
       </section>
     </>

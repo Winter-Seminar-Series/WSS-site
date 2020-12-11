@@ -3,6 +3,8 @@
   justify-content: center;
   align-items: center;
   align-content: center;
+  height: 100%;
+  padding: 15px 0;
   /* Lazy Load Styles */
   .card-image {
     display: block;
@@ -28,10 +30,8 @@
 
   .card {
     display: inline-block;
-    width: 90%;
     height: 100%;
     max-width: 20rem;
-    margin: 1rem;
     font-size: 1rem;
     text-decoration: none;
     overflow: hidden;
@@ -52,7 +52,7 @@
     text-decoration: none;
   }
 
-  .card-description>h2 {
+  .card-description>h3 {
     margin: 0 0 0.5em;
   }
 

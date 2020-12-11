@@ -4,7 +4,7 @@ import PublicCard from '../components/cards/PublicCard';
 import { THIS_YEAR } from '../constants/info';
 import { getModelList, MODEL_LISTS_NAMES } from '../redux/actions/WSS';
 
-const Staffs = ({
+const Staff = ({
   getWSSPrimitiveFields,
   getModelList,
   staff,
@@ -16,9 +16,6 @@ const Staffs = ({
     getModelList(MODEL_LISTS_NAMES.STAFF, THIS_YEAR);
   }, [getWSSPrimitiveFields]);
 
-  console.log(isFetching)
-
-
 
   return (
     <>
@@ -27,7 +24,7 @@ const Staffs = ({
         className="background-theme ts-speakers diagonal">
         <div className="container text-white">
           <div className="row mb-3">
-            <h2 className="mb-1 col section-sub-title title-white">Staffs</h2>
+            <h2 className="mb-1 col section-sub-title title-white">Staff</h2>
           </div>
           {holding_teams.map((team) => (
             <>
@@ -72,4 +69,4 @@ const mapStateToProps = (state, ownProps) => {
 
 export default connect(mapStateToProps, {
   getModelList,
-})(Staffs);
+})(Staff);
