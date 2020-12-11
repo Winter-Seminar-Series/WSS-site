@@ -1,6 +1,3 @@
-PAYMENT_SUBJECT_FA = 'تاییدیه پرداخت رویداد WSS'
-RESET_PASSWORD_SUBJECT_FA = 'WSS تنظیم مجدد رمز'
-
 PAYMENT_SUBJECT = 'WSS payment confirmation'
 RESET_PASSWORD_SUBJECT = 'WSS reset password'
 
@@ -127,19 +124,6 @@ BASE_HTML_CONTENT = '''<!DOCTYPE html>
   </body>
 </html>
 '''
-
-PAYMENT_EMAIL_FA = '''
-    شرکت کننده‌ی محترم، {}<br />
-    با تشکر از پرداخت شما<br />
-    شماره‌ی پیگیری: {}
-'''
-
-RESET_PASSWORD_EMAIL_FA = '''
-با سلام، برای تنظیم مجدد رمز خود
-<a href="{}">اینجا</a>
-کلیک کنید
-'''
-
 
 PAYMENT_EMAIL = (
   "Dear {},<br>"
