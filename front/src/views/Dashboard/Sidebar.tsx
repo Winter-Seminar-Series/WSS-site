@@ -51,18 +51,18 @@ function Sidebar({ logout }) {
         {sidebarItems.map((s) =>
           s.deactive ? (
             <span key={s.title} className="sidebar-item deactive">
-              <span className={`icon ml-2 fa fa-${s.icon}`}></span>
+              <span className={`icon mr-2 fa fa-${s.icon}`}></span>
               <span className="d-none d-md-block">{s.title}</span>
             </span>
           ) : (
               <a href={s.link} key={s.title} className="sidebar-item">
-                <span className={`icon ml-2 fa fa-${s.icon}`}></span>
+                <span className={`icon mr-2 fa fa-${s.icon}`}></span>
                 <span className="d-none d-md-block">{s.title}</span>
               </a>
             )
         )}
         <span key="logout" className="sidebar-item" onClick={doLogout}>
-          <span className={`icon ml-2 fa fa-sign-out`}></span>
+          <span className={`icon mr-2 fa fa-sign-out`}></span>
           <span className="d-none d-md-block">Logout</span>
         </span>
       </div>
