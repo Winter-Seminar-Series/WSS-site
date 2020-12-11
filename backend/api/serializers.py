@@ -96,7 +96,9 @@ class BookletSerializer(ModelSerializer):
 class HoldingTeamSerializer(ModelSerializer):
     class Meta:
         model = HoldingTeam
-        fields = '__all__'
+        fields = [
+            'id', 'name', 'wss', 'staff'
+        ]
 
 
 class ImageSerializer(ModelSerializer):
