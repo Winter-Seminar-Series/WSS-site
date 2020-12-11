@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 import { logout } from '../../redux/actions/account';
 
-function Sidebar({ logout }) {
+function Sidebar({ logout, isRegistered }) {
   const history = useHistory();
 
   const doLogout = () => {
@@ -11,40 +11,29 @@ function Sidebar({ logout }) {
     history.push('/');
   };
 
-  const sidebarItems: SidebarItem[] = [
-    {
-      title: 'Registration',
-      persianTitle: 'ثبت‌نام رویداد',
-      link: '/dashboard/seminar-registration',
-      icon: 'calendar-o',
-    },
-    // {
-    //   title: 'Workshop Registration',
-    //   persianTitle: 'ثبت‌نام کارگاه',
-    //   link: '/dashboard/workshop-registration',
-    //   icon: 'calendar',
-    // },
-    // {
-    //   title: 'Your Seminars',
-    //   persianTitle: 'سمینار‌های شما',
-    //   link: '/dashboard/seminar-list',
-    //   icon: 'bookmark-o',
-    //   deactive: true,
-    // },
-    // {
-    //   title: 'Your Workshops',
-    //   persianTitle: 'کارگاه‌های شما',
-    //   link: '/dashboard/workshop-list',
-    //   icon: 'bookmark-o',
-    //   deactive: true,
-    // },
+  var sidebarItems = [];
+
+  if (!isRegistered) {
+    sidebarItems.push(
+      {
+        title: 'Registration',
+        persianTitle: 'ثبت‌نام رویداد',
+        link: '/dashboard/seminar-registration',
+        icon: 'calendar-o',
+      },
+    )
+  }
+
+  sidebarItems.push(
     {
       title: 'Profile',
       persianTitle: 'پروفایل',
       link: '/dashboard/profile',
       icon: 'user-circle-o',
-    },
-  ];
+    }
+  )
+
+
   return (
     <>
       <div className="sidebar">
@@ -70,9 +59,9 @@ function Sidebar({ logout }) {
   );
 }
 
-const mapStateToProps = (state, ownProps) => {
-
-}
+const mapStateToProps = (state, ownProps) => ({
+  isRegistered: state.Participant.isRegistered,
+})
 
 export default connect(
   mapStateToProps,

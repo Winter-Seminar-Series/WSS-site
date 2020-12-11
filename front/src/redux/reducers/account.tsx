@@ -67,16 +67,12 @@ function Account(state = initState, action) {
     case actionTypes.LOGOUT_REQUEST:
       return initState;
 
-    // case actionTypes.LOGOUT_SUCCESS:
-    //   return initState;
-
-    // case actionTypes.LOGOUT_FAILURE:
-    //   return {
-    //     ...state,
-    //     isFetching: false,
-    //   };
-
     ///////////////////
+    case actionTypes.SEND_PAYMENT_REQUEST:
+      return ({
+        ...state,
+        isFetching: true,
+      })
 
     case actionTypes.SEND_PAYMENT_SUCCESS:
       var link = document.createElement('a');
@@ -87,24 +83,14 @@ function Account(state = initState, action) {
       return {
         ...state,
         redirect_url: action.response.redirect_url,
+        isFetching: false,
       };
 
-    case actionTypes.VERIFY_PAYMENT_SUCCESS:
-      console.log('hey');
-      return {
+    case actionTypes.SEND_PAYMENT_FAILURE:
+      return ({
         ...state,
-        payment: {
-          // url: action.response.message,
-          // amount: action.response.amount,
-          // typePayment: action.response.typePayment,
-        },
-      };
-
-    case actionTypes.REMOVE_PAYMENT_DATA:
-      return {
-        ...state,
-        payment: null,
-      };
+        isFetching: false,
+      })
 
     default:
       return state;
