@@ -4,6 +4,7 @@
 - Primitive fields of WSS
     Fields:
     - `main_image_url`
+    - `description`
     - `main_clip_url`
     - `booklet_url`
     - `staff_count`
@@ -391,7 +392,91 @@ Allows a POST request containing an Authorization header
   - Note:
       - Tokens expire after 10 hours (which can be modified)
   
+### Change Password
+Allows to update an authenticated user's password
+  - Example
+  ```HTTP
+  PUT /api/change-password/
+  {
+    "old_password": "someoldpass",
+    "new_password": "anewpass"
+  }
+  ```
+  - Success
+  ```HTTP
+  HTTP 200 OK
+  {
+    "message": "Password updated successfully"
+  }
+  ```
+  - Failure: if the old password isn't proper:
+  ```HTTP
+  HTTP 400 Bad Request
+  {
+    "message": "Wrong password"
+  }
+  ```
 
+### Reset Password
+Sends a token to the user's email to verify and set a new password
+  - Example
+  ```HTTP
+  POST /api/password_reset/
+  {
+    "email": "user@email.wss"
+  }
+  ```
+  - Success
+  ```HTTP
+  HTTP 200 OK
+  {
+    "status": "OK"
+  }
+  ```
+  - Failure: no user with that email exists:
+  ```HTTP
+  HTTP 400 Bad Request
+  {
+    "email": [
+      "There is no active user associated with this e-mail address or the password can not be changed"
+    ]
+  }
+  ```
+Now sending the token and the new password should be as described below:
+  - Example
+  ```HTTP
+  POST /api/password_reset/confirm/
+  {
+    "password": "newpassword",
+    "token": "31198ab141"
+  }
+  ```
+  - Success
+  ```HTTP
+  HTTP 200 OK
+  {
+    "status": "OK"
+  }
+  ```
+  - Failure: 
+      - invalid token:
+      ```HTTP
+      HTTP 400 Bad Request
+      {
+        "status": "notfound"
+      }
+      ```
+      - not strong enough password!:
+      ```HTTP
+      HTTP 400 Bad Request
+      {
+        "password": [
+           "The password is too similar to the username.",
+           "This password is too short. It must contain at least 8 characters.",
+           "This password is too common."
+        ]
+      }
+      ```
 
 ## User Profile APIs
 
