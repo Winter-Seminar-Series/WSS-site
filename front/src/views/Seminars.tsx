@@ -28,7 +28,7 @@ const Seminars = ({
             <div className="row">
               {seminars.map((seminar) => (
                 <div key={seminar.id} className="col-xs-12 col-sm-6 col-lg-3">
-                  <PublicCard person={seminar.speaker} presentationLink={'/seminar/' + seminar.id}></PublicCard>
+                  <PublicCard id={seminar.speaker} presentationLink={'/seminar/' + seminar.id}></PublicCard>
                 </div>
               ))}
             </div>

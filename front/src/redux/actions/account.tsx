@@ -54,23 +54,22 @@ export const logout = () => ({
   },
 });
 
-export const redirectWhenUserIsNotLoggedIn = () => ({
-  type: actionTypes.REDIRECT_WHEN_USER_IS_NOT_LOGGED,
-});
-
-export const sendPaymentRequest = (year = 2020) => ({
-  [CALL_API]: {
-    types: [
-      actionTypes.SEND_PAYMENT_REQUEST,
-      actionTypes.SEND_PAYMENT_SUCCESS,
-      actionTypes.SEND_PAYMENT_FAILURE,
-    ],
-    url: `${URLs.ROOT}${year}/payment/request?callback=${BASE_URL}/dashboard`,
-    fetchOptions: {
-      method: 'GET',
+export const sendPaymentRequest = (year = 2020) => {
+  console.log(BASE_URL)
+  return ({
+    [CALL_API]: {
+      types: [
+        actionTypes.SEND_PAYMENT_REQUEST,
+        actionTypes.SEND_PAYMENT_SUCCESS,
+        actionTypes.SEND_PAYMENT_FAILURE,
+      ],
+      url: `${URLs.ROOT}${year}/payment/request?callback=${BASE_URL}/dashboard`,
+      fetchOptions: {
+        method: 'GET',
+      },
     },
-  },
-});
+  })
+};
 
 export const verifyPayment = (authority, status, year = 2020) => ({
   [CALL_API]: {
@@ -84,8 +83,4 @@ export const verifyPayment = (authority, status, year = 2020) => ({
       method: 'GET',
     },
   },
-});
-
-export const removePaymentData = () => ({
-  type: actionTypes.REMOVE_PAYMENT_DATA,
 });

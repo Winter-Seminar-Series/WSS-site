@@ -1,5 +1,8 @@
 #public-card {
-
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
   /* Lazy Load Styles */
   .card-image {
     display: block;

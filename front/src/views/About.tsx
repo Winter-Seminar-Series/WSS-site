@@ -10,7 +10,7 @@ const About = () => {
   };
 
   const containerStyle = {
-    paddingTop: '9rem',
+    paddingTop: '10.5rem',
   };
 
   const whiteBackground = {
@@ -21,11 +21,9 @@ const About = () => {
     <>
       <section id="main-container" className="main-container pb-0">
         <div style={diagonalStyle} className="px-2 diagonal background-theme">
-          <div
-            className="container section-sub-title title-white"
-            style={containerStyle}>
-            {t('title')}
-          </div>
+          <h2 className="container section-sub-title title-white" style={containerStyle}>
+            About WSS
+          </h2>
         </div>
         <div
           className="container-fluid px-2 pt-4 mt-5 mb-0 diagonal"
@@ -39,9 +37,9 @@ const About = () => {
               </div>
             </div>
 
-            <h2 className="section-title mt-2">{t('programs')}</h2>
+            <h2 className="section-title mt-4">Programs</h2>
             <div className="row">
-              <div className="col mx-auto">
+              <div className="col col-sm-10 mx-auto">
                 <div className="row d-flex flex-sm-row-reverse justify-content-start justify-content-sm-between mt-5 mb-md-5">
                   <div className="p-5 p-md-0 col-md-3 d-flex flex-column justify-content-center">
                     <img
@@ -50,7 +48,7 @@ const About = () => {
                     />
                   </div>
                   <div className="col mr-md-3  d-flex flex-column justify-content-start">
-                    <h3>{t('seminars')}</h3>
+                    <h3>Seminars</h3>
                     <p>{t('seminarsDescription')}</p>
                   </div>
                 </div>
@@ -74,7 +72,7 @@ const About = () => {
                     />
                   </div>
                   <div className="col mr-md-3  d-flex flex-column justify-content-start">
-                    <h3>{t('workshops')}</h3>
+                    <h3>Workshops</h3>
                     <p>{t('workshopsDescription')}</p>
                   </div>
                 </div>
