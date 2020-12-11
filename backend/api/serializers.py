@@ -20,6 +20,7 @@ class WSSSerializer(ModelSerializer):
             'ical_link',
             'year',
             'start_date',
+            'end_date',
             'proposal_link',
             'show_stats',
             'registration_fee',

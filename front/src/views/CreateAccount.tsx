@@ -8,24 +8,14 @@ function CreateAccount({ register, isLoggedIn, isFetching }) {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [doesPasswordAgainMatch, setPasswordAgainMatchingStatus] = useState(
-    true
-  );
-
-  function checkPasswordAgain(passwordAgain) {
-    if (passwordAgain === password) {
-      setPasswordAgainMatchingStatus(true);
-    } else {
-      setPasswordAgainMatchingStatus(false);
-    }
-  }
+  const [confirmPassword, setConfirmPassword] = useState('');
 
   function doRegister() {
     if (!username || !email || !password) {
       toast.error('Please fill all the fields');
       return;
     }
-    if (!doesPasswordAgainMatch) {
+    if (password !== confirmPassword) {
       toast.error("Passwords doesn't match");
       return;
     }
@@ -75,10 +65,10 @@ function CreateAccount({ register, isLoggedIn, isFetching }) {
           <div className="form-group mb-5">
             <label htmlFor="confirm password">Confirm Password</label>
             <input
-              onChange={(e) => checkPasswordAgain(e.target.value)}
+              onChange={(e) => setConfirmPassword(e.target.value)}
               type="password"
               className="form-control"
-              id="password-again"
+              id="confirm-password"
             />
           </div>
           <button

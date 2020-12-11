@@ -44,3 +44,17 @@ export const updateProfile = (updatedData: {
     },
   },
 });
+
+export const doesUserHaveRegistered = (year) => ({
+  [CALL_API]: {
+    types: [
+      actionTypes.CHECK_USER_REGISTRATION_STATUS_REQUEST,
+      actionTypes.CHECK_USER_REGISTRATION_STATUS_SUCCESS,
+      actionTypes.CHECK_USER_REGISTRATION_STATUS_FAILURE,
+    ],
+    url: `${URLs.ROOT}profile/is_registered/?year=${year}`,
+    fetchOptions: {
+      method: 'GET',
+    },
+  },
+});

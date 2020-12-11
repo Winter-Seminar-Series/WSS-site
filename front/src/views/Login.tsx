@@ -11,7 +11,7 @@ function Login({ login, isLoggedIn, isFetching }) {
 
   function doLogin() {
     if (!username || !password) {
-      toast.error('Please fill all the required fields');
+      toast.error('Please fill all the fields');
       return;
     }
     login(username, password);
