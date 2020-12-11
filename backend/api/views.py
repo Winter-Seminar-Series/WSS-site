@@ -485,20 +485,3 @@ class ChangePasswordView(generics.UpdateAPIView):
             }, status=status.HTTP_200_OK)
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
-''' Signal handlers should be placed somewhere which is automatically loaded (like here or models)
-or be imported in ready() function in apps.py '''
-@receiver(reset_password_token_created)
-def password_reset_token_created(sender, instance, reset_password_token, *args, **kwargs):
-
-    base_url = 'https://sharif-wss.ir/'  # TODO
-    email_message = "{}?token={}".format(base_url, reset_password_token.key)
-
-    send_mail(
-        RESET_PASSWORD_SUBJECT, 'text content',
-        settings.EMAIL_HOST_USER,
-        [reset_password_token.user.email],
-        fail_silently=True,
-        html_message=BASE_HTML_CONTENT.format(RESET_PASSWORD_EMAIL.format(email_message))
-    )
