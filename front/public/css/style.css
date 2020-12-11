@@ -1812,12 +1812,13 @@ ul.navbar-nav > li:hover > a {
   opacity: 0.8;
   border-color: transparent !important;
 }
-@media (min-width: 576px) {
+/* @media (min-width: 576px) {
   #ts-speakers-main {
     background-position-x: 20vw !important;
     background-repeat: no-repeat !important;
   }
-}
+} */
+
 #ts-speakers {
   background-size: initial !important;
   background-repeat: no-repeat !important;
