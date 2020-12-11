@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { connect } from 'react-redux';
 import PublicCard from '../components/cards/PublicCard';
 import { BASE_URL, THIS_YEAR } from '../constants/info';
-import { Sponsor } from '../models/wss';
+import moment from 'moment'
 import {
   getModelList,
   getModelListCount,
@@ -104,7 +104,7 @@ function Home({
                     Advanced Topics in Computer Science and Engineering
                   </h2>
                   <h2 className="banner-subtitle my-3 font-weight-bold">
-                    {date}
+                    {startDate ? moment(startDate, "yy-mm-dd").format(`MMMM Do, YYYY`) : ''}
                   </h2>
                   <h3 className="banner-desc font-weight-bold">
                     IRAN, TEHRAN,
@@ -112,7 +112,7 @@ function Home({
                   <h3 className="banner-desc font-weight-bold">
                     SHARIF UNIVERSITY OF TECHNOLOGY
                   </h3>
-                  {register && (
+                  {/* {register && (
                     <p className="banner-btn">
                       <a
                         href="{% url 'wss:register' wss.year %}"
@@ -120,7 +120,7 @@ function Home({
                         Register Now
                       </a>
                     </p>
-                  )}
+                  )} */}
                   {/* {posterSessionRegister && (
                     <p className="banner-btn">
                       <a
@@ -214,11 +214,14 @@ function Home({
               </h3>
             </div>
             <div className="row justify-content-center">
-              {seminars.slice(0, 8).map((seminar) => (
-                <div key={seminar.id} className="col-xs-10 col-sm-6 col-lg-3">
-                  <PublicCard id={seminar.speaker} presentationLink={'/seminar/' + seminar.id}></PublicCard>
-                </div>
-              ))}
+              {
+                Array.from(Array(seminars.length).keys()).sort(() => Math.random() - 0.5).slice(0, 8)
+                  .map((index) =>
+                    <div key={index} className="col-xs-10 col-sm-6 col-lg-3">
+                      <PublicCard id={seminars[index].speaker} presentationLink={'/seminar/' + seminars[index].id} />
+                    </div>
+                  )
+              }
             </div>
           </div>
           <div className="row">
@@ -229,7 +232,8 @@ function Home({
             </div>
           </div>
         </section>
-      )}
+      )
+      }
 
       <section id="ts-statics" className="z-1 ts-statics diagonal">
         <div className="container py-4">

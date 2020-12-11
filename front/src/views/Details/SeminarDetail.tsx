@@ -55,15 +55,23 @@ function SeminarDetail({
                   <h3 className="session-title">{seminar.title}</h3>
                   <div className="seminar-details">
                     <i className="fa fa-clock-o">&nbsp;</i>
-                    {
+                    {seminar.duration && (
                       parseInt(moment(seminar.duration, "hh:mm:ss").format(`hh`)) === 12
                         ? parseInt(moment(seminar.duration, "hh:mm:ss").format(`mm`)) + " minutes"
                         : parseInt(moment(seminar.duration, "hh:mm:ss").format(`hh`)) * 60 + parseInt(moment(seminar.duration, "hh:mm:ss").format(`mm`)) + " minutes"
-                    }
+                    )}
+                    {!seminar.duration && (
+                      'To be announced ...'
+                    )}
                   </div>
                   <div className="seminar-details">
                     <i className="fa fa-calendar">&nbsp;</i>
-                    {moment(seminar.start_time, "YYYY-MM-DD hh:mm:ss").format("dddd, MMMM Do, hh:mm a")}
+                    {seminar.start_time && (
+                      moment(seminar.start_time, "YYYY-MM-DD hh:mm:ss").format("dddd, MMMM Do, hh:mm a")
+                    )}
+                    {!seminar.start_time && (
+                      'To be announced ...'
+                    )}
                   </div>
                 </div>
               </div>
@@ -72,18 +80,31 @@ function SeminarDetail({
           <div className="row mt-5">
             <div className="col-xs-12 col-md-8">
               <div className="ts-speaker-session right">
-                <h4>Abstract</h4>
-                <div className="mb-3">
-                  {seminar.abstract}
-                </div>
-                <h4>Audience</h4>
-                <div className="mb-3">
-                  {seminar.audience}
-                </div>
-                <h4>Bio</h4>
-                <span>
-                  {speaker.bio}
-                </span>
+                {seminar.abstract &&
+                  <>
+                    <h4>Abstract</h4>
+
+                    <div className="mb-3">
+                      {seminar.abstract}
+                    </div>
+                  </>
+                }
+                {seminar.audience &&
+                  <>
+                    <h4>Audience</h4>
+                    <div className="mb-3">
+                      {seminar.audience}
+                    </div>
+                  </>
+                }
+                {speaker.bio &&
+                  <>
+                    <h4>Bio</h4>
+                    <span>
+                      {speaker.bio}
+                    </span>
+                  </>
+                }
               </div>
             </div>
           </div>

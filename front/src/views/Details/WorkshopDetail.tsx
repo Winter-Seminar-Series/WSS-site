@@ -55,19 +55,28 @@ function WorkshopDetail({
                   <h3 className="session-title">{workshop.title}</h3>
                   <div className="seminar-details">
                     <i className="fa fa-clock-o">&nbsp;</i>
-                    {
+                    {workshop.duration && (
                       parseInt(moment(workshop.duration, "hh:mm:ss").format(`hh`)) === 12
                         ? parseInt(moment(workshop.duration, "hh:mm:ss").format(`mm`)) + " minutes"
                         : parseInt(moment(workshop.duration, "hh:mm:ss").format(`hh`)) * 60 + parseInt(moment(workshop.duration, "hh:mm:ss").format(`mm`)) + " minutes"
-                    }
+                    )}
+                    {!workshop.duration && (
+                      'To be announced ...'
+                    )}
                   </div>
                   <div className="seminar-details">
                     <i className="fa fa-calendar">&nbsp;</i>
-                    {moment(workshop.start_time, "YYYY-MM-DD hh:mm:ss").format("dddd, MMMM Do, hh:mm a")}
+                    {workshop.start_time &&
+                      moment(workshop.start_time, "YYYY-MM-DD hh:mm:ss").format("dddd, MMMM Do, hh:mm a")
+                    }
+                    {!workshop.duration && (
+                      'To be announced ...'
+                    )}
                   </div>
+
                   <div className="seminar-details">
                     <i className="fa fa-credit-card">&nbsp;</i>
-                    {`${workshop.price} Tomans`}
+                    {`${workshop.price ? workshop.price : '?'} Tomans`}
                   </div>
                 </div>
               </div>
@@ -76,14 +85,22 @@ function WorkshopDetail({
           <div className="row mt-5">
             <div className="col-xs-12 col-md-8">
               <div className="ts-speaker-session right">
-                <h4>Syllabus</h4>
-                <div className="mb-3">
-                  {workshop.syllabus}
-                </div>
-                <h4>Bio</h4>
-                <span>
-                  {speaker.bio}
-                </span>
+                {workshop.syllabus &&
+                  <>
+                    <h4>Syllabus</h4>
+                    <div className="mb-3">
+                      {workshop.syllabus}
+                    </div>
+                  </>
+                }
+                {speaker.bio &&
+                  <>
+                    <h4>Bio</h4>
+                    <span>
+                      {speaker.bio}
+                    </span>
+                  </>
+                }
               </div>
             </div>
           </div>

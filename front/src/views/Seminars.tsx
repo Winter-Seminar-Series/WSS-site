@@ -38,7 +38,7 @@ const Seminars = ({
               <div className="col">Loading...</div>
             </div>
           )}
-          {seminars.length === 0 && !isFetching &&
+          {seminars.length == 0 && !isFetching &&
             <div className="row">
               <div className="col">Nothing has been added yet</div>
             </div>
