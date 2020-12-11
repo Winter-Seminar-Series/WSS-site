@@ -292,6 +292,8 @@ class UserProfileViewSet(viewsets.ViewSet):
 
 class AnnouncementViewSet(BaseViewSet):
     serializer = serializers.AnnouncementSerializer
+    authentication_classes = [BasicAuthentication, TokenAuthentication]
+    permission_classes = [IsAuthenticated]
 
     def queryset_selector(self, request, wss):
         return wss.announcements.order_by('-create_timestamp')
