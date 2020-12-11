@@ -169,12 +169,12 @@ def forwards(apps, schema_editor):
 
     teams_staff = {
         'Content': ['Mahdi Farvardin', 'Hossein Firooz', 'Sepehr Amini Afshar', 'Farzam Zohdinasab', 'Pooya Moeini', 'Seyed Mohammad mehdi Hatami'],
-        'Technical': ['Emran Batmanghelich', 'Ahmad Salimi', 'Ali asghar Ghanati', 'Fateme Khashei', 'Alireza Tajmir riahi', 'Seyed Alireza Hashemi', 'Mohammad mehdi Barghi', 'ArhsiA Akhavan'],
-        'Network': ['Amirhossein Hadian', 'Shima Ramadani', 'Sara Azarnoosh', 'Ehsan Movafagh', 'Fatemeh Asgari', 'Sajjad Rezvani', 'Amirmohammad Imani', 'Mehdi Jalali'],
+        'Technical': ['Emran Batmanghelich', 'Ahmad Salimi', 'Ali asghar Ghanati', 'Fateme Khashei', 'Alireza Tajmir riahi', 'Mohammad mehdi Barghi', 'Seyed Alireza Hashemi', 'ArhsiA Akhavan'],
+        'Network': ['Amirhossein Hadian', 'Amirmohammad Imani', 'Sajjad Rezvani', 'Shima Ramadani', 'Mehdi Jalali', 'Sara Azarnoosh', 'Ehsan Movafagh', 'Fatemeh Asgari'],
         'Branding': ['Seyed Alireza Hosseini'],
         'Social': ['Sara Azarnoosh', 'Dorna Dehghani', 'Ghazal Shenavar', 'Helia Akhtarkavian', 'Sabiheh Tajdari', 'Sahel Messforoosh', 'Esmaeil Pahang'],
-        'Media': ['Hamila Meili', 'Mahdieh Ebrahimpoor', 'Roya Ghavami', 'Sara Zahedi', 'Mohammad mehdi Barghi'],
-        'Presentation Management': ['Alireza Ziaei', 'Sajjad Rezvani', 'Vahid Zehtab', 'Amirhossein Asem Yousefi'],
+        'Media': ['Hamila Meili', 'Mahdieh Ebrahimpoor', 'Roya Ghavami', 'Sara Zahedi', 'Hossein Aghamohammadi'],
+        'Presentation Management': ['Alireza Ziaei', 'Amirhossein Asem Yousefi', 'Vahid Zehtab', 'Sajjad Rezvani'],
     }
 
     wss = WSS.objects.get(year=2020)
