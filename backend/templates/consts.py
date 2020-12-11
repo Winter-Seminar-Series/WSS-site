@@ -1,5 +1,8 @@
-PAYMENT_SUBJECT = 'تاییدیه پرداخت رویداد WSS'
-RESET_PASSWORD_SUBJECT = 'WSS تنظیم مجدد رمز'
+PAYMENT_SUBJECT_FA = 'تاییدیه پرداخت رویداد WSS'
+RESET_PASSWORD_SUBJECT_FA = 'WSS تنظیم مجدد رمز'
+
+PAYMENT_SUBJECT = 'WSS payment confirmation'
+RESET_PASSWORD_SUBJECT = 'WSS reset password'
 
 BASE_HTML_CONTENT = '''<!DOCTYPE html>
 <html>
@@ -19,7 +22,7 @@ BASE_HTML_CONTENT = '''<!DOCTYPE html>
         -ms-text-size-adjust: 100%;
         margin: 0;
         padding: 0;
-        font-family: Tahoma, sans-serif;
+        font-family: sans-serif;
       }}
       /* Prevent Webkit and Windows Mobile platforms from changing default font sizes, while not breaking desktop design. */
   
@@ -103,7 +106,9 @@ BASE_HTML_CONTENT = '''<!DOCTYPE html>
                 <a href="http://wss.ce.sharif.edu" target="_blank" style="text-decoration: none;"><img src="https://s16.picofile.com/file/8414283942/WSS.png" border="0" width="123.5" height="123.25" alt="WSS 2020"></a>
               </div>
           </div>
-          <div class="px-1 py-1" dir="rtl" style="text-align: right;">{}</div>
+          <div class="px-1 py-1">
+             {}
+          </div>
           <footer>
             <div class="text-center px-1 py-1">
                 <div class="py-2 p-relative" id="site">
@@ -123,14 +128,29 @@ BASE_HTML_CONTENT = '''<!DOCTYPE html>
 </html>
 '''
 
-PAYMENT_EMAIL = '''
+PAYMENT_EMAIL_FA = '''
     شرکت کننده‌ی محترم، {}<br />
     با تشکر از پرداخت شما<br />
     شماره‌ی پیگیری: {}
 '''
 
-RESET_PASSWORD_EMAIL = '''
+RESET_PASSWORD_EMAIL_FA = '''
 با سلام، برای تنظیم مجدد رمز خود
 <a href="{}">اینجا</a>
 کلیک کنید
 '''
+
+
+PAYMENT_EMAIL = (
+  "Dear {},<br>"
+  "Thanks for your interest in attending WSS 2020 <br>"
+  "Your payment was successful. <br>"
+  "Ref code: {} <br>"
+)
+
+RESET_PASSWORD_EMAIL = (
+  "Dear attendee, <br>"
+  "You've recently asked to reset your password. <br>"
+  "To update your password, click <a href=\"{}\">here</a> <br>"
+)
+
