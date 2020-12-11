@@ -313,7 +313,7 @@ class PaymentViewSet(viewsets.ViewSet):
         wss = get_wss_object_or_404(year)
         if not wss.registration_open:
             return ErrorResponse({
-                'message': "Sorry, the registration has been ended."
+                'message': "Sorry, the registration is not available now."
             })
         
         callback_url = request.query_params.get("callback", None)
@@ -363,7 +363,7 @@ class PaymentViewSet(viewsets.ViewSet):
         wss = get_wss_object_or_404(year)
         if not wss.registration_open:
             return ErrorResponse({
-                'message': "Sorry, the registration has been ended."
+                'message': "Sorry, the registration is not available now."
             })
         
         user_profile = get_user_profile(request.user)
