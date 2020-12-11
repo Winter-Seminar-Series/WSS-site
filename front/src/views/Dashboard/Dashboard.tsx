@@ -11,6 +11,7 @@ import { connect } from 'react-redux';
 import { THIS_YEAR } from '../../constants/info';
 
 function Dashboard({ match, verifyPayment }) {
+  
   const location = useLocation();
   const urlParams = new URLSearchParams(location.search);
   const authority = urlParams.get('Authority');
