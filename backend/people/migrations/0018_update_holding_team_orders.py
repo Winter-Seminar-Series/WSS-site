@@ -1,4 +1,5 @@
 from django.db import migrations
+from django.contrib.contenttypes.models import ContentType
 
 
 def forwards(apps, schema_editor):
@@ -18,9 +19,12 @@ def forwards(apps, schema_editor):
         'Presentation Management'
     ]
 
-    HoldingTeam.objects.get(wss=wss, name='Event Director', order=1).update(name='Manager & Director')
+    HoldingTeam.objects.get(wss=wss, name='Event Director').update(name='Manager & Director')
+
+    ctype = ContentType.objects.get_for_model(Staff)
 
     Staff.objects.create(
+        polymorphic_ctype=ctype,
         name='Shayan Oveis gharan',
         picture='media/2020/staff/Shayan-Oveis-gharan.jpg'
     )
