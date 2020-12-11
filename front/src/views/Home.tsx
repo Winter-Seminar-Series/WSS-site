@@ -159,7 +159,7 @@ function Home({
                   </p>
                 </div>
               </div>
-              <div className="row justify-content-sm-start mt-md-5 mb-md-5">
+              {/* <div className="row justify-content-sm-start mt-md-5 mb-md-5">
                 <div className="p-5 p-md-0 col-md-4 d-flex flex-column justify-content-center">
                   <img
                     className="w-100 h-auto my-auto"
@@ -175,14 +175,8 @@ function Home({
                     with them, and build networks.
                   </p>
                 </div>
-              </div>
+              </div> */}
               <div className="row d-flex flex-sm-row-reverse justify-content-start justify-content-sm-between mt-md-5">
-                <div className="p-5 p-md-0 col-md-4 d-flex flex-column justify-content-center">
-                  <img
-                    className="w-100 h-auto my-auto"
-                    src="images/workshop.png"
-                  />
-                </div>
                 <div className="col mr-md-3 d-flex flex-column justify-content-center">
                   <h3>Workshops</h3>
                   <p>
@@ -190,6 +184,12 @@ function Home({
                     technology or scientific subjects presented by the best
                     experts our industry has to offer.
                   </p>
+                </div>
+                <div className="p-5 p-md-0 col-md-4 d-flex flex-column justify-content-center">
+                  <img
+                    className="w-100 h-auto my-auto"
+                    src="images/workshop.png"
+                  />
                 </div>
               </div>
             </div>
