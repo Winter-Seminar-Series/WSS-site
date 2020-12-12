@@ -41,6 +41,8 @@ class HoldingTeam(models.Model):
 
 
 class Staff(Human):
+    order = models.PositiveIntegerField(default=1)
+
     class Meta:
         verbose_name_plural = 'Staff'
 
