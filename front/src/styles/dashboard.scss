@@ -37,10 +37,9 @@
 
 .dashboard-container {
   min-height: 80vh;
-  padding: 0px;
-  padding-left: 250px;
+  padding: 0 0 0 250px;
   @media (max-width: 768px) {
-    padding-right: 50px;
+    padding-left: 50px;
   }
   .seminar-register-title {
     justify-content: center;
