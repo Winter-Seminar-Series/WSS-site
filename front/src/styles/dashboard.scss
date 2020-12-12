@@ -33,6 +33,21 @@
       color: rgba(0, 0, 0, 0.4);
     }
   }
+
+  .sidebar-announcement {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    color: inherit;
+    padding: 10px 20px;
+    text-decoration: none;
+    margin-bottom: 15px;
+    > .icon {
+      color: inherit;
+    }
+  }
+
+
 }
 
 .dashboard-container {

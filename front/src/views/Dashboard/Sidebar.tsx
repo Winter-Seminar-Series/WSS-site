@@ -37,10 +37,17 @@ function Sidebar({ logout, isRegistered }) {
   return (
     <>
       <div className="sidebar">
+        {isRegistered &&
+          <span className="sidebar-announcement">
+            <h5 style={{ color: '#397a00' }}>
+              Your registration has been approved successfully. The event will start at 31 Dec.
+            </h5>
+          </span>
+        }
         {sidebarItems.map((s) =>
           s.deactive ? (
             <span key={s.title} className="sidebar-item deactive">
-              <span className={`icon mr-2 fa fa-${s.icon}`}></span>
+              <span className={`icon mr-2 fa fa-${s.icon}`} ></span>
               <span className="d-none d-md-block">{s.title}</span>
             </span>
           ) : (
