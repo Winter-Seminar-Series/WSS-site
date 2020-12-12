@@ -23,8 +23,8 @@ def forwards(apps, schema_editor):
     Workshop.objects.create(
         wss=wss,
         polymorphic_ctype=ctype,
-        title='بررسی تاریخچه word embeddingها و پیاده سازی پروژه تحلیل احساسات با bert',
-        syllabus='We have a history of word embedding and then we go to the revolutionary technology, Bert. First we examine the structure of Bert and finally we will implement a practical and real project on Persian data.',
+        title='A brief history of word embeddings and implement the sentiment analysis project with bert',
+        syllabus='In this talk, we have a history of word embedding and then we go to the revolutionary technology, Bert. Advantages and disadvantages of word2vec, fasttext, bert methods will be stated. Then we examine the structure of Bert in more detail and Finally, a real and practical project is defined on Persian data and the sentiment analysis project is implemented on DigiKala dataset. Bert pretrained model will be used in this project.',
         speaker=Speaker.objects.filter(name='Mohammad Dehghani').last()
     )
     Workshop.objects.create(

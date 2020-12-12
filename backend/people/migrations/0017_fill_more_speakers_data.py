@@ -39,6 +39,20 @@ def forwards(apps, schema_editor):
         polymorphic_ctype=ctype,
     )
     Speakers.objects.create(
+        name='Gholamali Aminian',
+        degree='Ph.D.',
+        place='Honorary Research Fellow at UCL',
+        bio='Gholamali Aminian received the B.Sc. degree in electrical engineering from Amirkabir University, Tehran, Iran, in 2010, and M.Sc. and Ph.D degrees in electrical engineering from Sharif University of Technology, Tehran, Iran, in 2012 and 2017, respectively. He is awarded the Newton international Fellowship by Royal Society and he is now Honorary Research Fellow at UCL. His field of interest includes Machine Learning, wireless communication, and information theory.',
+        polymorphic_ctype=ctype,
+    )
+    Speakers.objects.create(
+        name='Mojtaba Tefagh',
+        degree='Ph.D.',
+        place='assistant professor at Sharif University of Technology.',
+        bio='Since joining Stanford University, Mojtaba has been involved with studies related to applications of convex optimization in systems biology. In 2019, Mojtaba wrote his dissertation on "applications of convex optimization in metabolic network analysis" under the supervision of Professor Stephen P. Boyd. Since 2020, Mojtaba has been working as an assistant professor at Sharif University of Technology.',
+        polymorphic_ctype=ctype,
+    )
+    Speakers.objects.create(
         name='Mohammad Dehghani',
         degree='Master',
         place='Tarbiat Modares University',
@@ -83,6 +97,8 @@ def rollback(apps, schema_editor):
         'Mehraveh Salehi',
         'Mohammad Haft-Javaheiran',
         'Mohamad Kazem Shirani Faradonbeh',
+        'Gholamali Aminian',
+        'Mojtaba Tefagh',
         'Mohammad Dehghani',
         'Mohammad Fazeli',
         'Mohammad Heydari',

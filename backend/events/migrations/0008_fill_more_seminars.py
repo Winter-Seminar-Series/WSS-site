@@ -42,6 +42,21 @@ def forwards(apps, schema_editor):
         abstract='Linear-Quadratic (LQ) models are classical for decision-making in unknown environments. In these models, state vectors of the environment evolve according to an unknown linear stochastic transition, and the reward is a quadratic function of state and action. Because of uncertainty in the state transition, Reinforcement Learning (RL) algorithms are needed to \'rapidly\' learn \'optimal\' actions. The fundamental challenge is balancing the contradictory objectives of learning and earning. That is, the trade-off between exploring to learn the unknown environment versus exploiting the available information to earn the most. We present RL algorithms with provable performance guarantees to learn accurately and earn optimally at the same time.',
         speaker=Speaker.objects.filter(name='Mohamad Kazem Shirani Faradonbeh').last()
     )
+    Seminar.objects.create(
+        wss=wss,
+        polymorphic_ctype=ctype,
+        title='Characterization of the Generalization Error of Learning Algorithms Using Jensen-Shannon Information',
+        audience='Graduate Students',
+        abstract='Generalization error bounds are critical to understanding the performance of machine learning models. In this presentation, we propose a new information-theoretic based generalization error upper bound applicable to supervised learning scenarios. We show that our general bound can specialize in various previous bounds. We also show that our general bound can be specialized under some conditions to a new bound involving the Jensen-Shannon information between a random variable modelling the set of training samples and another random variable modelling the set of hypotheses. We also show that our bound can be tighter than mutual information-based bounds under some conditions.',
+        speaker=Speaker.objects.filter(name='Gholamali Aminian').last()
+    )
+    Seminar.objects.create(
+        wss=wss,
+        polymorphic_ctype=ctype,
+        title='Alphabet of uncollateralized decentralized finance',
+        abstract='Inspired by the recent boom in decentralized finance (DeFi) and the unprecedented success of flash loan projects in this ecosystem, we introduce a decentralized debt derivative named atomic bonded crosschain debt (ABCD) to bridge the gap between the growth of lending protocols on Ethereum and other UTXO-based blockchains specifically Bitcoin. We think of ABCD as the alphabet of interoperability for DeFi and as a credit infrastructure which unlike the current protocols is not limited by requiring either smart contracts, over-collateralization, or instantaneous payback.',
+        speaker=Speaker.objects.filter(name='Mojtaba Tefagh').last()
+    )
 
 
 
@@ -56,6 +71,8 @@ def rollback(apps, schema_editor):
         'State-specific parcellation of the human brain',
         'A Topological Encoding Convolutional Neural Network for Segmentation of 3D Multiphoton Images of Brain Vasculature Using Persistent Homology',
         'Linear-Quadratic Reinforcement Learning',
+        'Characterization of the Generalization Error of Learning Algorithms Using Jensen-Shannon Information',
+        'Alphabet of uncollateralized decentralized finance',
     ]
 
     Seminar.objects.filter(wss=wss, title__in=titles).delete()
