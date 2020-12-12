@@ -110,7 +110,7 @@ def rollback(apps, schema_editor):
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('people', '0016_update_staff_order'),
+        ('people', '0015_update_staff_order'),
     ]
 
     operations = [
