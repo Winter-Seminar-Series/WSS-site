@@ -28,7 +28,7 @@ const Staff = ({
           {holding_teams.map((team) => (
             <>
               <div className="row mb-3">
-                <h4 className="mb-2 mt-3 col white">{team.name}</h4>
+                <h3 className="mb-2 mt-3 col white">{team.name}</h3>
               </div>
               {staff.length > 0 && !isFetching &&
                 <div className="row">

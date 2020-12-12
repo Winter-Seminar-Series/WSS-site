@@ -108,7 +108,8 @@ function Home({
                     Advanced Topics in Computer Science and Engineering
                   </h2>
                   <h2 className="banner-subtitle my-3 font-weight-bold">
-                    {startDate ? moment(startDate, "yy-mm-dd").format(`MMMM Do, YYYY`) : ''}
+                    31 Dec 2020 - 3 Jan 2021
+                    {/* {startDate ? moment(startDate, "yy-mm-dd").format(`MMMM Do, YYYY`) : ''} */}
                   </h2>
                   <h3 className="banner-desc font-weight-bold">
                     IRAN, TEHRAN,
