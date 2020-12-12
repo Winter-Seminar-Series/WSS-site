@@ -1,20 +1,17 @@
 .auth-container {
-  margin-top: -80px;
   position: relative;
   background-color: white;
+  margin-bottom: -150px;
+  padding-top: 50px;
 }
 
 .auth-container .form-container {
-  clip-path: polygon(5% 0, 100% 0%, 100% 90%, 0% 100%);
   background: white;
-  margin-top: -10px;
-  margin-bottom: -32px;
-  padding: 100px;
-  padding-top: 190px;
+  padding: 12rem 3rem;
 }
 
 .auth-container .logo-container {
-  margin-top: -50px;
+  //margin-top: -50px;
   padding: 100px;
   display: flex;
   flex-direction: column;

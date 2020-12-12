@@ -40,7 +40,7 @@ function Footer() {
     },
   ];
   return (
-    <footer className="text-white footer text-center">
+    <footer className="text-white footer text-center diagonal">
       <div className="row justify-content-center">
         <div className="col-12">
           <div className="footer-logo d-flex justify-content-center align-items-end">

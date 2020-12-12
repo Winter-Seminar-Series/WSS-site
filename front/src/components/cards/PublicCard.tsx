@@ -40,7 +40,7 @@ function PublicCard({
           <img src={person.picture ? `${BASE_URL}/${person.picture}` : process.env.PUBLIC_URL + '/images/icons/avatar.jpg'} alt="" />
         </a>
         <div className="card-description">
-          <h2>{person.name}</h2>
+          <h3>{person.name}</h3>
           {!isStaff &&
             <p>{`${person.degree}, ${person.place}`}</p>
           }

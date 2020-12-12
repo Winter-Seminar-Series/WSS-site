@@ -52,16 +52,15 @@
 
 .dashboard-container {
   min-height: 80vh;
-  padding: 0px;
-  padding-left: 250px;
+  padding: 0 0 0 250px;
   @media (max-width: 768px) {
-    padding-right: 50px;
+    padding-left: 50px;
   }
   .seminar-register-title {
     justify-content: center;
     color: white;
     height: 250px;
-    clip-path: polygon(0 0, 100% 0, 100% 70%, 0 100%);
+    //clip-path: polygon(0 0, 100% 0, 100% 70%, 0 100%);
     .header {
       display: flex;
       flex-direction: column;
@@ -91,7 +90,7 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding: 40px;
+    padding: 80px 40px;
     max-width: 100%;
     .degree {
       button {
