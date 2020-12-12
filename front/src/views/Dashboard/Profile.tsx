@@ -57,7 +57,8 @@ function Profile({
     inputCity,
     inputEmail,])
 
-  const doUpdateProfile = () => {
+  const doUpdateProfile = (e) => {
+    e.preventDefault()
     if (
       !(
         first_name &&
@@ -87,14 +88,14 @@ function Profile({
 
   return (
     <>
-      <div className="seminar-register-title background-theme d-flex align-items-center">
+      <div className="diagonal seminar-register-title background-theme d-flex align-items-center">
         <div className="header ml-3">
           <div className="title">
             Profile
           </div>
         </div>
       </div>
-      <form className="seminar-register-form">
+      <form className="seminar-register-form" onSubmit={doUpdateProfile}>
         <h3>
           Required fields
         </h3>
@@ -231,9 +232,9 @@ function Profile({
 
         <button
           disabled={isFetching}
-          type="button"
+          type="submit"
           className="btn btn-lg btn-primary btn-dark mb-5"
-          onClick={doUpdateProfile}>
+          >
           Update
         </button>
       </form>

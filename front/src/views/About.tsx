@@ -19,14 +19,14 @@ const About = () => {
 
   return (
     <>
-      <section id="main-container" className="main-container pb-0">
-        <div style={diagonalStyle} className="px-2 diagonal background-theme">
+      <section id="main-container" className="main-container pb-5">
+        <div style={diagonalStyle} className="px-2 pt-4 diagonal background-theme">
           <h2 className="container section-sub-title title-white" style={containerStyle}>
             About WSS
           </h2>
         </div>
         <div
-          className="container-fluid px-2 pt-4 mt-5 mb-0 diagonal"
+          className="container-fluid px-2 pt-4 pb-5 mt-5 mb-0 diagonal"
           style={whiteBackground}>
           <div className="container">
             <div className="row mt-5">
@@ -39,7 +39,7 @@ const About = () => {
 
             <h2 className="section-title mt-4">Programs</h2>
             <div className="row">
-              <div className="col col-sm-10 mx-auto">
+              <div className="col mx-auto">
                 <div className="row d-flex flex-sm-row-reverse justify-content-start justify-content-sm-between mt-5 mb-md-5">
                   <div className="p-5 p-md-0 col-md-3 d-flex flex-column justify-content-center">
                     <img
