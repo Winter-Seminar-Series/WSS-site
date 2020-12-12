@@ -10,7 +10,9 @@ function CreateAccount({ register, isLoggedIn, isFetching }) {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
-  function doRegister() {
+  function doRegister(e) {
+    e.preventDefault();
+
     if (!username || !email || !password) {
       toast.error('Please fill all the fields');
       return;
@@ -30,8 +32,9 @@ function CreateAccount({ register, isLoggedIn, isFetching }) {
     <>
       <section
         dir="rtl"
-        className="auth-container diagonal background-theme row py-0">
-        <div className="col-xs-12 col-sm-6 form-container" dir="ltr">
+        className="auth-container background-theme row">
+        <div className="diagonal col-xs-12 col-sm-6 form-container" dir="ltr">
+          <form onSubmit={doRegister}>
           <div className="form-group mb-5">
             <label htmlFor="username">Username</label>
             <input
@@ -72,7 +75,7 @@ function CreateAccount({ register, isLoggedIn, isFetching }) {
             />
           </div>
           <button
-            onClick={doRegister}
+
             disabled={isFetching}
             type="submit"
             className="btn btn-lg btn-primary btn-dark mb-5">
@@ -86,6 +89,7 @@ function CreateAccount({ register, isLoggedIn, isFetching }) {
               click here
             </a>
           </div>
+          </form>
         </div>
         <div className="d-none d-sm-flex col-6 logo-container" dir="ltr">
           <img className="logo" src="images/new_title_hq.png" alt="wss logo" />

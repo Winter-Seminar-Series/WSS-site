@@ -40,7 +40,7 @@ function Footer() {
     },
   ];
   return (
-    <footer className="text-white footer text-center">
+    <footer className="text-white footer text-center diagonal">
       <div className="row justify-content-center">
         <div className="col-12">
           <div className="footer-logo d-flex justify-content-center align-items-end">
@@ -71,7 +71,10 @@ function Footer() {
       </div>
       <div className="mx-auto copyright-info">
         <span>
-          {/* <a href="\staff-list#front">Website Creators</a> */}
+
+          {/*<a href="\staff-list#front">Website Creators</a>*/}
+          <br />
+
           Copyright © 2015-2020 WSS. All Rights Reserved.
         </span>
       </div>

@@ -16,6 +16,7 @@ import CreateAccount from './views/CreateAccount';
 import Seminars from './views/Seminars';
 import Staff from './views/Staff';
 import Workshops from './views/Workshops';
+import Schedule from "./views/Schedule";
 
 function App() {
   return (

@@ -16,6 +16,7 @@ const Staff = ({
     getModelList(MODEL_LISTS_NAMES.STAFF, THIS_YEAR);
   }, [getWSSPrimitiveFields]);
 
+
   return (
     <>
       <section
@@ -39,12 +40,14 @@ const Staff = ({
                   ))}
                 </div>
               }
-              {isFetching && 
+
+              {isFetching &&
                 <div className="row">
                   <div className="col mb-3">Loading...</div>
                 </div>
               }
               {staff.length == 0 && !isFetching &&
+
                 <div className="row">
                   <div className="col">Nothing has been added yet</div>
                 </div>
