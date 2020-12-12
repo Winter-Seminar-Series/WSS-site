@@ -7,6 +7,8 @@ from django.contrib.contenttypes.models import ContentType
 
 def forwards(apps, schema_editor):
     Staff = apps.get_model('people', 'Staff')
+
+    ctype = ContentType.objects.get_for_model(Staff)
     
     teams_staff = {
         'Content': ['Mahdi Farvardin', 'Hossein Firooz', 'Sepehr Amini Afshar', 'Farzam Zohdinasab', 'Pooya Moeini', 'Seyed Mohammad mehdi Hatami'],
@@ -21,8 +23,7 @@ def forwards(apps, schema_editor):
     for team_name in teams_staff:
         i = 1
         for staff in teams_staff[team_name]:
-            Staff.objects.get(name=staff).update(order=i)
-            i += 1
+            Staff.objects.filter(name=staff).update(order=i)
 
 
 class Migration(migrations.Migration):

@@ -1,11 +1,11 @@
 from django.db import migrations
-from django.contrib.contenttypes.models import ContentType
 
 
 def forwards(apps, schema_editor):
     WSS = apps.get_model('WSS', 'WSS')
     HoldingTeam = apps.get_model('people', 'HoldingTeam')
     Staff = apps.get_model('people', 'Staff')
+    ContentType = apps.get_model('contenttypes', 'ContentType')
 
     wss = WSS.objects.get(year=2020)
 
@@ -19,7 +19,7 @@ def forwards(apps, schema_editor):
         'Presentation Management'
     ]
 
-    HoldingTeam.objects.get(wss=wss, name='Event Director').update(name='Manager & Director')
+    HoldingTeam.objects.filter(wss=wss, name='Event Director').update(name='Manager & Director')
 
     ctype = ContentType.objects.get_for_model(Staff)
 
