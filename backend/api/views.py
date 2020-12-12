@@ -26,6 +26,12 @@ import threading
 from django.core.mail import send_mail
 from templates.consts import *
 
+from rest_framework import status
+from rest_framework.permissions import IsAuthenticated
+
+from django.dispatch import receiver
+from django_rest_passwordreset.signals import reset_password_token_created
+
 
 def get_wss_object_or_404(year: int) -> WSS:
     return get_object_or_404(WSS, year=year)
@@ -155,7 +161,7 @@ class HoldingTeamViewSet(BaseViewSet):
     serializer = serializers.HoldingTeamSerializer
 
     def queryset_selector(self, request, wss):
-        return wss.holding_teams
+        return wss.holding_teams.order_by('order')
 
 
 class ImageViewSet(BaseViewSet):
@@ -292,6 +298,8 @@ class UserProfileViewSet(viewsets.ViewSet):
 
 class AnnouncementViewSet(BaseViewSet):
     serializer = serializers.AnnouncementSerializer
+    authentication_classes = [BasicAuthentication, TokenAuthentication]
+    permission_classes = [IsAuthenticated]
 
     def queryset_selector(self, request, wss):
         return wss.announcements.order_by('-create_timestamp')
@@ -313,7 +321,7 @@ class PaymentViewSet(viewsets.ViewSet):
         wss = get_wss_object_or_404(year)
         if not wss.registration_open:
             return ErrorResponse({
-                'message': "Sorry, the registration has been ended."
+                'message': "Sorry, the registration is not available now."
             })
         
         callback_url = request.query_params.get("callback", None)
@@ -363,7 +371,7 @@ class PaymentViewSet(viewsets.ViewSet):
         wss = get_wss_object_or_404(year)
         if not wss.registration_open:
             return ErrorResponse({
-                'message': "Sorry, the registration has been ended."
+                'message': "Sorry, the registration is not available now."
             })
         
         user_profile = get_user_profile(request.user)
@@ -397,8 +405,10 @@ class PaymentViewSet(viewsets.ViewSet):
                     settings.EMAIL_HOST_USER,
                     [user.email],
                     fail_silently=True,
-                    html_message=PAYMENT_HTML_CONTENT.format(
-                        user.first_name, participant.payment_ref_id)
+                    html_message=BASE_HTML_CONTENT.format(
+                        PAYMENT_EMAIL.format(
+                            user.first_name, participant.payment_ref_id)
+                    )
                 )
                 ).start()
                 
@@ -450,3 +460,30 @@ class LoginAPI(KnoxLoginView):
         user = serializer.validated_data['user']
         login(request, user)
         return super(LoginAPI, self).post(request, format=None)
+ 
+
+class ChangePasswordView(generics.UpdateAPIView):
+    serializer_class = serializers.ChangePasswordSerializer
+    model = User
+
+    permission_classes = (IsAuthenticated,)
+
+    def get_object(self, queryset=None):
+        obj = self.request.user
+        return obj
+
+    def update(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        serializer = self.get_serializer(data=request.data)
+
+        if serializer.is_valid():
+            if not self.object.check_password(serializer.data.get("old_password")):
+                return Response({"old_password": "Wrong password"}, status=status.HTTP_400_BAD_REQUEST)
+            self.object.set_password(serializer.data.get("new_password"))
+            self.object.save()
+
+            return Response({
+                'message': 'Password updated successfully'
+            }, status=status.HTTP_200_OK)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

@@ -14,8 +14,9 @@ import Header from './views/Layout/header';
 import Login from './views/Login';
 import CreateAccount from './views/CreateAccount';
 import Seminars from './views/Seminars';
-import Staffs from './views/Staffs';
+import Staff from './views/Staff';
 import Workshops from './views/Workshops';
+import Schedule from "./views/Schedule";
 
 function App() {
   return (
@@ -27,7 +28,7 @@ function App() {
         <Route path="/about" component={About} />
         <Route path="/workshops" component={Workshops} />
         <Route path="/seminars" component={Seminars} />
-        <Route path="/staffs" component={Staffs} />
+        <Route path="/staff" component={Staff} />
         <Route path="/create-account" component={CreateAccount} />
         <Route path="/login" component={Login} />
         <PrivateRoute path="/dashboard" component={Dashboard} />

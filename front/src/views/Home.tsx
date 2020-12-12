@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { connect } from 'react-redux';
 import PublicCard from '../components/cards/PublicCard';
 import { BASE_URL, THIS_YEAR } from '../constants/info';
-import { Sponsor } from '../models/wss';
+import moment from 'moment'
 import {
   getModelList,
   getModelListCount,
@@ -35,6 +35,7 @@ function Home({
   seminars,
   seminars_count,
   workshops_count,
+  speakers_count,
   participantsCount,
   sponsors,
   isFetching,
@@ -55,6 +56,9 @@ function Home({
     getWSSPrimitiveFields(THIS_YEAR);
     getModelList(MODEL_LISTS_NAMES.SEMINARS, THIS_YEAR);
     getModelList(MODEL_LISTS_NAMES.SPEAKERS, THIS_YEAR);
+    getModelListCount(MODEL_LISTS_NAMES.SEMINARS, THIS_YEAR);
+    getModelListCount(MODEL_LISTS_NAMES.WORKSHOPS, THIS_YEAR);
+    getModelListCount(MODEL_LISTS_NAMES.SPEAKERS, THIS_YEAR);
   }, [getWSSPrimitiveFields]);
   const date = 'JANUARY 2nd - 3rd, 2021';
   const register = false;
@@ -104,7 +108,7 @@ function Home({
                     Advanced Topics in Computer Science and Engineering
                   </h2>
                   <h2 className="banner-subtitle my-3 font-weight-bold">
-                    {date}
+                    {startDate ? moment(startDate, "yy-mm-dd").format(`MMMM Do, YYYY`) : ''}
                   </h2>
                   <h3 className="banner-desc font-weight-bold">
                     IRAN, TEHRAN,
@@ -112,7 +116,7 @@ function Home({
                   <h3 className="banner-desc font-weight-bold">
                     SHARIF UNIVERSITY OF TECHNOLOGY
                   </h3>
-                  {register && (
+                  {/* {register && (
                     <p className="banner-btn">
                       <a
                         href="{% url 'wss:register' wss.year %}"
@@ -120,7 +124,7 @@ function Home({
                         Register Now
                       </a>
                     </p>
-                  )}
+                  )} */}
                   {/* {posterSessionRegister && (
                     <p className="banner-btn">
                       <a
@@ -137,13 +141,13 @@ function Home({
         </div>
       </section>
 
-      <section id="ts-programs" className="diagonal">
+      <section id="ts-programs" className="diagonal mb-5">
         <div className="container">
           <div className="row">
             <h2 className="section-title mx-auto">Programs</h2>
           </div>
           <div className="row">
-            <div className="col-11 col-sm-9 col-lg-6 mx-auto">
+            <div className="col-12 col-sm-9 col-lg-8 mx-auto">
               <div className="row d-flex flex-sm-row-reverse justify-content-start justify-content-sm-between mt-5 mb-md-5">
                 <div className="p-5 p-md-0 col-md-4 d-flex flex-column justify-content-center">
                   <img
@@ -178,7 +182,7 @@ function Home({
                 </div>
               </div> */}
               <div className="row d-flex flex-sm-row-reverse justify-content-start justify-content-sm-between mt-md-5">
-                <div className="col mr-md-3 d-flex flex-column justify-content-center">
+                <div className="col mr-md-3 d-flex flex-column justify-content-center order-1">
                   <h3>Workshops</h3>
                   <p>
                     Workshops are long form educational opportunities about
@@ -186,7 +190,7 @@ function Home({
                     experts our industry has to offer.
                   </p>
                 </div>
-                <div className="p-5 p-md-0 col-md-4 d-flex flex-column justify-content-center">
+                <div className="p-5 p-md-0 col-md-4 d-flex flex-column justify-content-center order-0 order-md-1">
                   <img
                     className="w-100 h-auto my-auto"
                     src="images/workshop.png"
@@ -206,7 +210,7 @@ function Home({
       </section>
 
       {seminars.length > 0 && (
-        <section id="ts-speakers-main" className="diagonal blue-gradient">
+        <section id="ts-speakers-main" className="diagonal blue-gradient my-5">
           <div className="container">
             <div className="row text-center">
               <h3 className="section-sub-title title-white mx-auto font-weight-light">
@@ -214,11 +218,14 @@ function Home({
               </h3>
             </div>
             <div className="row justify-content-center">
-              {seminars.slice(0, 8).map((seminar) => (
-                <div key={seminar.id} className="col-xs-10 col-sm-6 col-lg-3">
-                  <PublicCard id={seminar.speaker} presentationLink={'/seminar/' + seminar.id}></PublicCard>
-                </div>
-              ))}
+              {
+                Array.from(Array(seminars.length).keys()).sort(() => Math.random() - 0.5).slice(0, 8)
+                  .map((index) =>
+                    <div key={index} className="col-xs-10 col-sm-6 col-lg-3 mt-2 mb-4">
+                      <PublicCard id={seminars[index].speaker} presentationLink={'/seminar/' + seminars[index].id} />
+                    </div>
+                  )
+              }
             </div>
           </div>
           <div className="row">
@@ -229,13 +236,14 @@ function Home({
             </div>
           </div>
         </section>
-      )}
+      )
+      }
 
-      <section id="ts-statics" className="z-1 ts-statics diagonal">
+      <section id="ts-statics" className="z-1 ts-statics diagonal my-5">
         <div className="container py-4">
           <div className="row d-flex justify-content-center">
-            <div className="col-sm-2 text-center">
-              <a data-scroll href="{% url 'wss:seminars-list' wss.year %}">
+            <div className="col-sm-2 m-2 text-center">
+              <a data-scroll>
                 <div className="ts-facts">
                   <div className="ts-facts-content">
                     <h2 className="ts-facts-num">
@@ -246,8 +254,8 @@ function Home({
                 </div>
               </a>
             </div>
-            <div className="col-sm-2 text-center">
-              <a data-scroll href="{% url 'wss:workshops-list' wss.year %}">
+            <div className="col-sm-2 m-2 text-center">
+              <a data-scroll>
                 <div className="ts-facts">
                   <div className="ts-facts-content">
                     <h2 className="ts-facts-num">
@@ -259,21 +267,20 @@ function Home({
               </a>
             </div>
 
-            {/* <div className="col-sm-2 text-center">
-              <a
-                data-scroll
-                href="{% url 'wss:postersessions-list' wss.year %}">
+            {/* <div className="col-sm-2 m-2 text-center">
+              <a data-scroll>
                 <div className="ts-facts">
                   <div className="ts-facts-content">
                     <h2 className="ts-facts-num">
-                      <span className="counterUp">18</span>
+                      <span className="counterUp">{speakers_count}</span>
                     </h2>
-                    <h3 className="ts-facts-title">Poster Presenters</h3>
+                    <h3 className="ts-facts-title">Speakers</h3>
                   </div>
                 </div>
               </a>
             </div> */}
-            {/* <div className="col-sm-2 text-center">
+
+            <div className="col-sm-2 m-2 text-center">
               <div className="ts-facts">
                 <div className="ts-facts-content">
                   <h2 className="ts-facts-num">
@@ -282,7 +289,7 @@ function Home({
                   <h3 className="ts-facts-title">Participants</h3>
                 </div>
               </div>
-            </div> */}
+            </div>
           </div>
         </div>
       </section>
@@ -318,17 +325,17 @@ function Home({
       )} */}
 
       <section
-        className="venu-map no-padding diagonal background-theme h-100 pb-2"
+        className="venu-map no-padding diagonal background-theme h-100 pb-2 mt-1"
         style={venueMapStyle}>
         {/* <div className="container">
           <h3 className="section-sub-title" style={sectionSubtitleStyle}>
             WSS Venue
           </h3>
         </div> */}
-        <div className="container pt-5 mb-5">
-          <h5 className="section-sub-title mt-5 text-white">Info</h5>
-          <div className="row mb-5">
+        <div className="container pb-5">
+          <div className="row my-5">
             <div className="col-md-6 font-weight-bold">
+              <h5 className="section-sub-title text-white mb-3 mt-5">Info</h5>
               <div className="white">
                 <p>Sharif University of Technology </p>
                 <p>Azadi Street, District 2, Tehran, Iran</p>
@@ -337,12 +344,16 @@ function Home({
                 <p>+98(021) 66 16 57 81</p>
               </div>
             </div>
+
+            <div className="col-md-6 font-weight-bold">
+
+              <h5 className="section-sub-title text-white mb-3 mt-5">Organizer</h5>
+              <p className="font-italic white pb-3">
+                The event is held by the Student Scientific Chapter (SSC) of
+                Computer Engineering Department of Sharif University of Technology
+              </p>
+            </div>
           </div>
-          <h5 className="section-sub-title text-white">Organizer</h5>
-          <p className="font-italic white pb-3">
-            The event is held by the Student Scientific Chapter (SSC) of
-            Computer Engineering Department of Sharif University of Technology
-          </p>
         </div>
       </section>
     </>
@@ -369,6 +380,7 @@ const mapStateToProps = (state, ownProps) => {
     speakers,
     workshops_count,
     seminars_count,
+    speakers_count,
     sponsors,
     workshops,
     seminars,
@@ -389,6 +401,7 @@ const mapStateToProps = (state, ownProps) => {
     seminars,
     seminars_count,
     workshops_count,
+    speakers_count,
     participantsCount,
     sponsors,
     mainImageURL,
