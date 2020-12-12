@@ -77,7 +77,7 @@ def rollback(apps, schema_editor):
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('events', '0008_fill_more_seminars'),
+        ('events', '0008_fill_more_seminars_2020'),
     ]
 
     operations = [
