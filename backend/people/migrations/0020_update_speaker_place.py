@@ -6,11 +6,8 @@ from django.db import migrations
 
 def forwards(apps, schema_editor):
     Speaker = apps.get_model('people', 'Speaker')
-    WSS = apps.get_model('WSS', 'WSS')
 
-    wss = WSS.objects.get(year=2020)
-
-    Speaker.objects.filter(wss=wss, name='Shahram Ghandeharizadeh').update(place='faculty member at the University of Southern California')
+    Speaker.objects.filter(name='Shahram Ghandeharizadeh').update(place='faculty member at the University of Southern California')
 
 
 class Migration(migrations.Migration):
