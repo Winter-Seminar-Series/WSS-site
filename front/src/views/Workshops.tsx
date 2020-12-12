@@ -25,7 +25,7 @@ const Workshops = ({ getModelList, workshops, isFetching }) => {
           {workshops.length > 0 && !isFetching &&
             <div className="row">
               {workshops.map((workshop) => (
-                <div key={workshop.id} className="col-xs-12 col-sm-6 col-lg-3">
+                <div key={workshop.id} className="col-xs-12 col-sm-6 col-lg-3 mt-2 mb-4">
                   <PublicCard id={workshop.speaker} presentationLink={'/workshop/' + workshop.id}></PublicCard>
                 </div>
               ))}
@@ -36,7 +36,7 @@ const Workshops = ({ getModelList, workshops, isFetching }) => {
               <div className="col">Loading...</div>
             </div>
           )}
-          {workshops.length === 0 && !isFetching &&
+          {workshops.length == 0 && !isFetching &&
             <div className="row">
               <div className="col">Nothing has been added yet</div>
             </div>

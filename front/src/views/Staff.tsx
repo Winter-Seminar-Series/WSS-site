@@ -40,12 +40,14 @@ const Staff = ({
                   ))}
                 </div>
               }
-              {isFetching && (
+
+              {isFetching && 
                 <div className="row">
                   <div className="col mb-3">Loading...</div>
                 </div>
-              )}
-              {staff.length === 0 && !isFetching &&
+              }
+              {staff.length == 0 && !isFetching &&
+
                 <div className="row">
                   <div className="col">Nothing has been added yet</div>
                 </div>
