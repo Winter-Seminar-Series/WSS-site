@@ -114,10 +114,11 @@ function WSS(state = initState, action) {
       };
 
     case actionTypes.MODEL_LIST_COUNT_SUCCESS:
+      console.log(action)
       return {
         ...state,
         isFetching: false,
-        [action.payload.modelListName + '_count']: action.response,
+        [`${action.payload.modelListName}_count`]: action.response.count,
       };
 
     case actionTypes.MODEL_LIST_COUNT_FAILURE:

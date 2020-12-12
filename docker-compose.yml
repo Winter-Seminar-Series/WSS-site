@@ -47,7 +47,7 @@ services:
     depends_on:
       - web
       - frontend
-      - static-data-provider
+        #      - static-data-provider
   frontend:
     image: sharifwss/frontend:$FRONT_IMAGE_VERSION
     build: ./front/

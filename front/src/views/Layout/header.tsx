@@ -12,7 +12,7 @@ const Header = ({ isLoggedIn }) => {
     { title: 'Workshops', persianTitle: 'کارگاه‌ها', link: '/workshops' },
     // { title: 'PosterSession', persianTitle: 'پوسترسشن', link: '/postersessions' },
     // { title: 'Schedule', persianTitle: 'برنامه زمانی', link: '/schedule' },
-    { title: 'Staffs', persianTitle: 'استف‌ها', link: '/staffs' },
+    { title: 'Staff', persianTitle: 'استف‌ها', link: '/staff' },
     {
       title: 'Create Account',
       persianTitle: 'ثبت‌نام',

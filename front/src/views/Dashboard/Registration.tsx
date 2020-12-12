@@ -68,7 +68,8 @@ function Registration({
     inputCity,
     inputEmail,])
 
-  const submitInfo = () => {
+  const submitInfo = (e) => {
+    e.preventDefault();
     if (
       !(
         first_name &&
@@ -114,7 +115,7 @@ function Registration({
 
   return (
     <>
-      <div className="seminar-register-title background-theme d-flex align-items-center">
+      <div className="diagonal seminar-register-title background-theme d-flex align-items-center">
         <div className="header ml-3">
           <div className="title">
             Registration
@@ -122,7 +123,7 @@ function Registration({
         </div>
       </div>
 
-      <form className="seminar-register-form">
+      <form className="seminar-register-form" onSubmit={submitInfo}>
         <div className="row">
           <div className="col-12 mb-3 col-lg mb-lg-0">
             <input
@@ -269,9 +270,9 @@ function Registration({
         </div>
         <button
           disabled={isFetching || paymentProcess}
-          type="button"
+          type="submit"
           className="btn btn-lg btn-primary btn-dark mb-5"
-          onClick={submitInfo}>
+          >
           Go For Payment
             </button>
       </form>
