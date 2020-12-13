@@ -16,7 +16,6 @@ const Staff = ({
     getModelList(MODEL_LISTS_NAMES.STAFF, THIS_YEAR);
   }, [getWSSPrimitiveFields]);
 
-
   return (
     <>
       <section
@@ -29,7 +28,7 @@ const Staff = ({
           {holding_teams.map((team) => (
             <>
               <div className="row mb-3">
-                <h4 className="mb-2 mt-3 col white">{team.name}</h4>
+                <h3 className="mb-2 mt-3 col white">{team.name}</h3>
               </div>
               {staff.length > 0 && !isFetching &&
                 <div className="row">
@@ -40,14 +39,12 @@ const Staff = ({
                   ))}
                 </div>
               }
-
-              {isFetching &&
+              {isFetching && 
                 <div className="row">
                   <div className="col mb-3">Loading...</div>
                 </div>
               }
               {staff.length == 0 && !isFetching &&
-
                 <div className="row">
                   <div className="col">Nothing has been added yet</div>
                 </div>
