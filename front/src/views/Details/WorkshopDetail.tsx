@@ -74,10 +74,7 @@ function WorkshopDetail({
                     )}
                   </div>
 
-                  <div className="seminar-details">
-                    <i className="fa fa-credit-card">&nbsp;</i>
-                    {`${workshop.price ? workshop.price : '?'} Tomans`}
-                  </div>
+                  
                 </div>
               </div>
             </div>
