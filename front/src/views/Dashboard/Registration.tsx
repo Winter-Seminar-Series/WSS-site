@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { toast } from 'react-toastify';
-import { Redirect } from 'react-router-dom';
 
 import { THIS_YEAR } from '../../constants/info';
 import {
@@ -107,12 +106,6 @@ function Registration({
     sendPaymentRequest(THIS_YEAR);
   };
 
-  if (isRegistered) {
-    return (
-      <Redirect to='/dashboard/profile' />
-    )
-  }
-
   return (
     <>
       <div className="diagonal seminar-register-title background-theme d-flex align-items-center">
@@ -122,160 +115,170 @@ function Registration({
           </div>
         </div>
       </div>
-
-      <form className="seminar-register-form" onSubmit={submitInfo}>
-        <div className="row">
-          <div className="col-12 mb-3 col-lg mb-lg-0">
-            <input
-              value={first_name}
-              onChange={(e) => setFirstName(e.target.value)}
-              type="text"
-              className="text-input form-control"
-              placeholder="First name"
-            />
-          </div>
-          <div className="col-12 col-lg">
-            <input
-              value={last_name}
-              onChange={(e) => setLastName(e.target.value)}
-              type="text"
-              className="text-input form-control"
-              placeholder="Last name"
-            />
-          </div>
-        </div>
-
-
-        <div className="row">
-          <div className="col-12 mb-3 col-lg mb-lg-0">
-            <input
-              value={university}
-              onChange={(e) => setUniversity(e.target.value)}
-              type="text"
-              className="text-input form-control"
-              placeholder="University"
-            />
-          </div>
-          <div className="col-12 col-lg">
-            <input
-              value={city}
-              onChange={(e) => setCity(e.target.value)}
-              type="text"
-              className="text-input form-control"
-              placeholder="City"
-            />
-          </div>
-        </div>
-
-        <div className="row">
-          <div className="col-12 mb-3 col-lg mb-lg-0">
-            <input
-              disabled={true}
-              value={email}
-              type="email"
-              className="text-input form-control"
-              placeholder="Email"
-            />
-          </div>
-        </div>
-
-        <div className="row">
-          <div className='col-6 col-md-4'>
-            <div className="form-label pt-0 mr-3">Gender:</div>
-            <div className="dropdown">
-              <button
-                className="btn dropdown-toggle"
-                type="button"
-                id="dropdownMenuButton"
-                data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false">
-                {gender}
-              </button>
-              <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                {genderTypes.map((g, index) => (
-                  <a
-                    key={index}
-                    className="dropdown-item"
-                    onClick={() => setGender(g)}>
-                    {g}
-                  </a>
-                ))}
+      {isRegistered?
+          (
+              <div className="seminar-register-form text-center">
+                <h5 style={{ color: '#397a00' }}>
+                  Your registration has been approved successfully.
+                </h5>
               </div>
-            </div>
-          </div>
-          <div className='col-6  col-md-4'>
-            <div className="form-label pt-0 mr-3">Grade:</div>
-            <div className="dropdown">
-              <button
-                className="btn dropdown-toggle"
-                type="button"
-                id="dropdownMenuButton"
-                data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false">
-                {grade}
-              </button>
-              <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                {gradeTypes.map((d, index) => (
-                  <a
-                    key={index}
-                    className="dropdown-item"
-                    onClick={() => setGrade(d)}>
-                    {d}
-                  </a>
-                ))}
-              </div>
-            </div>
-          </div>
-          <div className='col-12 col-md-4'>
-            <div className="form-label pt-0 mr-3">Introduction method:</div>
-            <div className="dropdown">
-              <button
-                className="btn dropdown-toggle"
-                type="button"
-                id="dropdownMenuButton"
-                data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false">
-                {introduction_method}
-              </button>
-              <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                {introductionTypes.map((i, index) => (
-                  <a
-                    key={index}
-                    className="dropdown-item"
-                    onClick={() => setIntroduction_method(i)}>
-                    {i}
-                  </a>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
+          ) : (
+              <form className="seminar-register-form" onSubmit={submitInfo}>
+                <div className="row">
+                  <div className="col-12 mb-3 col-lg mb-lg-0">
+                    <input
+                        value={first_name}
+                        onChange={(e) => setFirstName(e.target.value)}
+                        type="text"
+                        className="text-input form-control"
+                        placeholder="First name"
+                    />
+                  </div>
+                  <div className="col-12 col-lg">
+                    <input
+                        value={last_name}
+                        onChange={(e) => setLastName(e.target.value)}
+                        type="text"
+                        className="text-input form-control"
+                        placeholder="Last name"
+                    />
+                  </div>
+                </div>
 
-        <div className="form-group mb-4">
-          <div className="form-check">
-            <input
-              checked={agree}
-              onChange={(e) => setAgree(!agree)}
-              className="form-check-input"
-              type="checkbox"
-              id="gridCheck1"
-            />
-            <label className="form-check-label" htmlFor="gridCheck1">
-              By checking this, I agree NOT to record any seminars or workshops.
-            </label>
-          </div>
-        </div>
-        <button
-          disabled={isFetching || paymentProcess}
-          type="submit"
-          className="btn btn-lg btn-primary btn-dark mb-5"
-          >
-          Go For Payment
-            </button>
-      </form>
+
+                <div className="row">
+                  <div className="col-12 mb-3 col-lg mb-lg-0">
+                    <input
+                        value={university}
+                        onChange={(e) => setUniversity(e.target.value)}
+                        type="text"
+                        className="text-input form-control"
+                        placeholder="University"
+                    />
+                  </div>
+                  <div className="col-12 col-lg">
+                    <input
+                        value={city}
+                        onChange={(e) => setCity(e.target.value)}
+                        type="text"
+                        className="text-input form-control"
+                        placeholder="City"
+                    />
+                  </div>
+                </div>
+
+                <div className="row">
+                  <div className="col-12 mb-3 col-lg mb-lg-0">
+                    <input
+                        disabled={true}
+                        value={email}
+                        type="email"
+                        className="text-input form-control"
+                        placeholder="Email"
+                    />
+                  </div>
+                </div>
+
+                <div className="row">
+                  <div className='col-6 col-md-4'>
+                    <div className="form-label pt-0 mr-3">Gender:</div>
+                    <div className="dropdown">
+                      <button
+                          className="btn dropdown-toggle"
+                          type="button"
+                          id="dropdownMenuButton"
+                          data-toggle="dropdown"
+                          aria-haspopup="true"
+                          aria-expanded="false">
+                        {gender}
+                      </button>
+                      <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        {genderTypes.map((g, index) => (
+                            <a
+                                key={index}
+                                className="dropdown-item"
+                                onClick={() => setGender(g)}>
+                              {g}
+                            </a>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                  <div className='col-6  col-md-4'>
+                    <div className="form-label pt-0 mr-3">Grade:</div>
+                    <div className="dropdown">
+                      <button
+                          className="btn dropdown-toggle"
+                          type="button"
+                          id="dropdownMenuButton"
+                          data-toggle="dropdown"
+                          aria-haspopup="true"
+                          aria-expanded="false">
+                        {grade}
+                      </button>
+                      <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        {gradeTypes.map((d, index) => (
+                            <a
+                                key={index}
+                                className="dropdown-item"
+                                onClick={() => setGrade(d)}>
+                              {d}
+                            </a>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                  <div className='col-12 col-md-4'>
+                    <div className="form-label pt-0 mr-3">Introduction method:</div>
+                    <div className="dropdown">
+                      <button
+                          className="btn dropdown-toggle"
+                          type="button"
+                          id="dropdownMenuButton"
+                          data-toggle="dropdown"
+                          aria-haspopup="true"
+                          aria-expanded="false">
+                        {introduction_method}
+                      </button>
+                      <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        {introductionTypes.map((i, index) => (
+                            <a
+                                key={index}
+                                className="dropdown-item"
+                                onClick={() => setIntroduction_method(i)}>
+                              {i}
+                            </a>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="form-group mb-4">
+                  <div className="form-check">
+                    <input
+                        checked={agree}
+                        onChange={(e) => setAgree(!agree)}
+                        className="form-check-input"
+                        type="checkbox"
+                        id="gridCheck1"
+                    />
+                    <label className="form-check-label" htmlFor="gridCheck1">
+                      By checking this, I agree NOT to record any seminars or workshops.
+                    </label>
+                  </div>
+                </div>
+                <button
+                    disabled={isFetching || paymentProcess}
+                    type="submit"
+                    className="btn btn-lg btn-primary btn-dark mb-5"
+                >
+                  Go For Payment
+                </button>
+              </form>
+
+          )
+      }
     </>
   );
 }
