@@ -84,7 +84,7 @@ function Registration({
       toast.error('Please fill all the fields');
       return;
     } else if (!agree) {
-      toast.error('You should agree to our conditions');
+      toast.error('You should agree to our condition');
       return;
     }
     if (first_name !== inputFirstName
