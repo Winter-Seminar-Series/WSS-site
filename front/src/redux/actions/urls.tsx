@@ -11,7 +11,7 @@ export const LOGIN = ROOT.concat('login/');
 export const LOGOUT = ROOT.concat('logout/');
 export const CHANGE_PASSWORD = ROOT.concat('change-password/');
 export const REQUEST_PASSWORD_RESET = ROOT.concat('password_reset/');
-export const RESET_PASSWORD = ROOT.concat('password-reset/confirm/');
+export const RESET_PASSWORD = ROOT.concat('password_reset/confirm/');
 
 
 
