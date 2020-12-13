@@ -48,6 +48,7 @@ function Home({
   icalLink,
   year,
   startDate,
+  endDate,
   proposalLink,
   showStats,
   calendarLink,
@@ -60,14 +61,14 @@ function Home({
     getModelListCount(MODEL_LISTS_NAMES.WORKSHOPS, THIS_YEAR);
     getModelListCount(MODEL_LISTS_NAMES.SPEAKERS, THIS_YEAR);
   }, [getWSSPrimitiveFields]);
-  const date = 'JANUARY 2nd - 3rd, 2021';
-  const register = false;
   const videoRef = useRef<HTMLVideoElement>();
   const setVideoPlayBackRate = () => {
     if (!videoRef) return;
     videoRef.current.playbackRate = 0.6;
   };
 
+  console.log(startDate)
+  console.log(endDate)
 
   return (
     <>
@@ -108,8 +109,8 @@ function Home({
                     Advanced Topics in Computer Science and Engineering
                   </h2>
                   <h2 className="banner-subtitle my-3 font-weight-bold">
-                    31 Dec 2020 - 3 Jan 2021
-                    {/* {startDate ? moment(startDate, "yy-mm-dd").format(`MMMM Do, YYYY`) : ''} */}
+                    {startDate && endDate
+                      ? moment(startDate, "YYYY-MM-DD").format(`MMM Do - `) + moment(endDate,"YYYY-MM-DD").format("MMM Do, YYYY") : ''}
                   </h2>
                   <h3 className="banner-desc font-weight-bold">
                     IRAN, TEHRAN,
@@ -375,6 +376,7 @@ const mapStateToProps = (state, ownProps) => {
     icalLink,
     year,
     startDate,
+    endDate,
     proposalLink,
     showStats,
     calendarLink,
@@ -414,6 +416,7 @@ const mapStateToProps = (state, ownProps) => {
     icalLink,
     year,
     startDate,
+    endDate,
     proposalLink,
     showStats,
     calendarLink,
