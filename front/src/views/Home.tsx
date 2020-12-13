@@ -110,7 +110,7 @@ function Home({
                   </h2>
                   <h2 className="banner-subtitle my-3 font-weight-bold">
                     {startDate && endDate
-                      ? moment(startDate, "YYYY-MM-DD").format(`MMM Do - `) + moment(endDate,"YYYY-MM-DD").format("MMM Do, YYYY") : ''}
+                      ? moment(startDate, "YYYY-MM-DD").format("MMM Do, YYYY ") + moment(endDate,"YYYY-MM-DD").format("MMM Do, YYYY") : ''}
                   </h2>
                   <h3 className="banner-desc font-weight-bold">
                     IRAN, TEHRAN,
