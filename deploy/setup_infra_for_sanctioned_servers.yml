@@ -2,6 +2,12 @@
 - hosts: all
   become: yes
   tasks:
+    - name: 'Check mandatory variables are defined'
+      assert:
+        that:
+          - shecan_dns_1 is defined
+          - shecan_dns_2 is defined
+
     - name: Install python-apt using apt
       apt:
         name: python-apt
@@ -36,6 +42,9 @@
         - docker-compose
         - python-dev
 
+    - name: Set Shecan
+      shell: "echo '### Shecan DNS ###\nnameserver {{ shecan_dns_1 | mandatory }}\nnameserver {{ shecan_dns_2 | mandatory }}' > /etc/resolv.conf"
+
     - name: Add Docker GPG apt Key
       apt_key:
         url: https://download.docker.com/linux/ubuntu/gpg
@@ -67,6 +76,19 @@
         groups:
           - docker
           - sudo
+
+    - name: Create docker config parent directory
+      file:
+        path: /etc/systemd/system/docker.service.d/
+        state: directory
+
+    - name: Add docker.ir proxy config
+      copy:
+        content: |
+          [Service]
+          Environment="HTTP_PROXY=http://Proxy.Docker.ir:5555"
+        dest: /etc/systemd/system/docker.service.d/http-proxy.conf
+        
 
     # Ansible 'service' module didn't work after 1 week try!
     - name: Restart docker manually!
