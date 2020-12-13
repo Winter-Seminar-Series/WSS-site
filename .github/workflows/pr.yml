@@ -7,49 +7,45 @@ on:
     branches:
       - master
 jobs:
-  build-backend:
+  investigation:
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
-      - run: ./.github/scripts/build.sh
-          --service-name web
-          --version snapshot-$GITHUB_RUN_ID
-          --docker-user $DOCKER_USERNAME
-          --docker-pass ${{ secrets.DOCKER_PASSWORD }}
-  build-frontend:
-    runs-on: ubuntu-20.04
-    steps:
-      - uses: actions/checkout@v2
-      - run: ./.github/scripts/build.sh
-          --service-name frontend
-          --version snapshot-$GITHUB_RUN_ID
-          --docker-user $DOCKER_USERNAME
-          --docker-pass ${{ secrets.DOCKER_PASSWORD }}
-  build-static-data-provider:
-    runs-on: ubuntu-20.04
-    steps:
-      - uses: actions/checkout@v2
-      - run: ./.github/scripts/build.sh
-          --service-name static-data-provider
-          --version snapshot-$GITHUB_RUN_ID
-          --docker-user $DOCKER_USERNAME
-          --docker-pass ${{ secrets.DOCKER_PASSWORD }}
-  smoke-test-backend:
-    needs: build-backend
-    runs-on: ubuntu-20.04
-    steps:
-      - uses: actions/checkout@v2
-      - run: ./.github/scripts/smoke-test.sh
-          --tag snapshot-$GITHUB_RUN_ID
-          --docker-user $DOCKER_USERNAME
-          --docker-pass ${{ secrets.DOCKER_PASSWORD }}
-  check-migrations:
-    needs: build-backend
-    runs-on: ubuntu-20.04
-    steps:
-      - uses: actions/checkout@v2
-      - run: echo "WEB_IMAGE_VERSION=snapshot-$GITHUB_RUN_ID" >> $GITHUB_ENV
-      - run: echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u $DOCKER_USERNAME --password-stdin
-      - run: docker-compose pull
-      - name: 'Check Migrations'
-        run: docker-compose run web ./manage.py makemigrations --dry-run --check
+      - run: ping -c 10 sharif-wss.ir
+#  build-frontend:
+#    runs-on: ubuntu-20.04
+#    steps:
+#      - uses: actions/checkout@v2
+#      - run: ./.github/scripts/build.sh
+#          --service-name frontend
+#          --version snapshot-$GITHUB_RUN_ID
+#          --docker-user $DOCKER_USERNAME
+#          --docker-pass ${{ secrets.DOCKER_PASSWORD }}
+#  build-static-data-provider:
+#    runs-on: ubuntu-20.04
+#    steps:
+#      - uses: actions/checkout@v2
+#      - run: ./.github/scripts/build.sh
+#          --service-name static-data-provider
+#          --version snapshot-$GITHUB_RUN_ID
+#          --docker-user $DOCKER_USERNAME
+#          --docker-pass ${{ secrets.DOCKER_PASSWORD }}
+#  smoke-test-backend:
+#    needs: build-backend
+#    runs-on: ubuntu-20.04
+#    steps:
+#      - uses: actions/checkout@v2
+#      - run: ./.github/scripts/smoke-test.sh
+#          --tag snapshot-$GITHUB_RUN_ID
+#          --docker-user $DOCKER_USERNAME
+#          --docker-pass ${{ secrets.DOCKER_PASSWORD }}
+#  check-migrations:
+#    needs: build-backend
+#    runs-on: ubuntu-20.04
+#    steps:
+#      - uses: actions/checkout@v2
+#      - run: echo "WEB_IMAGE_VERSION=snapshot-$GITHUB_RUN_ID" >> $GITHUB_ENV
+#      - run: echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u $DOCKER_USERNAME --password-stdin
+#      - run: docker-compose pull
+#      - name: 'Check Migrations'
+#        run: docker-compose run web ./manage.py makemigrations --dry-run --check
