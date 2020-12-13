@@ -84,3 +84,57 @@ export const verifyPayment = (authority, status, year = 2020) => ({
     },
   },
 });
+
+
+export const changePassword = (oldPassword, newPassword) => ({
+  [CALL_API]: {
+    types: [
+      actionTypes.CHANGE_PASSWORD_REQUEST,
+      actionTypes.CHANGE_PASSWORD_SUCCESS,
+      actionTypes.CHANGE_PASSWORD_FAILURE,
+    ],
+    url: URLs.CHANGE_PASSWORD,
+    fetchOptions: {
+      method: 'PUT',
+      body: {
+        old_password: oldPassword,
+        new_password: newPassword,
+      }
+    },
+  },
+});
+
+export const requestPasswordReset = (email) => ({
+  [CALL_API]: {
+    types: [
+      actionTypes.REQUEST_PASSWORD_RESET_REQUEST,
+      actionTypes.REQUEST_PASSWORD_RESET_SUCCESS,
+      actionTypes.REQUEST_PASSWORD_RESET_FAILURE,
+    ],
+    url: URLs.REQUEST_PASSWORD_RESET,
+    fetchOptions: {
+      method: 'POST',
+      body: {
+        email,
+      }
+    },
+  },
+});
+
+export const resetPassword = (password, token) => ({
+  [CALL_API]: {
+    types: [
+      actionTypes.RESET_PASSWORD_REQUEST,
+      actionTypes.RESET_PASSWORD_SUCCESS,
+      actionTypes.RESET_PASSWORD_FAILURE,
+    ],
+    url: URLs.RESET_PASSWORD,
+    fetchOptions: {
+      method: 'POST',
+      body: {
+        password,
+        token,
+      }
+    },
+  },
+});

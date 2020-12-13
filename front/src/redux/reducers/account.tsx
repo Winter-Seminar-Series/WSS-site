@@ -92,6 +92,26 @@ function Account(state = initState, action) {
         isFetching: false,
       })
 
+    ///////////////////
+
+    case actionTypes.REQUEST_PASSWORD_RESET_REQUEST:
+      return ({
+        ...state,
+        isFetching: true,
+      })
+
+    case actionTypes.REQUEST_PASSWORD_RESET_SUCCESS:
+      return ({
+        ...state,
+        isFetching: false,
+      })
+
+    case actionTypes.REQUEST_PASSWORD_RESET_FAILURE:
+      return ({
+        ...state,
+        isFetching: false,
+      })
+
     default:
       return state;
   }

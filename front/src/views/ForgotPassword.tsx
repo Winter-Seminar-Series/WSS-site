@@ -3,19 +3,21 @@ import { connect } from 'react-redux';
 import { toast } from 'react-toastify';
 import { login } from '../redux/actions/account';
 import { Redirect } from 'react-router-dom';
+import {
+  requestPasswordReset,
+} from '../redux/actions/account'
 
-function ForgotPassword({ login, isLoggedIn, isFetching }) {
+function ForgotPassword({ login, isLoggedIn, isFetching, requestPasswordReset }) {
   const [email, setEmail] = useState('');
 
-  function doPasswordReset(e) {
+  function doRequestPasswordReset(e) {
     e.preventDefault();
 
     if (!email) {
       toast.error('Please enter your email address');
       return;
     }
-    //todo call password_reset with {email}
-    // toast.error('Instructions to reset your password have been sent to you. Please check your email.');
+    requestPasswordReset(email);
   }
 
   if (isLoggedIn) {
@@ -27,12 +29,12 @@ function ForgotPassword({ login, isLoggedIn, isFetching }) {
       <section
         dir="rtl"
         className="auth-container background-theme row">
-          <div className="diagonal col-xs-12 col-sm-6 form-container" dir="ltr">
-            <form onSubmit={doPasswordReset}>
+        <div className="diagonal col-xs-12 col-sm-6 form-container" dir="ltr">
+          <form onSubmit={doRequestPasswordReset}>
 
-              <h2>Forgot Password?</h2>
+            <h2>Forgot Password?</h2>
 
-              <p>Enter the email address you used when you joined and we’ll send you instructions to reset your password.</p>
+            <p>Enter the email address you used when you created account and we’ll send you instructions to reset your password.</p>
 
             <div className="form-group mb-5">
               <label htmlFor="username">Email Address</label>
@@ -50,8 +52,8 @@ function ForgotPassword({ login, isLoggedIn, isFetching }) {
               className="btn btn-lg btn-primary btn-dark mb-5">
               Send Reset Instructions
             </button>
-            </form>
-          </div>
+          </form>
+        </div>
 
         <div className="d-none d-sm-flex col-6 logo-container" dir="ltr">
           <img className="logo" src="images/new_title_hq.png" alt="wss logo" />
@@ -71,6 +73,9 @@ const mapStateToProps = (state, ownProps) => ({
   isLoggedIn: state.account.isLoggedIn,
 });
 
-export default connect(mapStateToProps, {
-  login,
-})(ForgotPassword);
+export default connect(
+  mapStateToProps,
+  {
+    login,
+    requestPasswordReset,
+  })(ForgotPassword);

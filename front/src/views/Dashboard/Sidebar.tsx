@@ -11,9 +11,6 @@ function Sidebar({ logout, isRegistered }) {
     history.push('/');
   };
 
-
-  isRegistered = true;
-
   var sidebarItems = [];
 
   if (!isRegistered) {

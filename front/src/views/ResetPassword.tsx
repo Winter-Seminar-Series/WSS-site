@@ -2,23 +2,29 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { toast } from 'react-toastify';
 import { login } from '../redux/actions/account';
-import {Redirect, useParams} from 'react-router-dom';
+import { Redirect, useParams } from 'react-router-dom';
+import {
+  resetPassword,
+} from '../redux/actions/account'
 
-function ResetPassword({ login, isLoggedIn, isFetching }) {
+function ResetPassword({ login, isLoggedIn, isFetching, resetPassword }) {
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+
   const token = useParams()['token'];
 
   function doConfirmPasswordReset(e) {
     e.preventDefault();
 
+    if (password !== confirmPassword) {
+      toast.error('Passwords doesn\'t match');
+      return;
+    }
     if (!password) {
       toast.error('Please choose a password');
       return;
     }
-    //todo call /password_rest/confirm/ with {token, password}
-    // toast.error('Password changed successfully');
-    // redirect to /login
-
+    resetPassword(password, token);
   }
 
   if (!token) {
@@ -34,18 +40,27 @@ function ResetPassword({ login, isLoggedIn, isFetching }) {
       <section
         dir="rtl"
         className="auth-container background-theme row">
-          <div className="diagonal col-xs-12 col-sm-6 form-container" dir="ltr">
-            <form onSubmit={doConfirmPasswordReset}>
+        <div className="diagonal col-xs-12 col-sm-6 form-container" dir="ltr">
+          <form onSubmit={doConfirmPasswordReset}>
 
-              <h2>Reset Your Password</h2>
+            <h2>Reset Your Password</h2>
 
-              <p>Please choose a new password for your account.</p>
+            <p>Please choose a new password for your account.</p>
 
-              <div className="form-group mb-5">
+            <div className="form-group mb-5">
               <label htmlFor="password">New Password</label>
               <input
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+                type="password"
+                className="form-control"
+                id="password"
+              />
+              <br />
+              <label htmlFor="password">Confirm Password</label>
+              <input
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
                 type="password"
                 className="form-control"
                 id="password"
@@ -57,8 +72,8 @@ function ResetPassword({ login, isLoggedIn, isFetching }) {
               className="btn btn-lg btn-primary btn-dark mb-5">
               Reset Password
             </button>
-            </form>
-          </div>
+          </form>
+        </div>
 
         <div className="d-none d-sm-flex col-6 logo-container" dir="ltr">
           <img className="logo" src="images/new_title_hq.png" alt="wss logo" />
@@ -78,6 +93,10 @@ const mapStateToProps = (state, ownProps) => ({
   isLoggedIn: state.account.isLoggedIn,
 });
 
-export default connect(mapStateToProps, {
-  login,
-})(ResetPassword);
+export default connect(
+  mapStateToProps,
+  {
+    login,
+    resetPassword,
+  }
+)(ResetPassword);
