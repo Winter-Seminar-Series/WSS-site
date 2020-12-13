@@ -14,7 +14,7 @@ or be imported in ready() function in apps.py '''
 @receiver(reset_password_token_created)
 def password_reset_token_created(sender, instance, reset_password_token, *args, **kwargs):
 
-    base_url = 'http://sharif-wss.ir/password-reset/confirm'
+    base_url = 'https://sharif-wss.ir/password-reset/confirm'
     email_message = "{}/{}".format(base_url, reset_password_token.key)
 
     send_mail(
