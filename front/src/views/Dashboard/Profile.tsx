@@ -74,17 +74,24 @@ function Profile({
       toast.error('Please fill all the required fields');
       return;
     }
-    updateProfile({
-      first_name,
-      last_name,
-      gender,
-      grade,
-      university,
-      city,
-      introduction_method,
-      email,
-    });
-  };
+    if (first_name !== inputFirstName
+      || last_name !== inputLastName
+      || gender !== inputGender
+      || grade !== inputGrade
+      || university !== inputUniversity
+      || city !== inputCity
+      || introduction_method !== inputIntroductionMethod) {
+      updateProfile({
+        first_name,
+        last_name,
+        gender,
+        grade,
+        university,
+        city,
+        introduction_method,
+      });
+    };
+  }
 
   return (
     <>
@@ -234,7 +241,7 @@ function Profile({
           disabled={isFetching}
           type="submit"
           className="btn btn-lg btn-primary btn-dark mb-5"
-          >
+        >
           Update
         </button>
       </form>
