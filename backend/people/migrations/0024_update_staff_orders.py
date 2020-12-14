@@ -6,29 +6,27 @@ from django.db import migrations
 
 def forwards(apps, schema_editor):
     Staff = apps.get_model('people', 'Staff')
-    ContentType = apps.get_model('contenttypes', 'ContentType')
     HoldingTeam = apps.get_model('people', 'HoldingTeam')
 
-    ctype = ContentType.objects.get_for_model(Staff)
+    teams_staff = {
+        'Manager & Director': ['Alireza Ilami'],
+        'Scientific Secretary': ['Shayan Oveis gharan'],
+        'Content': ['Mahdi Farvardin', 'Hossein Firooz', 'Sepehr Amini Afshar', 'Farzam Zohdinasab', 'Pooya Moeini', 'Seyed Mohammad mehdi Hatami'],
+        'Networking': ['Amirhossein Hadian', 'Shima Ramadani', 'Sara Azarnoosh', 'Ehsan Movafagh', 'Fatemeh Asgari', 'Sajjad Rezvani', 'Amirmohammad Imani', 'Mehdi Jalali'],
+        'Branding': ['Seyed Alireza Hosseini'],
+        'Social': ['Sara Azarnoosh', 'Dorna Dehghani', 'Ghazal Shenavar', 'Helia Akhtarkavian', 'Sabiheh Tajdari', 'Sahel Messforoosh', 'Esmaeil Pahang'],
+        'Media': ['Hamila Meili', 'Mahdieh Ebrahimpoor', 'Roya Ghavami', 'Sara Zahedi', 'Mohammad mehdi Barghi'],
+        'Technical': ['Emran Batmanghelich', 'Ahmad Salimi', 'Ali asghar Ghanati', 'Fatemeh Khashei', 'Alireza Tajmir riahi', 'Seyed Alireza Hashemi', 'Mohammad mehdi Barghi'],
+        'Presentation Management': ['Alireza Ziaei', 'Sajjad Rezvani', 'Vahid Zehtab', 'Amirhossein Asem Yousefi'],
+    }
 
-    Staff.objects.get(name='Mohammad mehdi Barghi').delete()
-
-    id = Staff.objects.all().last().id
-
-    staff = Staff.objects.create(
-        id=id + 1,
-        name='Mohammad mahdi Barghi',
-        picture='media/2020/staff/Mohammad-mehdi-Barghi.jpg',
-        polymorphic_ctype=ctype
-    )
-
-    team = HoldingTeam.objects.get(name='Technical')
-    team.staff.add(staff)
-    team.save()
-
-    team = HoldingTeam.objects.get(name='Media')
-    team.staff.add(staff)
-    team.save()
+    for team_name in teams_staff:
+        i = 1
+        if team_name == 'Social':
+            i = 3
+        for name in teams_staff[team_name]:
+            Staff.objects.filter(name=name).update(order=i)
+            i += 1
 
 
 class Migration(migrations.Migration):
