@@ -24,7 +24,7 @@ class GradeDoesNotSpecifiedException(Exception):
 
 class WSS(models.Model):
     year = models.PositiveSmallIntegerField()
-    description = models.TextField()
+    description = models.TextField(null=True, blank=True)
     registration_open = models.BooleanField(null=False, default=False)
     # registration_link = models.URLField(null=True, blank=True)
     calendar_link = models.URLField(null=True, blank=True)
