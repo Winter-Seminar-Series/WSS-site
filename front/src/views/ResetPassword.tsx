@@ -88,7 +88,7 @@ function ResetPassword({
         </div>
 
         <div className="d-none d-sm-flex col-6 logo-container" dir="ltr">
-          <img className="logo" src="images/new_title_hq.png" alt="wss logo" />
+          <img className="logo" src="/images/new_title_hq.png" alt="wss logo" />
           <div className="row font-weight-bold text-uppercase d-flex justify-content-around text-white">
             <div>Winter</div>
             <div>Seminar</div>
