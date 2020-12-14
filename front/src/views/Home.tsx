@@ -67,8 +67,9 @@ function Home({
     videoRef.current.playbackRate = 0.6;
   };
 
-  console.log(startDate)
-  console.log(endDate)
+  // console.log(startDate)
+  // console.log(endDate)
+  // console.log(isRegistrationOpen)
 
   return (
     <>
@@ -110,7 +111,7 @@ function Home({
                   </h2>
                   <h2 className="banner-subtitle my-3 font-weight-bold">
                     {startDate && endDate
-                      ? moment(startDate, "YYYY-MM-DD").format(`MMM Do - `) + moment(endDate,"YYYY-MM-DD").format("MMM Do, YYYY") : ''}
+                      ? moment(startDate, "YYYY-MM-DD").format("MMM Do, YYYY ") + moment(endDate,"YYYY-MM-DD").format("MMM Do, YYYY") : ''}
                   </h2>
                   <h3 className="banner-desc font-weight-bold">
                     IRAN, TEHRAN,
@@ -118,15 +119,15 @@ function Home({
                   <h3 className="banner-desc font-weight-bold">
                     SHARIF UNIVERSITY OF TECHNOLOGY
                   </h3>
-                  {/* {register && (
+                  {isRegistrationOpen && (
                     <p className="banner-btn">
                       <a
-                        href="{% url 'wss:register' wss.year %}"
+                        href="/create-account"
                         className="btn btn-primary btn-white">
                         Register Now
                       </a>
                     </p>
-                  )} */}
+                  )}
                   {/* {posterSessionRegister && (
                     <p className="banner-btn">
                       <a
