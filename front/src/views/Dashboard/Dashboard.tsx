@@ -38,9 +38,7 @@ function Dashboard({ match, verifyPayment }) {
             component={UserWorkshopList}
           />
           <Route path={match.url + '/profile'} component={Profile} />
-          <Route path={match.url + '/'} exact>
-            <Redirect to={match.url + '/seminar-registration'} />
-          </Route>
+          <Redirect to={match.url + '/seminar-registration'} />
         </Switch>
       </div>
     </>

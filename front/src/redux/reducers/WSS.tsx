@@ -116,7 +116,6 @@ function WSS(state = initState, action) {
       };
 
     case actionTypes.MODEL_LIST_COUNT_SUCCESS:
-      console.log(action)
       return {
         ...state,
         isFetching: false,

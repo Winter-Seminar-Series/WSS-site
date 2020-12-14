@@ -64,5 +64,4 @@ interface SidebarItem {
   persianTitle: string;
   link: string;
   icon?: string;
-  deactive?: boolean;
 }
