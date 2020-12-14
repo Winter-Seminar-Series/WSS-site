@@ -1,0 +1,37 @@
+---
+name: "Deploy Latest Version"
+env:
+  DOCKER_USERNAME: sharifwss
+  RELEASE_VERSION: 1.1.0 # TODO implement a versioning and make this an input to workflow. See issue #185
+  TARGET_HOST: sharif-wss.ir
+  HOST_SSH_USER: wss
+on:
+  workflow_dispatch:
+jobs:
+  deploy:
+    runs-on: ubuntu-20.04
+    container:
+      image: spy86/ansible:latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: 'Deploy'
+        working-directory: ./deploy/
+        run: ansible-playbook
+          -i inventory.yml
+          --extra-vars="
+          ansible_host=$TARGET_HOST
+          ansible_user=$HOST_SSH_USER
+          ansible_ssh_pass=${{ secrets.HOST_SSH_PASSWORD }}
+          web_image_version=$RELEASE_VERSION
+          front_image_version=$RELEASE_VERSION
+          secret_key=${{ secrets.WSS_SECRET_KEY }}
+          payment_merchant=${{ secrets.PAYMENT_MERCHANT }}
+          db_password=${{ secrets.DB_PASSWORD }}
+          postgres_superuser_pass=${{ secrets.POSTGRES_SUPERUSER_PASS }}
+          docker_hub_password=${{ secrets.DOCKER_PASSWORD }}
+          ssl_private_key=\"${{ secrets.SSL_PRIV_KEY }}\"
+          ssl_fullchain=\"${{ secrets.SSL_FULL_CHAIN }}\"
+          sentry_token=${{ secrets.SENTRY_TOKEN }}
+          dropbox_auth_token=${{ secrets.DROPBOX_AUTH_TOKEN }}
+          wss_email_password=${{ secrets.WSS_EMAIL_PASSWORD }}"
+          deploy.yml
