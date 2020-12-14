@@ -100,18 +100,21 @@ function Account(state = initState, action) {
       return ({
         ...state,
         isFetching: true,
+        doesResetPasswordCompleted: false,
       })
 
     case actionTypes.REQUEST_PASSWORD_RESET_SUCCESS:
       return ({
         ...state,
         isFetching: false,
+        doesResetPasswordCompleted: false,
       })
 
     case actionTypes.REQUEST_PASSWORD_RESET_FAILURE:
       return ({
         ...state,
         isFetching: false,
+        doesResetPasswordCompleted: false,
       })
 
     //////////////////////////
