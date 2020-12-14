@@ -5,8 +5,6 @@ import './styles/style.scss';
 import About from './views/About';
 import Dashboard from './views/Dashboard/Dashboard';
 import SeminarDetail from './views/Details/SeminarDetail'
-// import PostersessionDetail from './views/Details/PostersessionDetail'
-// import Postersessions from './views/Postersessions';
 import WorkshopDetail from './views/Details/WorkshopDetail'
 import Home from './views/Home';
 import Footer from './views/Layout/footer';
