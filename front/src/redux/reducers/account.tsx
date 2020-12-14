@@ -3,6 +3,7 @@ import * as actionTypes from '../actionTypes';
 const initState = {
   isFetching: false,
   isLoggedIn: false,
+  doesResetPasswordCompleted: false,
   id: '',
   username: '',
   email: '',
@@ -110,6 +111,29 @@ function Account(state = initState, action) {
       return ({
         ...state,
         isFetching: false,
+      })
+
+    //////////////////////////
+
+    case actionTypes.RESET_PASSWORD_REQUEST:
+      return ({
+        ...state,
+        isFetching: true,
+        doesResetPasswordCompleted: false,
+      })
+
+    case actionTypes.RESET_PASSWORD_SUCCESS:
+      return ({
+        ...state,
+        isFetching: false,
+        doesResetPasswordCompleted: true,
+      })
+
+    case actionTypes.RESET_PASSWORD_FAILURE:
+      return ({
+        ...state,
+        isFetching: false,
+        doesResetPasswordCompleted: false,
       })
 
     default:

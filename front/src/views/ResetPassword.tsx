@@ -2,18 +2,26 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { toast } from 'react-toastify';
 import { login } from '../redux/actions/account';
-import { Redirect, useParams } from 'react-router-dom';
+import { Redirect, useParams, useHistory } from 'react-router-dom';
 import {
   resetPassword,
 } from '../redux/actions/account'
+import configureStore from '../redux/store/configureStore.prod';
 
-function ResetPassword({ login, isLoggedIn, isFetching, resetPassword }) {
+function ResetPassword({
+  login,
+  isLoggedIn,
+  isFetching,
+  resetPassword,
+  doesResetPasswordCompleted
+}) {
+  const history = useHistory();
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
   const token = useParams()['token'];
 
-  function doConfirmPasswordReset(e) {
+  async function doConfirmPasswordReset(e) {
     e.preventDefault();
 
     if (password !== confirmPassword) {
@@ -24,7 +32,10 @@ function ResetPassword({ login, isLoggedIn, isFetching, resetPassword }) {
       toast.error('Please choose a password');
       return;
     }
-    resetPassword(password, token);
+    await resetPassword(password, token);
+    if (doesResetPasswordCompleted) {
+      history.push('/login');
+    }
   }
 
   if (!token) {
@@ -36,6 +47,7 @@ function ResetPassword({ login, isLoggedIn, isFetching, resetPassword }) {
   }
 
   return (
+
     <>
       <section
         dir="rtl"
@@ -89,6 +101,7 @@ function ResetPassword({ login, isLoggedIn, isFetching, resetPassword }) {
 }
 
 const mapStateToProps = (state, ownProps) => ({
+  doesResetPasswordCompleted: state.account.doesResetPasswordCompleted,
   isFetching: state.account.isFetching,
   isLoggedIn: state.account.isLoggedIn,
 });

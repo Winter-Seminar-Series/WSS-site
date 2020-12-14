@@ -55,7 +55,6 @@ export const logout = () => ({
 });
 
 export const sendPaymentRequest = (year = 2020) => {
-  console.log(BASE_URL)
   return ({
     [CALL_API]: {
       types: [
