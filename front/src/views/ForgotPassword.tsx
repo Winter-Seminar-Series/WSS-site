@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { toast } from 'react-toastify';
-import { login } from '../redux/actions/account';
 import { Redirect } from 'react-router-dom';
 import {
   requestPasswordReset,
 } from '../redux/actions/account'
 
-function ForgotPassword({ login, isLoggedIn, isFetching, requestPasswordReset }) {
+function ForgotPassword({ isLoggedIn, isFetching, requestPasswordReset }) {
   const [email, setEmail] = useState('');
 
   function doRequestPasswordReset(e) {
@@ -76,6 +75,5 @@ const mapStateToProps = (state, ownProps) => ({
 export default connect(
   mapStateToProps,
   {
-    login,
     requestPasswordReset,
   })(ForgotPassword);

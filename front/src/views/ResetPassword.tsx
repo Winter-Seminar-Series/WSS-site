@@ -1,21 +1,19 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { toast } from 'react-toastify';
-import { login } from '../redux/actions/account';
 import { Redirect, useParams, useHistory } from 'react-router-dom';
 import {
   resetPassword,
 } from '../redux/actions/account'
-import configureStore from '../redux/store/configureStore.prod';
 
 function ResetPassword({
-  login,
   isLoggedIn,
   isFetching,
   resetPassword,
   doesResetPasswordCompleted
 }) {
   const history = useHistory();
+  const [didButtonClick, setButtonClickStatus] = useState(false);
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
@@ -33,9 +31,12 @@ function ResetPassword({
       return;
     }
     await resetPassword(password, token);
-    if (doesResetPasswordCompleted) {
-      history.push('/login');
-    }
+    setButtonClickStatus(true);
+  }
+
+
+  if (doesResetPasswordCompleted && didButtonClick) {
+    return <Redirect exact to="/login" />;
   }
 
   if (!token) {
@@ -109,7 +110,6 @@ const mapStateToProps = (state, ownProps) => ({
 export default connect(
   mapStateToProps,
   {
-    login,
     resetPassword,
   }
 )(ResetPassword);

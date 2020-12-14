@@ -1,3 +1,4 @@
+import { Redirect } from 'react-router-dom';
 import * as actionTypes from '../actionTypes';
 
 const initState = {
