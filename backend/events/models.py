@@ -19,7 +19,7 @@ class BaseEvent(PolymorphicModel):  # Is implicitly Abstract
     venue = models.ForeignKey(to='Venue', related_name='events', null=True, blank=True, on_delete=models.SET_NULL)
     key_words = TaggableManager(blank=True)
     audience = models.CharField(blank=True, max_length=200)
-    link = models.URLField(null=True, max_length=256)
+    link = models.URLField(blank=True, null=True, max_length=256)
     tags = models.ManyToManyField(WssTag, null=True, blank=True)
 
     class Meta:
