@@ -33,7 +33,7 @@ function App() {
         <Route path="/staff" component={Staff} />
         <Route path="/create-account" component={CreateAccount} />
         <Route path="/login" component={Login} />
-        <Route path="/password-reset/confirm/:token" component={ResetPassword} />
+        <Route path="/password-reset/confirm/:token" render={() => <ResetPassword key={Math.random()} />} />
         <Route path="/password-reset" component={ForgotPassword} />
         <PrivateRoute path="/dashboard" component={Dashboard} />
         <Route path="/" component={Home} />
