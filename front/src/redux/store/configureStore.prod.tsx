@@ -3,10 +3,10 @@ import thunk from 'redux-thunk';
 import api from '../middleware/api/api';
 import rootReducer from '../reducers';
 
-const configureStore = (preloadedState) =>
+const configureStoreProd = (preloadedState) =>
   createStore(
     rootReducer,
-    { Intl: { locale: 'fa' }, ...preloadedState },
+    { ...preloadedState },
     applyMiddleware(thunk, api)
   );
-export default configureStore;
+export default configureStoreProd;
