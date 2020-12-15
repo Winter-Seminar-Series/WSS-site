@@ -34,7 +34,7 @@ class HoldingTeam(models.Model):
     order = models.PositiveIntegerField(default=1)
 
     class Meta:
-        ordering = ('pk',)
+        ordering = ('order',)
 
     def __str__(self):
         return self.name

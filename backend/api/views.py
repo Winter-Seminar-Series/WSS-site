@@ -161,10 +161,6 @@ class HoldingTeamViewSet(BaseViewSet):
     serializer = serializers.HoldingTeamSerializer
 
     def queryset_selector(self, request, wss):
-        teams = wss.holding_teams.order_by('order')
-        for team in teams:
-            staff = Staff.objects.filter(holding_teams=team).order_by('order')
-            team.staff.set(staff)
         return wss.holding_teams.order_by('order')
 
 
