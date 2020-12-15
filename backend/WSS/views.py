@@ -157,7 +157,7 @@ class RegisterView(FooterMixin, WSSWithYearMixin, DetailView):
 
 
 MERCHANT = 'XXXXXXX'
-client = Client('https://www.zarinpal.com/pg/services/WebGate/wsdl')
+# client = Client('https://www.zarinpal.com/pg/services/WebGate/wsdl')
 description = "هزینه ثبت نام رویداد wss 2019"
 student_price = 135000
 other_price = 150000
@@ -269,8 +269,8 @@ def send_request(request, year):
     exh.workshops = workshops
     exh.save()
     price = compute_cost(exh)
-    result = client.service.PaymentRequest(MERCHANT, price, description, 'aaa@aaa.gmail.com', "09123456789",
-                                           CallbackURL + email + "/" + str(payment_id))
+    # result = client.service.PaymentRequest(MERCHANT, price, description, 'aaa@aaa.gmail.com', "09123456789",
+    #                                        CallbackURL + email + "/" + str(payment_id))
     if result.Status == 100:
         logger.info("user with email:" + email + " connected to payment")
         return redirect('https://www.zarinpal.com/pg/StartPay/' + str(result.Authority))
@@ -298,7 +298,7 @@ def verify(request, year, email, payment_id):
     price = compute_cost(exh)
 
     if request.GET.get('Status') == 'OK':
-        result = client.service.PaymentVerification(MERCHANT, request.GET['Authority'], price)
+        # result = client.service.PaymentVerification(MERCHANT, request.GET['Authority'], price)
         if result.Status == 100:
 
             exh.payment_status = 'OK'
