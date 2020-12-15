@@ -82,10 +82,6 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
-            'libraries': {
-                'date_tags': 'WSS.templatetags.date_tags',
-                'human_tags': 'people.templatetags.human_tags',
-            },
         },
     },
 ]
@@ -141,9 +137,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/backend-statics/'
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "static"),
-]
 STATIC_ROOT = os.path.join(BASE_DIR, 'collected_static')
 
 MEDIA_URL = '/media/'
