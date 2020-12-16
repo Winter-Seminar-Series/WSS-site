@@ -56,20 +56,12 @@ class Seminar(BaseEvent):
     speaker = models.ForeignKey(to='people.Speaker', related_name='seminars', on_delete=models.RESTRICT)
     material = models.OneToOneField(to='SeminarMaterial', null=True, blank=True, on_delete=models.SET_NULL)
 
-    @property
-    def get_absolute_url(self):
-        return reverse('events:seminar', args=[self.pk])
-
 
 class PosterSession(BaseEvent):
     abstract = models.TextField()
     speaker = models.ForeignKey(to='people.Speaker', related_name='postersessions', on_delete=models.RESTRICT)
     material = models.OneToOneField(to='PosterMaterial', null=True, blank=True, on_delete=models.SET_NULL)
     is_persian = models.BooleanField(null=False, default=False)
-
-    @property
-    def get_absolute_url(self):
-        return reverse('events:postersession', args=[self.pk])
 
 
 class Workshop(BaseEvent):
@@ -80,10 +72,6 @@ class Workshop(BaseEvent):
     registration_link = models.URLField(null=True, blank=True)
     price = models.IntegerField(default=30000)
     capacity = models.IntegerField(default=0)
-
-    @property
-    def get_absolute_url(self):
-        return reverse('events:workshop', args=[self.pk])
 
     def __str__(self):
         return self.title + ", " + "Speaker: " + self.speaker.name + ", " + (self.start_time.strftime("%A %d %B %Y, %H:%M, ") if self.start_time != None else "") + "Price: " + str(self.price) + " Tomans"
