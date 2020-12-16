@@ -57,6 +57,18 @@ class WSS(models.Model):
         return self.participants.filter(user_profile__grade__in=GRADE_GROUPS[grade]).count() >= getattr(self, GRADE_GROUP_LIMITS[grade])
 
     @property
+    def bs_participant_count(self):
+        return self.participants.filter(user_profile__grade='Bachelor').count()
+    
+    @property
+    def ms_participant_count(self):
+        return self.participants.filter(user_profile__grade='Master').count()
+    
+    @property
+    def phd_participant_count(self):
+        return self.participants.filter(user_profile__grade='PhD or Higher').count()
+    
+    @property
     def main_image_url(self):
         if not self.main_image:
             return None
