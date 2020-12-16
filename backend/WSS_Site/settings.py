@@ -209,7 +209,7 @@ LOGGING = {
 PAYMENT_SETTING = {
     "MERCHANT": os.environ.get('PAYMENT_MERCHANT'),
     "wsdl": os.environ.get('PAYMENT_WSDL'),
-    "description": "WSS registration fee",
+    "description": "WSS {} registration fee for user {}",
     "payment_url": os.environ.get('PAYMENT_URL')
 }
 
