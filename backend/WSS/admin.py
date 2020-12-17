@@ -73,6 +73,7 @@ class TagInline(CompactInline):
 class WSSAdmin(admin.ModelAdmin):
     inlines = (SeminarInline, PosterSessionInline, WorkshopInline, EventInline, SponsorshipInline, ImageInline,
                ClipInline, BookletInline, TagInline)
+    readonly_fields = ('bs_participant_count', 'ms_participant_count', 'phd_participant_count')
     list_display = ('__str__', 'start_date', 'end_date')
 
 

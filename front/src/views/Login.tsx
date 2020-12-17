@@ -50,6 +50,11 @@ function Login({ login, isLoggedIn, isFetching }) {
                 className="form-control"
                 id="password"
               />
+              <div className="linkbar mt-3">
+                <a className="link" href="/password-reset">
+                  Forgot password?
+                </a>
+              </div>
             </div>
             <button
               disabled={isFetching}

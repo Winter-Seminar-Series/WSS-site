@@ -24,7 +24,7 @@ class GradeDoesNotSpecifiedException(Exception):
 
 class WSS(models.Model):
     year = models.PositiveSmallIntegerField()
-    description = models.TextField()
+    description = models.TextField(null=True, blank=True)
     registration_open = models.BooleanField(null=False, default=False)
     # registration_link = models.URLField(null=True, blank=True)
     calendar_link = models.URLField(null=True, blank=True)
@@ -56,6 +56,18 @@ class WSS(models.Model):
         
         return self.participants.filter(user_profile__grade__in=GRADE_GROUPS[grade]).count() >= getattr(self, GRADE_GROUP_LIMITS[grade])
 
+    @property
+    def bs_participant_count(self):
+        return self.participants.filter(user_profile__grade='Bachelor').count()
+    
+    @property
+    def ms_participant_count(self):
+        return self.participants.filter(user_profile__grade='Master').count()
+    
+    @property
+    def phd_participant_count(self):
+        return self.participants.filter(user_profile__grade='PhD or Higher').count()
+    
     @property
     def main_image_url(self):
         if not self.main_image:
