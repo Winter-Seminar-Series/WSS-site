@@ -1,4 +1,4 @@
-from rest_framework.serializers import ModelSerializer, Serializer, CharField
+from rest_framework.serializers import ModelSerializer, Serializer, CharField, SerializerMethodField
 from events.models import *
 from people.models import HoldingTeam, Speaker, Staff
 from WSS.models import *
@@ -95,6 +95,11 @@ class BookletSerializer(ModelSerializer):
 
 
 class HoldingTeamSerializer(ModelSerializer):
+    staff = SerializerMethodField(read_only=True)
+
+    def get_staff(self, model):
+        return [s.id for s in model.staff.all().order_by('order')]
+
     class Meta:
         model = HoldingTeam
         fields = '__all__'
