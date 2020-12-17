@@ -7,13 +7,13 @@ from django.db import migrations
 def forwards(apps, schema_editor):
     Speakers = apps.get_model('people', 'Speaker')
     Speakers.objects.filter(name__in=[
-        'Hamed Hassani',
-    ]).delete()
+        'Mohammad Haft-Javaheiran',
+    ]).update(name='Mohammad Haft-Javaherian')
 
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('people', '0027_add_new_speakers_2020'),
+        ('people', '0028_remove_a_2020_speaker'),
     ]
 
     operations = [
