@@ -2,7 +2,6 @@ from rest_framework.decorators import action
 from rest_framework import viewsets, generics, permissions
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
-from rest_framework.authentication import BasicAuthentication
 from knox.auth import TokenAuthentication
 
 from django.views.generic.detail import DetailView
@@ -100,7 +99,7 @@ class BaseViewSet(viewsets.ViewSet, ABC):
 
 
 class EventViewSet(BaseViewSet, ABC):
-    authentication_classes = [BasicAuthentication, TokenAuthentication]
+    authentication_classes = [TokenAuthentication]
 
     def get_list(self, request, wss):
         queryset = self.queryset_selector(request, wss)
@@ -224,7 +223,7 @@ class StaffViewSet(BaseViewSet):
 
 
 class UserProfileViewSet(viewsets.ViewSet):
-    authentication_classes = [BasicAuthentication, TokenAuthentication]
+    authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
     serializer = serializers.UserProfileSerializer
 
@@ -298,7 +297,7 @@ class UserProfileViewSet(viewsets.ViewSet):
 
 class AnnouncementViewSet(BaseViewSet):
     serializer = serializers.AnnouncementSerializer
-    authentication_classes = [BasicAuthentication, TokenAuthentication]
+    authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
 
     def queryset_selector(self, request, wss):
@@ -313,7 +312,7 @@ class TagsViewSet(BaseViewSet):
 
 
 class PaymentViewSet(viewsets.ViewSet):
-    authentication_classes = [BasicAuthentication, TokenAuthentication]
+    authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
 
     @action(methods=['GET'], detail=False)
