@@ -33,9 +33,9 @@ const Staff = ({
               {staff.length > 0 && !isFetching &&
                 <div className="row">
                   {
-                    staff.filter((staff) => team.staff.includes(staff.id)).map((staff) => (
-                      <div key={staff.id} className="col-xs-12 col-sm-6 col-lg-3 mt-2 mb-4">
-                        <PublicCard id={staff.id} isStaff='true'></PublicCard>
+                    team.staff.map((staff) => (
+                      <div key={staff} className="col-xs-12 col-sm-6 col-lg-3 mt-2 mb-4">
+                        <PublicCard id={staff} isStaff='true'></PublicCard>
                       </div>
                     ))
                   }
