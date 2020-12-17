@@ -25,7 +25,7 @@ def forwards(apps, schema_editor):
         wss=wss,
         polymorphic_ctype=ctype,
         title='Machine Learning, Robotic Imaging and Augmented Reality for Computer Assisted Interventions',
-        audience='Curious and creative novices and experts'
+        audience='Curious and creative novices and experts',
         abstract='In this talk, I will present an overview of our most recent advancements in Robotic Imaging, Machine Leaning and Medical Augmented Reality. I will first discuss the particular requirements for intra-operative imaging and visualization. I will then present some of our latest results in intra-operative multimodal robotic imaging and its translation to clinical applications. I will then discuss the impact of research advancement in machine learning on medical imaging and computer assisted intervention. I will finally present some applications of virtual and augmented reality in the medical domain. Starting by the current deployment of AR and VR technology within medical education, I discuss its current and future impact on surgery, surgical education and training. I will then review the first deployment of augmented reality into operating rooms in the last two decades and present some of our latest achievements in this field.',
         speaker=Speaker.objects.filter(name='Nassir Navab').last()
     )
