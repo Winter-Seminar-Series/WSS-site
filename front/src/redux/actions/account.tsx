@@ -62,7 +62,7 @@ export const sendPaymentRequest = (year = 2020) => {
         actionTypes.SEND_PAYMENT_SUCCESS,
         actionTypes.SEND_PAYMENT_FAILURE,
       ],
-      url: `${URLs.ROOT}${year}/payment/request?callback=${BASE_URL}/dashboard`,
+      url: `${URLs.ROOT}${year}/payment/request/?callback=${BASE_URL}/dashboard`,
       fetchOptions: {
         method: 'GET',
       },
