@@ -229,7 +229,12 @@ REST_FRAMEWORK = {
         # 'rest_framework.authentication.BasicAuthentication',
         # 'rest_framework.authentication.SessionAuthentication',
         'knox.auth.TokenAuthentication',
-    ]
+    ],
+    'DEFAULT_RENDERER_CLASSES': (
+        'rest_framework.renderers.JSONRenderer',
+        'rest_framework.renderers.BrowsableAPIRenderer',
+        'rest_framework_csv.renderers.CSVRenderer',
+    ),
 }
 
 DBBACKUP_STORAGE = 'storages.backends.dropbox.DropBoxStorage'
