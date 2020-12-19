@@ -32,7 +32,8 @@
     - `holding_teams`
     - `images`
     - `tags`
-    - `announcements`
+    - `announcements` (just for authenticated users)
+    - `participants` (just for admin users)
     - `venues`
     - `speakers`
     - `seminar_materials`
