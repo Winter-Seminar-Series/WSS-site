@@ -1,7 +1,7 @@
 from rest_framework.decorators import action
 from rest_framework import viewsets, generics, permissions
 from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from knox.auth import TokenAuthentication
 
 from django.views.generic.detail import DetailView
@@ -302,6 +302,15 @@ class AnnouncementViewSet(BaseViewSet):
 
     def queryset_selector(self, request, wss):
         return wss.announcements.order_by('-create_timestamp')
+
+
+class ParticipantViewSet(BaseViewSet):
+    serializer = serializers.ParticipantDeepSerializer
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated, IsAdminUser]
+
+    def queryset_selector(self, request, wss):
+        return wss.participants
 
 
 class TagsViewSet(BaseViewSet):
