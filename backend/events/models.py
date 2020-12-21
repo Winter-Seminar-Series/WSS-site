@@ -73,6 +73,10 @@ class Workshop(BaseEvent):
     price = models.IntegerField(default=30000)
     capacity = models.IntegerField(default=0)
 
+    @property
+    def remaining_capacity(self):
+        return self.capacity - self.participants.all().count()
+
     def __str__(self):
         return self.title + ", " + "Speaker: " + self.speaker.name + ", " + (self.start_time.strftime("%A %d %B %Y, %H:%M, ") if self.start_time != None else "") + "Price: " + str(self.price) + " Tomans"
 

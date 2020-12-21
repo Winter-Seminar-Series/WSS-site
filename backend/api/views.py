@@ -42,10 +42,6 @@ def get_user_profile(user: User) -> UserProfile:
     return UserProfile.objects.create(user=user)
 
 
-def user_is_participant(user: User, wss: WSS):
-    return user.is_authenticated and not user.is_anonymous and wss.participants.filter(user_profile=get_user_profile(user)).count() == 1
-
-
 class ErrorResponse(Response):
     
     def __init__(self, data, status_code: int = 400):
@@ -101,15 +97,18 @@ class BaseViewSet(viewsets.ViewSet, ABC):
 class EventViewSet(BaseViewSet, ABC):
     authentication_classes = [TokenAuthentication]
 
+    @staticmethod
+    def user_is_participant(user: User, wss: WSS, pk: int) -> bool:
+        return user.is_authenticated and not user.is_anonymous and wss.participants.filter(user_profile=get_user_profile(user)).count() == 1
+
     def get_list(self, request, wss):
         queryset = self.queryset_selector(request, wss)
-        is_participant = user_is_participant(request.user, wss)
-        serializer = self.serializer(queryset, many=True, serialize_link=is_participant)
+        serializer = self.serializer(queryset, many=True, serialize_link=False)
         return serializer.data
 
     def get_by_pk(self, request, wss, pk):
         queryset = self.queryset_selector(request, wss)
-        is_participant = user_is_participant(request.user, wss)
+        is_participant = self.user_is_participant(request.user, wss, pk)
         entity = get_object_or_404(queryset, pk=pk)
         serializer = self.serializer(entity, serialize_link=is_participant)
         return serializer.data
@@ -118,8 +117,80 @@ class EventViewSet(BaseViewSet, ABC):
 class WorkshopViewSet(EventViewSet):
     serializer = serializers.WorkshopSerializer
 
+    @staticmethod
+    def user_is_registered_workshop(user, wss, pk):
+        return wss.participants.get(user_profile=user.profile)\
+            .registered_workshops.filter(pk=pk).count() > 0
+
+    @staticmethod
+    def user_is_participant(user: User, wss: WSS, pk: int) -> bool:
+        if not EventViewSet.user_is_participant(user, wss, pk):
+            return False
+        
+        return WorkshopViewSet.user_is_registered_workshop(user, wss, pk)
+
     def queryset_selector(self, request, wss):
         return wss.workshops
+
+class RegisteredWorkshopsAPI(generics.GenericAPIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, year):
+        wss = get_wss_object_or_404(year)
+        user_profile = get_user_profile(request.user)
+        workshops = wss.workshops.filter(participants__user_profile=user_profile)
+        serializer = serializers.WorkshopSerializer(workshops, many=True, serialize_link=True)
+        return Response(serializer.data)
+
+
+class WorkshopRegistrationViewSet(viewsets.ViewSet):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    @action(methods=['GET'], detail=True)
+    def register(self, request, year, pk):
+        wss = get_wss_object_or_404(year)
+        if not EventViewSet.user_is_participant(request.user, wss, pk):
+            return ErrorResponse({
+                "message": "You must finish your registration"
+            }, status_code=403)
+
+        workshop: Workshop = get_object_or_404(Workshop, pk=pk)
+
+        if WorkshopViewSet.user_is_registered_workshop(request.user, wss, pk):
+            return ErrorResponse({
+                "message": "You have already registered in this workshop"
+            }, status_code=403)
+
+        if workshop.remaining_capacity <= 0:
+            return ErrorResponse({
+                "message": "This workshop has no more capacity"
+            })
+        
+        participant: Participant = request.user.profile.participants.get(current_wss=wss)
+        participant.registered_workshops.add(workshop)
+
+        return Response({
+            "message": "Done!"
+        })
+    
+    @action(methods=['GET'], detail=True)
+    def cancel(self, request, year, pk):
+        wss = get_wss_object_or_404(year)
+        workshop: Workshop = get_object_or_404(Workshop, pk=pk)
+
+        if not WorkshopViewSet.user_is_participant(request.user, wss, pk):
+            return ErrorResponse({
+                "message": "You have not registered in this workshop"
+            })
+        
+        participant: Participant = request.user.profile.participants.get(current_wss=wss)
+        participant.registered_workshops.remove(workshop)
+
+        return Response({
+            "message": "Done!"
+        })
 
 
 class SeminarViewSet(EventViewSet):

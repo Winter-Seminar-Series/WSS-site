@@ -59,9 +59,14 @@ class EventSerializer(ModelSerializer):
 
 
 class WorkshopSerializer(EventSerializer):
+    remaining_capacity = SerializerMethodField()
+
     class Meta:
         model = Workshop
         fields = '__all__'
+
+    def get_remaining_capacity(self, workshop: Workshop):
+        return workshop.remaining_capacity
 
 
 class SeminarSerializer(EventSerializer):
