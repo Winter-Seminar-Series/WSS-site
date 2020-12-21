@@ -222,7 +222,8 @@ class Participant(models.Model):
     payment_ref_id = models.CharField(max_length=250, default="NOT_PAYED")
     payment_amount = models.PositiveIntegerField(default=0)
     payment_timestamp = models.DateTimeField(auto_now_add=True)
-    
+    registered_workshops = models.ManyToManyField(Workshop, related_name='participants', blank=True)
+
     class Meta:
         unique_together = [['current_wss', 'user_profile']]
     
