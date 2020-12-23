@@ -684,7 +684,7 @@ HTTP 200 OK
 ### Get registered workshops
 
 ```HTTP
-GET /api/<year>/workshops/registered/
+GET /api/<year>/registered-workshops/
 ```
 
 ### Register in a workshop
