@@ -29,7 +29,7 @@ year_router.register(r'workshop_materials', views.WorkshopMaterialViewSet, basen
 year_router.register(r'poster_materials', views.PosterMaterialViewSet, basename='poster_material')
 year_router.register(r'staff', views.StaffViewSet, basename='staff')
 year_urlpatterns = year_router.urls + [
-    path('workshops/registered', views.RegisteredWorkshopsAPI.as_view(), name='workshops')
+    path('registered-workshops', views.RegisteredWorkshopsAPI.as_view(), name='registered workshops')
 ]
 
 base_router = DefaultRouter()
