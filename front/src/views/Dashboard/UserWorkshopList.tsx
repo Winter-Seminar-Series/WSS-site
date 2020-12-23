@@ -13,13 +13,11 @@ function UserWorkshopList({
   getRegisteredWorkshops,
   getModelList,
   registeredWorkshops,
-  workshops,
   isFetching,
 }) {
 
 useEffect(() => {
   getRegisteredWorkshops(THIS_YEAR);
-  getModelList(MODEL_LISTS_NAMES.WORKSHOPS, THIS_YEAR);
   getModelList(MODEL_LISTS_NAMES.SPEAKERS, THIS_YEAR);
 }, [getModelList, getRegisteredWorkshops])
 
@@ -52,7 +50,7 @@ useEffect(() => {
               <div>Loading...</div>
             </div>
           )}
-          {workshops.length === 0 && !isFetching &&
+          {registeredWorkshops.length === 0 && !isFetching &&
           <div className="row py-4 justify-content-center">
             <div>You haven't registered for any workshops yet</div>
           </div>
@@ -65,10 +63,9 @@ useEffect(() => {
 
 const mapStateToProps = (state, ownProps) => {
   const { registeredWorkshops, } = state.Participant;
-  const { workshops, isFetching } = state.WSS;
+  const { isFetching } = state.WSS;
   return {
     registeredWorkshops,
-    workshops,
     isFetching,
   };
 };
