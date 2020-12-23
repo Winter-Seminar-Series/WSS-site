@@ -64,7 +64,7 @@ def rollback(apps, schema_editor):
 
     titles = [
         'Conceptual Blending in Computational Creativity',
-        'بررسی تاریخچه word embeddingها و پیاده سازی پروژه تحلیل احساسات با bert',
+        'A brief history of word embeddings and implement the sentiment analysis project with bert',
         'Machine Learning on Persian Text: Using Transfer Learning Word and Document Vectors(word2vec and doc2vec)',
         'Towards Big Data Processing by Spark Unified Analytics Engine',
         'Transfer Learning in NLP with Huggingface',
