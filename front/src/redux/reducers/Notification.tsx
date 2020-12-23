@@ -76,6 +76,8 @@ function Notification(state = {}, action) {
       toast.success('Instructions to reset password have been sent to you. Please check your email.');
       return { ...state };
 
+    case actionTypes.REGISTER_WORKSHOP_FAILURE:
+    case actionTypes.CANCEL_WORKSHOP_REGISTRATION_FAILURE:
     case actionTypes.REQUEST_PASSWORD_RESET_FAILURE:
       toast.error(action.error);
       return { ...state };
@@ -86,6 +88,14 @@ function Notification(state = {}, action) {
 
     case actionTypes.RESET_PASSWORD_FAILURE:
       toast.error(action.error);
+      return { ...state };
+
+    case actionTypes.REGISTER_WORKSHOP_SUCCESS:
+      toast.success('You registered the workshop successfully.')
+      return { ...state };
+
+    case actionTypes.CANCEL_WORKSHOP_REGISTRATION_SUCCESS:
+      toast.success('You canceled your registration in the workshop successfully.')
       return { ...state };
 
     default:

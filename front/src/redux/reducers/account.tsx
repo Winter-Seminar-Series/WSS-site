@@ -12,7 +12,7 @@ const initState = {
   expiry: '',
 };
 
-function Account(state = initState, action) {
+function account(state = initState, action) {
   switch (action.type) {
     case actionTypes.REGISTER_REQUEST:
       return {
@@ -145,4 +145,4 @@ function Account(state = initState, action) {
   }
 }
 
-export default Account;
+export default account;
