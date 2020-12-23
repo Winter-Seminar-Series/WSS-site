@@ -13,19 +13,19 @@ def forwards(apps, schema_editor):
 
     seminars = {
         1: {
-            (5, 0): ['Mostafa Dehghgani'],
+            (5, 0): ['Mostafa Dehghgani', 'Seyed Mohsen Moosavi Dezfooli'],
             (6, 0): ['Mohammad Hossein Rohban', 'Mona Azadkia'],
-            (9, 0): ['Mehraveh Salehi'],
+            (9, 0): ['Mehraveh Salehi', 'Ehsan Kazemi'],
             (9, 30): ['Gholamali Aminian', 'Mojtaba Tefagh']
         },
         2: {
-            (5, 0): ['Seyed Mohsen Moosavi Dezfooli', 'Nassir Navab'],
-            (6, 0): ['Mahdi Soltanolkotabi'],
+            (5, 0): ['Nassir Navab'],
+            (6, 0): ['Mahdi Soltanolkotabi', 'Soheil Behnezhad'],
             (9, 0): ['Sepehr Assadi', 'Mohamad Kazem Shirani Faradonbeh'],
             (9, 30): ['Mohammad Haft-Javaherian']
         },
         3: {
-            (5, 0): ['Amir Shaikhha'],
+            (5, 0): ['Amir Shaikhha', 'Shahram Ghandeharizadeh'],
             (6, 0): ['Mostafa Rezazad', 'Hamed Hassani'],
             (9, 0): ['Mehrdad Farajtabar', 'Mahmoud Ghandi'],
             (9, 30): ['Vijay Vazirani']
@@ -34,7 +34,7 @@ def forwards(apps, schema_editor):
             (5, 0): ['Amin Gohari'],
             (6, 0): ['Dorsa Sadigh'],
             (9, 0): ['Alexandre Alahi'],
-            (9, 30): ['Ehsan Kazemi']
+            (9, 30): ['Shayan Oveis Gharan']
         }
     }
 

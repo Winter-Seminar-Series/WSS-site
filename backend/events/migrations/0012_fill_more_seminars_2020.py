@@ -29,6 +29,29 @@ def forwards(apps, schema_editor):
         abstract='In this talk, I will present an overview of our most recent advancements in Robotic Imaging, Machine Leaning and Medical Augmented Reality. I will first discuss the particular requirements for intra-operative imaging and visualization. I will then present some of our latest results in intra-operative multimodal robotic imaging and its translation to clinical applications. I will then discuss the impact of research advancement in machine learning on medical imaging and computer assisted intervention. I will finally present some applications of virtual and augmented reality in the medical domain. Starting by the current deployment of AR and VR technology within medical education, I discuss its current and future impact on surgery, surgical education and training. I will then review the first deployment of augmented reality into operating rooms in the last two decades and present some of our latest achievements in this field.',
         speaker=Speaker.objects.filter(name='Nassir Navab').last()
     )
+    Seminar.objects.create(
+        wss=wss,
+        polymorphic_ctype=ctype,
+        title='Algorithmic Opportunities in Matching Markets',
+        audience='Undergraduate students',
+        abstract='The seminal, and Nobel-Prize-winning, work of Gale & Shapley (1962) started the field of matching markets. Bolstered by the Internet and mobile computing revolutions, today these markets occupy a sizable fraction of our economy (e.g., the Adwords market, Uber, Airbnb, Up-work) and have yielded effective solutions to important sociological challenges (e.g., markets for assigning students to schools, kidney exchange, and medical residents). \nThe recent surge of interest in matching markets and its exploration have made it clear that this area offers new opportunities for discovering fundamental algorithmic ideas. After a broad overview of this area, I will describe some of the recent work I and my group at the University of California, Irvine have been involved in.',
+        speaker=Speaker.objects.filter(name='Vijay Vazirani').last()
+    )
+    Seminar.objects.create(
+        wss=wss,
+        polymorphic_ctype=ctype,
+        title='Big Data Algorithms for Fundamental Graph Problems',
+        abstract='Although computing power has advanced at an astonishing rate, it has been far outpaced by the growing scale of data. Inherent assumptions of traditional algorithms—such as the possibility of storing the whole input into a single machine’s random access memory—do not hold for large-scale problems. Indeed even linear-time algorithms which have long been the gold standard of efficiency are not applicable to big data settings. For this reason, “sublinear algorithms” have attracted increasing attention over the past two decades. In this talk, we will survey some of the recent progress made on this emerging area with a focus on fundamental graph problems such (approximate) maximum matching, (maximal) independent set, connectivity, etc.',
+        speaker=Speaker.objects.filter(name='Soheil Behnezhad').last()
+    )
+    Seminar.objects.create(
+        wss=wss,
+        polymorphic_ctype=ctype,
+        title='A (slightly) Improved Approximation algorithm for Metric TSP',
+        audience='undergraduate computer science and engineering students',
+        abstract='Abstract: In an instance of the (metric) traveling salesperson problem (TSP), we are given a list of n cities and their pairwise symmetric distances satisfying the triangle inequality, and we want to find the shortest tour that visits all cities exactly once and returns back to the starting point. I will talk about an algorithm that provably returns a tour whose cost is at most 50-eps percent more than the optimum where eps>0 is a small constant independent of n. This slightly improves classical algorithms of Christofides and Serdyukov from the 1970s. \n\nBased on a joint work with Anna Karlin and Nathan Klein.',
+        speaker=Speaker.objects.filter(name='Shayan Oveis Gharan').last()
+    )
 
 
 def rollback(apps, schema_editor):
