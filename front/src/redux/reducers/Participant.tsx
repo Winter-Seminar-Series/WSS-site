@@ -93,23 +93,9 @@ function Participant(state = initState, action) {
         registeredWorkshops: action.response,
       }
 
-
     case actionTypes.REGISTER_WORKSHOP_SUCCESS:
-      return {
-        ...state,
-        registeredWorkshops: [...state.registeredWorkshops, action.payload.id],
-        isFetching: false,
-      };
-
-
-    case actionTypes.CANCEL_WORKSHOP_REGISTRATION_SUCCESS:
-      return {
-        ...state,
-        registeredWorkshops: [...state.registeredWorkshops.filter(id => id != action.payload.id)],
-        isFetching: false,
-      };
-
     case actionTypes.REGISTER_WORKSHOP_FAILURE:
+    case actionTypes.CANCEL_WORKSHOP_REGISTRATION_SUCCESS:
     case actionTypes.CANCEL_WORKSHOP_REGISTRATION_FAILURE:
     case actionTypes.GET_PROFILE_FAILURE:
     case actionTypes.UPDATE_PROFILE_FAILURE:

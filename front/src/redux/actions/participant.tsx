@@ -73,16 +73,13 @@ export const getRegisteredWorkshops = (year) => ({
   },
 });
 
-export const registerWorkshop = (year, id) => ({
+const _registerWorkshop = (year, id) => ({
   [CALL_API]: {
     types: [
       actionTypes.REGISTER_WORKSHOP_REQUEST,
       actionTypes.REGISTER_WORKSHOP_SUCCESS,
       actionTypes.REGISTER_WORKSHOP_FAILURE,
     ],
-    payload: {
-      id,
-    },
     url: `${URLs.ROOT}${year}/workshops/${id}/register/`,
     fetchOptions: {
       method: 'GET',
@@ -90,21 +87,28 @@ export const registerWorkshop = (year, id) => ({
   },
 });
 
+export const registerWorkshop = (year, id) => async (dispatch, getState) => {
+  await dispatch(_registerWorkshop(year, id));
+  dispatch(getRegisteredWorkshops(year))
+}
 
-export const cancelWorkshopRegistration = (year, id) => ({
+
+const _cancelWorkshopRegistration = (year, id) => ({
   [CALL_API]: {
     types: [
       actionTypes.CANCEL_WORKSHOP_REGISTRATION_REQUEST,
       actionTypes.CANCEL_WORKSHOP_REGISTRATION_SUCCESS,
       actionTypes.CANCEL_WORKSHOP_REGISTRATION_FAILURE,
     ],
-    payload: {
-      id,
-    },
     url: `${URLs.ROOT}${year}/workshops/${id}/cancel/`,
     fetchOptions: {
       method: 'GET',
     },
   },
 });
+
+export const cancelWorkshopRegistration = (year, id) => async (dispatch, getState) => {
+  await dispatch(_cancelWorkshopRegistration(year, id));
+  dispatch(getRegisteredWorkshops(year))
+}
 
