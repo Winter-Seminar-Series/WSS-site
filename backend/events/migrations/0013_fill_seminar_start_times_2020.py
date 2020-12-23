@@ -50,7 +50,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('events', '0012_update_some_events_2020'),
-        ('people', '0029_update_speaker_name')
+        ('people', '0028_update_speaker_name')
     ]
 
     operations = [
