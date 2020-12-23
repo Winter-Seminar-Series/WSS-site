@@ -44,8 +44,10 @@ function WorkshopDetail({
   }, [workshops])
 
   useEffect(() => {
-    if (!!registerWorkshop && !!registeredWorkshops.find(w => w.id == id)) {
+    if (registeredWorkshops && registeredWorkshops.find(w => w.id == id)) {
       setRegistrationStatus(true);
+    } else {
+      setRegistrationStatus(false);
     }
   }, [registeredWorkshops])
 

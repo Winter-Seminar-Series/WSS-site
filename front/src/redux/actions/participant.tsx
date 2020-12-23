@@ -80,6 +80,9 @@ export const registerWorkshop = (year, id) => ({
       actionTypes.REGISTER_WORKSHOP_SUCCESS,
       actionTypes.REGISTER_WORKSHOP_FAILURE,
     ],
+    payload: {
+      id,
+    },
     url: `${URLs.ROOT}${year}/workshops/${id}/register/`,
     fetchOptions: {
       method: 'GET',
@@ -95,6 +98,9 @@ export const cancelWorkshopRegistration = (year, id) => ({
       actionTypes.CANCEL_WORKSHOP_REGISTRATION_SUCCESS,
       actionTypes.CANCEL_WORKSHOP_REGISTRATION_FAILURE,
     ],
+    payload: {
+      id,
+    },
     url: `${URLs.ROOT}${year}/workshops/${id}/cancel/`,
     fetchOptions: {
       method: 'GET',
