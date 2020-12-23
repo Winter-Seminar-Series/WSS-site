@@ -66,7 +66,7 @@ export const getRegisteredWorkshops = (year) => ({
       actionTypes.GET_REGISTERED_WORKSHOPS_SUCCESS,
       actionTypes.GET_REGISTERED_WORKSHOPS_FAILURE,
     ],
-    url: `${URLs.ROOT}${year}/workshops/registered/`,
+    url: `${URLs.ROOT}${year}/registered-workshops`,
     fetchOptions: {
       method: 'GET',
     },

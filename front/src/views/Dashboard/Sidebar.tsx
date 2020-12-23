@@ -24,6 +24,12 @@ function Sidebar({ logout, isRegistered }) {
       persianTitle: 'پروفایل',
       link: '/dashboard/profile',
       icon: 'user-circle-o',
+    },
+    {
+      title: 'Your Workshops',
+      persianTitle: 'ورکشاپ‌های شما',
+      link: '/dashboard/workshop-list',
+      icon: 'suitcase',
     }
   ]
 
