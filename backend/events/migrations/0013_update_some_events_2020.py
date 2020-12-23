@@ -23,7 +23,7 @@ def forwards(apps, schema_editor):
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('events', '0011_fill_more_seminars_2020'),
+        ('events', '0012_fill_more_seminars_2020'),
     ]
 
     operations = [

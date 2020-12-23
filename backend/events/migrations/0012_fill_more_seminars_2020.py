@@ -48,7 +48,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('people', '0027_add_new_speakers_2020'),
-        ('events', '0010_baseevent__url_allow_blank'),
+        ('events', '0011_fill_workshops_2020_capacities'),
     ]
 
     operations = [
