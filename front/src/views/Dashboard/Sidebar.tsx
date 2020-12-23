@@ -24,6 +24,12 @@ function Sidebar({ logout, isRegistered }) {
       persianTitle: 'پروفایل',
       link: '/dashboard/profile',
       icon: 'user-circle-o',
+    },
+    {
+      title: 'Your Workshops',
+      persianTitle: 'کارگاه‌های شما',
+      link: '/dashboard/workshop-list',
+      icon: 'suitcase',
     }
   ]
 
@@ -36,7 +42,7 @@ function Sidebar({ logout, isRegistered }) {
               <a href={s.link} key={s.title} className="sidebar-item">
                 <span className={`icon mr-2 fa fa-${s.icon}`}></span>
                 <span className="d-none d-md-block">{s.title}</span>
-                {s.checked && <span className="icon text-success ml-2 fa fa-check-circle"></span>}
+                {/* {s.checked && <span className="icon text-success ml-2 fa fa-check-circle"></span>} */}
               </a>
             )
         )}

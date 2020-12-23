@@ -11,10 +11,11 @@ const checkErrorsStatusCode = (response, json_response) => {
     // throw new Error('توکن شما منقضی شده است!');
     throw new Error('TOKEN EXPIRED');
   }
-  if (response.status === 403) {
-    // throw new Error('شما دسترسی ندارید!');
-    throw new Error('You don\'t have access!');
-  }
+
+  // if (response.status === 403) {
+  //   // throw new Error('شما دسترسی ندارید!');
+  //   throw new Error('You don\'t have access!');
+  // }
 
   // creating account:
   if (response.status === 400 && json_response.username) {

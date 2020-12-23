@@ -59,9 +59,14 @@ class EventSerializer(ModelSerializer):
 
 
 class WorkshopSerializer(EventSerializer):
+    remaining_capacity = SerializerMethodField()
+
     class Meta:
         model = Workshop
         fields = '__all__'
+
+    def get_remaining_capacity(self, workshop: Workshop):
+        return workshop.remaining_capacity
 
 
 class SeminarSerializer(EventSerializer):
@@ -180,3 +185,52 @@ class StaffSerializer(ModelSerializer):
     class Meta:
         model = Staff
         fields = '__all__'
+
+
+class ParticipantDeepSerializer(ModelSerializer):
+    SELECTORS_BY_MODEL = {
+        "User": lambda p: p.user_profile.user,
+        "UserProfile": lambda p: p.user_profile,
+        "WSS": lambda p: p.current_wss,
+    }
+    FIELDS_BY_MODEL = {
+        "User": ['username', 'email', 'first_name', 'last_name', 'date_joined'],
+        "UserProfile": ['phone_number', 'age', 'job', 'university', 'introduction_method',
+                           'gender', 'city', 'country', 'field_of_interest', 'grade'],
+        "WSS": ['year'],
+    }
+
+    class Meta:
+       model = Participant
+       fields = '__all__'
+
+    username = SerializerMethodField()
+    email = SerializerMethodField()
+    first_name = SerializerMethodField()
+    last_name = SerializerMethodField()
+    date_joined = SerializerMethodField()
+    phone_number = SerializerMethodField()
+    age = SerializerMethodField()
+    job = SerializerMethodField()
+    university = SerializerMethodField()
+    introduction_method = SerializerMethodField()
+    gender = SerializerMethodField()
+    city = SerializerMethodField()
+    country = SerializerMethodField()
+    field_of_interest = SerializerMethodField()
+    grade = SerializerMethodField()
+    year = SerializerMethodField()
+
+    @classmethod
+    def get_getter(cls, selector, field):
+        def getter(participant: Participant):
+            return getattr(selector(participant), field)
+        return getter
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        for model in self.FIELDS_BY_MODEL:
+            selector = self.SELECTORS_BY_MODEL[model]
+            for field in self.FIELDS_BY_MODEL[model]:
+                setattr(self, f"get_{field}", self.get_getter(selector, field))

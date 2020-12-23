@@ -6,6 +6,7 @@ django-simple-history==2.12.0
 djangorestframework==3.12.2
 django-rest-passwordreset==1.1.0
 django-rest-knox==4.1.0
+djangorestframework-csv==2.1.0
 olefile==0.46
 Pillow==8.0.1
 pytz==2020.4

@@ -4,6 +4,7 @@ const initState = {
   isFetching: false,
   isLoggedIn: false,
   isRegistered: false,
+  registeredWorkshops: [],
   username: '',
   email: '',
   first_name: '',
@@ -24,11 +25,7 @@ const initState = {
 
 function Participant(state = initState, action) {
   switch (action.type) {
-    case actionTypes.GET_PROFILE_REQUEST:
-      return {
-        ...state,
-        isFetching: true,
-      };
+
     case actionTypes.GET_PROFILE_SUCCESS:
       return {
         ...state,
@@ -51,14 +48,11 @@ function Participant(state = initState, action) {
         favorite_tags: action.response.favorite_tags,
       };
 
-    case actionTypes.GET_PROFILE_FAILURE:
-      return {
-        ...state,
-        isFetching: false,
-      };
-
     /////////////////////////
 
+    case actionTypes.REGISTER_WORKSHOP_REQUEST:
+    case actionTypes.CANCEL_WORKSHOP_REGISTRATION_REQUEST:
+    case actionTypes.GET_PROFILE_REQUEST:
     case actionTypes.UPDATE_PROFILE_REQUEST:
       return {
         ...state,
@@ -87,17 +81,28 @@ function Participant(state = initState, action) {
         favorite_tags: action.response.favorite_tags,
       };
 
-    case actionTypes.UPDATE_PROFILE_FAILURE:
-      return {
-        ...state,
-        isFetching: false,
-      };
-
     case actionTypes.CHECK_USER_REGISTRATION_STATUS_SUCCESS:
       return {
         ...state,
         isRegistered: action.response.is_registered,
       }
+
+    case actionTypes.GET_REGISTERED_WORKSHOPS_SUCCESS:
+      return {
+        ...state,
+        registeredWorkshops: action.response,
+      }
+
+    case actionTypes.REGISTER_WORKSHOP_SUCCESS:
+    case actionTypes.REGISTER_WORKSHOP_FAILURE:
+    case actionTypes.CANCEL_WORKSHOP_REGISTRATION_SUCCESS:
+    case actionTypes.CANCEL_WORKSHOP_REGISTRATION_FAILURE:
+    case actionTypes.GET_PROFILE_FAILURE:
+    case actionTypes.UPDATE_PROFILE_FAILURE:
+      return {
+        ...state,
+        isFetching: false,
+      };
 
     default:
       return state;
