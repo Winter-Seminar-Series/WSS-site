@@ -10,6 +10,7 @@ from knox import views as knox_views
 year_router = DefaultRouter()
 year_router.register(r'wss', views.WSSViewSet, basename='wss')
 year_router.register(r'workshops', views.WorkshopViewSet, basename='workshop')
+year_router.register(r'workshops', views.WorkshopRegistrationViewSet, basename='workshop')
 year_router.register(r'seminars', views.SeminarViewSet, basename='seminar')
 year_router.register(r'postersessions', views.PosterSessionViewSet, basename='postersession')
 year_router.register(r'sponsorships', views.SponsorshipViewSet, basename='sponsorship')
@@ -18,6 +19,7 @@ year_router.register(r'holding_teams', views.HoldingTeamViewSet, basename='holdi
 year_router.register(r'images', views.ImageViewSet, basename='image')
 year_router.register(r'payment', views.PaymentViewSet, basename='payment')
 year_router.register(r'announcements', views.AnnouncementViewSet, basename='announcement')
+year_router.register(r'participants', views.ParticipantViewSet, basename='participant')
 year_router.register(r'tags', views.TagsViewSet, basename='tag')
 year_router.register(r'venus', views.VenueViewSet, basename='venue')
 year_router.register(r'sponsors', views.SponsorViewSet, basename='sponsor')
@@ -26,7 +28,9 @@ year_router.register(r'seminar_materials', views.SeminarMaterialViewSet, basenam
 year_router.register(r'workshop_materials', views.WorkshopMaterialViewSet, basename='workshop_material')
 year_router.register(r'poster_materials', views.PosterMaterialViewSet, basename='poster_material')
 year_router.register(r'staff', views.StaffViewSet, basename='staff')
-year_urlpatterns = year_router.urls
+year_urlpatterns = year_router.urls + [
+    path('workshops/registered', views.RegisteredWorkshopsAPI.as_view(), name='workshops')
+]
 
 base_router = DefaultRouter()
 base_router.register(f'profile', views.UserProfileViewSet, basename='profile')

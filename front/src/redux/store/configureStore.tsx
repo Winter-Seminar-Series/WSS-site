@@ -1,7 +1,13 @@
-if (process.env.NODE_ENV === 'production') {
-  module.exports = require('./configureStore.prod');
-} else {
-  module.exports = require('./configureStore.dev');
+import React from 'react'
+import configureStoreDev from './configureStore.dev';
+import configureStoreProd from './configureStore.prod';
+
+const configureStore = (preloadedState) => {
+  if (process.env.NODE_ENV === 'production') {
+    return configureStoreProd(preloadedState);
+  } else {
+    return configureStoreDev(preloadedState);
+  }
 }
 
-export {}
+export default configureStore;

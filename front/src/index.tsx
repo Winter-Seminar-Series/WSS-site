@@ -6,7 +6,7 @@ import { Slide, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import App from './App';
 import './i18n';
-import configureStore from './redux/store/configureStore.dev'; //todo: fix for production mode
+import configureStore from './redux/store/configureStore'; //todo: fix for production mode
 
 const persistedState = localStorage.getItem('WSS11') //use local storage just to save token
   ? JSON.parse(localStorage.getItem('WSS11'))

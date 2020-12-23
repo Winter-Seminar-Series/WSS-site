@@ -11,52 +11,32 @@ function Sidebar({ logout, isRegistered }) {
     history.push('/');
   };
 
-
-  isRegistered = true;
-
-  var sidebarItems = [];
-
-  if (!isRegistered) {
-    sidebarItems.push(
-      {
-        title: 'Registration',
-        persianTitle: 'ثبت‌نام رویداد',
-        link: '/dashboard/seminar-registration',
-        icon: 'calendar-o',
-      },
-    )
-  }
-
-  sidebarItems.push(
+  const sidebarItems = [
+    {
+      title: 'Registration',
+      persianTitle: 'ثبت‌نام رویداد',
+      link: '/dashboard/seminar-registration',
+      icon: 'user-plus',
+      checked: isRegistered
+    },
     {
       title: 'Profile',
       persianTitle: 'پروفایل',
       link: '/dashboard/profile',
       icon: 'user-circle-o',
     }
-  )
+  ]
 
 
   return (
     <>
       <div className="sidebar">
-        {isRegistered &&
-          <span className="sidebar-announcement">
-            <h5 style={{ color: '#397a00' }}>
-              Your registration has been approved successfully. The event will start at 31 Dec.
-            </h5>
-          </span>
-        }
         {sidebarItems.map((s) =>
-          s.deactive ? (
-            <span key={s.title} className="sidebar-item deactive">
-              <span className={`icon mr-2 fa fa-${s.icon}`} ></span>
-              <span className="d-none d-md-block">{s.title}</span>
-            </span>
-          ) : (
+            (
               <a href={s.link} key={s.title} className="sidebar-item">
                 <span className={`icon mr-2 fa fa-${s.icon}`}></span>
                 <span className="d-none d-md-block">{s.title}</span>
+                {s.checked && <span className="icon text-success ml-2 fa fa-check-circle"></span>}
               </a>
             )
         )}
@@ -84,5 +64,4 @@ interface SidebarItem {
   persianTitle: string;
   link: string;
   icon?: string;
-  deactive?: boolean;
 }

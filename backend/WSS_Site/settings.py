@@ -82,10 +82,6 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
-            'libraries': {
-                'date_tags': 'WSS.templatetags.date_tags',
-                'human_tags': 'people.templatetags.human_tags',
-            },
         },
     },
 ]
@@ -141,9 +137,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/backend-statics/'
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "static"),
-]
 STATIC_ROOT = os.path.join(BASE_DIR, 'collected_static')
 
 MEDIA_URL = '/media/'
@@ -216,7 +209,7 @@ LOGGING = {
 PAYMENT_SETTING = {
     "MERCHANT": os.environ.get('PAYMENT_MERCHANT'),
     "wsdl": os.environ.get('PAYMENT_WSDL'),
-    "description": "WSS registration fee",
+    "description": "WSS {} registration fee for user {}",
     "payment_url": os.environ.get('PAYMENT_URL')
 }
 
@@ -236,7 +229,12 @@ REST_FRAMEWORK = {
         # 'rest_framework.authentication.BasicAuthentication',
         # 'rest_framework.authentication.SessionAuthentication',
         'knox.auth.TokenAuthentication',
-    ]
+    ],
+    'DEFAULT_RENDERER_CLASSES': (
+        'rest_framework.renderers.JSONRenderer',
+        'rest_framework.renderers.BrowsableAPIRenderer',
+        'rest_framework_csv.renderers.CSVRenderer',
+    ),
 }
 
 DBBACKUP_STORAGE = 'storages.backends.dropbox.DropBoxStorage'

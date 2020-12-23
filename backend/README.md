@@ -32,7 +32,8 @@
     - `holding_teams`
     - `images`
     - `tags`
-    - `announcements`
+    - `announcements` (just for authenticated users)
+    - `participants` (just for admin users)
     - `venues`
     - `speakers`
     - `seminar_materials`
@@ -677,3 +678,32 @@ HTTP 200 OK
     'is_registered': true
 }
 ```
+
+## Workshop Registration (All APIs are authorized)
+
+### Get registered workshops
+
+```HTTP
+GET /api/<year>/workshops/registered/
+```
+
+### Register in a workshop
+
+```HTTP
+GET /api/<year>/workshops/<id>/register/
+```
+
+**Errors: 403 or 400 (all contains message):**
+```JSON
+{
+    "message": "..."
+}
+```
+
+### Cancel a workshop registration
+
+```HTTP
+GET /api/<year>/workshops/<id>/cancel/
+```
+
+**Errors: 400 (with message)**

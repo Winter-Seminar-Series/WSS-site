@@ -9,6 +9,6 @@ COPY requirements-pip.txt /tmp/
 RUN pip install -r /tmp/requirements-pip.txt
 COPY . ./
 RUN WSS_SECRET_KEY=dummy python manage.py collectstatic
-RUN chmod +x ./run.sh
+RUN chmod +x ./run.sh ./wait_for_db_service.sh
 
 CMD ./run.sh

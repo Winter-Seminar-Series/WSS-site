@@ -6,6 +6,7 @@ from WSS.models import Clip, Booklet, WSS, Image, Sponsor, ExternalLink, Sponsor
 from events.models import Seminar, Workshop, PosterSession, Event
 from django.contrib.auth.models import User
 from django.contrib.auth.admin import UserAdmin as AuthUserAdmin
+from events.admin import WorkshopRegistrationInline
 
 
 class SponsorshipInline(CompactInline):
@@ -39,6 +40,7 @@ class PosterSessionInline(CompactInline):
 
 
 class WorkshopInline(CompactInline):
+    readonly_fields = ('remaining_capacity',)
     model = Workshop
     extra = 0
 
@@ -54,6 +56,7 @@ class GradeInline(CompactInline):
 
 class ParticipantAdmin(admin.ModelAdmin):
     readonly_fields = ('payment_timestamp',)
+    inlines = (WorkshopRegistrationInline, )
 
 
 class AnnouncementAdmin(admin.ModelAdmin):
@@ -73,6 +76,7 @@ class TagInline(CompactInline):
 class WSSAdmin(admin.ModelAdmin):
     inlines = (SeminarInline, PosterSessionInline, WorkshopInline, EventInline, SponsorshipInline, ImageInline,
                ClipInline, BookletInline, TagInline)
+    readonly_fields = ('bs_participant_count', 'ms_participant_count', 'phd_participant_count')
     list_display = ('__str__', 'start_date', 'end_date')
 
 

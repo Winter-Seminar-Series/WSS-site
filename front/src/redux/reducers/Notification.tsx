@@ -1,11 +1,13 @@
 import * as actionTypes from '../actionTypes';
 import { toast } from 'react-toastify';
+import { Link, useHistory } from 'react-router-dom';
 
 const initState = {
   isFetching: false,
 };
 
 function Notification(state = {}, action) {
+
   switch (action.type) {
     case actionTypes.LOGIN_SUCCESS:
       toast.success('Welcome back!');
@@ -24,7 +26,7 @@ function Notification(state = {}, action) {
       return { ...state };
 
     case actionTypes.VERIFY_PAYMENT_REQUEST:
-      toast.warning('Your payment is in process',
+      toast.warning('Your payment is in process...',
         {
           autoClose: false,
           closeOnClick: false,
@@ -34,7 +36,7 @@ function Notification(state = {}, action) {
       return { ...state };
 
     case actionTypes.VERIFY_PAYMENT_SUCCESS:
-      toast.success('Your payment has been successfully done!',
+      toast.success('Your payment has been successfully done.',
         {
           autoClose: false,
           closeOnClick: false,
@@ -55,11 +57,35 @@ function Notification(state = {}, action) {
       return { ...state };
 
     case actionTypes.UPDATE_PROFILE_SUCCESS:
-      toast.success('Your information updated successfully');
+      toast.success('Information updated successfully.');
       return { ...state };
 
     case actionTypes.UPDATE_PROFILE_FAILURE:
-      toast.error('Something went wrong, your information didn\'t update');
+      toast.error('Something went wrong, your information didn\'t update.');
+      return { ...state };
+
+    case actionTypes.CHANGE_PASSWORD_SUCCESS:
+      toast.success('Password updated successfully.');
+      return { ...state };
+
+    case actionTypes.CHANGE_PASSWORD_FAILURE:
+      toast.error('Wrong old password');
+      return { ...state };
+
+    case actionTypes.REQUEST_PASSWORD_RESET_SUCCESS:
+      toast.success('Instructions to reset password have been sent to you. Please check your email.');
+      return { ...state };
+
+    case actionTypes.REQUEST_PASSWORD_RESET_FAILURE:
+      toast.error(action.error);
+      return { ...state };
+
+    case actionTypes.RESET_PASSWORD_SUCCESS:
+      toast.success('Password changed successfully.')
+      return { ...state };
+
+    case actionTypes.RESET_PASSWORD_FAILURE:
+      toast.error(action.error);
       return { ...state };
 
     default:

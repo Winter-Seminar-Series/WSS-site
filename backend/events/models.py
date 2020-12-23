@@ -19,7 +19,7 @@ class BaseEvent(PolymorphicModel):  # Is implicitly Abstract
     venue = models.ForeignKey(to='Venue', related_name='events', null=True, blank=True, on_delete=models.SET_NULL)
     key_words = TaggableManager(blank=True)
     audience = models.CharField(blank=True, max_length=200)
-    link = models.URLField(null=True, max_length=256)
+    link = models.URLField(blank=True, null=True, max_length=256)
     tags = models.ManyToManyField(WssTag, null=True, blank=True)
 
     class Meta:
@@ -56,20 +56,12 @@ class Seminar(BaseEvent):
     speaker = models.ForeignKey(to='people.Speaker', related_name='seminars', on_delete=models.RESTRICT)
     material = models.OneToOneField(to='SeminarMaterial', null=True, blank=True, on_delete=models.SET_NULL)
 
-    @property
-    def get_absolute_url(self):
-        return reverse('events:seminar', args=[self.pk])
-
 
 class PosterSession(BaseEvent):
     abstract = models.TextField()
     speaker = models.ForeignKey(to='people.Speaker', related_name='postersessions', on_delete=models.RESTRICT)
     material = models.OneToOneField(to='PosterMaterial', null=True, blank=True, on_delete=models.SET_NULL)
     is_persian = models.BooleanField(null=False, default=False)
-
-    @property
-    def get_absolute_url(self):
-        return reverse('events:postersession', args=[self.pk])
 
 
 class Workshop(BaseEvent):
@@ -82,8 +74,8 @@ class Workshop(BaseEvent):
     capacity = models.IntegerField(default=0)
 
     @property
-    def get_absolute_url(self):
-        return reverse('events:workshop', args=[self.pk])
+    def remaining_capacity(self):
+        return self.capacity - self.participants.all().count()
 
     def __str__(self):
         return self.title + ", " + "Speaker: " + self.speaker.name + ", " + (self.start_time.strftime("%A %d %B %Y, %H:%M, ") if self.start_time != None else "") + "Price: " + str(self.price) + " Tomans"

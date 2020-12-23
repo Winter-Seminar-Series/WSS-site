@@ -52,4 +52,4 @@ jobs:
       - run: echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u $DOCKER_USERNAME --password-stdin
       - run: docker-compose pull
       - name: 'Check Migrations'
-        run: docker-compose run web ./manage.py makemigrations --dry-run --check
+        run: docker-compose run web bash -c "./wait_for_db_service.sh && ./manage.py makemigrations --dry-run --check"
