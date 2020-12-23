@@ -6,6 +6,11 @@ import {
   getAnEntityOfModelList,
   MODEL_LISTS_NAMES,
 } from '../../redux/actions/WSS';
+import {
+  registerWorkshop,
+  cancelWorkshopRegistration,
+  getRegisteredWorkshops,
+} from '../../redux/actions/participant';
 import moment from 'moment'
 import { THIS_YEAR } from '../../constants/info'
 
@@ -13,22 +18,36 @@ function WorkshopDetail({
   getAnEntityOfModelList,
   workshops,
   speakers,
+  registerWorkshop,
+  cancelWorkshopRegistration,
+  getRegisteredWorkshops,
+  registeredWorkshops,
+  isLoggedIn,
+  isFetchingForRegistration,
 }) {
   const [workshop, setWorkshop] = useState({ title: '', duration: '', start_time: '', syllabus: '', price: '', speaker: '', tags: [] });
   const [speaker, setSpeaker] = useState({ picture: '', degree: '', place: '', bio: '', name: '' });
+  const [isRegistered, setRegistrationStatus] = useState(false);
   const id = useParams()['id'];
 
   useEffect(() => {
     getAnEntityOfModelList(MODEL_LISTS_NAMES.WORKSHOPS, THIS_YEAR, id);
+    getRegisteredWorkshops(THIS_YEAR);
   }, [getAnEntityOfModelList])
 
   useEffect(() => {
     if (!!workshops.find(s => s.id == id)) {
-      const workshop = workshops.find(s => s.id == id);
+      const workshop = workshops.find(w => w.id == id);
       setWorkshop(workshop);
       getAnEntityOfModelList(MODEL_LISTS_NAMES.SPEAKERS, THIS_YEAR, workshop.speaker);
     }
   }, [workshops])
+
+  useEffect(() => {
+    if (!!registerWorkshop && !!registeredWorkshops.find(w => w.id == id)) {
+      setRegistrationStatus(true);
+    }
+  }, [registeredWorkshops])
 
   useEffect(() => {
     if (!!speakers.find(s => s.id == workshop.speaker)) {
@@ -69,14 +88,34 @@ function WorkshopDetail({
                     {workshop.start_time &&
                       moment(workshop.start_time, "YYYY-MM-DD hh:mm:ss").format("dddd, MMMM Do, hh:mm a")
                     }
-                    {!workshop.duration && (
+                    {!workshop.start_time && (
                       'To be announced ...'
                     )}
                   </div>
-                  {/* <div className="seminar-details">
-                    <i className="fa fa-credit-card">&nbsp;</i>
-                    {`${workshop.price ? workshop.price : '?'} Tomans`}
-                  </div> */}
+                  <div className="seminar-details">
+                    {isLoggedIn && !isRegistered && (
+                      <button
+                        disabled={isFetchingForRegistration}
+                        style={{ marginTop: '30px' }}
+                        onClick={() => registerWorkshop(THIS_YEAR, id)}
+                        className="btn btn-primary btn-blue">
+                        Register Now For Free
+                        <br />
+                        <span style={{ fontSize: '10px' }}>
+                          (Limited capacity)
+                        </span>
+                      </button>
+                    )}
+                    {isLoggedIn && isRegistered && (
+                      <button
+                        disabled={isFetchingForRegistration}
+                        style={{ marginTop: '30px' }}
+                        onClick={() => cancelWorkshopRegistration(THIS_YEAR, id)}
+                        className="btn btn-primary btn-blue">
+                        Cancel Registration
+                      </button>
+                    )}
+                  </div>
                 </div>
               </div>
             </div>
@@ -112,9 +151,11 @@ function WorkshopDetail({
 const mapStateToProps = (state, ownProps) => {
   return ({
     isFetching: state.WSS.isFetching,
-    isLoggedIn: state.WSS.isLoggedIn,
+    isLoggedIn: state.account.isLoggedIn,
     speakers: state.WSS.speakers,
     workshops: state.WSS.workshops,
+    registeredWorkshops: state.Participant.registeredWorkshops,
+    isFetchingForRegistration: state.Participant.isFetching,
   })
 }
 
@@ -122,5 +163,8 @@ export default connect(
   mapStateToProps,
   {
     getAnEntityOfModelList,
+    registerWorkshop,
+    cancelWorkshopRegistration,
+    getRegisteredWorkshops,
   }
 )(WorkshopDetail);
