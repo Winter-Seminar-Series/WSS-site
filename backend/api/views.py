@@ -169,6 +169,17 @@ class WorkshopRegistrationViewSet(viewsets.ViewSet):
             })
         
         participant: Participant = request.user.profile.participants.get(current_wss=wss)
+        
+        if participant.registered_workshops.count() >= wss.participant_workshop_limit:
+            return ErrorResponse({
+                "message": f"You cannot register in more than {wss.participant_workshop_limit} workshops"
+            })
+        
+        if participant.registered_workshops.filter(start_time=workshop.start_time).count() > 0:
+            return ErrorResponse({
+                "message": f"You have already registered in a workshop at this time"
+            })
+        
         participant.registered_workshops.add(workshop)
 
         return Response({
