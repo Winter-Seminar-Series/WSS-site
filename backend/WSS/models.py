@@ -41,6 +41,7 @@ class WSS(models.Model):
     registration_fee = models.PositiveIntegerField(default=10000, validators=[MinValueValidator(1000)])
     bs_participant_limit = models.PositiveIntegerField(default=100)
     msOrPhd_participant_limit = models.PositiveIntegerField(default=100)
+    participant_workshop_limit = models.PositiveIntegerField(default=3)
 
     class Meta:
         ordering = ('-year',)
