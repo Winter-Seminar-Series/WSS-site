@@ -6,9 +6,23 @@ function Schedule() {
     padding: "40px 0 0 0"
   }
 
+  const diagonalStyle = {
+    marginTop: '-18rem',
+    height: '18rem',
+  };
+
+  const containerStyle = {
+    paddingTop: '10.5rem',
+  };
+
   return (
     <>
-      <section id="main-container" className="main-container" style={padding40}>
+      <section id="main-container" className="main-container pb-5">
+        <div style={diagonalStyle} className="px-2 pt-4 diagonal background-theme">
+          <h2 className="container section-sub-title title-white" style={containerStyle}>
+            Schedule
+          </h2>
+        </div>
         {/* {% if wss.calendar_link %} */}
         <div className="schedule-content">
           <div className="container mt-0">
@@ -119,12 +133,6 @@ function Schedule() {
             </div>
           </div>
           <div className="gap-60" />
-        </div>
-        {/* {% empty %} */}
-        <div className="diagonal schedule-content">
-          <div className="row text-center">
-            <h3 className="schedule-date mx-auto">TBD</h3>
-          </div>
         </div>
       </section>
     </>
