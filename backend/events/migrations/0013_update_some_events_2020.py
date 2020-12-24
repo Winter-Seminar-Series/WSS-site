@@ -6,6 +6,7 @@ from django.db import migrations
 
 def forwards(apps, schema_editor):
     Seminar = apps.get_model('events', 'Seminar')
+    Speaker = apps.get_model('people', 'Speaker')
     Workshop = apps.get_model('events', 'Workshop')
     WSS = apps.get_model('WSS', 'WSS')
 
@@ -13,6 +14,7 @@ def forwards(apps, schema_editor):
 
     Seminar.objects.filter(wss=wss, title='Understanding the role of training regimes continual training of neural networks').update(title='Understanding the role of training regimes in continual training of neural networks')
     Seminar.objects.filter(wss=wss, title='Algorithms vs. Mechanisms: Bayesian Blackbox Reductions in Mechanism Design').delete()
+    Speaker.objects.filter(name='Rad Niazadeh').delete()
 
     Workshop.objects.filter(wss=wss, title='Conceptual Blending in Computational Creativity').update(
         title='A Study of Computational Creativity from the Perspective of Conceptual Blending',

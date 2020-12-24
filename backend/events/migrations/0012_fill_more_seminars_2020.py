@@ -62,6 +62,9 @@ def rollback(apps, schema_editor):
     titles = [
         'Two Facets of Learning Robust Models: Fundamental Limits and Generalization to Natural Out-of-Distribution Inputs',
         'Machine Learning, Robotic Imaging and Augmented Reality for Computer Assisted Interventions',
+        'A (slightly) Improved Approximation algorithm for Metric TSP',
+        'Big Data Algorithms for Fundamental Graph Problems',
+        'Algorithmic Opportunities in Matching Markets',
     ]
 
     Seminar.objects.filter(wss=wss, title__in=titles).delete()

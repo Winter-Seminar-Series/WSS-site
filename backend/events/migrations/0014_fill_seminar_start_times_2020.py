@@ -13,28 +13,28 @@ def forwards(apps, schema_editor):
 
     seminars = {
         1: {
-            (5, 0): ['Mostafa Dehghgani', 'Seyed Mohsen Moosavi Dezfooli'],
-            (6, 0): ['Mohammad Hossein Rohban', 'Mona Azadkia'],
-            (9, 0): ['Mehraveh Salehi', 'Ehsan Kazemi'],
-            (9, 30): ['Gholamali Aminian', 'Mojtaba Tefagh']
+            (17, 0, 50): ['Mostafa Dehghani', 'Seyed-Mohsen Moosavi-Dezfooli'],
+            (18, 0, 50): ['Mohammad Hossein Rohban', 'Mona Azadkia'],
+            (21, 0, 25): ['Mehraveh Salehi', 'Ehsan Kazemi'],
+            (21, 30, 25): ['Gholamali Aminian', 'Mojtaba Tefagh']
         },
         2: {
-            (5, 0): ['Nassir Navab'],
-            (6, 0): ['Mahdi Soltanolkotabi', 'Soheil Behnezhad'],
-            (9, 0): ['Sepehr Assadi', 'Mohamad Kazem Shirani Faradonbeh'],
-            (9, 30): ['Mohammad Haft-Javaherian']
+            (17, 0, 50): ['Nassir Navab'],
+            (18, 0, 50): ['Mahdi Soltanolkotabi', 'Soheil Behnezhad'],
+            (21, 0, 25): ['Sepehr Assadi', 'Mohamad Kazem Shirani Faradonbeh'],
+            (21, 30, 25): ['Mohammad Haft-Javaherian']
         },
         3: {
-            (5, 0): ['Amir Shaikhha', 'Shahram Ghandeharizadeh'],
-            (6, 0): ['Mostafa Rezazad', 'Hamed Hassani'],
-            (9, 0): ['Mehrdad Farajtabar', 'Mahmoud Ghandi'],
-            (9, 30): ['Vijay Vazirani']
+            (17, 0, 50): ['Amir Shaikhha', 'Shahram Ghandeharizadeh'],
+            (18, 0, 50): ['Mostafa Rezazad', 'Hamed Hassani'],
+            (21, 0, 25): ['Mehrdad Farajtabar', 'Mahmoud Ghandi'],
+            (21, 30, 25): ['Vijay Vazirani']
         },
         4: {
-            (5, 0): ['Amin Gohari'],
-            (6, 0): ['Dorsa Sadigh'],
-            (9, 0): ['Alexandre Alahi'],
-            (9, 30): ['Shayan Oveis Gharan']
+            (17, 0, 50): ['Amin Gohari'],
+            (18, 0, 50): ['Dorsa Sadigh'],
+            (21, 0, 25): ['Alexandre Alahi'],
+            (21, 30, 25): ['Shayan Oveis Gharan']
         }
     }
 
@@ -42,8 +42,13 @@ def forwards(apps, schema_editor):
     for day in seminars:
         for hour in seminars[day]:
             time = date + timedelta(days=day, hours=hour[0], minutes=hour[1])
-            Seminar.objects.filter(wss=wss, speaker__name__in=seminars[day][hour]).update(start_time=time)
+            duration = timedelta(minutes=hour[2])
+            Seminar.objects.filter(wss=wss, speaker__name__in=seminars[day][hour]).update(start_time=time, duration=duration)
 
+
+def rollback(apps, schema_editor):
+    Seminar = apps.get_model('events', 'Seminar')
+    Seminar.objects.filter(wss__year=2020).update(start_time=None, duration=timedelta())
 
 
 class Migration(migrations.Migration):
@@ -54,5 +59,5 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RunPython(forwards)
+        migrations.RunPython(forwards, rollback)
     ]

@@ -10,6 +10,13 @@ def forwards(apps, schema_editor):
         'Mohammad Haft-Javaheiran',
     ]).update(name='Mohammad Haft-Javaherian')
 
+def rollback(apps, schema_editor):
+    Speakers = apps.get_model('people', 'Speaker')
+    Speakers.objects.filter(name__in=[
+        'Mohammad Haft-Javaherian',
+    ]).update(name='Mohammad Haft-Javaheiran')
+
+
 class Migration(migrations.Migration):
 
     dependencies = [
@@ -18,5 +25,5 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RunPython(forwards)
+        migrations.RunPython(forwards, rollback)
     ]
