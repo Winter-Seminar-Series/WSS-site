@@ -117,7 +117,7 @@ function SeminarDetail({
 const mapStateToProps = (state, ownProps) => {
   return ({
     isFetching: state.WSS.isFetching,
-    isLoggedIn: state.WSS.isLoggedIn,
+    isLoggedIn: state.account.isLoggedIn,
     speakers: state.WSS.speakers,
     seminars: state.WSS.seminars,
   })
