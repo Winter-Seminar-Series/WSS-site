@@ -8,13 +8,16 @@ import {
 } from '../../redux/actions/WSS';
 import moment from 'moment'
 import { THIS_YEAR } from '../../constants/info'
+import GoToButton from "../../components/GoToButton";
 
 function SeminarDetail({
   getAnEntityOfModelList,
   seminars,
   speakers,
+  isLoggedIn,
+  isRegistered,
 }) {
-  const [seminar, setSeminar] = useState({ title: '', duration: '', start_time: '', abstract: '', audience: '', speaker: '', tags: [] });
+  const [seminar, setSeminar] = useState({ id: '', title: '', duration: '', start_time: '', abstract: '', audience: '', speaker: '', tags: [] });
   const [speaker, setSpeaker] = useState({ picture: '', degree: '', place: '', bio: '', name: '' });
   const id = useParams()['id'];
 
@@ -73,6 +76,14 @@ function SeminarDetail({
                       'To be announced ...'
                     )}
                   </div>
+                  <div className="seminar-details mt-3">
+                    { isLoggedIn && isRegistered && (
+                      <GoToButton
+                        type="seminars"
+                        id={seminar.id}
+                      />
+                    )}
+                  </div>
                 </div>
               </div>
             </div>
@@ -120,6 +131,7 @@ const mapStateToProps = (state, ownProps) => {
     isLoggedIn: state.account.isLoggedIn,
     speakers: state.WSS.speakers,
     seminars: state.WSS.seminars,
+    isRegistered: state.Participant,
   })
 }
 

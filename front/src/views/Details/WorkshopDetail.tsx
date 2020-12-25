@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 import { BASE_URL } from '../../constants/info'
 import {
   getAnEntityOfModelList,
+  getWSSPrimitiveFields,
   MODEL_LISTS_NAMES,
 } from '../../redux/actions/WSS';
 import {
@@ -13,8 +14,10 @@ import {
 } from '../../redux/actions/participant';
 import moment from 'moment'
 import { THIS_YEAR } from '../../constants/info'
+import GoToButton from "../../components/GoToButton";
 
 function WorkshopDetail({
+  getWSSPrimitiveFields,
   getAnEntityOfModelList,
   workshops,
   speakers,
@@ -24,11 +27,16 @@ function WorkshopDetail({
   registeredWorkshops,
   isLoggedIn,
   isFetchingForRegistration,
+  isWorkshopRegistrationOpen,
 }) {
-  const [workshop, setWorkshop] = useState({ title: '', duration: '', start_time: '', syllabus: '', price: '', speaker: '', tags: [] });
+  const [workshop, setWorkshop] = useState({ id: '', title: '', duration: '', start_time: '', syllabus: '', price: '', speaker: '', tags: [] });
   const [speaker, setSpeaker] = useState({ picture: '', degree: '', place: '', bio: '', name: '' });
-  const [isRegistered, setRegistrationStatus] = useState(false);
+  const [isRegisteredInWorkshop, setRegistrationStatus] = useState(false);
   const id = useParams()['id'];
+
+  useEffect(() => {
+    getWSSPrimitiveFields(THIS_YEAR);
+  }, [getWSSPrimitiveFields]);
 
   useEffect(() => {
     getAnEntityOfModelList(MODEL_LISTS_NAMES.WORKSHOPS, THIS_YEAR, id);
@@ -94,30 +102,39 @@ function WorkshopDetail({
                       'To be announced ...'
                     )}
                   </div>
-                  <div className="seminar-details">
-                    {isLoggedIn && !isRegistered && (
-                      <button
-                        disabled={isFetchingForRegistration}
-                        style={{ marginTop: '30px' }}
-                        onClick={() => registerWorkshop(THIS_YEAR, id)}
-                        className="btn btn-primary btn-blue">
-                        Register Now For Free
-                        <br />
-                        <span style={{ fontSize: '10px' }}>
+                  {isLoggedIn && (
+                    <div className="seminar-details mt-3">
+                      {isRegisteredInWorkshop && (
+                      <span style={{ marginRight: '20px' }}>
+                        <GoToButton
+                          type="workshops"
+                          id={workshop.id}
+                        />
+                      </span>
+                      )}
+                      {isWorkshopRegistrationOpen && !isRegisteredInWorkshop && (
+                        <button
+                          disabled={isFetchingForRegistration}
+                          onClick={() => registerWorkshop(THIS_YEAR, id)}
+                          className="btn btn-primary btn-blue">
+                          Register Now For Free
+                          <br />
+                          <span style={{ fontSize: '10px' }}>
                           (Limited capacity)
                         </span>
-                      </button>
-                    )}
-                    {isLoggedIn && isRegistered && (
-                      <button
-                        disabled={isFetchingForRegistration}
-                        style={{ marginTop: '30px' }}
-                        onClick={() => cancelWorkshopRegistration(THIS_YEAR, id)}
-                        className="btn btn-primary btn-blue">
-                        Cancel Registration
-                      </button>
-                    )}
-                  </div>
+                        </button>
+                      )}
+                      {isWorkshopRegistrationOpen && isRegisteredInWorkshop && (
+                        <button
+                          disabled={isFetchingForRegistration}
+                          onClick={() => cancelWorkshopRegistration(THIS_YEAR, id)}
+                          className="btn btn-outline-primary btn-lg">
+                          Cancel Registration
+                        </button>
+                      )}
+                    </div>
+                  )}
+
                 </div>
               </div>
             </div>
@@ -158,12 +175,14 @@ const mapStateToProps = (state, ownProps) => {
     workshops: state.WSS.workshops,
     registeredWorkshops: state.Participant.registeredWorkshops,
     isFetchingForRegistration: state.Participant.isFetching,
+    isWorkshopRegistrationOpen: state.WSS.isWorkshopRegistrationOpen,
   })
 }
 
 export default connect(
   mapStateToProps,
   {
+    getWSSPrimitiveFields,
     getAnEntityOfModelList,
     registerWorkshop,
     cancelWorkshopRegistration,
