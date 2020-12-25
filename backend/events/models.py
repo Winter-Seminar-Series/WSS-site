@@ -4,6 +4,7 @@ from django.db import models
 from django.urls import reverse
 from polymorphic.models import PolymorphicModel
 from taggit.managers import TaggableManager
+import datetime
 
 
 class WssTag(models.Model):
@@ -35,6 +36,10 @@ class BaseEvent(PolymorphicModel):  # Is implicitly Abstract
     @property
     def keywords(self):
         return self.key_words.names()
+
+    @property
+    def is_available(self):
+        return self.start_time <= datetime.datetime.now(tz=datetime.timezone.utc) <= self.end_time
 
 
 class Event(BaseEvent):
