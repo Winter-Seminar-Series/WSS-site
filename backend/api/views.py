@@ -109,8 +109,8 @@ class EventViewSet(BaseViewSet, ABC):
     def get_by_pk(self, request, wss, pk):
         queryset = self.queryset_selector(request, wss)
         is_participant = self.user_is_participant(request.user, wss, pk)
-        entity = get_object_or_404(queryset, pk=pk)
-        serializer = self.serializer(entity, serialize_link=is_participant)
+        event: BaseEvent = get_object_or_404(queryset, pk=pk)
+        serializer = self.serializer(event, serialize_link=is_participant and event.is_available)
         return serializer.data
 
 
@@ -140,7 +140,7 @@ class RegisteredWorkshopsAPI(generics.GenericAPIView):
         wss = get_wss_object_or_404(year)
         user_profile = get_user_profile(request.user)
         workshops = wss.workshops.filter(participants__user_profile=user_profile)
-        serializer = serializers.WorkshopSerializer(workshops, many=True, serialize_link=True)
+        serializer = serializers.WorkshopSerializer(workshops, many=True, serialize_link=False)
         return Response(serializer.data)
 
 
