@@ -3,6 +3,7 @@ from events.models import *
 from people.models import HoldingTeam, Speaker, Staff
 from WSS.models import *
 from django.contrib.auth.models import User
+from django.conf import settings
 
 
 class WSSSerializer(ModelSerializer):
@@ -50,12 +51,16 @@ class AnnouncementSerializer(ModelSerializer):
 
 
 class EventSerializer(ModelSerializer):
+    start_time = SerializerMethodField()
 
     def __init__(self, *args, **kwargs):
         serialize_link = kwargs.pop('serialize_link', False)
         super().__init__(*args, **kwargs)
         if not serialize_link:
             self.fields.pop('link')
+
+    def get_start_time(self, event: BaseEvent):
+        return event.start_time + settings.CLIENT_TIME_DELTA
 
 
 class WorkshopSerializer(EventSerializer):
