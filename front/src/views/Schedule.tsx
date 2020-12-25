@@ -1,6 +1,33 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
+import { THIS_YEAR } from '../constants/info';
+import {
+  getWSSPrimitiveFields,
+  getModelList,
+  MODEL_LISTS_NAMES,
+} from '../redux/actions/WSS'
 
-function Schedule() {
+function Schedule({
+  getWSSPrimitiveFields,
+  getModelList,
+  speakers,
+  seminars,
+  mainImageURL,
+  mainClipURL,
+  bookletURL,
+  icalLink,
+  startDate,
+  endDate,
+  proposalLink,
+  calendarLink,
+}) {
+
+  useEffect(() => {
+    getWSSPrimitiveFields(THIS_YEAR);
+    getModelList(MODEL_LISTS_NAMES.SEMINARS, THIS_YEAR);
+    getModelList(MODEL_LISTS_NAMES.SPEAKERS, THIS_YEAR);
+    getModelList(MODEL_LISTS_NAMES.WORKSHOPS, THIS_YEAR);
+  }, [getModelList, getWSSPrimitiveFields])
 
   const padding40 = {
     padding: "40px 0 0 0"
@@ -139,4 +166,30 @@ function Schedule() {
   )
 }
 
-export default Schedule;
+const mapStateToProps = (state, ownProps) => ({
+  speakers: state.WSS.speakers
+    ? state.WSS.speakers
+    : [],
+  seminars: state.WSS.seminars
+    ? state.WSS.seminars
+    : [],
+  workshops: state.WSS.workshops
+    ? state.WSS.workshops
+    : [],
+  mainImageURL: state.WSS.mainImageURL,
+  mainClipURL: state.WSS.mainClipURL,
+  bookletURL: state.WSS.bookletURL,
+  icalLink: state.WSS.icalLink,
+  startDate: state.WSS.startDate,
+  endDate: state.WSS.endDate,
+  proposalLink: state.WSS.proposalLink,
+  calendarLink: state.WSS.calendarLink,
+})
+
+export default connect(
+  mapStateToProps,
+  {
+    getWSSPrimitiveFields,
+    getModelList,
+  }
+)(Schedule);
