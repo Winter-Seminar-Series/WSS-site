@@ -707,3 +707,22 @@ GET /api/<year>/workshops/<id>/cancel/
 ```
 
 **Errors: 400 (with message)**
+
+## Workshop/Seminar enter webinar
+
+```HTTP
+GET /api/<year>/workshops/<id>/open_webinar/
+```
+
+**Errors: 400 or 403 (with message)**
+
+Response:
+
+```HTTP
+HTTP 200 OK
+Content-Type: application/json
+
+{
+    "redirect_url": <redirect_url>
+}
+```

@@ -108,10 +108,30 @@ class EventViewSet(BaseViewSet, ABC):
 
     def get_by_pk(self, request, wss, pk):
         queryset = self.queryset_selector(request, wss)
-        is_participant = self.user_is_participant(request.user, wss, pk)
         event: BaseEvent = get_object_or_404(queryset, pk=pk)
-        serializer = self.serializer(event, serialize_link=is_participant and event.is_available)
+        serializer = self.serializer(event, serialize_link=False)
         return serializer.data
+
+    @action(methods=['GET'], detail=True)
+    def open_webinar(self, request, year, pk):
+        wss = get_wss_object_or_404(year)
+
+        events = self.queryset_selector(request, wss)
+        event: BaseEvent = get_object_or_404(events, pk=pk)
+
+        if not self.user_is_participant(request.user, wss, pk):
+            return ErrorResponse({
+                "message": "You have not access to this webinar"
+            }, status_code=403)
+
+        if not event.is_available:
+            return ErrorResponse({
+                "message": "This webinar is currently unavailable"
+            })
+
+        return Response({
+            "redirect_url": event.link
+        })
 
 
 class WorkshopViewSet(EventViewSet):
