@@ -171,6 +171,12 @@ class WorkshopRegistrationViewSet(viewsets.ViewSet):
     @action(methods=['GET'], detail=True)
     def register(self, request, year, pk):
         wss = get_wss_object_or_404(year)
+
+        if not wss.workshop_registration_open:
+            return ErrorResponse({
+                'message': "Sorry, the workshop registration is not available now."
+            })
+
         if not EventViewSet.user_is_participant(request.user, wss, pk):
             return ErrorResponse({
                 "message": "You must finish your registration"
@@ -214,6 +220,11 @@ class WorkshopRegistrationViewSet(viewsets.ViewSet):
         if not WorkshopViewSet.user_is_participant(request.user, wss, pk):
             return ErrorResponse({
                 "message": "You have not registered in this workshop"
+            })
+        
+        if not wss.workshop_registration_open:
+            return ErrorResponse({
+                'message': "Sorry, the workshop cancellation is not available now."
             })
         
         participant: Participant = request.user.profile.participants.get(current_wss=wss)
