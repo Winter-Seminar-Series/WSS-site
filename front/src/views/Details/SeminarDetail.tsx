@@ -9,8 +9,10 @@ import {
 import moment from 'moment'
 import { THIS_YEAR } from '../../constants/info'
 import GoToButton from "../../components/GoToButton";
+import {doesUserHaveRegistered} from "../../redux/actions/participant";
 
 function SeminarDetail({
+  doesUserHaveRegistered,
   getAnEntityOfModelList,
   seminars,
   speakers,
@@ -20,6 +22,10 @@ function SeminarDetail({
   const [seminar, setSeminar] = useState({ id: '', title: '', duration: '', start_time: '', abstract: '', audience: '', speaker: '', tags: [] });
   const [speaker, setSpeaker] = useState({ picture: '', degree: '', place: '', bio: '', name: '' });
   const id = useParams()['id'];
+
+  useEffect(() => {
+    doesUserHaveRegistered(THIS_YEAR);
+  }, [doesUserHaveRegistered])
 
   useEffect(() => {
     getAnEntityOfModelList(MODEL_LISTS_NAMES.SEMINARS, THIS_YEAR, id);
@@ -151,5 +157,6 @@ export default connect(
   mapStateToProps,
   {
     getAnEntityOfModelList,
+    doesUserHaveRegistered,
   }
 )(SeminarDetail);
