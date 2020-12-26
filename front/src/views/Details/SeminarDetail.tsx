@@ -41,55 +41,67 @@ function SeminarDetail({
 
   return (
     <section id="main-container" className="main-container">
-      <div style={{ marginTop: '-15rem', height: '15rem' }} className="diagonal blue-gradient" />
-      <div className="container-fluid px-sm-5 mt-5 diagonal" style={{ background: 'white' }}>
+      <div style={{ marginTop: '-15rem', height: '12rem' }} className="diagonal blue-gradient" />
+      <div className="container-fluid px-sm-3" style={{ marginTop: '-3rem' }}>
         <div className="container">
-          <div className="row pt-5">
-            {speaker.picture &&
-              <div className="col-md-4 m-0">
-                <img style={{ borderRadius: '5px', width: '100%', boxShadow: '2px -2px 5px gray' }} src={`${BASE_URL}/${speaker.picture}`} alt='' />
-              </div>
-            }
-            <div className="col mt-4 d-flex align-items-center">
-              <div className="row">
-                <div className="col">
-                  <h4>{speaker.name}</h4>
-                  <h6>{`${speaker.degree}, ${speaker.place}`}</h6>
-                  <h3 className="session-title">{seminar.title}</h3>
-                  <div className="seminar-details">
-                    <i className="fa fa-clock-o">&nbsp;</i>
-                    {seminar.duration && (
-                      parseInt(moment(seminar.duration, "hh:mm:ss").format(`hh`)) === 12
-                        ? parseInt(moment(seminar.duration, "hh:mm:ss").format(`mm`)) + " minutes"
-                        : parseInt(moment(seminar.duration, "hh:mm:ss").format(`hh`)) * 60 + parseInt(moment(seminar.duration, "hh:mm:ss").format(`mm`)) + " minutes"
-                    )}
-                    {!seminar.duration && (
-                      'To be announced ...'
-                    )}
-                  </div>
-                  <div className="seminar-details">
-                    <i className="fa fa-calendar">&nbsp;</i>
-                    {seminar.start_time && (
-                      moment(seminar.start_time, "YYYY-MM-DD hh:mm:ss").format("dddd, MMMM Do, hh:mm a")
-                    )}
-                    {!seminar.start_time && (
-                      'To be announced ...'
-                    )}
-                  </div>
-                  <div className="seminar-details mt-3">
-                    { isLoggedIn && isRegistered && (
-                      <GoToButton
-                        type="seminars"
-                        id={seminar.id}
-                      />
-                    )}
-                  </div>
+          <div className="row align-items-end">
+              <div className="col-md-6 col-lg-4 m-0">
+                <div style={{
+                  width: '100%',
+                  paddingTop: '100%',
+                  position: 'relative',
+                  backgroundColor: 'rgba(0,0,0,.1)',
+                  borderRadius: '5px'
+                }}>
+                  {speaker.picture &&
+                  <img  style={{
+                    borderRadius: '5px',
+                    width: '100%',
+                    boxShadow: '0px 6px 12px rgba(0,0,0,.3)',
+                    top: '0',
+                    position: 'absolute'
+                  }} src={`${BASE_URL}/${speaker.picture}`} alt='' />
+                  }
                 </div>
+              </div>
+            <div className="col mt-3">
+              <h2>{speaker.name}</h2>
+              <h5>{`${speaker.degree}, ${speaker.place}`}</h5>
+              <div className="seminar-details">
+                <i className="fa fa-clock-o">&nbsp;</i>
+                {seminar.duration && (
+                  parseInt(moment(seminar.duration, "hh:mm:ss").format(`hh`)) === 12
+                    ? parseInt(moment(seminar.duration, "hh:mm:ss").format(`mm`)) + " minutes"
+                    : parseInt(moment(seminar.duration, "hh:mm:ss").format(`hh`)) * 60 + parseInt(moment(seminar.duration, "hh:mm:ss").format(`mm`)) + " minutes"
+                )}
+                {!seminar.duration && (
+                  'To be announced ...'
+                )}
+              </div>
+              <div className="seminar-details">
+                <i className="fa fa-calendar">&nbsp;</i>
+                {seminar.start_time && (
+                  moment(seminar.start_time, "YYYY-MM-DD hh:mm:ss").format("dddd, MMMM Do, hh:mm a")
+                )}
+                {!seminar.start_time && (
+                  'To be announced ...'
+                )}
+              </div>
+              <div className="seminar-details mt-3">
+                { isLoggedIn && isRegistered && (
+                  <GoToButton
+                    type="seminars"
+                    id={seminar.id}
+                  />
+                )}
               </div>
             </div>
           </div>
-          <div className="row mt-5">
-            <div className="col-xs-12 col-md-8">
+          <div className="mt-5">
+            <h3 className="session-title text-center">{seminar.title}</h3>
+          </div>
+          <div className="row mt-5 justify-content-center">
+            <div className="col-xs-12 col-lg-8">
               <div className="ts-speaker-session right">
                 {seminar.abstract &&
                   <>
