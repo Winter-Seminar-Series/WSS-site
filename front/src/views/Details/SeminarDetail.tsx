@@ -26,7 +26,7 @@ function SeminarDetail({
   }, [getAnEntityOfModelList])
 
   useEffect(() => {
-    if (!!seminars.find(s => s.id == id)) {
+    if (seminars.find(s => s.id == id)) {
       const seminar = seminars.find(s => s.id == id);
       setSeminar(seminar);
       getAnEntityOfModelList(MODEL_LISTS_NAMES.SPEAKERS, THIS_YEAR, seminar.speaker);
@@ -34,7 +34,7 @@ function SeminarDetail({
   }, [seminars])
 
   useEffect(() => {
-    if (!!speakers.find(s => s.id == seminar.speaker)) {
+    if (speakers.find(s => s.id == seminar.speaker)) {
       setSpeaker(speakers.find(s => s.id === seminar.speaker))
     }
   }, [speakers])
@@ -45,25 +45,25 @@ function SeminarDetail({
       <div className="container-fluid px-sm-3" style={{ marginTop: '-3rem' }}>
         <div className="container">
           <div className="row align-items-end">
-              <div className="col-md-6 col-lg-4 m-0">
-                <div style={{
-                  width: '100%',
-                  paddingTop: '100%',
-                  position: 'relative',
-                  backgroundColor: 'rgba(0,0,0,.1)',
-                  borderRadius: '5px'
-                }}>
-                  {speaker.picture &&
-                  <img  style={{
+            <div className="col-md-6 col-lg-4 m-0">
+              <div style={{
+                width: '100%',
+                paddingTop: '100%',
+                position: 'relative',
+                backgroundColor: 'rgba(0,0,0,.1)',
+                borderRadius: '5px'
+              }}>
+                {speaker.picture &&
+                  <img style={{
                     borderRadius: '5px',
                     width: '100%',
                     boxShadow: '0px 6px 12px rgba(0,0,0,.3)',
                     top: '0',
                     position: 'absolute'
                   }} src={`${BASE_URL}/${speaker.picture}`} alt='' />
-                  }
-                </div>
+                }
               </div>
+            </div>
             <div className="col mt-3">
               <h2>{speaker.name}</h2>
               <h5>{`${speaker.degree}, ${speaker.place}`}</h5>
@@ -88,7 +88,7 @@ function SeminarDetail({
                 )}
               </div>
               <div className="seminar-details mt-3">
-                { isLoggedIn && isRegistered && (
+                {isLoggedIn && isRegistered && (
                   <GoToButton
                     type="seminars"
                     id={seminar.id}
@@ -143,7 +143,7 @@ const mapStateToProps = (state, ownProps) => {
     isLoggedIn: state.account.isLoggedIn,
     speakers: state.WSS.speakers,
     seminars: state.WSS.seminars,
-    isRegistered: state.Participant,
+    isRegistered: state.Participant.isRegistered,
   })
 }
 
