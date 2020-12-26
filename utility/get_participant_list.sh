@@ -28,7 +28,7 @@ if [ -z "$token" ]; then
     exit 1
 fi
 
-echo "Successfull login"
+echo "Successfully logged in"
 
 authorization_header="Authorization: Token $token"
 
@@ -40,4 +40,4 @@ echo "Logging out..."
 
 curl -X POST -H "$authorization_header" -s ${api_url}/logout/
 
-echo "Done!"
+echo "Done! Result saved at $output"
