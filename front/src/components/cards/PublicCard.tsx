@@ -34,6 +34,7 @@ function PublicCard({
   }, [cardRef]);
 
   return (
+    <a className="" ref={cardRef} href={!isStaff ? presentationLink : null} >
     <div id="public-card">
       <div className="card">
         <a className="card-image" ref={cardRef} href={!isStaff ? presentationLink : null}>
@@ -53,6 +54,7 @@ function PublicCard({
         </div>
       </div>
     </div>
+    </a>
   );
 }
 
