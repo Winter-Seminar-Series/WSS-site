@@ -26,6 +26,7 @@ class WSS(models.Model):
     year = models.PositiveSmallIntegerField()
     description = models.TextField(null=True, blank=True)
     registration_open = models.BooleanField(null=False, default=False)
+    workshop_registration_open = models.BooleanField(null=False, default=False)
     # registration_link = models.URLField(null=True, blank=True)
     calendar_link = models.URLField(null=True, blank=True)
     ical_link = models.URLField(null=True, blank=True)
@@ -41,6 +42,7 @@ class WSS(models.Model):
     registration_fee = models.PositiveIntegerField(default=10000, validators=[MinValueValidator(1000)])
     bs_participant_limit = models.PositiveIntegerField(default=100)
     msOrPhd_participant_limit = models.PositiveIntegerField(default=100)
+    participant_workshop_limit = models.PositiveIntegerField(default=3)
 
     class Meta:
         ordering = ('-year',)

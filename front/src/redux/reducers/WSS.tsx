@@ -70,6 +70,7 @@ function WSS(state = initState, action) {
         staffCount: action.response.staff_count,
         isActive: action.response.is_active,
         isRegistrationOpen: action.response.is_registration_open,
+        isWorkshopRegistrationOpen: action.response.workshop_registration_open,
         participantsCount: action.response.participants_count,
         icalLink: action.response.ical_link,
         year: action.response.year,
