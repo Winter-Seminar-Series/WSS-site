@@ -34,12 +34,12 @@ function PublicCard({
   }, [cardRef]);
 
   return (
-    <a className="" ref={cardRef} href={!isStaff ? presentationLink : null} >
+    <a className="" ref={cardRef} href={!isStaff ? presentationLink : null} style={{textDecoration: 'none'}} >
     <div id="public-card">
       <div className="card">
-        <a className="card-image" ref={cardRef} href={!isStaff ? presentationLink : null}>
+        <div className="card-image">
           <img src={person.picture ? `${BASE_URL}/${person.picture}` : process.env.PUBLIC_URL + '/images/icons/avatar.jpg'} alt="" />
-        </a>
+        </div>
         <div className="card-description">
           <h3>{person.name}</h3>
           {!isStaff &&
