@@ -1,3 +1,6 @@
+.is-loaded:hover{
+  text-decoration: none !important;
+}
 #public-card {
   display: flex;
   justify-content: center;
@@ -5,6 +8,7 @@
   align-content: center;
   height: 100%;
   width: 100%;
+  text-decoration: none;
 
   /* Lazy Load Styles */
   .card-image {
@@ -13,13 +17,15 @@
     /* layout hack */
     background: #fff center center no-repeat;
     background-size: cover;
-    filter: blur(3px);
+    filter: blur(0px);
+    text-decoration: none;
     /* blur the lowres image */
   }
-
+  
   .card-image>img {
     display: block;
     width: 100%;
+    text-decoration: none;
     // opacity: 0; /* visually hide the img element */
   }
 
@@ -40,11 +46,13 @@
     overflow: hidden;
     box-shadow: 0 0 3rem -1rem rgba(0, 0, 0, 0.5);
     transition: transform 0.1s ease-in-out;
+    
   }
 
   .card:hover {
     transform: translateY(-0.5rem) scale(1.0125);
     box-shadow: 0 0.5em 3rem -1rem rgba(0, 0, 0, 0.5);
+    text-decoration: none;
   }
 
   .card-description {
@@ -52,14 +60,17 @@
     padding: 1em 0.5em;
     color: #515151;
     text-decoration: none;
+    
   }
 
   .card-description>h3 {
     margin: 0 0 0.5em;
+    text-decoration: none;
   }
 
   .card-description>p {
     margin: 0 0 0.5em;
+    text-decoration: none;
   }
 
   .card-description>.like {
@@ -72,6 +83,8 @@
     align-content: center;
     align-items: center;
     flex-wrap: wrap;
+    text-decoration: none;
     // padding-left: calc(100% - 35px);
   }
+  
 }
