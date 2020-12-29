@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 import os
 import sentry_sdk
 from sentry_sdk.integrations.django import DjangoIntegration
+from datetime import timedelta
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -205,6 +206,8 @@ LOGGING = {
         },
     },
 }
+
+CLIENT_TIME_DELTA = timedelta(hours=3, minutes=30) # used for events times in serialization
 
 PAYMENT_SETTING = {
     "MERCHANT": os.environ.get('PAYMENT_MERCHANT'),

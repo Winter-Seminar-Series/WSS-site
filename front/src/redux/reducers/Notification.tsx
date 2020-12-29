@@ -79,6 +79,7 @@ function Notification(state = {}, action) {
     case actionTypes.REGISTER_WORKSHOP_FAILURE:
     case actionTypes.CANCEL_WORKSHOP_REGISTRATION_FAILURE:
     case actionTypes.REQUEST_PASSWORD_RESET_FAILURE:
+    case actionTypes.GET_REDIRECT_URL_FAILURE:
       toast.error(action.error);
       return { ...state };
 

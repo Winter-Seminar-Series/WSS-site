@@ -1,6 +1,7 @@
 import * as actionTypes from '../actionTypes';
 import * as URLs from './urls';
 import { CALL_API } from '../middleware/api/api';
+import {THIS_YEAR} from "../../constants/info";
 
 export const getProfile = () => ({
   [CALL_API]: {
@@ -112,3 +113,16 @@ export const cancelWorkshopRegistration = (year, id) => async (dispatch, getStat
   dispatch(getRegisteredWorkshops(year))
 }
 
+export const getRedirectURL = (year, type, id) => ({
+  [CALL_API]: {
+    types: [
+      actionTypes.GET_REDIRECT_URL_REQUEST,
+      actionTypes.GET_REDIRECT_URL_SUCCESS,
+      actionTypes.GET_REDIRECT_URL_FAILURE,
+    ],
+    url: `${URLs.ROOT}${year}/${type}/${id}/open_webinar/`,
+    fetchOptions: {
+      method: 'GET',
+    },
+  },
+});
