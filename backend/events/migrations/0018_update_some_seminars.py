@@ -31,14 +31,16 @@ def forwards(apps, schema_editor):
     # Re-schedule
     base_date = datetime(2020, 12, 30)
     Seminar.objects.filter(wss=wss, speaker__name='Ehsan Kazemi')\
-        .update(start_time=base_date + timedelta(days=2, hours=21))
+        .update(start_time=base_date + timedelta(days=2, hours=21) - timedelta(hours=3, minutes=30))
     Seminar.objects.filter(wss=wss, speaker__name='Mona Azadkia')\
-        .update(start_time=base_date + timedelta(days=4, hours=17))
+        .update(start_time=base_date + timedelta(days=4, hours=17) - timedelta(hours=3, minutes=30))
 
     Seminar.objects.filter(wss=wss, speaker__name='Ali Sharifi-Zarchi')\
-        .update(start_time=base_date + timedelta(days=2, hours=17), link=room_url_pattern.format(2))
+        .update(start_time=base_date + timedelta(days=2, hours=17) - timedelta(hours=3, minutes=30),
+                link=room_url_pattern.format(2))  # duration ?
     Seminar.objects.filter(wss=wss, speaker__name='Fatemeh Nejatbakhshesfahani')\
-        .update(start_time=base_date + timedelta(days=4, hours=18))  # link=TBA
+        .update(start_time=base_date + timedelta(days=4, hours=18) - timedelta(hours=3, minutes=30),
+                duration=50, link=room_url_pattern.format(4))
 
     Seminar.objects.filter(wss=wss, speaker__name='Soheil Behnezhad')\
         .update(title='Recent Advances in Large-Scale Graph Algorithms')
