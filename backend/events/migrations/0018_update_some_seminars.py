@@ -39,10 +39,10 @@ def forwards(apps, schema_editor):
 
     Seminar.objects.filter(wss=wss, speaker__name='Ali Sharifi-Zarchi')\
         .update(start_time=base_date + timedelta(days=2, hours=17) - utc_diff,
-                duration=50, link=room_url_pattern.format(2))
+                duration=timedelta(minutes=50), link=room_url_pattern.format(2))
     Seminar.objects.filter(wss=wss, speaker__name='Fatemeh Nejatbakhshesfahani')\
         .update(start_time=base_date + timedelta(days=4, hours=18) - utc_diff,
-                duration=50, link=room_url_pattern.format(4))
+                duration=timedelta(minutes=50), link=room_url_pattern.format(4))
 
     Seminar.objects.filter(wss=wss, speaker__name='Soheil Behnezhad')\
         .update(title='Recent Advances in Large-Scale Graph Algorithms')
