@@ -45,13 +45,9 @@ function Home({
   staffCount,
   isActive,
   isRegistrationOpen,
-  icalLink,
   year,
   startDate,
   endDate,
-  proposalLink,
-  showStats,
-  calendarLink,
 }) {
   useEffect(() => {
     getWSSPrimitiveFields(THIS_YEAR);
@@ -66,10 +62,6 @@ function Home({
     if (!videoRef) return;
     videoRef.current.playbackRate = 0.6;
   };
-
-  // console.log(startDate)
-  // console.log(endDate)
-  // console.log(isRegistrationOpen)
 
   return (
     <>

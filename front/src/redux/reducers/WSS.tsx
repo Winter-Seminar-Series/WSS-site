@@ -78,7 +78,7 @@ function WSS(state = initState, action) {
         endDate: action.response.end_date,
         proposalLink: action.response.proposal_link,
         showStats: action.response.show_stats,
-        calendarLink: action.response.calender_link,
+        calendarLink: action.response.calendar_link,
       };
 
     case actionTypes.PRIMITIVE_FIELDS_FAILURE:

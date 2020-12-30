@@ -1732,9 +1732,17 @@ ul.navbar-nav > li:hover > a {
 .schedule-tab,
 .schedule-content .container {
   max-width: 960px;
-  padding-top: 6rem;
-  margin-top: 6rem;
+  padding-bottom: 8rem;
 }
+
+.schedule-content {
+  margin-top: 0;
+}
+
+.striped .diagonal.schedule-content:nth-child(odd) {
+  background-color: #e8e8e8;
+}
+
 .schedule-tab .nav-tabs {
   text-align: center;
   margin-bottom: 40px;
@@ -1761,7 +1769,6 @@ ul.navbar-nav > li:hover > a {
 /* Schedule listing */
 
 .schedule-date {
-  font-size: 24px;
   margin-bottom: 40px;
   color: #446cb3;
   text-align: center;
