@@ -6,21 +6,31 @@ import {
   getModelList,
   MODEL_LISTS_NAMES,
 } from '../redux/actions/WSS'
+import moment from "moment";
+import ScheduleCard from "../components/cards/ScheduleCard";
+import {doesUserHaveRegistered} from "../redux/actions/participant";
 
 function Schedule({
   getWSSPrimitiveFields,
+  doesUserHaveRegistered,
   getModelList,
   speakers,
   seminars,
-  mainImageURL,
-  mainClipURL,
-  bookletURL,
   icalLink,
-  startDate,
-  endDate,
-  proposalLink,
   calendarLink,
+  year,
+  isLoggedIn,
+  isRegistered,
 }) {
+
+  const [seminarsByDate, setSeminarsByDate] = useState([])
+  const [speakersById, setSpeakersById] = useState([])
+  const [liveSeminars, setLiveSeminars] = useState([])
+  const [liveTimeout, setLiveTimeout] = useState(null)
+
+  useEffect(() => {
+    doesUserHaveRegistered(THIS_YEAR);
+  }, [doesUserHaveRegistered])
 
   useEffect(() => {
     getWSSPrimitiveFields(THIS_YEAR);
@@ -28,6 +38,60 @@ function Schedule({
     getModelList(MODEL_LISTS_NAMES.SPEAKERS, THIS_YEAR);
     getModelList(MODEL_LISTS_NAMES.WORKSHOPS, THIS_YEAR);
   }, [getModelList, getWSSPrimitiveFields])
+
+  useEffect(() => {
+    setSeminarsByDate(groupSeminarsByDate())
+    getLiveSeminars()
+  }, [seminars])
+
+  useEffect(() => {
+    setSpeakersById(getSpeakersById())
+  }, [speakers])
+
+  function getLiveSeminars() {
+    setLiveTimeout(null)
+
+    setLiveSeminars(seminars.filter(
+      (seminar) => moment().isBetween(
+        moment(seminar.start_time, "YYYY-MM-DD hh:mm:ss"),
+        moment(seminar.start_time, "YYYY-MM-DD hh:mm:ss").add(moment.duration(seminar.duration))
+      )
+    ))
+
+    if (!liveTimeout) {
+
+      const liveSeminarTimeout = setTimeout(getLiveSeminars, (60 - new Date().getSeconds()) * 1000)
+      setLiveTimeout(liveSeminarTimeout)
+    }
+  }
+
+  // assume that seminars are sorted in the back end side
+  function groupSeminarsByDate() {
+    return seminars.reduce(
+      (data, seminar) => {
+        const seminarDate = seminar.start_time.split('T')[0];
+
+        if (data[seminarDate]) {
+          data[seminarDate].push(seminar)
+        } else {
+          data[seminarDate] = [seminar]
+        }
+
+        return data
+      },
+      {},
+    )
+  }
+
+  function getSpeakersById() {
+    return speakers.reduce(
+      (data, speaker) => ({
+        ...data,
+        [speaker.id]: speaker
+      }),
+      {}
+    )
+  }
 
   const padding40 = {
     padding: "40px 0 0 0"
@@ -50,117 +114,105 @@ function Schedule({
             Schedule
           </h2>
         </div>
-        {/* {% if wss.calendar_link %} */}
-        <div className="schedule-content">
-          <div className="container mt-0">
-            <div className="diagonal">
-              <div className="row d-flex justify-content-center">
-                <div className="btn-group" role="group" aria-label="Add to Calendar">
-                  {/* {% if wss.calendar_link %} */}
-                  <a role="button" href="{{ wss.calendar_link }}" className="btn btn-blue">
-                    Add Events to Calendar
-                  </a>
-                  {/* {% if wss.ical_link %} */}
-                  <a role="button" href="{{ wss.ical_link }}" className="btn btn-secondary">
-                    iCal
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        {/* {% if pre_wss_events.count %} */}
-        <div className="diagonal schedule-content pattern-bg">
-          <div className="container">
-            <div className="row">
-              <div className="col-md-12">
-                <h3 className="section-sub-title">
-                  {/* Pre-{{ wss }} Events */}
+
+        {liveSeminars.length && speakers.length && (
+        <>
+          <div className="diagonal">
+            <div className="container">
+              <div className="d-flex justify-content-center justify-content-md-between align-items-center flex-wrap my-5 py-5">
+
+                <h3 className="section-sub-title my-0 text-nowrap d-flex align-items-center">
+                  <span className="badge badge-danger mr-3">Live</span> Now
                 </h3>
-                <div className="schedule-listing">
-                  {/* {% for event in pre_wss_events %} */}
+              </div>
+
+            </div>
+          </div>
+
+          <div id="live-accordion" className="striped">
+              <div className="diagonal schedule-content">
+                <div className="container">
                   <div className="row">
-                    <span className="schedule-slot-time col-sm-4">
-                      {/* {{ event.start_time.date }} */}
-                      <br />
-                      {/* {% time_string event.start_time %} - {% time_string event.end_time %} */}
-                    </span>
-                    <div className="schedule-slot-info col">
-                      <div>
-                        {/* <!-- schedule-slot-info-content --> */}
-                        <h3 className="schedule-slot-speaker-name">
-                          {/* {{ event.speaker }} */}
-                        </h3>
-                        {/* {% if event.seminar %} */}
-                        <a href="{% url 'events:seminar' event.pk %}" />
-                        {/* {% elif event.workshop %} */}
-                        <a href="{% url 'events:workshop' event.pk %}" />
-                        <h3 className="schedule-slot-title">
-                          {/* {{ event.title }} */}
-                        </h3>
-                        {/* {% if event.venue %} */}
-                        <span className="schedule-slot-desc" data-toggle="tooltip" title="{{ event.venue.address }}">
-                          {/* {{ event.venue }} */}
-                        </span>
-                      </div>
+                    <div className="col-md-12">
+                      {liveSeminars.map(seminar => (
+                        <ScheduleCard
+                          key={`live${seminar.id}`}
+                          seminar={seminar}
+                          speaker={speakersById[seminar.speaker]}
+                          showJoin={isLoggedIn && isRegistered}
+                        />
+                      ))
+                      }
+
                     </div>
                   </div>
                 </div>
+                <div className="gap-60" />
               </div>
+          </div>
+          </>
+        )}
+
+        <div className="diagonal">
+          <div className="container">
+            <div className="d-flex justify-content-center justify-content-md-between align-items-center flex-wrap my-5 py-5">
+
+              <h3 className="section-sub-title my-0 text-nowrap">
+                 WSS { year } Talks
+              </h3>
+
+              {(calendarLink || icalLink) && (
+                <div className="text-center p-3">
+                  <div className="btn-group" role="group" aria-label="Add to Calendar">
+                    {calendarLink &&
+                    <a role="button" href={calendarLink} target="_blank" className="btn btn-blue">
+                      Add Events to Calendar
+                    </a>
+                    }
+
+                    {icalLink &&
+                    <a role="button" href={icalLink} target="_blank" className="btn btn-secondary">
+                      iCal
+                    </a>
+                    }
+                  </div>
+                </div>
+              )}
             </div>
-          </div>
-          <div className="gap-60" />
-        </div>
-        <div className="gap-60"></div>
-        <div className="diagonal schedule-content">
-          <div className="container">
-            <h3 className="section-sub-title">
-              {/* {{ wss }} Schedule */}
-            </h3>
+
           </div>
         </div>
-        {/* {% for day, events_by_time in events_by_day %} */}
-        <div className="diagonal schedule-content pattern-bg">
-          <div className="container">
-            <div className="row">
-              <div className="col-md-12">
-                <h2 className="schedule-date">
-                  {/* Day {{ forloop.counter }} / {% date_string day %} */}
-                </h2>
-                {/* {% for _, events in events_by_time %} */}
-                <div className="schedule-listing bg">
+
+        <div id="accordion" className="striped">
+          {!(seminars.length && speakers.length) && (
+            <div className="text-center">Loading...</div>
+          ) }
+          {seminars.length && speakers.length && Object.keys(seminarsByDate).map(date => (
+              <div key={date} className="diagonal schedule-content">
+                <div className="container">
                   <div className="row">
-                    {/* {% for event in events %} */}
-                    {/* {% if forloop.counter == 1 %} */}
-                    {/* {% if day %} */}
-                    <span className="schedule-slot-time col-sm-4">
-                      {/* {% time_string event.start_time %} - {% time_string event.end_time %} */}
-                    </span>
-                    <div className="schedule-slot-info col">
-                      <div>
-                        <h3 className="schedule-slot-speaker-name">
-                          {/* {{ event.speaker }} */}
-                        </h3>
-                        {/* {% if event.seminar %} */}
-                        <a href="{% url 'events:seminar' event.pk %}" />
-                        {/* {% elif event.workshop %} */}
-                        <a href="{% url 'events:workshop' event.pk %}" />
-                        <h3 className="schedule-slot-title">
-                          {/* {{ event.title }} */}
-                        </h3>
-                        {/* {% if event.venue %} */}
-                        <span className="schedule-slot-desc" data-toggle="tooltip" title="{{ event.venue.address }}">
-                          {/* {{ event.venue }} */}
-                        </span>
-                      </div>
+                    <div className="col-md-12">
+                      <h2 className="schedule-date">
+                        {moment(date," YYYY-MM-DD").format("MMM Do, YYYY")}
+                      </h2>
+                      {seminarsByDate[date].map(seminar => (
+                        <ScheduleCard
+                          key={seminar.id}
+                          seminar={seminar}
+                          speaker={speakersById[seminar.speaker]}
+                          showJoin={isLoggedIn && isRegistered}
+                        />
+                      ))
+                      }
+
                     </div>
                   </div>
                 </div>
+                <div className="gap-60" />
               </div>
-            </div>
-          </div>
-          <div className="gap-60" />
+          ))}
         </div>
+
       </section>
     </>
   )
@@ -184,6 +236,9 @@ const mapStateToProps = (state, ownProps) => ({
   endDate: state.WSS.endDate,
   proposalLink: state.WSS.proposalLink,
   calendarLink: state.WSS.calendarLink,
+  year: state.WSS.year,
+  isLoggedIn: state.account.isLoggedIn,
+  isRegistered: state.Participant.isRegistered,
 })
 
 export default connect(
@@ -191,5 +246,6 @@ export default connect(
   {
     getWSSPrimitiveFields,
     getModelList,
+    doesUserHaveRegistered,
   }
 )(Schedule);
