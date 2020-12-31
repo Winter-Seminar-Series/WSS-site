@@ -9,6 +9,7 @@ import {
 import moment from "moment";
 import ScheduleCard from "../components/cards/ScheduleCard";
 import {doesUserHaveRegistered} from "../redux/actions/participant";
+import {isFavorite} from "../utils/favorites";
 
 function Schedule({
   getWSSPrimitiveFields,
@@ -23,7 +24,9 @@ function Schedule({
   isRegistered,
 }) {
 
-  const [seminarsByDate, setSeminarsByDate] = useState([])
+  const [seminarsByDate, setSeminarsByDate] = useState({})
+  const [favoriteSeminars, setFavoriteSeminars] = useState({})
+  const [onlyFavorites, setOnlyFavorites] = useState(false)
   const [speakersById, setSpeakersById] = useState([])
   const [liveSeminars, setLiveSeminars] = useState([])
   const [liveTimeout, setLiveTimeout] = useState(null)
@@ -48,6 +51,10 @@ function Schedule({
     setSpeakersById(getSpeakersById())
   }, [speakers])
 
+  useEffect(() => {
+    filterSeminarsByFavorite()
+  }, [onlyFavorites])
+
   function getLiveSeminars() {
     setLiveTimeout(null)
 
@@ -63,6 +70,10 @@ function Schedule({
       const liveSeminarTimeout = setTimeout(getLiveSeminars, (60 - new Date().getSeconds()) * 1000)
       setLiveTimeout(liveSeminarTimeout)
     }
+  }
+
+  function getSeminars() {
+    return onlyFavorites ? favoriteSeminars : seminarsByDate
   }
 
   // assume that seminars are sorted in the back end side
@@ -81,6 +92,25 @@ function Schedule({
       },
       {},
     )
+  }
+
+  function filterSeminarsByFavorite() {
+    const favSeminars = Object.keys(seminarsByDate).reduce(
+      (favs, date) => {
+        const dateFavs = seminarsByDate[date].filter(
+          seminar => isFavorite(THIS_YEAR, 'seminar', seminar.id)
+        )
+
+        if (dateFavs.length) {
+          favs[date] = dateFavs
+        }
+
+        return favs
+      },
+      {}
+    )
+
+    setFavoriteSeminars(favSeminars)
   }
 
   function getSpeakersById() {
@@ -157,9 +187,24 @@ function Schedule({
           <div className="container">
             <div className="d-flex justify-content-center justify-content-md-between align-items-center flex-wrap my-5 py-5">
 
-              <h3 className="section-sub-title my-0 text-nowrap">
-                 WSS { year } Talks
-              </h3>
+              <div>
+                <h3 className="section-sub-title my-0 text-nowrap">
+                  WSS { year } Talks
+                </h3>
+
+                <div className="form-check">
+                  <input
+                    checked={onlyFavorites}
+                    onChange={(e) => setOnlyFavorites(!onlyFavorites)}
+                    className="form-check-input"
+                    type="checkbox"
+                    id="favoriteCheck"
+                  />
+                  <label className="form-check-label" htmlFor="favoriteCheck">
+                    Show Only Favorites
+                  </label>
+                </div>
+              </div>
 
               {(calendarLink || icalLink) && (
                 <div className="text-center p-3">
@@ -187,7 +232,7 @@ function Schedule({
           {!(seminars.length && speakers.length) && (
             <div className="text-center">Loading...</div>
           ) }
-          {seminars.length && speakers.length && Object.keys(seminarsByDate).map(date => (
+          {seminars.length && speakers.length && Object.keys(getSeminars()).map(date => (
               <div key={date} className="diagonal schedule-content">
                 <div className="container">
                   <div className="row">
@@ -195,7 +240,7 @@ function Schedule({
                       <h2 className="schedule-date">
                         {moment(date," YYYY-MM-DD").format("MMM Do, YYYY")}
                       </h2>
-                      {seminarsByDate[date].map(seminar => (
+                      {getSeminars()[date].map(seminar => (
                         <ScheduleCard
                           key={seminar.id}
                           seminar={seminar}
