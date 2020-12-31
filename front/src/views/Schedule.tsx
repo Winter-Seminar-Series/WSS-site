@@ -43,8 +43,10 @@ function Schedule({
   }, [getModelList, getWSSPrimitiveFields])
 
   useEffect(() => {
-    setSeminarsByDate(groupSeminarsByDate())
-    getLiveSeminars()
+    if (seminars) {
+      setSeminarsByDate(groupSeminarsByDate())
+      getLiveSeminars()
+    }
   }, [seminars])
 
   useEffect(() => {
@@ -57,6 +59,10 @@ function Schedule({
 
   function getLiveSeminars() {
     setLiveTimeout(null)
+
+    if (!seminars || !seminars.length) {
+      return
+    }
 
     setLiveSeminars(seminars.filter(
       (seminar) => moment().isBetween(
@@ -149,7 +155,7 @@ function Schedule({
         <>
           <div className="diagonal">
             <div className="container">
-              <div className="d-flex justify-content-center justify-content-md-between align-items-center flex-wrap my-5 py-5">
+              <div className="d-flex justify-content-center justify-content-md-between align-items-center flex-wrap mt-4 py-5">
 
                 <h3 className="section-sub-title my-0 text-nowrap d-flex align-items-center">
                   <span className="badge badge-danger mr-3">Live</span> Now
@@ -177,7 +183,6 @@ function Schedule({
                     </div>
                   </div>
                 </div>
-                <div className="gap-60" />
               </div>
           </div>
           </>
@@ -267,9 +272,7 @@ const mapStateToProps = (state, ownProps) => ({
   speakers: state.WSS.speakers
     ? state.WSS.speakers
     : [],
-  seminars: state.WSS.seminars
-    ? state.WSS.seminars
-    : [],
+  seminars: state.WSS.seminars,
   workshops: state.WSS.workshops
     ? state.WSS.workshops
     : [],
