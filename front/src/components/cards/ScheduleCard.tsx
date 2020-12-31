@@ -1,7 +1,8 @@
 import moment from "moment";
 import React from "react";
-import {BASE_URL} from "../../constants/info";
+import {BASE_URL, THIS_YEAR} from "../../constants/info";
 import GoToButton from "../GoToButton";
+import FavoriteButton from "../FavoriteButton";
 
 function ScheduleCard(
   {
@@ -14,24 +15,31 @@ function ScheduleCard(
   return (
     <div className="schedule-listing bg">
       {speaker && (
-        <div className="row align-items-center">
-          <div className="mr-3 mb-3">
-            {speaker.picture &&
-            <img style={{
-              borderRadius: '5px',
-              width: '80px',
-              height: '80px',
-              boxShadow: '0px 3px 6px rgba(0,0,0,.3)',
-            }} src={`${BASE_URL}/${speaker.picture}`} alt='' />
-            }
+        <div className="row flex-nowrap justify-content-between">
+          <div className="d-flex flex-wrap align-items-center">
+            <div className="mr-3 mb-3">
+              {speaker.picture &&
+              <img style={{
+                borderRadius: '5px',
+                width: '80px',
+                height: '80px',
+                boxShadow: '0px 3px 6px rgba(0,0,0,.3)',
+              }} src={`${BASE_URL}/${speaker.picture}`} alt='' />
+              }
+            </div>
+
+            <div>
+              <h5>
+                {speaker.name}
+              </h5>
+              {speaker.degree}, {speaker.place}
+            </div>
           </div>
 
-          <div>
-            <h5>
-              {speaker.name}
-            </h5>
-            {speaker.degree}, {speaker.place}
+          <div className="align-self-start">
+            <FavoriteButton year={THIS_YEAR} type={'seminar'} id={seminar.id} />
           </div>
+
         </div>
       )}
 
@@ -44,12 +52,14 @@ function ScheduleCard(
           </div>
 
           <div className="row align-items-center justify-content-between mt-2">
-            <div className='py-3'>
-              <i className="fa fa-clock-o">&nbsp;</i>
+            <div className='py-3 d-flex flex-column flex-sm-row'>
+              <div>
+                <i className="fa fa-clock-o">&nbsp;</i>
 
-              <b>{moment(seminar.start_time, "YYYY-MM-DD hh:mm:ss").format("hh:mm a")}</b>
+                <b>{moment(seminar.start_time, "YYYY-MM-DD hh:mm:ss").format("hh:mm a")}</b>
+              </div>
 
-              <span className="px-2">-</span>
+              <span className="px-2 d-none d-sm-inline">-</span>
 
               {moment.duration(seminar.duration).asMinutes() + ' minutes'}
             </div>
@@ -79,14 +89,29 @@ function ScheduleCard(
             data-parent={parentId}
           >
             <div className="mt-4 pt-4 border-top">
-              <h5>Abstract</h5>
-              <p>{seminar.abstract}</p>
 
-              <h5>Audience</h5>
-              <p>{seminar.audience}</p>
 
-              <h5>Bio</h5>
-              <p>{speaker.bio}</p>
+              {seminar.abstract && (
+                <>
+                  <h5>Abstract</h5>
+                  <p>{seminar.abstract}</p>
+                </>
+              )}
+
+              {seminar.audience && (
+                <>
+                  <h5>Audience</h5>
+                  <p>{seminar.audience}</p>
+                </>
+              )}
+
+              {speaker.bio && (
+                <>
+                  <h5>Bio</h5>
+                  <p>{speaker.bio}</p>
+                </>
+              )}
+
             </div>
           </div>
         </>

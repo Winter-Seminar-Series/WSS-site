@@ -10,6 +10,7 @@ import moment from 'moment'
 import { THIS_YEAR } from '../../constants/info'
 import GoToButton from "../../components/GoToButton";
 import {doesUserHaveRegistered} from "../../redux/actions/participant";
+import FavoriteButton from "../../components/FavoriteButton";
 
 function SeminarDetail({
   doesUserHaveRegistered,
@@ -71,8 +72,16 @@ function SeminarDetail({
               </div>
             </div>
             <div className="col mt-3">
-              <h2>{speaker.name}</h2>
+              <div className="d-flex">
+                {seminar && seminar.id && (
+                  <FavoriteButton year={THIS_YEAR} type={'seminar'} id={seminar.id} />
+                )}
+
+                <h2 className="ml-3">{speaker.name}</h2>
+              </div>
+
               <h5>{`${speaker.degree}, ${speaker.place}`}</h5>
+
               <div className="seminar-details">
                 <i className="fa fa-clock-o">&nbsp;</i>
                 {seminar.duration && (
