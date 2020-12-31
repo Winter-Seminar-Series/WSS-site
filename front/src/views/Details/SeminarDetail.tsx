@@ -73,7 +73,9 @@ function SeminarDetail({
             </div>
             <div className="col mt-3">
               <div className="d-flex">
-                <FavoriteButton year={THIS_YEAR} type={'seminar'} id={seminar.id} />
+                {seminar && seminar.id && (
+                  <FavoriteButton year={THIS_YEAR} type={'seminar'} id={seminar.id} />
+                )}
 
                 <h2 className="ml-3">{speaker.name}</h2>
               </div>
