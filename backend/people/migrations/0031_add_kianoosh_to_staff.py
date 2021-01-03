@@ -13,12 +13,12 @@ def forwards(apps, schema_editor):
     presentation_team = HoldingTeam.objects.get(
         wss__year=2020, name="Presentation Management"
     )
-    # presentation_team.staff.all().update(order=F("order") + 1)
+
     new_staff = Staff.objects.create(
         name="Kianoosh Abbasi",
         picture="media/2020/staff/Kianoosh-Abbasi.jpg",
         polymorphic_ctype=ctype,
-        order=5,  # waiting for order
+        order=6,
     )
     presentation_team.staff.add(new_staff)
 
@@ -30,7 +30,6 @@ def rollback(apps, schema_editor):
         wss__year=2020, name="Presentation Management"
     )
     presentation_team.staff.filter(name="Kianoosh Abbasi").delete()
-    # presentation_team.staff.all().update(order=F("order") - 1)
 
 
 class Migration(migrations.Migration):
