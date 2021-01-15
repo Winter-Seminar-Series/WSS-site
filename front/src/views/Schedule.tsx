@@ -8,8 +8,8 @@ import {
 } from '../redux/actions/WSS'
 import moment from "moment";
 import ScheduleCard from "../components/cards/ScheduleCard";
-import {doesUserHaveRegistered} from "../redux/actions/participant";
-import {isFavorite} from "../utils/favorites";
+import { doesUserHaveRegistered } from "../redux/actions/participant";
+import { isFavorite } from "../utils/favorites";
 
 function Schedule({
   getWSSPrimitiveFields,
@@ -152,20 +152,20 @@ function Schedule({
         </div>
 
         {liveSeminars.length && speakers.length && (
-        <>
-          <div className="diagonal">
-            <div className="container">
-              <div className="d-flex justify-content-center justify-content-md-between align-items-center flex-wrap mt-4 py-5">
+          <>
+            <div className="diagonal">
+              <div className="container">
+                <div className="d-flex justify-content-center justify-content-md-between align-items-center flex-wrap mt-4 py-5">
 
-                <h3 className="section-sub-title my-0 text-nowrap d-flex align-items-center">
-                  <span className="badge badge-danger mr-3">Live</span> Now
+                  <h3 className="section-sub-title my-0 text-nowrap d-flex align-items-center">
+                    <span className="badge badge-danger mr-3">Live</span> Now
                 </h3>
+                </div>
+
               </div>
-
             </div>
-          </div>
 
-          <div id="live-accordion" className="striped">
+            <div id="live-accordion" className="striped">
               <div className="diagonal schedule-content">
                 <div className="container">
                   <div className="row">
@@ -184,7 +184,7 @@ function Schedule({
                   </div>
                 </div>
               </div>
-          </div>
+            </div>
           </>
         )}
 
@@ -194,7 +194,7 @@ function Schedule({
 
               <div>
                 <h3 className="section-sub-title my-0 text-nowrap">
-                  WSS { year } Talks
+                  WSS {year} Talks
                 </h3>
 
                 <div className="form-check">
@@ -215,14 +215,14 @@ function Schedule({
                 <div className="text-center p-3">
                   <div className="btn-group" role="group" aria-label="Add to Calendar">
                     {calendarLink &&
-                    <a role="button" href={calendarLink} target="_blank" className="btn btn-blue">
-                      Add Events to Calendar
+                      <a role="button" href={calendarLink} target="_blank" className="btn btn-blue">
+                        Add Events to Calendar
                     </a>
                     }
 
                     {icalLink &&
-                    <a role="button" href={icalLink} target="_blank" className="btn btn-secondary">
-                      iCal
+                      <a role="button" href={icalLink} target="_blank" className="btn btn-secondary">
+                        iCal
                     </a>
                     }
                   </div>
@@ -236,30 +236,30 @@ function Schedule({
         <div id="accordion" className="striped">
           {!(seminars.length && speakers.length) && (
             <div className="text-center">Loading...</div>
-          ) }
-          {seminars.length && speakers.length && Object.keys(getSeminars()).map(date => (
-              <div key={date} className="diagonal schedule-content">
-                <div className="container">
-                  <div className="row">
-                    <div className="col-md-12">
-                      <h2 className="schedule-date">
-                        {moment(date," YYYY-MM-DD").format("MMM Do, YYYY")}
-                      </h2>
-                      {getSeminars()[date].map(seminar => (
-                        <ScheduleCard
-                          key={seminar.id}
-                          seminar={seminar}
-                          speaker={speakersById[seminar.speaker]}
-                          showJoin={isLoggedIn && isRegistered}
-                        />
-                      ))
-                      }
+          )}
+          {seminars.length > 0 && speakers.length > 0 && Object.keys(getSeminars()).map(date => (
+            <div key={date} className="diagonal schedule-content">
+              <div className="container">
+                <div className="row">
+                  <div className="col-md-12">
+                    <h2 className="schedule-date">
+                      {moment(date, " YYYY-MM-DD").format("MMM Do, YYYY")}
+                    </h2>
+                    {getSeminars()[date].map(seminar => (
+                      <ScheduleCard
+                        key={seminar.id}
+                        seminar={seminar}
+                        speaker={speakersById[seminar.speaker]}
+                        showJoin={isLoggedIn && isRegistered}
+                      />
+                    ))
+                    }
 
-                    </div>
                   </div>
                 </div>
-                <div className="gap-60" />
               </div>
+              <div className="gap-60" />
+            </div>
           ))}
         </div>
 
