@@ -237,7 +237,7 @@ function Schedule({
           {!(seminars.length && speakers.length) && (
             <div className="text-center">Loading...</div>
           )}
-          {seminars.length > 0 && speakers.length > 0 && Object.keys(getSeminars()).map(date => (
+          {seminars.length  > 0 && speakers.length > 0 && Object.keys(getSeminars()).map(date => (
             <div key={date} className="diagonal schedule-content">
               <div className="container">
                 <div className="row">
