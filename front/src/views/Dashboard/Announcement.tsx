@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { THIS_YEAR } from '../../constants/info';
 import {
   getRegisteredWorkshops,
 } from '../../redux/actions/participant';
@@ -10,6 +9,7 @@ import {
 } from '../../redux/actions/WSS'
 
 function Announcement({
+  thisYear,
   getRegisteredWorkshops,
   getModelList,
   registeredWorkshops,
@@ -17,8 +17,8 @@ function Announcement({
 }) {
 
   useEffect(() => {
-    getRegisteredWorkshops(THIS_YEAR);
-    getModelList(MODEL_LISTS_NAMES.WORKSHOPS, THIS_YEAR);
+    getRegisteredWorkshops(thisYear);
+    getModelList(MODEL_LISTS_NAMES.WORKSHOPS, thisYear);
   }, [getModelList, getRegisteredWorkshops])
 
   return (
@@ -39,8 +39,9 @@ function Announcement({
 
 const mapStateToProps = (state, ownProps) => {
   const { registeredWorkshops, } = state.Participant;
-  const { workshops } = state.WSS;
+  const { workshops, thisYear } = state.WSS;
   return {
+    thisYear,
     registeredWorkshops,
     workshops,
   };

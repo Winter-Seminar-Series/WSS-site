@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { THIS_YEAR } from '../constants/info';
 import {
   getWSSPrimitiveFields,
   getModelList,
@@ -10,8 +9,10 @@ import moment from "moment";
 import ScheduleCard from "../components/cards/ScheduleCard";
 import { doesUserHaveRegistered } from "../redux/actions/participant";
 import { isFavorite } from "../utils/favorites";
+import { strictEqual } from 'assert';
 
 function Schedule({
+  thisYear,
   getWSSPrimitiveFields,
   doesUserHaveRegistered,
   getModelList,
@@ -32,14 +33,14 @@ function Schedule({
   const [liveTimeout, setLiveTimeout] = useState(null)
 
   useEffect(() => {
-    doesUserHaveRegistered(THIS_YEAR);
+    doesUserHaveRegistered(thisYear);
   }, [doesUserHaveRegistered])
 
   useEffect(() => {
-    getWSSPrimitiveFields(THIS_YEAR);
-    getModelList(MODEL_LISTS_NAMES.SEMINARS, THIS_YEAR);
-    getModelList(MODEL_LISTS_NAMES.SPEAKERS, THIS_YEAR);
-    getModelList(MODEL_LISTS_NAMES.WORKSHOPS, THIS_YEAR);
+    getWSSPrimitiveFields(thisYear);
+    getModelList(MODEL_LISTS_NAMES.SEMINARS, thisYear);
+    getModelList(MODEL_LISTS_NAMES.SPEAKERS, thisYear);
+    getModelList(MODEL_LISTS_NAMES.WORKSHOPS, thisYear);
   }, [getModelList, getWSSPrimitiveFields])
 
   useEffect(() => {
@@ -104,7 +105,7 @@ function Schedule({
     const favSeminars = Object.keys(seminarsByDate).reduce(
       (favs, date) => {
         const dateFavs = seminarsByDate[date].filter(
-          seminar => isFavorite(THIS_YEAR, 'seminar', seminar.id)
+          seminar => isFavorite(thisYear, 'seminar', seminar.id)
         )
 
         if (dateFavs.length) {
@@ -237,7 +238,7 @@ function Schedule({
           {!(seminars.length && speakers.length) && (
             <div className="text-center">Loading...</div>
           )}
-          {seminars.length  > 0 && speakers.length > 0 && Object.keys(getSeminars()).map(date => (
+          {seminars.length > 0 && speakers.length > 0 && Object.keys(getSeminars()).map(date => (
             <div key={date} className="diagonal schedule-content">
               <div className="container">
                 <div className="row">
@@ -287,6 +288,7 @@ const mapStateToProps = (state, ownProps) => ({
   year: state.WSS.year,
   isLoggedIn: state.account.isLoggedIn,
   isRegistered: state.Participant.isRegistered,
+  thisYear: state.WSS.thisYear,
 })
 
 export default connect(

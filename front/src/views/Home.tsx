@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { connect } from 'react-redux';
 import PublicCard from '../components/cards/PublicCard';
-import { BASE_URL, THIS_YEAR } from '../constants/info';
+import { BASE_URL } from '../constants/info';
 import moment from 'moment'
 import {
   getModelList,
@@ -29,6 +29,7 @@ const venueMapStyle = {
 };
 
 function Home({
+  thisYear,
   getWSSPrimitiveFields,
   getModelList,
   getModelListCount,
@@ -50,12 +51,12 @@ function Home({
   endDate,
 }) {
   useEffect(() => {
-    getWSSPrimitiveFields(THIS_YEAR);
-    getModelList(MODEL_LISTS_NAMES.SEMINARS, THIS_YEAR);
-    getModelList(MODEL_LISTS_NAMES.SPEAKERS, THIS_YEAR);
-    getModelListCount(MODEL_LISTS_NAMES.SEMINARS, THIS_YEAR);
-    getModelListCount(MODEL_LISTS_NAMES.WORKSHOPS, THIS_YEAR);
-    getModelListCount(MODEL_LISTS_NAMES.SPEAKERS, THIS_YEAR);
+    getWSSPrimitiveFields(thisYear);
+    getModelList(MODEL_LISTS_NAMES.SEMINARS, thisYear);
+    getModelList(MODEL_LISTS_NAMES.SPEAKERS, thisYear);
+    getModelListCount(MODEL_LISTS_NAMES.SEMINARS, thisYear);
+    getModelListCount(MODEL_LISTS_NAMES.WORKSHOPS, thisYear);
+    getModelListCount(MODEL_LISTS_NAMES.SPEAKERS, thisYear);
   }, [getWSSPrimitiveFields]);
   const videoRef = useRef<HTMLVideoElement>();
   const setVideoPlayBackRate = () => {
@@ -104,7 +105,7 @@ function Home({
                   <h2 className="banner-subtitle my-3 font-weight-bold">
                     {startDate && endDate
 
-                      ? moment(startDate, "YYYY-MM-DD").format("MMM Do, YYYY -") + moment(endDate," YYYY-MM-DD").format("MMM Do, YYYY") : ''}
+                      ? moment(startDate, "YYYY-MM-DD").format("MMM Do, YYYY -") + moment(endDate, " YYYY-MM-DD").format("MMM Do, YYYY") : ''}
 
                   </h2>
                   <h3 className="banner-desc font-weight-bold">
@@ -360,6 +361,7 @@ function Home({
 
 const mapStateToProps = (state, ownProps) => {
   const {
+    thisYear,
     isFetching,
     mainImageURL,
     mainClipURL,
@@ -394,6 +396,7 @@ const mapStateToProps = (state, ownProps) => {
     images_count,
   } = state.WSS;
   return {
+    thisYear,
     isFetching,
     speakers,
     seminars,

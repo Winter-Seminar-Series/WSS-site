@@ -1,18 +1,18 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import PublicCard from '../components/cards/PublicCard';
-import { THIS_YEAR } from '../constants/info';
 import { getModelList, MODEL_LISTS_NAMES } from '../redux/actions/WSS';
 
 const Seminars = ({
+  thisYear,
   getWSSPrimitiveFields,
   getModelList,
   seminars,
   isFetching
 }) => {
   useEffect(() => {
-    getModelList(MODEL_LISTS_NAMES.SEMINARS, THIS_YEAR);
-    getModelList(MODEL_LISTS_NAMES.SPEAKERS, THIS_YEAR);
+    getModelList(MODEL_LISTS_NAMES.SEMINARS, thisYear);
+    getModelList(MODEL_LISTS_NAMES.SPEAKERS, thisYear);
   }, [getWSSPrimitiveFields]);
 
   return (
@@ -58,8 +58,9 @@ const Seminars = ({
 };
 
 const mapStateToProps = (state, ownProps) => {
-  const { isFetching, seminars } = state.WSS;
+  const { isFetching, seminars, thisYear } = state.WSS;
   return {
+    thisYear,
     isFetching,
     seminars,
   };

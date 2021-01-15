@@ -1,9 +1,9 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import { connect } from 'react-redux';
-import {THIS_YEAR} from "../constants/info";
 import { getRedirectURL } from "../redux/actions/participant";
 
 function GoToButton({
+  thisYear,
   type,
   id,
   getRedirectURL,
@@ -14,7 +14,7 @@ function GoToButton({
     setLoading(true)
 
     try {
-      const { response } = await getRedirectURL(THIS_YEAR, type, id)
+      const { response } = await getRedirectURL(thisYear, type, id)
 
       if (response && response.redirect_url) {
         window.open(response.redirect_url, '_blank');
@@ -34,8 +34,12 @@ function GoToButton({
   )
 }
 
+const mapStateToProps = (state, ownProps) => ({
+  thisYear: state.WSS.thisYear,
+})
+
 export default connect(
-  undefined,
+  mapStateToProps,
   {
     getRedirectURL,
   }

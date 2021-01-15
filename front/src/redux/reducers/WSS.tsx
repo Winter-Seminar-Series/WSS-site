@@ -11,7 +11,7 @@ const initState = {
   isRegistrationOpen: false,
   participantsCount: 0,
   icalLink: undefined,
-  year: 2020,
+  thisYear: 2020,
   startDate: undefined,
   endDate: undefined,
   proposalLink: undefined,

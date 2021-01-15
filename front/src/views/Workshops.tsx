@@ -1,16 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import PublicCard from '../components/cards/PublicCard';
-import { THIS_YEAR } from '../constants/info';
 import { Speaker } from '../models/wss';
 import { getModelList, MODEL_LISTS_NAMES } from '../redux/actions/WSS';
 
-const Workshops = ({ getModelList, workshops, isFetching }) => {
+const Workshops = ({ getModelList, workshops, isFetching, thisYear }) => {
   const [renderOnce, setRenderOnce] = useState(false);
 
   useEffect(() => {
-    getModelList(MODEL_LISTS_NAMES.WORKSHOPS, THIS_YEAR);
-    getModelList(MODEL_LISTS_NAMES.SPEAKERS, THIS_YEAR);
+    getModelList(MODEL_LISTS_NAMES.WORKSHOPS, thisYear);
+    getModelList(MODEL_LISTS_NAMES.SPEAKERS, thisYear);
   }, [getModelList]);
 
   return (
@@ -48,8 +47,9 @@ const Workshops = ({ getModelList, workshops, isFetching }) => {
 };
 
 const mapStateToProps = (state, ownProps) => {
-  const { isFetching, workshops } = state.WSS;
+  const { isFetching, workshops, thisYear } = state.WSS;
   return {
+    thisYear,
     isFetching,
     workshops,
   };

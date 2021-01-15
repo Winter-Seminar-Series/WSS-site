@@ -1,7 +1,6 @@
 import * as actionTypes from '../actionTypes';
 import * as URLs from './urls';
 import { CALL_API } from '../middleware/api/api';
-import {THIS_YEAR} from "../../constants/info";
 
 export const getProfile = () => ({
   [CALL_API]: {
