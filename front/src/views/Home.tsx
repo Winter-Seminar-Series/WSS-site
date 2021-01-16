@@ -51,6 +51,8 @@ function Home({
   endDate,
 }) {
   useEffect(() => {
+    console.log(thisYear);
+    console.log("##################")
     getWSSPrimitiveFields(thisYear);
     getModelList(MODEL_LISTS_NAMES.SEMINARS, thisYear);
     getModelList(MODEL_LISTS_NAMES.SPEAKERS, thisYear);
@@ -361,7 +363,6 @@ function Home({
 
 const mapStateToProps = (state, ownProps) => {
   const {
-    thisYear,
     isFetching,
     mainImageURL,
     mainClipURL,
@@ -396,7 +397,7 @@ const mapStateToProps = (state, ownProps) => {
     images_count,
   } = state.WSS;
   return {
-    thisYear,
+    thisYear: state.account.thisYear,
     isFetching,
     speakers,
     seminars,

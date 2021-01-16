@@ -60,7 +60,8 @@ const Staff = ({
 };
 
 const mapStateToProps = (state, ownProps) => {
-  const { isFetching, staff, holding_teams, thisYear } = state.WSS;
+  const { isFetching, staff, holding_teams } = state.WSS;
+  const { thisYear } = state.account;
   return {
     thisYear,
     holding_teams,

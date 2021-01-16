@@ -39,7 +39,8 @@ function Announcement({
 
 const mapStateToProps = (state, ownProps) => {
   const { registeredWorkshops, } = state.Participant;
-  const { workshops, thisYear } = state.WSS;
+  const { workshops } = state.WSS;
+  const { thisYear } = state.account;
   return {
     thisYear,
     registeredWorkshops,

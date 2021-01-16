@@ -47,7 +47,8 @@ const Workshops = ({ getModelList, workshops, isFetching, thisYear }) => {
 };
 
 const mapStateToProps = (state, ownProps) => {
-  const { isFetching, workshops, thisYear } = state.WSS;
+  const { isFetching, workshops } = state.WSS;
+  const { thisYear } = state.account;
   return {
     thisYear,
     isFetching,

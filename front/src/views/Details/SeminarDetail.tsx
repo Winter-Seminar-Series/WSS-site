@@ -154,7 +154,7 @@ function SeminarDetail({
 
 const mapStateToProps = (state, ownProps) => {
   return ({
-    thisYear: state.WSS.thisYear,
+    thisYear: state.account.thisYear,
     isFetching: state.WSS.isFetching,
     isLoggedIn: state.account.isLoggedIn,
     speakers: state.WSS.speakers,

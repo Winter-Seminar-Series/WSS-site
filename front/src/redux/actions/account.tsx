@@ -3,6 +3,13 @@ import * as URLs from './urls';
 import { CALL_API } from '../middleware/api/api';
 import { BASE_URL } from '../../constants/info';
 
+export const setThisYear = (thisYear) => ({
+  type: actionTypes.CHANGE_THIS_YEAR,
+  payload: {
+    thisYear
+  }
+})
+
 export const register = (
   username: string,
   email: string,

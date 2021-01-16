@@ -63,7 +63,8 @@ function UserWorkshopList({
 
 const mapStateToProps = (state, ownProps) => {
   const { registeredWorkshops, } = state.Participant;
-  const { isFetching, thisYear } = state.WSS;
+  const { isFetching } = state.WSS;
+  const { thisYear } = state.account;
   return {
     thisYear,
     registeredWorkshops,

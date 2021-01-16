@@ -121,7 +121,7 @@ function ScheduleCard({
 }
 
 const mapStateToProps = (state, ownProps) => ({
-  thisYear: state.WSS.thisYear,
+  thisYear: state.account.thisYear,
   seminar: ownProps.seminar,
   speaker: ownProps.speaker,
   showJoin: ownProps.showJoin,

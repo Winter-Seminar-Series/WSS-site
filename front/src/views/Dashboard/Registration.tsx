@@ -298,7 +298,7 @@ const mapStateToProps = (state, ownProps) => {
   } = state.Participant;
   const { isFetching: paymentProcess } = state.account;
   return {
-    thisYear: state.WSS.thisYear,
+    thisYear: state.account.thisYear,
     paymentProcess,
     isFetching,
     first_name,

@@ -1,12 +1,54 @@
-import React from 'react';
+import { title } from 'process';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
+import { setThisYear as doSetThisYear } from '../../redux/actions/account'
 
-const Header = ({ isLoggedIn }) => {
+const Header = ({ isLoggedIn, thisYear, doSetThisYear }) => {
   const { t } = useTranslation('header', { useSuspense: false });
 
   const navbarItems: NavBarItem[] = [
-    { title: 'WSS 2020', persianTitle: 'WSS 2020', link: '/' },
+    {
+      title: 'WSS ' + thisYear,
+      persianTitle: 'WSS ' + thisYear,
+      link: '/',
+      handler: (thisYear: number) => {
+        doSetThisYear(thisYear)
+          .then(() => window.location.reload())
+      },
+      children: [
+        {
+          title: 'WSS 2020',
+          persianTitle: 'WSS 2020',
+          number: 2020,
+        },
+        {
+          title: 'WSS 2019',
+          persianTitle: 'WSS 2019',
+          number: 2019,
+        },
+        {
+          title: 'WSS 2018',
+          persianTitle: 'WSS 2018',
+          number: 2018,
+        },
+        {
+          title: 'WSS 2017',
+          persianTitle: 'WSS 2017',
+          number: 2017,
+        },
+        {
+          title: 'WSS 2016',
+          persianTitle: 'WSS 2016',
+          number: 2016,
+        },
+        {
+          title: 'WSS 2015',
+          persianTitle: 'WSS 2015',
+          number: 2015,
+        },
+      ]
+    },
     { title: 'About Us', persianTitle: 'درباره ما', link: '/about' },
     { title: 'Speakers', persianTitle: 'سمینارها', link: '/seminars' },
     { title: 'Workshops', persianTitle: 'کارگاه‌ها', link: '/workshops' },
@@ -71,7 +113,11 @@ const Header = ({ isLoggedIn }) => {
                       <ul className="dropdown-menu" role="menu">
                         {i.children.map((c) => (
                           <li key={c.title}>
-                            <a className="dropdown-item" href={c.link}>
+                            <a
+                              href={c.link}
+                              className="dropdown-item"
+                              onClick={() => i.handler(c.number)}
+                              style={{ cursor: 'pointer' }}>
                               {c.title}
                             </a>
                           </li>
@@ -90,25 +136,33 @@ const Header = ({ isLoggedIn }) => {
           </div>
         </div>
       </nav>
-    </header>
+    </header >
   );
 };
 
 const mapStateToProps = (state, ownProps) => ({
+  thisYear: state.account.thisYear,
   isLoggedIn: state.account.isLoggedIn,
 });
 
-export default connect(mapStateToProps, {})(Header);
+export default connect(
+  mapStateToProps,
+  {
+    doSetThisYear,
+  }
+)(Header);
 
 interface NavBarItem {
   title: string;
   persianTitle: string;
   link: string;
+  handler?: any,
   style?: string;
   children?: {
     title: string;
     persianTitle: string;
-    link: string;
+    link?: string,
+    number?: number;
   }[];
   loggedIn?: 'authorized' | 'notAuthorized';
 }

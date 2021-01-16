@@ -20,7 +20,6 @@ function Schedule({
   seminars,
   icalLink,
   calendarLink,
-  year,
   isLoggedIn,
   isRegistered,
 }) {
@@ -195,7 +194,7 @@ function Schedule({
 
               <div>
                 <h3 className="section-sub-title my-0 text-nowrap">
-                  WSS {year} Talks
+                  WSS {thisYear} Talks
                 </h3>
 
                 <div className="form-check">
@@ -285,10 +284,9 @@ const mapStateToProps = (state, ownProps) => ({
   endDate: state.WSS.endDate,
   proposalLink: state.WSS.proposalLink,
   calendarLink: state.WSS.calendarLink,
-  year: state.WSS.year,
   isLoggedIn: state.account.isLoggedIn,
   isRegistered: state.Participant.isRegistered,
-  thisYear: state.WSS.thisYear,
+  thisYear: state.account.thisYear,
 })
 
 export default connect(

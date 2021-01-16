@@ -45,7 +45,7 @@ function Dashboard({ match, verifyPayment, thisYear }) {
 }
 
 const mapStateToProps = (state, ownProps) => ({
-  thisYear: state.WSS.thisYear,
+  thisYear: state.account.thisYear,
 });
 
 export default connect(mapStateToProps, {

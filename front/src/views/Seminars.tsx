@@ -58,7 +58,8 @@ const Seminars = ({
 };
 
 const mapStateToProps = (state, ownProps) => {
-  const { isFetching, seminars, thisYear } = state.WSS;
+  const { isFetching, seminars } = state.WSS;
+  const { thisYear } = state.account;
   return {
     thisYear,
     isFetching,
