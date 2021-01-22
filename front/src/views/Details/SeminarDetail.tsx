@@ -7,12 +7,12 @@ import {
   MODEL_LISTS_NAMES,
 } from '../../redux/actions/WSS';
 import moment from 'moment'
-import { THIS_YEAR } from '../../constants/info'
 import GoToButton from "../../components/GoToButton";
-import {doesUserHaveRegistered} from "../../redux/actions/participant";
+import { doesUserHaveRegistered } from "../../redux/actions/participant";
 import FavoriteButton from "../../components/FavoriteButton";
 
 function SeminarDetail({
+  thisYear,
   doesUserHaveRegistered,
   getAnEntityOfModelList,
   seminars,
@@ -25,18 +25,18 @@ function SeminarDetail({
   const id = useParams()['id'];
 
   useEffect(() => {
-    doesUserHaveRegistered(THIS_YEAR);
+    doesUserHaveRegistered(thisYear);
   }, [doesUserHaveRegistered])
 
   useEffect(() => {
-    getAnEntityOfModelList(MODEL_LISTS_NAMES.SEMINARS, THIS_YEAR, id);
+    getAnEntityOfModelList(MODEL_LISTS_NAMES.SEMINARS, thisYear, id);
   }, [getAnEntityOfModelList])
 
   useEffect(() => {
     if (seminars.find(s => s.id == id)) {
       const seminar = seminars.find(s => s.id == id);
       setSeminar(seminar);
-      getAnEntityOfModelList(MODEL_LISTS_NAMES.SPEAKERS, THIS_YEAR, seminar.speaker);
+      getAnEntityOfModelList(MODEL_LISTS_NAMES.SPEAKERS, thisYear, seminar.speaker);
     }
   }, [seminars])
 
@@ -74,7 +74,7 @@ function SeminarDetail({
             <div className="col mt-3">
               <div className="d-flex">
                 {seminar && seminar.id && (
-                  <FavoriteButton year={THIS_YEAR} type={'seminar'} id={seminar.id} />
+                  <FavoriteButton year={thisYear} type={'seminar'} id={seminar.id} />
                 )}
 
                 <h2 className="ml-3">{speaker.name}</h2>
@@ -154,6 +154,7 @@ function SeminarDetail({
 
 const mapStateToProps = (state, ownProps) => {
   return ({
+    thisYear: state.account.thisYear,
     isFetching: state.WSS.isFetching,
     isLoggedIn: state.account.isLoggedIn,
     speakers: state.WSS.speakers,

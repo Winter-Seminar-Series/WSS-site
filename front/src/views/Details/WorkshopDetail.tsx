@@ -13,10 +13,10 @@ import {
   getRegisteredWorkshops,
 } from '../../redux/actions/participant';
 import moment from 'moment'
-import { THIS_YEAR } from '../../constants/info'
 import GoToButton from "../../components/GoToButton";
 
 function WorkshopDetail({
+  thisYear,
   getWSSPrimitiveFields,
   getAnEntityOfModelList,
   workshops,
@@ -35,19 +35,19 @@ function WorkshopDetail({
   const id = useParams()['id'];
 
   useEffect(() => {
-    getWSSPrimitiveFields(THIS_YEAR);
+    getWSSPrimitiveFields(thisYear);
   }, [getWSSPrimitiveFields]);
 
   useEffect(() => {
-    getAnEntityOfModelList(MODEL_LISTS_NAMES.WORKSHOPS, THIS_YEAR, id);
-    getRegisteredWorkshops(THIS_YEAR);
+    getAnEntityOfModelList(MODEL_LISTS_NAMES.WORKSHOPS, thisYear, id);
+    getRegisteredWorkshops(thisYear);
   }, [getAnEntityOfModelList])
 
   useEffect(() => {
     if (!!workshops.find(s => s.id == id)) {
       const workshop = workshops.find(w => w.id == id);
       setWorkshop(workshop);
-      getAnEntityOfModelList(MODEL_LISTS_NAMES.SPEAKERS, THIS_YEAR, workshop.speaker);
+      getAnEntityOfModelList(MODEL_LISTS_NAMES.SPEAKERS, thisYear, workshop.speaker);
     }
   }, [workshops])
 
@@ -72,80 +72,80 @@ function WorkshopDetail({
         <div className="container">
           <div className="row align-items-end">
 
-              <div className="col-md-6 col-lg-4 m-0">
-                <div style={{
-                  width: '100%',
-                  paddingTop: '100%',
-                  position: 'relative',
-                  backgroundColor: 'rgba(0,0,0,.1)',
-                  borderRadius: '5px'
-                }}>
-                  {speaker.picture &&
+            <div className="col-md-6 col-lg-4 m-0">
+              <div style={{
+                width: '100%',
+                paddingTop: '100%',
+                position: 'relative',
+                backgroundColor: 'rgba(0,0,0,.1)',
+                borderRadius: '5px'
+              }}>
+                {speaker.picture &&
                   <img style={{
                     borderRadius: '5px',
                     width: '100%',
                     boxShadow: '0px 6px 12px rgba(0,0,0,.3)',
                     top: '0',
                     position: 'absolute'
-                  }} src={`${BASE_URL}/${speaker.picture}`} alt=''/>
-                  }
-                </div>
+                  }} src={`${BASE_URL}/${speaker.picture}`} alt='' />
+                }
               </div>
+            </div>
             <div className="col mt-3">
-                  <h2>{speaker.name}</h2>
-                  <h5>{`${speaker.degree}, ${speaker.place}`}</h5>
-                  <div className="seminar-details">
-                    <i className="fa fa-clock-o">&nbsp;</i>
-                    {workshop.duration && (
-                      parseInt(moment(workshop.duration, "hh:mm:ss").format(`hh`)) === 12
-                        ? parseInt(moment(workshop.duration, "hh:mm:ss").format(`mm`)) + " minutes"
-                        : parseInt(moment(workshop.duration, "hh:mm:ss").format(`hh`)) * 60 + parseInt(moment(workshop.duration, "hh:mm:ss").format(`mm`)) + " minutes"
-                    )}
-                    {!workshop.duration && (
-                      'To be announced ...'
-                    )}
-                  </div>
-                  <div className="seminar-details">
-                    <i className="fa fa-calendar">&nbsp;</i>
-                    {workshop.start_time &&
-                      moment(workshop.start_time, "YYYY-MM-DD hh:mm:ss").format("dddd, MMMM Do, hh:mm a")
-                    }
-                    {!workshop.start_time && (
-                      'To be announced ...'
-                    )}
-                  </div>
-                  {isLoggedIn && (
-                    <div className="seminar-details mt-3">
-                      {isRegisteredInWorkshop && (
-                      <span style={{ marginRight: '20px' }}>
-                        <GoToButton
-                          type="workshops"
-                          id={workshop.id}
-                        />
-                      </span>
-                      )}
-                      {isWorkshopRegistrationOpen && !isRegisteredInWorkshop && (
-                        <button
-                          disabled={isFetchingForRegistration}
-                          onClick={() => registerWorkshop(THIS_YEAR, id)}
-                          className="btn btn-primary btn-blue">
-                          Register Now For Free
-                          <br />
-                          <span style={{ fontSize: '10px' }}>
-                          (Limited capacity)
-                        </span>
-                        </button>
-                      )}
-                      {isWorkshopRegistrationOpen && isRegisteredInWorkshop && (
-                        <button
-                          disabled={isFetchingForRegistration}
-                          onClick={() => cancelWorkshopRegistration(THIS_YEAR, id)}
-                          className="btn btn-outline-primary btn-lg">
-                          Cancel Registration
-                        </button>
-                      )}
-                    </div>
+              <h2>{speaker.name}</h2>
+              <h5>{`${speaker.degree}, ${speaker.place}`}</h5>
+              <div className="seminar-details">
+                <i className="fa fa-clock-o">&nbsp;</i>
+                {workshop.duration && (
+                  parseInt(moment(workshop.duration, "hh:mm:ss").format(`hh`)) === 12
+                    ? parseInt(moment(workshop.duration, "hh:mm:ss").format(`mm`)) + " minutes"
+                    : parseInt(moment(workshop.duration, "hh:mm:ss").format(`hh`)) * 60 + parseInt(moment(workshop.duration, "hh:mm:ss").format(`mm`)) + " minutes"
+                )}
+                {!workshop.duration && (
+                  'To be announced ...'
+                )}
+              </div>
+              <div className="seminar-details">
+                <i className="fa fa-calendar">&nbsp;</i>
+                {workshop.start_time &&
+                  moment(workshop.start_time, "YYYY-MM-DD hh:mm:ss").format("dddd, MMMM Do, hh:mm a")
+                }
+                {!workshop.start_time && (
+                  'To be announced ...'
+                )}
+              </div>
+              {isLoggedIn && (
+                <div className="seminar-details mt-3">
+                  {isRegisteredInWorkshop && (
+                    <span style={{ marginRight: '20px' }}>
+                      <GoToButton
+                        type="workshops"
+                        id={workshop.id}
+                      />
+                    </span>
                   )}
+                  {isWorkshopRegistrationOpen && !isRegisteredInWorkshop && (
+                    <button
+                      disabled={isFetchingForRegistration}
+                      onClick={() => registerWorkshop(thisYear, id)}
+                      className="btn btn-primary btn-blue">
+                      Register Now For Free
+                      <br />
+                      <span style={{ fontSize: '10px' }}>
+                        (Limited capacity)
+                        </span>
+                    </button>
+                  )}
+                  {isWorkshopRegistrationOpen && isRegisteredInWorkshop && (
+                    <button
+                      disabled={isFetchingForRegistration}
+                      onClick={() => cancelWorkshopRegistration(thisYear, id)}
+                      className="btn btn-outline-primary btn-lg">
+                      Cancel Registration
+                    </button>
+                  )}
+                </div>
+              )}
             </div>
           </div>
           <div className="mt-5">
@@ -181,6 +181,7 @@ function WorkshopDetail({
 
 const mapStateToProps = (state, ownProps) => {
   return ({
+    thisYear: state.account.thisYear,
     isFetching: state.WSS.isFetching,
     isLoggedIn: state.account.isLoggedIn,
     speakers: state.WSS.speakers,

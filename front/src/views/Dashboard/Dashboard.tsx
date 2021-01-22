@@ -8,16 +8,15 @@ import UserSeminarList from './UserSeminarList';
 import UserWorkshopList from './UserWorkshopList';
 import { verifyPayment } from '../../redux/actions/account';
 import { connect } from 'react-redux';
-import { THIS_YEAR } from '../../constants/info';
 
-function Dashboard({ match, verifyPayment }) {
-  
+function Dashboard({ match, verifyPayment, thisYear }) {
+
   const location = useLocation();
   const urlParams = new URLSearchParams(location.search);
   const authority = urlParams.get('Authority');
   const status = urlParams.get('Status');
   if (authority && status) {
-    verifyPayment(authority, status, THIS_YEAR);
+    verifyPayment(authority, status, thisYear);
   }
 
   return (
@@ -45,7 +44,9 @@ function Dashboard({ match, verifyPayment }) {
   );
 }
 
-const mapStateToProps = (state, ownProps) => ({});
+const mapStateToProps = (state, ownProps) => ({
+  thisYear: state.account.thisYear,
+});
 
 export default connect(mapStateToProps, {
   verifyPayment,

@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import PublicCard from '../components/cards/PublicCard';
-import { THIS_YEAR } from '../constants/info';
 import { getModelList, MODEL_LISTS_NAMES } from '../redux/actions/WSS';
 
 const Staff = ({
+  thisYear,
   getWSSPrimitiveFields,
   getModelList,
   staff,
@@ -12,8 +12,8 @@ const Staff = ({
   isFetching
 }) => {
   useEffect(() => {
-    getModelList(MODEL_LISTS_NAMES.HOLDING_TEAMS, THIS_YEAR);
-    getModelList(MODEL_LISTS_NAMES.STAFF, THIS_YEAR);
+    getModelList(MODEL_LISTS_NAMES.HOLDING_TEAMS, thisYear);
+    getModelList(MODEL_LISTS_NAMES.STAFF, thisYear);
   }, [getWSSPrimitiveFields]);
 
   return (
@@ -26,14 +26,14 @@ const Staff = ({
             <h2 className="mb-1 col section-sub-title title-white">Staff</h2>
           </div>
           {isFetching &&
-          <div className="row">
-            <div className="col mb-3 text-center">Loading...</div>
-          </div>
+            <div className="row">
+              <div className="col mb-3 text-center">Loading...</div>
+            </div>
           }
           {staff.length === 0 && !isFetching &&
-          <div className="row">
-            <div className="col text-center">Nothing has been added yet</div>
-          </div>
+            <div className="row">
+              <div className="col text-center">Nothing has been added yet</div>
+            </div>
           }
           {holding_teams.map((team) => (
             <>
@@ -61,7 +61,9 @@ const Staff = ({
 
 const mapStateToProps = (state, ownProps) => {
   const { isFetching, staff, holding_teams } = state.WSS;
+  const { thisYear } = state.account;
   return {
+    thisYear,
     holding_teams,
     isFetching,
     staff,

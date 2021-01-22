@@ -1,17 +1,17 @@
 import moment from "moment";
 import React from "react";
-import {BASE_URL, THIS_YEAR} from "../../constants/info";
+import { BASE_URL } from "../../constants/info";
 import GoToButton from "../GoToButton";
 import FavoriteButton from "../FavoriteButton";
+import { connect } from "react-redux";
 
-function ScheduleCard(
-  {
-    seminar,
-    speaker,
-    showJoin = false,
-    parentId="#accordion"
-  }
-  ) {
+function ScheduleCard({
+  thisYear,
+  seminar,
+  speaker,
+  showJoin = false,
+  parentId = "#accordion"
+}) {
   return (
     <div className="schedule-listing bg">
       {speaker && (
@@ -19,12 +19,12 @@ function ScheduleCard(
           <div className="d-flex flex-wrap align-items-center">
             <div className="mr-3 mb-3">
               {speaker.picture &&
-              <img style={{
-                borderRadius: '5px',
-                width: '80px',
-                height: '80px',
-                boxShadow: '0px 3px 6px rgba(0,0,0,.3)',
-              }} src={`${BASE_URL}/${speaker.picture}`} alt='' />
+                <img style={{
+                  borderRadius: '5px',
+                  width: '80px',
+                  height: '80px',
+                  boxShadow: '0px 3px 6px rgba(0,0,0,.3)',
+                }} src={`${BASE_URL}/${speaker.picture}`} alt='' />
               }
             </div>
 
@@ -37,7 +37,7 @@ function ScheduleCard(
           </div>
 
           <div className="align-self-start">
-            <FavoriteButton year={THIS_YEAR} type={'seminar'} id={seminar.id} />
+            <FavoriteButton year={thisYear} type={'seminar'} id={seminar.id} />
           </div>
 
         </div>
@@ -120,4 +120,15 @@ function ScheduleCard(
   )
 }
 
-export default ScheduleCard;
+const mapStateToProps = (state, ownProps) => ({
+  thisYear: state.account.thisYear,
+  seminar: ownProps.seminar,
+  speaker: ownProps.speaker,
+  showJoin: ownProps.showJoin,
+  parentId: ownProps.parentId,
+})
+
+export default connect(
+  mapStateToProps,
+  {}
+)(ScheduleCard);

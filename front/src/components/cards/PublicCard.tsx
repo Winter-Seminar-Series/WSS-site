@@ -34,26 +34,26 @@ function PublicCard({
   }, [cardRef]);
 
   return (
-    <a className="" ref={cardRef} href={!isStaff ? presentationLink : null} style={{textDecoration: 'none'}} >
-    <div id="public-card">
-      <div className="card">
-        <div className="card-image">
-          <img src={person.picture ? `${BASE_URL}/${person.picture}` : process.env.PUBLIC_URL + '/images/icons/avatar.jpg'} alt="" />
-        </div>
-        <div className="card-description">
-          <h3>{person.name}</h3>
-          {!isStaff &&
-            <p>{`${person.degree}, ${person.place}`}</p>
-          }
-          {/* <div className='like'>
+    <a className="" ref={cardRef} href={!isStaff ? presentationLink : null} style={{ textDecoration: 'none' }} >
+      <div id="public-card">
+        <div className="card">
+          <div className="card-image">
+            <img src={person.picture ? `${BASE_URL}/${person.picture}` : process.env.PUBLIC_URL + '/images/icons/avatar.jpg'} alt="" />
+          </div>
+          <div className="card-description">
+            <h3>{person.name}</h3>
+            {!isStaff &&
+              <p>{`${person.degree}, ${person.place}`}</p>
+            }
+            {/* <div className='like'>
               <span>
                 add to your favorite
             </span>
               <Like />
             </div> */}
+          </div>
         </div>
       </div>
-    </div>
     </a>
   );
 }
