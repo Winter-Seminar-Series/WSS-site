@@ -5,11 +5,23 @@ env:
   HOST_SSH_USER: wss
 on:
   workflow_dispatch:
+    inputs:
+      enableBypassingSanctions:
+        description: 'Make infra able to bypass sanctions. (Highly recommended for Iran servers)'
+        default: 'true'
+        required: true
 jobs:
   setup-infra:
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
+      - name: "Choose sanctions bypass mode"
+        run: |
+          DEPLOY_FILE_NAME=setup_infra_for_iran_servers.yml
+          if [[ "${{ github.event.inputs.enableBypassingSanctions }}" != "true" ]]; then
+          DEPLOY_FILE_NAME=setup_infra.yml
+          fi
+          echo "DEPLOY_FILE_NAME=$DEPLOY_FILE_NAME" >> $GITHUB_ENV
       - name: "Setup Infra From Scratch"
         run: docker run
           -v `pwd`:/app-src/:ro
@@ -17,6 +29,7 @@ jobs:
           --env TARGET_HOST=$TARGET_HOST
           --env TARGET_USER=$HOST_SSH_USER
           --env TARGET_PASS=${{ secrets.HOST_SSH_PASSWORD }}
+          --env DEPLOY_FILE_NAME=$DEPLOY_FILE_NAME
           spy86/ansible:latest
           bash -c '
           ansible-playbook
@@ -25,5 +38,5 @@ jobs:
           ansible_host=$TARGET_HOST
           ansible_user=$TARGET_USER
           ansible_ssh_pass=$TARGET_PASS"
-          setup_infra.yml
+          $DEPLOY_FILE_NAME
           '
