@@ -58,10 +58,10 @@
         - front
         - static-data-provider
 
-    - name: 'Login to Docker Hub registry (To extend pull rate limit)'
-      community.general.docker_login:
-        username: '{{ docker_hub_username | mandatory }}'
-        password: '{{ docker_hub_password | mandatory }}'
+#     - name: 'Login to Docker Hub registry (To extend pull rate limit)'
+#       community.general.docker_login:
+#         username: '{{ docker_hub_username | mandatory }}'
+#         password: '{{ docker_hub_password | mandatory }}'
 
     - name: 'Create .env'
       template:
