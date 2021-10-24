@@ -3,8 +3,9 @@ name: "Deploy Latest Version"
 env:
   DOCKER_USERNAME: sharifwss
   RELEASE_VERSION: 1.1.0 # TODO implement a versioning and make this an input to workflow. See issue #185
-  TARGET_HOST: sharif-wss.ir
-  HOST_SSH_USER: wss
+  TARGET_HOST: wss.ce.sharif.edu
+  HOST_SSH_USER: ssc
+  HOST_SSH_PORT: 22022
 on:
   workflow_dispatch:
 jobs:
@@ -21,6 +22,7 @@ jobs:
           --extra-vars="
           ansible_host=$TARGET_HOST
           ansible_user=$HOST_SSH_USER
+          ansible_port=$HOST_SSH_PORT
           ansible_ssh_pass=${{ secrets.HOST_SSH_PASSWORD }}
           web_image_version=$RELEASE_VERSION
           front_image_version=$RELEASE_VERSION
