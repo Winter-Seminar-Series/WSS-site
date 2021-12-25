@@ -6,9 +6,9 @@ import { BASE_URL } from '../../constants/info';
 export const setThisYear = (thisYear) => ({
   type: actionTypes.CHANGE_THIS_YEAR,
   payload: {
-    thisYear
-  }
-})
+    thisYear,
+  },
+});
 
 export const register = (
   username: string,
@@ -61,8 +61,8 @@ export const logout = () => ({
   },
 });
 
-export const sendPaymentRequest = (year = 2020) => {
-  return ({
+export const sendPaymentRequest = (year = 2021) => {
+  return {
     [CALL_API]: {
       types: [
         actionTypes.SEND_PAYMENT_REQUEST,
@@ -74,10 +74,10 @@ export const sendPaymentRequest = (year = 2020) => {
         method: 'GET',
       },
     },
-  })
+  };
 };
 
-export const verifyPayment = (authority, status, year = 2020) => ({
+export const verifyPayment = (authority, status, year = 2021) => ({
   [CALL_API]: {
     types: [
       actionTypes.VERIFY_PAYMENT_REQUEST,
@@ -90,7 +90,6 @@ export const verifyPayment = (authority, status, year = 2020) => ({
     },
   },
 });
-
 
 export const changePassword = (oldPassword, newPassword) => ({
   [CALL_API]: {
@@ -105,7 +104,7 @@ export const changePassword = (oldPassword, newPassword) => ({
       body: {
         old_password: oldPassword,
         new_password: newPassword,
-      }
+      },
     },
   },
 });
@@ -122,7 +121,7 @@ export const requestPasswordReset = (email) => ({
       method: 'POST',
       body: {
         email,
-      }
+      },
     },
   },
 });
@@ -140,7 +139,7 @@ export const resetPassword = (password, token) => ({
       body: {
         password,
         token,
-      }
+      },
     },
   },
 });

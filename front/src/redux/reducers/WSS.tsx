@@ -11,7 +11,7 @@ const initState = {
   isRegistrationOpen: false,
   participantsCount: 0,
   icalLink: undefined,
-  thisYear: 2020,
+  thisYear: 2021,
   startDate: undefined,
   endDate: undefined,
   proposalLink: undefined,
@@ -140,7 +140,10 @@ function WSS(state = initState, action) {
     case actionTypes.AN_ENTITY_OF_MODEL_LIST_SUCCESS:
       return {
         ...state,
-        [action.payload.modelListName]: [...state[action.payload.modelListName], action.response],
+        [action.payload.modelListName]: [
+          ...state[action.payload.modelListName],
+          action.response,
+        ],
       };
 
     case actionTypes.AN_ENTITY_OF_MODEL_LIST_FAILURE:
