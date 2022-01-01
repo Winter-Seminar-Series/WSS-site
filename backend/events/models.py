@@ -22,6 +22,7 @@ class BaseEvent(PolymorphicModel):  # Is implicitly Abstract
     audience = models.CharField(blank=True, max_length=200)
     link = models.URLField(blank=True, null=True, max_length=256)
     tags = models.ManyToManyField(WssTag, null=True, blank=True)
+    calender_link = models.URLField(blank=True, null=True, max_length=512)
 
     class Meta:
         ordering = ('start_time',)
