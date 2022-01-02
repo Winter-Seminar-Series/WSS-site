@@ -2,9 +2,7 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { toast } from 'react-toastify';
 import { Redirect } from 'react-router-dom';
-import {
-  requestPasswordReset,
-} from '../redux/actions/account'
+import { requestPasswordReset } from '../redux/actions/account';
 
 function ForgotPassword({ isLoggedIn, isFetching, requestPasswordReset }) {
   const [email, setEmail] = useState('');
@@ -25,15 +23,18 @@ function ForgotPassword({ isLoggedIn, isFetching, requestPasswordReset }) {
 
   return (
     <>
-      <section
-        dir="rtl"
-        className="auth-container background-theme row">
-        <div className="diagonal col-xs-12 col-sm-6 form-container" dir="ltr">
-          
-        </div>
+      <section dir="rtl" className="auth-container background-theme row">
+        <div
+          className="diagonal col-xs-12 col-sm-6 form-container"
+          dir="ltr"></div>
 
         <div className="d-none d-sm-flex col-6 logo-container" dir="ltr">
-          
+          <img className="logo" src="/images/new_title_hq.png" alt="wss logo" />
+          <div className="row font-weight-bold text-uppercase d-flex justify-content-around text-white">
+            <div>Winter</div>
+            <div>Seminar</div>
+            <div>Series</div>
+          </div>
         </div>
       </section>
     </>
@@ -45,8 +46,6 @@ const mapStateToProps = (state, ownProps) => ({
   isLoggedIn: state.account.isLoggedIn,
 });
 
-export default connect(
-  mapStateToProps,
-  {
-    requestPasswordReset,
-  })(ForgotPassword);
+export default connect(mapStateToProps, {
+  requestPasswordReset,
+})(ForgotPassword);
