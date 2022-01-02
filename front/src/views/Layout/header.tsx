@@ -2,7 +2,7 @@ import { title } from 'process';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
-import { setThisYear as doSetThisYear } from '../../redux/actions/account'
+import { setThisYear as doSetThisYear } from '../../redux/actions/account';
 
 const Header = ({ isLoggedIn, thisYear, doSetThisYear }) => {
   const { t } = useTranslation('header', { useSuspense: false });
@@ -13,8 +13,7 @@ const Header = ({ isLoggedIn, thisYear, doSetThisYear }) => {
       persianTitle: 'WSS ' + thisYear,
       link: '/',
       handler: (thisYear: number) => {
-        doSetThisYear(thisYear)
-          .then(() => window.location.reload())
+        doSetThisYear(thisYear).then(() => window.location.reload());
       },
       children: [
         {
@@ -47,7 +46,7 @@ const Header = ({ isLoggedIn, thisYear, doSetThisYear }) => {
           persianTitle: 'WSS 2015',
           number: 2015,
         },
-      ]
+      ],
     },
     { title: 'About Us', persianTitle: 'درباره ما', link: '/about' },
     { title: 'Speakers', persianTitle: 'سمینارها', link: '/seminars' },
@@ -55,13 +54,13 @@ const Header = ({ isLoggedIn, thisYear, doSetThisYear }) => {
     // { title: 'PosterSession', persianTitle: 'پوسترسشن', link: '/postersessions' },
     { title: 'Schedule', persianTitle: 'برنامه زمانی', link: '/schedule' },
     { title: 'Staff', persianTitle: 'استف‌ها', link: '/staff' },
-    {
-      title: 'Create Account',
-      persianTitle: 'ثبت‌نام',
-      link: '/create-account',
-      style: 'active',
-      loggedIn: 'notAuthorized',
-    },
+    // {
+    //   title: 'Create Account',
+    //   persianTitle: 'ثبت‌نام',
+    //   link: '/create-account',
+    //   style: 'active',
+    //   loggedIn: 'notAuthorized',
+    // },
     {
       title: 'Login',
       persianTitle: 'ورود',
@@ -125,18 +124,18 @@ const Header = ({ isLoggedIn, thisYear, doSetThisYear }) => {
                       </ul>
                     </li>
                   ) : (
-                      <li key={i.title} className={`nav-item ${i.style || ''}`}>
-                        <a className="nav-link" href={i.link}>
-                          {i.title}
-                        </a>
-                      </li>
-                    ))
+                    <li key={i.title} className={`nav-item ${i.style || ''}`}>
+                      <a className="nav-link" href={i.link}>
+                        {i.title}
+                      </a>
+                    </li>
+                  ))
               )}
             </ul>
           </div>
         </div>
       </nav>
-    </header >
+    </header>
   );
 };
 
@@ -145,23 +144,20 @@ const mapStateToProps = (state, ownProps) => ({
   isLoggedIn: state.account.isLoggedIn,
 });
 
-export default connect(
-  mapStateToProps,
-  {
-    doSetThisYear,
-  }
-)(Header);
+export default connect(mapStateToProps, {
+  doSetThisYear,
+})(Header);
 
 interface NavBarItem {
   title: string;
   persianTitle: string;
   link: string;
-  handler?: any,
+  handler?: any;
   style?: string;
   children?: {
     title: string;
     persianTitle: string;
-    link?: string,
+    link?: string;
     number?: number;
   }[];
   loggedIn?: 'authorized' | 'notAuthorized';
