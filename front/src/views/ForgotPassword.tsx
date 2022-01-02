@@ -66,11 +66,13 @@ function ForgotPassword({ isLoggedIn, isFetching, requestPasswordReset }) {
   );
 }
 
-const mapStateToProps = (state, ownProps) => ({
-  isFetching: state.account.isFetching,
-  isLoggedIn: state.account.isLoggedIn,
-});
 
-export default connect(mapStateToProps, {
-  requestPasswordReset,
-})(ForgotPassword);
+const mapStateToProps = (state, ownProps) => ({
+    isFetching: state.account.isFetching,
+    isLoggedIn: state.account.isLoggedIn,
+  });
+  
+  export default connect(mapStateToProps, {
+    requestPasswordReset,
+  })(ForgotPassword);
+  
