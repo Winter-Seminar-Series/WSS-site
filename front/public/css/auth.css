@@ -14,6 +14,7 @@
   padding: 100px;
 }
 
+
 .auth-container .logo-container {
   margin-top: -50px;
   padding: 100px;
@@ -25,6 +26,8 @@
 .auth-container .logo-container .logo {
   max-width: 100%;
 }
+
+
 
 .linkbar .link {
   text-decoration: none;

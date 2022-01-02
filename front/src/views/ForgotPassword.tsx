@@ -12,6 +12,7 @@ function ForgotPassword({ isLoggedIn, isFetching, requestPasswordReset }) {
 
     if (!email) {
       toast.error('Please enter your email address');
+    //   toast.info('Please enter your email address');
       return;
     }
     requestPasswordReset(email);
