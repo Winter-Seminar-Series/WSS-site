@@ -24,9 +24,33 @@ function ForgotPassword({ isLoggedIn, isFetching, requestPasswordReset }) {
   return (
     <>
       <section dir="rtl" className="auth-container background-theme row">
-        <div
-          className="diagonal col-xs-12 col-sm-6 form-container"
-          dir="ltr"></div>
+        <div className="diagonal col-xs-12 col-sm-6 form-container" dir="ltr">
+          <form onSubmit={doRequestPasswordReset}>
+            <h2>Forgot Password?</h2>
+
+            <p>
+              Enter the email address you used when you created account and
+              we’ll send you instructions to reset your password.
+            </p>
+
+            <div className="form-group mb-5">
+              <label htmlFor="username">Email Address</label>
+              <input
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                id="email"
+                type="text"
+                className="form-control"
+              />
+            </div>
+            <button
+              disabled={isFetching}
+              type="submit"
+              className="btn btn-lg btn-primary btn-dark mb-5">
+              Send Reset Instructions
+            </button>
+          </form>
+        </div>
 
         <div className="d-none d-sm-flex col-6 logo-container" dir="ltr">
           <img className="logo" src="/images/new_title_hq.png" alt="wss logo" />
