@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { setThisSeries as doSetThisSeries } from '../../redux/actions/account';
 
+
 const Header = ({ isLoggedIn, thisSeries, doSetThisSeries }) => {
   const { t } = useTranslation('header', { useSuspense: false });
 
@@ -13,6 +14,7 @@ const Header = ({ isLoggedIn, thisSeries, doSetThisSeries }) => {
       link: '/',
       handler: (thisSeries: string) => {
         doSetThisSeries(thisSeries).then(() => window.location.reload());
+
       },
       children: [
         {
@@ -58,13 +60,13 @@ const Header = ({ isLoggedIn, thisSeries, doSetThisSeries }) => {
     // { title: 'PosterSession', persianTitle: 'پوسترسشن', link: '/postersessions' },
     { title: 'Schedule', persianTitle: 'برنامه زمانی', link: '/schedule' },
     { title: 'Staff', persianTitle: 'استف‌ها', link: '/staff' },
-    {
-      title: 'Create Account',
-      persianTitle: 'ثبت‌نام',
-      link: '/create-account',
-      style: 'active',
-      loggedIn: 'notAuthorized',
-    },
+    // {
+    //   title: 'Create Account',
+    //   persianTitle: 'ثبت‌نام',
+    //   link: '/create-account',
+    //   style: 'active',
+    //   loggedIn: 'notAuthorized',
+    // },
     {
       title: 'Login',
       persianTitle: 'ورود',
