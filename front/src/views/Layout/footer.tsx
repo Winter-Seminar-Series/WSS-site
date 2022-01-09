@@ -72,7 +72,7 @@ function Footer() {
       <div className="mx-auto copyright-info">
         <span>
           {/* <a href="\staff-list#front">Website Creators</a> */}
-          Copyright © 2015-2021 WSS. All Rights Reserved.
+          Copyright © 2015-2022 WSS. All Rights Reserved.
         </span>
       </div>
     </footer>

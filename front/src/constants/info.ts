@@ -1,2 +1,2 @@
-export const THIS_YEAR = 2021;
+export const THIS_SERIES = '7th';
 export const BASE_URL = 'https://sharif-wss.ir';

@@ -2,7 +2,7 @@ import { Redirect } from 'react-router-dom';
 import * as actionTypes from '../actionTypes';
 
 const initState = {
-  thisYear: 2021,
+  thisSeries: '7th',
   isFetching: false,
   isLoggedIn: false,
   doesResetPasswordCompleted: false,
@@ -143,10 +143,10 @@ function account(state = initState, action) {
 
     /////////////////////////
 
-    case actionTypes.CHANGE_THIS_YEAR:
+    case actionTypes.CHANGE_THIS_SERIES:
       return {
         ...state,
-        thisYear: action.payload.thisYear,
+        thisSeries: action.payload.thisSeries,
       };
 
     default:

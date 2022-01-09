@@ -3,10 +3,10 @@ import * as URLs from './urls';
 import { CALL_API } from '../middleware/api/api';
 import { BASE_URL } from '../../constants/info';
 
-export const setThisYear = (thisYear) => ({
-  type: actionTypes.CHANGE_THIS_YEAR,
+export const setThisSeries = (thisSeries: string) => ({
+  type: actionTypes.CHANGE_THIS_SERIES,
   payload: {
-    thisYear,
+    thisSeries,
   },
 });
 
@@ -61,7 +61,7 @@ export const logout = () => ({
   },
 });
 
-export const sendPaymentRequest = (year = 2021) => {
+export const sendPaymentRequest = (series = '7th') => {
   return {
     [CALL_API]: {
       types: [
@@ -69,7 +69,7 @@ export const sendPaymentRequest = (year = 2021) => {
         actionTypes.SEND_PAYMENT_SUCCESS,
         actionTypes.SEND_PAYMENT_FAILURE,
       ],
-      url: `${URLs.ROOT}${year}/payment/request/?callback=${BASE_URL}/dashboard`,
+      url: `${URLs.ROOT}${series}/payment/request/?callback=${BASE_URL}/dashboard`,
       fetchOptions: {
         method: 'GET',
       },
@@ -77,14 +77,14 @@ export const sendPaymentRequest = (year = 2021) => {
   };
 };
 
-export const verifyPayment = (authority, status, year = 2021) => ({
+export const verifyPayment = (authority, status, series = '7th') => ({
   [CALL_API]: {
     types: [
       actionTypes.VERIFY_PAYMENT_REQUEST,
       actionTypes.VERIFY_PAYMENT_SUCCESS,
       actionTypes.VERIFY_PAYMENT_FAILURE,
     ],
-    url: `${URLs.ROOT}${year}/payment/verify/?Authority=${authority}&Status=${status}`,
+    url: `${URLs.ROOT}${series}/payment/verify/?Authority=${authority}&Status=${status}`,
     fetchOptions: {
       method: 'GET',
     },
