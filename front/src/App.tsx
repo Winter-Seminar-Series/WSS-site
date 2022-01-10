@@ -20,30 +20,39 @@ import ResetPassword from './views/ResetPassword';
 import { useSelector } from 'react-redux';
 
 function App() {
-  const thisYear = useSelector((state: any) => state.account.thisYear);
+  const thisSeries = useSelector((state: any) => state.account.thisSeries);
   useEffect(() => {
-    document.title = 'WSS' + thisYear;
+    document.title = thisSeries + ' WSS';
   }, []);
   return (
     <>
       <Header />
       <Switch>
-        <Route path="/seminar/:id" component={SeminarDetail} />
-        <Route path="/workshop/:id" component={WorkshopDetail} />
-        <Route path="/about" component={About} />
-        <Route path="/workshops" component={Workshops} />
-        <Route path="/seminars" component={Seminars} />
-        <Route path="/schedule" component={Schedule} />
-        <Route path="/staff" component={Staff} />
-        {/* <Route path="/create-account" component={CreateAccount} /> */}
-        <Route path="/login" component={Login} />
+        <Route path={`/${thisSeries}/seminar/:id`} component={SeminarDetail} />
         <Route
-          path="/password-reset/confirm/:token"
+          path={`/${thisSeries}/workshop/:id`}
+          component={WorkshopDetail}
+        />
+        <Route path={`/${thisSeries}/about`} component={About} />
+        <Route path={`/${thisSeries}/workshops`} component={Workshops} />
+        <Route path={`/${thisSeries}/seminars`} component={Seminars} />
+        <Route path={`/${thisSeries}/schedule`} component={Schedule} />
+        <Route path={`/${thisSeries}/staff`} component={Staff} />
+        {/* <Route path={`/${thisSeries}/create-account`} component={CreateAccount} /> */}
+        <Route path={`/${thisSeries}/login`} component={Login} />
+        <Route
+          path={`/${thisSeries}/password-reset/confirm/:token`}
           render={() => <ResetPassword key={Math.random()} />}
         />
-        <Route path="/password-reset" component={ForgotPassword} />
-        <PrivateRoute path="/dashboard" component={Dashboard} />
-        <Route path="/" component={Home} />
+        <Route
+          path={`/${thisSeries}/password-reset`}
+          component={ForgotPassword}
+        />
+        <PrivateRoute path={`/${thisSeries}/dashboard`} component={Dashboard} />
+        <Route path={`/${thisSeries}`} component={Home} />
+        <Route exact path="/">
+          <Redirect to={`/${thisSeries}`} />
+        </Route>
       </Switch>
       <Footer />
     </>

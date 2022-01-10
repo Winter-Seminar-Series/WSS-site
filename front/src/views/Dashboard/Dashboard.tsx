@@ -9,14 +9,13 @@ import UserWorkshopList from './UserWorkshopList';
 import { verifyPayment } from '../../redux/actions/account';
 import { connect } from 'react-redux';
 
-function Dashboard({ match, verifyPayment, thisYear }) {
-
+function Dashboard({ match, verifyPayment, thisSeries }) {
   const location = useLocation();
   const urlParams = new URLSearchParams(location.search);
   const authority = urlParams.get('Authority');
   const status = urlParams.get('Status');
   if (authority && status) {
-    verifyPayment(authority, status, thisYear);
+    verifyPayment(authority, status, thisSeries);
   }
 
   return (
@@ -45,7 +44,7 @@ function Dashboard({ match, verifyPayment, thisYear }) {
 }
 
 const mapStateToProps = (state, ownProps) => ({
-  thisYear: state.account.thisYear,
+  thisSeries: state.account.thisSeries,
 });
 
 export default connect(mapStateToProps, {

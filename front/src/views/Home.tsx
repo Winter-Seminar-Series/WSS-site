@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { connect } from 'react-redux';
 import PublicCard from '../components/cards/PublicCard';
 import { BASE_URL } from '../constants/info';
-import moment from 'moment'
+import moment from 'moment';
 import {
   getModelList,
   getModelListCount,
@@ -29,7 +29,7 @@ const venueMapStyle = {
 };
 
 function Home({
-  thisYear,
+  thisSeries,
   getWSSPrimitiveFields,
   getModelList,
   getModelListCount,
@@ -46,19 +46,17 @@ function Home({
   staffCount,
   isActive,
   isRegistrationOpen,
-  year,
+  series,
   startDate,
   endDate,
 }) {
   useEffect(() => {
-    console.log(thisYear);
-    console.log("##################")
-    getWSSPrimitiveFields(thisYear);
-    getModelList(MODEL_LISTS_NAMES.SEMINARS, thisYear);
-    getModelList(MODEL_LISTS_NAMES.SPEAKERS, thisYear);
-    getModelListCount(MODEL_LISTS_NAMES.SEMINARS, thisYear);
-    getModelListCount(MODEL_LISTS_NAMES.WORKSHOPS, thisYear);
-    getModelListCount(MODEL_LISTS_NAMES.SPEAKERS, thisYear);
+    getWSSPrimitiveFields(thisSeries);
+    getModelList(MODEL_LISTS_NAMES.SEMINARS, thisSeries);
+    getModelList(MODEL_LISTS_NAMES.SPEAKERS, thisSeries);
+    getModelListCount(MODEL_LISTS_NAMES.SEMINARS, thisSeries);
+    getModelListCount(MODEL_LISTS_NAMES.WORKSHOPS, thisSeries);
+    getModelListCount(MODEL_LISTS_NAMES.SPEAKERS, thisSeries);
   }, [getWSSPrimitiveFields]);
   const videoRef = useRef<HTMLVideoElement>();
   const setVideoPlayBackRate = () => {
@@ -106,9 +104,11 @@ function Home({
                   </h2>
                   <h2 className="banner-subtitle my-3 font-weight-bold">
                     {startDate && endDate
-
-                      ? moment(startDate, "YYYY-MM-DD").format("MMM Do, YYYY -") + moment(endDate, " YYYY-MM-DD").format("MMM Do, YYYY") : ''}
-
+                      ? moment(startDate, 'YYYY-MM-DD').format(
+                          'MMM Do, YYYY -'
+                        ) +
+                        moment(endDate, ' YYYY-MM-DD').format('MMM Do, YYYY')
+                      : ''}
                   </h2>
                   <h3 className="banner-desc font-weight-bold">
                     IRAN, TEHRAN,
@@ -218,14 +218,19 @@ function Home({
               </h3>
             </div>
             <div className="row justify-content-center">
-              {
-                Array.from(Array(seminars.length).keys()).sort(() => Math.random() - 0.5).slice(0, 8)
-                  .map((index) =>
-                    <div key={index} className="col-xs-10 col-sm-6 col-lg-3 mt-2 mb-4">
-                      <PublicCard id={seminars[index].speaker} presentationLink={'/seminar/' + seminars[index].id} />
-                    </div>
-                  )
-              }
+              {Array.from(Array(seminars.length).keys())
+                .sort(() => Math.random() - 0.5)
+                .slice(0, 8)
+                .map((index) => (
+                  <div
+                    key={index}
+                    className="col-xs-10 col-sm-6 col-lg-3 mt-2 mb-4">
+                    <PublicCard
+                      id={seminars[index].speaker}
+                      presentationLink={'/seminar/' + seminars[index].id}
+                    />
+                  </div>
+                ))}
             </div>
           </div>
           <div className="row">
@@ -236,8 +241,7 @@ function Home({
             </div>
           </div>
         </section>
-      )
-      }
+      )}
 
       <section id="ts-statics" className="z-1 ts-statics diagonal my-5">
         <div className="container py-4">
@@ -346,11 +350,13 @@ function Home({
             </div>
 
             <div className="col-md-6 font-weight-bold">
-
-              <h5 className="section-sub-title text-white mb-3 mt-5">Organizer</h5>
+              <h5 className="section-sub-title text-white mb-3 mt-5">
+                Organizer
+              </h5>
               <p className="font-italic white pb-3">
                 The event is held by the Student Scientific Chapter (SSC) of
-                Computer Engineering Department of Sharif University of Technology
+                Computer Engineering Department of Sharif University of
+                Technology
               </p>
             </div>
           </div>
@@ -359,7 +365,6 @@ function Home({
     </>
   );
 }
-
 
 const mapStateToProps = (state, ownProps) => {
   const {
@@ -372,7 +377,7 @@ const mapStateToProps = (state, ownProps) => {
     isRegistrationOpen,
     participantsCount,
     icalLink,
-    year,
+    series,
     startDate,
     endDate,
     proposalLink,
@@ -397,7 +402,7 @@ const mapStateToProps = (state, ownProps) => {
     images_count,
   } = state.WSS;
   return {
-    thisYear: state.account.thisYear,
+    thisSeries: state.account.thisSeries,
     isFetching,
     speakers,
     seminars,
@@ -413,7 +418,7 @@ const mapStateToProps = (state, ownProps) => {
     isActive,
     isRegistrationOpen,
     icalLink,
-    year,
+    series,
     startDate,
     endDate,
     proposalLink,
@@ -426,4 +431,4 @@ export default connect(mapStateToProps, {
   getWSSPrimitiveFields,
   getModelList,
   getModelListCount,
-})(Home)
+})(Home);

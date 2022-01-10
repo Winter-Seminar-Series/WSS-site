@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { BASE_URL } from '../../constants/info'
+import { BASE_URL } from '../../constants/info';
 import {
   getAnEntityOfModelList,
   getWSSPrimitiveFields,
@@ -12,11 +12,11 @@ import {
   cancelWorkshopRegistration,
   getRegisteredWorkshops,
 } from '../../redux/actions/participant';
-import moment from 'moment'
-import GoToButton from "../../components/GoToButton";
+import moment from 'moment';
+import GoToButton from '../../components/GoToButton';
 
 function WorkshopDetail({
-  thisYear,
+  thisSeries,
   getWSSPrimitiveFields,
   getAnEntityOfModelList,
   workshops,
@@ -29,66 +29,92 @@ function WorkshopDetail({
   isFetchingForRegistration,
   isWorkshopRegistrationOpen,
 }) {
-  const [workshop, setWorkshop] = useState({ id: '', title: '', duration: '', start_time: '', syllabus: '', price: '', speaker: '', tags: [] });
-  const [speaker, setSpeaker] = useState({ picture: '', degree: '', place: '', bio: '', name: '' });
+  const [workshop, setWorkshop] = useState({
+    id: '',
+    title: '',
+    duration: '',
+    start_time: '',
+    syllabus: '',
+    price: '',
+    speaker: '',
+    tags: [],
+  });
+  const [speaker, setSpeaker] = useState({
+    picture: '',
+    degree: '',
+    place: '',
+    bio: '',
+    name: '',
+  });
   const [isRegisteredInWorkshop, setRegistrationStatus] = useState(false);
   const id = useParams()['id'];
 
   useEffect(() => {
-    getWSSPrimitiveFields(thisYear);
+    getWSSPrimitiveFields(thisSeries);
   }, [getWSSPrimitiveFields]);
 
   useEffect(() => {
-    getAnEntityOfModelList(MODEL_LISTS_NAMES.WORKSHOPS, thisYear, id);
-    getRegisteredWorkshops(thisYear);
-  }, [getAnEntityOfModelList])
+    getAnEntityOfModelList(MODEL_LISTS_NAMES.WORKSHOPS, thisSeries, id);
+    getRegisteredWorkshops(thisSeries);
+  }, [getAnEntityOfModelList]);
 
   useEffect(() => {
-    if (!!workshops.find(s => s.id == id)) {
-      const workshop = workshops.find(w => w.id == id);
+    if (workshops.find((s) => s.id === id)) {
+      const workshop = workshops.find((w) => w.id === id);
       setWorkshop(workshop);
-      getAnEntityOfModelList(MODEL_LISTS_NAMES.SPEAKERS, thisYear, workshop.speaker);
+      getAnEntityOfModelList(
+        MODEL_LISTS_NAMES.SPEAKERS,
+        thisSeries,
+        workshop.speaker
+      );
     }
-  }, [workshops])
+  }, [workshops]);
 
   useEffect(() => {
-    if (registeredWorkshops && registeredWorkshops.find(w => w.id == id)) {
+    if (registeredWorkshops && registeredWorkshops.find((w) => w.id === id)) {
       setRegistrationStatus(true);
     } else {
       setRegistrationStatus(false);
     }
-  }, [registeredWorkshops])
+  }, [registeredWorkshops]);
 
   useEffect(() => {
-    if (!!speakers.find(s => s.id == workshop.speaker)) {
-      setSpeaker(speakers.find(s => s.id === workshop.speaker))
+    if (speakers.find((s) => s.id === workshop.speaker)) {
+      setSpeaker(speakers.find((s) => s.id === workshop.speaker));
     }
-  }, [speakers])
+  }, [speakers]);
 
   return (
     <section id="main-container" className="main-container">
-      <div style={{ marginTop: '-15rem', height: '12rem' }} className="diagonal blue-gradient" />
+      <div
+        style={{ marginTop: '-15rem', height: '12rem' }}
+        className="diagonal blue-gradient"
+      />
       <div className="container-fluid px-sm-5" style={{ marginTop: '-3rem' }}>
         <div className="container">
           <div className="row align-items-end">
-
             <div className="col-md-6 col-lg-4 m-0">
-              <div style={{
-                width: '100%',
-                paddingTop: '100%',
-                position: 'relative',
-                backgroundColor: 'rgba(0,0,0,.1)',
-                borderRadius: '5px'
-              }}>
-                {speaker.picture &&
-                  <img style={{
-                    borderRadius: '5px',
-                    width: '100%',
-                    boxShadow: '0px 6px 12px rgba(0,0,0,.3)',
-                    top: '0',
-                    position: 'absolute'
-                  }} src={`${BASE_URL}/${speaker.picture}`} alt='' />
-                }
+              <div
+                style={{
+                  width: '100%',
+                  paddingTop: '100%',
+                  position: 'relative',
+                  backgroundColor: 'rgba(0,0,0,.1)',
+                  borderRadius: '5px',
+                }}>
+                {speaker.picture && (
+                  <img
+                    style={{
+                      borderRadius: '5px',
+                      width: '100%',
+                      boxShadow: '0px 6px 12px rgba(0,0,0,.3)',
+                      top: '0',
+                      position: 'absolute',
+                    }}
+                    src={`${BASE_URL}/${speaker.picture}`}
+                    alt=""
+                  />
+                )}
               </div>
             </div>
             <div className="col mt-3">
@@ -96,50 +122,54 @@ function WorkshopDetail({
               <h5>{`${speaker.degree}, ${speaker.place}`}</h5>
               <div className="seminar-details">
                 <i className="fa fa-clock-o">&nbsp;</i>
-                {workshop.duration && (
-                  parseInt(moment(workshop.duration, "hh:mm:ss").format(`hh`)) === 12
-                    ? parseInt(moment(workshop.duration, "hh:mm:ss").format(`mm`)) + " minutes"
-                    : parseInt(moment(workshop.duration, "hh:mm:ss").format(`hh`)) * 60 + parseInt(moment(workshop.duration, "hh:mm:ss").format(`mm`)) + " minutes"
-                )}
-                {!workshop.duration && (
-                  'To be announced ...'
-                )}
+                {workshop.duration &&
+                  (parseInt(
+                    moment(workshop.duration, 'hh:mm:ss').format(`hh`)
+                  ) === 12
+                    ? parseInt(
+                        moment(workshop.duration, 'hh:mm:ss').format(`mm`)
+                      ) + ' minutes'
+                    : parseInt(
+                        moment(workshop.duration, 'hh:mm:ss').format(`hh`)
+                      ) *
+                        60 +
+                      parseInt(
+                        moment(workshop.duration, 'hh:mm:ss').format(`mm`)
+                      ) +
+                      ' minutes')}
+                {!workshop.duration && 'To be announced ...'}
               </div>
               <div className="seminar-details">
                 <i className="fa fa-calendar">&nbsp;</i>
                 {workshop.start_time &&
-                  moment(workshop.start_time, "YYYY-MM-DD hh:mm:ss").format("dddd, MMMM Do, hh:mm a")
-                }
-                {!workshop.start_time && (
-                  'To be announced ...'
-                )}
+                  moment(workshop.start_time, 'YYYY-MM-DD hh:mm:ss').format(
+                    'dddd, MMMM Do, hh:mm a'
+                  )}
+                {!workshop.start_time && 'To be announced ...'}
               </div>
               {isLoggedIn && (
                 <div className="seminar-details mt-3">
                   {isRegisteredInWorkshop && (
                     <span style={{ marginRight: '20px' }}>
-                      <GoToButton
-                        type="workshops"
-                        id={workshop.id}
-                      />
+                      <GoToButton type="workshops" id={workshop.id} />
                     </span>
                   )}
                   {isWorkshopRegistrationOpen && !isRegisteredInWorkshop && (
                     <button
                       disabled={isFetchingForRegistration}
-                      onClick={() => registerWorkshop(thisYear, id)}
+                      onClick={() => registerWorkshop(thisSeries, id)}
                       className="btn btn-primary btn-blue">
                       Register Now For Free
                       <br />
                       <span style={{ fontSize: '10px' }}>
                         (Limited capacity)
-                        </span>
+                      </span>
                     </button>
                   )}
                   {isWorkshopRegistrationOpen && isRegisteredInWorkshop && (
                     <button
                       disabled={isFetchingForRegistration}
-                      onClick={() => cancelWorkshopRegistration(thisYear, id)}
+                      onClick={() => cancelWorkshopRegistration(thisSeries, id)}
                       className="btn btn-outline-primary btn-lg">
                       Cancel Registration
                     </button>
@@ -154,22 +184,18 @@ function WorkshopDetail({
           <div className="row mt-5 justify-content-center">
             <div className="col-xs-12 col-lg-8">
               <div className="ts-speaker-session right">
-                {workshop.syllabus &&
+                {workshop.syllabus && (
                   <>
                     <h4>Syllabus</h4>
-                    <div className="mb-3">
-                      {workshop.syllabus}
-                    </div>
+                    <div className="mb-3">{workshop.syllabus}</div>
                   </>
-                }
-                {speaker.bio &&
+                )}
+                {speaker.bio && (
                   <>
                     <h4>Bio</h4>
-                    <span>
-                      {speaker.bio}
-                    </span>
+                    <span>{speaker.bio}</span>
                   </>
-                }
+                )}
               </div>
             </div>
           </div>
@@ -180,8 +206,8 @@ function WorkshopDetail({
 }
 
 const mapStateToProps = (state, ownProps) => {
-  return ({
-    thisYear: state.account.thisYear,
+  return {
+    thisSeries: state.account.thisSeries,
     isFetching: state.WSS.isFetching,
     isLoggedIn: state.account.isLoggedIn,
     speakers: state.WSS.speakers,
@@ -189,16 +215,13 @@ const mapStateToProps = (state, ownProps) => {
     registeredWorkshops: state.Participant.registeredWorkshops,
     isFetchingForRegistration: state.Participant.isFetching,
     isWorkshopRegistrationOpen: state.WSS.isWorkshopRegistrationOpen,
-  })
-}
+  };
+};
 
-export default connect(
-  mapStateToProps,
-  {
-    getWSSPrimitiveFields,
-    getAnEntityOfModelList,
-    registerWorkshop,
-    cancelWorkshopRegistration,
-    getRegisteredWorkshops,
-  }
-)(WorkshopDetail);
+export default connect(mapStateToProps, {
+  getWSSPrimitiveFields,
+  getAnEntityOfModelList,
+  registerWorkshop,
+  cancelWorkshopRegistration,
+  getRegisteredWorkshops,
+})(WorkshopDetail);

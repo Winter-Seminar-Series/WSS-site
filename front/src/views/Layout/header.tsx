@@ -1,55 +1,60 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
-import { setThisYear as doSetThisYear } from '../../redux/actions/account';
+import { setThisSeries as doSetThisSeries } from '../../redux/actions/account';
 
-const Header = ({ isLoggedIn, thisYear, doSetThisYear }) => {
+const Header = ({ isLoggedIn, thisSeries, doSetThisSeries }) => {
   const { t } = useTranslation('header', { useSuspense: false });
 
   const navbarItems: NavBarItem[] = [
     {
-      title: 'WSS ' + thisYear,
-      persianTitle: 'WSS ' + thisYear,
-      link: '/' + thisYear,
-      handler: (thisYear: number) => {
-        doSetThisYear(thisYear).then(() => {
+      title: `${thisSeries} WSS`,
+      persianTitle: `${thisSeries} WSS`,
+      link: '/' + thisSeries,
+      handler: (thisSeries: string) => {
+        doSetThisSeries(thisSeries).then(() => {
           window.location.replace(
             window.location.origin +
-              `/${thisYear}` +
-              window.location.pathname.slice(5)
+              `/${thisSeries}` +
+              window.location.pathname.slice(4)
           );
         });
       },
       children: [
         {
-          title: 'WSS 2020',
-          persianTitle: 'WSS 2020',
-          number: 2020,
+          title: '7th Series',
+          persianTitle: '7th Series',
+          series: '7th',
         },
         {
-          title: 'WSS 2019',
-          persianTitle: 'WSS 2019',
-          number: 2019,
+          title: '6th Series',
+          persianTitle: '6th Series',
+          series: '6th',
         },
         {
-          title: 'WSS 2018',
-          persianTitle: 'WSS 2018',
-          number: 2018,
+          title: '5th Series',
+          persianTitle: '5th Series',
+          series: '5th',
         },
         {
-          title: 'WSS 2017',
-          persianTitle: 'WSS 2017',
-          number: 2017,
+          title: '4th Series',
+          persianTitle: '4th Series',
+          series: '4th',
         },
         {
-          title: 'WSS 2016',
-          persianTitle: 'WSS 2016',
-          number: 2016,
+          title: '3rd Series',
+          persianTitle: '3rd Series',
+          series: '3rd',
         },
         {
-          title: 'WSS 2015',
-          persianTitle: 'WSS 2015',
-          number: 2015,
+          title: '2nd Series',
+          persianTitle: '2nd Series',
+          series: '2nd',
+        },
+        {
+          title: '1st Series',
+          persianTitle: '1st Series',
+          series: '1st',
         },
       ],
     },
@@ -57,27 +62,27 @@ const Header = ({ isLoggedIn, thisYear, doSetThisYear }) => {
     {
       title: 'Schedule',
       persianTitle: 'برنامه زمانی',
-      link: `/${thisYear}/schedule`,
+      link: `/${thisSeries}/schedule`,
     },
-    { title: 'Staff', persianTitle: 'استف‌ها', link: `/${thisYear}/staff` },
+    { title: 'Staff', persianTitle: 'استف‌ها', link: `/${thisSeries}/staff` },
     // {
     //   title: 'Create Account',
     //   persianTitle: 'ثبت‌نام',
-    //   link: `/${thisYear}/create-account`,
+    //   link: `/${thisSeries}/create-account`,
     //   style: 'active',
     //   loggedIn: 'notAuthorized',
     // },
     {
       title: 'Login',
       persianTitle: 'ورود',
-      link: `/${thisYear}/login`,
+      link: `/${thisSeries}/login`,
       style: 'active',
       loggedIn: 'notAuthorized',
     },
     {
       title: 'Dashboard',
       persianTitle: 'داشبورد',
-      link: `/${thisYear}/dashboard`,
+      link: `/${thisSeries}/dashboard`,
       style: 'active',
       loggedIn: 'authorized',
     },
@@ -121,7 +126,7 @@ const Header = ({ isLoggedIn, thisYear, doSetThisYear }) => {
                             <a
                               href={c.link}
                               className="dropdown-item"
-                              onClick={() => i.handler(c.number)}
+                              onClick={() => i.handler(c.series)}
                               style={{ cursor: 'pointer' }}>
                               {c.title}
                             </a>
@@ -146,12 +151,12 @@ const Header = ({ isLoggedIn, thisYear, doSetThisYear }) => {
 };
 
 const mapStateToProps = (state, ownProps) => ({
-  thisYear: state.account.thisYear,
+  thisSeries: state.account.thisSeries,
   isLoggedIn: state.account.isLoggedIn,
 });
 
 export default connect(mapStateToProps, {
-  doSetThisYear,
+  doSetThisSeries,
 })(Header);
 
 interface NavBarItem {
@@ -164,7 +169,7 @@ interface NavBarItem {
     title: string;
     persianTitle: string;
     link?: string;
-    number?: number;
+    series?: string;
   }[];
   loggedIn?: 'authorized' | 'notAuthorized';
 }

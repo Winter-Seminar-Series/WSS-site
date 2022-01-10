@@ -11,7 +11,7 @@ const initState = {
   isRegistrationOpen: false,
   participantsCount: 0,
   icalLink: undefined,
-  thisYear: 2020,
+  thisSeries: '7th',
   startDate: undefined,
   endDate: undefined,
   proposalLink: undefined,
@@ -73,7 +73,7 @@ function WSS(state = initState, action) {
         isWorkshopRegistrationOpen: action.response.workshop_registration_open,
         participantsCount: action.response.participants_count,
         icalLink: action.response.ical_link,
-        year: action.response.year,
+        series: action.response.series,
         startDate: action.response.start_date,
         endDate: action.response.end_date,
         proposalLink: action.response.proposal_link,
@@ -140,7 +140,10 @@ function WSS(state = initState, action) {
     case actionTypes.AN_ENTITY_OF_MODEL_LIST_SUCCESS:
       return {
         ...state,
-        [action.payload.modelListName]: [...state[action.payload.modelListName], action.response],
+        [action.payload.modelListName]: [
+          ...state[action.payload.modelListName],
+          action.response,
+        ],
       };
 
     case actionTypes.AN_ENTITY_OF_MODEL_LIST_FAILURE:

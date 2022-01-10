@@ -1,26 +1,21 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import { getRedirectURL } from "../redux/actions/participant";
+import { getRedirectURL } from '../redux/actions/participant';
 
-function GoToButton({
-  thisYear,
-  type,
-  id,
-  getRedirectURL,
-}) {
-  const [loading, setLoading] = useState(false)
+function GoToButton({ thisSeries, type, id, getRedirectURL }) {
+  const [loading, setLoading] = useState(false);
 
   async function redirectToClass() {
-    setLoading(true)
+    setLoading(true);
 
     try {
-      const { response } = await getRedirectURL(thisYear, type, id)
+      const { response } = await getRedirectURL(thisSeries, type, id);
 
       if (response && response.redirect_url) {
         window.open(response.redirect_url, '_blank');
       }
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
   }
 
@@ -31,16 +26,13 @@ function GoToButton({
       className="btn btn-primary btn-blue">
       Join
     </button>
-  )
+  );
 }
 
 const mapStateToProps = (state, ownProps) => ({
-  thisYear: state.account.thisYear,
-})
+  thisSeries: state.account.thisSeries,
+});
 
-export default connect(
-  mapStateToProps,
-  {
-    getRedirectURL,
-  }
-)(GoToButton)
+export default connect(mapStateToProps, {
+  getRedirectURL,
+})(GoToButton);
