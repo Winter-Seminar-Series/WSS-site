@@ -1,16 +1,16 @@
-import moment from "moment";
-import React from "react";
-import { BASE_URL } from "../../constants/info";
-import GoToButton from "../GoToButton";
-import FavoriteButton from "../FavoriteButton";
-import { connect } from "react-redux";
+import moment from 'moment';
+import React from 'react';
+import { BASE_URL } from '../../constants/info';
+import GoToButton from '../GoToButton';
+import FavoriteButton from '../FavoriteButton';
+import { connect } from 'react-redux';
 
 function ScheduleCard({
-  thisYear,
+  thisSeries,
   seminar,
   speaker,
   showJoin = false,
-  parentId = "#accordion"
+  parentId = '#accordion',
 }) {
   return (
     <div className="schedule-listing bg">
@@ -18,45 +18,52 @@ function ScheduleCard({
         <div className="row flex-nowrap justify-content-between">
           <div className="d-flex flex-wrap align-items-center">
             <div className="mr-3 mb-3">
-              {speaker.picture &&
-                <img style={{
-                  borderRadius: '5px',
-                  width: '80px',
-                  height: '80px',
-                  boxShadow: '0px 3px 6px rgba(0,0,0,.3)',
-                }} src={`${BASE_URL}/${speaker.picture}`} alt='' />
-              }
+              {speaker.picture && (
+                <img
+                  style={{
+                    borderRadius: '5px',
+                    width: '80px',
+                    height: '80px',
+                    boxShadow: '0px 3px 6px rgba(0,0,0,.3)',
+                  }}
+                  src={`${BASE_URL}/${speaker.picture}`}
+                  alt=""
+                />
+              )}
             </div>
 
             <div>
-              <h5>
-                {speaker.name}
-              </h5>
+              <h5>{speaker.name}</h5>
               {speaker.degree}, {speaker.place}
             </div>
           </div>
 
           <div className="align-self-start">
-            <FavoriteButton year={thisYear} type={'seminar'} id={seminar.id} />
+            <FavoriteButton
+              series={thisSeries}
+              type={'seminar'}
+              id={seminar.id}
+            />
           </div>
-
         </div>
       )}
 
       {seminar && speaker && (
         <>
           <div className="row mt-4">
-            <h4>
-              {seminar.title}
-            </h4>
+            <h4>{seminar.title}</h4>
           </div>
 
           <div className="row align-items-center justify-content-between mt-2">
-            <div className='py-3 d-flex flex-column flex-sm-row'>
+            <div className="py-3 d-flex flex-column flex-sm-row">
               <div>
                 <i className="fa fa-clock-o">&nbsp;</i>
 
-                <b>{moment(seminar.start_time, "YYYY-MM-DD hh:mm:ss").format("hh:mm a")}</b>
+                <b>
+                  {moment(seminar.start_time, 'YYYY-MM-DD hh:mm:ss').format(
+                    'hh:mm a'
+                  )}
+                </b>
               </div>
 
               <span className="px-2 d-none d-sm-inline">-</span>
@@ -74,23 +81,15 @@ function ScheduleCard({
                 details
               </button>
 
-              {showJoin && (
-                <GoToButton
-                  type="seminars"
-                  id={seminar.id}
-                />
-              )}
+              {showJoin && <GoToButton type="seminars" id={seminar.id} />}
             </div>
           </div>
 
           <div
             id={`collapse${seminar.id}`}
             className="collapse"
-            data-parent={parentId}
-          >
+            data-parent={parentId}>
             <div className="mt-4 pt-4 border-top">
-
-
               {seminar.abstract && (
                 <>
                   <h5>Abstract</h5>
@@ -111,24 +110,20 @@ function ScheduleCard({
                   <p>{speaker.bio}</p>
                 </>
               )}
-
             </div>
           </div>
         </>
       )}
     </div>
-  )
+  );
 }
 
 const mapStateToProps = (state, ownProps) => ({
-  thisYear: state.account.thisYear,
+  thisSeries: state.account.thisSeries,
   seminar: ownProps.seminar,
   speaker: ownProps.speaker,
   showJoin: ownProps.showJoin,
   parentId: ownProps.parentId,
-})
+});
 
-export default connect(
-  mapStateToProps,
-  {}
-)(ScheduleCard);
+export default connect(mapStateToProps, {})(ScheduleCard);
