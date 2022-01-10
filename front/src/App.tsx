@@ -28,28 +28,22 @@ function App() {
     <>
       <Header />
       <Switch>
-        <Route path={`/${thisYear}/seminar/:id`} component={SeminarDetail} />
-        <Route path={`/${thisYear}/workshop/:id`} component={WorkshopDetail} />
-        <Route path={`/${thisYear}/about`} component={About} />
-        <Route path={`/${thisYear}/workshops`} component={Workshops} />
-        <Route path={`/${thisYear}/seminars`} component={Seminars} />
-        <Route path={`/${thisYear}/schedule`} component={Schedule} />
-        <Route path={`/${thisYear}/staff`} component={Staff} />
-        <Route path={`/${thisYear}/create-account`} component={CreateAccount} />
-        <Route path={`/${thisYear}/login`} component={Login} />
+        <Route path="/seminar/:id" component={SeminarDetail} />
+        <Route path="/workshop/:id" component={WorkshopDetail} />
+        <Route path="/about" component={About} />
+        <Route path="/workshops" component={Workshops} />
+        <Route path="/seminars" component={Seminars} />
+        <Route path="/schedule" component={Schedule} />
+        <Route path="/staff" component={Staff} />
+        {/* <Route path="/create-account" component={CreateAccount} /> */}
+        <Route path="/login" component={Login} />
         <Route
-          path={`/${thisYear}/password-reset/confirm/:token`}
+          path="/password-reset/confirm/:token"
           render={() => <ResetPassword key={Math.random()} />}
         />
-        <Route
-          path={`/${thisYear}/password-reset`}
-          component={ForgotPassword}
-        />
-        <PrivateRoute path={`/${thisYear}/dashboard`} component={Dashboard} />
-        <Route path={`/${thisYear}/`} component={Home} />
-        <Route exact path="/">
-          <Redirect to={`/${thisYear}`} />
-        </Route>
+        <Route path="/password-reset" component={ForgotPassword} />
+        <PrivateRoute path="/dashboard" component={Dashboard} />
+        <Route path="/" component={Home} />
       </Switch>
       <Footer />
     </>

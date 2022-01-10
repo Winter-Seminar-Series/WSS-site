@@ -2,7 +2,7 @@ import { Redirect } from 'react-router-dom';
 import * as actionTypes from '../actionTypes';
 
 const initState = {
-  thisYear: 2020,
+  thisYear: 2021,
   isFetching: false,
   isLoggedIn: false,
   doesResetPasswordCompleted: false,
@@ -72,10 +72,10 @@ function account(state = initState, action) {
 
     ///////////////////
     case actionTypes.SEND_PAYMENT_REQUEST:
-      return ({
+      return {
         ...state,
         isFetching: true,
-      })
+      };
 
     case actionTypes.SEND_PAYMENT_SUCCESS:
       var link = document.createElement('a');
@@ -90,64 +90,64 @@ function account(state = initState, action) {
       };
 
     case actionTypes.SEND_PAYMENT_FAILURE:
-      return ({
+      return {
         ...state,
         isFetching: false,
-      })
+      };
 
     ///////////////////
 
     case actionTypes.REQUEST_PASSWORD_RESET_REQUEST:
-      return ({
+      return {
         ...state,
         isFetching: true,
         doesResetPasswordCompleted: false,
-      })
+      };
 
     case actionTypes.REQUEST_PASSWORD_RESET_SUCCESS:
-      return ({
+      return {
         ...state,
         isFetching: false,
         doesResetPasswordCompleted: false,
-      })
+      };
 
     case actionTypes.REQUEST_PASSWORD_RESET_FAILURE:
-      return ({
+      return {
         ...state,
         isFetching: false,
         doesResetPasswordCompleted: false,
-      })
+      };
 
     //////////////////////////
 
     case actionTypes.RESET_PASSWORD_REQUEST:
-      return ({
+      return {
         ...state,
         isFetching: true,
         doesResetPasswordCompleted: false,
-      })
+      };
 
     case actionTypes.RESET_PASSWORD_SUCCESS:
-      return ({
+      return {
         ...state,
         isFetching: false,
         doesResetPasswordCompleted: true,
-      })
+      };
 
     case actionTypes.RESET_PASSWORD_FAILURE:
-      return ({
+      return {
         ...state,
         isFetching: false,
         doesResetPasswordCompleted: false,
-      })
+      };
 
     /////////////////////////
 
     case actionTypes.CHANGE_THIS_YEAR:
-      return ({
+      return {
         ...state,
         thisYear: action.payload.thisYear,
-      })
+      };
 
     default:
       return state;
