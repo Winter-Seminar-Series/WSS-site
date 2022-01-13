@@ -38,7 +38,7 @@ base_urlpatterns = base_router.urls
 
 
 urlpatterns = [
-    url(r'^(?P<year>\d{4})/', include(year_urlpatterns)),
+    url(r'^(?P<year>[\d\w]*)/', include(year_urlpatterns)),
     url(r'', include(base_urlpatterns)),
     path('register/', RegisterAPI.as_view(), name='register'),
     path('login/', LoginAPI.as_view(), name='login'),
