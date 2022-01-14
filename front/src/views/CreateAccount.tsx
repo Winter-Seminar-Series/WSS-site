@@ -3,12 +3,14 @@ import { Redirect, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { toast } from 'react-toastify';
 import { register } from '../redux/actions/account';
+import ReCaptchaV2 from 'react-google-recaptcha';
 
 function CreateAccount({ register, isLoggedIn, isFetching }) {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [token, setToken] = useState(null);
 
   function doRegister(e) {
     e.preventDefault();
@@ -21,7 +23,12 @@ function CreateAccount({ register, isLoggedIn, isFetching }) {
       toast.error("Passwords doesn't match");
       return;
     }
-    register(username, email, password);
+    if (token === null) {
+      toast.error("Please verify you're not a robot");
+      return;
+    }
+
+    register(username, email, password, token);
   }
 
   if (isLoggedIn) {
@@ -74,6 +81,13 @@ function CreateAccount({ register, isLoggedIn, isFetching }) {
               id="confirm-password"
             />
           </div>
+            <div style={{margin: "1rem 0"}}>
+              <ReCaptchaV2
+                sitekey={process.env.RECAPTCHA_SITE_KEY}
+                onChange={(token) => setToken(token)}
+                onExpire={() => setToken(null)}
+              />
+            </div>
           <button
 
             disabled={isFetching}
