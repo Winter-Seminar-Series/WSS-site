@@ -2,10 +2,7 @@ import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { toast } from 'react-toastify';
-import {
-  getProfile,
-  updateProfile
-} from '../../redux/actions/participant';
+import { getProfile, updateProfile } from '../../redux/actions/participant';
 
 function Profile({
   updateProfile,
@@ -22,7 +19,16 @@ function Profile({
 }) {
   const gradeTypes = ['PhD or Higher', 'Master', 'Bachelor'];
   const genderTypes = ['Male', 'Female', 'Other'];
-  const introductionTypes = ['Telegram', 'Instagram', 'Facebook', 'Twitter', 'Linkedin', 'YouTube', 'Friends', 'Other'];
+  const introductionTypes = [
+    'Telegram',
+    'Instagram',
+    'Facebook',
+    'Twitter',
+    'Linkedin',
+    'YouTube',
+    'Friends',
+    'Other',
+  ];
 
   const [first_name, setFirstName] = React.useState('');
   const [last_name, setLastName] = React.useState('');
@@ -35,29 +41,33 @@ function Profile({
 
   useEffect(() => {
     getProfile();
-  }, [getProfile])
+  }, [getProfile]);
 
   useEffect(() => {
     setFirstName(inputFirstName);
     setLastName(inputLastName);
-    inputIntroductionMethod ? setIntroduction_method(inputIntroductionMethod) : setIntroduction_method(introduction_method[0]);
+    inputIntroductionMethod
+      ? setIntroduction_method(inputIntroductionMethod)
+      : setIntroduction_method(introduction_method[0]);
     inputGender ? setGender(inputGender) : setGender(genderTypes[0]);
     inputGrade ? setGrade(inputGrade) : setGrade(gradeTypes[2]);
     setUniversity(inputUniversity);
     setEmail(inputEmail);
     setIntroduction_method(inputIntroductionMethod);
     setCity(inputCity);
-  }, [inputFirstName,
+  }, [
+    inputFirstName,
     inputLastName,
     inputUniversity,
     inputIntroductionMethod,
     inputGender,
     inputGrade,
     inputCity,
-    inputEmail,])
+    inputEmail,
+  ]);
 
   const doUpdateProfile = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     if (
       !(
         first_name &&
@@ -73,13 +83,15 @@ function Profile({
       toast.error('Please fill all the required fields');
       return;
     }
-    if (first_name !== inputFirstName
-      || last_name !== inputLastName
-      || gender !== inputGender
-      || grade !== inputGrade
-      || university !== inputUniversity
-      || city !== inputCity
-      || introduction_method !== inputIntroductionMethod) {
+    if (
+      first_name !== inputFirstName ||
+      last_name !== inputLastName ||
+      gender !== inputGender ||
+      grade !== inputGrade ||
+      university !== inputUniversity ||
+      city !== inputCity ||
+      introduction_method !== inputIntroductionMethod
+    ) {
       updateProfile({
         first_name,
         last_name,
@@ -89,22 +101,18 @@ function Profile({
         city,
         introduction_method,
       });
-    };
-  }
+    }
+  };
 
   return (
     <>
       <div className="diagonal seminar-register-title background-theme d-flex align-items-center">
         <div className="header ml-3">
-          <div className="title">
-            Profile
-          </div>
+          <div className="title">Profile</div>
         </div>
       </div>
       <form className="seminar-register-form" onSubmit={doUpdateProfile}>
-        <h3>
-          Required fields
-        </h3>
+        <h3>Required fields</h3>
         <br />
         <div className="row">
           <div className="col-12 mb-3 col-lg mb-lg-0">
@@ -126,7 +134,6 @@ function Profile({
             />
           </div>
         </div>
-
 
         <div className="row">
           <div className="col-12 mb-3 col-lg mb-lg-0">
@@ -162,7 +169,7 @@ function Profile({
         </div>
 
         <div className="row">
-          <div className='col-6 col-md-4'>
+          <div className="col-6 col-md-4">
             <div className="form-label pt-0 mr-3">Gender:</div>
             <div className="dropdown">
               <button
@@ -174,7 +181,9 @@ function Profile({
                 aria-expanded="false">
                 {gender}
               </button>
-              <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <div
+                className="dropdown-menu"
+                aria-labelledby="dropdownMenuButton">
                 {genderTypes.map((g, index) => (
                   <a
                     key={index}
@@ -186,7 +195,7 @@ function Profile({
               </div>
             </div>
           </div>
-          <div className='col-6  col-md-4'>
+          <div className="col-6  col-md-4">
             <div className="form-label pt-0 mr-3">Grade:</div>
             <div className="dropdown">
               <button
@@ -198,7 +207,9 @@ function Profile({
                 aria-expanded="false">
                 {grade}
               </button>
-              <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <div
+                className="dropdown-menu"
+                aria-labelledby="dropdownMenuButton">
                 {gradeTypes.map((d, index) => (
                   <a
                     key={index}
@@ -210,7 +221,7 @@ function Profile({
               </div>
             </div>
           </div>
-          <div className='col-12 col-md-4'>
+          <div className="col-12 col-md-4">
             <div className="form-label pt-0 mr-3">Introduction method:</div>
             <div className="dropdown">
               <button
@@ -222,7 +233,9 @@ function Profile({
                 aria-expanded="false">
                 {introduction_method}
               </button>
-              <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <div
+                className="dropdown-menu"
+                aria-labelledby="dropdownMenuButton">
                 {introductionTypes.map((i, index) => (
                   <a
                     key={index}
@@ -239,8 +252,7 @@ function Profile({
         <button
           disabled={isFetching}
           type="submit"
-          className="btn btn-lg btn-primary btn-dark mb-5"
-        >
+          className="btn btn-lg btn-primary btn-dark mb-5">
           Update
         </button>
       </form>
@@ -289,9 +301,7 @@ const mapStateToProps = (state, ownProps) => {
   };
 };
 
-export default connect(
-  mapStateToProps,
-  {
-    getProfile,
-    updateProfile,
-  })(Profile);
+export default connect(mapStateToProps, {
+  getProfile,
+  updateProfile,
+})(Profile);

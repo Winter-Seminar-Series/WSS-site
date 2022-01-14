@@ -12,7 +12,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('contenttypes', '0002_remove_content_type_name'),
-        ('WSS', '0002_auto_20201022_1926'),
+        ('WSS', '0003_add_WSS_2020'),
     ]
 
     operations = [

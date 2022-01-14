@@ -1,44 +1,44 @@
-let favorites = {}
+let favorites = {};
 
-readFavorites()
+readFavorites();
 
 export function readFavorites() {
-  const favs = localStorage.getItem('favorites')
+  const favs = localStorage.getItem('favorites');
 
   if (favs) {
     try {
-      favorites = JSON.parse(favs)
+      favorites = JSON.parse(favs);
     } catch (e) {
-      favorites = {}
-      writeFavorites()
+      favorites = {};
+      writeFavorites();
     }
   }
 }
 
 export function writeFavorites() {
-  localStorage.setItem('favorites', JSON.stringify(favorites))
+  localStorage.setItem('favorites', JSON.stringify(favorites));
 }
 
-export function setFavorite(year, type, id, val) {
-  if (favorites[year]) {
-    if (favorites[year][type]) {
-      favorites[year][type][id] = val
+export function setFavorite(series: string, type, id, val) {
+  if (favorites[series]) {
+    if (favorites[series][type]) {
+      favorites[series][type][id] = val;
     } else {
-      favorites[year][type] = {
-        [id]: val
-      }
+      favorites[series][type] = {
+        [id]: val,
+      };
     }
   } else {
-    favorites[year] = {
+    favorites[series] = {
       [type]: {
-        [id]: val
-      }
-    }
+        [id]: val,
+      },
+    };
   }
 
-  writeFavorites()
+  writeFavorites();
 }
 
-export function isFavorite(year, type, id) {
-  return favorites[year]?.[type]?.[id]
+export function isFavorite(series: string, type, id) {
+  return favorites[series]?.[type]?.[id];
 }

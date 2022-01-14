@@ -45,81 +45,86 @@ export const updateProfile = (updatedData: {
   },
 });
 
-export const doesUserHaveRegistered = (year) => ({
+export const doesUserHaveRegistered = (series) => ({
   [CALL_API]: {
     types: [
       actionTypes.CHECK_USER_REGISTRATION_STATUS_REQUEST,
       actionTypes.CHECK_USER_REGISTRATION_STATUS_SUCCESS,
       actionTypes.CHECK_USER_REGISTRATION_STATUS_FAILURE,
     ],
-    url: `${URLs.ROOT}profile/is_registered/?year=${year}`,
+    url: `${URLs.ROOT}profile/is_registered/?series=${series}`,
     fetchOptions: {
       method: 'GET',
     },
   },
 });
 
-export const getRegisteredWorkshops = (year) => ({
+export const getRegisteredWorkshops = (series) => ({
   [CALL_API]: {
     types: [
       actionTypes.GET_REGISTERED_WORKSHOPS_REQUEST,
       actionTypes.GET_REGISTERED_WORKSHOPS_SUCCESS,
       actionTypes.GET_REGISTERED_WORKSHOPS_FAILURE,
     ],
-    url: `${URLs.ROOT}${year}/registered-workshops`,
+    url: `${URLs.ROOT}${series}/registered-workshops`,
     fetchOptions: {
       method: 'GET',
     },
   },
 });
 
-const _registerWorkshop = (year, id) => ({
+const _registerWorkshop = (series, id) => ({
   [CALL_API]: {
     types: [
       actionTypes.REGISTER_WORKSHOP_REQUEST,
       actionTypes.REGISTER_WORKSHOP_SUCCESS,
       actionTypes.REGISTER_WORKSHOP_FAILURE,
     ],
-    url: `${URLs.ROOT}${year}/workshops/${id}/register/`,
+    url: `${URLs.ROOT}${series}/workshops/${id}/register/`,
     fetchOptions: {
       method: 'GET',
     },
   },
 });
 
-export const registerWorkshop = (year, id) => async (dispatch, getState) => {
-  await dispatch(_registerWorkshop(year, id));
-  dispatch(getRegisteredWorkshops(year))
-}
+export const registerWorkshop = (series: string, id) => async (
+  dispatch,
+  getState
+) => {
+  await dispatch(_registerWorkshop(series, id));
+  dispatch(getRegisteredWorkshops(series));
+};
 
-
-const _cancelWorkshopRegistration = (year, id) => ({
+const _cancelWorkshopRegistration = (series: string, id) => ({
   [CALL_API]: {
     types: [
       actionTypes.CANCEL_WORKSHOP_REGISTRATION_REQUEST,
       actionTypes.CANCEL_WORKSHOP_REGISTRATION_SUCCESS,
       actionTypes.CANCEL_WORKSHOP_REGISTRATION_FAILURE,
     ],
-    url: `${URLs.ROOT}${year}/workshops/${id}/cancel/`,
+    url: `${URLs.ROOT}${series}/workshops/${id}/cancel/`,
     fetchOptions: {
       method: 'GET',
     },
   },
 });
 
-export const cancelWorkshopRegistration = (year, id) => async (dispatch, getState) => {
-  await dispatch(_cancelWorkshopRegistration(year, id));
-  dispatch(getRegisteredWorkshops(year))
-}
+export const cancelWorkshopRegistration = (series: string, id) => async (
+  dispatch,
+  getState
+) => {
+  await dispatch(_cancelWorkshopRegistration(series, id));
+  dispatch(getRegisteredWorkshops(series));
+};
 
-export const getRedirectURL = (year, type, id) => ({
+export const getRedirectURL = (series: string, type, id) => ({
   [CALL_API]: {
     types: [
       actionTypes.GET_REDIRECT_URL_REQUEST,
       actionTypes.GET_REDIRECT_URL_SUCCESS,
       actionTypes.GET_REDIRECT_URL_FAILURE,
     ],
-    url: `${URLs.ROOT}${year}/${type}/${id}/open_webinar/`,
+    url: `${URLs.ROOT}${series}/${type}/${id}/open_webinar/`,
     fetchOptions: {
       method: 'GET',
     },
