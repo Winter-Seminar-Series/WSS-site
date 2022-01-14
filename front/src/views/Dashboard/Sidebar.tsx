@@ -13,9 +13,12 @@ function Sidebar({ logout, isRegistered }) {
 
   const sidebarItems = [
     {
-      title: 'Registration',
-      persianTitle: 'ثبت‌نام رویداد',
-      link: '/dashboard/seminar-registration',
+      title: 'Coming Soon',
+      // title: 'Registration',
+      persianTitle: 'به زودی',
+      // persianTitle: 'ثبت‌نام رویداد',
+      link: 'JavaScript:Void(0);',
+      // link: '/dashboard/seminar-registration',
       icon: 'user-plus',
       checked: isRegistered
     },
