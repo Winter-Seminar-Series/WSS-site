@@ -31,7 +31,8 @@ function Sidebar({ logout, isRegistered }) {
     {
       title: 'Your Workshops',
       persianTitle: 'کارگاه‌های شما',
-      link: '/dashboard/workshop-list',
+      link: 'JavaScript:Void(0);',
+      // link: '/dashboard/workshop-list',
       icon: 'suitcase',
     }
   ]
