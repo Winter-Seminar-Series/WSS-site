@@ -32,7 +32,20 @@ from django.dispatch import receiver
 from django_rest_passwordreset.signals import reset_password_token_created
 
 
-def get_wss_object_or_404(year: int) -> WSS:
+def get_wss_object_or_404(title: str) -> WSS:
+    title_to_year = {
+        "1st": 2015,
+        "2nd": 2016,
+        "3rd": 2017,
+        "4th": 2018,
+        "5th": 2019,
+        "6th": 2020,
+        "7th": 2021
+    }
+    try:
+        year = int(title)
+    except:
+        year = title_to_year[title]
     return get_object_or_404(WSS, year=year)
 
 
