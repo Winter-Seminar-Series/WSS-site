@@ -483,7 +483,7 @@ class PaymentViewSet(viewsets.ViewSet):
             }, status_code=403)
         
         amount = wss.registration_fee
-        description = settings.PAYMENT_SETTING['description'].format(year, user_profile.username)
+        description = settings.PAYMENT_SETTING['description'].format(year, user_profile.email)
 
         result = send_payment_request(callback_url, amount, description, user_profile.email, user_profile.phone_number)
 

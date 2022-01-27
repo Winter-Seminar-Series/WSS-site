@@ -254,10 +254,6 @@ class UserProfile(models.Model):
         return self.user.email
 
     @property
-    def username(self):
-        return self.user.username
-
-    @property
     def first_name(self):
         return self.user.first_name
 
