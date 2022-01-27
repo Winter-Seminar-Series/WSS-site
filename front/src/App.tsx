@@ -30,7 +30,7 @@ function App() {
         <Route path="/seminars" component={Seminars} />
         <Route path="/schedule" component={Schedule} />
         <Route path="/staff" component={Staff} />
-        {/* <Route path="/create-account" component={CreateAccount} /> */}
+        <Route path="/create-account" component={CreateAccount} />
         <Route path="/login" component={Login} />
         <Route
           path="/password-reset/confirm/:token"

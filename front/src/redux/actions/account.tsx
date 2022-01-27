@@ -11,7 +11,6 @@ export const setThisSeries = (thisSeries: string) => ({
 });
 
 export const register = (
-  username: string,
   email: string,
   password: string,
   token: string
@@ -25,7 +24,7 @@ export const register = (
     url: URLs.REGISTER,
     fetchOptions: {
       method: 'POST',
-      body: { username, password, email, token },
+      body: { password, email, token },
     },
   },
 });
