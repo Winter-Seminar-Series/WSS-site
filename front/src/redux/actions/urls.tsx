@@ -3,7 +3,7 @@ import { BASE_URL } from '../../constants/info'
 export const ROOT =
   process.env.NODE_ENV === 'production'
     ? BASE_URL.concat('/api/')
-    : 'http://localhost/api/';
+    : 'https://localhost/api/';
 
 export const REGISTER = ROOT.concat('register/');
 export const LOGIN = ROOT.concat('login/');
