@@ -10,7 +10,11 @@ export const setThisSeries = (thisSeries: string) => ({
   },
 });
 
-export const register = (email: string, password: string) => ({
+export const register = (
+  email: string,
+  password: string,
+  token: string
+) => ({
   [CALL_API]: {
     types: [
       actionTypes.REGISTER_REQUEST,
@@ -20,12 +24,12 @@ export const register = (email: string, password: string) => ({
     url: URLs.REGISTER,
     fetchOptions: {
       method: 'POST',
-      body: { password, email },
+      body: { password, email, token },
     },
   },
 });
 
-export const login = (username: string, password: string) => ({
+export const login = (username: string, password: string, recaptchaToken: string) => ({
   [CALL_API]: {
     types: [
       actionTypes.LOGIN_REQUEST,
@@ -38,7 +42,7 @@ export const login = (username: string, password: string) => ({
     },
     fetchOptions: {
       method: 'POST',
-      body: { username, password },
+      body: { username, password, recaptchaToken },
     },
   },
 });
