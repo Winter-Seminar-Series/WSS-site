@@ -10,11 +10,7 @@ export const setThisSeries = (thisSeries: string) => ({
   },
 });
 
-export const register = (
-  username: string,
-  email: string,
-  password: string
-) => ({
+export const register = (email: string, password: string) => ({
   [CALL_API]: {
     types: [
       actionTypes.REGISTER_REQUEST,
@@ -24,7 +20,7 @@ export const register = (
     url: URLs.REGISTER,
     fetchOptions: {
       method: 'POST',
-      body: { username, password, email },
+      body: { password, email },
     },
   },
 });

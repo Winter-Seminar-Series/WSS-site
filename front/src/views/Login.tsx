@@ -32,7 +32,7 @@ function Login({ login, isLoggedIn, isFetching }) {
             <form onSubmit={doLogin}>
 
             <div className="form-group mb-5">
-              <label htmlFor="username">Username</label>
+              <label htmlFor="username">Email</label>
               <input
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
