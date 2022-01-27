@@ -40,7 +40,7 @@ class UserProfileSerializer(ModelSerializer):
     class Meta:
         model = UserProfile
         fields = [
-            'username', 'email', 'first_name', 'last_name', 'phone_number', 'age', 'job', 'university',
+            'email', 'first_name', 'last_name', 'phone_number', 'age', 'job', 'university',
             'introduction_method', 'gender', 'city', 'country',
             'field_of_interest', 'grade', 'is_student', 'favorite_tags'
         ]
@@ -125,18 +125,18 @@ class ImageSerializer(ModelSerializer):
 class UserSerializer(ModelSerializer):
     class Meta:
         model = User
-        fields = ('id', 'username', 'email')
+        fields = ('id', 'email')
 
 
 class RegisterSerializer(ModelSerializer):
     class Meta:
         model = User
-        fields = ('id', 'username', 'email', 'password')
+        fields = ('id', 'email', 'password')
         extra_kwargs = {'password': {'write_only': True}}
 
     def create(self, validated_data):
         user = User.objects.create_user(
-            validated_data['username'], validated_data['email'], validated_data['password'])
+            validated_data['email'], validated_data['email'], validated_data['password'])
         
         user_profile = UserProfile(user=user)
         user_profile.save()
@@ -200,7 +200,7 @@ class ParticipantDeepSerializer(ModelSerializer):
         "WSS": lambda p: p.current_wss,
     }
     FIELDS_BY_MODEL = {
-        "User": ['username', 'email', 'first_name', 'last_name', 'date_joined'],
+        "User": ['email', 'first_name', 'last_name', 'date_joined'],
         "UserProfile": ['phone_number', 'age', 'job', 'university', 'introduction_method',
                            'gender', 'city', 'country', 'field_of_interest', 'grade'],
         "WSS": ['year'],
@@ -210,7 +210,6 @@ class ParticipantDeepSerializer(ModelSerializer):
        model = Participant
        fields = '__all__'
 
-    username = SerializerMethodField()
     email = SerializerMethodField()
     first_name = SerializerMethodField()
     last_name = SerializerMethodField()
