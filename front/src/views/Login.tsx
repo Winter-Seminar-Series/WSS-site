@@ -32,9 +32,7 @@ function Login({ login, isLoggedIn, isFetching }) {
 
   return (
     <>
-      <section
-        dir="rtl"
-        className="auth-container background-theme row">
+      <section dir="rtl" className="auth-container background-theme row">
         <div className="diagonal col-xs-12 col-sm-6 form-container" dir="ltr">
           <form onSubmit={doLogin}>
             <div className="form-group mb-5">
@@ -62,9 +60,9 @@ function Login({ login, isLoggedIn, isFetching }) {
                 </a>
               </div>
             </div>
-            <div style={{margin: "1rem 0"}}>
+            <div style={{ margin: '1rem 0' }}>
               <ReCaptchaV2
-                sitekey={process.env.RECAPTCHA_SITE_KEY}
+                sitekey={process.env.REACT_APP_RECAPTCHA_SITE_KEY}
                 onChange={(token) => setToken(token)}
                 onExpire={() => setToken(null)}
               />
@@ -76,9 +74,7 @@ function Login({ login, isLoggedIn, isFetching }) {
               Login
             </button>
             <div className="linkbar">
-              <span className="mr-1">
-                If you haven't created account yet,
-              </span>
+              <span className="mr-1">If you haven't created account yet,</span>
               <a className="link" href="/create-account">
                 click here
               </a>
