@@ -11,10 +11,12 @@ from templates.consts import *
 
 ''' Signal handlers should be placed somewhere which is automatically loaded (like here or models)
 or be imported in ready() function in apps.py '''
+
+
 @receiver(reset_password_token_created)
 def password_reset_token_created(sender, instance, reset_password_token, *args, **kwargs):
 
-    base_url = 'https://sharif-wss.ir/password-reset/confirm'
+    base_url = 'https://wss.ce.sharif.edu/password-reset/confirm'
     reset_password_link = "{}/{}".format(base_url, reset_password_token.key)
 
     send_mail(
@@ -22,5 +24,6 @@ def password_reset_token_created(sender, instance, reset_password_token, *args, 
         settings.EMAIL_HOST_USER,
         [reset_password_token.user.email],
         fail_silently=True,
-        html_message=BASE_HTML_CONTENT.format(RESET_PASSWORD_EMAIL.format(reset_password_link))
+        html_message=BASE_HTML_CONTENT.format(
+            RESET_PASSWORD_EMAIL.format(reset_password_link))
     )
