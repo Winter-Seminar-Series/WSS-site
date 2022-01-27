@@ -38,7 +38,6 @@ base_urlpatterns = base_router.urls
 
 
 urlpatterns = [
-    url(r'^(?P<year>[\d\w]*)/', include(year_urlpatterns)),
     url(r'', include(base_urlpatterns)),
     path('register/', RegisterAPI.as_view(), name='register'),
     path('login/', LoginAPI.as_view(), name='login'),
@@ -46,4 +45,5 @@ urlpatterns = [
     path('logoutall/', knox_views.LogoutAllView.as_view(), name='logoutall'),
     path('change-password/', ChangePasswordView.as_view(), name='change-password'),
     path('password_reset/', include('django_rest_passwordreset.urls', namespace='password_reset')),
+    url(r'^(?P<year>[\d\w]*)/', include(year_urlpatterns)),
 ]
