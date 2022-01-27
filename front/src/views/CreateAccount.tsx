@@ -83,7 +83,7 @@ function CreateAccount({ register, isLoggedIn, isFetching }) {
           </div>
             <div style={{margin: "1rem 0"}}>
               <ReCaptchaV2
-                sitekey={process.env.RECAPTCHA_SITE_KEY}
+                sitekey={process.env.REACT_APP_RECAPTCHA_SITE_KEY}
                 onChange={(token) => setToken(token)}
                 onExpire={() => setToken(null)}
               />
