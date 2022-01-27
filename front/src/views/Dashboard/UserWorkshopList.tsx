@@ -29,8 +29,9 @@ function UserWorkshopList({
       <div>
         <div className="p-5" style={{ maxWidth: '1200px', margin: '0 auto' }}>
           <div className="row py-4 justify-content-center">
-            to register for workshops please visit&nbsp;
-            <a href="/workshops">here</a>
+            {/*to register for workshops please visit&nbsp;
+            <a href="/workshops">here</a>*/}
+            Coming Soon...
           </div>
 
           {registeredWorkshops.length > 0 && !isFetching && (
