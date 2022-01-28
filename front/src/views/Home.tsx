@@ -75,7 +75,7 @@ function Home({
               muted
               ref={videoRef}
               onCanPlay={setVideoPlayBackRate}>
-              <source src="images/back-min.mp4?v=1.2" type="video/mp4" />
+              <source src="images/bg5.jpg" type="video/mp4" />
             </video>
           </div>
           <div className="container my-auto">

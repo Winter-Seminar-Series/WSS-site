@@ -52,9 +52,9 @@
 }
 
 :root {
-  --light-blue: #0089ee;
-  --med-blue: #090979;
-  --dark-blue: #020024;
+  --light-blue: #3E498C;
+  --med-blue: #776AA6;
+  --dark-blue: #252D59;
 }
 
 .white {
@@ -951,7 +951,7 @@ ul.navbar-nav > li:hover > a {
 .header-video-wrapper video {
   min-height: 100%;
   width: 100%;
-  background: url('../images/bg1.jpg') no-repeat center, black;
+  background: url('../images/bg5.jpg') no-repeat center, black;
   background-size: cover;
 }
 @media (max-width: 1400px) {
@@ -3314,7 +3314,7 @@ label {
 
 .blue-gradient:nth-last-child(2),
 .background-theme {
-  background: url('../images/bg3.jpg'), #000004 no-repeat center top !important;
+  background: url('../images/bg4.jpg'), #000004 no-repeat center top !important;
   background-size: cover !important;
 }
 
