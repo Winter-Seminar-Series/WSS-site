@@ -2,14 +2,14 @@ import * as actionTypes from '../actionTypes';
 import * as URLs from './urls';
 import { CALL_API } from '../middleware/api/api';
 
-export const getWSSPrimitiveFields = (year: number) => ({
+export const getWSSPrimitiveFields = (series: string) => ({
   [CALL_API]: {
     types: [
       actionTypes.PRIMITIVE_FIELDS_REQUEST,
       actionTypes.PRIMITIVE_FIELDS_SUCCESS,
       actionTypes.PRIMITIVE_FIELDS_FAILURE,
     ],
-    url: `${URLs.ROOT}${year}/wss/`,
+    url: `${URLs.ROOT}${series}/wss/`,
     fetchOptions: {
       method: 'GET',
     },
@@ -37,7 +37,7 @@ export const MODEL_LISTS_NAMES = {
 
 export const getAnEntityOfModelList = (
   modelListName: string,
-  year: number,
+  series: string,
   pk: number
 ) => ({
   [CALL_API]: {
@@ -52,14 +52,14 @@ export const getAnEntityOfModelList = (
       pk,
     },
 
-    url: `${URLs.ROOT}${year}/${modelListName}/${pk}/`,
+    url: `${URLs.ROOT}${series}/${modelListName}/${pk}/`,
     fetchOptions: {
       method: 'GET',
     },
   },
 });
 
-export const getModelList = (modelListName: string, year: number) => ({
+export const getModelList = (modelListName: string, series: string) => ({
   [CALL_API]: {
     types: [
       actionTypes.MODEL_LIST_REQUEST,
@@ -71,14 +71,14 @@ export const getModelList = (modelListName: string, year: number) => ({
       modelListName,
     },
 
-    url: `${URLs.ROOT}${year}/${modelListName}/`,
+    url: `${URLs.ROOT}${series}/${modelListName}/`,
     fetchOptions: {
       method: 'GET',
     },
   },
 });
 
-export const getModelListCount = (modelListName: string, year: number) => ({
+export const getModelListCount = (modelListName: string, series: string) => ({
   [CALL_API]: {
     types: [
       actionTypes.MODEL_LIST_COUNT_REQUEST,
@@ -90,7 +90,7 @@ export const getModelListCount = (modelListName: string, year: number) => ({
       modelListName,
     },
 
-    url: `${URLs.ROOT}${year}/${modelListName}/count/`,
+    url: `${URLs.ROOT}${series}/${modelListName}/count/`,
     fetchOptions: {
       method: 'GET',
     },

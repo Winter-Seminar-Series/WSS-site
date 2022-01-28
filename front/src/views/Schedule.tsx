@@ -4,15 +4,15 @@ import {
   getWSSPrimitiveFields,
   getModelList,
   MODEL_LISTS_NAMES,
-} from '../redux/actions/WSS'
-import moment from "moment";
-import ScheduleCard from "../components/cards/ScheduleCard";
-import { doesUserHaveRegistered } from "../redux/actions/participant";
-import { isFavorite } from "../utils/favorites";
+} from '../redux/actions/WSS';
+import moment from 'moment';
+import ScheduleCard from '../components/cards/ScheduleCard';
+import { doesUserHaveRegistered } from '../redux/actions/participant';
+import { isFavorite } from '../utils/favorites';
 import { strictEqual } from 'assert';
 
 function Schedule({
-  thisYear,
+  thisSeries,
   getWSSPrimitiveFields,
   doesUserHaveRegistered,
   getModelList,
@@ -23,115 +23,114 @@ function Schedule({
   isLoggedIn,
   isRegistered,
 }) {
-
-  const [seminarsByDate, setSeminarsByDate] = useState({})
-  const [favoriteSeminars, setFavoriteSeminars] = useState({})
-  const [onlyFavorites, setOnlyFavorites] = useState(false)
-  const [speakersById, setSpeakersById] = useState([])
-  const [liveSeminars, setLiveSeminars] = useState([])
-  const [liveTimeout, setLiveTimeout] = useState(null)
-
-  useEffect(() => {
-    doesUserHaveRegistered(thisYear);
-  }, [doesUserHaveRegistered])
+  const [seminarsByDate, setSeminarsByDate] = useState({});
+  const [favoriteSeminars, setFavoriteSeminars] = useState({});
+  const [onlyFavorites, setOnlyFavorites] = useState(false);
+  const [speakersById, setSpeakersById] = useState([]);
+  const [liveSeminars, setLiveSeminars] = useState([]);
+  const [liveTimeout, setLiveTimeout] = useState(null);
 
   useEffect(() => {
-    getWSSPrimitiveFields(thisYear);
-    getModelList(MODEL_LISTS_NAMES.SEMINARS, thisYear);
-    getModelList(MODEL_LISTS_NAMES.SPEAKERS, thisYear);
-    getModelList(MODEL_LISTS_NAMES.WORKSHOPS, thisYear);
-  }, [getModelList, getWSSPrimitiveFields])
+    doesUserHaveRegistered(thisSeries);
+  }, [doesUserHaveRegistered]);
+
+  useEffect(() => {
+    getWSSPrimitiveFields(thisSeries);
+    getModelList(MODEL_LISTS_NAMES.SEMINARS, thisSeries);
+    getModelList(MODEL_LISTS_NAMES.SPEAKERS, thisSeries);
+    getModelList(MODEL_LISTS_NAMES.WORKSHOPS, thisSeries);
+  }, [getModelList, getWSSPrimitiveFields]);
 
   useEffect(() => {
     if (seminars) {
-      setSeminarsByDate(groupSeminarsByDate())
-      getLiveSeminars()
+      setSeminarsByDate(groupSeminarsByDate());
+      getLiveSeminars();
     }
-  }, [seminars])
+  }, [seminars]);
 
   useEffect(() => {
-    setSpeakersById(getSpeakersById())
-  }, [speakers])
+    setSpeakersById(getSpeakersById());
+  }, [speakers]);
 
   useEffect(() => {
-    filterSeminarsByFavorite()
-  }, [onlyFavorites])
+    filterSeminarsByFavorite();
+  }, [onlyFavorites]);
 
   function getLiveSeminars() {
-    setLiveTimeout(null)
+    setLiveTimeout(null);
 
     if (!seminars || !seminars.length) {
-      return
+      return;
     }
 
-    setLiveSeminars(seminars.filter(
-      (seminar) => moment().isBetween(
-        moment(seminar.start_time, "YYYY-MM-DD hh:mm:ss"),
-        moment(seminar.start_time, "YYYY-MM-DD hh:mm:ss").add(moment.duration(seminar.duration))
+    setLiveSeminars(
+      seminars.filter((seminar) =>
+        moment().isBetween(
+          moment(seminar.start_time, 'YYYY-MM-DD hh:mm:ss'),
+          moment(seminar.start_time, 'YYYY-MM-DD hh:mm:ss').add(
+            moment.duration(seminar.duration)
+          )
+        )
       )
-    ))
+    );
 
     if (!liveTimeout) {
-
-      const liveSeminarTimeout = setTimeout(getLiveSeminars, (60 - new Date().getSeconds()) * 1000)
-      setLiveTimeout(liveSeminarTimeout)
+      const liveSeminarTimeout = setTimeout(
+        getLiveSeminars,
+        (60 - new Date().getSeconds()) * 1000
+      );
+      setLiveTimeout(liveSeminarTimeout);
     }
   }
 
   function getSeminars() {
-    return onlyFavorites ? favoriteSeminars : seminarsByDate
+    return onlyFavorites ? favoriteSeminars : seminarsByDate;
   }
 
   // assume that seminars are sorted in the back end side
   function groupSeminarsByDate() {
-    return seminars.reduce(
-      (data, seminar) => {
-        const seminarDate = seminar.start_time.split('T')[0];
+    return seminars.reduce((data, seminar) => {
+      const seminarDate = seminar.start_time.split('T')[0];
 
-        if (data[seminarDate]) {
-          data[seminarDate].push(seminar)
-        } else {
-          data[seminarDate] = [seminar]
-        }
+      if (data[seminarDate]) {
+        data[seminarDate].push(seminar);
+      } else {
+        data[seminarDate] = [seminar];
+      }
 
-        return data
-      },
-      {},
-    )
+      return data;
+    }, {});
   }
 
   function filterSeminarsByFavorite() {
-    const favSeminars = Object.keys(seminarsByDate).reduce(
-      (favs, date) => {
-        const dateFavs = seminarsByDate[date].filter(
-          seminar => isFavorite(thisYear, 'seminar', seminar.id)
-        )
+    const favSeminars = Object.keys(seminarsByDate).reduce((favs, date) => {
+      const dateFavs = seminarsByDate[date].filter((seminar) =>
+        isFavorite(thisSeries, 'seminar', seminar.id)
+      );
 
-        if (dateFavs.length) {
-          favs[date] = dateFavs
-        }
+      if (dateFavs.length) {
+        favs[date] = dateFavs;
+      }
 
-        return favs
-      },
-      {}
-    )
+      return favs;
+    }, {});
 
-    setFavoriteSeminars(favSeminars)
+    setFavoriteSeminars(favSeminars);
   }
 
   function getSpeakersById() {
     return speakers.reduce(
       (data, speaker) => ({
         ...data,
-        [speaker.id]: speaker
+        [speaker.id]: speaker,
       }),
       {}
-    )
+    );
   }
 
   const padding40 = {
-    padding: "40px 0 0 0"
-  }
+    padding: '40px 0 0 0',
+  };
 
   const diagonalStyle = {
     marginTop: '-18rem',
@@ -145,8 +144,12 @@ function Schedule({
   return (
     <>
       <section id="main-container" className="main-container pb-5">
-        <div style={diagonalStyle} className="px-2 pt-4 diagonal background-theme">
-          <h2 className="container section-sub-title title-white" style={containerStyle}>
+        <div
+          style={diagonalStyle}
+          className="px-2 pt-4 diagonal background-theme">
+          <h2
+            className="container section-sub-title title-white"
+            style={containerStyle}>
             Schedule
           </h2>
         </div>
@@ -156,12 +159,10 @@ function Schedule({
             <div className="diagonal">
               <div className="container">
                 <div className="d-flex justify-content-center justify-content-md-between align-items-center flex-wrap mt-4 py-5">
-
                   <h3 className="section-sub-title my-0 text-nowrap d-flex align-items-center">
                     <span className="badge badge-danger mr-3">Live</span> Now
-                </h3>
+                  </h3>
                 </div>
-
               </div>
             </div>
 
@@ -170,16 +171,14 @@ function Schedule({
                 <div className="container">
                   <div className="row">
                     <div className="col-md-12">
-                      {liveSeminars.map(seminar => (
+                      {liveSeminars.map((seminar) => (
                         <ScheduleCard
                           key={`live${seminar.id}`}
                           seminar={seminar}
                           speaker={speakersById[seminar.speaker]}
                           showJoin={isLoggedIn && isRegistered}
                         />
-                      ))
-                      }
-
+                      ))}
                     </div>
                   </div>
                 </div>
@@ -191,10 +190,9 @@ function Schedule({
         <div className="diagonal">
           <div className="container">
             <div className="d-flex justify-content-center justify-content-md-between align-items-center flex-wrap my-5 py-5">
-
               <div>
                 <h3 className="section-sub-title my-0 text-nowrap">
-                  WSS {thisYear} Talks
+                  {thisSeries} WSS Talks
                 </h3>
 
                 <div className="form-check">
@@ -213,23 +211,33 @@ function Schedule({
 
               {(calendarLink || icalLink) && (
                 <div className="text-center p-3">
-                  <div className="btn-group" role="group" aria-label="Add to Calendar">
-                    {calendarLink &&
-                      <a role="button" href={calendarLink} target="_blank" className="btn btn-blue">
+                  <div
+                    className="btn-group"
+                    role="group"
+                    aria-label="Add to Calendar">
+                    {calendarLink && (
+                      <a
+                        role="button"
+                        href={calendarLink}
+                        target="_blank"
+                        className="btn btn-blue">
                         Add Events to Calendar
-                    </a>
-                    }
+                      </a>
+                    )}
 
-                    {icalLink &&
-                      <a role="button" href={icalLink} target="_blank" className="btn btn-secondary">
+                    {icalLink && (
+                      <a
+                        role="button"
+                        href={icalLink}
+                        target="_blank"
+                        className="btn btn-secondary">
                         iCal
-                    </a>
-                    }
+                      </a>
+                    )}
                   </div>
                 </div>
               )}
             </div>
-
           </div>
         </div>
 
@@ -237,45 +245,40 @@ function Schedule({
           {!(seminars.length && speakers.length) && (
             <div className="text-center">Loading...</div>
           )}
-          {seminars.length > 0 && speakers.length > 0 && Object.keys(getSeminars()).map(date => (
-            <div key={date} className="diagonal schedule-content">
-              <div className="container">
-                <div className="row">
-                  <div className="col-md-12">
-                    <h2 className="schedule-date">
-                      {moment(date, " YYYY-MM-DD").format("MMM Do, YYYY")}
-                    </h2>
-                    {getSeminars()[date].map(seminar => (
-                      <ScheduleCard
-                        key={seminar.id}
-                        seminar={seminar}
-                        speaker={speakersById[seminar.speaker]}
-                        showJoin={isLoggedIn && isRegistered}
-                      />
-                    ))
-                    }
-
+          {seminars.length > 0 &&
+            speakers.length > 0 &&
+            Object.keys(getSeminars()).map((date) => (
+              <div key={date} className="diagonal schedule-content">
+                <div className="container">
+                  <div className="row">
+                    <div className="col-md-12">
+                      <h2 className="schedule-date">
+                        {moment(date, ' YYYY-MM-DD').format('MMM Do, YYYY')}
+                      </h2>
+                      {getSeminars()[date].map((seminar) => (
+                        <ScheduleCard
+                          key={seminar.id}
+                          seminar={seminar}
+                          speaker={speakersById[seminar.speaker]}
+                          showJoin={isLoggedIn && isRegistered}
+                        />
+                      ))}
+                    </div>
                   </div>
                 </div>
+                <div className="gap-60" />
               </div>
-              <div className="gap-60" />
-            </div>
-          ))}
+            ))}
         </div>
-
       </section>
     </>
-  )
+  );
 }
 
 const mapStateToProps = (state, ownProps) => ({
-  speakers: state.WSS.speakers
-    ? state.WSS.speakers
-    : [],
+  speakers: state.WSS.speakers ? state.WSS.speakers : [],
   seminars: state.WSS.seminars,
-  workshops: state.WSS.workshops
-    ? state.WSS.workshops
-    : [],
+  workshops: state.WSS.workshops ? state.WSS.workshops : [],
   mainImageURL: state.WSS.mainImageURL,
   mainClipURL: state.WSS.mainClipURL,
   bookletURL: state.WSS.bookletURL,
@@ -286,14 +289,11 @@ const mapStateToProps = (state, ownProps) => ({
   calendarLink: state.WSS.calendarLink,
   isLoggedIn: state.account.isLoggedIn,
   isRegistered: state.Participant.isRegistered,
-  thisYear: state.account.thisYear,
-})
+  thisSeries: state.account.thisSeries,
+});
 
-export default connect(
-  mapStateToProps,
-  {
-    getWSSPrimitiveFields,
-    getModelList,
-    doesUserHaveRegistered,
-  }
-)(Schedule);
+export default connect(mapStateToProps, {
+  getWSSPrimitiveFields,
+  getModelList,
+  doesUserHaveRegistered,
+})(Schedule);

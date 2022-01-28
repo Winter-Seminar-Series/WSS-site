@@ -4,10 +4,12 @@ import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import { login } from '../redux/actions/account';
 import { Redirect, Link, useHistory } from 'react-router-dom';
+import ReCaptchaV2 from 'react-google-recaptcha';
 
 function Login({ login, isLoggedIn, isFetching }) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [token, setToken] = useState(null);
 
   function doLogin(e) {
     e.preventDefault();
@@ -16,7 +18,12 @@ function Login({ login, isLoggedIn, isFetching }) {
       toast.error('Please fill all the fields');
       return;
     }
-    login(username, password);
+    if (token === null) {
+      toast.error("Please verify you're not a robot");
+      return;
+    }
+
+    login(username, password, token);
   }
 
   if (isLoggedIn) {
@@ -25,14 +32,11 @@ function Login({ login, isLoggedIn, isFetching }) {
 
   return (
     <>
-      <section
-        dir="rtl"
-        className="auth-container background-theme row">
-          <div className="diagonal col-xs-12 col-sm-6 form-container" dir="ltr">
-            <form onSubmit={doLogin}>
-
+      <section dir="rtl" className="auth-container background-theme row">
+        <div className="diagonal col-xs-12 col-sm-6 form-container" dir="ltr">
+          <form onSubmit={doLogin}>
             <div className="form-group mb-5">
-              <label htmlFor="username">Username</label>
+              <label htmlFor="username">Email</label>
               <input
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
@@ -56,6 +60,13 @@ function Login({ login, isLoggedIn, isFetching }) {
                 </a>
               </div>
             </div>
+            <div style={{ margin: '1rem 0' }}>
+              <ReCaptchaV2
+                sitekey={process.env.REACT_APP_RECAPTCHA_SITE_KEY}
+                onChange={(token) => setToken(token)}
+                onExpire={() => setToken(null)}
+              />
+            </div>
             <button
               disabled={isFetching}
               type="submit"
@@ -63,15 +74,13 @@ function Login({ login, isLoggedIn, isFetching }) {
               Login
             </button>
             <div className="linkbar">
-              <span className="mr-1">
-                If you haven't created account yet,
-              </span>
+              <span className="mr-1">If you haven't created account yet,</span>
               <a className="link" href="/create-account">
                 click here
               </a>
             </div>
-            </form>
-          </div>
+          </form>
+        </div>
 
         <div className="d-none d-sm-flex col-6 logo-container" dir="ltr">
           <img className="logo" src="images/new_title_hq.png" alt="wss logo" />

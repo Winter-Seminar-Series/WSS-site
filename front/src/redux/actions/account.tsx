@@ -3,17 +3,17 @@ import * as URLs from './urls';
 import { CALL_API } from '../middleware/api/api';
 import { BASE_URL } from '../../constants/info';
 
-export const setThisYear = (thisYear) => ({
-  type: actionTypes.CHANGE_THIS_YEAR,
+export const setThisSeries = (thisSeries: string) => ({
+  type: actionTypes.CHANGE_THIS_SERIES,
   payload: {
-    thisYear
-  }
-})
+    thisSeries,
+  },
+});
 
 export const register = (
-  username: string,
   email: string,
-  password: string
+  password: string,
+  token: string
 ) => ({
   [CALL_API]: {
     types: [
@@ -24,12 +24,12 @@ export const register = (
     url: URLs.REGISTER,
     fetchOptions: {
       method: 'POST',
-      body: { username, password, email },
+      body: { password, email, token },
     },
   },
 });
 
-export const login = (username: string, password: string) => ({
+export const login = (username: string, password: string, recaptchaToken: string) => ({
   [CALL_API]: {
     types: [
       actionTypes.LOGIN_REQUEST,
@@ -42,7 +42,7 @@ export const login = (username: string, password: string) => ({
     },
     fetchOptions: {
       method: 'POST',
-      body: { username, password },
+      body: { username, password, recaptchaToken },
     },
   },
 });
@@ -61,36 +61,35 @@ export const logout = () => ({
   },
 });
 
-export const sendPaymentRequest = (year = 2020) => {
-  return ({
+export const sendPaymentRequest = (series = '7th') => {
+  return {
     [CALL_API]: {
       types: [
         actionTypes.SEND_PAYMENT_REQUEST,
         actionTypes.SEND_PAYMENT_SUCCESS,
         actionTypes.SEND_PAYMENT_FAILURE,
       ],
-      url: `${URLs.ROOT}${year}/payment/request/?callback=${BASE_URL}/dashboard`,
+      url: `${URLs.ROOT}${series}/payment/request/?callback=${BASE_URL}/dashboard`,
       fetchOptions: {
         method: 'GET',
       },
     },
-  })
+  };
 };
 
-export const verifyPayment = (authority, status, year = 2020) => ({
+export const verifyPayment = (authority, status, series = '7th') => ({
   [CALL_API]: {
     types: [
       actionTypes.VERIFY_PAYMENT_REQUEST,
       actionTypes.VERIFY_PAYMENT_SUCCESS,
       actionTypes.VERIFY_PAYMENT_FAILURE,
     ],
-    url: `${URLs.ROOT}${year}/payment/verify/?Authority=${authority}&Status=${status}`,
+    url: `${URLs.ROOT}${series}/payment/verify/?Authority=${authority}&Status=${status}`,
     fetchOptions: {
       method: 'GET',
     },
   },
 });
-
 
 export const changePassword = (oldPassword, newPassword) => ({
   [CALL_API]: {
@@ -105,7 +104,7 @@ export const changePassword = (oldPassword, newPassword) => ({
       body: {
         old_password: oldPassword,
         new_password: newPassword,
-      }
+      },
     },
   },
 });
@@ -122,7 +121,7 @@ export const requestPasswordReset = (email) => ({
       method: 'POST',
       body: {
         email,
-      }
+      },
     },
   },
 });
@@ -140,7 +139,7 @@ export const resetPassword = (password, token) => ({
       body: {
         password,
         token,
-      }
+      },
     },
   },
 });
