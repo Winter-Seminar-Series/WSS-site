@@ -2,9 +2,7 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { toast } from 'react-toastify';
 import { Redirect } from 'react-router-dom';
-import {
-  requestPasswordReset,
-} from '../redux/actions/account'
+import { requestPasswordReset } from '../redux/actions/account';
 
 function ForgotPassword({ isLoggedIn, isFetching, requestPasswordReset }) {
   const [email, setEmail] = useState('');
@@ -14,6 +12,7 @@ function ForgotPassword({ isLoggedIn, isFetching, requestPasswordReset }) {
 
     if (!email) {
       toast.error('Please enter your email address');
+    //   toast.info('Please enter your email address');
       return;
     }
     requestPasswordReset(email);
@@ -25,15 +24,15 @@ function ForgotPassword({ isLoggedIn, isFetching, requestPasswordReset }) {
 
   return (
     <>
-      <section
-        dir="rtl"
-        className="auth-container background-theme row">
+      <section dir="rtl" className="auth-container background-theme row">
         <div className="diagonal col-xs-12 col-sm-6 form-container" dir="ltr">
           <form onSubmit={doRequestPasswordReset}>
-
             <h2>Forgot Password?</h2>
 
-            <p>Enter the email address you used when you created account and we’ll send you instructions to reset your password.</p>
+            <p>
+              Enter the email address you used when you created account and
+              we’ll send you instructions to reset your password.
+            </p>
 
             <div className="form-group mb-5">
               <label htmlFor="username">Email Address</label>
@@ -67,13 +66,13 @@ function ForgotPassword({ isLoggedIn, isFetching, requestPasswordReset }) {
   );
 }
 
-const mapStateToProps = (state, ownProps) => ({
-  isFetching: state.account.isFetching,
-  isLoggedIn: state.account.isLoggedIn,
-});
 
-export default connect(
-  mapStateToProps,
-  {
+const mapStateToProps = (state, ownProps) => ({
+    isFetching: state.account.isFetching,
+    isLoggedIn: state.account.isLoggedIn,
+  });
+  
+  export default connect(mapStateToProps, {
     requestPasswordReset,
   })(ForgotPassword);
+  
