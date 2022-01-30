@@ -10,7 +10,7 @@ def forwards(apps, schema_editor):
     wss = WSS.objects.get(year=2021)
     ctype = ContentType.objects.get_for_model(Seminar)
 
-    # date = datetime(2022, 2, 24)
+    date = datetime(2022, 2, 24)
 
     Seminar.objects.create(
         wss = wss,
@@ -19,8 +19,8 @@ def forwards(apps, schema_editor):
         audience = 'open to all',
         abstract = '''In this talk, I aim to address a major challenge in the adoption of user-centred privacy-enhancing technologies: Can we leverage novel architectures to provide private, trusted, personalised, and dynamically- configurable models on consumer devices to cater for heterogeneous environments and user requirements? Importantly, such properties must provide assurances for the data integrity and model authenticity/trustworthiness, while respecting the privacy of the individuals taking part in training and improving such models. Innovation and adoption in this space require collaborations between device manufacturers, platform providers, network operators, regulators, and the users.''',
         speaker = Speaker.objects.filter(name='Hamed Haddadi').last(),
-        start_time = None #date + timedelta(hours=10),
-        # duration = timedelta(minutes=45)
+        start_time = date + timedelta(hours=10),
+        duration = timedelta(minutes=45)
     )
     Seminar.objects.create(
         wss = wss,
@@ -33,8 +33,8 @@ An implicit representation is called efficient if each vertex is given a code of
 
 In this talk, we show the existence of strong counterexamples to the Implicit Graph Conjecture. In particular, we establish the existence of hereditary graph families with at most factorial speed of growth that require codes of length polynomially large as a function of n.''',
         speaker = Speaker.objects.filter(name='Pooya Hatami').last(),
-        start_time = None #date + timedelta(hours=10),
-        # duration = timedelta(minutes=45)
+        start_time = date + timedelta(hours=10),
+        duration = timedelta(minutes=45)
     )
     Seminar.objects.create(
         wss = wss,
@@ -43,8 +43,8 @@ In this talk, we show the existence of strong counterexamples to the Implicit Gr
         audience = 'undergraduate and graduate students',
         abstract = '''The talk will review the basics of information security and cryptography, and focus on security of their implementations. More precisely, the basics of side-channel analysis attacks and mitigation techniques will be presented.''',
         speaker = Speaker.objects.filter(name='Amir Moradi').last(),
-        start_time = None #date + timedelta(hours=10),
-        # duration = timedelta(minutes=45)
+        start_time = date + timedelta(hours=10),
+        duration = timedelta(minutes=45)
     )
     Seminar.objects.create(
         wss = wss,
@@ -53,8 +53,8 @@ In this talk, we show the existence of strong counterexamples to the Implicit Gr
         audience = '',
         abstract = '''I will go over recent advances in two-party secure computation involving branching programs: where one party holds a branching program P and the other party holds an input x, and the goal is for the two parties to jointly compute P(x) without revealing any other information. I will mention applications of these results to such areas as Private Set Intersection (PSI) and Private-Information Retrieval (PIR). Such PSI and PIR protocols are used as critical components of various privacy-preserving technologies, such as those for contact tracing, password breaching, etc.''',
         speaker = Speaker.objects.filter(name='Mohammad Hajiabadi').last(),
-        start_time = None #date + timedelta(hours=10),
-        # duration = timedelta(minutes=45)
+        start_time = date + timedelta(hours=10),
+        duration = timedelta(minutes=45)
     )
     Seminar.objects.create(
         wss = wss,
@@ -67,8 +67,8 @@ In this talk, I will not introduce yet another clean-slate learning-based design
 
 To that end, I will show how learning-based techniques can be put wisely in harmony with classic heuristics in the context of congestion control. And how this harmony can lead to way higher performance and way lower overhead for the system compared to the clean-slate learning-based designs.''',
         speaker = Speaker.objects.filter(name='Soheil Abbasloo').last(),
-        start_time = None #date + timedelta(hours=10),
-        # duration = timedelta(minutes=45)
+        start_time = date + timedelta(hours=10),
+        duration = timedelta(minutes=45)
     )
 
 def rollback(apps, schema_editor):
