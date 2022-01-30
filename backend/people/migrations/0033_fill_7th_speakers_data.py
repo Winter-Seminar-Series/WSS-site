@@ -11,7 +11,7 @@ def forwards(apps, schema_editor):
     Speakers.objects.get_or_create(
         name = 'Hamed Haddadi',
         defaults = {
-        'picture': 'media/2020/speakers/Hamed-Haddadi.jpg',
+        'picture': 'media/7th/speakers/Hamed-Haddadi.jpg',
         'degree': 'PhD',
         'place': 'Imperial College London',
         'polymorphic_ctype':ctype,
@@ -23,7 +23,7 @@ He studied for BEng/MSc/PhD at University College London and the University of C
     Speakers.objects.get_or_create(
         name = 'Pooya Hatami',
         defaults = {
-        'picture': 'media/2020/speakers/Pooya-Hatami.jpg',
+        'picture': 'media/7th/speakers/Pooya-Hatami.jpg',
         'degree': 'PhD, University of Chicago',
         'place': 'CSE, Ohio State University',
         'polymorphic_ctype':ctype,
@@ -32,7 +32,7 @@ He studied for BEng/MSc/PhD at University College London and the University of C
     Speakers.objects.get_or_create(
         name = 'Amir Moradi',
         defaults = {
-        'picture': 'media/2020/speakers/Amir-Moradi.jpg',
+        'picture': 'media/7th/speakers/Amir-Moradi.png',
         'degree': 'Prof.',
         'place': 'University of Cologne, Germany',
         'polymorphic_ctype':ctype,
@@ -41,7 +41,7 @@ He studied for BEng/MSc/PhD at University College London and the University of C
     Speakers.objects.get_or_create(
         name = 'Mohammad Hajiabadi',
         defaults = {
-        'picture': 'media/2020/speakers/Mohammad-Hajiabadi.jpg',
+        'picture': 'media/7th/speakers/Mohammad-Hajiabadi.jpg',
         'degree': 'PhD',
         'place': 'Assistant Professor, University of Waterloo',
         'polymorphic_ctype':ctype,
@@ -50,7 +50,7 @@ He studied for BEng/MSc/PhD at University College London and the University of C
     Speakers.objects.get_or_create(
         name = 'Soheil Abbasloo',
         defaults = {
-        'picture': 'media/2020/speakers/Soheil-Abbasloo.jpg',
+        'picture': 'media/7th/speakers/Soheil-Abbasloo.jpg',
         'degree': 'PhD',
         'place': 'University of Toronto',
         'polymorphic_ctype':ctype,
