@@ -111,10 +111,10 @@ function Home({
                       : ''}
                   </h2>
                   <h3 className="banner-desc font-weight-bold">
-                    IRAN, TEHRAN,
+                    SHARIF UNIVERSITY OF TECHNOLOGY,
                   </h3>
                   <h3 className="banner-desc font-weight-bold">
-                    SHARIF UNIVERSITY OF TECHNOLOGY
+                    TEHRAN, IRAN
                   </h3>
                   {isRegistrationOpen && (
                     <p className="banner-btn">
