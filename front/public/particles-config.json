@@ -1,0 +1,83 @@
+{
+    "fpsLimit": 60,
+    "interactivity": {
+        "events": {
+            "onClick": {
+                "enable": true,
+                "mode": "repulse"
+            },
+            "onHover": {
+                "enable": true,
+                "mode": "bubble",
+                "parallax": {
+                    "force": 10
+                }
+            }
+        },
+        "modes": {
+            "bubble": {
+                "distance": 450,
+                "duration": 0.3,
+                "opacity": 1,
+                "size": 4
+            },
+            "repulse": {
+                "distance": 250,
+                "duration": 0.5,
+                "factor": 200,
+                "speed": 0.5
+            }
+        }
+    },
+    "particles": {
+        "color": {
+            "value": "#f9ecec"
+        },
+        "move": {
+            "angle": {
+                "value": 97
+            },
+            "direction": "bottom",
+            "enable": true,
+            "outModes": {
+                "bottom": "out",
+                "left": "out",
+                "right": "out",
+                "top": "out"
+            }
+        },
+        "number": {
+            "density": {
+                "enable": true
+            },
+            "value": 500
+        },
+        "opacity": {
+            "random": {
+                "enable": true
+            },
+            "value": {
+                "min": 0.1,
+                "max": 0.8
+            },
+            "animation": {
+                "speed": 1,
+                "minimumValue": 0.1
+            }
+        },
+        "size": {
+            "random": {
+                "enable": true
+            },
+            "value": {
+                "min": 1,
+                "max": 6.5
+            },
+            "animation": {
+                "speed": 40,
+                "minimumValue": 0.1
+            }
+        }
+    },
+    "pauseOnBlur": false
+}
