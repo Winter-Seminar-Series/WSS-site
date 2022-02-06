@@ -9,6 +9,7 @@ import {
   getWSSPrimitiveFields,
   MODEL_LISTS_NAMES,
 } from '../redux/actions/WSS';
+import Particles from "react-tsparticles";
 
 const fontStyle = {
   fontSize: '1.125rem',
@@ -68,15 +69,29 @@ function Home({
     <>
       <section id="banner">
         <div className="banner-item d-flex h-100">
-          <div className="header-video-wrapper">
-            <video
+          <div
+            className="header-video-wrapper"
+            style={{
+              backgroundImage: "url(../images/bg5.jpg)",
+              backgroundSize: "100% 100%",
+              backgroundRepeat: "no-repeat"
+            }}>
+            <Particles id="tsparticles" url="/particles-config.json"
+              init={(main) => {
+                console.log(main);
+                return Promise.resolve();
+              }} loaded={(container) => {
+                console.log(container);
+                return Promise.resolve()
+              }} />
+            {/* <video
               autoPlay
               loop
               muted
               ref={videoRef}
               onCanPlay={setVideoPlayBackRate}>
-              <source src="images/back-min.mp4?v=1.2" type="video/mp4" />
-            </video>
+              <source src="images/bg5.jpg" type="video/mp4" />
+            </video> */}
           </div>
           <div className="container my-auto">
             <div className="banner-content ">
@@ -105,9 +120,9 @@ function Home({
                   <h2 className="banner-subtitle my-3 font-weight-bold">
                     {startDate && endDate
                       ? moment(startDate, 'YYYY-MM-DD').format(
-                          'MMM Do, YYYY -'
-                        ) +
-                        moment(endDate, ' YYYY-MM-DD').format('MMM Do, YYYY')
+                        'MMM Do, YYYY -'
+                      ) +
+                      moment(endDate, ' YYYY-MM-DD').format('MMM Do, YYYY')
                       : ''}
                   </h2>
                   <h3 className="banner-desc font-weight-bold">

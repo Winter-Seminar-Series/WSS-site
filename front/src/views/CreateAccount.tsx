@@ -3,17 +3,18 @@ import { Redirect, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { toast } from 'react-toastify';
 import { register } from '../redux/actions/account';
+import ReCaptchaV2 from 'react-google-recaptcha';
 
 function CreateAccount({ register, isLoggedIn, isFetching }) {
-  const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [token, setToken] = useState(null);
 
   function doRegister(e) {
     e.preventDefault();
 
-    if (!username || !email || !password) {
+    if (!email || !password) {
       toast.error('Please fill all the fields');
       return;
     }
@@ -21,7 +22,11 @@ function CreateAccount({ register, isLoggedIn, isFetching }) {
       toast.error("Passwords doesn't match");
       return;
     }
-    register(username, email, password);
+    if (token === null) {
+      toast.error("Please verify you're not a robot");
+      return;
+    }
+    register(email, password, token);
   }
 
   if (isLoggedIn) {
@@ -35,16 +40,6 @@ function CreateAccount({ register, isLoggedIn, isFetching }) {
         className="auth-container background-theme row">
         <div className="diagonal col-xs-12 col-sm-6 form-container" dir="ltr">
           <form onSubmit={doRegister}>
-          <div className="form-group mb-5">
-            <label htmlFor="username">Username</label>
-            <input
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              id="username"
-              type="text"
-              className="form-control"
-            />
-          </div>
           <div className="form-group mb-5">
             <label htmlFor="email">Email</label>
             <input
@@ -74,6 +69,13 @@ function CreateAccount({ register, isLoggedIn, isFetching }) {
               id="confirm-password"
             />
           </div>
+            <div style={{margin: "1rem 0"}}>
+              <ReCaptchaV2
+                sitekey={process.env.REACT_APP_RECAPTCHA_SITE_KEY}
+                onChange={(token) => setToken(token)}
+                onExpire={() => setToken(null)}
+              />
+            </div>
           <button
 
             disabled={isFetching}

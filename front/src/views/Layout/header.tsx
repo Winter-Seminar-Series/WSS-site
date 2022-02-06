@@ -60,13 +60,13 @@ const Header = ({ isLoggedIn, thisSeries, doSetThisSeries }) => {
     // { title: 'PosterSession', persianTitle: 'پوسترسشن', link: '/postersessions' },
     { title: 'Schedule', persianTitle: 'برنامه زمانی', link: '/schedule' },
     { title: 'Staff', persianTitle: 'استف‌ها', link: '/staff' },
-    // {
-    //   title: 'Create Account',
-    //   persianTitle: 'ثبت‌نام',
-    //   link: '/create-account',
-    //   style: 'active',
-    //   loggedIn: 'notAuthorized',
-    // },
+    {
+      title: 'Create Account',
+      persianTitle: 'ثبت‌نام',
+      link: '/create-account',
+      style: 'active',
+      loggedIn: 'notAuthorized',
+    },
     {
       title: 'Login',
       persianTitle: 'ورود',

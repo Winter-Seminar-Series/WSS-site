@@ -11,9 +11,9 @@ export const setThisSeries = (thisSeries: string) => ({
 });
 
 export const register = (
-  username: string,
   email: string,
-  password: string
+  password: string,
+  token: string
 ) => ({
   [CALL_API]: {
     types: [
@@ -24,12 +24,12 @@ export const register = (
     url: URLs.REGISTER,
     fetchOptions: {
       method: 'POST',
-      body: { username, password, email },
+      body: { password, email, token },
     },
   },
 });
 
-export const login = (username: string, password: string) => ({
+export const login = (username: string, password: string, recaptchaToken: string) => ({
   [CALL_API]: {
     types: [
       actionTypes.LOGIN_REQUEST,
@@ -42,7 +42,7 @@ export const login = (username: string, password: string) => ({
     },
     fetchOptions: {
       method: 'POST',
-      body: { username, password },
+      body: { username, password, recaptchaToken },
     },
   },
 });
