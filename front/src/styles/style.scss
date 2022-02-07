@@ -1,6 +1,5 @@
 @import '~bootstrap/scss/bootstrap.scss';
 
-
 @import './publicCard';
 
 @import './like';
@@ -15,4 +14,36 @@
 
 .z-index-master {
   z-index: 100 !important;
+}
+
+.about-us-outer-container {
+  display: flex;
+  flex-direction: row;
+  width: 75%;
+}
+
+.about-us-text-container {
+  display: flex;
+  flex-direction: column;
+  width: 60%;
+}
+
+.about-us-images-container {
+  display: flex;
+  flex-direction: column;
+  width: 40%;
+}
+
+@media screen and (max-width: 632px) {
+  .about-us-outer-container {
+    flex-direction: column;
+    width: 95%;
+  }
+
+  .about-us-text-container,
+  .about-us-images-container {
+    flex-direction: row;
+    width: 100%;
+    flex-wrap: wrap;
+  }
 }
