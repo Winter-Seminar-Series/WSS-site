@@ -20,8 +20,12 @@ const About = () => {
   return (
     <>
       <section id="main-container" className="main-container pb-5">
-        <div style={diagonalStyle} className="px-2 pt-4 diagonal background-theme">
-          <h2 className="container section-sub-title title-white" style={containerStyle}>
+        <div
+          style={diagonalStyle}
+          className="px-2 pt-4 diagonal background-theme">
+          <h2
+            className="container section-sub-title title-white"
+            style={containerStyle}>
             About WSS
           </h2>
         </div>
@@ -36,22 +40,39 @@ const About = () => {
                 <p>{t('descriptionP3')}</p>
               </div>
             </div>
-
-            <h2 className="section-title mt-4">Programs</h2>
-            <div className="row">
-              <div className="col mx-auto">
-                <div className="row d-flex flex-sm-row-reverse justify-content-start justify-content-sm-between mt-5 mb-md-5">
-                  <div className="p-5 p-md-0 col-md-3 d-flex flex-column justify-content-center">
+            <div className="d-flex flex-column align-items-center">
+              <h2 className="section-title my-4">Programs</h2>
+              <div className="d-flex flex-row justify-content-around w-75 mx-auto" style={{minHeight: 500}}>
+                <div className="d-flex flex-column justify-content-between h-100" style={{minHeight: 500, width: "60%"}}>
+                  <div className="col mr-md-3 d-flex flex-column justify-content-center">
+                    <h3>Seminars</h3>
+                    <p>{t('seminarsDescription')}</p>
+                  </div>
+                  <div className="col mr-md-3 d-flex flex-column justify-content-center">
+                    <h3>Round Tables</h3>
+                    <p>{t('roundTablesDescription')}</p>
+                  </div>
+                  <div className="col mr-md-3 d-flex flex-column justify-content-center">
+                    <h3>Lab Talks</h3>
+                    <p>{t('labTalksDescription')}</p>
+                  </div>
+                </div>
+                <div className="d-flex flex-column justify-content-around align-items-center h-100" style={{minHeight: 500, width: "40%"}}>
+                  <div className="p-5 p-md-0 col-md-7 d-flex flex-column justify-content-center">
                     <img
                       className="w-100 h-auto my-auto"
                       src="images/seminar.png"
                     />
                   </div>
-                  <div className="col mr-md-3  d-flex flex-column justify-content-start">
-                    <h3>Seminars</h3>
-                    <p>{t('seminarsDescription')}</p>
+                  <div className="p-5 p-md-0 col-md-7 d-flex flex-column justify-content-center">
+                    <img
+                      className="w-100 h-auto my-auto"
+                      src="images/roundtable.png"
+                    />
                   </div>
                 </div>
+                {/*<div className="row d-flex flex-sm-row-reverse justify-content-start justify-content-sm-between mt-5 mb-md-5">*/}
+                {/*</div>*/}
                 {/* <div className="row d-flex flex-sm-row-reverse justify-content-start justify-content-sm-between mt-5 mb-md-5">
                   <div className="p-5 p-md-0 col-md-3 d-flex flex-column justify-content-center">
                     <img
@@ -64,7 +85,7 @@ const About = () => {
                     <p>{t('posterSessionDescription')}</p>
                   </div>
                 </div> */}
-                <div className="row d-flex flex-sm-row-reverse justify-content-start justify-content-sm-between mt-md-5">
+                {/*<div className="row d-flex flex-sm-row-reverse justify-content-start justify-content-sm-between mt-md-5">
                   <div className="p-5 p-md-0 col-md-3 d-flex flex-column justify-content-center">
                     <img
                       className="w-100 h-auto my-auto"
@@ -75,7 +96,9 @@ const About = () => {
                     <h3>Workshops</h3>
                     <p>{t('workshopsDescription')}</p>
                   </div>
-                </div>
+                </div>*/}
+                {/*<div className="row d-flex flex-sm-row-reverse justify-content-start justify-content-sm-between mt-md-5">*/}
+                {/*</div>*/}
               </div>
             </div>
           </div>

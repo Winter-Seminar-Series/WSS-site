@@ -126,10 +126,10 @@ function Home({
                       : ''}
                   </h2>
                   <h3 className="banner-desc font-weight-bold">
-                    IRAN, TEHRAN,
+                    SHARIF UNIVERSITY OF TECHNOLOGY,
                   </h3>
                   <h3 className="banner-desc font-weight-bold">
-                    SHARIF UNIVERSITY OF TECHNOLOGY
+                    TEHRAN, IRAN
                   </h3>
                   {isRegistrationOpen && (
                     <p className="banner-btn">
@@ -258,7 +258,7 @@ function Home({
         </section>
       )}
 
-      <section id="ts-statics" className="z-1 ts-statics diagonal my-5">
+      {/*<section id="ts-statics" className="z-1 ts-statics diagonal my-5">
         <div className="container py-4">
           <div className="row d-flex justify-content-center">
             <div className="col-sm-2 m-2 text-center">
@@ -286,7 +286,7 @@ function Home({
               </a>
             </div>
 
-            {/* <div className="col-sm-2 m-2 text-center">
+            <div className="col-sm-2 m-2 text-center">
               <a data-scroll>
                 <div className="ts-facts">
                   <div className="ts-facts-content">
@@ -297,7 +297,7 @@ function Home({
                   </div>
                 </div>
               </a>
-            </div> */}
+            </div>
 
             <div className="col-sm-2 m-2 text-center">
               <div className="ts-facts">
@@ -311,7 +311,7 @@ function Home({
             </div>
           </div>
         </div>
-      </section>
+      </section>*/}
 
       {/* {sponsors.length > 0 && (
         <section id="ts-sponsors" className="ts-sponsors diagonal pt-0">
