@@ -56,14 +56,14 @@ def get_user_profile(user: User) -> UserProfile:
 
 
 class ErrorResponse(Response):
-    
+
     def __init__(self, data, status_code: int = 400):
         super().__init__(data)
         self.status_code = status_code
 
 
 class WSSViewSet(viewsets.ViewSet):
-    
+
     def list(self, request, year):
         wss = get_wss_object_or_404(year)
         serializer = serializers.WSSSerializer(wss)
@@ -98,7 +98,7 @@ class BaseViewSet(viewsets.ViewSet, ABC):
     def retrieve(self, request, year, pk=None):
         wss = get_wss_object_or_404(year)
         return Response(self.get_by_pk(request, wss, pk))
-    
+
     @action(detail=False)
     def count(self, request, year):
         wss = get_wss_object_or_404(year)
@@ -159,11 +159,12 @@ class WorkshopViewSet(EventViewSet):
     def user_is_participant(user: User, wss: WSS, pk: int) -> bool:
         if not EventViewSet.user_is_participant(user, wss, pk):
             return False
-        
+
         return WorkshopViewSet.user_is_registered_workshop(user, wss, pk)
 
     def queryset_selector(self, request, wss):
         return wss.workshops
+
 
 class RegisteredWorkshopsAPI(generics.GenericAPIView):
     authentication_classes = [TokenAuthentication]
@@ -172,8 +173,10 @@ class RegisteredWorkshopsAPI(generics.GenericAPIView):
     def get(self, request, year):
         wss = get_wss_object_or_404(year)
         user_profile = get_user_profile(request.user)
-        workshops = wss.workshops.filter(participants__user_profile=user_profile)
-        serializer = serializers.WorkshopSerializer(workshops, many=True, serialize_link=False)
+        workshops = wss.workshops.filter(
+            participants__user_profile=user_profile)
+        serializer = serializers.WorkshopSerializer(
+            workshops, many=True, serialize_link=False)
         return Response(serializer.data)
 
 
@@ -206,25 +209,26 @@ class WorkshopRegistrationViewSet(viewsets.ViewSet):
             return ErrorResponse({
                 "message": "This workshop has no more capacity"
             })
-        
-        participant: Participant = request.user.profile.participants.get(current_wss=wss)
-        
+
+        participant: Participant = request.user.profile.participants.get(
+            current_wss=wss)
+
         if participant.registered_workshops.count() >= wss.participant_workshop_limit:
             return ErrorResponse({
                 "message": f"You cannot register in more than {wss.participant_workshop_limit} workshops"
             })
-        
+
         if participant.registered_workshops.filter(start_time=workshop.start_time).count() > 0:
             return ErrorResponse({
                 "message": f"You have already registered in a workshop at this time"
             })
-        
+
         participant.registered_workshops.add(workshop)
 
         return Response({
             "message": "Done!"
         })
-    
+
     @action(methods=['GET'], detail=True)
     def cancel(self, request, year, pk):
         wss = get_wss_object_or_404(year)
@@ -234,13 +238,14 @@ class WorkshopRegistrationViewSet(viewsets.ViewSet):
             return ErrorResponse({
                 "message": "You have not registered in this workshop"
             })
-        
+
         if not wss.workshop_registration_open:
             return ErrorResponse({
                 'message': "Sorry, the workshop cancellation is not available now."
             })
-        
-        participant: Participant = request.user.profile.participants.get(current_wss=wss)
+
+        participant: Participant = request.user.profile.participants.get(
+            current_wss=wss)
         participant.registered_workshops.remove(workshop)
 
         return Response({
@@ -314,10 +319,10 @@ class SpeakerViewSet(BaseViewSet):
     serializer = serializers.SpeakerSerializer
 
     def queryset_selector(self, request, wss):
-        return Speaker.objects.filter(id__in=wss.seminars.values_list('speaker', flat=True)\
-            .union(wss.workshops.values_list('speaker', flat=True))\
-            .union(wss.postersessions.values_list('speaker', flat=True))\
-            .distinct())
+        return Speaker.objects.filter(id__in=wss.seminars.values_list('speaker', flat=True)
+                                      .union(wss.workshops.values_list('speaker', flat=True))
+                                      .union(wss.postersessions.values_list('speaker', flat=True))
+                                      .distinct())
 
 
 class SeminarMaterialViewSet(BaseViewSet):
@@ -357,7 +362,7 @@ class UserProfileViewSet(viewsets.ViewSet):
         user_profile = get_user_profile(request.user)
         serializer = self.serializer(user_profile)
         return Response(serializer.data)
-    
+
     @action(methods=['PUT'], detail=False)
     def edit(self, request):
         user_profile = get_user_profile(request.user)
@@ -371,7 +376,7 @@ class UserProfileViewSet(viewsets.ViewSet):
         for field in fields:
             if user_data_parameter.get(field):
                 setattr(user_profile, field, user_data_parameter[field])
-        
+
         user_profile.save()
         request.user.save()
         return Response(self.serializer(user_profile).data)
@@ -392,7 +397,7 @@ class UserProfileViewSet(viewsets.ViewSet):
         user_profile.save()
 
         return Response(self.serializer(user_profile).data)
-    
+
     @action(methods=['DELETE'], detail=False)
     def remove_favorite_tag(self, request):
         user_profile = get_user_profile(request.user)
@@ -415,7 +420,7 @@ class UserProfileViewSet(viewsets.ViewSet):
             return ErrorResponse({
                 'message': '`year` should be passed in query string.'
             })
-        
+
         return Response({
             'is_registered': user_profile.participants.filter(current_wss=wss).count() > 0
         })
@@ -457,19 +462,24 @@ class PaymentViewSet(viewsets.ViewSet):
             return ErrorResponse({
                 'message': "Sorry, the registration is not available now."
             })
-        
+
         callback_url = request.query_params.get("callback", None)
 
         if callback_url is None:
             return ErrorResponse({
                 'message': "`callback` should be passed in query string"
             })
-        
+
         user_profile = get_user_profile(request.user)
 
         if user_profile.participants.filter(current_wss=wss).count() != 0:
             return ErrorResponse({
                 "message": "You already have finished your payment."
+            })
+        elif ((not user_profile.grade) or (not user_profile.email) or (not user_profile.phone_number)
+              or (not user_profile.job) or (not user_profile.university)):
+            return ErrorResponse({
+                "message": "Some required fields are blank."
             })
 
         try:
@@ -481,11 +491,13 @@ class PaymentViewSet(viewsets.ViewSet):
             return ErrorResponse({
                 "message": "You must specify your grade in your profile before registration."
             }, status_code=403)
-        
-        amount = wss.registration_fee
-        description = settings.PAYMENT_SETTING['description'].format(year, user_profile.email)
 
-        result = send_payment_request(callback_url, amount, description, user_profile.email, user_profile.phone_number)
+        amount = wss.registration_fee
+        description = settings.PAYMENT_SETTING['description'].format(
+            year, user_profile.email)
+
+        result = send_payment_request(
+            callback_url, amount, description, user_profile.email, user_profile.phone_number)
 
         if result.Status != 100:
             return ErrorResponse({
@@ -498,7 +510,6 @@ class PaymentViewSet(viewsets.ViewSet):
         return Response({
             "redirect_url": f"{payment_url}{result.Authority}"
         })
-    
 
     @action(methods=['GET'], detail=False)
     def verify(self, request, year):
@@ -507,13 +518,13 @@ class PaymentViewSet(viewsets.ViewSet):
             return ErrorResponse({
                 'message': "Sorry, the registration is not available now."
             })
-        
+
         user_profile = get_user_profile(request.user)
 
         if user_profile.participants.filter(current_wss=wss).count() != 0:
             return ErrorResponse({
                 "message": "You already have finished your payment."
-            })        
+            })
 
         if request.query_params.get('Status', None) == 'OK':
             authority = request.query_params.get('Authority', None)
@@ -521,11 +532,11 @@ class PaymentViewSet(viewsets.ViewSet):
                 return ErrorResponse({
                     'message': 'Authority should be passed in query string'
                 }, status_code=403)
-            
+
             amount = wss.registration_fee
 
             result = verify(authority, amount)
-            
+
             if result.Status == 100:
                 participant = Participant(current_wss=wss, user_profile=user_profile,
                                           payment_ref_id=str(result.RefID), payment_amount=amount)
@@ -533,7 +544,7 @@ class PaymentViewSet(viewsets.ViewSet):
 
                 # Notify user about successful payment
                 user = participant.user_profile.user
-                
+
                 threading.Thread(target=lambda: send_mail(
                     PAYMENT_SUBJECT, 'text content',
                     settings.EMAIL_HOST_USER,
@@ -545,26 +556,25 @@ class PaymentViewSet(viewsets.ViewSet):
                     )
                 )
                 ).start()
-                
+
                 return Response({
                     "message": 'OK',
                     "RefID": result.RefID
                 })
-            
+
             if result.Status == 101:
                 return ErrorResponse({'status': 'ALREADY SUBMITTED'})
-            
+
             return ErrorResponse({
                 'message': 'FAILED',
                 'status': result.Status
             })
-        
 
         return ErrorResponse({
             'message': 'FAILED|CANCELLED'
         })
-            
-            
+
+
 class RegisterAPI(generics.GenericAPIView):
     serializer_class = serializers.RegisterSerializer
 
@@ -594,7 +604,7 @@ class LoginAPI(KnoxLoginView):
         user = serializer.validated_data['user']
         login(request, user)
         return super(LoginAPI, self).post(request, format=None)
- 
+
 
 class ChangePasswordView(generics.UpdateAPIView):
     serializer_class = serializers.ChangePasswordSerializer
