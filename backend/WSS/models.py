@@ -273,6 +273,8 @@ class UserProfile(models.Model):
         null=True, blank=True, verbose_name="Date of Birth")
     social_media_ids = models.CharField(
         max_length=500, blank=True, verbose_name="Social Media (LinkedIn, Github, ...)")
+    major = models.CharField(max_length=30)
+    # cv = models.FileField()
 
     @property
     def email(self):
