@@ -477,7 +477,7 @@ class PaymentViewSet(viewsets.ViewSet):
                 "message": "You already have finished your payment."
             })
         elif ((not user_profile.grade) or (not user_profile.email) or (not user_profile.phone_number)
-              or (not user_profile.job) or (not user_profile.university)):
+              or (not user_profile.job) or (not user_profile.university)):  # TODO
             return ErrorResponse({
                 "message": "Some required fields are blank."
             })
