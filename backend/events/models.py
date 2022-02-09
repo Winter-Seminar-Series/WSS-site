@@ -8,20 +8,24 @@ import datetime
 
 
 class WssTag(models.Model):
-    wss = models.ForeignKey(to='WSS.WSS', related_name='tag', on_delete=models.CASCADE)
-    name = models.CharField(max_length=100, verbose_name="Tag", primary_key=True)
+    wss = models.ForeignKey(
+        to='WSS.WSS', related_name='tag', on_delete=models.CASCADE)
+    name = models.CharField(
+        max_length=100, verbose_name="Tag", primary_key=True)
 
 
 class BaseEvent(PolymorphicModel):  # Is implicitly Abstract
-    wss = models.ForeignKey(to='WSS.WSS', related_name='events', on_delete=models.CASCADE)
+    wss = models.ForeignKey(
+        to='WSS.WSS', related_name='events', on_delete=models.CASCADE)
     title = models.CharField(max_length=150)
     start_time = models.DateTimeField(null=True, blank=True)
     duration = models.DurationField(default=timedelta())
-    venue = models.ForeignKey(to='Venue', related_name='events', null=True, blank=True, on_delete=models.SET_NULL)
+    venue = models.ForeignKey(to='Venue', related_name='events',
+                              null=True, blank=True, on_delete=models.SET_NULL)
     key_words = TaggableManager(blank=True)
     audience = models.CharField(blank=True, max_length=200)
     link = models.URLField(blank=True, null=True, max_length=256)
-    tags = models.ManyToManyField(WssTag, null=True, blank=True)
+    tags = models.ManyToManyField(WssTag, blank=True)
     calender_link = models.URLField(blank=True, null=True, max_length=512)
 
     class Meta:
@@ -59,22 +63,29 @@ class Venue(models.Model):
 class Seminar(BaseEvent):
     abstract = models.TextField()
     is_keynote = models.BooleanField(default=False)
-    speaker = models.ForeignKey(to='people.Speaker', related_name='seminars', on_delete=models.RESTRICT)
-    material = models.OneToOneField(to='SeminarMaterial', null=True, blank=True, on_delete=models.SET_NULL)
+    speaker = models.ForeignKey(
+        to='people.Speaker', related_name='seminars', on_delete=models.RESTRICT)
+    material = models.OneToOneField(
+        to='SeminarMaterial', null=True, blank=True, on_delete=models.SET_NULL)
 
 
 class PosterSession(BaseEvent):
     abstract = models.TextField()
-    speaker = models.ForeignKey(to='people.Speaker', related_name='postersessions', on_delete=models.RESTRICT)
-    material = models.OneToOneField(to='PosterMaterial', null=True, blank=True, on_delete=models.SET_NULL)
+    speaker = models.ForeignKey(
+        to='people.Speaker', related_name='postersessions', on_delete=models.RESTRICT)
+    material = models.OneToOneField(
+        to='PosterMaterial', null=True, blank=True, on_delete=models.SET_NULL)
     is_persian = models.BooleanField(null=False, default=False)
 
 
 class Workshop(BaseEvent):
     syllabus = models.TextField()
-    sponsor = models.ForeignKey(to='WSS.Sponsor', related_name='workshops', null=True, blank=True, on_delete=models.SET_NULL)
-    speaker = models.ForeignKey(to='people.Speaker', related_name='workshops', on_delete=models.RESTRICT)
-    material = models.OneToOneField(to='WorkshopMaterial', null=True, blank=True, on_delete=models.SET_NULL)
+    sponsor = models.ForeignKey(to='WSS.Sponsor', related_name='workshops',
+                                null=True, blank=True, on_delete=models.SET_NULL)
+    speaker = models.ForeignKey(
+        to='people.Speaker', related_name='workshops', on_delete=models.RESTRICT)
+    material = models.OneToOneField(
+        to='WorkshopMaterial', null=True, blank=True, on_delete=models.SET_NULL)
     registration_link = models.URLField(null=True, blank=True)
     price = models.IntegerField(default=30000)
     capacity = models.IntegerField(default=0)
@@ -107,7 +118,9 @@ class WorkshopMaterial(Material):
 
 
 class PosterMaterial(Material):
-    poster = models.ImageField(upload_to='poster_pictures/', null=True, blank=True)
+    poster = models.ImageField(
+        upload_to='poster_pictures/', null=True, blank=True)
+
     def __str__(self):
         if hasattr(self, 'postersession'):
             return 'Material of {}'.format(self.postersession)
