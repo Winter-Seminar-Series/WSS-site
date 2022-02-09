@@ -256,6 +256,7 @@ class UserProfile(models.Model):
     phone_number = models.CharField(max_length=13, verbose_name="Phone Number")
     age = models.PositiveSmallIntegerField(null=True)
     job = models.CharField(max_length=250)
+    major = models.CharField(max_length=250)
     university = models.CharField(max_length=250)
     introduction_method = models.CharField(
         max_length=250, choices=INTRODUCTION, default=None, verbose_name="How were you introduced to WSS?", null=True)
@@ -266,15 +267,18 @@ class UserProfile(models.Model):
     field_of_interest = models.CharField(max_length=1500, blank=True)
     grade = models.CharField(max_length=30, choices=GRADE_CHOICES, null=True)
     favorite_tags = models.ManyToManyField(
-        WssTag, null=True, blank=True, verbose_name="Favorite tags")
+        WssTag, blank=True, verbose_name="Favorite tags")
     is_student = models.BooleanField(
         default=False, verbose_name="I am a Student")
     date_of_birth = models.DateField(
         null=True, blank=True, verbose_name="Date of Birth")
     social_media_ids = models.CharField(
         max_length=500, blank=True, verbose_name="Social Media (LinkedIn, Github, ...)")
-    major = models.CharField(max_length=30)
-    # cv = models.FileField()
+    agreement = models.BooleanField(
+        default=False, verbose_name="I agree to the terms of service.")
+    open_to_work = models.BooleanField(
+        default=False, verbose_name="I am open to job offers.")
+    resume = models.FileField(upload_to='uploads')
 
     @property
     def email(self):
