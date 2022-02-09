@@ -10,7 +10,7 @@ import {
   MODEL_LISTS_NAMES,
 } from '../redux/actions/WSS';
 import AboutUs from '../components/AboutUs';
-import Particles from "react-tsparticles";
+import Particles from 'react-tsparticles';
 
 const fontStyle = {
   fontSize: '1.125rem',
@@ -73,18 +73,20 @@ function Home({
           <div
             className="header-video-wrapper"
             style={{
-              backgroundImage: "url(../images/bg5.jpg)",
-              backgroundSize: "100% 100%",
-              backgroundRepeat: "no-repeat"
+              backgroundImage: 'url(../images/bg5.jpg)',
+              backgroundSize: '100% 100%',
+              backgroundRepeat: 'no-repeat',
             }}>
-            <Particles id="tsparticles" url="/particles-config.json"
+            <Particles
+              id="tsparticles"
+              url="/particles-config.json"
               init={(main) => {
-                console.log(main);
                 return Promise.resolve();
-              }} loaded={(container) => {
-                console.log(container);
-                return Promise.resolve()
-              }} />
+              }}
+              loaded={(container) => {
+                return Promise.resolve();
+              }}
+            />
             {/* <video
               autoPlay
               loop
@@ -121,17 +123,15 @@ function Home({
                   <h2 className="banner-subtitle my-3 font-weight-bold">
                     {startDate && endDate
                       ? moment(startDate, 'YYYY-MM-DD').format(
-                        'MMM Do, YYYY -'
-                      ) +
-                      moment(endDate, ' YYYY-MM-DD').format('MMM Do, YYYY')
+                          'MMM Do, YYYY -'
+                        ) +
+                        moment(endDate, ' YYYY-MM-DD').format('MMM Do, YYYY')
                       : ''}
                   </h2>
                   <h3 className="banner-desc font-weight-bold">
                     SHARIF UNIVERSITY OF TECHNOLOGY,
                   </h3>
-                  <h3 className="banner-desc font-weight-bold">
-                    TEHRAN, IRAN
-                  </h3>
+                  <h3 className="banner-desc font-weight-bold">TEHRAN, IRAN</h3>
                   {isRegistrationOpen && (
                     <p className="banner-btn">
                       {/* <a
@@ -139,7 +139,9 @@ function Home({
                         className="btn btn-primary btn-white">
                         Register Now
                       </a> */}
-                      <div className="btn btn-primary btn-white">Coming Soon...</div>
+                      <div className="btn btn-primary btn-white">
+                        Coming Soon...
+                      </div>
                     </p>
                   )}
                   {/* {posterSessionRegister && (

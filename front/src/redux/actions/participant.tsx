@@ -16,6 +16,11 @@ export const getProfile = () => ({
   },
 });
 
+interface socialMediaIds {
+  github: string;
+  linkedin: string;
+}
+
 export const updateProfile = (updatedData: {
   first_name?: string;
   last_name?: string;
@@ -30,6 +35,11 @@ export const updateProfile = (updatedData: {
   field_of_interest?: string;
   grade?: number;
   is_student?: boolean;
+  major?: string;
+  date_of_birth?: string;
+  social_media_ids?: socialMediaIds;
+  agreement?: boolean;
+  open_to_work?: boolean;
 }) => ({
   [CALL_API]: {
     types: [
@@ -87,13 +97,11 @@ const _registerWorkshop = (series, id) => ({
   },
 });
 
-export const registerWorkshop = (series: string, id) => async (
-  dispatch,
-  getState
-) => {
-  await dispatch(_registerWorkshop(series, id));
-  dispatch(getRegisteredWorkshops(series));
-};
+export const registerWorkshop =
+  (series: string, id) => async (dispatch, getState) => {
+    await dispatch(_registerWorkshop(series, id));
+    dispatch(getRegisteredWorkshops(series));
+  };
 
 const _cancelWorkshopRegistration = (series: string, id) => ({
   [CALL_API]: {
@@ -109,13 +117,11 @@ const _cancelWorkshopRegistration = (series: string, id) => ({
   },
 });
 
-export const cancelWorkshopRegistration = (series: string, id) => async (
-  dispatch,
-  getState
-) => {
-  await dispatch(_cancelWorkshopRegistration(series, id));
-  dispatch(getRegisteredWorkshops(series));
-};
+export const cancelWorkshopRegistration =
+  (series: string, id) => async (dispatch, getState) => {
+    await dispatch(_cancelWorkshopRegistration(series, id));
+    dispatch(getRegisteredWorkshops(series));
+  };
 
 export const getRedirectURL = (series: string, type, id) => ({
   [CALL_API]: {
