@@ -41,8 +41,8 @@ function SeminarDetail({
   }, [getAnEntityOfModelList]);
 
   useEffect(() => {
-    if (seminars.find((s) => s.id === id)) {
-      const seminar = seminars.find((s) => s.id === id);
+    const seminar = seminars.find((s) => s.id === id);
+    if (seminar) {
       setSeminar(seminar);
       getAnEntityOfModelList(
         MODEL_LISTS_NAMES.SPEAKERS,
@@ -57,6 +57,8 @@ function SeminarDetail({
       setSpeaker(speakers.find((s) => s.id === seminar.speaker));
     }
   }, [speakers]);
+
+  debugger
 
   return (
     <section id="main-container" className="main-container">
