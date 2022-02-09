@@ -134,11 +134,12 @@ function Home({
                   </h3>
                   {isRegistrationOpen && (
                     <p className="banner-btn">
-                      <a
+                      {/* <a
                         href="/create-account"
                         className="btn btn-primary btn-white">
                         Register Now
-                      </a>
+                      </a> */}
+                      <div className="btn btn-primary btn-white">Coming Soon...</div>
                     </p>
                   )}
                   {/* {posterSessionRegister && (
