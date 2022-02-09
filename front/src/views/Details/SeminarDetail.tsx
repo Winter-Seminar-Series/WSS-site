@@ -8,17 +8,14 @@ import {
 } from '../../redux/actions/WSS';
 import moment from 'moment';
 import GoToButton from '../../components/GoToButton';
-import { doesUserHaveRegistered } from '../../redux/actions/participant';
 import FavoriteButton from '../../components/FavoriteButton';
 
 function SeminarDetail({
   thisSeries,
-  doesUserHaveRegistered,
   getAnEntityOfModelList,
   seminars,
   speakers,
   isLoggedIn,
-  isRegistered,
 }) {
   const [seminar, setSeminar] = useState({
     id: '',
@@ -38,10 +35,6 @@ function SeminarDetail({
     name: '',
   });
   const id = useParams()['id'];
-
-  useEffect(() => {
-    doesUserHaveRegistered(thisSeries);
-  }, [doesUserHaveRegistered]);
 
   useEffect(() => {
     getAnEntityOfModelList(MODEL_LISTS_NAMES.SEMINARS, thisSeries, id);
@@ -120,16 +113,16 @@ function SeminarDetail({
                     moment(seminar.duration, 'hh:mm:ss').format(`hh`)
                   ) === 12
                     ? parseInt(
-                        moment(seminar.duration, 'hh:mm:ss').format(`mm`)
-                      ) + ' minutes'
+                      moment(seminar.duration, 'hh:mm:ss').format(`mm`)
+                    ) + ' minutes'
                     : parseInt(
-                        moment(seminar.duration, 'hh:mm:ss').format(`hh`)
-                      ) *
-                        60 +
-                      parseInt(
-                        moment(seminar.duration, 'hh:mm:ss').format(`mm`)
-                      ) +
-                      ' minutes')}
+                      moment(seminar.duration, 'hh:mm:ss').format(`hh`)
+                    ) *
+                    60 +
+                    parseInt(
+                      moment(seminar.duration, 'hh:mm:ss').format(`mm`)
+                    ) +
+                    ' minutes')}
                 {!seminar.duration && 'To be announced ...'}
               </div>
               <div className="seminar-details">
@@ -141,7 +134,7 @@ function SeminarDetail({
                 {!seminar.start_time && 'To be announced ...'}
               </div>
               <div className="seminar-details mt-3">
-                {isLoggedIn && isRegistered && (
+                {isLoggedIn && (
                   <GoToButton type="seminars" id={seminar.id} />
                 )}
               </div>
@@ -188,11 +181,9 @@ const mapStateToProps = (state, ownProps) => {
     isLoggedIn: state.account.isLoggedIn,
     speakers: state.WSS.speakers,
     seminars: state.WSS.seminars,
-    isRegistered: state.Participant.isRegistered,
   };
 };
 
 export default connect(mapStateToProps, {
   getAnEntityOfModelList,
-  doesUserHaveRegistered,
 })(SeminarDetail);
