@@ -49,6 +49,7 @@ class EventInline(CompactInline):
     model = Event
     extra = 0
 
+
 class GradeInline(CompactInline):
     model = Grade
     extra = 0
@@ -76,7 +77,8 @@ class TagInline(CompactInline):
 class WSSAdmin(admin.ModelAdmin):
     inlines = (SeminarInline, PosterSessionInline, WorkshopInline, EventInline, SponsorshipInline, ImageInline,
                ClipInline, BookletInline, TagInline)
-    readonly_fields = ('bs_participant_count', 'ms_participant_count', 'phd_participant_count')
+    readonly_fields = ('bs_participant_count',
+                       'ms_participant_count', 'phd_participant_count')
     list_display = ('__str__', 'start_date', 'end_date')
 
 
@@ -106,6 +108,7 @@ admin.site.register(ShortLink)
 admin.site.register(Reserve)
 admin.site.register(Grade)
 admin.site.register(WssTag)
+admin.site.register(UserProfile)
 # unregister old user admin
 admin.site.unregister(User)
 # register new user admin
