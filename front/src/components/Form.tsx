@@ -17,7 +17,6 @@ import {
   Radio,
   RadioGroup,
   Select,
-  Typography,
 } from '@mui/material';
 import ResponsiveDialog from './Dialog';
 
