@@ -8,16 +8,18 @@ function PrivateRoute({ isLoggedIn, ...rest }) {
       {isLoggedIn ? (
         <Route {...rest} />
       ) : (
-        <Route
-          render={({ location }) => (
-            <Redirect
-              to={{
-                pathname: '/login',
-                state: { from: location },
-              }}
-            />
-          )}
-        />
+        <Route {...rest} />
+
+        // <Route
+        //   render={({ location }) => (
+        //     <Redirect
+        //       to={{
+        //         pathname: '/login',
+        //         state: { from: location },
+        //       }}
+        //     />
+        //   )}
+        // />
       )}
     </>
   );
