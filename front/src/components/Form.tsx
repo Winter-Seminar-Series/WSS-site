@@ -7,8 +7,6 @@ import {
   doesUserHaveRegistered,
 } from '../redux/actions/participant';
 import { sendPaymentRequest } from '../redux/actions/account';
-import { LocalizationProvider, MobileDatePicker } from '@mui/lab';
-import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import {
   Button,
   FormControl,
@@ -19,7 +17,10 @@ import {
   Radio,
   RadioGroup,
   Select,
+  Typography,
 } from '@mui/material';
+import { Link } from 'react-router-dom';
+import ResponsiveDialog from './Dialog';
 
 function Form({
   thisSeries,
@@ -69,11 +70,21 @@ function Form({
   const [city, setCity] = React.useState('');
   const [agreement, setAgreement] = React.useState(false);
   const [openToWork, setOpenToWork] = React.useState(false);
-  const [dateOfBirth, setDateOfBirth] = React.useState('05/08/2001');
+  const [dateOfBirth, setDateOfBirth] = React.useState(null);
   const [major, setMajor] = React.useState('');
   const [github, setGithub] = React.useState(null);
   const [linkedIn, setLinkedIn] = React.useState(null);
   const [resume, setResume] = React.useState(null);
+
+  const [dialogOpen, setDialogOpen] = React.useState(false);
+
+  const handleClickOpenDialog = () => {
+    setDialogOpen(true);
+  };
+
+  const handleCloseDialog = () => {
+    setDialogOpen(false);
+  };
 
   const handleCaptureResume = ({ target }) => {
     setResume(target);
@@ -140,10 +151,10 @@ function Form({
         major
       )
     ) {
-      toast.error('Please fill all the fields');
+      toast.error('Please fill all the required fields');
       return;
     } else if (!agreement && isRegisteration) {
-      toast.error('You should agreement to our condition');
+      toast.error('You should agree to our condition');
       return;
     }
     if (
@@ -181,7 +192,7 @@ function Form({
         resume,
       });
     }
-    sendPaymentRequest(thisSeries);
+    if (isRegisteration) sendPaymentRequest(thisSeries);
   };
   return (
     <form className="seminar-register-form" onSubmit={submitInfo}>
@@ -227,30 +238,15 @@ function Form({
             placeholder="City"
           />
         </div>
-        <LocalizationProvider dateAdapter={AdapterDateFns}>
-          <MobileDatePicker
-            label="Birth Date"
+
+        <div className="col-12 col-lg">
+          <input
+            type="date"
+            className="text-input form-control"
             value={dateOfBirth}
-            onChange={(newValue) => {
-              setDateOfBirth(newValue);
-            }}
-            renderInput={({ inputRef, inputProps, InputProps }) => {
-              return (
-                <div className="col-12 col-lg">
-                  <input
-                    onChange={(e) => setDateOfBirth(e.target.value)}
-                    className="text-input form-control"
-                    ref={inputRef}
-                    {...inputProps}
-                    readOnly={false}
-                    disabled={false}
-                  />
-                  {InputProps?.endAdornment}
-                </div>
-              );
-            }}
+            onChange={(e) => setDateOfBirth(e.target.value)}
           />
-        </LocalizationProvider>
+        </div>
       </div>
 
       <div className="row">
@@ -380,8 +376,22 @@ function Form({
                 id="gridCheck1"
               />
               <label className="form-check-label" htmlFor="gridCheck1">
-                By checking this, I agreement NOT to record any seminars or
-                workshops.
+                <div>
+                  I agree to{' '}
+                  <a
+                    style={{ textDecoration: 'underline' }}
+                    type="button"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleClickOpenDialog();
+                    }}>
+                    terms of service
+                  </a>
+                </div>
+                <ResponsiveDialog
+                  handleClose={handleCloseDialog}
+                  open={dialogOpen}
+                />
               </label>
             </div>
           </div>
@@ -403,7 +413,7 @@ function Form({
             disabled={isFetching || paymentProcess}
             type="submit"
             className="btn btn-lg btn-primary btn-dark mb-5">
-            Go For Payment
+            {isRegisteration ? 'Go For Payment' : 'Update Profile'}
           </button>
         </>
       ) : undefined}
