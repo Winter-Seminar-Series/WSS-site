@@ -56,9 +56,9 @@ const Header = ({ isLoggedIn, thisSeries, doSetThisSeries }) => {
     },
     { title: 'About Us', persianTitle: 'درباره ما', link: '/about' },
     { title: 'Speakers', persianTitle: 'سمینارها', link: '/seminars' },
-    { title: 'Workshops', persianTitle: 'کارگاه‌ها', link: '/workshops' },
+    // { title: 'Workshops', persianTitle: 'کارگاه‌ها', link: '/workshops' },
     // { title: 'PosterSession', persianTitle: 'پوسترسشن', link: '/postersessions' },
-    { title: 'Schedule', persianTitle: 'برنامه زمانی', link: '/schedule' },
+    // { title: 'Schedule', persianTitle: 'برنامه زمانی', link: '/schedule' },
     { title: 'Staff', persianTitle: 'استف‌ها', link: '/staff' },
     {
       title: 'Create Account',
