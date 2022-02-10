@@ -350,6 +350,11 @@ img.pull-right {
   color: var(--med-blue);
 }
 
+.section-sub-title
+{
+  color: var(--dark-blue) !important;
+}
+
 .section-sub-title,
 .intro-sub-title {
   font-weight: 900;
@@ -3314,7 +3319,7 @@ label {
 
 .blue-gradient:nth-last-child(2),
 .background-theme {
-  background: url('../images/bg4.jpg'), #000004 no-repeat center top !important;
+  background: url('../images/bg42.jpg'), #120C41 no-repeat center top !important;
   background-size: cover !important;
 }
 
