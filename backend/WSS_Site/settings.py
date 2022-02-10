@@ -65,6 +65,7 @@ INSTALLED_APPS = [
     'django_rest_passwordreset',
     'dbbackup',
     'corsheaders',
+    'storages'
 ] + WSS_APPS
 
 MIDDLEWARE = [
