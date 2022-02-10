@@ -102,10 +102,6 @@ function Form({
   }, [getProfile]);
 
   useEffect(() => {
-    console.log(dateOfBirth);
-  }, [dateOfBirth]);
-
-  useEffect(() => {
     setFirstName(inputFirstName);
     setLastName(inputLastName);
     inputIntroductionMethod
