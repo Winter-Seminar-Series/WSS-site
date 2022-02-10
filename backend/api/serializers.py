@@ -41,9 +41,11 @@ class UserProfileSerializer(ModelSerializer):
         model = UserProfile
         fields = [
             'email', 'first_name', 'last_name', 'phone_number', 'age', 'job', 'university',
-            'introduction_method', 'gender', 'city', 'country',
-            'field_of_interest', 'grade', 'is_student', 'favorite_tags'
+            'introduction_method', 'gender', 'city', 'country', 'major',
+            'field_of_interest', 'grade', 'is_student', 'favorite_tags',
+            'date_of_birth', 'social_media_ids', 'open_to_work', 'resume'
         ]
+
 
 class AnnouncementSerializer(ModelSerializer):
     class Meta:
@@ -137,7 +139,7 @@ class RegisterSerializer(ModelSerializer):
     def create(self, validated_data):
         user = User.objects.create_user(
             validated_data['email'], validated_data['email'], validated_data['password'])
-        
+
         user_profile = UserProfile(user=user)
         user_profile.save()
 
@@ -202,13 +204,13 @@ class ParticipantDeepSerializer(ModelSerializer):
     FIELDS_BY_MODEL = {
         "User": ['email', 'first_name', 'last_name', 'date_joined'],
         "UserProfile": ['phone_number', 'age', 'job', 'university', 'introduction_method',
-                           'gender', 'city', 'country', 'field_of_interest', 'grade'],
+                        'gender', 'city', 'country', 'field_of_interest', 'grade'],
         "WSS": ['year'],
     }
 
     class Meta:
-       model = Participant
-       fields = '__all__'
+        model = Participant
+        fields = '__all__'
 
     email = SerializerMethodField()
     first_name = SerializerMethodField()
@@ -225,6 +227,8 @@ class ParticipantDeepSerializer(ModelSerializer):
     field_of_interest = SerializerMethodField()
     grade = SerializerMethodField()
     year = SerializerMethodField()
+    date_of_birth = SerializerMethodField()
+    social_media_ids = SerializerMethodField()
 
     @classmethod
     def get_getter(cls, selector, field):
