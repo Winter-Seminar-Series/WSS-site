@@ -19,8 +19,10 @@ GRADE_GROUP_LIMITS = {
     'PhD or Higher': 'msOrPhd_participant_limit'
 }
 
+
 class GradeDoesNotSpecifiedException(Exception):
     pass
+
 
 class WSS(models.Model):
     year = models.PositiveSmallIntegerField()
@@ -36,10 +38,14 @@ class WSS(models.Model):
     show_stats = models.BooleanField(null=False, default=True)
     start_date = models.DateField()
     end_date = models.DateField()
-    main_clip = models.OneToOneField(to='Clip', null=True, blank=True, related_name='+', on_delete=models.SET_NULL)
-    booklet = models.OneToOneField(to='Booklet', null=True, blank=True, related_name='+', on_delete=models.SET_NULL)
-    main_image = models.OneToOneField(to='Image', null=True, blank=True, related_name='+', on_delete=models.SET_NULL)
-    registration_fee = models.PositiveIntegerField(default=10000, validators=[MinValueValidator(1000)])
+    main_clip = models.OneToOneField(
+        to='Clip', null=True, blank=True, related_name='+', on_delete=models.SET_NULL)
+    booklet = models.OneToOneField(
+        to='Booklet', null=True, blank=True, related_name='+', on_delete=models.SET_NULL)
+    main_image = models.OneToOneField(
+        to='Image', null=True, blank=True, related_name='+', on_delete=models.SET_NULL)
+    registration_fee = models.PositiveIntegerField(
+        default=10000, validators=[MinValueValidator(1000)])
     bs_participant_limit = models.PositiveIntegerField(default=100)
     msOrPhd_participant_limit = models.PositiveIntegerField(default=100)
     participant_workshop_limit = models.PositiveIntegerField(default=3)
@@ -51,25 +57,25 @@ class WSS(models.Model):
 
     def __str__(self):
         return 'WSS {}'.format(self.year)
-    
+
     def is_capacity_full(self, grade: str):
         if grade not in GRADE_GROUPS:
             raise GradeDoesNotSpecifiedException()
-        
+
         return self.participants.filter(user_profile__grade__in=GRADE_GROUPS[grade]).count() >= getattr(self, GRADE_GROUP_LIMITS[grade])
 
     @property
     def bs_participant_count(self):
         return self.participants.filter(user_profile__grade='Bachelor').count()
-    
+
     @property
     def ms_participant_count(self):
         return self.participants.filter(user_profile__grade='Master').count()
-    
+
     @property
     def phd_participant_count(self):
         return self.participants.filter(user_profile__grade='PhD or Higher').count()
-    
+
     @property
     def main_image_url(self):
         if not self.main_image:
@@ -140,7 +146,8 @@ class WSS(models.Model):
 
 
 class Clip(models.Model):
-    wss = models.ForeignKey(to='WSS', related_name='clips', verbose_name='WSS', on_delete=models.CASCADE)
+    wss = models.ForeignKey(to='WSS', related_name='clips',
+                            verbose_name='WSS', on_delete=models.CASCADE)
     clip = models.FileField(upload_to='clips/')
 
     def __str__(self):
@@ -148,7 +155,8 @@ class Clip(models.Model):
 
 
 class Booklet(models.Model):
-    wss = models.ForeignKey(to='WSS', related_name='booklets', verbose_name='WSS', on_delete=models.CASCADE)
+    wss = models.ForeignKey(to='WSS', related_name='booklets',
+                            verbose_name='WSS', on_delete=models.CASCADE)
     booklet = models.FileField(upload_to='booklets/')
 
     def __str__(self):
@@ -156,7 +164,8 @@ class Booklet(models.Model):
 
 
 class Image(models.Model):
-    wss = models.ForeignKey(to='WSS', related_name='images', verbose_name='WSS', on_delete=models.CASCADE)
+    wss = models.ForeignKey(to='WSS', related_name='images',
+                            verbose_name='WSS', on_delete=models.CASCADE)
     image = ImageField(upload_to='images/')
 
     def __str__(self):
@@ -180,8 +189,10 @@ class Sponsor(models.Model):
 
 
 class Sponsorship(models.Model):
-    wss = models.ForeignKey(to='WSS', related_name='sponsorships', on_delete=models.CASCADE)
-    sponsor = models.ForeignKey(to=Sponsor, related_name='sponsorships', on_delete=models.RESTRICT)
+    wss = models.ForeignKey(
+        to='WSS', related_name='sponsorships', on_delete=models.CASCADE)
+    sponsor = models.ForeignKey(
+        to=Sponsor, related_name='sponsorships', on_delete=models.RESTRICT)
     is_main = models.BooleanField()
 
     def __str__(self):
@@ -202,11 +213,13 @@ class ExternalLink(models.Model):
         return '{}: {}'.format(self.type, self.url)
 
 
-GRADE_CHOICES = [(None, "Please Select"), ('Bachelor', 'Bachelor'), ('Master', "Master"), ('PhD or Higher', "PhD or Higher")]
+GRADE_CHOICES = [(None, "Please Select"), ('Bachelor', 'Bachelor'),
+                 ('Master', "Master"), ('PhD or Higher', "PhD or Higher")]
 
 
 class Grade(models.Model):
-    level = models.CharField(max_length=30, choices=GRADE_CHOICES, primary_key=True)
+    level = models.CharField(
+        max_length=30, choices=GRADE_CHOICES, primary_key=True)
     capacity = models.IntegerField()
 
     def __str__(self):
@@ -219,35 +232,53 @@ GENDER = [('Female', 'Female'), ('Male', 'Male'), ('Other', 'Other')]
 
 
 class Participant(models.Model):
-    current_wss = models.ForeignKey('WSS', null=True, related_name='participants', verbose_name='WSS', on_delete=models.SET_NULL)
-    user_profile = models.ForeignKey('UserProfile', null=True, related_name='participants', on_delete=models.SET_NULL)
+    current_wss = models.ForeignKey(
+        'WSS', null=True, related_name='participants', verbose_name='WSS', on_delete=models.SET_NULL)
+    user_profile = models.ForeignKey(
+        'UserProfile', null=True, related_name='participants', on_delete=models.SET_NULL)
     payment_ref_id = models.CharField(max_length=250, default="NOT_PAYED")
     payment_amount = models.PositiveIntegerField(default=0)
     payment_timestamp = models.DateTimeField(auto_now_add=True)
-    registered_workshops = models.ManyToManyField(Workshop, related_name='participants', blank=True)
+    registered_workshops = models.ManyToManyField(
+        Workshop, related_name='participants', blank=True)
 
     class Meta:
         unique_together = [['current_wss', 'user_profile']]
-    
+
     def __str__(self):
         return f"{self.current_wss} - {self.user_profile}"
 
 
 class UserProfile(models.Model):
-    user = models.OneToOneField(User, null=True, default=None, on_delete=models.CASCADE, related_name='profile')
+    user = models.OneToOneField(
+        User, null=True, default=None, on_delete=models.CASCADE, related_name='profile')
     id = models.BigAutoField(primary_key=True)
     phone_number = models.CharField(max_length=13, verbose_name="Phone Number")
     age = models.PositiveSmallIntegerField(null=True)
     job = models.CharField(max_length=250)
+    major = models.CharField(max_length=250, null=True, blank=True)
     university = models.CharField(max_length=250)
-    introduction_method = models.CharField(max_length=250, choices=INTRODUCTION, default=None, verbose_name="How were you introduced to WSS?", null=True)
-    gender = models.CharField(max_length=50, choices=GENDER, blank=False, default=None, null=True)
+    introduction_method = models.CharField(
+        max_length=250, choices=INTRODUCTION, default=None, verbose_name="How were you introduced to WSS?", null=True)
+    gender = models.CharField(
+        max_length=50, choices=GENDER, blank=False, default=None, null=True)
     city = models.CharField(max_length=150)
     country = models.CharField(max_length=150)
     field_of_interest = models.CharField(max_length=1500, blank=True)
     grade = models.CharField(max_length=30, choices=GRADE_CHOICES, null=True)
-    favorite_tags = models.ManyToManyField(WssTag, null=True, blank=True, verbose_name="Favorite tags")
-    is_student = models.BooleanField(default=False, verbose_name="I am a Student")
+    favorite_tags = models.ManyToManyField(
+        WssTag, blank=True, verbose_name="Favorite tags")
+    is_student = models.BooleanField(
+        default=False, verbose_name="I am a Student")
+    date_of_birth = models.DateField(
+        null=True, blank=True, verbose_name="Date of Birth")
+    social_media_ids = models.CharField(
+        max_length=500, blank=True, verbose_name="Social Media (LinkedIn, Github, ...)")
+    agreement = models.BooleanField(
+        default=False, verbose_name="I agree to the terms of service.")
+    open_to_work = models.BooleanField(
+        default=False, verbose_name="I am open to job offers.")
+    resume = models.FileField(upload_to='uploads', null=True, blank=True)
 
     @property
     def email(self):
@@ -278,7 +309,8 @@ class Reserve(models.Model):
     grade = models.CharField(max_length=70)
     student_number = models.CharField(max_length=70, blank=True)
     email = models.EmailField(primary_key=True)
-    phone_number = models.CharField(default=0, max_length=13, verbose_name="Phone Number")
+    phone_number = models.CharField(
+        default=0, max_length=13, verbose_name="Phone Number")
     major = models.CharField(max_length=30)
 
     def __str__(self):
@@ -295,7 +327,8 @@ class ShortLink(models.Model):
 
 
 class Announcement(models.Model):
-    wss = models.ForeignKey('WSS', null=True, related_name='announcements', verbose_name='WSS', on_delete=models.CASCADE)
+    wss = models.ForeignKey('WSS', null=True, related_name='announcements',
+                            verbose_name='WSS', on_delete=models.CASCADE)
     create_timestamp = models.DateTimeField(auto_now_add=True)
     last_modify_timestamp = models.DateTimeField(auto_now=True)
     title = models.CharField(max_length=200)
