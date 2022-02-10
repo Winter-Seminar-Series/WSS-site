@@ -40,6 +40,7 @@ export const updateProfile = (updatedData: {
   social_media_ids?: socialMediaIds;
   agreement?: boolean;
   open_to_work?: boolean;
+  resume?: any;
 }) => ({
   [CALL_API]: {
     types: [

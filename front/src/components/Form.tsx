@@ -43,6 +43,7 @@ function Form({
   major: inputMajor,
   agreement: inputAgreement,
   openToWork: inputOpenToWork,
+  resume: inputResume,
   isRegisteration,
 }) {
   const gradeTypes = ['Bachelor', 'Master', 'PhD or Higher'];
@@ -72,6 +73,18 @@ function Form({
   const [major, setMajor] = React.useState('');
   const [github, setGithub] = React.useState(null);
   const [linkedIn, setLinkedIn] = React.useState(null);
+  const [resume, setResume] = React.useState(null);
+
+  const handleCaptureResume = ({ target }) => {
+    setResume(target);
+    const fileReader = new FileReader();
+    const name = target.accept.includes('image') ? 'images' : 'videos';
+
+    fileReader.readAsDataURL(target.files[0]);
+    fileReader.onload = (e) => {
+      setResume(e.target.result);
+    };
+  };
 
   useEffect(() => {
     getProfile();
@@ -94,6 +107,7 @@ function Form({
     setGithub(inputGithub);
     setLinkedIn(inputLinkedIn);
     setDateOfBirth(inputDateOfBirth);
+    setResume(inputResume);
   }, [
     inputFirstName,
     inputLastName,
@@ -109,6 +123,7 @@ function Form({
     inputGithub,
     inputAgreement,
     inputOpenToWork,
+    inputResume,
   ]);
   const submitInfo = (e) => {
     e.preventDefault();
@@ -144,7 +159,8 @@ function Form({
       major !== inputMajor ||
       dateOfBirth !== inputDateOfBirth ||
       agreement !== inputAgreement ||
-      openToWork !== inputOpenToWork
+      openToWork !== inputOpenToWork ||
+      resume !== inputResume
     ) {
       updateProfile({
         first_name,
@@ -162,6 +178,7 @@ function Form({
         },
         agreement,
         open_to_work: openToWork,
+        resume,
       });
     }
     sendPaymentRequest(thisSeries);
@@ -339,11 +356,15 @@ function Form({
             <FormHelperText>Optional</FormHelperText>
           </FormControl>
         </div>
+      </div>
+      <div className="row">
         <div className="col-12 col-lg">
-          <button className="btn btn-lg btn-primary btn-dark mb-5">
-            Upload Resume
-            <input type="file" hidden />
-          </button>
+          <Button
+            component="label"
+            className="col-12 col-lg btn btn-lg btn-primary btn-white mb-5">
+            {resume ? 'Uploaded' : 'Upload Resume (optional)'}
+            <input type="file" hidden onChange={handleCaptureResume} />
+          </Button>
         </div>
       </div>
 
