@@ -278,7 +278,7 @@ class UserProfile(models.Model):
         default=False, verbose_name="I agree to the terms of service.")
     open_to_work = models.BooleanField(
         default=False, verbose_name="I am open to job offers.")
-    resume = models.FileField(upload_to='uploads/', null=True, blank=True)
+    resume = models.FileField(upload_to='uploads', null=True, blank=True)
 
     @property
     def email(self):
