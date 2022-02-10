@@ -10,6 +10,7 @@ import { sendPaymentRequest } from '../redux/actions/account';
 import { LocalizationProvider, MobileDatePicker } from '@mui/lab';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import {
+  Button,
   FormControl,
   FormControlLabel,
   FormHelperText,
@@ -317,7 +318,7 @@ function Form({
         </div>
       </div>
       <div className="row">
-        <div className="col-12 col-md-4">
+        <div className="col-12 mb-3 col-lg mb-lg-0">
           <FormControl sx={{ m: 1, minWidth: 200 }}>
             <InputLabel id="demo-simple-select-required-label">
               Introduction method
@@ -337,6 +338,12 @@ function Form({
             </Select>
             <FormHelperText>Optional</FormHelperText>
           </FormControl>
+        </div>
+        <div className="col-12 col-lg">
+          <button className="btn btn-lg btn-primary btn-dark mb-5">
+            Upload Resume
+            <input type="file" hidden />
+          </button>
         </div>
       </div>
 
