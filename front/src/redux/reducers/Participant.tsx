@@ -21,11 +21,16 @@ const initState = {
   grade: '',
   is_student: false,
   favorite_tags: '',
+  major: '',
+  date_of_birth: '',
+  social_media_ids: '',
+  agreement: false,
+  open_to_work: false,
+  resume: null,
 };
 
 function Participant(state = initState, action) {
   switch (action.type) {
-
     case actionTypes.GET_PROFILE_SUCCESS:
       return {
         ...state,
@@ -46,6 +51,12 @@ function Participant(state = initState, action) {
         grade: action.response.grade,
         is_student: action.response.is_student,
         favorite_tags: action.response.favorite_tags,
+        major: action.response.major,
+        date_of_birth: action.response.date_of_birth,
+        social_media_ids: action.response.social_media_ids,
+        agreement: action.response.agreement,
+        open_to_work: action.reponse.open_to_work,
+        resume: action.response.resume,
       };
 
     /////////////////////////
@@ -79,19 +90,25 @@ function Participant(state = initState, action) {
         grade: action.response.grade,
         is_student: action.response.is_student,
         favorite_tags: action.response.favorite_tags,
+        major: action.response.major,
+        date_of_birth: action.response.date_of_birth,
+        social_media_ids: action.response.social_media_ids,
+        agreement: action.response.agreement,
+        open_to_work: action.reponse.open_to_work,
+        resume: action.response.resume,
       };
 
     case actionTypes.CHECK_USER_REGISTRATION_STATUS_SUCCESS:
       return {
         ...state,
         isRegistered: action.response.is_registered,
-      }
+      };
 
     case actionTypes.GET_REGISTERED_WORKSHOPS_SUCCESS:
       return {
         ...state,
         registeredWorkshops: action.response,
-      }
+      };
 
     case actionTypes.REGISTER_WORKSHOP_SUCCESS:
     case actionTypes.REGISTER_WORKSHOP_FAILURE:
