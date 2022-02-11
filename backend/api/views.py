@@ -370,9 +370,9 @@ class UserProfileViewSet(viewsets.ViewSet):
 
         fields = ['first_name', 'last_name', 'phone_number', 'age'
                   'job', 'university', 'introduction_method',
-                  'gender', 'city', 'country', 'field_of_interest',
-                  'grade', 'is_student']
-
+                  'gender', 'city', 'country', 'major', 'field_of_interest',
+                  'grade', 'is_student', 'favorite_tags',
+                  'date_of_birth', 'social_media_ids', 'open_to_work', 'resume']
         for field in fields:
             if user_data_parameter.get(field):
                 setattr(user_profile, field, user_data_parameter[field])
