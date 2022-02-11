@@ -20,7 +20,7 @@ function Registration({ isRegistered }) {
           </h5>
         </div>
       ) : (
-        <Form isRegisteration="true" />
+        <Form isRegisteration={true} />
       )}
     </>
   );

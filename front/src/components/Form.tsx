@@ -17,9 +17,7 @@ import {
   Radio,
   RadioGroup,
   Select,
-  Typography,
 } from '@mui/material';
-import { Link } from 'react-router-dom';
 import ResponsiveDialog from './Dialog';
 
 function Form({
@@ -70,7 +68,7 @@ function Form({
   const [city, setCity] = React.useState('');
   const [agreement, setAgreement] = React.useState(false);
   const [openToWork, setOpenToWork] = React.useState(false);
-  const [dateOfBirth, setDateOfBirth] = React.useState(null);
+  const [dateOfBirth, setDateOfBirth] = React.useState('');
   const [major, setMajor] = React.useState('');
   const [github, setGithub] = React.useState(null);
   const [linkedIn, setLinkedIn] = React.useState(null);
@@ -409,14 +407,18 @@ function Form({
               </label>
             </div>
           </div>
+        </>
+      ) : undefined}
+      <div className="row">
+        <div className="col-12 col-lg">
           <button
             disabled={isFetching || paymentProcess}
             type="submit"
             className="btn btn-lg btn-primary btn-dark mb-5">
             {isRegisteration ? 'Go For Payment' : 'Update Profile'}
           </button>
-        </>
-      ) : undefined}
+        </div>
+      </div>
     </form>
   );
 }
@@ -438,6 +440,7 @@ const mapStateToProps = (state, ownProps) => {
     linkedIn,
   } = state.Participant;
   const { isFetching: paymentProcess } = state.account;
+  const { isRegisteration } = ownProps;
   return {
     thisSeries: state.account.thisSeries,
     paymentProcess,
@@ -454,6 +457,7 @@ const mapStateToProps = (state, ownProps) => {
     dateOfBirth,
     github,
     linkedIn,
+    isRegisteration,
   };
 };
 

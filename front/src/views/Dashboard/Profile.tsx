@@ -25,7 +25,7 @@ function Profile({
           <div className="title">Profile</div>
         </div>
       </div>
-      <Form isRegisteration="false" />
+      <Form isRegisteration={false} />
     </>
   );
 }
