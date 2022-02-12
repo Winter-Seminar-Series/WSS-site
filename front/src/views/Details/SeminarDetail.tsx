@@ -58,8 +58,6 @@ function SeminarDetail({
     }
   }, [speakers]);
 
-  debugger
-
   return (
     <section id="main-container" className="main-container">
       <div
@@ -95,7 +93,7 @@ function SeminarDetail({
             </div>
             <div className="col mt-3">
               <div className="d-flex">
-                {seminar && seminar.id && (
+                {seminar && seminar.id && isLoggedIn && (
                   <FavoriteButton
                     series={thisSeries}
                     type={'seminar'}
