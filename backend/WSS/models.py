@@ -252,6 +252,10 @@ class Participant(models.Model):
 class UserProfile(models.Model):
     user = models.OneToOneField(
         User, null=True, default=None, on_delete=models.CASCADE, related_name='profile')
+    persian_first_name = models.CharField(
+        max_length=100, null=True, blank=True, default=None, verbose_name="Persian first name")
+    persian_last_name = models.CharField(
+        max_length=100, null=True, blank=True, default=None, verbose_name="Persian last name")
     id = models.BigAutoField(primary_key=True)
     phone_number = models.CharField(max_length=13, verbose_name="Phone Number")
     age = models.PositiveSmallIntegerField(null=True)

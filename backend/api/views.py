@@ -368,8 +368,8 @@ class UserProfileViewSet(viewsets.ViewSet):
         user_profile = get_user_profile(request.user)
         user_data_parameter = request.data
 
-        fields = ['first_name', 'last_name', 'phone_number', 'age'
-                  'job', 'university', 'introduction_method',
+        fields = ['first_name', 'last_name', 'persian_first_name', 'persian_last_name',
+                  'phone_number', 'age', 'job', 'university', 'introduction_method',
                   'gender', 'city', 'country', 'major', 'field_of_interest',
                   'grade', 'is_student', 'favorite_tags',
                   'date_of_birth', 'social_media_ids', 'open_to_work', 'resume']
