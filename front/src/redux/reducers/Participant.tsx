@@ -55,7 +55,7 @@ function Participant(state = initState, action) {
         date_of_birth: action.response.date_of_birth,
         social_media_ids: action.response.social_media_ids,
         agreement: action.response.agreement,
-        open_to_work: action.reponse.open_to_work,
+        open_to_work: action.response.open_to_work,
         resume: action.response.resume,
       };
 

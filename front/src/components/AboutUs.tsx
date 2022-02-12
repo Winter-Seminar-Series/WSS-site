@@ -1,6 +1,7 @@
+import * as React from "react";
 import { useTranslation } from 'react-i18next';
 
-function AboutUs() {
+export default function AboutUs() {
   const { t } = useTranslation('about', { useSuspense: false });
 
   return (
@@ -70,5 +71,3 @@ function AboutUs() {
     </div>
   );
 }
-
-export default AboutUs;
