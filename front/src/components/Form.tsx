@@ -60,8 +60,8 @@ function Form({
 
   const [first_name, setFirstName] = React.useState('');
   const [last_name, setLastName] = React.useState('');
-  const [gender, setGender] = React.useState('Male');
-  const [grade, setGrade] = React.useState('Bachelor');
+  const [gender, setGender] = React.useState('');
+  const [grade, setGrade] = React.useState('');
   const [university, setUniversity] = React.useState('');
   const [email, setEmail] = React.useState('');
   const [introduction_method, setIntroduction_method] = React.useState('');
@@ -70,8 +70,8 @@ function Form({
   const [openToWork, setOpenToWork] = React.useState(false);
   const [dateOfBirth, setDateOfBirth] = React.useState('');
   const [major, setMajor] = React.useState('');
-  const [github, setGithub] = React.useState(null);
-  const [linkedIn, setLinkedIn] = React.useState(null);
+  const [github, setGithub] = React.useState('');
+  const [linkedIn, setLinkedIn] = React.useState('');
   const [resume, setResume] = React.useState(null);
 
   const [dialogOpen, setDialogOpen] = React.useState(false);
@@ -87,9 +87,7 @@ function Form({
   const handleCaptureResume = ({ target }) => {
     setResume(target);
     const fileReader = new FileReader();
-    const name = target.accept.includes('image') ? 'images' : 'videos';
-
-    fileReader.readAsDataURL(target.files[0]);
+    fileReader.readAsArrayBuffer(target.files[0]);
     fileReader.onload = (e) => {
       setResume(e.target.result);
     };
@@ -181,10 +179,10 @@ function Form({
         introduction_method,
         major,
         date_of_birth: dateOfBirth,
-        social_media_ids: {
+        social_media_ids: JSON.stringify({
           github,
           linkedin: linkedIn,
-        },
+        }),
         agreement,
         open_to_work: openToWork,
         resume,
@@ -240,9 +238,12 @@ function Form({
         <div className="col-12 col-lg">
           <input
             type="date"
+            placeholder="Birthdate"
             className="text-input form-control"
             value={dateOfBirth}
-            onChange={(e) => setDateOfBirth(e.target.value)}
+            onChange={(e) => {
+              setDateOfBirth(e.target.value);
+            }}
           />
         </div>
       </div>
@@ -254,10 +255,12 @@ function Form({
             <RadioGroup
               row
               aria-labelledby="demo-radio-buttons-group-label"
-              defaultValue={gender}
+              defaultValue={'Male'}
+              value={gender}
               name="radio-buttons-group">
               {genderTypes.map((type) => (
                 <FormControlLabel
+                  key={type}
                   value={type}
                   label={type}
                   control={<Radio onChange={() => setGender(type)} />}
@@ -295,10 +298,12 @@ function Form({
             <RadioGroup
               row
               aria-labelledby="demo-radio-buttons-group-label"
-              defaultValue={grade}
+              defaultValue={'Bachelor'}
+              value={grade}
               name="radio-buttons-group">
               {gradeTypes.map((type) => (
                 <FormControlLabel
+                  key={type}
                   value={type}
                   label={type}
                   control={<Radio onChange={() => setGrade(type)} />}
@@ -341,7 +346,9 @@ function Form({
               label="Introduction method"
               onChange={(e) => setIntroduction_method(e.target.value)}>
               {introductionTypes.map((type) => (
-                <MenuItem value={type}>{type}</MenuItem>
+                <MenuItem key={type} value={type}>
+                  {type}
+                </MenuItem>
               ))}
               <MenuItem value="">
                 <em>None</em>
@@ -435,12 +442,15 @@ const mapStateToProps = (state, ownProps) => {
     grade,
     email,
     major,
-    dateOfBirth,
-    github,
-    linkedIn,
+    date_of_birth: dateOfBirth,
+    social_media_ids,
+    resume,
   } = state.Participant;
   const { isFetching: paymentProcess } = state.account;
   const { isRegisteration } = ownProps;
+  const socialMediaIds = social_media_ids
+    ? JSON.parse(social_media_ids)
+    : social_media_ids;
   return {
     thisSeries: state.account.thisSeries,
     paymentProcess,
@@ -455,9 +465,10 @@ const mapStateToProps = (state, ownProps) => {
     email,
     major,
     dateOfBirth,
-    github,
-    linkedIn,
+    github: socialMediaIds.github,
+    linkedIn: socialMediaIds.linkedin,
     isRegisteration,
+    resume,
   };
 };
 

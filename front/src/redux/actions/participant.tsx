@@ -16,10 +16,10 @@ export const getProfile = () => ({
   },
 });
 
-interface socialMediaIds {
-  github: string;
-  linkedin: string;
-}
+// interface socialMediaIds {
+//   github: string;
+//   linkedin: string;
+// }
 
 export const updateProfile = (updatedData: {
   first_name?: string;
@@ -37,7 +37,7 @@ export const updateProfile = (updatedData: {
   is_student?: boolean;
   major?: string;
   date_of_birth?: string;
-  social_media_ids?: socialMediaIds;
+  social_media_ids?: string;
   agreement?: boolean;
   open_to_work?: boolean;
   resume?: any;
