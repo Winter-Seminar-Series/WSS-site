@@ -43,6 +43,7 @@ function Form({
   agreement: inputAgreement,
   openToWork: inputOpenToWork,
   resume: inputResume,
+  fieldOfInterest: inputFieldOfInterest,
   isRegisteration,
 }) {
   const gradeTypes = ['Bachelor', 'Master', 'PhD or Higher'];
@@ -73,6 +74,7 @@ function Form({
   const [github, setGithub] = React.useState('');
   const [linkedIn, setLinkedIn] = React.useState('');
   const [resume, setResume] = React.useState(null);
+  const [fieldOfInterset, setFieldOfInterest] = React.useState('');
 
   const [dialogOpen, setDialogOpen] = React.useState(false);
 
@@ -116,6 +118,7 @@ function Form({
     setDateOfBirth(inputDateOfBirth);
     setResume(inputResume);
     setOpenToWork(inputOpenToWork);
+    setFieldOfInterest(inputFieldOfInterest);
   }, [
     inputFirstName,
     inputLastName,
@@ -132,6 +135,7 @@ function Form({
     inputAgreement,
     inputOpenToWork,
     inputResume,
+    inputFieldOfInterest,
   ]);
   const submitInfo = (e) => {
     e.preventDefault();
@@ -168,7 +172,8 @@ function Form({
       dateOfBirth !== inputDateOfBirth ||
       agreement !== inputAgreement ||
       openToWork !== inputOpenToWork ||
-      resume !== inputResume
+      resume !== inputResume ||
+      fieldOfInterset !== inputFieldOfInterest
     ) {
       updateProfile({
         first_name,
@@ -187,6 +192,7 @@ function Form({
         agreement,
         open_to_work: openToWork,
         resume,
+        field_of_interest: fieldOfInterset,
       });
     }
     if (isRegisteration) sendPaymentRequest(thisSeries);
@@ -292,6 +298,17 @@ function Form({
             type="text"
             className="text-input form-control"
             placeholder="Major *"
+          />
+        </div>
+      </div>
+      <div className="row">
+        <div className="col-12 mb-3 col-lg mb-lg-0">
+          <input
+            value={fieldOfInterset}
+            onChange={(e) => setFieldOfInterest(e.target.value)}
+            type="text"
+            className="text-input form-control"
+            placeholder="Fields of interset (optional)"
           />
         </div>
       </div>
@@ -449,13 +466,13 @@ const mapStateToProps = (state, ownProps) => {
     social_media_ids,
     resume,
     open_to_work,
+    field_of_interest,
   } = state.Participant;
   const { isFetching: paymentProcess } = state.account;
   const { isRegisteration } = ownProps;
   const socialMediaIds = social_media_ids
     ? JSON.parse(social_media_ids)
     : social_media_ids;
-  console.log(open_to_work);
   return {
     thisSeries: state.account.thisSeries,
     paymentProcess,
@@ -475,6 +492,7 @@ const mapStateToProps = (state, ownProps) => {
     isRegisteration,
     resume,
     openToWork: open_to_work,
+    fieldOfInterest: field_of_interest,
   };
 };
 
