@@ -115,6 +115,7 @@ function Form({
     setLinkedIn(inputLinkedIn);
     setDateOfBirth(inputDateOfBirth);
     setResume(inputResume);
+    setOpenToWork(inputOpenToWork);
   }, [
     inputFirstName,
     inputLastName,
@@ -210,7 +211,7 @@ function Form({
             onChange={(e) => setFirstName(e.target.value)}
             type="text"
             className="text-input form-control"
-            placeholder="First name"
+            placeholder="First name *"
           />
         </div>
         <div className="col-12 col-lg">
@@ -219,7 +220,7 @@ function Form({
             onChange={(e) => setLastName(e.target.value)}
             type="text"
             className="text-input form-control"
-            placeholder="Last name"
+            placeholder="Last name *"
           />
         </div>
       </div>
@@ -231,14 +232,17 @@ function Form({
             onChange={(e) => setCity(e.target.value)}
             type="text"
             className="text-input form-control"
-            placeholder="City"
+            placeholder="City *"
           />
         </div>
 
         <div className="col-12 col-lg">
           <input
-            type="date"
-            placeholder="Birthdate"
+            name="date"
+            type="text"
+            onFocus={(e) => (e.target.type = 'date')}
+            onBlur={(e) => (e.target.type = 'text')}
+            placeholder="Birthdate *"
             className="text-input form-control"
             value={dateOfBirth}
             onChange={(e) => {
@@ -251,7 +255,7 @@ function Form({
       <div className="row">
         <div className="col-12 mb-3 col-lg mb-lg-0">
           <FormControl>
-            <div className="form-label pt-0 mr-3">Gender:</div>
+            <div className="form-label pt-0 mr-3">Gender: *</div>
             <RadioGroup
               row
               aria-labelledby="demo-radio-buttons-group-label"
@@ -278,7 +282,7 @@ function Form({
             onChange={(e) => setUniversity(e.target.value)}
             type="text"
             className="text-input form-control"
-            placeholder="University"
+            placeholder="University *"
           />
         </div>
         <div className="col-12 mb-3 col-lg mb-lg-0">
@@ -287,14 +291,14 @@ function Form({
             onChange={(e) => setMajor(e.target.value)}
             type="text"
             className="text-input form-control"
-            placeholder="Major"
+            placeholder="Major *"
           />
         </div>
       </div>
       <div className="row">
         <div className="col-12 mb-3 col-lg mb-lg-0">
           <FormControl>
-            <div className="form-label pt-0 mr-3">Grade:</div>
+            <div className="form-label pt-0 mr-3">Grade: *</div>
             <RadioGroup
               row
               aria-labelledby="demo-radio-buttons-group-label"
@@ -337,13 +341,13 @@ function Form({
         <div className="col-12 mb-3 col-lg mb-lg-0">
           <FormControl sx={{ m: 1, minWidth: 200 }}>
             <InputLabel id="demo-simple-select-required-label">
-              Introduction method
+              Introduction method *
             </InputLabel>
             <Select
               labelId="demo-simple-select-required-label"
               id="demo-simple-select-required"
               value={introduction_method}
-              label="Introduction method"
+              label="Introduction method *"
               onChange={(e) => setIntroduction_method(e.target.value)}>
               {introductionTypes.map((type) => (
                 <MenuItem key={type} value={type}>
@@ -354,7 +358,6 @@ function Form({
                 <em>None</em>
               </MenuItem>
             </Select>
-            <FormHelperText>Optional</FormHelperText>
           </FormControl>
         </div>
       </div>
@@ -400,22 +403,22 @@ function Form({
               </label>
             </div>
           </div>
-          <div className="form-group mb-4">
-            <div className="form-check">
-              <input
-                checked={openToWork}
-                onChange={() => setOpenToWork(!openToWork)}
-                className="form-check-input"
-                type="checkbox"
-                id="gridCheck1"
-              />
-              <label className="form-check-label" htmlFor="gridCheck1">
-                I'm open to work.
-              </label>
-            </div>
-          </div>
         </>
       ) : undefined}
+      <div className="form-group mb-4">
+        <div className="form-check">
+          <input
+            checked={openToWork}
+            onChange={() => setOpenToWork(!openToWork)}
+            className="form-check-input"
+            type="checkbox"
+            id="gridCheck1"
+          />
+          <label className="form-check-label" htmlFor="gridCheck1">
+            I'm open to work.
+          </label>
+        </div>
+      </div>
       <div className="row">
         <div className="col-12 col-lg">
           <button
@@ -445,12 +448,14 @@ const mapStateToProps = (state, ownProps) => {
     date_of_birth: dateOfBirth,
     social_media_ids,
     resume,
+    open_to_work,
   } = state.Participant;
   const { isFetching: paymentProcess } = state.account;
   const { isRegisteration } = ownProps;
   const socialMediaIds = social_media_ids
     ? JSON.parse(social_media_ids)
     : social_media_ids;
+  console.log(open_to_work);
   return {
     thisSeries: state.account.thisSeries,
     paymentProcess,
@@ -469,6 +474,7 @@ const mapStateToProps = (state, ownProps) => {
     linkedIn: socialMediaIds.linkedin,
     isRegisteration,
     resume,
+    openToWork: open_to_work,
   };
 };
 

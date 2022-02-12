@@ -52,9 +52,9 @@
 }
 
 :root {
-  --light-blue: #3E498C;
-  --med-blue: #776AA6;
-  --dark-blue: #252D59;
+  --light-blue: #3e498c;
+  --med-blue: #776aa6;
+  --dark-blue: #252d59;
 }
 
 .white {
@@ -350,8 +350,7 @@ img.pull-right {
   color: var(--med-blue);
 }
 
-.section-sub-title
-{
+.section-sub-title {
   color: var(--dark-blue) !important;
 }
 
@@ -698,7 +697,7 @@ a[href^='tel'] {
 /* Header dark */
 
 .header-dark {
-  background: #252D59;
+  background: #252d59;
   overflow: hidden;
   z-index: 2;
   position: fixed;
@@ -725,10 +724,10 @@ a[href^='tel'] {
   border: 0;
   margin-bottom: 0;
   background: linear-gradient(
-          135deg,
-          #252D59 0%,
-          #252D59 50%,
-          #252D59 100%
+    135deg,
+    #252d59 0%,
+    #252d59 50%,
+    #252d59 100%
   ) !important;
 }
 .navbar-toggle {
@@ -2426,7 +2425,7 @@ h4.panel-title a.collapsed:before {
 .footer {
   z-index: 2;
   /*clip-path: polygon(0 30%, 100% 0, 100% 100%, 0% 100%);*/
-  background-color: #120C41;
+  background-color: #120c41;
   color: #666666;
   padding: 40px 0;
   margin-top: -10px;
@@ -2438,7 +2437,7 @@ h4.panel-title a.collapsed:before {
   content: ' ';
   width: 100%;
   height: 1000px;
-  background-color: #120C41;
+  background-color: #120c41;
   position: absolute;
   top: 99%;
   left: 0;
@@ -3304,11 +3303,11 @@ label {
 
 .blue-gradient {
   background: linear-gradient(
-          135deg,
-          #261e67 0%,
-          #120c41 71%,
-          #0b1120 100%
-  ) !important
+    135deg,
+    #261e67 0%,
+    #120c41 71%,
+    #0b1120 100%
+  ) !important;
 }
 
 .badge-blue {
@@ -3319,7 +3318,7 @@ label {
 
 .blue-gradient:nth-last-child(2),
 .background-theme {
-  background: url('../images/bg42.jpg'), #120C41 no-repeat center top !important;
+  background: url('../images/bg42.jpg'), #120c41 no-repeat center top !important;
   background-size: cover !important;
 }
 
