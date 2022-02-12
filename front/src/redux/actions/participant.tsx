@@ -16,11 +16,6 @@ export const getProfile = () => ({
   },
 });
 
-// interface socialMediaIds {
-//   github: string;
-//   linkedin: string;
-// }
-
 export const updateProfile = (updatedData: {
   first_name?: string;
   last_name?: string;

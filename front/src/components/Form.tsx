@@ -362,7 +362,7 @@ function Form({
         <div className="col-12 col-lg">
           <Button
             component="label"
-            className="col-12 col-lg btn btn-lg btn-primary btn-white mb-5">
+            className="col-12 col-lg btn btn-lg btn-primary btn-blue mb-5">
             {resume ? 'Uploaded' : 'Upload Resume (optional)'}
             <input type="file" hidden onChange={handleCaptureResume} />
           </Button>
