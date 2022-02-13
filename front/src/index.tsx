@@ -8,8 +8,8 @@ import App from './App';
 import './i18n';
 import configureStore from './redux/store/configureStore'; //todo: fix for production mode
 
-const persistedState = localStorage.getItem('WSS_2021') //use local storage just to save token
-  ? JSON.parse(localStorage.getItem('WSS_2021'))
+const persistedState = localStorage.getItem('WSS') //use local storage just to save token
+  ? JSON.parse(localStorage.getItem('WSS'))
   : {};
 
 const store = configureStore(persistedState);
@@ -17,7 +17,7 @@ const store = configureStore(persistedState);
 store.subscribe(() => {
   const state = store.getState();
   localStorage.setItem(
-    'WSS_2021',
+    'WSS',
     JSON.stringify({
       account: state.account,
     })
