@@ -56,9 +56,9 @@ const Header = ({ isLoggedIn, thisSeries, doSetThisSeries }) => {
     },
     { title: 'About Us', persianTitle: 'درباره ما', link: '/about' },
     { title: 'Speakers', persianTitle: 'سمینارها', link: '/seminars' },
-    { title: 'Workshops', persianTitle: 'کارگاه‌ها', link: '/workshops' },
+    // { title: 'Workshops', persianTitle: 'کارگاه‌ها', link: '/workshops' },
     // { title: 'PosterSession', persianTitle: 'پوسترسشن', link: '/postersessions' },
-    { title: 'Schedule', persianTitle: 'برنامه زمانی', link: '/schedule' },
+    // { title: 'Schedule', persianTitle: 'برنامه زمانی', link: '/schedule' },
     { title: 'Staff', persianTitle: 'استف‌ها', link: '/staff' },
     {
       title: 'Create Account',
@@ -88,7 +88,7 @@ const Header = ({ isLoggedIn, thisSeries, doSetThisSeries }) => {
       <nav className="navbar navbar-expand-xl navbar-dark w-100 z-index-master">
         <div className="container">
           <a className="navbar-brand" href="/">
-            <img src="/images/logo.png" height="40" alt="" />
+            <img src="/images/headerlogo.png" height="40" alt="" />
           </a>
           <button
             className="navbar-toggler"

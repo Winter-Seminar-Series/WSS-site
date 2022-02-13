@@ -31,6 +31,9 @@ from rest_framework.permissions import IsAuthenticated
 from django.dispatch import receiver
 from django_rest_passwordreset.signals import reset_password_token_created
 
+import base64
+from django.core.files.base import ContentFile
+
 
 def get_wss_object_or_404(title: str) -> WSS:
     title_to_year = {
@@ -370,12 +373,19 @@ class UserProfileViewSet(viewsets.ViewSet):
 
         fields = ['first_name', 'last_name', 'phone_number', 'age'
                   'job', 'university', 'introduction_method',
-                  'gender', 'city', 'country', 'field_of_interest',
-                  'grade', 'is_student']
-
+                  'gender', 'city', 'country', 'major', 'field_of_interest',
+                  'grade', 'is_student', 'favorite_tags',
+                  'date_of_birth', 'social_media_ids', 'open_to_work', 'resume']
         for field in fields:
             if user_data_parameter.get(field):
-                setattr(user_profile, field, user_data_parameter[field])
+                data = user_data_parameter[field]
+                if field == 'resume' and data.get('name') and data.get('extension') and data.get('content'):
+                    format, content = data['content'].split(';base64,')
+                    name = data['name']
+                    ext = data['extension']
+                    data = ContentFile(base64.b64decode(
+                        content), name=f'{name}.{ext}')
+                setattr(user_profile, field, data)
 
         user_profile.save()
         request.user.save()
@@ -477,7 +487,8 @@ class PaymentViewSet(viewsets.ViewSet):
                 "message": "You already have finished your payment."
             })
         elif ((not user_profile.grade) or (not user_profile.email) or (not user_profile.phone_number)
-              or (not user_profile.job) or (not user_profile.university)):  # TODO
+              or (not user_profile.job) or (not user_profile.university) or (not user_profile.major)
+              or (not user_profile.first_name) or (not user_profile.last_name) or (not user_profile.date_of_birth)):
             return ErrorResponse({
                 "message": "Some required fields are blank."
             })

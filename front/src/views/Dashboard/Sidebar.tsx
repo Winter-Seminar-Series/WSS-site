@@ -28,13 +28,13 @@ function Sidebar({ logout, isRegistered }) {
       link: '/dashboard/profile',
       icon: 'user-circle-o',
     },
-    {
-      title: 'Your Workshops',
-      persianTitle: 'کارگاه‌های شما',
-      link: 'JavaScript:Void(0);',
-      // link: '/dashboard/workshop-list',
-      icon: 'suitcase',
-    }
+    // {
+    //   title: 'Your Workshops',
+    //   persianTitle: 'کارگاه‌های شما',
+    //   link: 'JavaScript:Void(0);',
+    //   // link: '/dashboard/workshop-list',
+    //   icon: 'suitcase',
+    // }
   ]
 
 
@@ -42,13 +42,13 @@ function Sidebar({ logout, isRegistered }) {
     <>
       <div className="sidebar">
         {sidebarItems.map((s) =>
-            (
-              <a href={s.link} key={s.title} className="sidebar-item">
-                <span className={`icon mr-2 fa fa-${s.icon}`}></span>
-                <span className="d-none d-md-block">{s.title}</span>
-                {/* {s.checked && <span className="icon text-success ml-2 fa fa-check-circle"></span>} */}
-              </a>
-            )
+        (
+          <a href={s.link} key={s.title} className="sidebar-item">
+            <span className={`icon mr-2 fa fa-${s.icon}`}></span>
+            <span className="d-none d-md-block">{s.title}</span>
+            {/* {s.checked && <span className="icon text-success ml-2 fa fa-check-circle"></span>} */}
+          </a>
+        )
         )}
         <span key="logout" className="sidebar-item" onClick={doLogout}>
           <span className={`icon mr-2 fa fa-sign-out`}></span>
