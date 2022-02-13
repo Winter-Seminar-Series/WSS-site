@@ -88,10 +88,13 @@ function Form({
 
   const handleCaptureResume = ({ target }) => {
     setResume(target);
+    const file = target.files[0];
+    const fileName = file.name.slice(0, file.name.lastIndexOf('.'));
+    const extension = file.name.slice(file.name.lastIndexOf('.') + 1);
     const fileReader = new FileReader();
-    fileReader.readAsArrayBuffer(target.files[0]);
+    fileReader.readAsDataURL(file);
     fileReader.onload = (e) => {
-      setResume(e.target.result);
+      setResume({ name: fileName, extension, content: e.target.result });
     };
   };
 
@@ -137,6 +140,9 @@ function Form({
     inputResume,
     inputFieldOfInterest,
   ]);
+  useEffect(() => {
+    console.log(resume);
+  }, [resume]);
   const submitInfo = (e) => {
     e.preventDefault();
     if (
@@ -191,7 +197,7 @@ function Form({
         }),
         agreement,
         open_to_work: openToWork,
-        resume,
+        resume: JSON.stringify(resume),
         field_of_interest: fieldOfInterset,
       });
     }
@@ -470,6 +476,7 @@ const mapStateToProps = (state, ownProps) => {
   } = state.Participant;
   const { isFetching: paymentProcess } = state.account;
   const { isRegisteration } = ownProps;
+  console.log(resume);
   const socialMediaIds = social_media_ids
     ? JSON.parse(social_media_ids)
     : social_media_ids;
