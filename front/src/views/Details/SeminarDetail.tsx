@@ -48,9 +48,8 @@ function SeminarDetail({
   }, [getAnEntityOfModelList]);
 
   useEffect(() => {
-    const seminar = seminars.find((s) => s.id === +id)
-
-    if (seminar) {
+    if (seminars.find((s) => s.id === id)) {
+      const seminar = seminars.find((s) => s.id === id);
       setSeminar(seminar);
       getAnEntityOfModelList(
         MODEL_LISTS_NAMES.SPEAKERS,
@@ -64,7 +63,7 @@ function SeminarDetail({
     if (speakers.find((s) => s.id === seminar.speaker)) {
       setSpeaker(speakers.find((s) => s.id === seminar.speaker));
     }
-  }, [speakers, seminar]);
+  }, [speakers]);
 
   return (
     <section id="main-container" className="main-container">
@@ -121,16 +120,16 @@ function SeminarDetail({
                     moment(seminar.duration, 'hh:mm:ss').format(`hh`)
                   ) === 12
                     ? parseInt(
-                      moment(seminar.duration, 'hh:mm:ss').format(`mm`)
-                    ) + ' minutes'
+                        moment(seminar.duration, 'hh:mm:ss').format(`mm`)
+                      ) + ' minutes'
                     : parseInt(
-                      moment(seminar.duration, 'hh:mm:ss').format(`hh`)
-                    ) *
-                    60 +
-                    parseInt(
-                      moment(seminar.duration, 'hh:mm:ss').format(`mm`)
-                    ) +
-                    ' minutes')}
+                        moment(seminar.duration, 'hh:mm:ss').format(`hh`)
+                      ) *
+                        60 +
+                      parseInt(
+                        moment(seminar.duration, 'hh:mm:ss').format(`mm`)
+                      ) +
+                      ' minutes')}
                 {!seminar.duration && 'To be announced ...'}
               </div>
               <div className="seminar-details">
