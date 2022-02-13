@@ -8,17 +8,14 @@ import {
 } from '../../redux/actions/WSS';
 import moment from 'moment';
 import GoToButton from '../../components/GoToButton';
-import { doesUserHaveRegistered } from '../../redux/actions/participant';
 import FavoriteButton from '../../components/FavoriteButton';
 
 function SeminarDetail({
   thisSeries,
-  doesUserHaveRegistered,
   getAnEntityOfModelList,
   seminars,
   speakers,
   isLoggedIn,
-  isRegistered,
 }) {
   const [seminar, setSeminar] = useState({
     id: '',
@@ -40,16 +37,14 @@ function SeminarDetail({
   const id = useParams()['id'];
 
   useEffect(() => {
-    doesUserHaveRegistered(thisSeries);
-  }, [doesUserHaveRegistered]);
-
-  useEffect(() => {
     getAnEntityOfModelList(MODEL_LISTS_NAMES.SEMINARS, thisSeries, id);
   }, [getAnEntityOfModelList]);
 
   useEffect(() => {
-    if (seminars.find((s) => s.id === id)) {
-      const seminar = seminars.find((s) => s.id === id);
+
+    const seminar = seminars.find((s) => s.id === +id);
+    if (seminar) {
+
       setSeminar(seminar);
       getAnEntityOfModelList(
         MODEL_LISTS_NAMES.SPEAKERS,
@@ -60,8 +55,10 @@ function SeminarDetail({
   }, [seminars]);
 
   useEffect(() => {
-    if (speakers.find((s) => s.id === seminar.speaker)) {
-      setSpeaker(speakers.find((s) => s.id === seminar.speaker));
+    const speaker = speakers.find((s) => s.id === seminar.speaker);
+
+    if (speaker) {
+      setSpeaker(speaker);
     }
   }, [speakers]);
 
@@ -100,7 +97,7 @@ function SeminarDetail({
             </div>
             <div className="col mt-3">
               <div className="d-flex">
-                {seminar && seminar.id && (
+                {seminar && seminar.id && isLoggedIn && (
                   <FavoriteButton
                     series={thisSeries}
                     type={'seminar'}
@@ -115,7 +112,7 @@ function SeminarDetail({
 
               <div className="seminar-details">
                 <i className="fa fa-clock-o">&nbsp;</i>
-                {seminar.duration &&
+                {/* {seminar.duration &&
                   (parseInt(
                     moment(seminar.duration, 'hh:mm:ss').format(`hh`)
                   ) === 12
@@ -123,25 +120,29 @@ function SeminarDetail({
                         moment(seminar.duration, 'hh:mm:ss').format(`mm`)
                       ) + ' minutes'
                     : parseInt(
-                        moment(seminar.duration, 'hh:mm:ss').format(`hh`)
-                      ) *
-                        60 +
-                      parseInt(
-                        moment(seminar.duration, 'hh:mm:ss').format(`mm`)
-                      ) +
-                      ' minutes')}
-                {!seminar.duration && 'To be announced ...'}
+
+                      moment(seminar.duration, 'hh:mm:ss').format(`hh`)
+                    ) *
+                    60 +
+                    parseInt(
+                      moment(seminar.duration, 'hh:mm:ss').format(`mm`)
+                    ) +
+                    ' minutes')} */}
+                {/* {!seminar.duration &&  */}
+                {'To be announced ...'}
+
               </div>
               <div className="seminar-details">
                 <i className="fa fa-calendar">&nbsp;</i>
-                {seminar.start_time &&
+                {/* {seminar.start_time &&
                   moment(seminar.start_time, 'YYYY-MM-DD hh:mm:ss').format(
                     'dddd, MMMM Do, hh:mm a'
-                  )}
-                {!seminar.start_time && 'To be announced ...'}
+                  )} */}
+                {/* {!seminar.start_time &&  */}
+                {'To be announced ...'}
               </div>
               <div className="seminar-details mt-3">
-                {isLoggedIn && isRegistered && (
+                {isLoggedIn && (
                   <GoToButton type="seminars" id={seminar.id} />
                 )}
               </div>
@@ -188,11 +189,9 @@ const mapStateToProps = (state, ownProps) => {
     isLoggedIn: state.account.isLoggedIn,
     speakers: state.WSS.speakers,
     seminars: state.WSS.seminars,
-    isRegistered: state.Participant.isRegistered,
   };
 };
 
 export default connect(mapStateToProps, {
   getAnEntityOfModelList,
-  doesUserHaveRegistered,
 })(SeminarDetail);

@@ -43,6 +43,7 @@ function Form({
   agreement: inputAgreement,
   openToWork: inputOpenToWork,
   resume: inputResume,
+  fieldOfInterest: inputFieldOfInterest,
   isRegisteration,
 }) {
   const gradeTypes = ['Bachelor', 'Master', 'PhD or Higher'];
@@ -60,8 +61,8 @@ function Form({
 
   const [first_name, setFirstName] = React.useState('');
   const [last_name, setLastName] = React.useState('');
-  const [gender, setGender] = React.useState('Male');
-  const [grade, setGrade] = React.useState('Bachelor');
+  const [gender, setGender] = React.useState('');
+  const [grade, setGrade] = React.useState('');
   const [university, setUniversity] = React.useState('');
   const [email, setEmail] = React.useState('');
   const [introduction_method, setIntroduction_method] = React.useState('');
@@ -70,9 +71,10 @@ function Form({
   const [openToWork, setOpenToWork] = React.useState(false);
   const [dateOfBirth, setDateOfBirth] = React.useState('');
   const [major, setMajor] = React.useState('');
-  const [github, setGithub] = React.useState(null);
-  const [linkedIn, setLinkedIn] = React.useState(null);
+  const [github, setGithub] = React.useState('');
+  const [linkedIn, setLinkedIn] = React.useState('');
   const [resume, setResume] = React.useState(null);
+  const [fieldOfInterset, setFieldOfInterest] = React.useState('');
 
   const [dialogOpen, setDialogOpen] = React.useState(false);
 
@@ -86,12 +88,13 @@ function Form({
 
   const handleCaptureResume = ({ target }) => {
     setResume(target);
+    const file = target.files[0];
+    const fileName = file.name.slice(0, file.name.lastIndexOf('.'));
+    const extension = file.name.slice(file.name.lastIndexOf('.') + 1);
     const fileReader = new FileReader();
-    const name = target.accept.includes('image') ? 'images' : 'videos';
-
-    fileReader.readAsDataURL(target.files[0]);
+    fileReader.readAsDataURL(file);
     fileReader.onload = (e) => {
-      setResume(e.target.result);
+      setResume({ name: fileName, extension, content: e.target.result });
     };
   };
 
@@ -117,6 +120,8 @@ function Form({
     setLinkedIn(inputLinkedIn);
     setDateOfBirth(inputDateOfBirth);
     setResume(inputResume);
+    setOpenToWork(inputOpenToWork);
+    setFieldOfInterest(inputFieldOfInterest);
   }, [
     inputFirstName,
     inputLastName,
@@ -133,6 +138,7 @@ function Form({
     inputAgreement,
     inputOpenToWork,
     inputResume,
+    inputFieldOfInterest,
   ]);
   const submitInfo = (e) => {
     e.preventDefault();
@@ -169,7 +175,8 @@ function Form({
       dateOfBirth !== inputDateOfBirth ||
       agreement !== inputAgreement ||
       openToWork !== inputOpenToWork ||
-      resume !== inputResume
+      resume !== inputResume ||
+      fieldOfInterset !== inputFieldOfInterest
     ) {
       updateProfile({
         first_name,
@@ -181,13 +188,14 @@ function Form({
         introduction_method,
         major,
         date_of_birth: dateOfBirth,
-        social_media_ids: {
+        social_media_ids: JSON.stringify({
           github,
           linkedin: linkedIn,
-        },
+        }),
         agreement,
         open_to_work: openToWork,
-        resume,
+        resume: JSON.stringify(resume),
+        field_of_interest: fieldOfInterset,
       });
     }
     if (isRegisteration) sendPaymentRequest(thisSeries);
@@ -212,7 +220,7 @@ function Form({
             onChange={(e) => setFirstName(e.target.value)}
             type="text"
             className="text-input form-control"
-            placeholder="First name"
+            placeholder="First name *"
           />
         </div>
         <div className="col-12 col-lg">
@@ -221,7 +229,7 @@ function Form({
             onChange={(e) => setLastName(e.target.value)}
             type="text"
             className="text-input form-control"
-            placeholder="Last name"
+            placeholder="Last name *"
           />
         </div>
       </div>
@@ -233,16 +241,22 @@ function Form({
             onChange={(e) => setCity(e.target.value)}
             type="text"
             className="text-input form-control"
-            placeholder="City"
+            placeholder="City *"
           />
         </div>
 
         <div className="col-12 col-lg">
           <input
-            type="date"
+            name="date"
+            type="text"
+            onFocus={(e) => (e.target.type = 'date')}
+            onBlur={(e) => (e.target.type = 'text')}
+            placeholder="Birthdate *"
             className="text-input form-control"
             value={dateOfBirth}
-            onChange={(e) => setDateOfBirth(e.target.value)}
+            onChange={(e) => {
+              setDateOfBirth(e.target.value);
+            }}
           />
         </div>
       </div>
@@ -250,14 +264,16 @@ function Form({
       <div className="row">
         <div className="col-12 mb-3 col-lg mb-lg-0">
           <FormControl>
-            <div className="form-label pt-0 mr-3">Gender:</div>
+            <div className="form-label pt-0 mr-3">Gender: *</div>
             <RadioGroup
               row
               aria-labelledby="demo-radio-buttons-group-label"
-              defaultValue={gender}
+              defaultValue={'Male'}
+              value={gender}
               name="radio-buttons-group">
               {genderTypes.map((type) => (
                 <FormControlLabel
+                  key={type}
                   value={type}
                   label={type}
                   control={<Radio onChange={() => setGender(type)} />}
@@ -275,7 +291,7 @@ function Form({
             onChange={(e) => setUniversity(e.target.value)}
             type="text"
             className="text-input form-control"
-            placeholder="University"
+            placeholder="University *"
           />
         </div>
         <div className="col-12 mb-3 col-lg mb-lg-0">
@@ -284,21 +300,34 @@ function Form({
             onChange={(e) => setMajor(e.target.value)}
             type="text"
             className="text-input form-control"
-            placeholder="Major"
+            placeholder="Major *"
+          />
+        </div>
+      </div>
+      <div className="row">
+        <div className="col-12 mb-3 col-lg mb-lg-0">
+          <input
+            value={fieldOfInterset}
+            onChange={(e) => setFieldOfInterest(e.target.value)}
+            type="text"
+            className="text-input form-control"
+            placeholder="Fields of interset (optional)"
           />
         </div>
       </div>
       <div className="row">
         <div className="col-12 mb-3 col-lg mb-lg-0">
           <FormControl>
-            <div className="form-label pt-0 mr-3">Grade:</div>
+            <div className="form-label pt-0 mr-3">Grade: *</div>
             <RadioGroup
               row
               aria-labelledby="demo-radio-buttons-group-label"
-              defaultValue={grade}
+              defaultValue={'Bachelor'}
+              value={grade}
               name="radio-buttons-group">
               {gradeTypes.map((type) => (
                 <FormControlLabel
+                  key={type}
                   value={type}
                   label={type}
                   control={<Radio onChange={() => setGrade(type)} />}
@@ -332,22 +361,23 @@ function Form({
         <div className="col-12 mb-3 col-lg mb-lg-0">
           <FormControl sx={{ m: 1, minWidth: 200 }}>
             <InputLabel id="demo-simple-select-required-label">
-              Introduction method
+              Introduction method *
             </InputLabel>
             <Select
               labelId="demo-simple-select-required-label"
               id="demo-simple-select-required"
               value={introduction_method}
-              label="Introduction method"
+              label="Introduction method *"
               onChange={(e) => setIntroduction_method(e.target.value)}>
               {introductionTypes.map((type) => (
-                <MenuItem value={type}>{type}</MenuItem>
+                <MenuItem key={type} value={type}>
+                  {type}
+                </MenuItem>
               ))}
               <MenuItem value="">
                 <em>None</em>
               </MenuItem>
             </Select>
-            <FormHelperText>Optional</FormHelperText>
           </FormControl>
         </div>
       </div>
@@ -355,8 +385,8 @@ function Form({
         <div className="col-12 col-lg">
           <Button
             component="label"
-            className="col-12 col-lg btn btn-lg btn-primary btn-white mb-5">
-            {resume ? 'Uploaded' : 'Upload Resume (optional)'}
+            className="col-12 col-lg btn btn-lg btn-primary btn-blue mb-5">
+            {resume ? 'Resume Uploaded' : 'Upload Resume (optional)'}
             <input type="file" hidden onChange={handleCaptureResume} />
           </Button>
         </div>
@@ -393,22 +423,22 @@ function Form({
               </label>
             </div>
           </div>
-          <div className="form-group mb-4">
-            <div className="form-check">
-              <input
-                checked={openToWork}
-                onChange={() => setOpenToWork(!openToWork)}
-                className="form-check-input"
-                type="checkbox"
-                id="gridCheck1"
-              />
-              <label className="form-check-label" htmlFor="gridCheck1">
-                I'm open to work.
-              </label>
-            </div>
-          </div>
         </>
       ) : undefined}
+      <div className="form-group mb-4">
+        <div className="form-check">
+          <input
+            checked={openToWork}
+            onChange={() => setOpenToWork(!openToWork)}
+            className="form-check-input"
+            type="checkbox"
+            id="gridCheck1"
+          />
+          <label className="form-check-label" htmlFor="gridCheck1">
+            I'm open to work.
+          </label>
+        </div>
+      </div>
       <div className="row">
         <div className="col-12 col-lg">
           <button
@@ -435,12 +465,17 @@ const mapStateToProps = (state, ownProps) => {
     grade,
     email,
     major,
-    dateOfBirth,
-    github,
-    linkedIn,
+    date_of_birth: dateOfBirth,
+    social_media_ids,
+    resume,
+    open_to_work,
+    field_of_interest,
   } = state.Participant;
   const { isFetching: paymentProcess } = state.account;
   const { isRegisteration } = ownProps;
+  const socialMediaIds = social_media_ids
+    ? JSON.parse(social_media_ids)
+    : social_media_ids;
   return {
     thisSeries: state.account.thisSeries,
     paymentProcess,
@@ -455,9 +490,12 @@ const mapStateToProps = (state, ownProps) => {
     email,
     major,
     dateOfBirth,
-    github,
-    linkedIn,
+    github: socialMediaIds.github,
+    linkedIn: socialMediaIds.linkedin,
     isRegisteration,
+    resume,
+    openToWork: open_to_work,
+    fieldOfInterest: field_of_interest,
   };
 };
 

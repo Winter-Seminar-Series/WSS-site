@@ -31,6 +31,10 @@ from rest_framework.permissions import IsAuthenticated
 from django.dispatch import receiver
 from django_rest_passwordreset.signals import reset_password_token_created
 
+import base64
+from django.core.files.base import ContentFile
+import json
+
 
 def get_wss_object_or_404(title: str) -> WSS:
     title_to_year = {
@@ -375,7 +379,19 @@ class UserProfileViewSet(viewsets.ViewSet):
                   'date_of_birth', 'social_media_ids', 'open_to_work', 'resume']
         for field in fields:
             if user_data_parameter.get(field):
-                setattr(user_profile, field, user_data_parameter[field])
+                data = user_data_parameter[field]
+                if field == 'resume':
+                    if type(data) == str:
+                        data = json.loads(data)
+                    if type(data) == dict and data.get('name') and data.get('extension') and data.get('content'):
+                        format, content = data['content'].split(';base64,')
+                        name = data['name']
+                        ext = data['extension']
+                        data = ContentFile(base64.b64decode(
+                            content), name=f'{name}.{ext}')
+                    else:
+                        continue
+                setattr(user_profile, field, data)
 
         user_profile.save()
         request.user.save()

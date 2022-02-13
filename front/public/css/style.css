@@ -52,9 +52,9 @@
 }
 
 :root {
-  --light-blue: #3E498C;
-  --med-blue: #776AA6;
-  --dark-blue: #252D59;
+  --light-blue: #3e498c;
+  --med-blue: #776aa6;
+  --dark-blue: #252d59;
 }
 
 .white {
@@ -350,8 +350,7 @@ img.pull-right {
   color: var(--med-blue);
 }
 
-.section-sub-title
-{
+.section-sub-title {
   color: var(--dark-blue) !important;
 }
 
@@ -710,7 +709,7 @@ a[href^='tel'] {
 /* Header dark */
 
 .header-dark {
-  background: #252D59;
+  background: #252d59;
   overflow: hidden;
   z-index: 2;
   position: fixed;
@@ -737,10 +736,10 @@ a[href^='tel'] {
   border: 0;
   margin-bottom: 0;
   background: linear-gradient(
-          135deg,
-          #252D59 0%,
-          #252D59 50%,
-          #252D59 100%
+    135deg,
+    #252d59 0%,
+    #252d59 50%,
+    #252d59 100%
   ) !important;
 }
 .navbar-toggle {
@@ -2541,6 +2540,7 @@ h4.panel-title a.collapsed:before {
   width: 100%;
   /* height: 10px; */
   background-color: #36366D;
+
   position: absolute;
   top: 99%;
   left: 0;
@@ -3405,6 +3405,7 @@ label {
 }
 
 .blue-gradient {
+
   background: #36366D !important;
 }
 
@@ -3416,7 +3417,7 @@ label {
 
 .blue-gradient:nth-last-child(2),
 .background-theme {
-  background: url('../images/bg42.jpg'), #120C41 no-repeat center top !important;
+  background: url('../images/bg42.jpg'), #120c41 no-repeat center top !important;
   background-size: cover !important;
 }
 
