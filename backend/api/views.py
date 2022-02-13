@@ -33,6 +33,7 @@ from django_rest_passwordreset.signals import reset_password_token_created
 
 import base64
 from django.core.files.base import ContentFile
+import json
 
 
 def get_wss_object_or_404(title: str) -> WSS:
@@ -379,12 +380,17 @@ class UserProfileViewSet(viewsets.ViewSet):
         for field in fields:
             if user_data_parameter.get(field):
                 data = user_data_parameter[field]
-                if field == 'resume' and data.get('name') and data.get('extension') and data.get('content'):
-                    format, content = data['content'].split(';base64,')
-                    name = data['name']
-                    ext = data['extension']
-                    data = ContentFile(base64.b64decode(
-                        content), name=f'{name}.{ext}')
+                if field == 'resume':
+                    if type(data) == str:
+                        data = json.loads(data)
+                    if type(data) == dict and data.get('name') and data.get('extension') and data.get('content'):
+                        format, content = data['content'].split(';base64,')
+                        name = data['name']
+                        ext = data['extension']
+                        data = ContentFile(base64.b64decode(
+                            content), name=f'{name}.{ext}')
+                    else:
+                        continue
                 setattr(user_profile, field, data)
 
         user_profile.save()
