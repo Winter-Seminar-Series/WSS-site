@@ -41,7 +41,7 @@ function SeminarDetail({
   }, [getAnEntityOfModelList]);
 
   useEffect(() => {
-    const seminar = seminars.find((s) => s.id === id);
+    const seminar = seminars.find((s) => s.id === +id);
     if (seminar) {
       setSeminar(seminar);
       getAnEntityOfModelList(
