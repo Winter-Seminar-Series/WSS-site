@@ -140,9 +140,6 @@ function Form({
     inputResume,
     inputFieldOfInterest,
   ]);
-  useEffect(() => {
-    console.log(resume);
-  }, [resume]);
   const submitInfo = (e) => {
     e.preventDefault();
     if (
@@ -389,7 +386,7 @@ function Form({
           <Button
             component="label"
             className="col-12 col-lg btn btn-lg btn-primary btn-blue mb-5">
-            {resume ? 'Uploaded' : 'Upload Resume (optional)'}
+            {resume ? 'Resume Uploaded' : 'Upload Resume (optional)'}
             <input type="file" hidden onChange={handleCaptureResume} />
           </Button>
         </div>
@@ -476,7 +473,6 @@ const mapStateToProps = (state, ownProps) => {
   } = state.Participant;
   const { isFetching: paymentProcess } = state.account;
   const { isRegisteration } = ownProps;
-  console.log(resume);
   const socialMediaIds = social_media_ids
     ? JSON.parse(social_media_ids)
     : social_media_ids;
