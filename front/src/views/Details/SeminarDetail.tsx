@@ -60,8 +60,6 @@ function SeminarDetail({
     }
   }, [speakers, seminar]);
 
-  debugger
-
   return (
     <section id="main-container" className="main-container">
       <div
