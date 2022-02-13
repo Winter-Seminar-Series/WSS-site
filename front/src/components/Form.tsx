@@ -88,10 +88,13 @@ function Form({
 
   const handleCaptureResume = ({ target }) => {
     setResume(target);
+    const file = target.files[0];
+    const fileName = file.name.slice(0, file.name.lastIndexOf('.'));
+    const extension = file.name.slice(file.name.lastIndexOf('.') + 1);
     const fileReader = new FileReader();
-    fileReader.readAsArrayBuffer(target.files[0]);
+    fileReader.readAsDataURL(file);
     fileReader.onload = (e) => {
-      setResume(e.target.result);
+      setResume({ name: fileName, extension, content: e.target.result });
     };
   };
 
@@ -191,7 +194,7 @@ function Form({
         }),
         agreement,
         open_to_work: openToWork,
-        resume,
+        resume: JSON.stringify(resume),
         field_of_interest: fieldOfInterset,
       });
     }
@@ -383,7 +386,7 @@ function Form({
           <Button
             component="label"
             className="col-12 col-lg btn btn-lg btn-primary btn-blue mb-5">
-            {resume ? 'Uploaded' : 'Upload Resume (optional)'}
+            {resume ? 'Resume Uploaded' : 'Upload Resume (optional)'}
             <input type="file" hidden onChange={handleCaptureResume} />
           </Button>
         </div>
