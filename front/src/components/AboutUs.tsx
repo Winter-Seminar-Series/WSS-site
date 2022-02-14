@@ -5,69 +5,83 @@ export default function AboutUs() {
   const { t } = useTranslation('about', { useSuspense: false });
 
   return (
-    <div className="d-flex flex-column align-items-center">
-      <h2 className="section-title my-4">Programs</h2>
-      <div
-        className="about-us-outer-container justify-content-around mx-auto"
-        style={{ height: 'fit-content' }}>
-        <div className="about-us-text-container justify-content-between h-100">
-          <div
-            className="col mr-md-3 d-flex flex-column justify-content-center"
-            style={{ minWidth: 200 }}>
-            <h3>Seminars</h3>
-            <p>{t('seminarsDescription')}</p>
+    <section id="ts-programs" className="d-flex flex-column align-items-center">
+    <div className="container">
+      <div className="row">
+        <h2 className="section-title mx-auto">Programs</h2>
+      </div>
+      <div className="row">
+        <div className="col-12 col-sm-9 col-lg-8 mx-auto">
+          
+          
+          <div className="row d-flex flex-sm-row-reverse justify-content-start justify-content-sm-between mt-5 mb-md-5">
+            <div className="p-5 p-md-0 col-md-4 d-flex flex-column justify-content-center">
+              <img
+                className="w-100 h-auto my-auto"
+                src="images/seminar.png"
+              />
+            </div>
+            <div className="col mr-md-3 d-flex flex-column justify-content-center">
+              <h3 className="section-sub-title">Seminars</h3>
+              <p>
+                  Seminars takes place as a four-day event and in each day speakers
+                   present their research and ideas. They also share their findings
+                    and teach related topics.
+              </p>
+            </div>
           </div>
-          <div
-            className="col mr-md-3 d-flex flex-column justify-content-center"
-            style={{ minWidth: 200 }}>
-            <h3>Round Tables</h3>
-            <p>{t('roundTablesDescription')}</p>
+
+
+
+          <div className="row d-flex flex-sm-row-reverse justify-content-start justify-content-sm-between mt-5 mb-md-5">
+            <div className="p-5 p-md-0 col-md-4 d-flex flex-column justify-content-center">
+              <img
+                className="w-100 h-auto my-auto"
+                src="images/roundtable.png"
+              />
+            </div>
+            <div className="col mr-md-3 d-flex flex-column justify-content-center">
+              <h3 className="section-sub-title">Round Tables</h3>
+              <p>
+              Each day, we will have a round table with specific topics to discuss.
+               At each round table, we will host several experts in the field and discuss
+                your concerns about the topic. Note that the round tables are going to be held
+                 in Persian.
+              </p>
+            </div>
           </div>
-          <div
-            className="col mr-md-3 d-flex flex-column justify-content-center"
-            style={{ minWidth: 200 }}>
-            <h3>Lab Talks</h3>
-            <p>{t('labTalksDescription')}</p>
+
+
+
+
+          <div className="row d-flex flex-sm-row-reverse justify-content-start justify-content-sm-between mt-5 mb-md-5">
+            <div className="p-5 p-md-0 col-md-4 d-flex flex-column justify-content-center">
+              <img
+                className="w-100 h-auto my-auto"
+                src="images/poster_session.png"
+              />
+            </div>
+            <div className="col mr-md-3 d-flex flex-column justify-content-center">
+              <h3 className="section-sub-title">Lab Talks</h3>
+              <p>
+              This section is about the laboratories of the Faculty of Computer Engineering of 
+              Sharif University of Technology.
+               In each session we host one of them. Members introduce the lab and discuss hot lab topics.
+              </p>
+            </div>
           </div>
+
+
+
+
+
+
         </div>
-        <div className="about-us-images-container justify-content-around align-items-center h-100">
-          <div className="p-5 p-md-0 col-md-7 d-flex flex-column justify-content-center">
-            <img className="w-100 h-auto my-auto" src="images/seminar.png" />
-          </div>
-          <br />
-          <div className="p-5 p-md-0 col-md-7 d-flex flex-column justify-content-center">
-            <img className="w-100 h-auto my-auto" src="images/roundtable.png" />
-          </div>
-        </div>
-        {/*<div className="row d-flex flex-sm-row-reverse justify-content-start justify-content-sm-between mt-5 mb-md-5">*/}
-        {/*</div>*/}
-        {/* <div className="row d-flex flex-sm-row-reverse justify-content-start justify-content-sm-between mt-5 mb-md-5">
-      <div className="p-5 p-md-0 col-md-3 d-flex flex-column justify-content-center">
-        <img
-          className="w-100 h-auto my-auto"
-          src="images/poster_session.png"
-        />
       </div>
-      <div className="col ml-md-3  d-flex flex-column justify-content-start">
-        <h3>{t('posterSession')}</h3>
-        <p>{t('posterSessionDescription')}</p>
-      </div>
-    </div> */}
-        {/*<div className="row d-flex flex-sm-row-reverse justify-content-start justify-content-sm-between mt-md-5">
-      <div className="p-5 p-md-0 col-md-3 d-flex flex-column justify-content-center">
-        <img
-          className="w-100 h-auto my-auto"
-          src="images/workshop.png"
-        />
-      </div>
-      <div className="col mr-md-3  d-flex flex-column justify-content-start">
-        <h3>Workshops</h3>
-        <p>{t('workshopsDescription')}</p>
-      </div>
-    </div>*/}
-        {/*<div className="row d-flex flex-sm-row-reverse justify-content-start justify-content-sm-between mt-md-5">*/}
-        {/*</div>*/}
-      </div>
+      
     </div>
+  </section>
+
+
   );
 }
