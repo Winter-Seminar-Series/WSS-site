@@ -19,10 +19,10 @@ const Seminars = ({
     <>
       <section
         id="ts-speakers"
-        className="background-theme ts-speakers diagonal">
+        className="background-theme ts-speakers pt-4">
         <div className="container text-white">
           <div className="row mb-3">
-            <h3 className="mb-1 col section-sub-title title-white">Speakers</h3>
+            <h3 className="mb-1 col section-sub-title title-white">Speakers (is updating)</h3>
           </div>
           {seminars.length > 0 && !isFetching && (
             <div className="row">
