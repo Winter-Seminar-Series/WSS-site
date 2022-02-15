@@ -123,9 +123,9 @@ function Home({
                   <h2 className="banner-subtitle my-3 font-weight-bold">
                     {startDate && endDate
                       ? moment(startDate, 'YYYY-MM-DD').format(
-                          'MMM Do, YYYY -'
-                        ) +
-                        moment(endDate, ' YYYY-MM-DD').format('MMM Do, YYYY')
+                        'MMM Do, YYYY -'
+                      ) +
+                      moment(endDate, ' YYYY-MM-DD').format('MMM Do, YYYY')
                       : ''}
                   </h2>
                   <h3 className="banner-desc font-weight-bold">
@@ -134,14 +134,11 @@ function Home({
                   <h3 className="banner-desc font-weight-bold">TEHRAN, IRAN</h3>
                   {isRegistrationOpen && (
                     <p className="banner-btn">
-                      {/* <a
+                      <a
                         href="/create-account"
                         className="btn btn-primary btn-white">
                         Register Now
-                      </a> */}
-                      <div className="btn btn-primary btn-white">
-                        Coming Soon...
-                      </div>
+                      </a>
                     </p>
                   )}
                   {/* {posterSessionRegister && (
@@ -163,12 +160,12 @@ function Home({
       <section id="ts-programs" className="diagonal mb-5">
         <AboutUs />
         <div className="row no-margin">
-            <div className="general-btn text-center mx-auto">
-              <a href="/about" className="btn btn-primary all-speakers">
-                More About WSS
-              </a>
-            </div>
+          <div className="general-btn text-center mx-auto">
+            <a href="/about" className="btn btn-primary all-speakers">
+              More About WSS
+            </a>
           </div>
+        </div>
       </section>
 
 
@@ -178,41 +175,41 @@ function Home({
 
 
       {/* <div className="purple-background"> */}
-        { (
-          <section id="ts-speakers-main" className="diagonal-up-right blue-gradient my-5 ">
-            <div className="container">
-              <div className="row text-center">
-                <h3 className="title-white mx-auto font-weight-light speaker-title">
-                  Speakers
-                </h3>
-              </div>
-              <div className="row justify-content-center">
-                {Array.from(Array(seminars.length).keys())
-                  .sort(() => Math.random() - 0.5)
-                  .slice(0, 8)
-                  .map((index) => (
-                    <div
-                      key={index}
-                      className="col-xs-10 col-sm-6 col-lg-3 mt-2 mb-4">
-                      <PublicCard
-                        id={seminars[index].speaker}
-                        presentationLink={'/seminar/' + seminars[index].id}
-                      />
-                    </div>
-                  ))}
-              </div>
+      {(
+        <section id="ts-speakers-main" className="diagonal-up-right blue-gradient my-5 ">
+          <div className="container">
+            <div className="row text-center">
+              <h3 className="title-white mx-auto font-weight-light speaker-title">
+                Speakers
+              </h3>
             </div>
-            <div className="row">
-              <div className="general-btn text-center mx-auto">
-                <a href="/seminars" className="btn btn-primary btn-white">
-                  View All Speakers
-                </a>
-              </div>
+            <div className="row justify-content-center">
+              {Array.from(Array(seminars.length).keys())
+                .sort(() => Math.random() - 0.5)
+                .slice(0, 8)
+                .map((index) => (
+                  <div
+                    key={index}
+                    className="col-xs-10 col-sm-6 col-lg-3 mt-2 mb-4">
+                    <PublicCard
+                      id={seminars[index].speaker}
+                      presentationLink={'/seminar/' + seminars[index].id}
+                    />
+                  </div>
+                ))}
             </div>
-          </section>
-        )}
+          </div>
+          <div className="row">
+            <div className="general-btn text-center mx-auto">
+              <a href="/seminars" className="btn btn-primary btn-white">
+                View All Speakers
+              </a>
+            </div>
+          </div>
+        </section>
+      )}
 
-        {/*<section id="ts-statics" className="z-1 ts-statics diagonal my-5">
+      {/*<section id="ts-statics" className="z-1 ts-statics diagonal my-5">
           <div className="container py-4">
             <div className="row d-flex justify-content-center">
               <div className="col-sm-2 m-2 text-center">
@@ -267,7 +264,7 @@ function Home({
           </div>
         </section>*/}
 
-        {/* {sponsors.length > 0 && (
+      {/* {sponsors.length > 0 && (
           <section id="ts-sponsors" className="ts-sponsors diagonal pt-0">
             <div className="container">
               <p className="section-sub-title">
@@ -297,40 +294,40 @@ function Home({
           </section>
         )} */}
 
-        <section
-          className="venu-map no-padding diagonal background-theme h-100 pb-2  large-neg-margin"
-          style={venueMapStyle}>
-          {/* <div className="container">
+      <section
+        className="venu-map no-padding diagonal background-theme h-100 pb-2  large-neg-margin"
+        style={venueMapStyle}>
+        {/* <div className="container">
             <h3 className="section-sub-title" style={sectionSubtitleStyle}>
               WSS Venue
             </h3>
           </div> */}
-          <div className="container pb-5 large-margin">
-            <div className="row my-5">
-              <div className="col-md-6 font-weight-bold">
-                <h5 className="section-sub-title text-white mb-3 mt-5">Info</h5>
-                <div className="white">
-                  <p>Sharif University of Technology </p>
-                  <p>Azadi Street, District 2, Tehran, Iran</p>
-                  <br />
-                  <p>wss@ce.sharif.edu</p>
-                  <p>+98(021) 66 16 57 81</p>
-                </div>
-              </div>
-
-              <div className="col-md-6 font-weight-bold">
-                <h5 className="section-sub-title text-white mb-3 mt-5">
-                  Organizer
-                </h5>
-                <p className="font-italic white pb-3">
-                  The event is held by the Student Scientific Chapter (SSC) of
-                  Computer Engineering Department of Sharif University of
-                  Technology
-                </p>
+        <div className="container pb-5 large-margin">
+          <div className="row my-5">
+            <div className="col-md-6 font-weight-bold">
+              <h5 className="section-sub-title text-white mb-3 mt-5">Info</h5>
+              <div className="white">
+                <p>Sharif University of Technology </p>
+                <p>Azadi Street, District 2, Tehran, Iran</p>
+                <br />
+                <p>wss@ce.sharif.edu</p>
+                <p>+98(021) 66 16 57 81</p>
               </div>
             </div>
+
+            <div className="col-md-6 font-weight-bold">
+              <h5 className="section-sub-title text-white mb-3 mt-5">
+                Organizer
+              </h5>
+              <p className="font-italic white pb-3">
+                The event is held by the Student Scientific Chapter (SSC) of
+                Computer Engineering Department of Sharif University of
+                Technology
+              </p>
+            </div>
           </div>
-        </section>
+        </div>
+      </section>
       {/* </div> */}
     </>
   );
