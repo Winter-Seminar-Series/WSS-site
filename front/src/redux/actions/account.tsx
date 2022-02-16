@@ -10,11 +10,7 @@ export const setThisSeries = (thisSeries: string) => ({
   },
 });
 
-export const register = (
-  email: string,
-  password: string,
-  token: string
-) => ({
+export const register = (email: string, password: string, token: string) => ({
   [CALL_API]: {
     types: [
       actionTypes.REGISTER_REQUEST,
@@ -29,7 +25,11 @@ export const register = (
   },
 });
 
-export const login = (username: string, password: string, recaptchaToken: string) => ({
+export const login = (
+  username: string,
+  password: string,
+  recaptchaToken: string
+) => ({
   [CALL_API]: {
     types: [
       actionTypes.LOGIN_REQUEST,
@@ -61,7 +61,7 @@ export const logout = () => ({
   },
 });
 
-export const sendPaymentRequest = (series = '7th') => {
+export const sendPaymentRequest = (discount, series = '7th') => {
   return {
     [CALL_API]: {
       types: [
@@ -69,7 +69,7 @@ export const sendPaymentRequest = (series = '7th') => {
         actionTypes.SEND_PAYMENT_SUCCESS,
         actionTypes.SEND_PAYMENT_FAILURE,
       ],
-      url: `${URLs.ROOT}${series}/payment/request/?callback=${BASE_URL}/dashboard`,
+      url: `${URLs.ROOT}${series}/payment/request/?callback=${BASE_URL}&discount=${discount}/dashboard`,
       fetchOptions: {
         method: 'GET',
       },
