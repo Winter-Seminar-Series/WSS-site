@@ -14,7 +14,7 @@ def forwards(apps, schema_editor):
         defaults={
             'picture': 'media/7th/speakers/Hamed-Haddadi.jpg',
             'degree': 'PhD',
-            'place': 'Imperial College London',
+            'place': 'Reader (Associate Professor), Imperial College London',
             'polymorphic_ctype': ctype,
             'bio': '''Hamed is a Reader in Human-Centred Systems and the Director of Postgraduate Studies at the Dyson School of Design Engineering at The Faculty of Engineering, Imperial College London. He serves as a Security Science Fellow of the Institute for Security Science and Technology, leads the Systems and Algorithms Laboratory, and is an Academic Fellow of the Data Science Institute. . In his industrial role, he is a Visiting Professor and the Chief Scientist at Brave Software where he works on developing privacy-preserving analytics protocols. He is interested in User-Centred Systems, IoT, Applied Machine Learning, and Data Security & Privacy. He enjoys designing and building systems that enable better use of our digital footprint, while respecting users' privacy.
 He studied for BEng/MSc/PhD at University College London and the University of Cambridge. He was a postdoctoral researcher at Max Planck Institute for Software Systems in Germany, and a postdoctoral research fellow at Department of Pharmacology, University of Cambridge and The Royal Veterinary College, University of London, followed by few years as a Lecturer and consequently Senior Lecturer in Digital Media at Queen Mary University of London. He has spent time working and collaborating with Brave Software, Intel Research, Microsoft Research, AT&T Research, Telefonica, and Sony Europe. When not in the lab, he prefers to be on a ski slope or in a kayak.'''
@@ -23,7 +23,7 @@ He studied for BEng/MSc/PhD at University College London and the University of C
     Speakers.objects.filter(name='Hamed Haddadi').update(
             picture='media/7th/speakers/Hamed-Haddadi.jpg',
             degree='PhD',
-            place='Imperial College London',
+            place='Reader (Associate Professor), Imperial College London',
             polymorphic_ctype=ctype,
             bio='''Hamed is a Reader in Human-Centred Systems and the Director of Postgraduate Studies at the Dyson School of Design Engineering at The Faculty of Engineering, Imperial College London. He serves as a Security Science Fellow of the Institute for Security Science and Technology, leads the Systems and Algorithms Laboratory, and is an Academic Fellow of the Data Science Institute. . In his industrial role, he is a Visiting Professor and the Chief Scientist at Brave Software where he works on developing privacy-preserving analytics protocols. He is interested in User-Centred Systems, IoT, Applied Machine Learning, and Data Security & Privacy. He enjoys designing and building systems that enable better use of our digital footprint, while respecting users' privacy.
 He studied for BEng/MSc/PhD at University College London and the University of Cambridge. He was a postdoctoral researcher at Max Planck Institute for Software Systems in Germany, and a postdoctoral research fellow at Department of Pharmacology, University of Cambridge and The Royal Veterinary College, University of London, followed by few years as a Lecturer and consequently Senior Lecturer in Digital Media at Queen Mary University of London. He has spent time working and collaborating with Brave Software, Intel Research, Microsoft Research, AT&T Research, Telefonica, and Sony Europe. When not in the lab, he prefers to be on a ski slope or in a kayak.''')
@@ -33,7 +33,7 @@ He studied for BEng/MSc/PhD at University College London and the University of C
         defaults={
             'picture': 'media/7th/speakers/Pooya-Hatami.jpg',
             'degree': 'PhD, University of Chicago',
-            'place': 'CSE, Ohio State University',
+            'place': 'Assistant Professor, CSE, Ohio State University',
             'polymorphic_ctype': ctype,
             'bio': '''Pooya Hatami is an assistant professor in the CSE department at the Ohio State University. His research interests are broadly in theoretical computer science, on topics such as randomness and pseudorandomness, communication complexity, analysis of Boolean functions, and additive combinatorics. He obtained his Ph.D. from the University of Chicago, where he was advised by Alexander Razborov and Madhur Tulsiani. Before joining OSU, he spent a few years as a postdoctoral researcher in the Institute for Advanced Study, DIMACS, and the University of Texas at Austin.''',
         })
@@ -41,7 +41,7 @@ He studied for BEng/MSc/PhD at University College London and the University of C
     Speakers.objects.filter(name='Pooya Hatami').update(
             picture='media/7th/speakers/Pooya-Hatami.jpg',
             degree='PhD, University of Chicago',
-            place='CSE, Ohio State University',
+            place='Assistant Professor, CSE, Ohio State University',
             polymorphic_ctype=ctype,
             bio='''Pooya Hatami is an assistant professor in the CSE department at the Ohio State University. His research interests are broadly in theoretical computer science, on topics such as randomness and pseudorandomness, communication complexity, analysis of Boolean functions, and additive combinatorics. He obtained his Ph.D. from the University of Chicago, where he was advised by Alexander Razborov and Madhur Tulsiani. Before joining OSU, he spent a few years as a postdoctoral researcher in the Institute for Advanced Study, DIMACS, and the University of Texas at Austin.''')
 
@@ -50,7 +50,7 @@ He studied for BEng/MSc/PhD at University College London and the University of C
         defaults={
             'picture': 'media/7th/speakers/Amir-Moradi.png',
             'degree': 'Prof.',
-            'place': 'University of Cologne, Germany',
+            'place': 'Professor, University of Cologne, Germany',
             'polymorphic_ctype': ctype,
             'bio': '''Amir Moradi received the M.Sc. and Ph.D. degrees in computer engineering from Sharif University of Technology, Tehran, Iran, in 2004 and 2008 respectively. Afterwards, till 2015 he worked as a Post-Doctoral researcher at the chair for Embedded Security, Ruhr University Bochum, Germany. In 2016 after obtaining the Habilitation degree, he joined the faculty of Electrical Engineering and Information Technology at Ruhr University Bochum, and afterwards has become a professor at the same faculty. Since October 2021 he is a professor for IT Security at the Institute for Computer Science at the University of Cologne, Germany. His current research interests include physical security of embedded systems, passive and active physical attacks, and the corresponding countermeasures. To date, he has published over 140 peer-reviewed journal articles and conference papers, in both destructive and constructive aspects of side-channel analysis. He also served as Program Committee Member (and the Chair) of several security- and cryptography-related conferences and workshops.''',
         })
@@ -58,7 +58,7 @@ He studied for BEng/MSc/PhD at University College London and the University of C
     Speakers.objects.filter(name='Amir Moradi').update(
             picture='media/7th/speakers/Amir-Moradi.png',
             degree='Prof.',
-            place='University of Cologne, Germany',
+            place='Professor, University of Cologne, Germany',
             polymorphic_ctype=ctype,
             bio='''Amir Moradi received the M.Sc. and Ph.D. degrees in computer engineering from Sharif University of Technology, Tehran, Iran, in 2004 and 2008 respectively. Afterwards, till 2015 he worked as a Post-Doctoral researcher at the chair for Embedded Security, Ruhr University Bochum, Germany. In 2016 after obtaining the Habilitation degree, he joined the faculty of Electrical Engineering and Information Technology at Ruhr University Bochum, and afterwards has become a professor at the same faculty. Since October 2021 he is a professor for IT Security at the Institute for Computer Science at the University of Cologne, Germany. His current research interests include physical security of embedded systems, passive and active physical attacks, and the corresponding countermeasures. To date, he has published over 140 peer-reviewed journal articles and conference papers, in both destructive and constructive aspects of side-channel analysis. He also served as Program Committee Member (and the Chair) of several security- and cryptography-related conferences and workshops.''')
 
@@ -84,7 +84,7 @@ He studied for BEng/MSc/PhD at University College London and the University of C
         defaults={
             'picture': 'media/7th/speakers/Soheil-Abbasloo.jpg',
             'degree': 'PhD',
-            'place': 'University of Toronto',
+            'place': 'Postdoctoral Fellow, University of Toronto',
             'polymorphic_ctype': ctype,
             'bio': '''Soheil Abbasloo received a Ph.D. degree in electrical engineering from the New York University in 2020. Before his studies at NYU, he worked as a Network Protocol Designer and a Software Engineer for more than four years.  He is currently a postdoctoral fellow at the department of computer science, University of Toronto. His research is centered around congestion control, ultra-low latency networks, machine learning-assisted network design, scheduling and resource management, datacenter networks, and cellular networks.''',
         })
@@ -92,7 +92,7 @@ He studied for BEng/MSc/PhD at University College London and the University of C
     Speakers.objects.filter(name='Soheil Abbasloo').update(
             picture='media/7th/speakers/Soheil-Abbasloo.jpg',
             degree='PhD',
-            place='University of Toronto',
+            place='Postdoctoral Fellow, University of Toronto',
             polymorphic_ctype=ctype,
             bio='''Soheil Abbasloo received a Ph.D. degree in electrical engineering from the New York University in 2020. Before his studies at NYU, he worked as a Network Protocol Designer and a Software Engineer for more than four years.  He is currently a postdoctoral fellow at the department of computer science, University of Toronto. His research is centered around congestion control, ultra-low latency networks, machine learning-assisted network design, scheduling and resource management, datacenter networks, and cellular networks.''')
 
@@ -101,7 +101,7 @@ He studied for BEng/MSc/PhD at University College London and the University of C
         defaults={
             'picture': 'media/7th/speakers/Amir-Zamir.jpg',
             'degree': 'PhD',
-            'place': 'EPFL',
+            'place': 'Assistant Professor, EPFL',
             'polymorphic_ctype': ctype,
             'bio': '''I am a tenure-track Assistant Professor of Computer Science at the Swiss Federal Institute of Technology (EPFL). Prior to EPFL, I spent time at UC Berkeley, Stanford, and UCF where I had the opportunity of working with Jitendra Malik, Silvio Savarese, Mubarak Shah, Rahul Sukthankar, and Leonidas Guibas. I am also the lead CV/ML scientist of Aurora Solar since 2015.''',
         })
@@ -109,7 +109,7 @@ He studied for BEng/MSc/PhD at University College London and the University of C
     Speakers.objects.filter(name='Amir Zamir').update(
             picture='media/7th/speakers/Amir-Zamir.jpg',
             degree='PhD',
-            place='EPFL',
+            place='Assistant Professor, EPFL',
             polymorphic_ctype=ctype,
             bio='''I am a tenure-track Assistant Professor of Computer Science at the Swiss Federal Institute of Technology (EPFL). Prior to EPFL, I spent time at UC Berkeley, Stanford, and UCF where I had the opportunity of working with Jitendra Malik, Silvio Savarese, Mubarak Shah, Rahul Sukthankar, and Leonidas Guibas. I am also the lead CV/ML scientist of Aurora Solar since 2015.''')
 
@@ -118,7 +118,7 @@ He studied for BEng/MSc/PhD at University College London and the University of C
         defaults={
             'picture': 'media/7th/speakers/Mahdi-Cheraghchi.jpg',
             'degree': 'PhD',
-            'place': 'University of Michigan',
+            'place': 'Assistant Professor, University of Michigan',
             'polymorphic_ctype': ctype,
             'bio': '''I'm an Assistant Professor of Computer Science and Engineering at the EECS Department of the University of Michigan, Ann Arbor. Previously, I have been on the faculty of the Department of Computing, Imperial College London (where I maintain an Honorary Senior Lecturer position), a Qualcomm Research Fellow at the Simons Institute for the Theory of Computing of U.C. Berkeley and post-doctoral scholar at the MIT Computer Science and Artificial Intelligence Lab (hosted by Piotr Indyk), Computer Science Department of the Carnegie Mellon University (hosted by Venkatesan Guruswami) and the University of Texas at Austin (hosted by David Zuckerman).''',
         })
@@ -126,7 +126,7 @@ He studied for BEng/MSc/PhD at University College London and the University of C
     Speakers.objects.filter(name='Mahdi Cheraghchi').update(
             picture='media/7th/speakers/Mahdi-Cheraghchi.jpg',
             degree='PhD',
-            place='University of Michigan',
+            place='Assistant Professor, University of Michigan',
             polymorphic_ctype=ctype,
             bio='''I'm an Assistant Professor of Computer Science and Engineering at the EECS Department of the University of Michigan, Ann Arbor. Previously, I have been on the faculty of the Department of Computing, Imperial College London (where I maintain an Honorary Senior Lecturer position), a Qualcomm Research Fellow at the Simons Institute for the Theory of Computing of U.C. Berkeley and post-doctoral scholar at the MIT Computer Science and Artificial Intelligence Lab (hosted by Piotr Indyk), Computer Science Department of the Carnegie Mellon University (hosted by Venkatesan Guruswami) and the University of Texas at Austin (hosted by David Zuckerman).''')
 
@@ -135,7 +135,7 @@ He studied for BEng/MSc/PhD at University College London and the University of C
         defaults={
             'picture': 'media/7th/speakers/Masoumeh-Ebrahimi.jpg',
             'degree': 'PhD',
-            'place': 'KTH Royal Institute of Technology',
+            'place': 'Associate Professor, KTH Royal Institute of Technology',
             'polymorphic_ctype': ctype,
             'bio': '''I am an Associate Professor (docent) at KTH. I am also an Adjunct Professor at the University of Turku, Finland. I received my Ph.D. with honors from the University of Turku, Finland in 2013. I have also received MBA jointly from Turku School of Economics and the European Institute of Innovation & Technology (EIT) ICT Labs. I joined KTH Royal Institute of Technology, Sweden as a Marie-Curie Postdoctoral fellow in 2014. Currently, I am leading several projects at KTH and (co) supervising several M.Sc. and Ph.D. students. My main areas of interest include Systems-on-Chip, Interconnection Netwroks, Near-Memory Processing, and Machine Learning Accelerators.''',
         })
@@ -143,7 +143,7 @@ He studied for BEng/MSc/PhD at University College London and the University of C
     Speakers.objects.filter(name='Masoumeh Ebrahimi').update(
             picture='media/7th/speakers/Masoumeh-Ebrahimi.jpg',
             degree='PhD',
-            place='KTH Royal Institute of Technology',
+            place='Associate Professor, KTH Royal Institute of Technology',
             polymorphic_ctype=ctype,
             bio='''I am an Associate Professor (docent) at KTH. I am also an Adjunct Professor at the University of Turku, Finland. I received my Ph.D. with honors from the University of Turku, Finland in 2013. I have also received MBA jointly from Turku School of Economics and the European Institute of Innovation & Technology (EIT) ICT Labs. I joined KTH Royal Institute of Technology, Sweden as a Marie-Curie Postdoctoral fellow in 2014. Currently, I am leading several projects at KTH and (co) supervising several M.Sc. and Ph.D. students. My main areas of interest include Systems-on-Chip, Interconnection Netwroks, Near-Memory Processing, and Machine Learning Accelerators.''')
 
@@ -152,7 +152,7 @@ He studied for BEng/MSc/PhD at University College London and the University of C
         defaults={
             'picture': 'media/7th/speakers/Amir-Shaikhha.jpg',
             'degree': 'PhD',
-            'place': 'University of Edinburgh',
+            'place': 'Assistant Professor, University of Edinburgh',
             'polymorphic_ctype': ctype,
             'bio': '''Amir is an Assistant Professor (Lecturer) in the School of Informatics at the University of Edinburgh. His research focuses on the design and implementation of data-analytics systems by using techniques from the databases, programming languages, compilers, and machine learning communities. Prior to that, he was a Departmental Lecturer at Oxford. He earned his Ph.D. from EPFL in 2018, for which he was awarded a Google Ph.D. Fellowship in structured data analysis, as well as a Ph.D. thesis distinction award.''',
         })
@@ -160,7 +160,7 @@ He studied for BEng/MSc/PhD at University College London and the University of C
     Speakers.objects.filter(name='Amir Shaikhha').update(
             picture='media/7th/speakers/Amir-Shaikhha.jpg',
             degree='PhD',
-            place='University of Edinburgh',
+            place='Assistant Professor, University of Edinburgh',
             polymorphic_ctype=ctype,
             bio='''Amir is an Assistant Professor (Lecturer) in the School of Informatics at the University of Edinburgh. His research focuses on the design and implementation of data-analytics systems by using techniques from the databases, programming languages, compilers, and machine learning communities. Prior to that, he was a Departmental Lecturer at Oxford. He earned his Ph.D. from EPFL in 2018, for which he was awarded a Google Ph.D. Fellowship in structured data analysis, as well as a Ph.D. thesis distinction award.''')
 
@@ -169,7 +169,7 @@ He studied for BEng/MSc/PhD at University College London and the University of C
         defaults={
             'picture': 'media/7th/speakers/Behzad-Salami.png',
             'degree': 'PhD',
-            'place': 'ETH and BSC',
+            'place': 'Senior Researcher, ETH and BSC',
             'polymorphic_ctype': ctype,
             'bio': '''Behzad Salami received the Ph.D. degree (Hons.) in Computer Architecture from the Universitat Politècnica de Catalunya  (UPC) in 2018, followed by a post-doc in the Computer Science department of Barcelona Supercomputing Centre (BSC). He is currently collaborating with the SAFARI Research Group as an affiliated researcher. He had short research visits at the University of Manchester (UK) and the Institute for Research in Fundamental Sciences (Iran). He has collaborated with academia and industry to conduct joint research projects and participated in multiple EU-funded research projects. He received several grants and awards for his research efforts, e.g., HiPEAC paper award, HiPEAC collaboration grant, Tetramax technology transfer grant, MSCA Seal of Excellence, I4MS Certificate of Excellence, OPRECOM Summer of Code, among others. His research interests are reconfigurable computing, low-power and fault-resilient hardware accelerators, and near data processing.''',
         })
@@ -177,7 +177,7 @@ He studied for BEng/MSc/PhD at University College London and the University of C
     Speakers.objects.filter(name='Behzad Salami').update(
             picture='media/7th/speakers/Behzad-Salami.jpg',
             degree='PhD',
-            place='ETH and BSC',
+            place='Senior Researcher, ETH and BSC',
             polymorphic_ctype=ctype,
             bio='''Behzad Salami received the Ph.D. degree (Hons.) in Computer Architecture from the Universitat Politècnica de Catalunya  (UPC) in 2018, followed by a post-doc in the Computer Science department of Barcelona Supercomputing Centre (BSC). He is currently collaborating with the SAFARI Research Group as an affiliated researcher. He had short research visits at the University of Manchester (UK) and the Institute for Research in Fundamental Sciences (Iran). He has collaborated with academia and industry to conduct joint research projects and participated in multiple EU-funded research projects. He received several grants and awards for his research efforts, e.g., HiPEAC paper award, HiPEAC collaboration grant, Tetramax technology transfer grant, MSCA Seal of Excellence, I4MS Certificate of Excellence, OPRECOM Summer of Code, among others. His research interests are reconfigurable computing, low-power and fault-resilient hardware accelerators, and near data processing.''')
 
@@ -186,7 +186,7 @@ He studied for BEng/MSc/PhD at University College London and the University of C
         defaults={
             'picture': 'media/7th/speakers/Stefan-Schmid.jpg',
             'degree': 'PhD',
-            'place': 'TU Berlin',
+            'place': 'Professor, TU Berlin',
             'polymorphic_ctype': ctype,
             'bio': '''Stefan Schmid is a Professor at the Technical University of Berlin, Germany. MSc and PhD at ETH Zurich, Postdoc at TU Munich and University of Paderborn, Senior Research Scientist at  T-Labs in Berlin, Associate Professor at Aalborg University, Denmark, and Full Professor at the University of Vienna, Austria. Stefan Schmid received the IEEE Communications Society ITC Early Career Award 2016 and an ERC Consolidator Grant 2019.''',
         })
@@ -194,7 +194,7 @@ He studied for BEng/MSc/PhD at University College London and the University of C
     Speakers.objects.filter(name='Stefan Schmid').update(
             picture='media/7th/speakers/Stefan-Schmid.jpg',
             degree='PhD',
-            place='TU Berlin',
+            place='Professor, TU Berlin',
             polymorphic_ctype=ctype,
             bio='''Stefan Schmid is a Professor at the Technical University of Berlin, Germany. MSc and PhD at ETH Zurich, Postdoc at TU Munich and University of Paderborn, Senior Research Scientist at  T-Labs in Berlin, Associate Professor at Aalborg University, Denmark, and Full Professor at the University of Vienna, Austria. Stefan Schmid received the IEEE Communications Society ITC Early Career Award 2016 and an ERC Consolidator Grant 2019.''')
 
@@ -203,7 +203,7 @@ He studied for BEng/MSc/PhD at University College London and the University of C
         defaults={
             'picture': 'media/7th/speakers/Shahram-Khazaei.jpg',
             'degree': 'PhD',
-            'place': 'Sharif University of Technology',
+            'place': 'Assistant Professor, Sharif University of Technology',
             'polymorphic_ctype': ctype,
             'bio': '''I was a postdoctoral researcher at School of Computer Science and Communication, KTH Royal Institute of Technology, from 2011 to 2012 during which I worked with Douglas Wikström on electronic voting schemes and mix-nets. I did my Ph.D. at LACAL, EPFL, Switzerland under the supervision of Arjen Lenstra and Willi Meier and worked on cryptanalysis of symmetric primitives, mainly stream ciphers and hash functions.''',
         })
@@ -211,7 +211,7 @@ He studied for BEng/MSc/PhD at University College London and the University of C
     Speakers.objects.filter(name='Shahram Khazaei').update(
             picture='media/7th/speakers/Shahram-Khazaei.jpg',
             degree='PhD',
-            place='Sharif University of Technology',
+            place='Assistant Professor, Sharif University of Technology',
             polymorphic_ctype=ctype,
             bio='''I was a postdoctoral researcher at School of Computer Science and Communication, KTH Royal Institute of Technology, from 2011 to 2012 during which I worked with Douglas Wikström on electronic voting schemes and mix-nets. I did my Ph.D. at LACAL, EPFL, Switzerland under the supervision of Arjen Lenstra and Willi Meier and worked on cryptanalysis of symmetric primitives, mainly stream ciphers and hash functions.''')
 
@@ -220,7 +220,7 @@ He studied for BEng/MSc/PhD at University College London and the University of C
         defaults={
             'picture': 'media/7th/speakers/Hadi-Daneshmand.jpg',
             'degree': 'PhD',
-            'place': 'Princeton University',
+            'place': 'Postdoctoral Researcher, Princeton University',
             'polymorphic_ctype': ctype,
             'bio': '''Hadi is a postdoc at Princeton University. He previously worked at INRIA Paris as a postdoc researcher. Hadi completed his Ph.D. in computer science in June 2020 in the Machine Learning Department of ETH Zurich. The focus of his research is optimization for deep neural networks.''',
         })
@@ -228,7 +228,7 @@ He studied for BEng/MSc/PhD at University College London and the University of C
     Speakers.objects.filter(name='Hadi Daneshmand').update(
             picture='media/7th/speakers/Hadi-Daneshmand.jpg',
             degree='PhD',
-            place='Princeton University',
+            place='Postdoctoral Researcher, Princeton University',
             polymorphic_ctype=ctype,
             bio='''Hadi is a postdoc at Princeton University. He previously worked at INRIA Paris as a postdoc researcher. Hadi completed his Ph.D. in computer science in June 2020 in the Machine Learning Department of ETH Zurich. The focus of his research is optimization for deep neural networks.''')
 
@@ -237,7 +237,7 @@ He studied for BEng/MSc/PhD at University College London and the University of C
         defaults={
             'picture': 'media/7th/speakers/Hassan-Ashtiani.jpg',
             'degree': 'PhD',
-            'place': 'McMaster University',
+            'place': 'Assistant Professor, McMaster University',
             'polymorphic_ctype': ctype,
             'bio': '''Hassan Ashtiani is an Assistant Professor in the Department of Computing and Software at McMaster University, and a faculty affiliate at Vector institute. He obtained his Ph.D. in Computer Science in 2018 from University of Waterloo where he was advised by Shai Ben-David. Before that, he received his master's degree in AI and Robotics and his bachelor's degree in Computer Engineering, both from University of Tehran. Broadly speaking, a major theme in his research is the design and analysis of sample-efficient learning algorithms. In recent years, he has focused on studying sample-efficient learning methods that are robust to (i) model misspecification, (ii) distribution shift, (iii) adversarial attacks, and/or (iv) privacy attacks.''',
         })
@@ -245,7 +245,7 @@ He studied for BEng/MSc/PhD at University College London and the University of C
     Speakers.objects.filter(name='Hassan Ashtiani').update(
             picture='media/7th/speakers/Hassan-Ashtiani.jpg',
             degree='PhD',
-            place='McMaster University',
+            place='Assistant Professor, McMaster University',
             polymorphic_ctype=ctype,
             bio='''Hassan Ashtiani is an Assistant Professor in the Department of Computing and Software at McMaster University, and a faculty affiliate at Vector institute. He obtained his Ph.D. in Computer Science in 2018 from University of Waterloo where he was advised by Shai Ben-David. Before that, he received his master's degree in AI and Robotics and his bachelor's degree in Computer Engineering, both from University of Tehran. Broadly speaking, a major theme in his research is the design and analysis of sample-efficient learning algorithms. In recent years, he has focused on studying sample-efficient learning methods that are robust to (i) model misspecification, (ii) distribution shift, (iii) adversarial attacks, and/or (iv) privacy attacks.''')
 
@@ -254,7 +254,7 @@ He studied for BEng/MSc/PhD at University College London and the University of C
         defaults={
             'picture': 'media/7th/speakers/Pantea-Zardoshti.jpg',
             'degree': 'PhD',
-            'place': 'Microsoft',
+            'place': 'Research Software Development Engineer 2 at Microsoft',
             'polymorphic_ctype': ctype,
             'bio': '''I am a Research Software Development Engineer in the Cloud Efficiency team within the Systems Research group. A central theme of my research is working on hardware/software co-design for improving the cost efficiency of Microsoft’s datacenters.
 
@@ -264,7 +264,7 @@ My PhD thesis focused on hardware/software co-design for emerging memory technol
     Speakers.objects.filter(name='Pantea Zardoshti').update(
             picture='media/7th/speakers/Pantea-Zardoshti.jpg',
             degree='PhD',
-            place='Microsoft',
+            place='Research Software Development Engineer 2 at Microsoft',
             polymorphic_ctype=ctype,
             bio='''I am a Research Software Development Engineer in the Cloud Efficiency team within the Systems Research group. A central theme of my research is working on hardware/software co-design for improving the cost efficiency of Microsoft’s datacenters.
 
@@ -275,7 +275,7 @@ My PhD thesis focused on hardware/software co-design for emerging memory technol
         defaults={
             'picture': 'media/7th/speakers/Kavé-Salamatian.jpg',
             'degree': 'PhD',
-            'place': 'Université de Savoie',
+            'place': 'Professor, Université de Savoie',
             'polymorphic_ctype': ctype,
             'bio': '''Kavé Salamatian is a full professor of computer science at University of Savoie. His main areas of researches have been Information theory applied to a large set of applications ranging from Internet measurement and modeling, Network architecture to cyber-security, and networking information theory. Kavé Salamatian has been educated as an electronics engineer in Isfahan University of technology from 1986. He has also graduated with a bachelor in maths (by correspondence) in the same year from Paris 6 university . He got an MBA in 1992 with a thesis titled « The application of Sun-Tse Strategy to marketing », a master in telecommunication in 1994 with a thesis titled « On the concept of capacity in neural nets » both from Isfahan University of Technology. He moved after to France and got  a master in theoretical computer science in 1996 with a thesis on joint source-channel coding applied to Internet transmission, continued with  a Phd in 1999 computer science at Paris South university, titled « Robust multimedia coding for video conferencing over Internet » and a habilitation to direct research in 2005, from Pierre and Marie Curie University. He has been holding Assistant and associate Professor at Pierre and Marie Curie University in Paris from 2000 to 2006, a visiting professor at EPFL and ETHZ till 2011.''',
         })
@@ -283,24 +283,24 @@ My PhD thesis focused on hardware/software co-design for emerging memory technol
     Speakers.objects.filter(name='Kavé Salamatian').update(
             picture='media/7th/speakers/Kavé-Salamatian.jpg',
             degree='PhD',
-            place='Université de Savoie',
+            place='Professor, Université de Savoie',
             polymorphic_ctype=ctype,
             bio='''Kavé Salamatian is a full professor of computer science at University of Savoie. His main areas of researches have been Information theory applied to a large set of applications ranging from Internet measurement and modeling, Network architecture to cyber-security, and networking information theory. Kavé Salamatian has been educated as an electronics engineer in Isfahan University of technology from 1986. He has also graduated with a bachelor in maths (by correspondence) in the same year from Paris 6 university . He got an MBA in 1992 with a thesis titled « The application of Sun-Tse Strategy to marketing », a master in telecommunication in 1994 with a thesis titled « On the concept of capacity in neural nets » both from Isfahan University of Technology. He moved after to France and got  a master in theoretical computer science in 1996 with a thesis on joint source-channel coding applied to Internet transmission, continued with  a Phd in 1999 computer science at Paris South university, titled « Robust multimedia coding for video conferencing over Internet » and a habilitation to direct research in 2005, from Pierre and Marie Curie University. He has been holding Assistant and associate Professor at Pierre and Marie Curie University in Paris from 2000 to 2006, a visiting professor at EPFL and ETHZ till 2011.''')
 
     Speakers.objects.get_or_create(
         name='Peyman Mohajerin Esfahani',
         defaults={
-            'picture': 'media/7th/speakers/Peyman-Mohajerin-Esfahani.jpg',
+            'picture': 'media/7th/speakers/Peyman-MohajerinEsfahani.jpg',
             'degree': 'PhD',
-            'place': 'Delft University of Technology',
+            'place': 'Associate Professor, Delft University of Technology',
             'polymorphic_ctype': ctype,
             'bio': '''Peyman Mohajerin Esfahani is an associate professor at the Delft Center for Systems and Control, and a co-director of the Delft-AI Energy Lab at the Delft University of Technology. Prior to joining TU Delft, he held several research appointments at EPFL, ETH Zurich, and MIT between 2014 and 2016. He received the BSc and MSc degrees from Sharif University of Technology, Iran, and the PhD degree from ETH Zurich. His research interests include theoretical and practical aspects of decision-making problems in uncertain and dynamic environments, with applications to control and security of large-scale and distributed systems. He was one of the three finalists for the Young Researcher Prize in Continuous Optimization awarded by the Mathematical Optimization Society in 2016, and was a recipient of the 2016 George S. Axelby Outstanding Paper Award from the IEEE Control Systems Society. He also received the ERC Starting Grant and the INFORMS Frederick W. Lanchester Prize in 2020.''',
         })
         
     Speakers.objects.filter(name='Peyman Mohajerin Esfahani').update(
-            picture='media/7th/speakers/Peyman-Mohajerin-Esfahani.jpg',
+            picture='media/7th/speakers/Peyman-MohajerinEsfahani.jpg',
             degree='PhD',
-            place='Delft University of Technology',
+            place='Associate Professor, Delft University of Technology',
             polymorphic_ctype=ctype,
             bio='''Peyman Mohajerin Esfahani is an associate professor at the Delft Center for Systems and Control, and a co-director of the Delft-AI Energy Lab at the Delft University of Technology. Prior to joining TU Delft, he held several research appointments at EPFL, ETH Zurich, and MIT between 2014 and 2016. He received the BSc and MSc degrees from Sharif University of Technology, Iran, and the PhD degree from ETH Zurich. His research interests include theoretical and practical aspects of decision-making problems in uncertain and dynamic environments, with applications to control and security of large-scale and distributed systems. He was one of the three finalists for the Young Researcher Prize in Continuous Optimization awarded by the Mathematical Optimization Society in 2016, and was a recipient of the 2016 George S. Axelby Outstanding Paper Award from the IEEE Control Systems Society. He also received the ERC Starting Grant and the INFORMS Frederick W. Lanchester Prize in 2020.''')
 
@@ -309,7 +309,7 @@ My PhD thesis focused on hardware/software co-design for emerging memory technol
         defaults={
             'picture': 'media/7th/speakers/Farzan-Farnia.jpg',
             'degree': 'PhD',
-            'place': 'The Chinese University of Hong Kong',
+            'place': 'Assistant Professor, The Chinese University of Hong Kong',
             'polymorphic_ctype': ctype,
             'bio': '''Farzan Farnia is an Assistant Professor of Computer Science and Engineering at The Chinese University of Hong Kong. Prior to joining CUHK, he was a postdoctoral research associate at the Laboratory for Information and Decision Systems, Massachusetts Institute of Technology, from 2019-2021. He received his master’s and PhD degrees in electrical engineering from Stanford University and his bachelor’s degrees in electrical engineering and mathematics from Sharif University of Technology. At Stanford, he was a graduate research assistant at the Information Systems Laboratory advised by Professor David Tse. Farzan's research interests span statistical learning theory, information theory, and convex optimization. He has been the recipient of the Stanford Graduate Fellowship (Sequoia Capital Fellowship) between 2013-2016 and the Numerical Technology Founders Prize as the second top performer of Stanford’s electrical engineering PhD qualifying exams in 2014.''',
         })
@@ -317,7 +317,7 @@ My PhD thesis focused on hardware/software co-design for emerging memory technol
     Speakers.objects.filter(name='Farzan Farnia').update(
             picture='media/7th/speakers/Farzan-Farnia.jpg',
             degree='PhD',
-            place='The Chinese University of Hong Kong',
+            place='Assistant Professor, The Chinese University of Hong Kong',
             polymorphic_ctype=ctype,
             bio='''Farzan Farnia is an Assistant Professor of Computer Science and Engineering at The Chinese University of Hong Kong. Prior to joining CUHK, he was a postdoctoral research associate at the Laboratory for Information and Decision Systems, Massachusetts Institute of Technology, from 2019-2021. He received his master’s and PhD degrees in electrical engineering from Stanford University and his bachelor’s degrees in electrical engineering and mathematics from Sharif University of Technology. At Stanford, he was a graduate research assistant at the Information Systems Laboratory advised by Professor David Tse. Farzan's research interests span statistical learning theory, information theory, and convex optimization. He has been the recipient of the Stanford Graduate Fellowship (Sequoia Capital Fellowship) between 2013-2016 and the Numerical Technology Founders Prize as the second top performer of Stanford’s electrical engineering PhD qualifying exams in 2014.''')
 
@@ -326,7 +326,7 @@ My PhD thesis focused on hardware/software co-design for emerging memory technol
         defaults={
             'picture': 'media/7th/speakers/Maryam-Kamgarpour.jpg',
             'degree': 'PhD',
-            'place': 'EPFL',
+            'place': 'Assistant Professor, EPFL',
             'polymorphic_ctype': ctype,
             'bio': '''Maryam Kamgarpour holds a Doctor of Philosophy in Engineering from the University of California, Berkeley and a Bachelor of Applied Science from University of Waterloo, Canada. Her research is on safe decision-making and control under uncertainty, game theory and mechanism design, mixed integer and stochastic optimization and control. Her theoretical research is motivated by control challenges arising in intelligent transportation networks, robotics, power grid systems and healthcare. She is the recipient of NASA High Potential Individual Award, NASA Excellence in Publication Award, and the European Union (ERC) Starting Grant.''',
         })
@@ -334,7 +334,7 @@ My PhD thesis focused on hardware/software co-design for emerging memory technol
     Speakers.objects.filter(name='Maryam Kamgarpour').update(
             picture='media/7th/speakers/Maryam-Kamgarpour.jpg',
             degree='PhD',
-            place='EPFL',
+            place='Assistant Professor, EPFL',
             polymorphic_ctype=ctype,
             bio='''Maryam Kamgarpour holds a Doctor of Philosophy in Engineering from the University of California, Berkeley and a Bachelor of Applied Science from University of Waterloo, Canada. Her research is on safe decision-making and control under uncertainty, game theory and mechanism design, mixed integer and stochastic optimization and control. Her theoretical research is motivated by control challenges arising in intelligent transportation networks, robotics, power grid systems and healthcare. She is the recipient of NASA High Potential Individual Award, NASA Excellence in Publication Award, and the European Union (ERC) Starting Grant.''')
 
@@ -343,7 +343,7 @@ My PhD thesis focused on hardware/software co-design for emerging memory technol
         defaults={
             'picture': 'media/7th/speakers/Azam-Soleimanian.jpg',
             'degree': 'PhD',
-            'place': 'EPFL',
+            'place': 'Researcher, EPFL',
             'polymorphic_ctype': ctype,
             'bio': '''Azam Soleimanian is currently an applied researcher in the ConsenSys company working on the scalability of Ethereum blockchain.  She has received her PhD in 2018 under the supervision of Dr. Shahram Khazaei.  She joined the university of Catania for a one-year academic-visit to collaborate with Dr. Dario Catalano. After that,  she worked as a postadoc researcher at Cascad team of ENS and Grace team of Ecole Polytechnique (Paris, France) where she collaborated with Dr. Michel Abdalla and Dr. David Pointcheval.''',
         })
@@ -351,7 +351,7 @@ My PhD thesis focused on hardware/software co-design for emerging memory technol
     Speakers.objects.filter(name='Azam Soleimanian').update(
             picture='media/7th/speakers/Azam-Soleimanian.jpg',
             degree='PhD',
-            place='EPFL',
+            place='Researcher, EPFL',
             polymorphic_ctype=ctype,
             bio='''Azam Soleimanian is currently an applied researcher in the ConsenSys company working on the scalability of Ethereum blockchain.  She has received her PhD in 2018 under the supervision of Dr. Shahram Khazaei.  She joined the university of Catania for a one-year academic-visit to collaborate with Dr. Dario Catalano. After that,  she worked as a postadoc researcher at Cascad team of ENS and Grace team of Ecole Polytechnique (Paris, France) where she collaborated with Dr. Michel Abdalla and Dr. David Pointcheval.''')
 
@@ -360,7 +360,7 @@ My PhD thesis focused on hardware/software co-design for emerging memory technol
         defaults={
             'picture': 'media/7th/speakers/Mohammad-Sadrosadati.jpg',
             'degree': 'PhD',
-            'place': 'ETH',
+            'place': 'Senior Researcher, ETH',
             'polymorphic_ctype': ctype,
             'bio': '''Mohammad Sadrosadati received Ph.D. degree in Computer Engineering from Sharif University of Technology, Tehran, Iran, in 2019 under the supervision of Prof. H. Sarbazi-Azad. He spent one year from April 2017 to April 2018 as an academic guest at ETH Zurich hosted by Prof. O. Mutlu during his Ph.D. program. He is currently a senior researcher in the SAFARI research group at ETH Zurich. His research interests are in the areas of heterogeneous computing, processing-in-memory, memory systems, and interconnection networks. Due to his achievements and impact on improving the energy efficiency of GPUs, he won Khwarizmi Youth Award, one of the most prestigious awards, as the first laureate in 2020, to honor and embolden him to keep taking even bigger steps in his research career.''',
         })
@@ -368,7 +368,7 @@ My PhD thesis focused on hardware/software co-design for emerging memory technol
     Speakers.objects.filter(name='Mohammad Sadrosadati').update(
             picture='media/7th/speakers/Mohammad-Sadrosadati.jpg',
             degree='PhD',
-            place='ETH',
+            place='Senior Researcher, ETH',
             polymorphic_ctype=ctype,
             bio='''Mohammad Sadrosadati received Ph.D. degree in Computer Engineering from Sharif University of Technology, Tehran, Iran, in 2019 under the supervision of Prof. H. Sarbazi-Azad. He spent one year from April 2017 to April 2018 as an academic guest at ETH Zurich hosted by Prof. O. Mutlu during his Ph.D. program. He is currently a senior researcher in the SAFARI research group at ETH Zurich. His research interests are in the areas of heterogeneous computing, processing-in-memory, memory systems, and interconnection networks. Due to his achievements and impact on improving the energy efficiency of GPUs, he won Khwarizmi Youth Award, one of the most prestigious awards, as the first laureate in 2020, to honor and embolden him to keep taking even bigger steps in his research career.''')
 
@@ -377,7 +377,7 @@ My PhD thesis focused on hardware/software co-design for emerging memory technol
         defaults={
             'picture': 'media/7th/speakers/Mohammad-Hossein-Rohban.jpg',
             'degree': 'PhD',
-            'place': 'Sharif University of Technology',
+            'place': 'Assistant Professor, Sharif University of Technology',
             'polymorphic_ctype': ctype,
             'bio': '''Mohammad Hossein Rohban is an assistant professor in Computer Engineering Department of Sharif University of Technology. His research areas include adversarial robustness, anomaly detection, and medical imaging. Previously, he was a postdoc at Broad Institute of MIT and Harvard, where his research was focused around applications of ML and data analysis on Microscopy data that makes gene and compound function characterization possible.''',
         })
@@ -385,7 +385,7 @@ My PhD thesis focused on hardware/software co-design for emerging memory technol
     Speakers.objects.filter(name='Mohammad Hossein Rohban').update(
             picture='media/7th/speakers/Mohammad-Hossein-Rohban.jpg',
             degree='PhD',
-            place='Sharif University of Technology',
+            place='Assistant Professor, Sharif University of Technology',
             polymorphic_ctype=ctype,
             bio='''Mohammad Hossein Rohban is an assistant professor in Computer Engineering Department of Sharif University of Technology. His research areas include adversarial robustness, anomaly detection, and medical imaging. Previously, he was a postdoc at Broad Institute of MIT and Harvard, where his research was focused around applications of ML and data analysis on Microscopy data that makes gene and compound function characterization possible.''')
 
