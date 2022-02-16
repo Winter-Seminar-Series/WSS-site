@@ -2492,11 +2492,7 @@ h4.panel-title a.collapsed:before {
 .footer {
   z-index: 2;
   /*clip-path: polygon(0 30%, 100% 0, 100% 100%, 0% 100%);*/
-<<<<<<< HEAD
-  background-color: #120c41;
-=======
   background-color: #36366d;
->>>>>>> 7a01a58f0e3a2ba8996419bd0c08f2c6ad895ef7
   color: #666666;
   padding: 40px 0;
   margin-top: 0px;
@@ -3403,16 +3399,7 @@ label {
 }
 
 .blue-gradient {
-<<<<<<< HEAD
-  background: linear-gradient(
-    135deg,
-    #261e67 0%,
-    #120c41 71%,
-    #0b1120 100%
-  ) !important;
-=======
   background: #36366d !important;
->>>>>>> 7a01a58f0e3a2ba8996419bd0c08f2c6ad895ef7
 }
 
 .badge-blue {
