@@ -44,6 +44,8 @@ function Form({
   openToWork: inputOpenToWork,
   resume: inputResume,
   fieldOfInterest: inputFieldOfInterest,
+  job: inputJob,
+  phoneNumber: inputPhoneNumber,
   isRegisteration,
 }) {
   const gradeTypes = ['Bachelor', 'Master', 'PhD or Higher'];
@@ -75,6 +77,9 @@ function Form({
   const [linkedIn, setLinkedIn] = React.useState('');
   const [resume, setResume] = React.useState(null);
   const [fieldOfInterset, setFieldOfInterest] = React.useState('');
+  const [job, setJob] = React.useState('');
+  const [phoneNumber, setPhoneNumber] = React.useState('');
+  const [discount, setDiscount] = React.useState('');
 
   const [dialogOpen, setDialogOpen] = React.useState(false);
 
@@ -122,6 +127,8 @@ function Form({
     setResume(inputResume);
     setOpenToWork(inputOpenToWork);
     setFieldOfInterest(inputFieldOfInterest);
+    setPhoneNumber(inputPhoneNumber);
+    setJob(inputJob);
   }, [
     inputFirstName,
     inputLastName,
@@ -139,6 +146,8 @@ function Form({
     inputOpenToWork,
     inputResume,
     inputFieldOfInterest,
+    inputJob,
+    inputPhoneNumber,
   ]);
   const submitInfo = (e) => {
     e.preventDefault();
@@ -152,7 +161,9 @@ function Form({
         city &&
         introduction_method &&
         dateOfBirth &&
-        major
+        major &&
+        phoneNumber &&
+        job
       )
     ) {
       toast.error('Please fill all the required fields');
@@ -176,7 +187,9 @@ function Form({
       agreement !== inputAgreement ||
       openToWork !== inputOpenToWork ||
       resume !== inputResume ||
-      fieldOfInterset !== inputFieldOfInterest
+      fieldOfInterset !== inputFieldOfInterest ||
+      job !== inputJob ||
+      phoneNumber !== inputPhoneNumber
     ) {
       updateProfile({
         first_name,
@@ -196,9 +209,11 @@ function Form({
         open_to_work: openToWork,
         resume: JSON.stringify(resume),
         field_of_interest: fieldOfInterset,
+        job,
+        phone_number: phoneNumber,
       });
     }
-    if (isRegisteration) sendPaymentRequest(thisSeries);
+    if (isRegisteration) sendPaymentRequest(discount, thisSeries);
   };
   return (
     <form className="seminar-register-form" onSubmit={submitInfo}>
@@ -394,6 +409,17 @@ function Form({
 
       {isRegisteration ? (
         <>
+          <div className="row">
+            <div className="col-12 mb-3 col-lg mb-lg-0">
+              <input
+                value={discount}
+                onChange={(e) => setDiscount(e.target.value)}
+                type="text"
+                className="text-input form-control"
+                placeholder="Enter discount code"
+              />
+            </div>
+          </div>
           <div className="form-group mb-4">
             <div className="form-check">
               <input
