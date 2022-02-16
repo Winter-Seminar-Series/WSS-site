@@ -123,9 +123,9 @@ function Home({
                   <h2 className="banner-subtitle my-3 font-weight-bold">
                     {startDate && endDate
                       ? moment(startDate, 'YYYY-MM-DD').format(
-                          'MMM Do, YYYY -'
-                        ) +
-                        moment(endDate, ' YYYY-MM-DD').format('MMM Do, YYYY')
+                        'MMM Do, YYYY -'
+                      ) +
+                      moment(endDate, ' YYYY-MM-DD').format('MMM Do, YYYY')
                       : ''}
                   </h2>
                   <h3 className="banner-desc font-weight-bold">
@@ -134,14 +134,11 @@ function Home({
                   <h3 className="banner-desc font-weight-bold">TEHRAN, IRAN</h3>
                   {isRegistrationOpen && (
                     <p className="banner-btn">
-                      {/* <a
+                      <a
                         href="/create-account"
                         className="btn btn-primary btn-white">
                         Register Now
-                      </a> */}
-                      <div className="btn btn-primary btn-white">
-                        Coming Soon...
-                      </div>
+                      </a>
                     </p>
                   )}
                   {/* {posterSessionRegister && (
@@ -160,98 +157,14 @@ function Home({
         </div>
       </section>
 
-      {/* <section id="ts-programs" className="diagonal mb-5">
+      <section id="ts-programs" className="diagonal mb-5">
         <AboutUs />
-      </section> */}
-
-
-
-      {/* ////////////////////////// */}
-
-
-
-
-
-      <section id="ts-programs" className="d-flex flex-column align-items-center">
-        <div className="container">
-          <div className="row">
-            <h2 className="section-title mx-auto">Programs</h2>
+        <div className="row no-margin">
+          <div className="general-btn text-center mx-auto">
+            <a href="/about" className="btn btn-primary all-speakers">
+              More About WSS
+            </a>
           </div>
-          <div className="row">
-            <div className="col-12 col-sm-9 col-lg-8 mx-auto">
-              
-              
-              <div className="row d-flex flex-sm-row-reverse justify-content-start justify-content-sm-between mt-5 mb-md-5">
-                <div className="p-5 p-md-0 col-md-4 d-flex flex-column justify-content-center">
-                  <img
-                    className="w-100 h-auto my-auto"
-                    src="images/seminar.png"
-                  />
-                </div>
-                <div className="col mr-md-3 d-flex flex-column justify-content-center">
-                  <h3 className="section-sub-title">Seminars</h3>
-                  <p>
-                      Seminars takes place as a four-day event and in each day speakers
-                       present their research and ideas. They also share their findings
-                        and teach related topics.
-                  </p>
-                </div>
-              </div>
-
-
-
-              <div className="row d-flex flex-sm-row-reverse justify-content-start justify-content-sm-between mt-5 mb-md-5">
-                <div className="p-5 p-md-0 col-md-4 d-flex flex-column justify-content-center">
-                  <img
-                    className="w-100 h-auto my-auto"
-                    src="images/roundtable.png"
-                  />
-                </div>
-                <div className="col mr-md-3 d-flex flex-column justify-content-center">
-                  <h3 className="section-sub-title">Round Tables</h3>
-                  <p>
-                  Each day, we will have a round table with specific topics to discuss.
-                   At each round table, we will host several experts in the field and discuss
-                    your concerns about the topic. Note that the round tables are going to be held
-                     in Persian.
-                  </p>
-                </div>
-              </div>
-
-
-
-
-              <div className="row d-flex flex-sm-row-reverse justify-content-start justify-content-sm-between mt-5 mb-md-5">
-                <div className="p-5 p-md-0 col-md-4 d-flex flex-column justify-content-center">
-                  <img
-                    className="w-100 h-auto my-auto"
-                    src="images/poster_session.png"
-                  />
-                </div>
-                <div className="col mr-md-3 d-flex flex-column justify-content-center">
-                  <h3 className="section-sub-title">Lab Talks</h3>
-                  <p>
-                  This section is about the laboratories of the Faculty of Computer Engineering of 
-                  Sharif University of Technology.
-                   In each session we host one of them. Members introduce the lab and discuss hot lab topics.
-                  </p>
-                </div>
-              </div>
-
-
-
-
-
-
-            </div>
-          </div>
-          {/* <div className="row">
-            <div className="general-btn text-center mx-auto">
-              <a href="/about" className="btn btn-primary all-speakers">
-                More About WSS
-              </a>
-            </div>
-          </div> */}
         </div>
       </section>
 
@@ -261,22 +174,12 @@ function Home({
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-      {seminars.length > 0 && (
-        <section id="ts-speakers-main" className="diagonal blue-gradient my-5">
+      {/* <div className="purple-background"> */}
+      {(
+        <section id="ts-speakers-main" className="diagonal-up-right blue-gradient my-5 ">
           <div className="container">
             <div className="row text-center">
-              <h3 className="section-sub-title title-white mx-auto font-weight-light">
+              <h3 className="title-white mx-auto font-weight-light speaker-title">
                 Speakers
               </h3>
             </div>
@@ -307,99 +210,99 @@ function Home({
       )}
 
       {/*<section id="ts-statics" className="z-1 ts-statics diagonal my-5">
-        <div className="container py-4">
-          <div className="row d-flex justify-content-center">
-            <div className="col-sm-2 m-2 text-center">
-              <a data-scroll>
-                <div className="ts-facts">
-                  <div className="ts-facts-content">
-                    <h2 className="ts-facts-num">
-                      <span className="counterUp">{seminars_count}</span>
-                    </h2>
-                    <h3 className="ts-facts-title">Seminars</h3>
+          <div className="container py-4">
+            <div className="row d-flex justify-content-center">
+              <div className="col-sm-2 m-2 text-center">
+                <a data-scroll>
+                  <div className="ts-facts">
+                    <div className="ts-facts-content">
+                      <h2 className="ts-facts-num">
+                        <span className="counterUp">{seminars_count}</span>
+                      </h2>
+                      <h3 className="ts-facts-title">Seminars</h3>
+                    </div>
                   </div>
-                </div>
-              </a>
-            </div>
-            <div className="col-sm-2 m-2 text-center">
-              <a data-scroll>
-                <div className="ts-facts">
-                  <div className="ts-facts-content">
-                    <h2 className="ts-facts-num">
-                      <span className="counterUp">{workshops_count}</span>
-                    </h2>
-                    <h3 className="ts-facts-title"> Workshops</h3>
+                </a>
+              </div>
+              <div className="col-sm-2 m-2 text-center">
+                <a data-scroll>
+                  <div className="ts-facts">
+                    <div className="ts-facts-content">
+                      <h2 className="ts-facts-num">
+                        <span className="counterUp">{workshops_count}</span>
+                      </h2>
+                      <h3 className="ts-facts-title"> Workshops</h3>
+                    </div>
                   </div>
-                </div>
-              </a>
-            </div>
+                </a>
+              </div>
 
-            <div className="col-sm-2 m-2 text-center">
-              <a data-scroll>
+              <div className="col-sm-2 m-2 text-center">
+                <a data-scroll>
+                  <div className="ts-facts">
+                    <div className="ts-facts-content">
+                      <h2 className="ts-facts-num">
+                        <span className="counterUp">{speakers_count}</span>
+                      </h2>
+                      <h3 className="ts-facts-title">Speakers</h3>
+                    </div>
+                  </div>
+                </a>
+              </div>
+
+              <div className="col-sm-2 m-2 text-center">
                 <div className="ts-facts">
                   <div className="ts-facts-content">
                     <h2 className="ts-facts-num">
-                      <span className="counterUp">{speakers_count}</span>
+                      <span className="counterUp">{participantsCount}</span>
                     </h2>
-                    <h3 className="ts-facts-title">Speakers</h3>
+                    <h3 className="ts-facts-title">Participants</h3>
                   </div>
-                </div>
-              </a>
-            </div>
-
-            <div className="col-sm-2 m-2 text-center">
-              <div className="ts-facts">
-                <div className="ts-facts-content">
-                  <h2 className="ts-facts-num">
-                    <span className="counterUp">{participantsCount}</span>
-                  </h2>
-                  <h3 className="ts-facts-title">Participants</h3>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      </section>*/}
+        </section>*/}
 
       {/* {sponsors.length > 0 && (
-        <section id="ts-sponsors" className="ts-sponsors diagonal pt-0">
-          <div className="container">
-            <p className="section-sub-title">
-              {sponsors.length === 1 ? 'Event Sponsor' : 'Event Sponsors'}
-            </p>
-            <div className="row text-center d-flex align-items-center">
-              {sponsors.map((s: Sponsor) => (
-                <div
-                  key={s.id}
-                  className="col-xs-12 col-sm-4 col-md-2 align-center">
-                  <a href={s.url} target="_blank">
-                    <img
-                      className="mw-100 img-responsive"
-                      src={BASE_URL + s.logo}
-                      alt=""
-                    />
-                  </a>
-                  <a href={s.url} target="_blank">
-                    <h2 className="intro-title" style={margin60}>
-                      {s.name}
-                    </h2>
-                  </a>
-                </div>
-              ))}
+          <section id="ts-sponsors" className="ts-sponsors diagonal pt-0">
+            <div className="container">
+              <p className="section-sub-title">
+                {sponsors.length === 1 ? 'Event Sponsor' : 'Event Sponsors'}
+              </p>
+              <div className="row text-center d-flex align-items-center">
+                {sponsors.map((s: Sponsor) => (
+                  <div
+                    key={s.id}
+                    className="col-xs-12 col-sm-4 col-md-2 align-center">
+                    <a href={s.url} target="_blank">
+                      <img
+                        className="mw-100 img-responsive"
+                        src={BASE_URL + s.logo}
+                        alt=""
+                      />
+                    </a>
+                    <a href={s.url} target="_blank">
+                      <h2 className="intro-title" style={margin60}>
+                        {s.name}
+                      </h2>
+                    </a>
+                  </div>
+                ))}
+              </div>
             </div>
-          </div>
-        </section>
-      )} */}
+          </section>
+        )} */}
 
       <section
-        className="venu-map no-padding diagonal background-theme h-100 pb-2 mt-1"
+        className="venu-map no-padding diagonal background-theme h-100 pb-2  large-neg-margin"
         style={venueMapStyle}>
         {/* <div className="container">
-          <h3 className="section-sub-title" style={sectionSubtitleStyle}>
-            WSS Venue
-          </h3>
-        </div> */}
-        <div className="container pb-5">
+            <h3 className="section-sub-title" style={sectionSubtitleStyle}>
+              WSS Venue
+            </h3>
+          </div> */}
+        <div className="container pb-5 large-margin">
           <div className="row my-5">
             <div className="col-md-6 font-weight-bold">
               <h5 className="section-sub-title text-white mb-3 mt-5">Info</h5>
@@ -425,6 +328,7 @@ function Home({
           </div>
         </div>
       </section>
+      {/* </div> */}
     </>
   );
 }
