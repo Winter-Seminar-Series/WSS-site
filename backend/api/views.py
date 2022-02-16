@@ -427,7 +427,7 @@ class UserProfileViewSet(viewsets.ViewSet):
         return Response(self.serializer(user_profile).data)
 
     @action(methods=['GET'], detail=False)
-        def is_registered(self, request):
+    def is_registered(self, request):
         user_profile = get_user_profile(request.user)
         year = request.query_params.get('year', request.query_params.get('series', None))
         if year is None:
