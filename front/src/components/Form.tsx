@@ -519,6 +519,8 @@ const mapStateToProps = (state, ownProps) => {
     resume,
     open_to_work,
     field_of_interest,
+    job,
+    phone_number,
   } = state.Participant;
   const { isFetching: paymentProcess } = state.account;
   const { isRegisteration } = ownProps;
@@ -545,6 +547,8 @@ const mapStateToProps = (state, ownProps) => {
     resume,
     openToWork: open_to_work,
     fieldOfInterest: field_of_interest,
+    job,
+    phoneNumber: phone_number,
   };
 };
 
