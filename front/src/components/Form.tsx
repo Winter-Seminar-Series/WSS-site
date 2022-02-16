@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+
 import { connect } from 'react-redux';
 import { toast } from 'react-toastify';
 import {
@@ -11,7 +12,6 @@ import {
   Button,
   FormControl,
   FormControlLabel,
-  FormHelperText,
   InputLabel,
   MenuItem,
   Radio,
@@ -19,6 +19,8 @@ import {
   Select,
 } from '@mui/material';
 import ResponsiveDialog from './Dialog';
+import PhoneInput from 'react-phone-input-2';
+import 'react-phone-input-2/lib/style.css';
 
 function Form({
   thisSeries,
@@ -275,6 +277,27 @@ function Form({
           />
         </div>
       </div>
+      <div className="row">
+        <div className="col-12 mb-3 col-lg mb-lg-0">
+          <PhoneInput
+            country="ir"
+            value={phoneNumber}
+            onChange={(e) => setPhoneNumber(e)}
+            inputClass="text-input form-control"
+            inputStyle={{ width: '100%' }}
+            placeholder="Phone Number *"
+          />
+        </div>
+        <div className="col-12 mb-3 col-lg mb-lg-0">
+          <input
+            value={job}
+            onChange={(e) => setJob(e.target.value)}
+            type="text"
+            className="text-input form-control"
+            placeholder="Job *"
+          />
+        </div>
+      </div>
 
       <div className="row">
         <div className="col-12 mb-3 col-lg mb-lg-0">
@@ -496,6 +519,8 @@ const mapStateToProps = (state, ownProps) => {
     resume,
     open_to_work,
     field_of_interest,
+    job,
+    phone_number,
   } = state.Participant;
   const { isFetching: paymentProcess } = state.account;
   const { isRegisteration } = ownProps;
@@ -522,6 +547,8 @@ const mapStateToProps = (state, ownProps) => {
     resume,
     openToWork: open_to_work,
     fieldOfInterest: field_of_interest,
+    job,
+    phoneNumber: phone_number,
   };
 };
 

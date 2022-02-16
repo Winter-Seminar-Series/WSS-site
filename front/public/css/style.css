@@ -489,6 +489,8 @@ img.pull-right {
   color: #fff;
   border-bottom: 1px solid #dedede;
   border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+  font-family: 'Raleway', sans-serif !important
+
 }
 .form-control:focus {
   box-shadow: none;
