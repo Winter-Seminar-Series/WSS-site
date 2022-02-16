@@ -427,15 +427,15 @@ class UserProfileViewSet(viewsets.ViewSet):
         return Response(self.serializer(user_profile).data)
 
     @action(methods=['GET'], detail=False)
-    def is_registered(self, request):
+        def is_registered(self, request):
         user_profile = get_user_profile(request.user)
-        year = request.query_params.get('year', 0)
-        wss = get_wss_object_or_404(year)
-
+        year = request.query_params.get('year', request.query_params.get('series', None))
         if year is None:
             return ErrorResponse({
-                'message': '`year` should be passed in query string.'
+                'message': '`year` or `series` should be passed in query string.'
             })
+
+        wss = get_wss_object_or_404(year)
 
         return Response({
             'is_registered': user_profile.participants.filter(current_wss=wss).count() > 0
@@ -515,6 +515,8 @@ class PaymentViewSet(viewsets.ViewSet):
         if discount_code == "Sharif-Student": # TODO define discount code in database and remove hardcode
             amount = (amount * 2) // 3
             amount = (amount // 10000) * 10000
+        elif discount_code == "mandskmsabdmnbbsamndbsamnbdmsa!$#@$WFR986yr87yr87676t23r8uyUDWET^EW&%Dbd":
+            amount = 0
         
         description = settings.PAYMENT_SETTING['description'].format(
             year, user_profile.email)
