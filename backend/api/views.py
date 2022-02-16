@@ -510,6 +510,12 @@ class PaymentViewSet(viewsets.ViewSet):
             }, status_code=403)
 
         amount = wss.registration_fee
+        
+        discount_code = request.query_params.get("discount", None)
+        if discount_code == "Sharif-Student": # TODO define discount code in database and remove hardcode
+            amount = (amount * 2) // 3
+            amount = (amount // 10000) * 10000
+        
         description = settings.PAYMENT_SETTING['description'].format(
             year, user_profile.email)
 
