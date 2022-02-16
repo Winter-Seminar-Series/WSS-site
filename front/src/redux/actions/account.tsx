@@ -69,7 +69,7 @@ export const sendPaymentRequest = (discount, series = '7th') => {
         actionTypes.SEND_PAYMENT_SUCCESS,
         actionTypes.SEND_PAYMENT_FAILURE,
       ],
-      url: `${URLs.ROOT}${series}/payment/request/?callback=${BASE_URL}&discount=${discount}/dashboard`,
+      url: `${URLs.ROOT}${series}/payment/request/?callback=${BASE_URL}/dashboard&discount=${discount}`,
       fetchOptions: {
         method: 'GET',
       },
