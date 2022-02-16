@@ -515,7 +515,7 @@ class PaymentViewSet(viewsets.ViewSet):
         if discount_code == "Sharif-Student": # TODO define discount code in database and remove hardcode
             amount = (amount * 2) // 3
             amount = (amount // 10000) * 10000
-        elif discount_code == "mandskmsabdmnbbsamndbsamnbdmsa!$#@$WFR986yr87yr87676t23r8uyUDWET^EW&%Dbd":
+        elif discount_code == "mandskmsabdmnAKHGMGERGbbsamndbsamnbFR986yr87yr87676t23QWEADr8uyUDWDbd":
             amount = 0
         
         description = settings.PAYMENT_SETTING['description'].format(
