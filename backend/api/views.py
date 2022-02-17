@@ -429,7 +429,8 @@ class UserProfileViewSet(viewsets.ViewSet):
     @action(methods=['GET'], detail=False)
     def is_registered(self, request):
         user_profile = get_user_profile(request.user)
-        year = request.query_params.get('year', request.query_params.get('series', None))
+        year = request.query_params.get(
+            'year', request.query_params.get('series', None))
         if year is None:
             return ErrorResponse({
                 'message': '`year` or `series` should be passed in query string.'
@@ -510,14 +511,12 @@ class PaymentViewSet(viewsets.ViewSet):
             }, status_code=403)
 
         amount = wss.registration_fee
-        
+
         discount_code = request.query_params.get("discount", None)
-        if discount_code == "Sharif-Student": # TODO define discount code in database and remove hardcode
+        if discount_code == "Sharif-Student":  # TODO define discount code in database and remove hardcode
             amount = (amount * 2) // 3
             amount = (amount // 10000) * 10000
-        elif discount_code == "mandskmsabdmnbbsamndbsamnbdmsa!$#@$WFR986yr87yr87676t23r8uyUDWET^EW&%Dbd":
-            amount = 0
-        
+
         description = settings.PAYMENT_SETTING['description'].format(
             year, user_profile.email)
 
@@ -560,6 +559,38 @@ class PaymentViewSet(viewsets.ViewSet):
 
             amount = wss.registration_fee
 
+            result = verify(authority, amount)
+
+            if result.Status == 100:
+                participant = Participant(current_wss=wss, user_profile=user_profile,
+                                          payment_ref_id=str(result.RefID), payment_amount=amount)
+                participant.save()
+
+                # Notify user about successful payment
+                user = participant.user_profile.user
+
+                threading.Thread(target=lambda: send_mail(
+                    PAYMENT_SUBJECT, 'text content',
+                    settings.EMAIL_HOST_USER,
+                    [user.email],
+                    fail_silently=True,
+                    html_message=BASE_HTML_CONTENT.format(
+                        PAYMENT_EMAIL.format(
+                            user.first_name, participant.payment_ref_id)
+                    )
+                )
+                ).start()
+
+                return Response({
+                    "message": 'OK',
+                    "RefID": result.RefID
+                })
+
+            if result.Status == 101:
+                return ErrorResponse({'status': 'ALREADY SUBMITTED'})
+
+            amount = (amount * 2) // 3
+            amount = (amount // 10000) * 10000
             result = verify(authority, amount)
 
             if result.Status == 100:
