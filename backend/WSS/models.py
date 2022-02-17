@@ -147,7 +147,8 @@ class WSS(models.Model):
 
 class DiscountCode(models.Model):
     value = models.CharField(max_length=128)
-    related_wss = models.ForeignKey('WSS', related_name='discount_codes')
+    related_wss = models.ForeignKey(
+        'WSS', related_name='discount_codes', on_delete=models.CASCADE)
 
 
 class Clip(models.Model):
