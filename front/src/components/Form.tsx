@@ -171,7 +171,7 @@ function Form({
       toast.error('Please fill all the required fields');
       return;
     } else if (!agreement && isRegisteration) {
-      toast.error('You should agree to our condition');
+      toast.error('You should agree to our terms of service');
       return;
     }
     // if (
