@@ -145,6 +145,11 @@ class WSS(models.Model):
         return self.participants.count()
 
 
+class DiscountCode(models.Model):
+    value = models.CharField(max_length=128)
+    related_wss = models.ForeignKey('WSS', related_name='discount_codes')
+
+
 class Clip(models.Model):
     wss = models.ForeignKey(to='WSS', related_name='clips',
                             verbose_name='WSS', on_delete=models.CASCADE)
