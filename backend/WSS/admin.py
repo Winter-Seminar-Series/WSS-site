@@ -2,7 +2,7 @@ from django.contrib import admin
 from jet.admin import CompactInline
 
 from WSS.models import Clip, Booklet, WSS, Image, Sponsor, ExternalLink, Sponsorship, Grade, Participant, UserProfile, \
-    ShortLink, Reserve, WssTag, Announcement
+    ShortLink, Reserve, WssTag, Announcement, DiscountCode
 from events.models import Seminar, Workshop, PosterSession, Event
 from django.contrib.auth.models import User
 from django.contrib.auth.admin import UserAdmin as AuthUserAdmin
@@ -109,6 +109,7 @@ admin.site.register(Reserve)
 admin.site.register(Grade)
 admin.site.register(WssTag)
 admin.site.register(UserProfile)
+admin.site.register(DiscountCode)
 # unregister old user admin
 admin.site.unregister(User)
 # register new user admin
