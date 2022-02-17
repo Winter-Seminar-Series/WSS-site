@@ -174,48 +174,49 @@ function Form({
       toast.error('You should agree to our condition');
       return;
     }
-    if (
-      first_name !== inputFirstName ||
-      last_name !== inputLastName ||
-      gender !== inputGender ||
-      grade !== inputGrade ||
-      university !== inputUniversity ||
-      city !== inputCity ||
-      introduction_method !== inputIntroductionMethod ||
-      linkedIn !== inputLinkedIn ||
-      github !== inputGithub ||
-      major !== inputMajor ||
-      dateOfBirth !== inputDateOfBirth ||
-      agreement !== inputAgreement ||
-      openToWork !== inputOpenToWork ||
-      resume !== inputResume ||
-      fieldOfInterset !== inputFieldOfInterest ||
-      job !== inputJob ||
-      phoneNumber !== inputPhoneNumber
-    ) {
-      updateProfile({
-        first_name,
-        last_name,
-        gender,
-        grade,
-        university,
-        city,
-        introduction_method,
-        major,
-        date_of_birth: dateOfBirth,
-        social_media_ids: JSON.stringify({
-          github,
-          linkedin: linkedIn,
-        }),
-        agreement,
-        open_to_work: openToWork,
-        resume: JSON.stringify(resume),
-        field_of_interest: fieldOfInterset,
-        job,
-        phone_number: phoneNumber,
-      });
-    }
-    if (isRegisteration) sendPaymentRequest(discount, thisSeries);
+    // if (
+    //   first_name !== inputFirstName ||
+    //   last_name !== inputLastName ||
+    //   gender !== inputGender ||
+    //   grade !== inputGrade ||
+    //   university !== inputUniversity ||
+    //   city !== inputCity ||
+    //   introduction_method !== inputIntroductionMethod ||
+    //   linkedIn !== inputLinkedIn ||
+    //   github !== inputGithub ||
+    //   major !== inputMajor ||
+    //   dateOfBirth !== inputDateOfBirth ||
+    //   agreement !== inputAgreement ||
+    //   openToWork !== inputOpenToWork ||
+    //   resume !== inputResume ||
+    //   fieldOfInterset !== inputFieldOfInterest ||
+    //   job !== inputJob ||
+    //   phoneNumber !== inputPhoneNumber
+    // ) {
+    updateProfile({
+      first_name,
+      last_name,
+      gender,
+      grade,
+      university,
+      city,
+      introduction_method,
+      major,
+      date_of_birth: dateOfBirth,
+      social_media_ids: JSON.stringify({
+        github,
+        linkedin: linkedIn,
+      }),
+      agreement,
+      open_to_work: openToWork,
+      resume: JSON.stringify(resume),
+      field_of_interest: fieldOfInterset,
+      job,
+      phone_number: phoneNumber,
+    }).then(() => {
+      if (isRegisteration) sendPaymentRequest(discount, thisSeries);
+    })
+    // }
   };
   return (
     <form className="seminar-register-form" onSubmit={submitInfo}>
