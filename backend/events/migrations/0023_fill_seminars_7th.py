@@ -95,7 +95,7 @@ To that end, I will show how learning-based techniques can be put wisely in harm
         wss=wss,
         polymorphic_ctype=ctype,
         title='Semi-Ring Dictionaries for End-to-End Data Science',
-        audience='',
+        audience='senior undergraduate students and graduate students',
         abstract='''In this talk, we introduce semi-ring dictionaries, a powerful class of functional collections that subsume other collection types such as sets, multisets, arrays, vectors, and matrices. We developed SDQL, a statically typed language that can express relational algebra with aggregations, linear algebra, and functional collections over data such as relations and matrices using semi-ring dictionaries. Furthermore, thanks to the algebraic structure behind these dictionaries, SDQL unifies a wide range of optimizations commonly used in databases and linear algebra. As a result, SDQL enables efficient processing of end-to-end data science pipelines consisting of hybrid DB and LA workloads, by putting together optimizations that are otherwise confined to either DB systems or LA frameworks.''',
         speaker=Speaker.objects.filter(name='Amir Shaikhha').last(),
         start_time=date + timedelta(hours=10),
