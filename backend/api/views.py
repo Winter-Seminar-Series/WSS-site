@@ -378,7 +378,7 @@ class UserProfileViewSet(viewsets.ViewSet):
                   'grade', 'is_student', 'favorite_tags',
                   'date_of_birth', 'social_media_ids', 'open_to_work', 'resume']
         for field in fields:
-            if user_data_parameter.get(field):
+            if user_data_parameter.get(field) is not None:
                 data = user_data_parameter[field]
                 if field == 'resume':
                     if type(data) == str:
