@@ -23,10 +23,10 @@ function Dashboard({ match, verifyPayment, thisSeries }) {
       <Sidebar></Sidebar>
       <div className="dashboard-container">
         <Switch>
-          {/* <Route
+          <Route
             path={match.url + '/seminar-registration'}
             component={Registration}
-          /> */}
+          />
           {/* <Route
             path={match.url + '/seminar-list'}
             component={UserSeminarList}

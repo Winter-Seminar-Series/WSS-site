@@ -6,7 +6,7 @@ BASE_HTML_CONTENT = '''<!DOCTYPE html>
     <head>
         <meta name="ROBOTS" content="NOINDEX, NOFOLLOW">
         <meta name="referrer" content="no-referrer">
-    <title>WSS 2020</title>
+    <title>7th WSS</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="UTF-8">
     <style>
@@ -100,7 +100,7 @@ BASE_HTML_CONTENT = '''<!DOCTYPE html>
       <div>
           <div>
               <div id="logo" class="text-center p-relative px-1 py-1">
-                <a href="http://wss.ce.sharif.edu" target="_blank" style="text-decoration: none;"><img src="https://wss.ce.sharif.edu/media/7th/logos/banner1.png" border="0" width="123.5" height="123.25" alt="WSS 2020"></a>
+                <a href="http://wss.ce.sharif.edu" target="_blank" style="text-decoration: none;"><img src="https://wss.ce.sharif.edu/media/7th/logos/banner1.png" border="0" width="123.5" height="123.25" alt="7th WSS"></a>
               </div>
           </div>
           <div class="px-1 py-1">
@@ -127,7 +127,7 @@ BASE_HTML_CONTENT = '''<!DOCTYPE html>
 
 PAYMENT_EMAIL = (
   "Dear {},<br>"
-  "Thanks for your interest in attending WSS 2020 <br>"
+  "Thanks for your interest in attending 7th WSS <br>"
   "Your payment was successful. <br>"
   "Ref code: {} <br>"
 )
