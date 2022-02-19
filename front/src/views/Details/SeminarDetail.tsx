@@ -153,17 +153,13 @@ function SeminarDetail({
                   <>
                     <h4>Abstract</h4>
 
-                    <div className="mb-3" style={{ whiteSpace: 'pre-wrap' }}>
-                      {seminar.abstract}
-                    </div>
+                    <div className="mb-3">{seminar.abstract}</div>
                   </>
                 )}
                 {seminar.audience && (
                   <>
                     <h4>Audience</h4>
-                    <div className="mb-3" style={{ whiteSpace: 'pre-wrap' }}>
-                      {seminar.audience}
-                    </div>
+                    <div className="mb-3">{seminar.audience}</div>
                   </>
                 )}
                 {speaker.bio && (
