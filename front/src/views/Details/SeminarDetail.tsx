@@ -41,10 +41,8 @@ function SeminarDetail({
   }, [getAnEntityOfModelList]);
 
   useEffect(() => {
-
     const seminar = seminars.find((s) => s.id === +id);
     if (seminar) {
-
       setSeminar(seminar);
       getAnEntityOfModelList(
         MODEL_LISTS_NAMES.SPEAKERS,
@@ -130,7 +128,6 @@ function SeminarDetail({
                     ' minutes')} */}
                 {/* {!seminar.duration &&  */}
                 {'To be announced ...'}
-
               </div>
               <div className="seminar-details">
                 <i className="fa fa-calendar">&nbsp;</i>
@@ -142,9 +139,7 @@ function SeminarDetail({
                 {'To be announced ...'}
               </div>
               <div className="seminar-details mt-3">
-                {isLoggedIn && (
-                  <GoToButton type="seminars" id={seminar.id} />
-                )}
+                {isLoggedIn && <GoToButton type="seminars" id={seminar.id} />}
               </div>
             </div>
           </div>
@@ -158,13 +153,17 @@ function SeminarDetail({
                   <>
                     <h4>Abstract</h4>
 
-                    <div className="mb-3">{seminar.abstract}</div>
+                    <div className="mb-3" style={{ whiteSpace: 'pre-wrap' }}>
+                      {seminar.abstract}
+                    </div>
                   </>
                 )}
                 {seminar.audience && (
                   <>
                     <h4>Audience</h4>
-                    <div className="mb-3">{seminar.audience}</div>
+                    <div className="mb-3" style={{ whiteSpace: 'pre-wrap' }}>
+                      {seminar.audience}
+                    </div>
                   </>
                 )}
                 {speaker.bio && (
