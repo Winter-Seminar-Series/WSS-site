@@ -41,10 +41,8 @@ function SeminarDetail({
   }, [getAnEntityOfModelList]);
 
   useEffect(() => {
-
     const seminar = seminars.find((s) => s.id === +id);
     if (seminar) {
-
       setSeminar(seminar);
       getAnEntityOfModelList(
         MODEL_LISTS_NAMES.SPEAKERS,
@@ -130,7 +128,6 @@ function SeminarDetail({
                     ' minutes')} */}
                 {/* {!seminar.duration &&  */}
                 {'To be announced ...'}
-
               </div>
               <div className="seminar-details">
                 <i className="fa fa-calendar">&nbsp;</i>
@@ -142,9 +139,7 @@ function SeminarDetail({
                 {'To be announced ...'}
               </div>
               <div className="seminar-details mt-3">
-                {isLoggedIn && (
-                  <GoToButton type="seminars" id={seminar.id} />
-                )}
+                {isLoggedIn && <GoToButton type="seminars" id={seminar.id} />}
               </div>
             </div>
           </div>
