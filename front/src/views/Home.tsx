@@ -209,60 +209,22 @@ function Home({
         </section>
       )}
 
-      {/*<section id="ts-statics" className="z-1 ts-statics diagonal my-5">
-          <div className="container py-4">
-            <div className="row d-flex justify-content-center">
-              <div className="col-sm-2 m-2 text-center">
-                <a data-scroll>
-                  <div className="ts-facts">
-                    <div className="ts-facts-content">
-                      <h2 className="ts-facts-num">
-                        <span className="counterUp">{seminars_count}</span>
-                      </h2>
-                      <h3 className="ts-facts-title">Seminars</h3>
-                    </div>
-                  </div>
-                </a>
-              </div>
-              <div className="col-sm-2 m-2 text-center">
-                <a data-scroll>
-                  <div className="ts-facts">
-                    <div className="ts-facts-content">
-                      <h2 className="ts-facts-num">
-                        <span className="counterUp">{workshops_count}</span>
-                      </h2>
-                      <h3 className="ts-facts-title"> Workshops</h3>
-                    </div>
-                  </div>
-                </a>
-              </div>
-
-              <div className="col-sm-2 m-2 text-center">
-                <a data-scroll>
-                  <div className="ts-facts">
-                    <div className="ts-facts-content">
-                      <h2 className="ts-facts-num">
-                        <span className="counterUp">{speakers_count}</span>
-                      </h2>
-                      <h3 className="ts-facts-title">Speakers</h3>
-                    </div>
-                  </div>
-                </a>
-              </div>
-
-              <div className="col-sm-2 m-2 text-center">
-                <div className="ts-facts">
-                  <div className="ts-facts-content">
-                    <h2 className="ts-facts-num">
-                      <span className="counterUp">{participantsCount}</span>
-                    </h2>
-                    <h3 className="ts-facts-title">Participants</h3>
-                  </div>
+      <section id="ts-statics" className="z-1 ts-statics my-5" style={{ paddingTop: "10rem" }}>
+        <div className="container py-4">
+          <div className="row d-flex justify-content-center">
+            <div className="col-sm-2 m-2 text-center">
+              <div className="ts-facts">
+                <div className="ts-facts-content">
+                  <h2 className="ts-facts-num">
+                    <span className="counterUp">{seminars_count}</span>
+                  </h2>
+                  <h3 className="ts-facts-title">Seminars</h3>
                 </div>
               </div>
             </div>
           </div>
-        </section>*/}
+        </div>
+      </section>
 
       {/* {sponsors.length > 0 && (
           <section id="ts-sponsors" className="ts-sponsors diagonal pt-0">
