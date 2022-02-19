@@ -222,6 +222,42 @@ function Home({
                 </div>
               </div>
             </div>
+
+            {/* <div className="col-sm-2 m-2 text-center">
+                 <a data-scroll>
+                   <div className="ts-facts">
+                     <div className="ts-facts-content">
+                       <h2 className="ts-facts-num">
+                         <span className="counterUp">{workshops_count}</span>
+                       </h2>
+                       <h3 className="ts-facts-title"> Workshops</h3>
+                     </div>
+                   </div>
+                 </a>
+               </div>
+               <div className="col-sm-2 m-2 text-center">
+                 <a data-scroll>
+                   <div className="ts-facts">
+                     <div className="ts-facts-content">
+                       <h2 className="ts-facts-num">
+                         <span className="counterUp">{speakers_count}</span>
+                       </h2>
+                       <h3 className="ts-facts-title">Speakers</h3>
+                     </div>
+                   </div>
+                 </a>
+               </div>
+               <div className="col-sm-2 m-2 text-center">
+                 <div className="ts-facts">
+                   <div className="ts-facts-content">
+                     <h2 className="ts-facts-num">
+                       <span className="counterUp">{participantsCount}</span>
+                     </h2>
+                     <h3 className="ts-facts-title">Participants</h3>
+                   </div>
+                 </div>
+               </div> */}
+
           </div>
         </div>
       </section>
