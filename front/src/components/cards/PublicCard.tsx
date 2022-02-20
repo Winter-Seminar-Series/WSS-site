@@ -3,8 +3,7 @@ import { connect } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import Like from './Like';
-import { BASE_URL } from '../../constants/info'
-
+import { BASE_URL } from '../../constants/info';
 
 function PublicCard({
   id,
@@ -13,16 +12,21 @@ function PublicCard({
   speakers,
   staff,
 }) {
-  const [person, setPerson] = useState({ picture: '', name: '', degree: '', place: '' });
+  const [person, setPerson] = useState({
+    picture: '',
+    name: '',
+    degree: '',
+    place: '',
+  });
 
   useEffect(() => {
-    if (isStaff && staff.find(s => s.id === id)) {
-      setPerson(staff.find(s => s.id === id));
+    if (isStaff && staff.find((s) => s.id === id)) {
+      setPerson(staff.find((s) => s.id === id));
     }
-    if (!isStaff && speakers.find(s => s.id === id)) {
-      setPerson(speakers.find(s => s.id === id));
+    if (!isStaff && speakers.find((s) => s.id === id)) {
+      setPerson(speakers.find((s) => s.id === id));
     }
-  }, [speakers, staff])
+  }, [speakers, staff]);
 
   const cardRef = useRef(null);
   useEffect(() => {
@@ -34,17 +38,30 @@ function PublicCard({
   }, [cardRef]);
 
   return (
-    <a className="" ref={cardRef} href={!isStaff ? presentationLink : null} style={{ textDecoration: 'none' }} >
+    <a
+      className=""
+      ref={cardRef}
+      href={!isStaff ? presentationLink : null}
+      style={{ textDecoration: 'none' }}>
       <div id="public-card">
         <div className="card">
           <div className="card-image">
-            <img src={person.picture ? `${BASE_URL}/${person.picture}` : process.env.PUBLIC_URL + '/images/icons/avatar.jpg'} alt="" />
+            <img
+              src={
+                person.picture
+                  ? `${BASE_URL}/${person.picture}`
+                  : process.env.PUBLIC_URL + '/images/icons/avatar.jpg'
+              }
+              alt=""
+              onError={({ currentTarget }) => {
+                currentTarget.onerror = null; // prevents looping
+                currentTarget.src = `${process.env.PUBLIC_URL}images/icons/avatar.jpg`;
+              }}
+            />
           </div>
           <div className="card-description">
             <h3>{person.name}</h3>
-            {!isStaff &&
-              <p>{`${person.degree}, ${person.place}`}</p>
-            }
+            {!isStaff && <p>{`${person.degree}, ${person.place}`}</p>}
             {/* <div className='like'>
               <span>
                 add to your favorite
@@ -65,6 +82,4 @@ const mapStateToProps = (state, ownProps) => ({
   staff: state.WSS.staff,
 });
 
-export default connect(
-  mapStateToProps,
-  {})(PublicCard);
+export default connect(mapStateToProps, {})(PublicCard);

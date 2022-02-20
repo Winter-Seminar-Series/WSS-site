@@ -10,6 +10,7 @@ import {
 import { sendPaymentRequest } from '../redux/actions/account';
 import {
   Button,
+  emphasize,
   FormControl,
   FormControlLabel,
   InputLabel,
@@ -420,15 +421,35 @@ function Form({
           </FormControl>
         </div>
       </div>
+
+      <div className="form-group mb-4">
+        <div className="form-check">
+          <input
+            checked={openToWork}
+            onChange={() => setOpenToWork(!openToWork)}
+            className="form-check-input"
+            type="checkbox"
+            id="gridCheck1"
+          />
+          <label className="form-check-label" htmlFor="gridCheck1">
+            I'm open to work.
+          </label>
+        </div>
+      </div>
+
       <div className="row">
         <div className="col-12 col-lg">
           <Button
             component="label"
-            className="col-12 col-lg btn btn-lg btn-primary btn-blue mb-5">
+            className="col-12 col-lg btn btn-lg btn-primary btn-blue mb-1">
             {resume ? 'Resume Uploaded' : 'Upload Resume (optional)'}
             <input type="file" hidden onChange={handleCaptureResume} />
           </Button>
         </div>
+      </div>
+
+      <div className='row'>
+        <em className='mb-4'>To increase your chance of getting hired by our sponsers, fill out the optional fields!</em>
       </div>
 
       {isRegisteration ? (
@@ -475,20 +496,7 @@ function Form({
           </div>
         </>
       ) : undefined}
-      <div className="form-group mb-4">
-        <div className="form-check">
-          <input
-            checked={openToWork}
-            onChange={() => setOpenToWork(!openToWork)}
-            className="form-check-input"
-            type="checkbox"
-            id="gridCheck1"
-          />
-          <label className="form-check-label" htmlFor="gridCheck1">
-            I'm open to work.
-          </label>
-        </div>
-      </div>
+
       <div className="row">
         <div className="col-12 col-lg">
           <button
