@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 from pip._vendor import requests
 from sorl.thumbnail import ImageField
 from django.core.validators import MinValueValidator
-from events.models import Workshop, Seminar, PosterSession, WssTag
+from events.models import Workshop, LabTalk, Seminar, PosterSession, WssTag
 
 GRADE_GROUPS = {
     'Bachelor': ['Bachelor'],
@@ -97,6 +97,10 @@ class WSS(models.Model):
     @property
     def workshops(self):
         return Workshop.objects.filter(wss=self)
+
+    @property
+    def labtalks(self):
+        return LabTalk.objects.filter(wss=self)
 
     @property
     def seminars(self):
