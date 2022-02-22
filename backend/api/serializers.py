@@ -77,6 +77,12 @@ class WorkshopSerializer(EventSerializer):
         return workshop.remaining_capacity
 
 
+class LabTalkSerializer(EventSerializer):
+    class Meta:
+        model = LabTalk
+        fields = '__all__'
+
+
 class SeminarSerializer(EventSerializer):
     class Meta:
         model = Seminar

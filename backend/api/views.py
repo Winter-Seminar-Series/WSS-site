@@ -257,6 +257,13 @@ class WorkshopRegistrationViewSet(viewsets.ViewSet):
         })
 
 
+class LabTalkViewSet(EventViewSet):
+    serializer = serializers.LabTalkSerializer
+
+    def queryset_selector(self, request, wss):
+        return wss.labtalks
+
+
 class SeminarViewSet(EventViewSet):
     serializer = serializers.SeminarSerializer
 
