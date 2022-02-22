@@ -36,6 +36,7 @@ function Home({
   getModelList,
   getModelListCount,
   seminars,
+  labtalks,
   seminars_count,
   workshops_count,
   speakers_count,
@@ -56,6 +57,7 @@ function Home({
     getWSSPrimitiveFields(thisSeries);
     getModelList(MODEL_LISTS_NAMES.SEMINARS, thisSeries);
     getModelList(MODEL_LISTS_NAMES.SPEAKERS, thisSeries);
+    getModelList(MODEL_LISTS_NAMES.LAB_TALKS, thisSeries);
     getModelListCount(MODEL_LISTS_NAMES.SEMINARS, thisSeries);
     getModelListCount(MODEL_LISTS_NAMES.WORKSHOPS, thisSeries);
     getModelListCount(MODEL_LISTS_NAMES.SPEAKERS, thisSeries);
@@ -180,7 +182,7 @@ function Home({
           <div className="container">
             <div className="row text-center">
               <h3 className="title-white mx-auto font-weight-light speaker-title">
-                Speakers
+                Seminars
               </h3>
             </div>
             <div className="row justify-content-center">
@@ -202,7 +204,7 @@ function Home({
           <div className="row">
             <div className="general-btn text-center mx-auto">
               <a href="/seminars" className="btn btn-primary btn-white">
-                View All Speakers
+                View All Seminars
               </a>
             </div>
           </div>
@@ -355,6 +357,7 @@ const mapStateToProps = (state, ownProps) => {
     sponsors,
     workshops,
     seminars,
+    labtalks,
     postersessions,
     postersessions_count,
     sponsorships,
@@ -371,6 +374,7 @@ const mapStateToProps = (state, ownProps) => {
     isFetching,
     speakers,
     seminars,
+    labtalks,
     seminars_count,
     workshops_count,
     speakers_count,

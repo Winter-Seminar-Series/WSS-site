@@ -28,6 +28,7 @@ const initState = {
   seminar_materials_count: 0,
   speakers: [],
   speakers_count: 0,
+  labtalks: [],
   postersessions: [],
   postersessions_count: 0,
   poster_materials: [],

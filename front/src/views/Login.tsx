@@ -62,7 +62,7 @@ function Login({ login, isLoggedIn, isFetching }) {
             </div>
             <div style={{ margin: '1rem 0' }}>
               <ReCaptchaV2
-                sitekey={process.env.REACT_APP_RECAPTCHA_SITE_KEY}
+                sitekey={'6LfZB84dAAAAABxoYIEAal-r8fiCB8sR93N8gKso'}
                 onChange={(token) => setToken(token)}
                 onExpire={() => setToken(null)}
               />
