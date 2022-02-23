@@ -26,6 +26,7 @@ function SeminarDetail({
     audience: '',
     speaker: '',
     tags: [],
+    room_name: '',
   });
   const [speaker, setSpeaker] = useState({
     picture: '',
@@ -41,10 +42,8 @@ function SeminarDetail({
   }, [getAnEntityOfModelList]);
 
   useEffect(() => {
-
     const seminar = seminars.find((s) => s.id === +id);
     if (seminar) {
-
       setSeminar(seminar);
       getAnEntityOfModelList(
         MODEL_LISTS_NAMES.SPEAKERS,
@@ -112,7 +111,7 @@ function SeminarDetail({
 
               <div className="seminar-details">
                 <i className="fa fa-clock-o">&nbsp;</i>
-                {/* {seminar.duration &&
+                {seminar.duration &&
                   (parseInt(
                     moment(seminar.duration, 'hh:mm:ss').format(`hh`)
                   ) === 12
@@ -120,30 +119,30 @@ function SeminarDetail({
                         moment(seminar.duration, 'hh:mm:ss').format(`mm`)
                       ) + ' minutes'
                     : parseInt(
-
-                      moment(seminar.duration, 'hh:mm:ss').format(`hh`)
-                    ) *
-                    60 +
-                    parseInt(
-                      moment(seminar.duration, 'hh:mm:ss').format(`mm`)
-                    ) +
-                    ' minutes')} */}
-                {/* {!seminar.duration &&  */}
-                {'To be announced ...'}
-
+                        moment(seminar.duration, 'hh:mm:ss').format(`hh`)
+                      ) *
+                        60 +
+                      parseInt(
+                        moment(seminar.duration, 'hh:mm:ss').format(`mm`)
+                      ) +
+                      ' minutes')}
+                {!seminar.duration && 'To be announced ...'}
               </div>
               <div className="seminar-details">
                 <i className="fa fa-calendar">&nbsp;</i>
-                {/* {seminar.start_time &&
+                {seminar.start_time &&
                   moment(seminar.start_time, 'YYYY-MM-DD hh:mm:ss').format(
                     'dddd, MMMM Do, hh:mm a'
-                  )} */}
-                {/* {!seminar.start_time &&  */}
-                {'To be announced ...'}
+                  )}
+                {!seminar.start_time && 'To be announced ...'}
               </div>
               <div className="seminar-details mt-3">
                 {isLoggedIn && (
-                  <GoToButton type="seminars" id={seminar.id} />
+                  <GoToButton
+                    type="seminars"
+                    id={seminar.id}
+                    room_name={seminar.room_name}
+                  />
                 )}
               </div>
             </div>

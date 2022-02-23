@@ -119,16 +119,20 @@ export const cancelWorkshopRegistration =
     dispatch(getRegisteredWorkshops(series));
   };
 
-export const getRedirectURL = (series: string, type, id) => ({
+export const getRedirectURL = (series: string, type, id, room_name) => ({
   [CALL_API]: {
     types: [
       actionTypes.GET_REDIRECT_URL_REQUEST,
       actionTypes.GET_REDIRECT_URL_SUCCESS,
       actionTypes.GET_REDIRECT_URL_FAILURE,
     ],
-    url: `${URLs.ROOT}${series}/${type}/${id}/open_webinar/`,
+    url: URLs.ROOM,
     fetchOptions: {
-      method: 'GET',
+      method: 'POST',
+      body: {
+        year: series,
+        room_name: 'room1',
+      },
     },
   },
 });
