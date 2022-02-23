@@ -138,7 +138,7 @@ class EventViewSet(BaseViewSet, ABC):
 
         if not self.user_is_participant(request.user, wss, pk):
             return ErrorResponse({
-                "message": "You have not access to this webinar"
+                "message": "You do not have access to this webinar"
             }, status_code=403)
 
         if not event.is_available:
