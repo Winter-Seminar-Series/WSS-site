@@ -13,6 +13,8 @@ year_router.register(r'workshops', views.WorkshopViewSet, basename='workshop')
 year_router.register(
     r'workshops', views.WorkshopRegistrationViewSet, basename='workshop')
 year_router.register(r'labtalks', views.LabTalkViewSet, basename='labtalk')
+year_router.register(r'roundtables', views.RoundTableViewSet,
+                     basename='roundtable')
 year_router.register(r'seminars', views.SeminarViewSet, basename='seminar')
 year_router.register(
     r'postersessions', views.PosterSessionViewSet, basename='postersession')

@@ -257,6 +257,13 @@ class WorkshopRegistrationViewSet(viewsets.ViewSet):
         })
 
 
+class RoundTableViewSet(EventViewSet):
+    serializer = serializers.RoundTableSerializer
+
+    def queryset_selector(self, request, wss):
+        return wss.roundtables
+
+
 class LabTalkViewSet(EventViewSet):
     serializer = serializers.LabTalkSerializer
 
