@@ -14,6 +14,7 @@ services:
       - SENTRY_TOKEN
       - DROPBOX_AUTH_TOKEN
       - WSS_EMAIL_PASSWORD
+      - SKYROOM_API_ENDPOINT
     networks:
       wss_net:
     volumes:
