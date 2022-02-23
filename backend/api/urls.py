@@ -3,7 +3,7 @@ from api import views
 from rest_framework.routers import DefaultRouter
 from django.conf.urls import url, include
 
-from api.views import RegisterAPI, LoginAPI, ChangePasswordView
+from api.views import RegisterAPI, LoginAPI, ChangePasswordView, RoomAPI
 from knox import views as knox_views
 
 
@@ -52,6 +52,7 @@ base_urlpatterns = base_router.urls
 
 urlpatterns = [
     url(r'', include(base_urlpatterns)),
+    path('room/', RoomAPI.as_view(), name='room'),
     path('register/', RegisterAPI.as_view(), name='register'),
     path('login/', LoginAPI.as_view(), name='login'),
     path('logout/', knox_views.LogoutView.as_view(), name='logout'),

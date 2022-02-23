@@ -81,6 +81,7 @@ class Seminar(BaseEvent):
         to='people.Speaker', related_name='seminars', on_delete=models.RESTRICT)
     material = models.OneToOneField(
         to='SeminarMaterial', null=True, blank=True, on_delete=models.SET_NULL)
+    room = models.CharField(blank=True, max_length=256, null=True)
 
 
 class PosterSession(BaseEvent):
