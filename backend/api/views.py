@@ -346,7 +346,7 @@ class RoomAPI(generics.GenericAPIView):
             })
         room_url = room_data.get('result')
 
-        return JsonResponse({"url": room_url})
+        return JsonResponse({"redirect_url": room_url})
 
 
 class PosterSessionViewSet(EventViewSet):
