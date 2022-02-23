@@ -5,6 +5,7 @@ from django.urls import reverse
 from polymorphic.models import PolymorphicModel
 from taggit.managers import TaggableManager
 import datetime
+from people.models import Speaker
 
 
 class WssTag(models.Model):
@@ -27,6 +28,7 @@ class BaseEvent(PolymorphicModel):  # Is implicitly Abstract
     link = models.URLField(blank=True, null=True, max_length=256)
     tags = models.ManyToManyField(WssTag, blank=True)
     calender_link = models.URLField(blank=True, null=True, max_length=512)
+    poster_picture = models.CharField(max_length=200, null=True, blank=True)
 
     class Meta:
         ordering = ('start_time',)
@@ -58,6 +60,18 @@ class Venue(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class RoundTable(BaseEvent):
+    subject = models.CharField(blank=True, max_length=256)
+    speakers = models.ManyToManyField(Speaker)
+
+
+class LabTalk(BaseEvent):
+    head = models.ForeignKey(
+        to='people.Speaker', related_name='labtalks', on_delete=models.RESTRICT)
+    field = models.CharField(blank=True, max_length=256)
+    website_link = models.URLField(blank=True, null=True, max_length=256)
 
 
 class Seminar(BaseEvent):
