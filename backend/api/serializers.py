@@ -77,6 +77,12 @@ class WorkshopSerializer(EventSerializer):
         return workshop.remaining_capacity
 
 
+class RoundTableSerializer(EventSerializer):
+    class Meta:
+        model = RoundTable
+        fields = '__all__'
+
+
 class LabTalkSerializer(EventSerializer):
     class Meta:
         model = LabTalk
