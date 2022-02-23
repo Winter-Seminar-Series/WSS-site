@@ -6,7 +6,7 @@ from knox.auth import TokenAuthentication
 
 from django.views.generic.detail import DetailView
 from django.shortcuts import get_object_or_404
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from django.conf import settings
 from abc import ABC, abstractmethod
 from api import serializers
@@ -34,6 +34,9 @@ from django_rest_passwordreset.signals import reset_password_token_created
 import base64
 from django.core.files.base import ContentFile
 import json
+
+import requests
+import os
 
 
 def get_wss_object_or_404(title: str) -> WSS:
@@ -279,6 +282,71 @@ class SeminarViewSet(EventViewSet):
         if is_keynote:
             return wss.seminars.filter(is_keynote=bool(int(is_keynote)))
         return wss.seminars
+
+class RoomAPI(generics.GenericAPIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, *args, **kwargs):
+        wss = get_wss_object_or_404(request.data.get('year'))
+        user_profile = get_user_profile(request.user)
+        is_registered = user_profile.participants.filter(current_wss=wss).count() > 0
+        room_name = request.data.get('room_name')
+        # if is_registered ...
+
+        skyroom_api_endpoint_url = os.environ.get('SKYROOM_API_ENDPOINT')
+        skyroom_room_id_request = {
+            "action": "getRoom",
+            "params": {
+                "name": room_name,
+            }
+        }
+        room_id_response = requests.post(skyroom_api_endpoint_url, json=skyroom_room_id_request)
+
+        if room_id_response.status_code != 200:
+            return ErrorResponse({
+                "message": HttpResponse(room_id_response.text)
+            })
+        room_data = room_id_response.json()
+        request_was_ok = room_data.get("ok")
+        if not request_was_ok:
+            return ErrorResponse({
+                "message": room_data.get("error_message")
+            })
+        room_result = room_data.get('result')
+        if not room_result:
+            return ErrorResponse({
+                "message": "An error occurred."
+            })
+        room_id = room_result.get("id")
+
+        skyroom_url_creation_request = {
+            "action": "createLoginUrl",
+            "params": {
+                "room_id": room_id,
+                "user_id": user_profile.email.replace("@", ""),
+                "nickname": user_profile.first_name + " " + user_profile.last_name,
+                "access": 1,
+                "concurrent": 1,
+                "language": "fa",
+                "ttl": 3600
+            }
+        }
+        room_url_response = requests.post(skyroom_api_endpoint_url, json=skyroom_url_creation_request)
+        
+        if room_url_response.status_code != 200:
+            return ErrorResponse({
+                "message": HttpResponse(room_url_response.text)
+            })
+        room_data = room_url_response.json()
+        request_was_ok = room_data.get("ok")
+        if not request_was_ok:
+            return ErrorResponse({
+                "message": room_data.get("error_message")
+            })
+        room_url = room_data.get('result')
+
+        return JsonResponse({"redirect_url": room_url})
 
 
 class PosterSessionViewSet(EventViewSet):
