@@ -325,7 +325,7 @@ class RoomAPI(generics.GenericAPIView):
             "params": {
                 "room_id": room_id,
                 "user_id": user_profile.email.replace("@", ""),
-                "nickname": user_profile.first_name + user_profile.last_name,
+                "nickname": user_profile.first_name + " " + user_profile.last_name,
                 "access": 1,
                 "concurrent": 1,
                 "language": "fa",
