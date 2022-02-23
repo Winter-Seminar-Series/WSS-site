@@ -17,6 +17,7 @@ import Workshops from './views/Workshops';
 import Schedule from './views/Schedule';
 import ForgotPassword from './views/ForgotPassword';
 import ResetPassword from './views/ResetPassword';
+import Sponsor from './views/Sponsor';
 
 function App() {
   return (
@@ -38,6 +39,7 @@ function App() {
         />
         <Route path="/password-reset" component={ForgotPassword} />
         <PrivateRoute path="/dashboard" component={Dashboard} />
+        <Route path="/sponsor" component={Sponsor} />
         <Route path="/" component={Home} />
       </Switch>
       <Footer />
