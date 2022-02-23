@@ -131,7 +131,7 @@ export const getRedirectURL = (series: string, type, id, room_name) => ({
       method: 'POST',
       body: {
         year: series,
-        room_name: 'room1',
+        room_name,
       },
     },
   },
