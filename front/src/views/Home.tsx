@@ -322,6 +322,12 @@ function Home({
                 Computer Engineering Department of Sharif University of
                 Technology
               </p>
+              <div style={{ display: "flex", flexDirection: "row", alignItems: "center", flexWrap: "wrap" }}>
+                <h5 className="section-sub-title text-white mb-3 mt-5">
+                  Sponsored by
+                </h5>
+                <img src="/images/Tapsell_logo_png.png" alt="Image not found!" className='ml-4' style={{ maxWidth: 150, width: '100%' }} />
+              </div>
             </div>
           </div>
         </div>
