@@ -5,6 +5,7 @@ from django.urls import reverse
 from polymorphic.models import PolymorphicModel
 from taggit.managers import TaggableManager
 import datetime
+from people.models import Speaker
 
 
 class WssTag(models.Model):
@@ -61,6 +62,11 @@ class Venue(models.Model):
         return self.name
 
 
+class RoundTable(BaseEvent):
+    subject = models.CharField(blank=True, max_length=256)
+    speakers = models.ManyToManyField(Speaker)
+
+
 class LabTalk(BaseEvent):
     head = models.ForeignKey(
         to='people.Speaker', related_name='labtalks', on_delete=models.RESTRICT)
@@ -75,6 +81,7 @@ class Seminar(BaseEvent):
         to='people.Speaker', related_name='seminars', on_delete=models.RESTRICT)
     material = models.OneToOneField(
         to='SeminarMaterial', null=True, blank=True, on_delete=models.SET_NULL)
+    room = models.CharField(blank=True, max_length=256, null=True)
 
 
 class PosterSession(BaseEvent):

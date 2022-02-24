@@ -26,6 +26,7 @@ function SeminarDetail({
     audience: '',
     speaker: '',
     tags: [],
+    room: '',
   });
   const [speaker, setSpeaker] = useState({
     picture: '',
@@ -110,7 +111,7 @@ function SeminarDetail({
 
               <div className="seminar-details">
                 <i className="fa fa-clock-o">&nbsp;</i>
-                {/* {seminar.duration &&
+                {seminar.duration &&
                   (parseInt(
                     moment(seminar.duration, 'hh:mm:ss').format(`hh`)
                   ) === 12
@@ -118,28 +119,31 @@ function SeminarDetail({
                         moment(seminar.duration, 'hh:mm:ss').format(`mm`)
                       ) + ' minutes'
                     : parseInt(
-
-                      moment(seminar.duration, 'hh:mm:ss').format(`hh`)
-                    ) *
-                    60 +
-                    parseInt(
-                      moment(seminar.duration, 'hh:mm:ss').format(`mm`)
-                    ) +
-                    ' minutes')} */}
-                {/* {!seminar.duration &&  */}
-                {'To be announced ...'}
+                        moment(seminar.duration, 'hh:mm:ss').format(`hh`)
+                      ) *
+                        60 +
+                      parseInt(
+                        moment(seminar.duration, 'hh:mm:ss').format(`mm`)
+                      ) +
+                      ' minutes')}
+                {!seminar.duration && 'To be announced ...'}
               </div>
               <div className="seminar-details">
                 <i className="fa fa-calendar">&nbsp;</i>
-                {/* {seminar.start_time &&
+                {seminar.start_time &&
                   moment(seminar.start_time, 'YYYY-MM-DD hh:mm:ss').format(
                     'dddd, MMMM Do, hh:mm a'
-                  )} */}
-                {/* {!seminar.start_time &&  */}
-                {'To be announced ...'}
+                  )}
+                {!seminar.start_time && 'To be announced ...'}
               </div>
               <div className="seminar-details mt-3">
-                {isLoggedIn && <GoToButton type="seminars" id={seminar.id} />}
+                {isLoggedIn && (
+                  <GoToButton
+                    type="seminars"
+                    id={seminar.id}
+                    room_name={seminar.room}
+                  />
+                )}
               </div>
             </div>
           </div>
