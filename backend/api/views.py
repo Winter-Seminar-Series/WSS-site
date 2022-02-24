@@ -283,6 +283,7 @@ class SeminarViewSet(EventViewSet):
             return wss.seminars.filter(is_keynote=bool(int(is_keynote)))
         return wss.seminars
 
+
 class RoomAPI(generics.GenericAPIView):
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
@@ -290,14 +291,15 @@ class RoomAPI(generics.GenericAPIView):
     def post(self, request, *args, **kwargs):
         wss = get_wss_object_or_404(request.data.get('year'))
         user_profile = get_user_profile(request.user)
-        is_registered = user_profile.participants.filter(current_wss=wss).count() > 0
+        is_registered = user_profile.participants.filter(
+            current_wss=wss).count() > 0
         room_name = request.data.get('room_name')
 
         if not EventViewSet.user_is_participant(request.user, wss, 0):
             return ErrorResponse({
                 "message": "You do not have access to this webinar"
             }, status_code=403)
-        
+
         skyroom_api_endpoint_url = os.environ.get('SKYROOM_API_ENDPOINT')
         skyroom_room_id_request = {
             "action": "getRoom",
@@ -305,7 +307,8 @@ class RoomAPI(generics.GenericAPIView):
                 "name": room_name,
             }
         }
-        room_id_response = requests.post(skyroom_api_endpoint_url, json=skyroom_room_id_request)
+        room_id_response = requests.post(
+            skyroom_api_endpoint_url, json=skyroom_room_id_request)
 
         if room_id_response.status_code != 200:
             return ErrorResponse({
@@ -336,8 +339,9 @@ class RoomAPI(generics.GenericAPIView):
                 "ttl": 3600
             }
         }
-        room_url_response = requests.post(skyroom_api_endpoint_url, json=skyroom_url_creation_request)
-        
+        room_url_response = requests.post(
+            skyroom_api_endpoint_url, json=skyroom_url_creation_request)
+
         if room_url_response.status_code != 200:
             return ErrorResponse({
                 "message": "An error occurred."
@@ -413,6 +417,7 @@ class SpeakerViewSet(BaseViewSet):
                                       .union(wss.workshops.values_list('speaker', flat=True))
                                       .union(wss.labtalks.values_list('head', flat=True))
                                       .union(wss.postersessions.values_list('speaker', flat=True))
+                                      .union(wss.roundtables.values_list('speakers', flat=True))
                                       .distinct())
 
 

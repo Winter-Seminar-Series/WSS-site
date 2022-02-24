@@ -29,6 +29,7 @@ const initState = {
   speakers: [],
   speakers_count: 0,
   labtalks: [],
+  roundtables: [],
   postersessions: [],
   postersessions_count: 0,
   poster_materials: [],

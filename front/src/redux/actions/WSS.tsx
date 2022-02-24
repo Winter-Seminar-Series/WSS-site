@@ -21,6 +21,7 @@ export const MODEL_LISTS_NAMES = {
   SPEAKERS: 'speakers',
   SEMINARS: 'seminars',
   LAB_TALKS: 'labtalks',
+  ROUND_TABLES: 'roundtables',
   POSTERSESSIONS: 'postersessions',
   ANNOUNCEMENT: 'announcements',
   VENUES: 'venues',
