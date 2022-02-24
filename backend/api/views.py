@@ -292,8 +292,12 @@ class RoomAPI(generics.GenericAPIView):
         user_profile = get_user_profile(request.user)
         is_registered = user_profile.participants.filter(current_wss=wss).count() > 0
         room_name = request.data.get('room_name')
-        # if is_registered ...
 
+        if not EventViewSet.user_is_participant(request.user, wss, 0):
+            return ErrorResponse({
+                "message": "You do not have access to this webinar"
+            }, status_code=403)
+        
         skyroom_api_endpoint_url = os.environ.get('SKYROOM_API_ENDPOINT')
         skyroom_room_id_request = {
             "action": "getRoom",
@@ -305,13 +309,13 @@ class RoomAPI(generics.GenericAPIView):
 
         if room_id_response.status_code != 200:
             return ErrorResponse({
-                "message": HttpResponse(room_id_response.text)
+                "message": "An error occurred."
             })
         room_data = room_id_response.json()
         request_was_ok = room_data.get("ok")
         if not request_was_ok:
             return ErrorResponse({
-                "message": room_data.get("error_message")
+                "message": "An error occurred."
             })
         room_result = room_data.get('result')
         if not room_result:
@@ -336,13 +340,13 @@ class RoomAPI(generics.GenericAPIView):
         
         if room_url_response.status_code != 200:
             return ErrorResponse({
-                "message": HttpResponse(room_url_response.text)
+                "message": "An error occurred."
             })
         room_data = room_url_response.json()
         request_was_ok = room_data.get("ok")
         if not request_was_ok:
             return ErrorResponse({
-                "message": room_data.get("error_message")
+                "message": "An error occurred."
             })
         room_url = room_data.get('result')
 
