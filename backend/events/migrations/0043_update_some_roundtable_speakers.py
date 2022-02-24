@@ -9,12 +9,12 @@ def forwards(apps, schema_editor):
 
     wss = WSS.objects.get(year=2021)
 
-    rt = RoundTable.objects.filter(
+    rt = RoundTable.objects.get(
         wss=wss, subject='Ph.D. student\'s life - Academic life')
     rt.speakers.remove(Speaker.objects.filter(name='Amir Moradi').last())
     rt.save()
 
-    rt = RoundTable.objects.filter(
+    rt = RoundTable.objects.get(
         wss=wss, subject='Which one is for me? Masters or Ph.D.')
     rt.speakers.add(Speaker.objects.filter(name='Arash Pourdamghani').last())
     rt.save()
@@ -27,12 +27,12 @@ def rollback(apps, schema_editor):
 
     wss = WSS.objects.get(year=2021)
 
-    rt = RoundTable.objects.filter(
+    rt = RoundTable.objects.get(
         wss=wss, subject='Ph.D. student\'s life - Academic life')
     rt.speakers.add(Speaker.objects.filter(name='Amir Moradi').last())
     rt.save()
 
-    rt = RoundTable.objects.filter(
+    rt = RoundTable.objects.get(
         wss=wss, subject='Which one is for me? Masters or Ph.D.')
     rt.speakers.remove(Speaker.objects.filter(
         name='Arash Pourdamghani').last())
