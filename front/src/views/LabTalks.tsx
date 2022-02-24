@@ -40,7 +40,7 @@ const LabTalks = ({
                       className="col-xs-10 col-sm-6 col-lg-3 mt-2 mb-4">
                       <PublicCard
                         id={labtalks[index].head}
-                        presentationLink={'/labtalks/' + labtalks[index].id}
+                        presentationLink={'/labtalk/' + labtalks[index].id}
                       />
                     </div>
                   ))

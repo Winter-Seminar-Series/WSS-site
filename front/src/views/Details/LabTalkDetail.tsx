@@ -8,6 +8,7 @@ import {
 } from '../../redux/actions/WSS';
 import GoToButton from '../../components/GoToButton';
 import FavoriteButton from '../../components/FavoriteButton';
+import moment from "moment";
 
 function LabTalkDetail({
   thisSeries,
@@ -111,33 +112,33 @@ function LabTalkDetail({
               <div className="seminar-details">
                 {/*TODO new classes for lab talks*/}
                 <i className="fa fa-clock-o">&nbsp;</i>
-                {/* {seminar.duration &&
+                {labTalk.duration &&
                   (parseInt(
-                    moment(seminar.duration, 'hh:mm:ss').format(`hh`)
+                    moment(labTalk.duration, 'hh:mm:ss').format(`hh`)
                   ) === 12
                     ? parseInt(
-                        moment(seminar.duration, 'hh:mm:ss').format(`mm`)
+                        moment(labTalk.duration, 'hh:mm:ss').format(`mm`)
                       ) + ' minutes'
                     : parseInt(
 
-                      moment(seminar.duration, 'hh:mm:ss').format(`hh`)
+                      moment(labTalk.duration, 'hh:mm:ss').format(`hh`)
                     ) *
                     60 +
                     parseInt(
-                      moment(seminar.duration, 'hh:mm:ss').format(`mm`)
+                      moment(labTalk.duration, 'hh:mm:ss').format(`mm`)
                     ) +
-                    ' minutes')} */}
+                    ' minutes')}
                 {/* {!seminar.duration &&  */}
-                {'To be announced ...'}
+                {/*{'To be announced ...'}*/}
               </div>
               <div className="seminar-details">
                 <i className="fa fa-calendar">&nbsp;</i>
-                {/* {seminar.start_time &&
-                  moment(seminar.start_time, 'YYYY-MM-DD hh:mm:ss').format(
+                {labTalk.start_time &&
+                  moment(labTalk.start_time, 'YYYY-MM-DD hh:mm:ss').format(
                     'dddd, MMMM Do, hh:mm a'
-                  )} */}
+                  )}
                 {/* {!seminar.start_time &&  */}
-                {'To be announced ...'}
+                {/*{'To be announced ...'}*/}
               </div>
               <div className="seminar-details mt-3">
                 {isLoggedIn && <GoToButton type="labtalks" id={labTalk.id} />}
