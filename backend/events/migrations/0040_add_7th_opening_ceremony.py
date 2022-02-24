@@ -20,7 +20,7 @@ def forwards(apps, schema_editor):
         audience='',
         speaker=Speaker.objects.filter(name='Opening Ceremony').last(),
         abstract='''''',
-        start_time=date + timedelta(hours=14),
+        start_time=date + timedelta(hours=14, minutes=30),
         duration=timedelta(minutes=30),
         room='room1'
     )
