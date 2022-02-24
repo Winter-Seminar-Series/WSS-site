@@ -7,6 +7,7 @@ import Dashboard from './views/Dashboard/Dashboard';
 import SeminarDetail from './views/Details/SeminarDetail';
 import LabTalkDetail from './views/Details/LabTalkDetail';
 import RoundTableDetail from "./views/Details/RoundTableDetail";
+import LabTalkDetail from './views/Details/LabTalkDetail';
 import WorkshopDetail from './views/Details/WorkshopDetail';
 import Home from './views/Home';
 import Footer from './views/Layout/footer';
@@ -29,8 +30,8 @@ function App() {
       <Header />
       <Switch>
         <Route path="/seminar/:id" component={SeminarDetail} />
-        <Route path="/labtalk/:id" component={LabTalkDetail} />
         <Route path="/roundtable/:id" component={RoundTableDetail} />
+        <Route path="/labtalk/:id" component={LabTalkDetail} />
         <Route path="/workshop/:id" component={WorkshopDetail} />
         <Route path="/about" component={About} />
         <Route path="/workshops" component={Workshops} />

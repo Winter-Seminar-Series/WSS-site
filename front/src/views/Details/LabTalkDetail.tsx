@@ -79,7 +79,7 @@ function LabTalkDetail({
                   backgroundColor: 'rgba(0,0,0,.1)',
                   borderRadius: '5px',
                 }}>
-                {head.picture && (
+                {labTalk.poster_picture && (
                   <img
                     style={{
                       borderRadius: '5px',
@@ -103,6 +103,7 @@ function LabTalkDetail({
                     id={labTalk.id}
                   />
                 )}
+
                 <h2 className="ml-3">{head.name}</h2>
               </div>
 

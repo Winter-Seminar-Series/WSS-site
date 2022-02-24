@@ -411,6 +411,7 @@ class SpeakerViewSet(BaseViewSet):
     def queryset_selector(self, request, wss):
         return Speaker.objects.filter(id__in=wss.seminars.values_list('speaker', flat=True)
                                       .union(wss.workshops.values_list('speaker', flat=True))
+                                      .union(wss.labtalks.values_list('head', flat=True))
                                       .union(wss.postersessions.values_list('speaker', flat=True))
                                       .distinct())
 
