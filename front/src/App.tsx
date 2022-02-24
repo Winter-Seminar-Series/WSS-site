@@ -5,7 +5,6 @@ import './styles/style.scss';
 import About from './views/About';
 import Dashboard from './views/Dashboard/Dashboard';
 import SeminarDetail from './views/Details/SeminarDetail';
-import LabTalkDetail from './views/Details/LabTalkDetail';
 import RoundTableDetail from "./views/Details/RoundTableDetail";
 import LabTalkDetail from './views/Details/LabTalkDetail';
 import WorkshopDetail from './views/Details/WorkshopDetail';
