@@ -5,6 +5,7 @@ import './styles/style.scss';
 import About from './views/About';
 import Dashboard from './views/Dashboard/Dashboard';
 import SeminarDetail from './views/Details/SeminarDetail';
+import LabTalkDetail from './views/Details/LabTalkDetail';
 import WorkshopDetail from './views/Details/WorkshopDetail';
 import Home from './views/Home';
 import Footer from './views/Layout/footer';
@@ -12,6 +13,7 @@ import Header from './views/Layout/header';
 import Login from './views/Login';
 import CreateAccount from './views/CreateAccount';
 import Seminars from './views/Seminars';
+import LabTalks from './views/LabTalks';
 import Staff from './views/Staff';
 import Workshops from './views/Workshops';
 import Schedule from './views/Schedule';
@@ -25,10 +27,12 @@ function App() {
       <Header />
       <Switch>
         <Route path="/seminar/:id" component={SeminarDetail} />
+        <Route path="/labtalk/:id" component={LabTalkDetail} />
         <Route path="/workshop/:id" component={WorkshopDetail} />
         <Route path="/about" component={About} />
         <Route path="/workshops" component={Workshops} />
         <Route path="/seminars" component={Seminars} />
+        <Route path="/labtalks" component={LabTalks} />
         <Route path="/schedule" component={Schedule} />
         <Route path="/staff" component={Staff} />
         <Route path="/create-account" component={CreateAccount} />
