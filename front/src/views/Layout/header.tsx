@@ -55,10 +55,12 @@ const Header = ({ isLoggedIn, thisSeries, doSetThisSeries }) => {
       ],
     },
     { title: 'About Us', persianTitle: 'درباره ما', link: '/about' },
-    // { title: 'Speakers', persianTitle: 'سمینارها', link: '/seminars' },
+    { title: 'Sponsor', persianTitle: 'اسپانسر', link: '/sponsor' },
     { title: 'Seminars', persianTitle: 'سمینارها', link: '/seminars' },
     { title: 'Lab Talks', persianTitle: 'ارائه آزمایشگاه', link: '/labtalks' },
-    { title: 'Opening Ceremony', persianTitle: 'افتتاحیه', link: '/seminar/114' },
+    { title: 'Round Tables', persianTitle: 'میزگردها', link: '/roundtables' },
+    // { title: 'Speakers', persianTitle: 'سمینارها', link: '/seminars' },
+    // { title: 'Opening Ceremony', persianTitle: 'افتتاحیه', link: '/seminar/114' },
     // { title: 'Workshops', persianTitle: 'کارگاه‌ها', link: '/workshops' },
     // { title: 'PosterSession', persianTitle: 'پوسترسشن', link: '/postersessions' },
     // { title: 'Schedule', persianTitle: 'برنامه زمانی', link: '/schedule' },
@@ -84,7 +86,6 @@ const Header = ({ isLoggedIn, thisSeries, doSetThisSeries }) => {
       style: 'active',
       loggedIn: 'authorized',
     },
-    { title: 'Sponsor', persianTitle: 'اسپانسر', link: '/sponsor' },
   ];
   return (
     <header id="header">
