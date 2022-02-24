@@ -55,7 +55,7 @@ const Header = ({ isLoggedIn, thisSeries, doSetThisSeries }) => {
       ],
     },
     { title: 'About Us', persianTitle: 'درباره ما', link: '/about' },
-    { title: 'Speakers', persianTitle: 'سمینارها', link: '/seminars' },
+    // { title: 'Speakers', persianTitle: 'سمینارها', link: '/seminars' },
     { title: 'Sponsor', persianTitle: 'اسپانسر', link: '/sponsor' },
     { title: 'Seminars', persianTitle: 'سمینارها', link: '/seminars' },
     { title: 'Lab Talks', persianTitle: 'ارائه آزمایشگاه', link: '/labtalks' },
