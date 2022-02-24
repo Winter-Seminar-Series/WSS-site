@@ -88,7 +88,7 @@ function LabTalkDetail({
                       top: '0',
                       position: 'absolute',
                     }}
-                    src={`${BASE_URL}/${head.picture}`}
+                    src={`${BASE_URL}/${labTalk.poster_picture}`}
                     alt=""
                   />
                 )}
@@ -141,7 +141,13 @@ function LabTalkDetail({
                 {/*{'To be announced ...'}*/}
               </div>
               <div className="seminar-details mt-3">
-                {isLoggedIn && <GoToButton type="labtalks" id={labTalk.id} />}
+                {isLoggedIn && (
+                  <GoToButton
+                    type="labtalks"
+                    id={labTalk.id}
+                    room_name={"labtalk"}
+                  />
+                )}
               </div>
             </div>
           </div>
