@@ -26,7 +26,7 @@ function SeminarDetail({
     audience: '',
     speaker: '',
     tags: [],
-    room_name: '',
+    room: '',
   });
   const [speaker, setSpeaker] = useState({
     picture: '',
@@ -141,7 +141,7 @@ function SeminarDetail({
                   <GoToButton
                     type="seminars"
                     id={seminar.id}
-                    room_name={seminar.room_name}
+                    room_name={seminar.room}
                   />
                 )}
               </div>
