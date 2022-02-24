@@ -11,7 +11,7 @@ def forwards(apps, schema_editor):
     wss = WSS.objects.get(year=2021)
 
     date = datetime(2022, 2, 24)
-    RoundTable.objects.get(wss=wss, subject='Ph.D. student\'s life - Academic life')\
+    RoundTable.objects.filter(wss=wss, subject='Ph.D. student\'s life - Academic life')\
         .update(start_time=date + timedelta(hours=21, minutes=30), duration=timedelta(minutes=90))
 
     date = datetime(2022, 2, 25)
@@ -19,10 +19,12 @@ def forwards(apps, schema_editor):
         .update(start_time=date + timedelta(hours=21, minutes=30), duration=timedelta(minutes=90))
 
     date = datetime(2022, 2, 26)
-    rt = RoundTable.objects.filter(
+    RoundTable.objects.filter(
+        wss=wss, subject='Which one is for me? Masters or Ph.D.')\
+        .update(start_time=date + timedelta(hours=21, minutes=30),
+                duration=timedelta(minutes=90))
+    rt = RoundTable.objects.get(
         wss=wss, subject='Which one is for me? Masters or Ph.D.')
-    rt.update(start_time=date + timedelta(hours=21, minutes=30),
-              duration=timedelta(minutes=90))
     rt.speakers.remove(Speaker.objects.filter(name='Soheil Abbaslooa').last())
     rt.speakers.add(Speaker.objects.filter(name='Soheil Abbasloo').last())
     rt.save()
@@ -48,9 +50,11 @@ def rollback(apps, schema_editor):
 
     date = datetime(2022, 2, 26)
     rt = RoundTable.objects.filter(
+        wss=wss, subject='Which one is for me? Masters or Ph.D.')\
+        .update(start_time=date + timedelta(hours=10),
+                duration=timedelta(minutes=45))
+    rt = RoundTable.objects.get(
         wss=wss, subject='Which one is for me? Masters or Ph.D.')
-    rt.update(start_time=date + timedelta(hours=10),
-              duration=timedelta(minutes=45))
     rt.speakers.remove(Speaker.objects.filter(name='Soheil Abbasloo').last())
     rt.speakers.add(Speaker.objects.filter(name='Soheil Abbaslooa').last())
     rt.save()
