@@ -59,6 +59,7 @@ const Header = ({ isLoggedIn, thisSeries, doSetThisSeries }) => {
     { title: 'Sponsor', persianTitle: 'اسپانسر', link: '/sponsor' },
     { title: 'Seminars', persianTitle: 'سمینارها', link: '/seminars' },
     { title: 'Lab Talks', persianTitle: 'ارائه آزمایشگاه', link: '/labtalks' },
+    { title: 'Round Tables', persianTitle: 'میزگردها', link: '/roundtables' },
     // { title: 'Workshops', persianTitle: 'کارگاه‌ها', link: '/workshops' },
     // { title: 'PosterSession', persianTitle: 'پوسترسشن', link: '/postersessions' },
     // { title: 'Schedule', persianTitle: 'برنامه زمانی', link: '/schedule' },

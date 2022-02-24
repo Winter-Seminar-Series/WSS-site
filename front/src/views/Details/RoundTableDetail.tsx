@@ -8,59 +8,69 @@ import {
 } from '../../redux/actions/WSS';
 import GoToButton from '../../components/GoToButton';
 import FavoriteButton from '../../components/FavoriteButton';
-import moment from "moment";
+import moment from 'moment';
 
-function LabTalkDetail({
+function RoundTableDetail({
   thisSeries,
   getAnEntityOfModelList,
-  labTalks,
-  speakers,
+  roundTables,
+  allSpeakers,
   isLoggedIn,
 }) {
-  const [labTalk, setLabTalk] = useState({
+  const [roundTable, setRoundTable] = useState({
     id: '',
-    title: '',
+    subject: '',
     duration: '',
     start_time: '',
     field: '',
     audience: '',
-    head: '',
+    speakers: [],
     tags: [],
-    website_link: '',
+    link: '',
     poster_picture: '',
   });
-  const [head, setHead] = useState({
-    picture: '',
-    degree: '',
-    place: '',
-    bio: '',
-    name: '',
-  });
+  const [speakers, setSpeakers] = useState([
+    {
+      picture: '',
+      degree: '',
+      place: '',
+      bio: '',
+      name: '',
+    },
+  ]);
   const id = useParams()['id'];
 
   useEffect(() => {
-    getAnEntityOfModelList(MODEL_LISTS_NAMES.LAB_TALKS, thisSeries, id);
+    getAnEntityOfModelList(MODEL_LISTS_NAMES.ROUND_TABLES, thisSeries, id);
   }, [getAnEntityOfModelList]);
 
   useEffect(() => {
-    const labTalk = labTalks.find((lt) => lt.id === +id);
-    if (labTalk) {
-      setLabTalk(labTalk);
-      getAnEntityOfModelList(
-        MODEL_LISTS_NAMES.SPEAKERS,
-        thisSeries,
-        labTalk.head
+    const roundTable = roundTables.find((lt) => lt.id === +id);
+    if (roundTable) {
+      setRoundTable(roundTable);
+      roundTable.speakers.map((s) =>
+        getAnEntityOfModelList(MODEL_LISTS_NAMES.SPEAKERS, thisSeries, s)
       );
+      // getAnEntityOfModelList(
+      //   MODEL_LISTS_NAMES.SPEAKERS,
+      //   thisSeries,
+      //   roundTable.head
+      // );
     }
-  }, [labTalks]);
+  }, [roundTables]);
 
   useEffect(() => {
-    const head = speakers.find((s) => s.id === labTalk.head);
+    let speakers = allSpeakers.filter((s) =>
+      roundTable.speakers.includes(s.id)
+    );
+    speakers = speakers.filter(function (item, pos, self) {
+      return self.indexOf(item) === pos;
+    });
 
-    if (head) {
-      setHead(head);
+    if (speakers) {
+      setSpeakers(speakers);
     }
-  }, [speakers]);
+  }, [allSpeakers]);
   return (
     <section id="main-container" className="main-container">
       <div
@@ -79,7 +89,7 @@ function LabTalkDetail({
                   backgroundColor: 'rgba(0,0,0,.1)',
                   borderRadius: '5px',
                 }}>
-                {head.picture && (
+                {roundTable.poster_picture && (
                   <img
                     style={{
                       borderRadius: '5px',
@@ -88,7 +98,7 @@ function LabTalkDetail({
                       top: '0',
                       position: 'absolute',
                     }}
-                    src={`${BASE_URL}/${labTalk.poster_picture}`}
+                    src={`${BASE_URL}/${roundTable.poster_picture}`}
                     alt=""
                   />
                 )}
@@ -96,44 +106,41 @@ function LabTalkDetail({
             </div>
             <div className="col mt-3">
               <div className="d-flex">
-                {labTalk && labTalk.id && isLoggedIn && (
+                {roundTable && roundTable.id && isLoggedIn && (
                   <FavoriteButton
                     series={thisSeries}
-                    type={'labTalk'}
-                    id={labTalk.id}
+                    type={'roundtable'}
+                    id={roundTable.id}
                   />
                 )}
-                <h2 className="ml-3">{head.name}</h2>
+                <h2 className="ml-3">{roundTable.subject}</h2>
               </div>
-
-              <h5>{`${head.degree}, ${head.place}`}</h5>
 
               <div className="seminar-details">
                 {/*TODO new classes for lab talks*/}
                 <i className="fa fa-clock-o">&nbsp;</i>
-                {labTalk.duration &&
+                {roundTable.duration &&
                   (parseInt(
-                    moment(labTalk.duration, 'hh:mm:ss').format(`hh`)
+                    moment(roundTable.duration, 'hh:mm:ss').format(`hh`)
                   ) === 12
                     ? parseInt(
-                        moment(labTalk.duration, 'hh:mm:ss').format(`mm`)
+                        moment(roundTable.duration, 'hh:mm:ss').format(`mm`)
                       ) + ' minutes'
                     : parseInt(
-
-                      moment(labTalk.duration, 'hh:mm:ss').format(`hh`)
-                    ) *
-                    60 +
-                    parseInt(
-                      moment(labTalk.duration, 'hh:mm:ss').format(`mm`)
-                    ) +
-                    ' minutes')}
+                        moment(roundTable.duration, 'hh:mm:ss').format(`hh`)
+                      ) *
+                        60 +
+                      parseInt(
+                        moment(roundTable.duration, 'hh:mm:ss').format(`mm`)
+                      ) +
+                      ' minutes')}
                 {/* {!seminar.duration &&  */}
                 {/*{'To be announced ...'}*/}
               </div>
               <div className="seminar-details">
                 <i className="fa fa-calendar">&nbsp;</i>
-                {labTalk.start_time &&
-                  moment(labTalk.start_time, 'YYYY-MM-DD hh:mm:ss').format(
+                {roundTable.start_time &&
+                  moment(roundTable.start_time, 'YYYY-MM-DD hh:mm:ss').format(
                     'dddd, MMMM Do, hh:mm a'
                   )}
                 {/* {!seminar.start_time &&  */}
@@ -142,39 +149,43 @@ function LabTalkDetail({
               <div className="seminar-details mt-3">
                 {isLoggedIn && (
                   <GoToButton
-                    type="labtalks"
-                    id={labTalk.id}
-                    room_name={"labtalk"}
+                    type="roundtables"
+                    id={roundTable.id}
+                    room_name={'rountable'}
+                    // room_name={'roundtable'}
                   />
                 )}
               </div>
             </div>
           </div>
-          <div className="mt-5">
-            <h3 className="session-title text-center">{labTalk.title}</h3>
-          </div>
           <div className="row mt-5 justify-content-center">
             <div className="col-xs-12 col-lg-8">
               <div className="ts-speaker-session right">
-                {labTalk.field && (
+                {roundTable.field && (
                   <>
-                    <h4>Lab Field</h4>
-
-                    <div className="mb-3">{labTalk.field}</div>
+                    <h4>Round Table Field</h4>
+                    <div className="mb-3">{roundTable.field}</div>
                   </>
                 )}
-                {labTalk.audience && (
+                {roundTable.audience && (
                   <>
                     <h4>Audience</h4>
-                    <div className="mb-3">{labTalk.audience}</div>
+                    <div className="mb-3">{roundTable.audience}</div>
                   </>
                 )}
-                {head.bio && (
+                <h2 className="mt-2 mb-5">Speakers</h2>
+                {speakers.map((s) => (
+                  <div className="mb-4">
+                    <h3 className="ml-3">{s.name}</h3>
+                    <h5>{`${s.degree}, ${s.place}`}</h5>
+                  </div>
+                ))}
+                {/*head.bio && (
                   <>
                     <h4>Bio</h4>
                     <span>{head.bio}</span>
                   </>
-                )}
+                )*/}
               </div>
             </div>
           </div>
@@ -187,13 +198,12 @@ function LabTalkDetail({
 const mapStateToProps = (state, ownProps) => {
   return {
     thisSeries: state.account.thisSeries,
-    isFetching: state.WSS.isFetching,
     isLoggedIn: state.account.isLoggedIn,
-    speakers: state.WSS.speakers,
-    labTalks: state.WSS.labtalks,
+    allSpeakers: state.WSS.speakers,
+    roundTables: state.WSS.roundtables,
   };
 };
 
 export default connect(mapStateToProps, {
   getAnEntityOfModelList,
-})(LabTalkDetail);
+})(RoundTableDetail);
