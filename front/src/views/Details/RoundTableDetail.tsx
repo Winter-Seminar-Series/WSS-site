@@ -124,16 +124,16 @@ function RoundTableDetail({
                     moment(roundTable.duration, 'hh:mm:ss').format(`hh`)
                   ) === 12
                     ? parseInt(
-                        moment(roundTable.duration, 'hh:mm:ss').format(`mm`)
-                      ) + ' minutes'
+                      moment(roundTable.duration, 'hh:mm:ss').format(`mm`)
+                    ) + ' minutes'
                     : parseInt(
-                        moment(roundTable.duration, 'hh:mm:ss').format(`hh`)
-                      ) *
-                        60 +
-                      parseInt(
-                        moment(roundTable.duration, 'hh:mm:ss').format(`mm`)
-                      ) +
-                      ' minutes')}
+                      moment(roundTable.duration, 'hh:mm:ss').format(`hh`)
+                    ) *
+                    60 +
+                    parseInt(
+                      moment(roundTable.duration, 'hh:mm:ss').format(`mm`)
+                    ) +
+                    ' minutes')}
                 {/* {!seminar.duration &&  */}
                 {/*{'To be announced ...'}*/}
               </div>
@@ -152,7 +152,7 @@ function RoundTableDetail({
                     type="roundtables"
                     id={roundTable.id}
                     room_name={'rountable'}
-                    // room_name={'roundtable'}
+                  // room_name={'roundtable'}
                   />
                 )}
               </div>
@@ -173,7 +173,7 @@ function RoundTableDetail({
                     <div className="mb-3">{roundTable.audience}</div>
                   </>
                 )}
-                <h2 className="mt-2 mb-5">Speakers</h2>
+                <h2 className="mt-2 mb-5">Panelists</h2>
                 {speakers.map((s) => (
                   <div className="mb-4">
                     <h3 className="ml-3">{s.name}</h3>
