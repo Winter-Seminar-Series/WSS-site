@@ -85,9 +85,10 @@ function ScheduleCard({
                 <GoToButton
                   type="seminars"
                   id={seminar.id}
-                  room_name={seminar.room_name}
+                  room_name={seminar.room}
                 />
               )}
+              {console.log(seminar)}
             </div>
           </div>
 
