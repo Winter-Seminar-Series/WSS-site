@@ -12,7 +12,7 @@ def forwards(apps, schema_editor):
     Speakers.objects.get_or_create(
         name='Arash Pourdamghani',
         defaults={
-            'picture': 'media/7th/speakers/Amir-Moradi.jpg',
+            'picture': 'media/7th/speakers/Arash-Pourdamghani.jpg',
             'degree': 'Ph.D. Student',
             'place': 'Researcher, Intelligent Networks (INET), TU Berlin',
             'polymorphic_ctype': ctype,
