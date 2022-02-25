@@ -60,7 +60,7 @@ const Header = ({ isLoggedIn, thisSeries, doSetThisSeries }) => {
     { title: 'Lab Talks', persianTitle: 'ارائه آزمایشگاه', link: '/labtalks' },
     { title: 'Round Tables', persianTitle: 'میزگردها', link: '/roundtables' },
     // { title: 'Speakers', persianTitle: 'سمینارها', link: '/seminars' },
-    { title: 'Opening Ceremony', persianTitle: 'افتتاحیه', link: '/seminar/114' },
+    // { title: 'Opening Ceremony', persianTitle: 'افتتاحیه', link: '/seminar/114' },
     // { title: 'Workshops', persianTitle: 'کارگاه‌ها', link: '/workshops' },
     // { title: 'PosterSession', persianTitle: 'پوسترسشن', link: '/postersessions' },
     // { title: 'Schedule', persianTitle: 'برنامه زمانی', link: '/schedule' },
