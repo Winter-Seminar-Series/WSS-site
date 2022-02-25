@@ -154,7 +154,7 @@ function Schedule({
           </h2>
         </div>
 
-        {liveSeminars.length && speakers.length && (
+        {liveSeminars.length > 0 && speakers.length > 0 && (
           <>
             <div className="diagonal">
               <div className="container">
@@ -187,7 +187,7 @@ function Schedule({
           </>
         )}
 
-        <div className="diagonal">
+        <div className="diagonal pb-0">
           <div className="container">
             <div className="d-flex justify-content-center justify-content-md-between align-items-center flex-wrap my-5 py-5">
               <div>
