@@ -81,7 +81,13 @@ function ScheduleCard({
                 details
               </button>
 
-              {showJoin && <GoToButton type="seminars" id={seminar.id} />}
+              {showJoin && (
+                <GoToButton
+                  type="seminars"
+                  id={seminar.id}
+                  room_name={seminar.room_name}
+                />
+              )}
             </div>
           </div>
 
