@@ -17,6 +17,9 @@ function Registration({ isRegistered }) {
         <div className="seminar-register-form text-center">
           <h5 style={{ color: '#397a00' }}>
             Your registration has been approved successfully.
+            <br />
+            <br />
+            You can attend any events by going to the event page  and clicking join. (here is the list of events: <a href="/seminars">seminars</a>, <a href="/labtalks">labtalks</a>, <a href="/roundtables">roundtables</a>)
           </h5>
         </div>
       ) : (
