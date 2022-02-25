@@ -88,7 +88,6 @@ function ScheduleCard({
                   room_name={seminar.room}
                 />
               )}
-              {console.log(seminar)}
             </div>
           </div>
 
