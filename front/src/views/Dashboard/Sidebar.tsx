@@ -13,12 +13,18 @@ function Sidebar({ logout, isRegistered }) {
 
   const sidebarItems = [
     {
-      title: 'Coming Soon',
-      // title: 'Registration',
-      persianTitle: 'به زودی',
-      // persianTitle: 'ثبت‌نام رویداد',
-      link: 'JavaScript:Void(0);',
-      // link: '/dashboard/seminar-registration',
+      title: 'Attend Seminars',
+      persianTitle: 'شرکت در سمینارها',
+      link: '/schedule',
+      icon: 'sign-in',
+    },
+    {
+      // title: 'Coming Soon',
+      title: 'Registration',
+      // persianTitle: 'به زودی',
+      persianTitle: 'ثبت‌نام رویداد',
+      // link: 'JavaScript:Void(0);',
+      link: '/dashboard/seminar-registration',
       icon: 'user-plus',
       checked: isRegistered
     },
@@ -28,13 +34,6 @@ function Sidebar({ logout, isRegistered }) {
       link: '/dashboard/profile',
       icon: 'user-circle-o',
     },
-    // {
-    //   title: 'Your Workshops',
-    //   persianTitle: 'کارگاه‌های شما',
-    //   link: 'JavaScript:Void(0);',
-    //   // link: '/dashboard/workshop-list',
-    //   icon: 'suitcase',
-    // }
   ]
 
 
