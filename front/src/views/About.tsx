@@ -1,6 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import AboutUs from '../components/AboutUs';
+import Staff from './Staff';
 
 const About = () => {
   const { t } = useTranslation('about', { useSuspense: false });
@@ -42,6 +43,8 @@ const About = () => {
               </div>
             </div>
             <AboutUs />
+
+            <Staff />
           </div>
         </div>
       </section>
