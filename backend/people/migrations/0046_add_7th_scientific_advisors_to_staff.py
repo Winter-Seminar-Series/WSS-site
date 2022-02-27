@@ -18,7 +18,7 @@ def forwards(apps, schema_editor):
     wss = WSS.objects.get(year=2021)
 
     for team_name in teams_staff:
-        team = HoldingTeam.objects.create(wss=wss, name=team_name, order=0)
+        team = HoldingTeam.objects.create(wss=wss, name=team_name, order=1)
         for staff_name in teams_staff[team_name]:
             staff = Staff.objects.create(
                 name=staff_name,
