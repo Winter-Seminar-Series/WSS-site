@@ -18,7 +18,7 @@ def forwards(apps, schema_editor):
     wss = WSS.objects.get(year=2021)
 
     for team_name in teams_staff:
-        team = HoldingTeam.objects.create(wss=wss, name=team_name)
+        team = HoldingTeam.objects.create(wss=wss, name=team_name, order=0)
         for staff_name in teams_staff[team_name]:
             staff = Staff.objects.create(
                 name=staff_name,
@@ -28,20 +28,14 @@ def forwards(apps, schema_editor):
             )
             team.staff.add(staff)
         team.save()
-        # team.staff.set(Staff.objects.filter(
-        #     name__in=teams_staff[team_name]).order_by('id'))
-
-
-def rollback(apps, schema_editor):
-    pass
 
 
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('people', '0044_update_roundtable_speaker_place'),
+        ('people', '0045_fill_7th_staff'),
     ]
 
     operations = [
-        migrations.RunPython(forwards, rollback)
+        migrations.RunPython(forwards)
     ]
