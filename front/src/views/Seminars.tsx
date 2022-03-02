@@ -15,6 +15,8 @@ const Seminars = ({
     getModelList(MODEL_LISTS_NAMES.SPEAKERS, thisSeries);
   }, [getWSSPrimitiveFields]);
 
+
+  
   return (
     <>
       <section
@@ -22,7 +24,7 @@ const Seminars = ({
         className="background-theme ts-speakers pt-4">
         <div className="container text-white">
           <div className="row mb-3">
-            <h3 className="mb-1 col section-sub-title title-white">Seminars</h3>
+             <h3 className="mb-1 col section-sub-title title-white">Seminars</h3>
           </div>
           {seminars.length > 0 && !isFetching && (
             <div className="row">
