@@ -103,7 +103,7 @@ RAW_BASE_HTML = '''<!DOCTYPE html>
                 <a href="http://wss.ce.sharif.edu" target="_blank" style="text-decoration: none;"><img src="https://wss.ce.sharif.edu/media/7th/logos/banner1.png" style="width: 100%" border="0" alt="WSS 7th Series"></a>
               </div>
           </div>
-          {}
+          {{{content_to_be_injected}}}
           <footer>
             <div class="text-center px-1 py-1">
                 <div class="py-2 p-relative" id="site">
@@ -123,13 +123,13 @@ RAW_BASE_HTML = '''<!DOCTYPE html>
 </html>
 '''
 
-BASE_HTML_CONTENT = RAW_BASE_HTML.format('''
+BASE_HTML_CONTENT = RAW_BASE_HTML.replace("{{{content_to_be_injected}}}", '''
 <div class="px-1 py-1">
   {}
 </div>
 ''')
 
-PERSIAN_BASE_HTML_CONTENT = RAW_BASE_HTML.format('''
+PERSIAN_BASE_HTML_CONTENT = RAW_BASE_HTML.replace("{{{content_to_be_injected}}}", '''
 <div dir="rtl" class="px-1 py-1">
   {}
 </div>
@@ -160,9 +160,3 @@ SURVEY_EMAIL = (
 "تیم برگزاری هفتمین سری سمینارهای زمستانه‌ی دانشکده مهندسی کامپیوتر دانشگاه صنعتی شریف <br>"
 )
 
-STAFF_EMAIL = (
-  "{} عزیز، با سلام"
-  "از اینکه در آخرین لحظات رویداد با در اختیار گذاشتن ایمیل و اسمت بهمون کمک کردی، ممنونیم"
-  "این ایمیل جهت تست کارکرد ایمیل‌های ارسالی به شرکت‌کننده‌ها برای شما ارسال شده است"
-  "با سپاس فراوان، دبیر و تیم فنی سری سمینارهای زمستانه‌ی ۷ام"
-)
