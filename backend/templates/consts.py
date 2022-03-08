@@ -1,7 +1,7 @@
 PAYMENT_SUBJECT = 'WSS payment confirmation'
 RESET_PASSWORD_SUBJECT = 'WSS reset password'
 
-BASE_HTML_CONTENT = '''<!DOCTYPE html>
+RAW_BASE_HTML = '''<!DOCTYPE html>
 <html>
     <head>
         <meta name="ROBOTS" content="NOINDEX, NOFOLLOW">
@@ -100,12 +100,10 @@ BASE_HTML_CONTENT = '''<!DOCTYPE html>
       <div>
           <div>
               <div id="logo" class="text-center p-relative px-1 py-1">
-                <a href="http://wss.ce.sharif.edu" target="_blank" style="text-decoration: none;"><img src="https://wss.ce.sharif.edu/media/7th/logos/banner1.png" border="0" width="123.5" height="123.25" alt="7th WSS"></a>
+                <a href="http://wss.ce.sharif.edu" target="_blank" style="text-decoration: none;"><img src="https://wss.ce.sharif.edu/media/7th/logos/banner1.png" style="width: 100%" border="0" alt="WSS 7th Series"></a>
               </div>
           </div>
-          <div class="px-1 py-1">
-             {}
-          </div>
+          {}
           <footer>
             <div class="text-center px-1 py-1">
                 <div class="py-2 p-relative" id="site">
@@ -125,6 +123,18 @@ BASE_HTML_CONTENT = '''<!DOCTYPE html>
 </html>
 '''
 
+BASE_HTML_CONTENT = RAW_BASE_HTML.format('''
+<div class="px-1 py-1">
+  {}
+</div>
+''')
+
+PERSIAN_BASE_HTML_CONTENT = RAW_BASE_HTML.format('''
+<div dir="rtl" class="px-1 py-1">
+  {}
+</div>
+''')
+
 PAYMENT_EMAIL = (
   "Dear {},<br>"
   "Thanks for your interest in attending 7th WSS <br>"
@@ -138,3 +148,21 @@ RESET_PASSWORD_EMAIL = (
   "To update your password, click <a href=\"{}\">here</a> <br>"
 )
 
+SURVEY_EMAIL = (
+"با سلام و احترام <br>"
+"شرکت‌کننده‌ی گرامی هفتمین سری سمینارهای زمستانه شریف، {} عزیز <br>"
+"امیدوار هستیم که در 7th WSS توانسته باشیم لحظات خوبی را برایتان فراهم کرده و از شرکت در برنامه های این دوره از WSS خوشنود باشید. <br>"
+"ویدئوهای تمامی ارائه‌های این رویداد ضبط شده و اگر از نظر ارائه دهنده مشکلی برای پخش وجود نداشته باشد در اسرع وقت در اختیارتان قرار خواهد گرفت. <br>"
+"برای کمک به هرچه بهتر شدن رویداد در دوره‌های آینده می‌توانید فرم نظرسنجی زیر را پر کنید تا لینک ویدئو ها برایتان ارسال شود. <br>"
+"توجه: حتی اگر در وبیناری شرکت نکرده اید لطف کنید این نظرسنجی را پر کنید تا از پیشنهادات و نظراتتان در تمام مراحل برگزاری رویداد مطلع باشیم. <br>"
+" <br>"
+"با آرزوی موفقیت <br>"
+"تیم برگزاری هفتمین سری سمینارهای زمستانه‌ی دانشکده مهندسی کامپیوتر دانشگاه صنعتی شریف <br>"
+)
+
+STAFF_EMAIL = (
+  "{} عزیز، با سلام"
+  "از اینکه در آخرین لحظات رویداد با در اختیار گذاشتن ایمیل و اسمت بهمون کمک کردی، ممنونیم"
+  "این ایمیل جهت تست کارکرد ایمیل‌های ارسالی به شرکت‌کننده‌ها برای شما ارسال شده است"
+  "با سپاس فراوان، دبیر و تیم فنی سری سمینارهای زمستانه‌ی ۷ام"
+)
