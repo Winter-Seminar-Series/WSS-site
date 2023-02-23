@@ -25,6 +25,7 @@ export const updateProfile = (updatedData: {
   university?: string;
   introduction_method?: string;
   gender?: string;
+  is_online_attendant?: boolean;
   city?: string;
   country?: string;
   field_of_interest?: string;

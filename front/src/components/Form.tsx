@@ -37,6 +37,7 @@ function Form({
   introduction_method: inputIntroductionMethod,
   gender: inputGender,
   grade: inputGrade,
+  is_online_attendant: inputIsOnlineAttendant,
   city: inputCity,
   email: inputEmail,
   dateOfBirth: inputDateOfBirth,
@@ -68,6 +69,7 @@ function Form({
   const [last_name, setLastName] = React.useState('');
   const [gender, setGender] = React.useState('');
   const [grade, setGrade] = React.useState('');
+  const [is_online_attendant, setIsOnlineAttendant] = React.useState(true);
   const [university, setUniversity] = React.useState('');
   const [email, setEmail] = React.useState('');
   const [introduction_method, setIntroduction_method] = React.useState('');
@@ -119,6 +121,7 @@ function Form({
       : setIntroduction_method(introduction_method[0]);
     inputGender ? setGender(inputGender) : setGender(genderTypes[0]);
     inputGrade ? setGrade(inputGrade) : setGrade(gradeTypes[2]);
+    inputIsOnlineAttendant ? setIsOnlineAttendant(inputIsOnlineAttendant) : setIsOnlineAttendant(true);
     setUniversity(inputUniversity);
     setEmail(inputEmail);
     setIntroduction_method(inputIntroductionMethod);
@@ -139,6 +142,7 @@ function Form({
     inputIntroductionMethod,
     inputGender,
     inputGrade,
+    inputIsOnlineAttendant,
     inputCity,
     inputEmail,
     inputMajor,
@@ -199,6 +203,7 @@ function Form({
       last_name,
       gender,
       grade,
+      is_online_attendant,
       university,
       city,
       introduction_method,
@@ -373,6 +378,32 @@ function Form({
                   control={<Radio onChange={() => setGrade(type)} />}
                 />
               ))}
+            </RadioGroup>
+          </FormControl>
+        </div>
+      </div>
+      <div className="row">
+        <div className="col-12 mb-3 col-lg mb-lg-0">
+          <FormControl>
+            <div className="form-label pt-0 mr-3">Mode of Attendance: *</div>
+            <RadioGroup
+              row
+              aria-labelledby="demo-radio-buttons-group-label"
+              defaultValue={true}
+              value={is_online_attendant}
+              name="radio-buttons-group">
+              <FormControlLabel
+                  key={"Online"}
+                  value={true}
+                  label={"Online"}
+                  control={<Radio onChange={() => setIsOnlineAttendant(true)} />}
+                />
+                <FormControlLabel
+                  key={"In person"}
+                  value={false}
+                  label={"In person"}
+                  control={<Radio onChange={() => setIsOnlineAttendant(false)} />}
+                />
             </RadioGroup>
           </FormControl>
         </div>
