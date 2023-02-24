@@ -22,6 +22,8 @@ import {
 import ResponsiveDialog from './Dialog';
 import PhoneInput from 'react-phone-input-2';
 import 'react-phone-input-2/lib/style.css';
+import fetchApi from '../redux/middleware/api/fetchApi';
+import { ROOT } from '../redux/actions/urls';
 
 function Form({
   thisSeries,
@@ -85,6 +87,8 @@ function Form({
   const [job, setJob] = React.useState('');
   const [phoneNumber, setPhoneNumber] = React.useState('');
   const [discount, setDiscount] = React.useState('');
+  const [discountIsFocused, setDiscountIsFocused] = React.useState(false);
+  const [price, setPrice] = React.useState(0);
 
   const [dialogOpen, setDialogOpen] = React.useState(false);
 
@@ -112,6 +116,20 @@ function Form({
     getProfile();
     doesUserHaveRegistered(thisSeries);
   }, [getProfile]);
+
+  useEffect(() => {
+    if (discountIsFocused) return;
+
+    fetchApi(`${ROOT}somewhere`, {
+      method: 'POST',
+      body: JSON.stringify({
+        discount,
+        is_online_attendant,
+      }),
+    }).then((response) => {
+      setPrice(response.price ?? 0);
+    });
+  }, [discount, discountIsFocused, is_online_attendant]);
 
   useEffect(() => {
     setFirstName(inputFirstName);
@@ -396,16 +414,16 @@ function Form({
               name="radio-buttons-group">
               <FormControlLabel
                 key={'Online'}
-                  value={true}
+                value={true}
                 label={'Online'}
-                  control={<Radio onChange={() => setIsOnlineAttendant(true)} />}
-                />
-                <FormControlLabel
+                control={<Radio onChange={() => setIsOnlineAttendant(true)} />}
+              />
+              <FormControlLabel
                 key={'In person'}
-                  value={false}
+                value={false}
                 label={'In person'}
-                  control={<Radio onChange={() => setIsOnlineAttendant(false)} />}
-                />
+                control={<Radio onChange={() => setIsOnlineAttendant(false)} />}
+              />
             </RadioGroup>
           </FormControl>
         </div>
@@ -494,6 +512,8 @@ function Form({
             <div className="col-12 mb-3 col-lg mb-lg-0">
               <input
                 value={discount}
+                onFocus={() => setDiscountIsFocused(true)}
+                onBlur={() => setDiscountIsFocused(false)}
                 onChange={(e) => setDiscount(e.target.value)}
                 type="text"
                 className="text-input form-control"
@@ -539,7 +559,11 @@ function Form({
             disabled={isFetching || paymentProcess}
             type="submit"
             className="btn btn-lg btn-primary btn-dark mb-5">
-            {isRegisteration ? 'Go For Payment' : 'Update Profile'}
+            {isRegisteration ? (
+              <>Go For Payment {price ? ` • ${price}` : ''}</>
+            ) : (
+              'Update Profile'
+            )}
           </button>
         </div>
       </div>
