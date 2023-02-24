@@ -24,9 +24,11 @@ export default function AboutUs() {
             <div className="col mr-md-3 d-flex flex-column justify-content-center">
               <h3 className="section-sub-title">Seminars</h3>
               <p>
-                  Seminars takes place as a four-day event and in each day speakers
-                   present their research and ideas. They also share their findings
-                    and teach related topics.
+
+                  The seminars comprise a four-day event where speakers present their
+                   research and ideas, sharing their findings and teaching related topics.
+                    Each day of the event features different speakers and topics, providing
+                      participants with a diverse range of perspectives and knowledge.
               </p>
             </div>
           </div>
@@ -43,10 +45,9 @@ export default function AboutUs() {
             <div className="col mr-md-3 d-flex flex-column justify-content-center">
               <h3 className="section-sub-title">Round Tables</h3>
               <p>
-              Each day, we will have a round table with specific topics to discuss.
-               At each round table, we will host several experts in the field and discuss
-                your concerns about the topic. Note that the round tables are going to be held
-                 in Persian.
+                During the event, we host round table discussions on specific topics,
+                  inviting experts in the field to share their insights and engage with
+                    participants' concerns. Please note that the round tables are conducted in Persian.
               </p>
             </div>
           </div>
@@ -64,9 +65,11 @@ export default function AboutUs() {
             <div className="col mr-md-3 d-flex flex-column justify-content-center">
               <h3 className="section-sub-title">Lab Talks</h3>
               <p>
-              This section is about the laboratories of the Faculty of Computer Engineering of 
-              Sharif University of Technology.
-               In each session we host one of them. Members introduce the lab and discuss hot lab topics.
+                This section focuses on the laboratories of the Faculty of Computer
+                  Engineering at Sharif University of Technology. In each session, we
+                    feature a different laboratory, with members introducing their lab and
+                      discussing current research topics. This provides participants with an
+                        opportunity to learn about cutting-edge research and developments in computer engineering.
               </p>
             </div>
           </div>

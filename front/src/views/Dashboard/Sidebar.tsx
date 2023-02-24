@@ -12,12 +12,12 @@ function Sidebar({ logout, isRegistered }) {
   };
 
   const sidebarItems = [
-    {
-      title: 'Attend Seminars',
-      persianTitle: 'شرکت در سمینارها',
-      link: '/schedule',
-      icon: 'sign-in',
-    },
+    // {
+    //   title: 'Attend Seminars',
+    //   persianTitle: 'شرکت در سمینارها',
+    //   link: '/schedule',
+    //   icon: 'sign-in',
+    // },
     {
       // title: 'Coming Soon',
       title: 'Registration',
