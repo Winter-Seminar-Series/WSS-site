@@ -46,6 +46,7 @@ class WSS(models.Model):
         to='Image', null=True, blank=True, related_name='+', on_delete=models.SET_NULL)
     registration_fee = models.PositiveIntegerField(
         default=10000, validators=[MinValueValidator(1000)])
+    in_person_fee_bias = models.PositiveIntegerField(default=0)
     bs_participant_limit = models.PositiveIntegerField(default=100)
     msOrPhd_participant_limit = models.PositiveIntegerField(default=100)
     participant_workshop_limit = models.PositiveIntegerField(default=3)
@@ -63,6 +64,15 @@ class WSS(models.Model):
             raise GradeDoesNotSpecifiedException()
 
         return self.participants.filter(user_profile__grade__in=GRADE_GROUPS[grade]).count() >= getattr(self, GRADE_GROUP_LIMITS[grade])
+
+    def calculate_fee(self, is_online_attendant, discount_code=None):
+        final_fee = self.registration_fee
+        if discount_code:
+            discount = self.discount_codes.get(value=discount_code)
+            final_fee *= (1 - discount.off_percentage / 100)
+        if not is_online_attendant:
+            final_fee += self.in_person_fee_bias
+        return int(final_fee)
 
     @property
     def bs_participant_count(self):
@@ -154,7 +164,8 @@ class WSS(models.Model):
 
 
 class DiscountCode(models.Model):
-    value = models.CharField(max_length=128)
+    value = models.CharField(max_length=128, unique=True)
+    off_percentage = models.PositiveSmallIntegerField()
     related_wss = models.ForeignKey(
         'WSS', related_name='discount_codes', on_delete=models.CASCADE)
 
@@ -293,6 +304,7 @@ class UserProfile(models.Model):
     open_to_work = models.BooleanField(
         default=False, verbose_name="I am open to job offers.")
     resume = models.FileField(upload_to='uploads', null=True, blank=True)
+    is_online_attendant = models.BooleanField(default=False)
 
     @property
     def email(self):
