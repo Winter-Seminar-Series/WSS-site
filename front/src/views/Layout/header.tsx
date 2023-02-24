@@ -123,7 +123,8 @@ const Header = ({isLoggedIn, thisSeries, doSetThisSeries}) => {
                                             !(i.title === 'Lab Talks') &&
                                             !(i.title === 'Round Tables') &&
                                             !(i.title === 'Sponsor') &&
-                                            !(i.title === 'Schedule'))) && (!i.loggedIn ||
+                                            !(i.title === 'Schedule') &&
+                                            !(i.title === 'Staff'))) && (!i.loggedIn ||
                                         (i.loggedIn === 'notAuthorized' && !isLoggedIn) ||
                                         (i.loggedIn === 'authorized' && isLoggedIn)))&&
                                     (i.children ? (
