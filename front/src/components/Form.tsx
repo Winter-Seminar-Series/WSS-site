@@ -121,7 +121,9 @@ function Form({
       : setIntroduction_method(introduction_method[0]);
     inputGender ? setGender(inputGender) : setGender(genderTypes[0]);
     inputGrade ? setGrade(inputGrade) : setGrade(gradeTypes[2]);
-    inputIsOnlineAttendant ? setIsOnlineAttendant(inputIsOnlineAttendant) : setIsOnlineAttendant(true);
+    inputIsOnlineAttendant
+      ? setIsOnlineAttendant(inputIsOnlineAttendant)
+      : setIsOnlineAttendant(true);
     setUniversity(inputUniversity);
     setEmail(inputEmail);
     setIntroduction_method(inputIntroductionMethod);
@@ -221,7 +223,7 @@ function Form({
       phone_number: phoneNumber,
     }).then(() => {
       if (isRegisteration) sendPaymentRequest(discount, thisSeries);
-    })
+    });
     // }
   };
   return (
@@ -393,15 +395,15 @@ function Form({
               value={is_online_attendant}
               name="radio-buttons-group">
               <FormControlLabel
-                  key={"Online"}
+                key={'Online'}
                   value={true}
-                  label={"Online"}
+                label={'Online'}
                   control={<Radio onChange={() => setIsOnlineAttendant(true)} />}
                 />
                 <FormControlLabel
-                  key={"In person"}
+                key={'In person'}
                   value={false}
-                  label={"In person"}
+                label={'In person'}
                   control={<Radio onChange={() => setIsOnlineAttendant(false)} />}
                 />
             </RadioGroup>
@@ -479,8 +481,11 @@ function Form({
         </div>
       </div>
 
-      <div className='row'>
-        <em className='mb-4'>To increase your chance of getting hired by our sponsers, fill out the optional fields!</em>
+      <div className="row">
+        <em className="mb-4">
+          To increase your chance of getting hired by our sponsers, fill out the
+          optional fields!
+        </em>
       </div>
 
       {isRegisteration ? (
