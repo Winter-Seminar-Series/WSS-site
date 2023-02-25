@@ -55,6 +55,7 @@
   --light-blue: #3e498c;
   --med-blue: #776aa6;
   --dark-blue: #252d59;
+  --font-family: 'Noto Sans', sans-serif;
 }
 
 .white {
@@ -64,7 +65,7 @@
 body {
   background: #e8e8e8;
   color: #000;
-  font-family: 'Raleway', sans-serif !important;
+  font-family: var(--font-family) !important;
   white-space: pre-wrap;
 }
 
@@ -490,7 +491,7 @@ img.pull-right {
   color: #fff;
   border-bottom: 1px solid #dedede;
   border-bottom: 1px solid rgba(0, 0, 0, 0.15);
-  font-family: 'Raleway', sans-serif !important;
+  font-family: var(--font-family) !important;
 }
 .form-control:focus {
   box-shadow: none;
