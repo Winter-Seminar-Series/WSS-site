@@ -134,14 +134,10 @@ function Form({
   useEffect(() => {
     setFirstName(inputFirstName);
     setLastName(inputLastName);
-    inputIntroductionMethod
-      ? setIntroduction_method(inputIntroductionMethod)
-      : setIntroduction_method(introduction_method[0]);
-    inputGender ? setGender(inputGender) : setGender(genderTypes[0]);
-    inputGrade ? setGrade(inputGrade) : setGrade(gradeTypes[2]);
-    inputIsOnlineAttendant
-      ? setIsOnlineAttendant(inputIsOnlineAttendant)
-      : setIsOnlineAttendant(true);
+    setIntroduction_method(inputIntroductionMethod)
+    setGender(inputGender)
+    setGrade(inputGrade)
+    setIsOnlineAttendant(inputIsOnlineAttendant)
     setUniversity(inputUniversity);
     setEmail(inputEmail);
     setIntroduction_method(inputIntroductionMethod);
@@ -184,6 +180,7 @@ function Form({
         last_name &&
         gender &&
         grade &&
+        is_online_attendant != null &&
         university &&
         city &&
         introduction_method &&
@@ -333,7 +330,6 @@ function Form({
             <RadioGroup
               row
               aria-labelledby="demo-radio-buttons-group-label"
-              defaultValue={'Male'}
               value={gender}
               name="radio-buttons-group">
               {genderTypes.map((type) => (
@@ -387,7 +383,6 @@ function Form({
             <RadioGroup
               row
               aria-labelledby="demo-radio-buttons-group-label"
-              defaultValue={'Bachelor'}
               value={grade}
               name="radio-buttons-group">
               {gradeTypes.map((type) => (
@@ -409,7 +404,6 @@ function Form({
             <RadioGroup
               row
               aria-labelledby="demo-radio-buttons-group-label"
-              defaultValue={true}
               value={is_online_attendant}
               name="radio-buttons-group">
               <FormControlLabel
@@ -492,7 +486,7 @@ function Form({
         <div className="col-12 col-lg">
           <Button
             component="label"
-            className="col-12 col-lg btn btn-lg btn-primary btn-blue mb-1">
+            className="btn btn-lg btn-primary btn-dark mb-1">
             {resume ? 'Resume Uploaded' : 'Upload Resume (optional)'}
             <input type="file" hidden onChange={handleCaptureResume} />
           </Button>
@@ -500,7 +494,7 @@ function Form({
       </div>
 
       <div className="row">
-        <em className="mb-4">
+        <em className="mb-1">
           To increase your chance of getting hired by our sponsers, fill out the
           optional fields!
         </em>
@@ -515,7 +509,7 @@ function Form({
                 onFocus={() => setDiscountIsFocused(true)}
                 onBlur={() => setDiscountIsFocused(false)}
                 onChange={(e) => setDiscount(e.target.value)}
-                type="text"
+                type="password"
                 className="text-input form-control"
                 placeholder="Enter discount code"
               />
@@ -558,7 +552,7 @@ function Form({
           <button
             disabled={isFetching || paymentProcess}
             type="submit"
-            className="btn btn-lg btn-primary btn-dark mb-5">
+            className="col-12 col-lg btn btn-lg btn-primary btn-blue mb-5">
             {isRegisteration ? (
               <>Go For Payment {price ? ` • ${price}` : ''}</>
             ) : (
