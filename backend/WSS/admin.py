@@ -74,9 +74,14 @@ class TagInline(CompactInline):
     extra = 0
 
 
+class DiscountCodeInline(CompactInline):
+    model = DiscountCode
+    extra = 0
+
+
 class WSSAdmin(admin.ModelAdmin):
     inlines = (SeminarInline, PosterSessionInline, WorkshopInline, EventInline, SponsorshipInline, ImageInline,
-               ClipInline, BookletInline, TagInline)
+               ClipInline, BookletInline, TagInline, DiscountCodeInline)
     readonly_fields = ('bs_participant_count',
                        'ms_participant_count', 'phd_participant_count')
     list_display = ('__str__', 'start_date', 'end_date')
@@ -109,7 +114,6 @@ admin.site.register(Reserve)
 admin.site.register(Grade)
 admin.site.register(WssTag)
 admin.site.register(UserProfile)
-admin.site.register(DiscountCode)
 # unregister old user admin
 admin.site.unregister(User)
 # register new user admin

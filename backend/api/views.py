@@ -12,7 +12,7 @@ from abc import ABC, abstractmethod
 from api import serializers
 from events.models import Workshop, WssTag, Venue, SeminarMaterial, PosterMaterial, WorkshopMaterial, BaseEvent
 from people.models import Speaker, Staff
-from WSS.models import WSS, Participant, UserProfile, Sponsor, GradeDoesNotSpecifiedException
+from WSS.models import WSS, Participant, UserProfile, Sponsor, GradeDoesNotSpecifiedException, DiscountCode
 from WSS.payment import send_payment_request, verify
 
 from rest_framework.authtoken.serializers import AuthTokenSerializer
@@ -20,6 +20,7 @@ from knox.models import AuthToken
 from django.contrib.auth import login
 from knox.views import LoginView as KnoxLoginView
 from django.contrib.auth.models import User
+from django.utils.translation import gettext_lazy as _
 
 import threading
 from django.core.mail import send_mail
@@ -468,7 +469,7 @@ class UserProfileViewSet(viewsets.ViewSet):
                   'job', 'university', 'introduction_method',
                   'gender', 'city', 'country', 'major', 'field_of_interest',
                   'grade', 'is_student', 'favorite_tags',
-                  'date_of_birth', 'social_media_ids', 'open_to_work', 'resume']
+                  'date_of_birth', 'social_media_ids', 'open_to_work', 'resume', 'is_online_attendant']
         for field in fields:
             if user_data_parameter.get(field) is not None:
                 data = user_data_parameter[field]
@@ -565,6 +566,27 @@ class PaymentViewSet(viewsets.ViewSet):
     permission_classes = [IsAuthenticated]
 
     @action(methods=['GET'], detail=False)
+    def price(self, request, year):
+        try:
+            is_online_attendant = request.data["is_online_attendant"]
+        except KeyError:
+            return ErrorResponse({
+                "message": _("is_online_attendant is required")
+            })
+        wss = get_wss_object_or_404(year)
+        discount_code = request.data.get("discount", None)
+        try:
+            price = wss.calculate_fee(is_online_attendant, discount_code)
+        except DiscountCode.DoesNotExist:
+            return ErrorResponse({
+                "message": _("Discount code is INVALID!")
+            })
+
+        return Response({
+            "price": price
+        })
+
+    @action(methods=['GET'], detail=False)
     def request(self, request, year):
         wss = get_wss_object_or_404(year)
         if not wss.registration_open:
@@ -587,7 +609,8 @@ class PaymentViewSet(viewsets.ViewSet):
             })
         elif ((not user_profile.grade) or (not user_profile.email) or (not user_profile.phone_number)
               or (not user_profile.job) or (not user_profile.university) or (not user_profile.major)
-              or (not user_profile.first_name) or (not user_profile.last_name) or (not user_profile.date_of_birth)):
+              or (not user_profile.first_name) or (not user_profile.last_name) or (not user_profile.date_of_birth)
+              or (not user_profile.is_online_attendant)):
             return ErrorResponse({
                 "message": "Some required fields are blank."
             })
@@ -602,14 +625,13 @@ class PaymentViewSet(viewsets.ViewSet):
                 "message": "You must specify your grade in your profile before registration."
             }, status_code=403)
 
-        amount = wss.registration_fee
-
         discount_code = request.query_params.get("discount", None)
-        for dc in wss.discount_codes.all():
-            if discount_code == dc.value:
-                amount = (amount * 2) // 3
-                amount = (amount // 10000) * 10000
-                break
+        try:
+            amount = wss.calculate_fee(user_profile.is_online_attendant, discount_code)
+        except DiscountCode.DoesNotExist:
+            return ErrorResponse({
+                "message": _("Discount code is INVALID!")
+            })
 
         description = settings.PAYMENT_SETTING['description'].format(
             year, user_profile.email)
