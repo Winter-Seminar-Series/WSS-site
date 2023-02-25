@@ -126,9 +126,9 @@ function Home({
                   <h2 className="banner-subtitle my-3 font-weight-bold">
                     {startDate && endDate
                       ? moment(startDate, 'YYYY-MM-DD').format(
-                        'MMM Do, YYYY -'
-                      ) +
-                      moment(endDate, ' YYYY-MM-DD').format('MMM Do, YYYY')
+                          'MMM Do, YYYY -'
+                        ) +
+                        moment(endDate, ' YYYY-MM-DD').format('MMM Do, YYYY')
                       : ''}
                   </h2>
                   <h3 className="banner-desc font-weight-bold">
@@ -171,15 +171,11 @@ function Home({
         </div>
       </section>
 
-
-
-
-
-
-
       {/* <div className="purple-background"> */}
-      {(
-        <section id="ts-speakers-main" className="diagonal-up-right blue-gradient my-5 ">
+      {
+        <section
+          id="ts-speakers-main"
+          className="diagonal-up-right blue-gradient my-5 ">
           <div className="container">
             <div className="row text-center">
               <h3 className="title-white mx-auto font-weight-light speaker-title">
@@ -210,9 +206,12 @@ function Home({
             </div>
           </div>
         </section>
-      )}
+      }
 
-      <section id="ts-statics" className="z-1 ts-statics my-5" style={{ paddingTop: "10rem" }}>
+      <section
+        id="ts-statics"
+        className="z-1 ts-statics my-5"
+        style={{ paddingTop: '10rem' }}>
         <div className="container py-4">
           <div className="row d-flex justify-content-center">
             <div className="col-sm-2 m-2 text-center">
@@ -260,7 +259,6 @@ function Home({
                    </div>
                  </div>
                </div> */}
-
           </div>
         </div>
       </section>
@@ -305,31 +303,38 @@ function Home({
           </div> */}
         <div className="container pb-5 large-margin">
           <div className="row my-5">
-            <div className="col-md-6 font-weight-bold">
-              <h5 className="section-sub-title text-white mb-3 mt-5">Info</h5>
+            <div className="col-md-6">
+              <h5 className="h1 text-white mb-3 mt-5">Info</h5>
               <div className="white">
-                <p>Sharif University of Technology </p>
-                <p>Azadi Street, District 2, Tehran, Iran</p>
+                <p className="lead">Sharif University of Technology </p>
+                <p className="lead">Azadi Street, District 2, Tehran, Iran</p>
                 <br />
-                <p>wss@ce.sharif.edu</p>
-                <p>+98(021) 66 16 57 81</p>
+                <p className="lead">wss@ce.sharif.edu</p>
+                <p className="lead">+98(021) 66 16 57 81</p>
               </div>
             </div>
 
-            <div className="col-md-6 font-weight-bold">
-              <h5 className="section-sub-title text-white mb-3 mt-5">
-                Organizer
-              </h5>
-              <p className="font-italic white pb-3">
+            <div className="col-md-6 fs-1 white">
+              <h5 className="h1 text-white mb-3 mt-5">Organizer</h5>
+              <p className="lead pb-3">
                 The event is held by the Student Scientific Chapter (SSC) of
                 Computer Engineering Department of Sharif University of
                 Technology
               </p>
-              <div style={{ display: "flex", flexDirection: "row", alignItems: "center", flexWrap: "wrap" }}>
-                <h5 className="section-sub-title text-white mb-3 mt-5">
-                  Sponsored by
-                </h5>
-                <img src="/images/Tapsell_logo_png.png" alt="Image not found!" className='ml-4' style={{ maxWidth: 150, width: '100%' }} />
+              <div
+                style={{
+                  display: 'flex',
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  flexWrap: 'wrap',
+                }}>
+                <h5 className="h4 text-white mb-3 mt-5">Sponsored by</h5>
+                <img
+                  src="/images/Tapsell_logo_png.png"
+                  alt="Image not found!"
+                  className="ml-4"
+                  style={{ maxWidth: 150, width: '100%' }}
+                />
               </div>
             </div>
           </div>
