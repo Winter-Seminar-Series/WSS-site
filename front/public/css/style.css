@@ -778,7 +778,6 @@ ul.navbar-nav > li:last-child:after {
 }
 ul.navbar-nav > li > a {
   color: #333;
-  font-family: 'Roboto', sans-serif;
   text-rendering: optimizeLegibility;
   display: inline-block;
   padding: 6px 10px;
@@ -880,7 +879,6 @@ ul.navbar-nav > li:hover > a {
   background: none;
 }
 .dropdown-menu li a {
-  font-family: 'Roboto', sans-serif;
   display: block;
   font-size: 14px;
   line-height: normal;
@@ -3301,7 +3299,6 @@ label {
 
 .sidebar ul.service-menu li a {
   background-color: #f4f4f4;
-  font-family: 'Roboto Slab', serif;
   padding: 15px 20px;
   border: 0;
   margin-bottom: 8px;
