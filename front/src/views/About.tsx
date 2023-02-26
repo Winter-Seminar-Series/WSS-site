@@ -12,7 +12,7 @@ const About = () => {
   };
 
   const containerStyle = {
-    paddingTop: '10.5rem',
+    paddingTop: '12rem',
   };
 
   const whiteBackground = {

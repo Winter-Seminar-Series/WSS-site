@@ -5,15 +5,13 @@ export default function AboutUs() {
     const {t} = useTranslation('about', {useSuspense: false});
 
     return (
-        <section id="ts-programs" className="d-flex flex-column align-items-center">
+        <section id="ts-programs" className="d-flex flex-column align-items-center no-margin mb-0">
             <div className="container">
                 <div className="row">
                     <h2 className="section-title mx-auto">Programs</h2>
                 </div>
                 <div className="row">
                     <div className="col-12 col-sm-9 col-lg-8 mx-auto">
-
-
                         <div
                             className="row d-flex flex-sm-row-reverse justify-content-start justify-content-sm-between mt-5 mb-md-5">
                             <div className="p-5 p-md-0 col-md-4 d-flex flex-column justify-content-center">
@@ -71,16 +69,15 @@ export default function AboutUs() {
                                     opportunity to learn about cutting-edge research and developments in computer
                                     engineering.
                                 </p>
+
                             </div>
+
                         </div>
-
-
                     </div>
+
                 </div>
-
             </div>
+            {/*here*/}
         </section>
-
-
-    );
+);
 }

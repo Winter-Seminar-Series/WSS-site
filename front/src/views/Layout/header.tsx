@@ -4,11 +4,6 @@ import {connect} from 'react-redux';
 import {setThisSeries as doSetThisSeries} from '../../redux/actions/account';
 
 const Header = ({isLoggedIn, thisSeries, doSetThisSeries}) => {
-
-    function returnThisSeries() {
-        return thisSeries;
-    }
-
     const {t} = useTranslation('header', {useSuspense: false});
 
     const navbarItems: NavBarItem[] = [
@@ -118,13 +113,8 @@ const Header = ({isLoggedIn, thisSeries, doSetThisSeries}) => {
                             {navbarItems.map(
                                 (i) =>
                                     ((!(thisSeries === '8th') ||
-                                        (thisSeries ==='8th'
-                                            // &&
-                                            // !(i.title === 'Seminars') &&
-                                            // !(i.title === 'Lab Talks') &&
-                                            // !(i.title === 'Round Tables') &&
-                                            // !(i.title === 'Staff')
-                                        )) && (!i.loggedIn ||
+                                        (thisSeries ==='8th' &&
+                                            !(i.title === 'Staff'))) && (!i.loggedIn ||
                                         (i.loggedIn === 'notAuthorized' && !isLoggedIn) ||
                                         (i.loggedIn === 'authorized' && isLoggedIn)))&&
                                     (i.children ? (
@@ -161,7 +151,6 @@ const Header = ({isLoggedIn, thisSeries, doSetThisSeries}) => {
                     </div>
                 </div>
             </nav>
-            F
         </header>
     );
 };
