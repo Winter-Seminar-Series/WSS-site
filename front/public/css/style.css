@@ -1113,21 +1113,6 @@ ul.navbar-nav > li:hover > a {
   -webkit-backface-visibility: hidden;
 }
 
-.diagonal {
-  -webkit-transform: skewY(-5deg);
-  -moz-transform: skewY(-5deg);
-  -ms-transform: skewY(-5deg);
-  -o-transform: skewY(-5deg);
-  transform: skewY(-5deg);
-  margin-top: -6rem;
-  padding-top: 3rem;
-  padding-bottom: 8rem !important;
-  margin-bottom: 6rem;
-  z-index: 1;
-
-  /* padding-top: 2rem; */
-}
-
 .large-margin {
   margin: 10rem;
 }
@@ -1169,14 +1154,6 @@ ul.navbar-nav > li:hover > a {
 }
 
 .diagonal > * {
-  -webkit-transform: skewY(5deg);
-  -moz-transform: skewY(5deg);
-  -ms-transform: skewY(5deg);
-  -o-transform: skewY(5deg);
-  transform: skewY(5deg);
-}
-
-.diagonal-down-left > * {
   -webkit-transform: skewY(5deg);
   -moz-transform: skewY(5deg);
   -ms-transform: skewY(5deg);
