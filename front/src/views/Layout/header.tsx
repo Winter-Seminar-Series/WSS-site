@@ -66,15 +66,15 @@ const Header = ({isLoggedIn, thisSeries, doSetThisSeries}) => {
         {title: 'Seminars', persianTitle: 'سمینارها', link: '/seminars'},
         {title: 'Lab Talks', persianTitle: 'ارائه آزمایشگاه', link: '/labtalks'},
         {title: 'Round Tables', persianTitle: 'میزگردها', link: '/roundtables'},
-        {title: 'Sponsor', persianTitle: 'اسپانسر', link: '/sponsor'},
+        // {title: 'Sponsor', persianTitle: 'اسپانسر', link: '/sponsor'},
         // { title: 'Speakers', persianTitle: 'سمینارها', link: '/seminars' },
         // { title: 'Opening Ceremony', persianTitle: 'افتتاحیه', link: '/seminar/114' },
         // { title: 'Workshops', persianTitle: 'کارگاه‌ها', link: '/workshops' },
         // { title: 'PosterSession', persianTitle: 'پوسترسشن', link: '/postersessions' },
-        {title: 'Schedule', persianTitle: 'برنامه زمانی', link: '/schedule'},
+        // {title: 'Schedule', persianTitle: 'برنامه زمانی', link: '/schedule'},
         {title: 'Staff', persianTitle: 'استف‌ها', link: '/staff'},
         {
-            title: 'Create Account',
+            title: 'Sign Up',
             persianTitle: 'ثبت‌نام',
             link: '/create-account',
             style: 'active',
@@ -118,13 +118,13 @@ const Header = ({isLoggedIn, thisSeries, doSetThisSeries}) => {
                             {navbarItems.map(
                                 (i) =>
                                     ((!(thisSeries === '8th') ||
-                                        (thisSeries ==='8th' &&
-                                            !(i.title === 'Seminars') &&
-                                            !(i.title === 'Lab Talks') &&
-                                            !(i.title === 'Round Tables') &&
-                                            !(i.title === 'Sponsor') &&
-                                            !(i.title === 'Schedule') &&
-                                            !(i.title === 'Staff'))) && (!i.loggedIn ||
+                                        (thisSeries ==='8th'
+                                            // &&
+                                            // !(i.title === 'Seminars') &&
+                                            // !(i.title === 'Lab Talks') &&
+                                            // !(i.title === 'Round Tables') &&
+                                            // !(i.title === 'Staff')
+                                        )) && (!i.loggedIn ||
                                         (i.loggedIn === 'notAuthorized' && !isLoggedIn) ||
                                         (i.loggedIn === 'authorized' && isLoggedIn)))&&
                                     (i.children ? (
