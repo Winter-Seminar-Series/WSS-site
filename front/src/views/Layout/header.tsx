@@ -74,6 +74,7 @@ const Header = ({isLoggedIn, thisSeries, doSetThisSeries}) => {
             link: '/create-account',
             style: 'active',
             loggedIn: 'notAuthorized',
+
         },
         {
             title: 'Login',
