@@ -80,7 +80,7 @@ function Home({
               backgroundSize: '100% 100%',
               backgroundRepeat: 'no-repeat',
             }}>
-            <Particles
+            {/* <Particles
               id="tsparticles"
               url="/particles-config.json"
               init={(main) => {
@@ -89,7 +89,7 @@ function Home({
               loaded={(container) => {
                 return Promise.resolve();
               }}
-            />
+            /> */}
             {/* <video
               autoPlay
               loop
@@ -126,9 +126,9 @@ function Home({
                   <h2 className="banner-subtitle my-3 font-weight-bold">
                     {startDate && endDate
                       ? moment(startDate, 'YYYY-MM-DD').format(
-                        'MMM Do, YYYY -'
-                      ) +
-                      moment(endDate, ' YYYY-MM-DD').format('MMM Do, YYYY')
+                          'MMM Do, YYYY -'
+                        ) +
+                        moment(endDate, ' YYYY-MM-DD').format('MMM Do, YYYY')
                       : ''}
                   </h2>
                   <h3 className="banner-desc font-weight-bold">
@@ -171,15 +171,11 @@ function Home({
         </div>
       </section>
 
-
-
-
-
-
-
       {/* <div className="purple-background"> */}
-      {(
-        <section id="ts-speakers-main" className="diagonal-up-right blue-gradient my-5 ">
+      {
+        <section
+          id="ts-speakers-main"
+          className="diagonal-up-right blue-gradient my-5 ">
           <div className="container">
             <div className="row text-center">
               <h3 className="title-white mx-auto font-weight-light speaker-title">
@@ -210,9 +206,12 @@ function Home({
             </div>
           </div>
         </section>
-      )}
+      }
 
-      <section id="ts-statics" className="z-1 ts-statics my-5" style={{ paddingTop: "10rem" }}>
+      <section
+        id="ts-statics"
+        className="z-1 ts-statics my-5"
+        style={{ paddingTop: '10rem' }}>
         <div className="container py-4">
           <div className="row d-flex justify-content-center">
             <div className="col-sm-2 m-2 text-center">
@@ -260,7 +259,6 @@ function Home({
                    </div>
                  </div>
                </div> */}
-
           </div>
         </div>
       </section>
@@ -325,11 +323,22 @@ function Home({
                 Computer Engineering Department of Sharif University of
                 Technology
               </p>
-              <div style={{ display: "flex", flexDirection: "row", alignItems: "center", flexWrap: "wrap" }}>
+              <div
+                style={{
+                  display: 'flex',
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  flexWrap: 'wrap',
+                }}>
                 <h5 className="section-sub-title text-white mb-3 mt-5">
                   Sponsored by
                 </h5>
-                <img src="/images/Tapsell_logo_png.png" alt="Image not found!" className='ml-4' style={{ maxWidth: 150, width: '100%' }} />
+                <img
+                  src="/images/Tapsell_logo_png.png"
+                  alt="Image not found!"
+                  className="ml-4"
+                  style={{ maxWidth: 150, width: '100%' }}
+                />
               </div>
             </div>
           </div>
