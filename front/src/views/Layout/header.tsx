@@ -1,16 +1,32 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
+import { useLocation } from 'react-router-dom';
 import { setThisSeries as doSetThisSeries } from '../../redux/actions/account';
+
+const matchesScope = (location: string, scopes: string[]): boolean => {
+  return scopes.some((scope) => {
+    if (scope.endsWith('/*')) {
+      return (
+        location === scope.slice(0, -2) ||
+        location.startsWith(scope.slice(0, -1))
+      );
+    } else {
+      return location === scope;
+    }
+  });
+};
 
 const Header = ({ isLoggedIn, thisSeries, doSetThisSeries }) => {
   const { t } = useTranslation('header', { useSuspense: false });
+  const location = useLocation();
 
   const navbarItems: NavBarItem[] = [
     {
       title: `${thisSeries} WSS`,
       persianTitle: `${thisSeries} WSS`,
       link: '/',
+      scopes: ['/'],
       handler: (thisSeries: string) => {
         doSetThisSeries(thisSeries).then(() => window.location.reload());
       },
@@ -53,9 +69,24 @@ const Header = ({ isLoggedIn, thisSeries, doSetThisSeries }) => {
       ],
     },
     { title: 'Schedule', persianTitle: 'برنامه زمانی', link: '/schedule' },
-    { title: 'Seminars', persianTitle: 'سمینارها', link: '/seminars' },
-    { title: 'Lab Talks', persianTitle: 'ارائه آزمایشگاه', link: '/labtalks' },
-    { title: 'Round Tables', persianTitle: 'میزگردها', link: '/roundtables' },
+    {
+      title: 'Seminars',
+      persianTitle: 'سمینارها',
+      link: '/seminars',
+      scopes: ['/seminars', '/seminar/*'],
+    },
+    {
+      title: 'Lab Talks',
+      persianTitle: 'ارائه آزمایشگاه',
+      link: '/labtalks',
+      scopes: ['/labtalks', '/labtalk/*'],
+    },
+    {
+      title: 'Round Tables',
+      persianTitle: 'میزگردها',
+      link: '/roundtables',
+      scopes: ['/roundtables', '/roundtable/*'],
+    },
     // { title: 'Speakers', persianTitle: 'سمینارها', link: '/seminars' },
     // { title: 'Opening Ceremony', persianTitle: 'افتتاحیه', link: '/seminar/114' },
     // { title: 'Workshops', persianTitle: 'کارگاه‌ها', link: '/workshops' },
@@ -67,21 +98,18 @@ const Header = ({ isLoggedIn, thisSeries, doSetThisSeries }) => {
       title: 'Signup',
       persianTitle: 'ثبت‌نام',
       link: '/create-account',
-      style: 'active',
       loggedIn: 'notAuthorized',
     },
     {
       title: 'Login',
       persianTitle: 'ورود',
       link: '/login',
-      style: 'active',
       loggedIn: 'notAuthorized',
     },
     {
       title: 'Dashboard',
       persianTitle: 'داشبورد',
       link: '/dashboard',
-      style: 'active',
       loggedIn: 'authorized',
     },
   ];
@@ -133,7 +161,16 @@ const Header = ({ isLoggedIn, thisSeries, doSetThisSeries }) => {
                       </ul>
                     </li>
                   ) : (
-                    <li key={i.title} className={`nav-item ${i.style || ''}`}>
+                    <li
+                      key={i.title}
+                      className={`nav-item ${i.style || ''} ${
+                        matchesScope(
+                          location.pathname,
+                          i.scopes || [`${i.link}/*`]
+                        )
+                          ? i.activeStyle || 'active'
+                          : ''
+                      }`}>
                       <a className="nav-link" href={i.link}>
                         {i.title}
                       </a>
@@ -161,8 +198,10 @@ interface NavBarItem {
   title: string;
   persianTitle: string;
   link: string;
+  scopes?: string[];
   handler?: any;
   style?: string;
+  activeStyle?: string;
   children?: {
     title: string;
     persianTitle: string;
