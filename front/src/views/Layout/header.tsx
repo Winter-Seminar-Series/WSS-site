@@ -179,5 +179,3 @@ interface NavBarItem {
     }[];
     loggedIn?: 'authorized' | 'notAuthorized';
 }
-
-// function is8th

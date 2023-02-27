@@ -34,12 +34,7 @@ export default function AboutUs() {
 
                         <div
                             className="row d-flex flex-sm-row-reverse justify-content-start justify-content-sm-between mt-5 mb-md-5">
-                            <div className="p-5 p-md-0 col-md-4 d-flex flex-column justify-content-center">
-                                <img
-                                    className="w-100 h-auto my-auto"
-                                    src="images/roundtable.png"
-                                />
-                            </div>
+
                             <div className="col mr-md-3 d-flex flex-column justify-content-center">
                                 <h3 className="section-sub-title">Round Tables</h3>
                                 <p className="section-paragraph">
@@ -47,6 +42,12 @@ export default function AboutUs() {
                                     inviting experts in the field to share their insights and engage with
                                     participants' concerns. Please note that the round tables are conducted in Persian.
                                 </p>
+                            </div>
+                            <div className="p-5 p-md-0 col-md-4 d-flex flex-column justify-content-center">
+                                <img
+                                    className="w-100 h-auto my-auto"
+                                    src="images/roundtable.png"
+                                />
                             </div>
                         </div>
 
