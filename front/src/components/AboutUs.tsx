@@ -36,8 +36,8 @@ export default function AboutUs() {
                             className="row d-flex flex-sm-row-reverse justify-content-start justify-content-sm-between mt-5 mb-md-5">
 
                             <div className="col mr-md-3 d-flex flex-column justify-content-center">
-                                <h3 className="section-sub-title padding-right-text">Round Tables</h3>
-                                <p className="section-paragraph padding-right-text">
+                                <h3 className="section-sub-title padding-left-text">Round Tables</h3>
+                                <p className="section-paragraph padding-left-text">
                                     During the event, we host round table discussions on specific topics,
                                     inviting experts in the field to share their insights and engage with
                                     participants' concerns. Please note that the round tables are conducted in Persian.

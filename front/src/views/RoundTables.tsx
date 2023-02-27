@@ -54,7 +54,8 @@ const RoundTables = ({
           )}
           {roundTables.length === 0 && !isFetching && (
             <div className="row">
-              <div className="col">Nothing has been added yet</div>
+              {/*<div className="col">Nothing has been added yet</div>*/}
+
             </div>
           )}
         </div>
