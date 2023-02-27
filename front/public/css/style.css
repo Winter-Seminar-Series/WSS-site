@@ -64,9 +64,9 @@
   --green-light: #94ae3f;
   --green-mid: #638932;
 
-  --gray-light: #9FAEB5;
-  --gray-mid: #3D5863;
-  --gray-dark: #121C1E;
+  --gray-light: #9faeb5;
+  --gray-mid: #3d5863;
+  --gray-dark: #121c1e;
   --gray-pure: #0c1417;
 
   /* --section-background: #36366d; */
@@ -3786,7 +3786,8 @@ label {
 
 .blue-gradient:nth-last-child(2),
 .background-theme {
-  background: url('../images/bg42.jpg'), var(--spring-dark-blue) no-repeat center top !important;
+  background: url('../images/bg42.jpg'),
+    var(--spring-dark-blue) no-repeat center top !important;
   background-size: cover !important;
 }
 
