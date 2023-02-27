@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import PublicCard from '../components/cards/PublicCard';
 import LabTalkCard from "../components/cards/LabTalkCard";
 import { getModelList, MODEL_LISTS_NAMES } from '../redux/actions/WSS';
+import TBACard from "../components/cards/TBACard";
 
 const LabTalks = ({
   thisSeries,
@@ -55,7 +56,8 @@ const LabTalks = ({
           )}
           {labtalks.length === 0 && !isFetching && (
             <div className="row">
-              <div className="col">Nothing has been added yet</div>
+              {/*<div className="col">Nothing has been added yet</div>*/}
+              <TBACard/>
             </div>
           )}
         </div>

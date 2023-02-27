@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { connect } from 'react-redux';
 import { BASE_URL } from '../../constants/info';
 
-function RoundTableCard({ id, presentationLink = '', roundTables, avatarName, cardDescription}) {
+function RoundTableCard({ id, presentationLink = '', roundTables }) {
   const [roundTable, setRoundTable] = useState({
     subject: '',
     speakers: [],
@@ -25,39 +25,39 @@ function RoundTableCard({ id, presentationLink = '', roundTables, avatarName, ca
   }, [cardRef]);
 
   return (
-    <a
-      className=""
-      ref={cardRef}
-      href={presentationLink}
-      style={{ textDecoration: 'none' }}>
-      <div id="public-card">
-        <div className="card">
-          <div className="card-image">
-            <img
-              src={
-                roundTable.poster_picture
-                  ? `${BASE_URL}/${roundTable.poster_picture}`
-                  : process.env.PUBLIC_URL + '/images/icons/' + avatarName
-              }
-              alt=""
-              onError={({ currentTarget }) => {
-                currentTarget.onerror = null; // prevents looping
-                currentTarget.src = `${process.env.PUBLIC_URL}images/icons/` + avatarName;
-              }}
-            />
-          </div>
-          <div className="card-description">
-            <h3>{roundTable.subject}</h3>
-            {/* <div className='like'>
+      <a
+          className=""
+          ref={cardRef}
+          href={presentationLink}
+          style={{ textDecoration: 'none' }}>
+        <div id="public-card">
+          <div className="card">
+            <div className="card-image">
+              <img
+                  src={
+                    roundTable.poster_picture
+                        ? `${BASE_URL}/${roundTable.poster_picture}`
+                        : process.env.PUBLIC_URL + '/images/icons/avatar.jpg'
+                  }
+                  alt=""
+                  onError={({ currentTarget }) => {
+                    currentTarget.onerror = null; // prevents looping
+                    currentTarget.src = `${process.env.PUBLIC_URL}images/icons/avatar.jpg`;
+                  }}
+              />
+            </div>
+            <div className="card-description">
+              <h3>{roundTable.subject}</h3>
+              {/* <div className='like'>
               <span>
                 add to your favorite
             </span>
               <Like />
             </div> */}
+            </div>
           </div>
         </div>
-      </div>
-    </a>
+      </a>
   );
 }
 
