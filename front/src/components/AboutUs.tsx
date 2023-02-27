@@ -36,8 +36,8 @@ export default function AboutUs() {
                             className="row d-flex flex-sm-row-reverse justify-content-start justify-content-sm-between mt-5 mb-md-5">
 
                             <div className="col mr-md-3 d-flex flex-column justify-content-center">
-                                <h3 className="section-sub-title">Round Tables</h3>
-                                <p className="section-paragraph">
+                                <h3 className="section-sub-title padding-right-text">Round Tables</h3>
+                                <p className="section-paragraph padding-right-text">
                                     During the event, we host round table discussions on specific topics,
                                     inviting experts in the field to share their insights and engage with
                                     participants' concerns. Please note that the round tables are conducted in Persian.
@@ -60,11 +60,11 @@ export default function AboutUs() {
                                     src="images/poster_session.png"
                                 />
                             </div>
-                            <div className="col mr-md-3 d-flex flex-column justify-content-center">
+                            <div className="col justify-content-center">
                                 <h3 className="section-sub-title">Lab Talks</h3>
                                 <p className="section-paragraph">
-                                    This section focuses on the laboratories of the Faculty of Computer
-                                    Engineering at Sharif University of Technology. In each session, we
+                                    This section focuses on the laboratories of the Faculty of
+                                    Computer Engineering at Sharif University of Technology. <br/>In each session, we
                                     feature a different laboratory, with members introducing their lab and
                                     discussing current research topics. This provides participants with an
                                     opportunity to learn about cutting-edge research and developments in computer
