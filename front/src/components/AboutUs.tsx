@@ -64,10 +64,11 @@ export default function AboutUs() {
                                 <h3 className="section-sub-title">Lab Talks</h3>
                                 <p className="section-paragraph">
                                     This section focuses on the laboratories of the Faculty of
-                                    Computer Engineering at Sharif University of Technology. <br/>In each session, we
-                                    feature a different laboratory, with members introducing their lab and
-                                    discussing current research topics. This provides participants with an
-                                    opportunity to learn about cutting-edge research and developments in computer
+                                    Computer Engineering at Sharif University of Technology. <br/>
+                                    In each session, we feature a different laboratory, with <br/>
+                                    members introducing their lab and discussing current <br/>
+                                    research topics. This provides participants with an
+                                    opportunity <br/>to learn about cutting-edge research and developments in computer
                                     engineering.
                                 </p>
 
