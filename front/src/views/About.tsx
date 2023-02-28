@@ -1,9 +1,11 @@
+import { StaticDatePicker } from '@mui/lab';
 import React from 'react';
+import { connect } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import AboutUs from '../components/AboutUs';
 import Staff from './Staff';
 
-const About = () => {
+const About = ({ thisSeries }) => {
   const { t } = useTranslation('about', { useSuspense: false });
 
   const diagonalStyle = {
@@ -44,7 +46,7 @@ const About = () => {
             </div>
             <AboutUs />
 
-            <Staff />
+            {thisSeries !== '8th' && <Staff />}
           </div>
         </div>
       </section>
@@ -52,4 +54,12 @@ const About = () => {
   );
 };
 
-export default About;
+const mapStateToProps = (state, ownProps) => {
+  return {
+    thisSeries: state.account.thisSeries,
+  };
+};
+
+export default connect(mapStateToProps)(About);
+
+// export default About;
