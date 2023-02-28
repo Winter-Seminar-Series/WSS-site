@@ -2792,7 +2792,7 @@ h4.panel-title a.collapsed:before {
 }
 
 .large-neg-margin {
-  margin-bottom: -140px !important;
+  margin-bottom: calc(-2 * var(--diagonal-offset)) !important;
 }
 
 .on-top {

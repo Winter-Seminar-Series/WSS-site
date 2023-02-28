@@ -25,11 +25,6 @@ const sectionSubtitleStyle: { position: 'relative'; top: string } = {
   top: '-2rem',
 };
 
-const venueMapStyle = {
-  minHeight: '30rem',
-  backgroundPositionY: 'center !important',
-};
-
 function Home({
   thisSeries,
   getWSSPrimitiveFields,
@@ -294,8 +289,20 @@ function Home({
         )} */}
 
       <section
-        className="venu-map no-padding diagonal background-theme h-100 pb-2  large-neg-margin"
-        style={venueMapStyle}>
+        className="venu-map no-padding diagonal background-theme h-100 pb-2 large-neg-margin"
+        style={{
+          minHeight: '30rem',
+          backgroundPositionY: 'center !important',
+          position: 'relative',
+          overflow: 'hidden',
+        }}>
+        <div
+          style={{
+            position: 'absolute',
+            inset: 0,
+            background: '#0005',
+            transform: 'unset',
+          }}></div>
         {/* <div className="container">
             <h3 className="section-sub-title" style={sectionSubtitleStyle}>
               WSS Venue
