@@ -1,15 +1,15 @@
 import React from 'react';
-import {useTranslation} from 'react-i18next';
-import {connect} from 'react-redux';
-import {useLocation} from 'react-router-dom';
-import {setThisSeries as doSetThisSeries} from '../../redux/actions/account';
+import { useTranslation } from 'react-i18next';
+import { connect } from 'react-redux';
+import { useLocation } from 'react-router-dom';
+import { setThisSeries as doSetThisSeries } from '../../redux/actions/account';
 
 const matchesScope = (location: string, scopes: string[]): boolean => {
   return scopes.some((scope) => {
     if (scope.endsWith('/*')) {
       return (
-          location === scope.slice(0, -2) ||
-          location.startsWith(scope.slice(0, -1))
+        location === scope.slice(0, -2) ||
+        location.startsWith(scope.slice(0, -1))
       );
     } else {
       return location === scope;
@@ -17,8 +17,8 @@ const matchesScope = (location: string, scopes: string[]): boolean => {
   });
 };
 
-const Header = ({isLoggedIn, thisSeries, doSetThisSeries}) => {
-  const {t} = useTranslation('header', {useSuspense: false});
+const Header = ({ isLoggedIn, thisSeries, doSetThisSeries }) => {
+  const { t } = useTranslation('header', { useSuspense: false });
   const location = useLocation();
 
   const navbarItems: NavBarItem[] = [
@@ -105,76 +105,76 @@ const Header = ({isLoggedIn, thisSeries, doSetThisSeries}) => {
     },
   ];
   return (
-      <header id="header">
-        <div className="container"></div>
-        <nav className="navbar navbar-expand-xl navbar-dark w-100 z-index-master">
-          <div className="container">
-            <a className="navbar-brand" href="/">
-              <img src="/images/headerlogo.png" height="40" alt=""/>
-            </a>
-            <button
-                className="navbar-toggler"
-                type="button"
-                data-toggle="collapse"
-                data-target="#wss-navbar"
-                aria-controls="wss-navbar"
-                aria-expanded="false"
-                aria-label="Toggle navigation">
-              <span className="navbar-toggler-icon"></span>
-            </button>
-            <div className="collapse navbar-collapse" id="wss-navbar">
-              <ul className="navbar-nav ml-auto mt-2 mt-lg-0">
-                {navbarItems.map(
-                    (i) =>
-                        ((!(thisSeries === '8th') ||
-                            (thisSeries === '8th' &&
-                                !(i.title === 'Staff'))) && (!i.loggedIn ||
-                            (i.loggedIn === 'notAuthorized' && !isLoggedIn) ||
-                            (i.loggedIn === 'authorized' && isLoggedIn))) &&
-                        (i.children ? (
-                            <li key={i.title} className="nav-item dropdown">
-                              <a
-                                  href={i.link}
-                                  className={`nav-link dropdown-toggle ${i.style || ''}`}
-                                  data-toggle="dropdown">
-                                {i.title}
-                              </a>
-                              <ul className="dropdown-menu" role="menu">
-                                {i.children.map((c) => (
-                                    <li key={c.title}>
-                                      <a
-                                          href={c.link}
-                                          className="dropdown-item"
-                                          onClick={() => i.handler(c.series)}
-                                          style={{cursor: 'pointer'}}>
-                                        {c.title}
-                                      </a>
-                                    </li>
-                                ))}
-                              </ul>
-                            </li>
-                        ) : (
-                            <li
-                                key={i.title}
-                                className={`nav-item ${i.style || ''} ${
-                                    matchesScope(
-                                        location.pathname,
-                                        i.scopes || [`${i.link}/*`]
-                                    )
-                                        ? i.activeStyle || 'active'
-                                        : ''
-                                }`}>
-                              <a className="nav-link" href={i.link}>
-                                {i.title}
-                              </a>
-                            </li>
-                        ))
-                )}
-              </ul>
-            </div>
+    <header id="header">
+      <div className="container"></div>
+      <nav className="navbar navbar-expand-xl navbar-dark w-100 z-index-master">
+        <div className="container">
+          <a className="navbar-brand" href="/">
+            <img src="/images/headerlogo.png" height="40" alt=""/>
+          </a>
+          <button
+              className="navbar-toggler"
+              type="button"
+              data-toggle="collapse"
+              data-target="#wss-navbar"
+              aria-controls="wss-navbar"
+              aria-expanded="false"
+              aria-label="Toggle navigation">
+            <span className="navbar-toggler-icon"></span>
+          </button>
+          <div className="collapse navbar-collapse" id="wss-navbar">
+            <ul className="navbar-nav ml-auto mt-2 mt-lg-0">
+              {navbarItems.map(
+                  (i) =>
+                      ((!(thisSeries === '8th') ||
+                          (thisSeries === '8th' &&
+                              !(i.title === 'Staff'))) && (!i.loggedIn ||
+                          (i.loggedIn === 'notAuthorized' && !isLoggedIn) ||
+                          (i.loggedIn === 'authorized' && isLoggedIn))) &&
+                      (i.children ? (
+                          <li key={i.title} className="nav-item dropdown">
+                            <a
+                                href={i.link}
+                                className={`nav-link dropdown-toggle ${i.style || ''}`}
+                                data-toggle="dropdown">
+                              {i.title}
+                            </a>
+                            <ul className="dropdown-menu" role="menu">
+                              {i.children.map((c) => (
+                                  <li key={c.title}>
+                                    <a
+                                        href={c.link}
+                                        className="dropdown-item"
+                                        onClick={() => i.handler(c.series)}
+                                        style={{cursor: 'pointer'}}>
+                                      {c.title}
+                                    </a>
+                                  </li>
+                              ))}
+                            </ul>
+                          </li>
+                      ) : (
+                          <li
+                              key={i.title}
+                              className={`nav-item ${i.style || ''} ${
+                                  matchesScope(
+                                      location.pathname,
+                                      i.scopes || [`${i.link}/*`]
+                                  )
+                                      ? i.activeStyle || 'active'
+                                      : ''
+                              }`}>
+                            <a className="nav-link" href={i.link}>
+                              {i.title}
+                            </a>
+                          </li>
+                      ))
+              )}
+            </ul>
           </div>
-        </nav>
-      </header>
+        </div>
+      </nav>
+    </header>
   );
 };
 
