@@ -49,7 +49,6 @@ def get_wss_object_or_404(title: str) -> WSS:
         "5th": 2019,
         "6th": 2020,
         "7th": 2021
-        "8th": 2023
     }
     try:
         year = int(title)
