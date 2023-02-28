@@ -125,50 +125,50 @@ const Header = ({ isLoggedIn, thisSeries, doSetThisSeries }) => {
           <div className="collapse navbar-collapse" id="wss-navbar">
             <ul className="navbar-nav ml-auto mt-2 mt-lg-0">
               {navbarItems.map(
-                  (i) =>
-                      ((!(thisSeries === '8th') ||
-                          (thisSeries === '8th' &&
-                              !(i.title === 'Staff'))) && (!i.loggedIn ||
-                          (i.loggedIn === 'notAuthorized' && !isLoggedIn) ||
-                          (i.loggedIn === 'authorized' && isLoggedIn))) &&
-                      (i.children ? (
-                          <li key={i.title} className="nav-item dropdown">
+                (i) =>
+                  ((!(thisSeries === '8th') ||
+                    (thisSeries === '8th' &&
+                        !(i.title === 'Staff'))) && (!i.loggedIn ||
+                    (i.loggedIn === 'notAuthorized' && !isLoggedIn) ||
+                    (i.loggedIn === 'authorized' && isLoggedIn))) &&
+                  (i.children ? (
+                    <li key={i.title} className="nav-item dropdown">
+                      <a
+                        href={i.link}
+                        className={`nav-link dropdown-toggle ${i.style || ''}`}
+                        data-toggle="dropdown">
+                        {i.title}
+                      </a>
+                      <ul className="dropdown-menu" role="menu">
+                        {i.children.map((c) => (
+                          <li key={c.title}>
                             <a
-                                href={i.link}
-                                className={`nav-link dropdown-toggle ${i.style || ''}`}
-                                data-toggle="dropdown">
-                              {i.title}
-                            </a>
-                            <ul className="dropdown-menu" role="menu">
-                              {i.children.map((c) => (
-                                  <li key={c.title}>
-                                    <a
-                                        href={c.link}
-                                        className="dropdown-item"
-                                        onClick={() => i.handler(c.series)}
-                                        style={{cursor: 'pointer'}}>
-                                      {c.title}
-                                    </a>
-                                  </li>
-                              ))}
-                            </ul>
-                          </li>
-                      ) : (
-                          <li
-                              key={i.title}
-                              className={`nav-item ${i.style || ''} ${
-                                  matchesScope(
-                                      location.pathname,
-                                      i.scopes || [`${i.link}/*`]
-                                  )
-                                      ? i.activeStyle || 'active'
-                                      : ''
-                              }`}>
-                            <a className="nav-link" href={i.link}>
-                              {i.title}
+                              href={c.link}
+                              className="dropdown-item"
+                              onClick={() => i.handler(c.series)}
+                              style={{cursor: 'pointer'}}>
+                              {c.title}
                             </a>
                           </li>
-                      ))
+                        ))}
+                      </ul>
+                    </li>
+                  ) : (
+                    <li
+                      key={i.title}
+                      className={`nav-item ${i.style || ''} ${
+                        matchesScope(
+                          location.pathname,
+                          i.scopes || [`${i.link}/*`]
+                        )
+                          ? i.activeStyle || 'active'
+                          : ''
+                      }`}>
+                      <a className="nav-link" href={i.link}>
+                        {i.title}
+                      </a>
+                    </li>
+                  ))
               )}
             </ul>
           </div>
