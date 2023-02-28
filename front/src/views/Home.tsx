@@ -164,7 +164,7 @@ function Home({
         <AboutUs />
         <div className="row no-margin">
           <div className="general-btn text-center mx-auto">
-            <a href="/about" className="btn btn-primary all-speakers">
+            <a href="/about" className="btn btn-primary">
               More About WSS
             </a>
           </div>

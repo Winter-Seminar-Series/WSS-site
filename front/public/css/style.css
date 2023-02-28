@@ -349,7 +349,7 @@ img.pull-right {
   font-weight: 900;
   font-weight: bold;
   margin: 0;
-  color: var(--med-blue);
+  color: #243942;
 }
 
 .section-sub-title {
@@ -529,6 +529,7 @@ cite {
 /* Button */
 
 .btn.btn-primary,
+.btn.btn-secondary,
 .btn-dark,
 .btn-border {
   font-size: 13px;
@@ -544,6 +545,16 @@ cite {
   transition: color 400ms, background-color 400ms, border-color 400ms;
 }
 
+.btn.btn-secondary {
+  background: #e0e1e4;
+  color: #212529;
+}
+
+.btn.btn-secondary:hover {
+  color: #e0e1e4;
+  background: #212529;
+}
+
 .btn-white.btn-primary,
 .btn-white.btn-primary:hover {
   background: #fff;
@@ -557,8 +568,14 @@ cite {
   text-decoration: none;
 }
 .btn.btn-primary {
-  background: white;
-  border: 2px solid transparent;
+  background: #3d5863;
+  color: #e0e1e4;
+  /* border: 2px solid transparent; */
+}
+
+.btn.btn-primary:hover {
+  /* color: #e0e1e4; */
+  background: #243942;
 }
 
 .btn.btn-blue {
