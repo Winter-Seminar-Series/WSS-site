@@ -158,8 +158,8 @@ function Home({
       <section id="ts-programs" className="diagonal mb-5">
         <AboutUs />
         <div className="row no-margin">
-          <div className="text-center mx-auto">
-            <a href="/about" className="btn btn-primary all-speakers">
+          <div className="general-btn text-center mx-auto">
+            <a href="/about" className="btn btn-primary">
               More About WSS
             </a>
           </div>
