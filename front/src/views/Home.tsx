@@ -75,7 +75,7 @@ function Home({
               backgroundSize: '100% 100%',
               backgroundRepeat: 'no-repeat',
             }}>
-              {/* <Particles
+            {/* <Particles
               id="tsparticles"
               url="/particles-config.json"
               init={(main) => {
@@ -92,7 +92,7 @@ function Home({
               ref={videoRef}
               onCanPlay={setVideoPlayBackRate}>
               <source src="images/bg5.jpg" type="video/mp4" />
-          </video> */}
+            </video> */}
           </div>
           <div className="container my-auto">
             <div className="banner-content ">
@@ -121,9 +121,9 @@ function Home({
                   <h2 className="banner-subtitle my-3 font-weight-bold">
                     {startDate && endDate
                       ? moment(startDate, 'YYYY-MM-DD').format(
-                        'MMM Do, YYYY -'
-                      ) +
-                      moment(endDate, ' YYYY-MM-DD').format('MMM Do, YYYY')
+                          'MMM Do, YYYY -'
+                        ) +
+                        moment(endDate, ' YYYY-MM-DD').format('MMM Do, YYYY')
                       : ''}
                   </h2>
                   <h3 className="banner-desc font-weight-bold">
@@ -304,10 +304,10 @@ function Home({
             transform: 'unset',
           }}></div>
         {/* <div className="container">
-          <h3 className="section-sub-title" style={sectionSubtitleStyle}>
-            WSS Venue
-          </h3>
-        </div> */}
+            <h3 className="section-sub-title" style={sectionSubtitleStyle}>
+              WSS Venue
+            </h3>
+          </div> */}
         <div className="container pb-5 large-margin">
           <div className="row my-5">
             <div className="col-md-6">

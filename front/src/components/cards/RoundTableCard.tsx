@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { connect } from 'react-redux';
 import { BASE_URL } from '../../constants/info';
 
-function RoundTableCard({id, presentationLink = '', roundTables}) {
+function RoundTableCard({ id, presentationLink = '', roundTables }) {
   const [roundTable, setRoundTable] = useState({
     subject: '',
     speakers: [],
@@ -29,7 +29,7 @@ function RoundTableCard({id, presentationLink = '', roundTables}) {
       className=""
       ref={cardRef}
       href={presentationLink}
-      style={{textDecoration: 'none'}}>
+      style={{ textDecoration: 'none' }}>
       <div id="public-card">
         <div className="card">
           <div className="card-image">
@@ -40,7 +40,7 @@ function RoundTableCard({id, presentationLink = '', roundTables}) {
                   : process.env.PUBLIC_URL + '/images/icons/avatar.jpg'
               }
               alt=""
-              onError={({currentTarget}) => {
+              onError={({ currentTarget }) => {
                 currentTarget.onerror = null; // prevents looping
                 currentTarget.src = `${process.env.PUBLIC_URL}images/icons/avatar.jpg`;
               }}
