@@ -8,7 +8,7 @@ import {
 } from '../../redux/actions/WSS';
 import GoToButton from '../../components/GoToButton';
 import FavoriteButton from '../../components/FavoriteButton';
-import moment from "moment";
+import moment from 'moment';
 
 function LabTalkDetail({
   thisSeries,
@@ -70,31 +70,21 @@ function LabTalkDetail({
       <div className="container-fluid px-sm-3" style={{ marginTop: '-3rem' }}>
         <div className="container">
           <div className="row align-items-end">
-            <div className="col-md-6 col-lg-4 m-0">
-              <div
-                style={{
-                  width: '100%',
-                  paddingTop: '100%',
-                  position: 'relative',
-                  backgroundColor: 'rgba(0,0,0,.1)',
-                  borderRadius: '5px',
-                }}>
-                {labTalk.poster_picture && (
-                  <img
-                    style={{
-                      borderRadius: '5px',
-                      width: '100%',
-                      boxShadow: '0px 6px 12px rgba(0,0,0,.3)',
-                      top: '0',
-                      position: 'absolute',
-                    }}
-                    src={`${BASE_URL}/${labTalk.poster_picture}`}
-                    alt=""
-                  />
-                )}
+            {labTalk.poster_picture && (
+              <div className="col-12 col-md-6 col-lg-4">
+                <img
+                  style={{
+                    borderRadius: '5px',
+                    width: '100%',
+                    boxShadow: '0px 6px 12px rgba(0,0,0,.3)',
+                    aspectRatio: '1 / 1',
+                  }}
+                  src={`${BASE_URL}/${labTalk.poster_picture}`}
+                  alt=""
+                />
               </div>
-            </div>
-            <div className="col mt-3">
+            )}
+            <div className="col">
               <div className="d-flex">
                 {labTalk && labTalk.id && isLoggedIn && (
                   <FavoriteButton
@@ -104,7 +94,7 @@ function LabTalkDetail({
                   />
                 )}
 
-                <h2 className="ml-3">{head.name}</h2>
+                <h1>{head.name}</h1>
               </div>
 
               <h5>{`${head.degree}, ${head.place}`}</h5>
@@ -120,14 +110,13 @@ function LabTalkDetail({
                         moment(labTalk.duration, 'hh:mm:ss').format(`mm`)
                       ) + ' minutes'
                     : parseInt(
-
-                      moment(labTalk.duration, 'hh:mm:ss').format(`hh`)
-                    ) *
-                    60 +
-                    parseInt(
-                      moment(labTalk.duration, 'hh:mm:ss').format(`mm`)
-                    ) +
-                    ' minutes')}
+                        moment(labTalk.duration, 'hh:mm:ss').format(`hh`)
+                      ) *
+                        60 +
+                      parseInt(
+                        moment(labTalk.duration, 'hh:mm:ss').format(`mm`)
+                      ) +
+                      ' minutes')}
                 {/* {!seminar.duration &&  */}
                 {/*{'To be announced ...'}*/}
               </div>
@@ -145,7 +134,7 @@ function LabTalkDetail({
                   <GoToButton
                     type="labtalks"
                     id={labTalk.id}
-                    room_name={"labtalk"}
+                    room_name={'labtalk'}
                   />
                 )}
               </div>

@@ -61,7 +61,7 @@ export const logout = () => ({
   },
 });
 
-export const sendPaymentRequest = (discount, series = '7th') => {
+export const sendPaymentRequest = (discount, series = '8th') => {
   return {
     [CALL_API]: {
       types: [
@@ -77,7 +77,7 @@ export const sendPaymentRequest = (discount, series = '7th') => {
   };
 };
 
-export const verifyPayment = (authority, status, series = '7th') => ({
+export const verifyPayment = (authority, status, series = '8th') => ({
   [CALL_API]: {
     types: [
       actionTypes.VERIFY_PAYMENT_REQUEST,

@@ -11,7 +11,7 @@ const initState = {
   isRegistrationOpen: false,
   participantsCount: 0,
   icalLink: undefined,
-  thisSeries: '7th',
+  thisSeries: '8th',
   startDate: undefined,
   endDate: undefined,
   proposalLink: undefined,

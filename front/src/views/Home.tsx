@@ -25,11 +25,6 @@ const sectionSubtitleStyle: { position: 'relative'; top: string } = {
   top: '-2rem',
 };
 
-const venueMapStyle = {
-  minHeight: '30rem',
-  backgroundPositionY: 'center !important',
-};
-
 function Home({
   thisSeries,
   getWSSPrimitiveFields,
@@ -76,11 +71,11 @@ function Home({
           <div
             className="header-video-wrapper"
             style={{
-              backgroundImage: 'url(../images/bg5.jpg)',
+              backgroundImage: 'url(../images/peak.jpg)',
               backgroundSize: '100% 100%',
               backgroundRepeat: 'no-repeat',
             }}>
-            <Particles
+            {/* <Particles
               id="tsparticles"
               url="/particles-config.json"
               init={(main) => {
@@ -89,7 +84,7 @@ function Home({
               loaded={(container) => {
                 return Promise.resolve();
               }}
-            />
+            /> */}
             {/* <video
               autoPlay
               loop
@@ -126,9 +121,9 @@ function Home({
                   <h2 className="banner-subtitle my-3 font-weight-bold">
                     {startDate && endDate
                       ? moment(startDate, 'YYYY-MM-DD').format(
-                        'MMM Do, YYYY -'
-                      ) +
-                      moment(endDate, ' YYYY-MM-DD').format('MMM Do, YYYY')
+                          'MMM Do, YYYY -'
+                        ) +
+                        moment(endDate, ' YYYY-MM-DD').format('MMM Do, YYYY')
                       : ''}
                   </h2>
                   <h3 className="banner-desc font-weight-bold">
@@ -163,7 +158,7 @@ function Home({
       <section id="ts-programs" className="diagonal mb-5">
         <AboutUs />
         <div className="row no-margin">
-          <div className="general-btn text-center mx-auto">
+          <div className="text-center mx-auto">
             <a href="/about" className="btn btn-primary all-speakers">
               More About WSS
             </a>
@@ -171,15 +166,11 @@ function Home({
         </div>
       </section>
 
-
-
-
-
-
-
       {/* <div className="purple-background"> */}
-      {(
-        <section id="ts-speakers-main" className="diagonal-up-right blue-gradient my-5 ">
+      {
+        <section
+          id="ts-speakers-main"
+          className="diagonal-up-right blue-gradient my-5 ">
           <div className="container">
             <div className="row text-center">
               <h3 className="title-white mx-auto font-weight-light speaker-title">
@@ -203,16 +194,19 @@ function Home({
             </div>
           </div>
           <div className="row">
-            <div className="general-btn text-center mx-auto">
+            <div className="text-center mx-auto mt-5">
               <a href="/seminars" className="btn btn-primary btn-white">
                 View All Seminars
               </a>
             </div>
           </div>
         </section>
-      )}
+      }
 
-      <section id="ts-statics" className="z-1 ts-statics my-5" style={{ paddingTop: "10rem" }}>
+      <section
+        id="ts-statics"
+        className="z-1 ts-statics my-5"
+        style={{ paddingTop: '10rem' }}>
         <div className="container py-4">
           <div className="row d-flex justify-content-center">
             <div className="col-sm-2 m-2 text-center">
@@ -260,7 +254,6 @@ function Home({
                    </div>
                  </div>
                </div> */}
-
           </div>
         </div>
       </section>
@@ -296,8 +289,20 @@ function Home({
         )} */}
 
       <section
-        className="venu-map no-padding diagonal background-theme h-100 pb-2  large-neg-margin"
-        style={venueMapStyle}>
+        className="venu-map no-padding diagonal background-theme h-100 pb-2 large-neg-margin"
+        style={{
+          minHeight: '30rem',
+          backgroundPositionY: 'center !important',
+          position: 'relative',
+          overflow: 'hidden',
+        }}>
+        <div
+          style={{
+            position: 'absolute',
+            inset: 0,
+            background: '#0005',
+            transform: 'unset',
+          }}></div>
         {/* <div className="container">
             <h3 className="section-sub-title" style={sectionSubtitleStyle}>
               WSS Venue
@@ -305,31 +310,40 @@ function Home({
           </div> */}
         <div className="container pb-5 large-margin">
           <div className="row my-5">
-            <div className="col-md-6 font-weight-bold">
-              <h5 className="section-sub-title text-white mb-3 mt-5">Info</h5>
+            <div className="col-md-6">
+              <h5 className="h1 text-white mb-3 mt-5">Info</h5>
               <div className="white">
-                <p>Sharif University of Technology </p>
-                <p>Azadi Street, District 2, Tehran, Iran</p>
+                <p className="lead">Sharif University of Technology </p>
+                <p className="lead">Azadi Street, District 2, Tehran, Iran</p>
                 <br />
-                <p>wss@ce.sharif.edu</p>
-                <p>+98(021) 66 16 57 81</p>
+                <p className="lead">wss@ce.sharif.edu</p>
+                <p className="lead">+98(021) 66 16 57 81</p>
               </div>
             </div>
 
-            <div className="col-md-6 font-weight-bold">
-              <h5 className="section-sub-title text-white mb-3 mt-5">
-                Organizer
-              </h5>
-              <p className="font-italic white pb-3">
+            <div className="col-md-6 fs-1 white">
+              <h5 className="h1 text-white mb-3 mt-5">Organizer</h5>
+              <p className="lead pb-3">
                 The event is held by the Student Scientific Chapter (SSC) of
                 Computer Engineering Department of Sharif University of
                 Technology
               </p>
-              <div style={{ display: "flex", flexDirection: "row", alignItems: "center", flexWrap: "wrap" }}>
+              <div
+                style={{
+                  display: 'flex',
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  flexWrap: 'wrap',
+                }}>
                 <h5 className="section-sub-title text-white mb-3 mt-5">
                   Sponsored by
                 </h5>
-                <img src="/images/Tapsell_logo_png.png" alt="Image not found!" className='ml-4' style={{ maxWidth: 150, width: '100%' }} />
+                <img
+                  src="/images/Tapsell_logo_png.png"
+                  alt="Image not found!"
+                  className="ml-4"
+                  style={{ maxWidth: 150, width: '100%' }}
+                />
               </div>
             </div>
           </div>
