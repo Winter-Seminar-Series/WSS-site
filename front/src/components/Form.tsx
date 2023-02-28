@@ -22,6 +22,8 @@ import {
 import ResponsiveDialog from './Dialog';
 import PhoneInput from 'react-phone-input-2';
 import 'react-phone-input-2/lib/style.css';
+import fetchApi from '../redux/middleware/api/fetchApi';
+import { ROOT } from '../redux/actions/urls';
 
 function Form({
   thisSeries,
@@ -37,6 +39,7 @@ function Form({
   introduction_method: inputIntroductionMethod,
   gender: inputGender,
   grade: inputGrade,
+  is_online_attendant: inputIsOnlineAttendant,
   city: inputCity,
   email: inputEmail,
   dateOfBirth: inputDateOfBirth,
@@ -68,6 +71,7 @@ function Form({
   const [last_name, setLastName] = React.useState('');
   const [gender, setGender] = React.useState('');
   const [grade, setGrade] = React.useState('');
+  const [is_online_attendant, setIsOnlineAttendant] = React.useState(true);
   const [university, setUniversity] = React.useState('');
   const [email, setEmail] = React.useState('');
   const [introduction_method, setIntroduction_method] = React.useState('');
@@ -83,6 +87,8 @@ function Form({
   const [job, setJob] = React.useState('');
   const [phoneNumber, setPhoneNumber] = React.useState('');
   const [discount, setDiscount] = React.useState('');
+  const [discountIsFocused, setDiscountIsFocused] = React.useState(false);
+  const [price, setPrice] = React.useState(0);
 
   const [dialogOpen, setDialogOpen] = React.useState(false);
 
@@ -112,13 +118,26 @@ function Form({
   }, [getProfile]);
 
   useEffect(() => {
+    if (discountIsFocused) return;
+
+    fetchApi(`${ROOT}somewhere`, {
+      method: 'POST',
+      body: JSON.stringify({
+        discount,
+        is_online_attendant,
+      }),
+    }).then((response) => {
+      setPrice(response.price ?? 0);
+    });
+  }, [discount, discountIsFocused, is_online_attendant]);
+
+  useEffect(() => {
     setFirstName(inputFirstName);
     setLastName(inputLastName);
-    inputIntroductionMethod
-      ? setIntroduction_method(inputIntroductionMethod)
-      : setIntroduction_method(introduction_method[0]);
-    inputGender ? setGender(inputGender) : setGender(genderTypes[0]);
-    inputGrade ? setGrade(inputGrade) : setGrade(gradeTypes[2]);
+    setIntroduction_method(inputIntroductionMethod)
+    setGender(inputGender)
+    setGrade(inputGrade)
+    setIsOnlineAttendant(inputIsOnlineAttendant)
     setUniversity(inputUniversity);
     setEmail(inputEmail);
     setIntroduction_method(inputIntroductionMethod);
@@ -139,6 +158,7 @@ function Form({
     inputIntroductionMethod,
     inputGender,
     inputGrade,
+    inputIsOnlineAttendant,
     inputCity,
     inputEmail,
     inputMajor,
@@ -160,6 +180,7 @@ function Form({
         last_name &&
         gender &&
         grade &&
+        is_online_attendant != null &&
         university &&
         city &&
         introduction_method &&
@@ -199,6 +220,7 @@ function Form({
       last_name,
       gender,
       grade,
+      is_online_attendant,
       university,
       city,
       introduction_method,
@@ -216,7 +238,7 @@ function Form({
       phone_number: phoneNumber,
     }).then(() => {
       if (isRegisteration) sendPaymentRequest(discount, thisSeries);
-    })
+    });
     // }
   };
   return (
@@ -308,7 +330,6 @@ function Form({
             <RadioGroup
               row
               aria-labelledby="demo-radio-buttons-group-label"
-              defaultValue={'Male'}
               value={gender}
               name="radio-buttons-group">
               {genderTypes.map((type) => (
@@ -362,7 +383,6 @@ function Form({
             <RadioGroup
               row
               aria-labelledby="demo-radio-buttons-group-label"
-              defaultValue={'Bachelor'}
               value={grade}
               name="radio-buttons-group">
               {gradeTypes.map((type) => (
@@ -373,6 +393,31 @@ function Form({
                   control={<Radio onChange={() => setGrade(type)} />}
                 />
               ))}
+            </RadioGroup>
+          </FormControl>
+        </div>
+      </div>
+      <div className="row">
+        <div className="col-12 mb-3 col-lg mb-lg-0">
+          <FormControl>
+            <div className="form-label pt-0 mr-3">Mode of Attendance: *</div>
+            <RadioGroup
+              row
+              aria-labelledby="demo-radio-buttons-group-label"
+              value={is_online_attendant}
+              name="radio-buttons-group">
+              <FormControlLabel
+                key={'Online'}
+                value={true}
+                label={'Online'}
+                control={<Radio onChange={() => setIsOnlineAttendant(true)} />}
+              />
+              <FormControlLabel
+                key={'In person'}
+                value={false}
+                label={'In person'}
+                control={<Radio onChange={() => setIsOnlineAttendant(false)} />}
+              />
             </RadioGroup>
           </FormControl>
         </div>
@@ -441,15 +486,18 @@ function Form({
         <div className="col-12 col-lg">
           <Button
             component="label"
-            className="col-12 col-lg btn btn-lg btn-primary btn-blue mb-1">
+            className="btn btn-lg btn-primary btn-dark mb-1">
             {resume ? 'Resume Uploaded' : 'Upload Resume (optional)'}
             <input type="file" hidden onChange={handleCaptureResume} />
           </Button>
         </div>
       </div>
 
-      <div className='row'>
-        <em className='mb-4'>To increase your chance of getting hired by our sponsers, fill out the optional fields!</em>
+      <div className="row">
+        <em className="mb-1">
+          To increase your chance of getting hired by our sponsers, fill out the
+          optional fields!
+        </em>
       </div>
 
       {isRegisteration ? (
@@ -458,8 +506,10 @@ function Form({
             <div className="col-12 mb-3 col-lg mb-lg-0">
               <input
                 value={discount}
+                onFocus={() => setDiscountIsFocused(true)}
+                onBlur={() => setDiscountIsFocused(false)}
                 onChange={(e) => setDiscount(e.target.value)}
-                type="text"
+                type="password"
                 className="text-input form-control"
                 placeholder="Enter discount code"
               />
@@ -502,8 +552,12 @@ function Form({
           <button
             disabled={isFetching || paymentProcess}
             type="submit"
-            className="btn btn-lg btn-primary btn-dark mb-5">
-            {isRegisteration ? 'Go For Payment' : 'Update Profile'}
+            className="col-12 col-lg btn btn-lg btn-primary btn-blue mb-5">
+            {isRegisteration ? (
+              <>Go For Payment {price ? ` • ${price}` : ''}</>
+            ) : (
+              'Update Profile'
+            )}
           </button>
         </div>
       </div>

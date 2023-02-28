@@ -39,7 +39,8 @@ function Sidebar({ logout, isRegistered }) {
 
   return (
     <>
-      <div className="sidebar">
+      <div className="sidebar position-fixed">
+        <div> </div>
         {sidebarItems.map((s) =>
         (
           <a href={s.link} key={s.title} className="sidebar-item">
