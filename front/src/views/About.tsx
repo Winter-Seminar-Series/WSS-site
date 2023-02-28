@@ -12,7 +12,7 @@ const About = () => {
   };
 
   const containerStyle = {
-    paddingTop: '10.5rem',
+    paddingTop: '12rem',
   };
 
   const whiteBackground = {
@@ -37,9 +37,9 @@ const About = () => {
           <div className="container">
             <div className="row mt-5">
               <div className="col">
-                <p>{t('descriptionP1')}</p>
-                <p>{t('descriptionP2')}</p>
-                <p>{t('descriptionP3')}</p>
+                <p className="section-paragraph">{t('descriptionP1')}</p>
+                <p className="section-paragraph">{t('descriptionP2')}</p>
+                <p className="section-paragraph">{t('descriptionP3')}</p>
               </div>
             </div>
             <AboutUs />

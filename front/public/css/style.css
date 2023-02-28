@@ -99,6 +99,11 @@ p {
   line-height: 24px;
   font-size: 14px;
 }
+.padding-left-text
+{
+  padding-left: 25px;
+}
+
 
 h1,
 h2,
@@ -192,6 +197,9 @@ section,
 .section-padding {
   padding: 8rem 0;
   position: relative;
+}
+.section-paragraph{
+  font-size: 16px ;
 }
 
 .gradient-bg {
@@ -687,7 +695,7 @@ cite {
 
 .general-btn {
   clear: both;
-  margin-top: 60px;
+  /*margin-top: 60px;*/
   z-index: 1000;
 }
 

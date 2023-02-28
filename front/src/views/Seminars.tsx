@@ -16,7 +16,7 @@ const Seminars = ({
   }, [getWSSPrimitiveFields]);
 
 
-  
+
   return (
     <>
       <section
