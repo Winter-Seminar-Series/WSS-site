@@ -1,10 +1,9 @@
 import { BASE_URL } from '../../constants/info';
 
-// export const ROOT = 'https://127.0.0.1:8002/api/'
-export const ROOT = 'https://wss.ce.sharif.edu/api/'
-  // process.env.NODE_ENV === 'production'
-  //   ? BASE_URL.concat('/api/')
-  //   : 'https://wss.ce.sharif.edu/api/';
+export const ROOT =
+  process.env.NODE_ENV === 'production'
+    ? BASE_URL.concat('/api/')
+    : 'https://wss.ce.sharif.edu/api/';
 
 export const REGISTER = ROOT.concat('register/');
 export const LOGIN = ROOT.concat('login/');
