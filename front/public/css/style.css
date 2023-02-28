@@ -3791,7 +3791,7 @@ label {
 
 .blue-gradient:nth-last-child(2),
 .background-theme {
-  background: url('../images/bg42.jpg'),
+  background: url('../images/hill.png'),
     var(--spring-dark-blue) no-repeat center top !important;
   background-size: cover !important;
 }

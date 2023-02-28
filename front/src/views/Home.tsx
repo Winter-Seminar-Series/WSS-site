@@ -76,7 +76,7 @@ function Home({
           <div
             className="header-video-wrapper"
             style={{
-              backgroundImage: 'url(../images/bg5.jpg)',
+              backgroundImage: 'url(../images/peak.jpg)',
               backgroundSize: '100% 100%',
               backgroundRepeat: 'no-repeat',
             }}>
