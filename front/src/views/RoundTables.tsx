@@ -35,14 +35,14 @@ const RoundTables = ({
                 //   </div>
                 // ))
                 roundTables.map((roundTable) => (
-                    <div
-                        key={roundTable.id}
-                        className="col-xs-10 col-sm-6 col-lg-3 mt-2 mb-4">
-                      <RoundTableCard
-                          id={roundTable.id}
-                          presentationLink={'/roundtable/' + roundTable.id}
-                      />
-                    </div>
+                  <div
+                    key={roundTable.id}
+                    className="col-xs-10 col-sm-6 col-lg-3 mt-2 mb-4">
+                    <RoundTableCard
+                      id={roundTable.id}
+                      presentationLink={'/roundtable/' + roundTable.id}
+                    />
+                  </div>
                 ))
               }
             </div>

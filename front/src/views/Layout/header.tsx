@@ -113,13 +113,13 @@ const Header = ({ isLoggedIn, thisSeries, doSetThisSeries }) => {
             <img src="/images/headerlogo.png" height="40" alt=""/>
           </a>
           <button
-              className="navbar-toggler"
-              type="button"
-              data-toggle="collapse"
-              data-target="#wss-navbar"
-              aria-controls="wss-navbar"
-              aria-expanded="false"
-              aria-label="Toggle navigation">
+            className="navbar-toggler"
+            type="button"
+            data-toggle="collapse"
+            data-target="#wss-navbar"
+            aria-controls="wss-navbar"
+            aria-expanded="false"
+            aria-label="Toggle navigation">
             <span className="navbar-toggler-icon"></span>
           </button>
           <div className="collapse navbar-collapse" id="wss-navbar">
@@ -146,7 +146,7 @@ const Header = ({ isLoggedIn, thisSeries, doSetThisSeries }) => {
                               href={c.link}
                               className="dropdown-item"
                               onClick={() => i.handler(c.series)}
-                              style={{cursor: 'pointer'}}>
+                              style={{ cursor: 'pointer' }}>
                               {c.title}
                             </a>
                           </li>

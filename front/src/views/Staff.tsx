@@ -41,15 +41,15 @@ const Staff = ({
                 <h3 className="mb-2 mt-4 col white text-center">{team.name}</h3>
               </div>
               {staff.length > 0 && !isFetching && (
-                  <div className="row justify-content-center">
-                    {team.staff.map((staff) => (
-                        <div
-                            key={staff}
-                            className="col-xs-12 col-sm-6 col-lg-3 mt-2 mb-4">
-                          <PublicCard id={staff} isStaff="true"></PublicCard>
-                        </div>
-                    ))}
-                  </div>
+                <div className="row justify-content-center">
+                  {team.staff.map((staff) => (
+                    <div
+                      key={staff}
+                      className="col-xs-12 col-sm-6 col-lg-3 mt-2 mb-4">
+                      <PublicCard id={staff} isStaff="true"></PublicCard>
+                    </div>
+                  ))}
+                </div>
               )}
             </>
           ))}

@@ -69,29 +69,29 @@ function Home({
       <section id="banner">
         <div className="banner-item d-flex h-100">
           <div
-              className="header-video-wrapper"
-              style={{
-                backgroundImage: 'url(../images/peak.jpg)',
-                backgroundSize: '100% 100%',
-                backgroundRepeat: 'no-repeat',
-              }}>
-            {/* <Particles
-            id="tsparticles"
-            url="/particles-config.json"
-            init={(main) => {
-              return Promise.resolve();
-            }}
-            loaded={(container) => {
-              return Promise.resolve();
-            }}
-          /> */}
+            className="header-video-wrapper"
+            style={{
+              backgroundImage: 'url(../images/peak.jpg)',
+              backgroundSize: '100% 100%',
+              backgroundRepeat: 'no-repeat',
+            }}>
+              {/* <Particles
+              id="tsparticles"
+              url="/particles-config.json"
+              init={(main) => {
+                return Promise.resolve();
+              }}
+              loaded={(container) => {
+                return Promise.resolve();
+              }}
+            /> */}
             {/* <video
-            autoPlay
-            loop
-            muted
-            ref={videoRef}
-            onCanPlay={setVideoPlayBackRate}>
-            <source src="images/bg5.jpg" type="video/mp4" />
+              autoPlay
+              loop
+              muted
+              ref={videoRef}
+              onCanPlay={setVideoPlayBackRate}>
+              <source src="images/bg5.jpg" type="video/mp4" />
           </video> */}
           </div>
           <div className="container my-auto">
@@ -101,12 +101,12 @@ function Home({
                   <div className="row mb-3">
                     <div className="col">
                       <img
-                          className="w-100"
-                          src="images/new_title_hq.png?v=1.4"
+                        className="w-100"
+                        src="images/new_title_hq.png?v=1.4"
                       />
                       <div
-                          style={fontStyle}
-                          className="row ml-4 mt-1 font-weight-bold text-uppercase d-flex justify-content-around">
+                        style={fontStyle}
+                        className="row ml-4 mt-1 font-weight-bold text-uppercase d-flex justify-content-around">
                         <div>Winter</div>
                         <div>Seminar</div>
                         <div>Series</div>
@@ -120,11 +120,11 @@ function Home({
                   </h2>
                   <h2 className="banner-subtitle my-3 font-weight-bold">
                     {startDate && endDate
-                        ? moment(startDate, 'YYYY-MM-DD').format(
-                            'MMM Do, YYYY -'
-                        ) +
-                        moment(endDate, ' YYYY-MM-DD').format('MMM Do, YYYY')
-                        : ''}
+                      ? moment(startDate, 'YYYY-MM-DD').format(
+                        'MMM Do, YYYY -'
+                      ) +
+                      moment(endDate, ' YYYY-MM-DD').format('MMM Do, YYYY')
+                      : ''}
                   </h2>
                   <h3 className="banner-desc font-weight-bold">
                     SHARIF UNIVERSITY OF TECHNOLOGY,
@@ -140,14 +140,14 @@ function Home({
                     </p>
                   )}
                   {/* {posterSessionRegister && (
-                  <p className="banner-btn">
-                    <a
-                      href="{{ wss.proposal_link }}"
-                      className="btn btn-primary btn-white">
-                      Poster Session Registration
-                    </a>
-                  </p>
-                )} */}
+                    <p className="banner-btn">
+                      <a
+                        href="{{ wss.proposal_link }}"
+                        className="btn btn-primary btn-white">
+                        Poster Session Registration
+                      </a>
+                    </p>
+                  )} */}
                 </div>
               </div>
             </div>
@@ -156,7 +156,7 @@ function Home({
       </section>
 
       <section id="ts-programs" className="diagonal mb-5">
-        <AboutUs/>
+        <AboutUs />
         <div className="row no-margin">
           <div className="text-center mx-auto">
             <a href="/about" className="btn btn-primary all-speakers">
@@ -289,20 +289,20 @@ function Home({
       )} */}
 
       <section
-          className="venu-map no-padding diagonal background-theme h-100 pb-2 large-neg-margin"
-          style={{
-            minHeight: '30rem',
-            backgroundPositionY: 'center !important',
-            position: 'relative',
-            overflow: 'hidden',
-          }}>
+        className="venu-map no-padding diagonal background-theme h-100 pb-2 large-neg-margin"
+        style={{
+          minHeight: '30rem',
+          backgroundPositionY: 'center !important',
+          position: 'relative',
+          overflow: 'hidden',
+        }}>
         <div
-            style={{
-              position: 'absolute',
-              inset: 0,
-              background: '#0005',
-              transform: 'unset',
-            }}></div>
+          style={{
+            position: 'absolute',
+            inset: 0,
+            background: '#0005',
+            transform: 'unset',
+          }}></div>
         {/* <div className="container">
           <h3 className="section-sub-title" style={sectionSubtitleStyle}>
             WSS Venue
@@ -315,7 +315,7 @@ function Home({
               <div className="white">
                 <p className="lead">Sharif University of Technology </p>
                 <p className="lead">Azadi Street, District 2, Tehran, Iran</p>
-                <br/>
+                <br />
                 <p className="lead">wss@ce.sharif.edu</p>
                 <p className="lead">+98(021) 66 16 57 81</p>
               </div>
