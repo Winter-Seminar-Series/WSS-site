@@ -32,6 +32,11 @@ const Header = ({ isLoggedIn, thisSeries, doSetThisSeries }) => {
       },
       children: [
         {
+          title: '8th Series',
+          persianTitle: '8th Series',
+          series: '8th',
+        },
+        {
           title: '7th Series',
           persianTitle: '7th Series',
           series: '7th',

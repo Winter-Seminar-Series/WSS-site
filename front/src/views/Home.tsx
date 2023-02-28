@@ -80,7 +80,7 @@ function Home({
               backgroundSize: '100% 100%',
               backgroundRepeat: 'no-repeat',
             }}>
-            <Particles
+            {/* <Particles
               id="tsparticles"
               url="/particles-config.json"
               init={(main) => {
@@ -89,7 +89,7 @@ function Home({
               loaded={(container) => {
                 return Promise.resolve();
               }}
-            />
+            /> */}
             {/* <video
               autoPlay
               loop
@@ -328,7 +328,9 @@ function Home({
                   alignItems: 'center',
                   flexWrap: 'wrap',
                 }}>
-                <h5 className="h4 text-white mb-3 mt-5">Sponsored by</h5>
+                <h5 className="section-sub-title text-white mb-3 mt-5">
+                  Sponsored by
+                </h5>
                 <img
                   src="/images/Tapsell_logo_png.png"
                   alt="Image not found!"
