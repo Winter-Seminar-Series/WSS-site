@@ -486,7 +486,7 @@ function Form({
         <div className="col-12 col-lg">
           <Button
             component="label"
-            className="btn btn-lg btn-primary btn-dark mb-1">
+            className="col-12 col-lg btn btn-lg btn-secondary btn-blue mb-1">
             {resume ? 'Resume Uploaded' : 'Upload Resume (optional)'}
             <input type="file" hidden onChange={handleCaptureResume} />
           </Button>
@@ -495,7 +495,7 @@ function Form({
 
       <div className="row">
         <em className="mb-1">
-          To increase your chance of getting hired by our sponsers, fill out the
+          To increase your chance of getting hired by our sponsors, fill out the
           optional fields!
         </em>
       </div>
