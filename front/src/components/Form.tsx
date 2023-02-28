@@ -486,7 +486,7 @@ function Form({
         <div className="col-12 col-lg">
           <Button
             component="label"
-            className="col-12 col-lg btn btn-lg btn-secondary btn-blue mb-1">
+            className="col-12 col-lg btn btn-lg btn-secondary mb-1">
             {resume ? 'Resume Uploaded' : 'Upload Resume (optional)'}
             <input type="file" hidden onChange={handleCaptureResume} />
           </Button>
@@ -552,7 +552,7 @@ function Form({
           <button
             disabled={isFetching || paymentProcess}
             type="submit"
-            className="col-12 col-lg btn btn-lg btn-primary btn-blue mb-5">
+            className="col-12 col-lg btn btn-lg btn-primary mb-5">
             {isRegisteration ? (
               <>Go For Payment {price ? ` • ${price}` : ''}</>
             ) : (
