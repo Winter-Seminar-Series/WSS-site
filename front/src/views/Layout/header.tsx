@@ -1,16 +1,32 @@
 import React from 'react';
-import {useTranslation} from 'react-i18next';
-import {connect} from 'react-redux';
-import {setThisSeries as doSetThisSeries} from '../../redux/actions/account';
+import { useTranslation } from 'react-i18next';
+import { connect } from 'react-redux';
+import { useLocation } from 'react-router-dom';
+import { setThisSeries as doSetThisSeries } from '../../redux/actions/account';
 
-const Header = ({isLoggedIn, thisSeries, doSetThisSeries}) => {
-    const {t} = useTranslation('header', {useSuspense: false});
+const matchesScope = (location: string, scopes: string[]): boolean => {
+    return scopes.some((scope) => {
+        if (scope.endsWith('/*')) {
+            return (
+                location === scope.slice(0, -2) ||
+                location.startsWith(scope.slice(0, -1))
+            );
+        } else {
+            return location === scope;
+        }
+    });
+};
+
+const Header = ({ isLoggedIn, thisSeries, doSetThisSeries }) => {
+    const { t } = useTranslation('header', { useSuspense: false });
+    const location = useLocation();
 
     const navbarItems: NavBarItem[] = [
         {
             title: `${thisSeries} WSS`,
             persianTitle: `${thisSeries} WSS`,
             link: '/',
+            scopes: ['/'],
             handler: (thisSeries: string) => {
                 doSetThisSeries(thisSeries).then(() => window.location.reload());
             },
@@ -74,20 +90,17 @@ const Header = ({isLoggedIn, thisSeries, doSetThisSeries}) => {
             link: '/create-account',
             style: 'active',
             loggedIn: 'notAuthorized',
-
         },
         {
             title: 'Login',
             persianTitle: 'ورود',
             link: '/login',
-            style: 'active',
             loggedIn: 'notAuthorized',
         },
         {
             title: 'Dashboard',
             persianTitle: 'داشبورد',
             link: '/dashboard',
-            style: 'active',
             loggedIn: 'authorized',
         },
     ];
@@ -97,7 +110,7 @@ const Header = ({isLoggedIn, thisSeries, doSetThisSeries}) => {
             <nav className="navbar navbar-expand-xl navbar-dark w-100 z-index-master">
                 <div className="container">
                     <a className="navbar-brand" href="/">
-                        <img src="/images/headerlogo.png" height="40" alt=""/>
+                        <img src="/images/headerlogo.png" height="40" alt="" />
                     </a>
                     <button
                         className="navbar-toggler"
@@ -133,7 +146,7 @@ const Header = ({isLoggedIn, thisSeries, doSetThisSeries}) => {
                                                             href={c.link}
                                                             className="dropdown-item"
                                                             onClick={() => i.handler(c.series)}
-                                                            style={{cursor: 'pointer'}}>
+                                                            style={{ cursor: 'pointer' }}>
                                                             {c.title}
                                                         </a>
                                                     </li>
@@ -141,7 +154,16 @@ const Header = ({isLoggedIn, thisSeries, doSetThisSeries}) => {
                                             </ul>
                                         </li>
                                     ) : (
-                                        <li key={i.title} className={`nav-item ${i.style || ''}`}>
+                                        <li
+                                            key={i.title}
+                                            className={`nav-item ${i.style || ''} ${
+                                                matchesScope(
+                                                    location.pathname,
+                                                    i.scopes || [`${i.link}/*`]
+                                                )
+                                                    ? i.activeStyle || 'active'
+                                                    : ''
+                                            }`}>
                                             <a className="nav-link" href={i.link}>
                                                 {i.title}
                                             </a>
@@ -169,8 +191,10 @@ interface NavBarItem {
     title: string;
     persianTitle: string;
     link: string;
+    scopes?: string[];
     handler?: any;
     style?: string;
+    activeStyle?: string;
     children?: {
         title: string;
         persianTitle: string;

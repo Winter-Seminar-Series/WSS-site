@@ -132,20 +132,15 @@ function Schedule({
     padding: '40px 0 0 0',
   };
 
-  const diagonalStyle = {
-    marginTop: '-18rem',
-    height: '18rem',
-  };
-
   const containerStyle = {
     paddingTop: '10.5rem',
   };
 
   return (
     <>
-      <section id="main-container" className="main-container pb-5">
+      <section id="main-container" className="main-container pb-5 pt-0">
         <div
-          style={diagonalStyle}
+          style={{ marginTop: 'calc(-2 * var(--diagonal-offset))' }}
           className="px-2 pt-4 diagonal background-theme">
           <h2
             className="container section-sub-title title-white"

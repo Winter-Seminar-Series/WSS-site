@@ -21,10 +21,10 @@ const About = () => {
 
   return (
     <>
-      <section id="main-container" className="main-container pb-5">
+      <section id="main-container" className="main-container pb-5 pt-0">
         <div
-          style={diagonalStyle}
-          className="px-2 pt-4 diagonal background-theme">
+          className="px-2 pt-4 diagonal background-theme"
+          style={{ marginTop: 'calc(-2 * var(--diagonal-offset))' }}>
           <h2
             className="container section-sub-title title-white"
             style={containerStyle}>

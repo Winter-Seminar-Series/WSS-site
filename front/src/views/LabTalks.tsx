@@ -56,8 +56,8 @@ const LabTalks = ({
           )}
           {labtalks.length === 0 && !isFetching && (
             <div className="row">
-              {/*<div className="col">Nothing has been added yet</div>*/}
-              <TBACard/>
+              <div className="col">Nothing has been added yet</div>
+              {/*<TBACard/>*/}
             </div>
           )}
         </div>

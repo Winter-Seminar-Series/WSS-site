@@ -55,11 +55,11 @@ const RoundTables = ({
                     )}
                     {roundTables.length === 0 && !isFetching && (
                         <div className="row">
-                            {/*<div className="col">Nothing has been added yet</div>*/}
-                            <div
-                                className="col-xs-10 col-sm-6 col-lg-3 mt-2 mb-4">
-                                <TBACard/>
-                            </div>
+                            <div className="col">Nothing has been added yet</div>
+                            {/*<div*/}
+                            {/*    className="col-xs-10 col-sm-6 col-lg-3 mt-2 mb-4">*/}
+                                {/*<TBACard/>*/}
+                            {/*</div>*/}
                         </div>
                     )}
                 </div>
