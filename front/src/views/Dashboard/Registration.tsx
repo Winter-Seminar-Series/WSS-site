@@ -9,7 +9,7 @@ function Registration({ isRegistered }) {
   return (
     <>
       <div className="diagonal seminar-register-title background-theme d-flex align-items-center">
-        <div className="header ml-3">
+        <div className="header ml-3 pt-5">
           <div className="title">Registration</div>
         </div>
       </div>
