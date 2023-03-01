@@ -47,7 +47,7 @@ function ForgotPassword({ isLoggedIn, isFetching, requestPasswordReset }) {
             <button
               disabled={isFetching}
               type="submit"
-              className="btn btn-lg btn-primary btn-dark mb-5">
+              className="btn btn-lg btn-primary mb-5">
               Send Reset Instructions
             </button>
           </form>
