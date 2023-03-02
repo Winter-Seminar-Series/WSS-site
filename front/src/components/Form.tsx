@@ -120,7 +120,8 @@ function Form({
   useEffect(() => {
     if (discountIsFocused) return;
 
-    fetchApi(`${ROOT}somewhere`, {
+    //TODO move this to redux or undo hardcoding series name
+    fetchApi(`${ROOT}8th/payment/price/`, {
       method: 'POST',
       body: JSON.stringify({
         discount,
