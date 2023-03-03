@@ -119,7 +119,7 @@ function Home({
                     Advanced Topics in Computer Science and Engineering
                   </h2>
                   <h2 className="banner-subtitle my-3 font-weight-bold">
-                    {startDate && endDate
+                    {thisSeries === "8th" && startDate && endDate
                       ? moment(startDate, 'YYYY-MM-DD').format(
                           'MMM Do, YYYY -'
                         ) +
