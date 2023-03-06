@@ -6,7 +6,7 @@ services:
     depends_on:
       - database
     environment:
-      - WSS_DB_PASSWORD
+      - WSS_DB_PASSWORD=localnonsecretpassword
       - WSS_SECRET_KEY
       - PAYMENT_MERCHANT
       - PAYMENT_WSDL
@@ -15,6 +15,13 @@ services:
       - DROPBOX_AUTH_TOKEN
       - WSS_EMAIL_PASSWORD
       - SKYROOM_API_ENDPOINT
+    command: >
+      sh -c "
+        ./manage.py migrate;
+        ./manage.py compilemessages;
+        ./manage.py collectstatic --noinput;
+        gunicorn --bind=0.0.0.0:8000 --timeout=90 --workers=6 --preload WSS_Site.wsgi:application;
+      "
     networks:
       wss_net:
     volumes:
@@ -28,7 +35,7 @@ services:
       - POSTGRES_PASSWORD
       - WSS_DB_DATABASE=wss_database
       - WSS_DB_USER=wss_user
-      - WSS_DB_PASSWORD
+      - WSS_DB_PASSWORD=localnonsecretpassword
     networks:
       wss_net:
   nginx:
@@ -40,7 +47,8 @@ services:
       - 80:80
     volumes:
       - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
-      - frontend_vol:/mnt/frontend/:ro
+      - ./front/build:/mnt/frontend/:ro
+      - /etc/letsencrypt:/etc/letsencrypt
       - media_vol:/mnt/media/ # TODO nginx doesn't work with readonly (644 permission) files for only this volume!
       - backend_statics_vol:/mnt/backend-statics/:ro
       - $FULLCHAIN_PATH:/etc/ssl-files/fullchain.pem:ro

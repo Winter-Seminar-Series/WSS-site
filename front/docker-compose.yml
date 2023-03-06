@@ -1,0 +1,9 @@
+version: "3.3"
+
+services:
+  frontend:
+    container_name: frontend-staging
+    build: .
+    restart: always
+    ports:
+    - "3001:80"

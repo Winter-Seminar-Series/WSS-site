@@ -1,3 +1,4 @@
 # https://www.robotstxt.org/robotstxt.html
+# https://www.robot2.org/
 User-agent: *
 Disallow:

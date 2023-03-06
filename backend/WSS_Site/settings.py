@@ -107,9 +107,9 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'wss_database',
         'USER': 'wss_user',
-        'PASSWORD': os.environ.get('WSS_DB_PASSWORD'),
+        'PASSWORD': 'wss_password',
         'HOST': 'database',
-        'PORT': '5432',
+        'PORT': 5432,
     }
 }
 

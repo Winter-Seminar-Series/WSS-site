@@ -1,10 +1,20 @@
-FROM node:10.23.0
-WORKDIR /app/
-COPY package.json .
-RUN npm install --no-dev
-COPY . .
-RUN npm run-script build
-RUN chmod +x sync-production-files.sh
+FROM node:10.23.0 as builder
 
-ENV BASE_URL="https:\/\/localhost"
-CMD ./sync-production-files.sh
+WORKDIR /app
+
+COPY package*.json ./
+
+RUN npm install --legacy-peer-deps
+
+COPY . .
+
+RUN npm run build
+
+FROM nginx:1.19.4-alpine as production-stage
+
+COPY --from=builder /app/build/ /mnt/frontend
+COPY ./nginx.conf /etc/nginx/conf.d/default.conf
+
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]
+
