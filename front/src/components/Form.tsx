@@ -598,6 +598,7 @@ const mapStateToProps = (state, ownProps) => {
   return {
     thisSeries: state.account.thisSeries,
     paymentProcess,
+    token,
     isFetching,
     first_name,
     last_name,
