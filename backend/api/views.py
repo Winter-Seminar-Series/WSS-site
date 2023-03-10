@@ -571,13 +571,13 @@ class PaymentViewSet(viewsets.ViewSet):
     @action(methods=['GET'], detail=False)
     def price(self, request, year):
         try:
-            is_online_attendant = request.data["is_online_attendant"]
+            is_online_attendant = request.query_params["is_online_attendant"]
         except KeyError:
             return ErrorResponse({
                 "message": _("is_online_attendant is required")
             })
         wss = get_wss_object_or_404(year)
-        discount_code = request.data.get("discount", None)
+        discount_code = request.query_params.get("discount", None)
         try:
             price = wss.calculate_fee(is_online_attendant, discount_code)
         except DiscountCode.DoesNotExist:
