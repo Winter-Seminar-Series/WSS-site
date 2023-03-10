@@ -1,3 +1,4 @@
+import { Redirect } from 'react-router-dom';
 import * as actionTypes from '../actionTypes';
 
 const initState = {
@@ -10,7 +11,6 @@ const initState = {
   email: '',
   token: '',
   expiry: '',
-  price: undefined,
 };
 
 function account(state = initState, action) {
@@ -68,20 +68,6 @@ function account(state = initState, action) {
     ///////////////////
 
     case actionTypes.LOGOUT_REQUEST:
-      return initState;
-
-    ///////////////////
-
-    case actionTypes.GET_PRICE_REQUEST:
-      return initState;
-
-    case actionTypes.GET_PRICE_SUCCESS:
-      return {
-        ...state,
-        price: action.response.price,
-      };
-
-    case actionTypes.GET_PRICE_FAILURE:
       return initState;
 
     ///////////////////

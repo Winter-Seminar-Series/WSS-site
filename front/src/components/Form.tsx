@@ -7,7 +7,7 @@ import {
   updateProfile,
   doesUserHaveRegistered,
 } from '../redux/actions/participant';
-import { sendPaymentRequest, getPrice } from '../redux/actions/account';
+import { sendPaymentRequest } from '../redux/actions/account';
 import {
   Button,
   emphasize,
@@ -31,9 +31,7 @@ function Form({
   getProfile,
   doesUserHaveRegistered,
   sendPaymentRequest,
-  getPrice,
   paymentProcess,
-  price,
   isFetching,
   first_name: inputFirstName,
   last_name: inputLastName,
@@ -73,7 +71,7 @@ function Form({
   const [last_name, setLastName] = React.useState('');
   const [gender, setGender] = React.useState('');
   const [grade, setGrade] = React.useState('');
-  const [isOnlineAttendant, setIsOnlineAttendant] = React.useState(true);
+  const [is_online_attendant, setIsOnlineAttendant] = React.useState(true);
   const [university, setUniversity] = React.useState('');
   const [email, setEmail] = React.useState('');
   const [introduction_method, setIntroduction_method] = React.useState('');
@@ -90,6 +88,7 @@ function Form({
   const [phoneNumber, setPhoneNumber] = React.useState('');
   const [discount, setDiscount] = React.useState('');
   const [discountIsFocused, setDiscountIsFocused] = React.useState(false);
+  const [price, setPrice] = React.useState(0);
 
   const [dialogOpen, setDialogOpen] = React.useState(false);
 
@@ -121,8 +120,17 @@ function Form({
   useEffect(() => {
     if (discountIsFocused) return;
 
-    getPrice(discount, isOnlineAttendant);
-  }, [discount, discountIsFocused, isOnlineAttendant]);
+    //TODO move this to redux or undo hardcoding series name
+    fetchApi(`${ROOT}8th/payment/price/`, {
+      method: 'POST',
+      body: JSON.stringify({
+        discount,
+        is_online_attendant,
+      }),
+    }).then((response) => {
+      setPrice(response.price ?? 0);
+    });
+  }, [discount, discountIsFocused, is_online_attendant]);
 
   useEffect(() => {
     setFirstName(inputFirstName);
@@ -173,7 +181,7 @@ function Form({
         last_name &&
         gender &&
         grade &&
-        isOnlineAttendant &&
+        is_online_attendant != null &&
         university &&
         city &&
         introduction_method &&
@@ -213,7 +221,7 @@ function Form({
       last_name,
       gender,
       grade,
-      is_online_attendant: isOnlineAttendant,
+      is_online_attendant,
       university,
       city,
       introduction_method,
@@ -397,7 +405,7 @@ function Form({
             <RadioGroup
               row
               aria-labelledby="demo-radio-buttons-group-label"
-              value={isOnlineAttendant}
+              value={is_online_attendant}
               name="radio-buttons-group">
               <FormControlLabel
                 key={'Online'}
@@ -578,7 +586,7 @@ const mapStateToProps = (state, ownProps) => {
     job,
     phone_number,
   } = state.Participant;
-  const { isFetching: paymentProcess, price } = state.account;
+  const { isFetching: paymentProcess } = state.account;
   const { isRegisteration } = ownProps;
   const socialMediaIds = social_media_ids
     ? JSON.parse(social_media_ids)
@@ -586,7 +594,6 @@ const mapStateToProps = (state, ownProps) => {
   return {
     thisSeries: state.account.thisSeries,
     paymentProcess,
-    price,
     isFetching,
     first_name,
     last_name,
@@ -613,6 +620,5 @@ export default connect(mapStateToProps, {
   getProfile,
   updateProfile,
   sendPaymentRequest,
-  getPrice,
   doesUserHaveRegistered,
 })(Form);
