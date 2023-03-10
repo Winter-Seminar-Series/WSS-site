@@ -32,6 +32,7 @@ function Form({
   doesUserHaveRegistered,
   sendPaymentRequest,
   paymentProcess,
+  token,
   isFetching,
   first_name: inputFirstName,
   last_name: inputLastName,
@@ -122,6 +123,9 @@ function Form({
 
     //TODO move this to redux or undo hardcoding series name
     fetchApi(`${ROOT}8th/payment/price/`, {
+      headers: {
+        Authorization: `Token ${token}`
+      },
       method: 'POST',
       body: JSON.stringify({
         discount,
@@ -586,7 +590,7 @@ const mapStateToProps = (state, ownProps) => {
     job,
     phone_number,
   } = state.Participant;
-  const { isFetching: paymentProcess } = state.account;
+  const { isFetching: paymentProcess, token } = state.account;
   const { isRegisteration } = ownProps;
   const socialMediaIds = social_media_ids
     ? JSON.parse(social_media_ids)
