@@ -485,6 +485,8 @@ class UserProfileViewSet(viewsets.ViewSet):
                             content), name=f'{name}.{ext}')
                     else:
                         continue
+                if field == 'is_online_attendant' and not data:
+                    data = False
                 setattr(user_profile, field, data)
 
         user_profile.save()
@@ -611,7 +613,7 @@ class PaymentViewSet(viewsets.ViewSet):
         elif ((not user_profile.grade) or (not user_profile.email) or (not user_profile.phone_number)
               or (not user_profile.job) or (not user_profile.university) or (not user_profile.major)
               or (not user_profile.first_name) or (not user_profile.last_name) or (not user_profile.date_of_birth)
-              or (not user_profile.is_online_attendant)):
+              or (user_profile.is_online_attendant is None)):
             return ErrorResponse({
                 "message": "Some required fields are blank."
             })
