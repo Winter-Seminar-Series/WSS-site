@@ -67,12 +67,14 @@ class WSS(models.Model):
 
     def calculate_fee(self, is_online_attendant, discount_code=None):
         final_fee = self.registration_fee
+        discount = None
         if discount_code:
-            discount = self.discount_codes.get(value=discount_code)
-            final_fee *= (1 - discount.off_percentage / 100)
+            discount = self.discount_codes.filter(value=discount_code).first()
+            if discount:
+                final_fee *= (1 - discount.off_percentage / 100)
         if not is_online_attendant:
             final_fee += self.in_person_fee_bias
-        return int(final_fee)
+        return int(final_fee), discount is not None
 
     @property
     def bs_participant_count(self):

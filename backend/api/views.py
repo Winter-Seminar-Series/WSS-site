@@ -578,15 +578,11 @@ class PaymentViewSet(viewsets.ViewSet):
             })
         wss = get_wss_object_or_404(year)
         discount_code = request.query_params.get("discount", None)
-        try:
-            price = wss.calculate_fee(is_online_attendant, discount_code)
-        except DiscountCode.DoesNotExist:
-            return ErrorResponse({
-                "message": _("Discount code is INVALID!")
-            })
+        price, is_valid_discount = wss.calculate_fee(is_online_attendant, discount_code)
 
         return Response({
-            "price": price
+            "price": price,
+            "is_valid_discount": is_valid_discount,
         })
 
     @action(methods=['GET'], detail=False)
@@ -630,7 +626,7 @@ class PaymentViewSet(viewsets.ViewSet):
 
         discount_code = request.query_params.get("discount", None)
         try:
-            amount = wss.calculate_fee(user_profile.is_online_attendant, discount_code)
+            amount, _ = wss.calculate_fee(user_profile.is_online_attendant, discount_code)
         except DiscountCode.DoesNotExist:
             return ErrorResponse({
                 "message": _("Discount code is INVALID!")
