@@ -571,8 +571,8 @@ class PaymentViewSet(viewsets.ViewSet):
     @action(methods=['GET'], detail=False)
     def price(self, request, year):
         try:
-            is_online_attendant = request.query_params["is_online_attendant"]
-        except KeyError:
+            is_online_attendant = bool(request.query_params["is_online_attendant"])
+        except Exception:
             return ErrorResponse({
                 "message": _("is_online_attendant is required")
             })
