@@ -119,18 +119,14 @@ function Form({
   }, [getProfile]);
 
   useEffect(() => {
-    if (discountIsFocused) return;
+    if (discountIsFocused || is_online_attendant === undefined) return;
 
     //TODO move this to redux or undo hardcoding series name
-    fetchApi(`${ROOT}8th/payment/price/`, {
+    fetchApi(`${ROOT}8th/payment/price?is_online_attendant=${is_online_attendant}&discount=${discount}`, {
       headers: {
         Authorization: `Token ${token}`
       },
-      method: 'POST',
-      body: JSON.stringify({
-        discount,
-        is_online_attendant,
-      }),
+      method: 'GET',
     }).then((response) => {
       setPrice(response.price ?? 0);
     });
