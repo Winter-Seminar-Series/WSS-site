@@ -61,6 +61,26 @@ export const logout = () => ({
   },
 });
 
+export const getPrice = (discount: string, isOnlineAttendant: boolean, series = '8th') => {
+  return {
+    [CALL_API]: {
+      types: [
+        actionTypes.GET_PRICE_REQUEST,
+        actionTypes.GET_PRICE_SUCCESS,
+        actionTypes.GET_PRICE_FAILURE,
+      ],
+      url: `${URLs.ROOT}${series}/payment/price/`,
+      fetchOptions: {
+        method: 'POST',
+        body: {
+          discount,
+          is_online_attendant: isOnlineAttendant,
+        }
+      }
+    }
+  }
+}
+
 export const sendPaymentRequest = (discount, series = '8th') => {
   return {
     [CALL_API]: {
