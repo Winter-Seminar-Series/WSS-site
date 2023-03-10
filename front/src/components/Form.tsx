@@ -7,7 +7,7 @@ import {
   updateProfile,
   doesUserHaveRegistered,
 } from '../redux/actions/participant';
-import { sendPaymentRequest } from '../redux/actions/account';
+import { sendPaymentRequest, getPrice } from '../redux/actions/account';
 import {
   Button,
   emphasize,
@@ -31,7 +31,9 @@ function Form({
   getProfile,
   doesUserHaveRegistered,
   sendPaymentRequest,
+  getPrice,
   paymentProcess,
+  price,
   isFetching,
   first_name: inputFirstName,
   last_name: inputLastName,
@@ -71,7 +73,7 @@ function Form({
   const [last_name, setLastName] = React.useState('');
   const [gender, setGender] = React.useState('');
   const [grade, setGrade] = React.useState('');
-  const [is_online_attendant, setIsOnlineAttendant] = React.useState(true);
+  const [isOnlineAttendant, setIsOnlineAttendant] = React.useState(true);
   const [university, setUniversity] = React.useState('');
   const [email, setEmail] = React.useState('');
   const [introduction_method, setIntroduction_method] = React.useState('');
@@ -88,7 +90,6 @@ function Form({
   const [phoneNumber, setPhoneNumber] = React.useState('');
   const [discount, setDiscount] = React.useState('');
   const [discountIsFocused, setDiscountIsFocused] = React.useState(false);
-  const [price, setPrice] = React.useState(0);
 
   const [dialogOpen, setDialogOpen] = React.useState(false);
 
@@ -120,17 +121,8 @@ function Form({
   useEffect(() => {
     if (discountIsFocused) return;
 
-    //TODO move this to redux or undo hardcoding series name
-    fetchApi(`${ROOT}8th/payment/price/`, {
-      method: 'POST',
-      body: JSON.stringify({
-        discount,
-        is_online_attendant,
-      }),
-    }).then((response) => {
-      setPrice(response.price ?? 0);
-    });
-  }, [discount, discountIsFocused, is_online_attendant]);
+    getPrice(discount, isOnlineAttendant);
+  }, [discount, discountIsFocused, isOnlineAttendant]);
 
   useEffect(() => {
     setFirstName(inputFirstName);
@@ -181,7 +173,7 @@ function Form({
         last_name &&
         gender &&
         grade &&
-        is_online_attendant != null &&
+        isOnlineAttendant &&
         university &&
         city &&
         introduction_method &&
@@ -197,50 +189,50 @@ function Form({
       toast.error('You should agree to our terms of service');
       return;
     }
-    // if (
-    //   first_name !== inputFirstName ||
-    //   last_name !== inputLastName ||
-    //   gender !== inputGender ||
-    //   grade !== inputGrade ||
-    //   university !== inputUniversity ||
-    //   city !== inputCity ||
-    //   introduction_method !== inputIntroductionMethod ||
-    //   linkedIn !== inputLinkedIn ||
-    //   github !== inputGithub ||
-    //   major !== inputMajor ||
-    //   dateOfBirth !== inputDateOfBirth ||
-    //   agreement !== inputAgreement ||
-    //   openToWork !== inputOpenToWork ||
-    //   resume !== inputResume ||
-    //   fieldOfInterset !== inputFieldOfInterest ||
-    //   job !== inputJob ||
-    //   phoneNumber !== inputPhoneNumber
-    // ) {
-    updateProfile({
-      first_name,
-      last_name,
-      gender,
-      grade,
-      is_online_attendant,
-      university,
-      city,
-      introduction_method,
-      major,
-      date_of_birth: dateOfBirth,
-      social_media_ids: JSON.stringify({
-        github,
-        linkedin: linkedIn,
-      }),
-      agreement,
-      open_to_work: openToWork,
-      resume: JSON.stringify(resume),
-      field_of_interest: fieldOfInterset,
-      job,
-      phone_number: phoneNumber,
-    }).then(() => {
-      if (isRegisteration) sendPaymentRequest(discount, thisSeries);
-    });
-    // }
+    if (
+      first_name !== inputFirstName ||
+      last_name !== inputLastName ||
+      gender !== inputGender ||
+      grade !== inputGrade ||
+      university !== inputUniversity ||
+      city !== inputCity ||
+      introduction_method !== inputIntroductionMethod ||
+      linkedIn !== inputLinkedIn ||
+      github !== inputGithub ||
+      major !== inputMajor ||
+      dateOfBirth !== inputDateOfBirth ||
+      agreement !== inputAgreement ||
+      openToWork !== inputOpenToWork ||
+      resume !== inputResume ||
+      fieldOfInterset !== inputFieldOfInterest ||
+      job !== inputJob ||
+      phoneNumber !== inputPhoneNumber
+    ) {
+      updateProfile({
+        first_name,
+        last_name,
+        gender,
+        grade,
+        is_online_attendant: isOnlineAttendant,
+        university,
+        city,
+        introduction_method,
+        major,
+        date_of_birth: dateOfBirth,
+        social_media_ids: JSON.stringify({
+          github,
+          linkedin: linkedIn,
+        }),
+        agreement,
+        open_to_work: openToWork,
+        resume: JSON.stringify(resume),
+        field_of_interest: fieldOfInterset,
+        job,
+        phone_number: phoneNumber,
+      }).then(() => {
+        if (isRegisteration) sendPaymentRequest(discount, thisSeries);
+      });
+    }
   };
   return (
     <form className="seminar-register-form" onSubmit={submitInfo}>
@@ -405,7 +397,7 @@ function Form({
             <RadioGroup
               row
               aria-labelledby="demo-radio-buttons-group-label"
-              value={is_online_attendant}
+              value={isOnlineAttendant}
               name="radio-buttons-group">
               <FormControlLabel
                 key={'Online'}
@@ -586,7 +578,7 @@ const mapStateToProps = (state, ownProps) => {
     job,
     phone_number,
   } = state.Participant;
-  const { isFetching: paymentProcess } = state.account;
+  const { isFetching: paymentProcess, price } = state.account;
   const { isRegisteration } = ownProps;
   const socialMediaIds = social_media_ids
     ? JSON.parse(social_media_ids)
@@ -594,6 +586,7 @@ const mapStateToProps = (state, ownProps) => {
   return {
     thisSeries: state.account.thisSeries,
     paymentProcess,
+    price,
     isFetching,
     first_name,
     last_name,
@@ -620,5 +613,6 @@ export default connect(mapStateToProps, {
   getProfile,
   updateProfile,
   sendPaymentRequest,
+  getPrice,
   doesUserHaveRegistered,
 })(Form);
