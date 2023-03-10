@@ -208,30 +208,30 @@ function Form({
     //   job !== inputJob ||
     //   phoneNumber !== inputPhoneNumber
     // ) {
-      updateProfile({
-        first_name,
-        last_name,
-        gender,
-        grade,
-        is_online_attendant: isOnlineAttendant,
-        university,
-        city,
-        introduction_method,
-        major,
-        date_of_birth: dateOfBirth,
-        social_media_ids: JSON.stringify({
-          github,
-          linkedin: linkedIn,
-        }),
-        agreement,
-        open_to_work: openToWork,
-        resume: JSON.stringify(resume),
-        field_of_interest: fieldOfInterset,
-        job,
-        phone_number: phoneNumber,
-      }).then(() => {
-        if (isRegisteration) sendPaymentRequest(discount, thisSeries);
-      });
+    updateProfile({
+      first_name,
+      last_name,
+      gender,
+      grade,
+      is_online_attendant: isOnlineAttendant,
+      university,
+      city,
+      introduction_method,
+      major,
+      date_of_birth: dateOfBirth,
+      social_media_ids: JSON.stringify({
+        github,
+        linkedin: linkedIn,
+      }),
+      agreement,
+      open_to_work: openToWork,
+      resume: JSON.stringify(resume),
+      field_of_interest: fieldOfInterset,
+      job,
+      phone_number: phoneNumber,
+    }).then(() => {
+      if (isRegisteration) sendPaymentRequest(discount, thisSeries);
+    });
     // }
   };
   return (
