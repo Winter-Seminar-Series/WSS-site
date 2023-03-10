@@ -189,25 +189,25 @@ function Form({
       toast.error('You should agree to our terms of service');
       return;
     }
-    if (
-      first_name !== inputFirstName ||
-      last_name !== inputLastName ||
-      gender !== inputGender ||
-      grade !== inputGrade ||
-      university !== inputUniversity ||
-      city !== inputCity ||
-      introduction_method !== inputIntroductionMethod ||
-      linkedIn !== inputLinkedIn ||
-      github !== inputGithub ||
-      major !== inputMajor ||
-      dateOfBirth !== inputDateOfBirth ||
-      agreement !== inputAgreement ||
-      openToWork !== inputOpenToWork ||
-      resume !== inputResume ||
-      fieldOfInterset !== inputFieldOfInterest ||
-      job !== inputJob ||
-      phoneNumber !== inputPhoneNumber
-    ) {
+    // if (
+    //   first_name !== inputFirstName ||
+    //   last_name !== inputLastName ||
+    //   gender !== inputGender ||
+    //   grade !== inputGrade ||
+    //   university !== inputUniversity ||
+    //   city !== inputCity ||
+    //   introduction_method !== inputIntroductionMethod ||
+    //   linkedIn !== inputLinkedIn ||
+    //   github !== inputGithub ||
+    //   major !== inputMajor ||
+    //   dateOfBirth !== inputDateOfBirth ||
+    //   agreement !== inputAgreement ||
+    //   openToWork !== inputOpenToWork ||
+    //   resume !== inputResume ||
+    //   fieldOfInterset !== inputFieldOfInterest ||
+    //   job !== inputJob ||
+    //   phoneNumber !== inputPhoneNumber
+    // ) {
       updateProfile({
         first_name,
         last_name,
@@ -232,7 +232,7 @@ function Form({
       }).then(() => {
         if (isRegisteration) sendPaymentRequest(discount, thisSeries);
       });
-    }
+    // }
   };
   return (
     <form className="seminar-register-form" onSubmit={submitInfo}>
