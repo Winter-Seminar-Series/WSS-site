@@ -1,143 +1,143 @@
----
-name: "Main Workflow"
-env:
-  DOCKER_USERNAME: sharifwss
-  RELEASE_VERSION: 1.1.0 # If changed, make sure to also update this variable in deploy workflow.
-  TARGET_HOST: sharif-wss.ir
-  HOST_SSH_USER: wss
-on:
-  push:
-    branches:
-      - master
-jobs:
-  build-backend:
-    runs-on: ubuntu-20.04
-    steps:
-      - uses: actions/checkout@v2
-      - run: ./.github/scripts/build.sh
-          --service-name web
-          --version snapshot-$GITHUB_RUN_ID
-          --docker-user $DOCKER_USERNAME
-          --docker-pass ${{ secrets.DOCKER_PASSWORD }}
-  build-frontend:
-    runs-on: ubuntu-20.04
-    steps:
-      - uses: actions/checkout@v2
-      - run: ./.github/scripts/build.sh
-          --service-name frontend
-          --version snapshot-$GITHUB_RUN_ID
-          --docker-user $DOCKER_USERNAME
-          --docker-pass ${{ secrets.DOCKER_PASSWORD }}
-  build-static-data-provider:
-    runs-on: ubuntu-20.04
-    steps:
-      - uses: actions/checkout@v2
-      - run: ./.github/scripts/build.sh
-          --service-name static-data-provider
-          --version snapshot-$GITHUB_RUN_ID
-          --docker-user $DOCKER_USERNAME
-          --docker-pass ${{ secrets.DOCKER_PASSWORD }}
-  smoke-test-backend:
-    needs: build-backend
-    runs-on: ubuntu-20.04
-    steps:
-      - uses: actions/checkout@v2
-      - run: ./.github/scripts/smoke-test.sh
-          --tag snapshot-$GITHUB_RUN_ID
-          --docker-user $DOCKER_USERNAME
-          --docker-pass ${{ secrets.DOCKER_PASSWORD }}
-  release-backend:
-    needs: smoke-test-backend
-    runs-on: ubuntu-20.04
-    steps:
-      - uses: actions/checkout@v2
-      - run: ./.github/scripts/release-image.sh
-          --service-name web
-          --src-tag snapshot-$GITHUB_RUN_ID
-          --release-tag $RELEASE_VERSION
-          --docker-user $DOCKER_USERNAME
-          --docker-pass ${{ secrets.DOCKER_PASSWORD }}
-  release-frontend:
-    needs: build-frontend
-    runs-on: ubuntu-20.04
-    steps:
-      - uses: actions/checkout@v2
-      - run: ./.github/scripts/release-image.sh
-          --service-name frontend
-          --src-tag snapshot-$GITHUB_RUN_ID
-          --release-tag $RELEASE_VERSION
-          --docker-user $DOCKER_USERNAME
-          --docker-pass ${{ secrets.DOCKER_PASSWORD }}
-  release-static-data-provider:
-    needs: build-static-data-provider
-    runs-on: ubuntu-20.04
-    steps:
-      - uses: actions/checkout@v2
-      - run: ./.github/scripts/release-image.sh
-          --service-name static-data-provider
-          --src-tag snapshot-$GITHUB_RUN_ID
-          --release-tag latest
-          --docker-user $DOCKER_USERNAME
-          --docker-pass ${{ secrets.DOCKER_PASSWORD }}
-  test-deploy:
-    needs: build-backend
-    runs-on: ubuntu-20.04
-    steps:
-      - uses: actions/checkout@v2
-      - name: Force GitHub Actions' docker daemon to use vfs.
-        run: |
-          sudo systemctl stop docker
-          echo '{"cgroup-parent":"/actions_job","storage-driver":"vfs"}' | sudo tee /etc/docker/daemon.json
-          sudo systemctl start docker
-      - run: echo "TARGET_HOST=192.168.2.2" >> $GITHUB_ENV
-      - run: docker network create --subnet 192.168.2.0/24 wss-net
-      - run: docker run -d
-          --network wss-net
-          --ip $TARGET_HOST
-          --privileged
-          $DOCKER_USERNAME/infra-image:latest
-      - run: docker run
-          --network wss-net
-          --env TARGET_HOST=$TARGET_HOST
-          spy86/ansible:latest
-          bash -c '
-          sshpass -p root ssh -o StrictHostKeyChecking=no root@$TARGET_HOST "service docker start"
-          '
-      - name: Run deploy.yml
-        run: docker run
-          --network wss-net
-          -v `pwd`:/app-src/:ro
-          --workdir /app-src/deploy/
-          --env TARGET_HOST=$TARGET_HOST
-          --env GITHUB_RUN_ID=$GITHUB_RUN_ID
-          spy86/ansible:latest
-          bash -c '
-          ansible-playbook
-          -i inventory.yml
-          --extra-vars="
-          ansible_host=$TARGET_HOST
-          ansible_user=root
-          ansible_ssh_pass=root
-          web_image_version=snapshot-$GITHUB_RUN_ID
-          front_image_version=snapshot-$GITHUB_RUN_ID
-          secret_key=dummy
-          payment_merchant=${{ secrets.PAYMENT_MERCHANT }}
-          db_password=dummy
-          postgres_superuser_pass=dummy
-          docker_hub_password=${{ secrets.DOCKER_PASSWORD }}
-          ssl_private_key=\"${{ secrets.SSL_PRIV_KEY }}\"
-          ssl_fullchain=\"${{ secrets.SSL_FULL_CHAIN }}\"
-          sentry_token=${{ secrets.SENTRY_TOKEN }}
-          dropbox_auth_token=${{ secrets.DROPBOX_AUTH_TOKEN }}
-          wss_email_password=${{ secrets.WSS_EMAIL_PASSWORD }}"
-          deploy.yml
-          '
-      - name: Wait for the app to be up
-        run: sleep 20
-      - name: Smoke test
-        run: docker run
-          --network wss-net
-          --add-host sharif-wss.ir:$TARGET_HOST
-          -v `pwd`/.github/scripts/smoke-test.sh:/smoke-test.sh:ro
-          spy86/ansible:latest
-          /smoke-test.sh --host "https://sharif-wss.ir"
+# ---
+# name: "Main Workflow"
+# env:
+#   DOCKER_USERNAME: sharifwss
+#   RELEASE_VERSION: 1.1.0 # If changed, make sure to also update this variable in deploy workflow.
+#   TARGET_HOST: sharif-wss.ir
+#   HOST_SSH_USER: wss
+# on:
+#   push:
+#     branches:
+#       - master
+# jobs:
+#   build-backend:
+#     runs-on: ubuntu-20.04
+#     steps:
+#       - uses: actions/checkout@v2
+#       - run: ./.github/scripts/build.sh
+#           --service-name web
+#           --version snapshot-$GITHUB_RUN_ID
+#           --docker-user $DOCKER_USERNAME
+#           --docker-pass ${{ secrets.DOCKER_PASSWORD }}
+#   build-frontend:
+#     runs-on: ubuntu-20.04
+#     steps:
+#       - uses: actions/checkout@v2
+#       - run: ./.github/scripts/build.sh
+#           --service-name frontend
+#           --version snapshot-$GITHUB_RUN_ID
+#           --docker-user $DOCKER_USERNAME
+#           --docker-pass ${{ secrets.DOCKER_PASSWORD }}
+#   build-static-data-provider:
+#     runs-on: ubuntu-20.04
+#     steps:
+#       - uses: actions/checkout@v2
+#       - run: ./.github/scripts/build.sh
+#           --service-name static-data-provider
+#           --version snapshot-$GITHUB_RUN_ID
+#           --docker-user $DOCKER_USERNAME
+#           --docker-pass ${{ secrets.DOCKER_PASSWORD }}
+#   smoke-test-backend:
+#     needs: build-backend
+#     runs-on: ubuntu-20.04
+#     steps:
+#       - uses: actions/checkout@v2
+#       - run: ./.github/scripts/smoke-test.sh
+#           --tag snapshot-$GITHUB_RUN_ID
+#           --docker-user $DOCKER_USERNAME
+#           --docker-pass ${{ secrets.DOCKER_PASSWORD }}
+#   release-backend:
+#     needs: smoke-test-backend
+#     runs-on: ubuntu-20.04
+#     steps:
+#       - uses: actions/checkout@v2
+#       - run: ./.github/scripts/release-image.sh
+#           --service-name web
+#           --src-tag snapshot-$GITHUB_RUN_ID
+#           --release-tag $RELEASE_VERSION
+#           --docker-user $DOCKER_USERNAME
+#           --docker-pass ${{ secrets.DOCKER_PASSWORD }}
+#   release-frontend:
+#     needs: build-frontend
+#     runs-on: ubuntu-20.04
+#     steps:
+#       - uses: actions/checkout@v2
+#       - run: ./.github/scripts/release-image.sh
+#           --service-name frontend
+#           --src-tag snapshot-$GITHUB_RUN_ID
+#           --release-tag $RELEASE_VERSION
+#           --docker-user $DOCKER_USERNAME
+#           --docker-pass ${{ secrets.DOCKER_PASSWORD }}
+#   release-static-data-provider:
+#     needs: build-static-data-provider
+#     runs-on: ubuntu-20.04
+#     steps:
+#       - uses: actions/checkout@v2
+#       - run: ./.github/scripts/release-image.sh
+#           --service-name static-data-provider
+#           --src-tag snapshot-$GITHUB_RUN_ID
+#           --release-tag latest
+#           --docker-user $DOCKER_USERNAME
+#           --docker-pass ${{ secrets.DOCKER_PASSWORD }}
+#   test-deploy:
+#     needs: build-backend
+#     runs-on: ubuntu-20.04
+#     steps:
+#       - uses: actions/checkout@v2
+#       - name: Force GitHub Actions' docker daemon to use vfs.
+#         run: |
+#           sudo systemctl stop docker
+#           echo '{"cgroup-parent":"/actions_job","storage-driver":"vfs"}' | sudo tee /etc/docker/daemon.json
+#           sudo systemctl start docker
+#       - run: echo "TARGET_HOST=192.168.2.2" >> $GITHUB_ENV
+#       - run: docker network create --subnet 192.168.2.0/24 wss-net
+#       - run: docker run -d
+#           --network wss-net
+#           --ip $TARGET_HOST
+#           --privileged
+#           $DOCKER_USERNAME/infra-image:latest
+#       - run: docker run
+#           --network wss-net
+#           --env TARGET_HOST=$TARGET_HOST
+#           spy86/ansible:latest
+#           bash -c '
+#           sshpass -p root ssh -o StrictHostKeyChecking=no root@$TARGET_HOST "service docker start"
+#           '
+#       - name: Run deploy.yml
+#         run: docker run
+#           --network wss-net
+#           -v `pwd`:/app-src/:ro
+#           --workdir /app-src/deploy/
+#           --env TARGET_HOST=$TARGET_HOST
+#           --env GITHUB_RUN_ID=$GITHUB_RUN_ID
+#           spy86/ansible:latest
+#           bash -c '
+#           ansible-playbook
+#           -i inventory.yml
+#           --extra-vars="
+#           ansible_host=$TARGET_HOST
+#           ansible_user=root
+#           ansible_ssh_pass=root
+#           web_image_version=snapshot-$GITHUB_RUN_ID
+#           front_image_version=snapshot-$GITHUB_RUN_ID
+#           secret_key=dummy
+#           payment_merchant=${{ secrets.PAYMENT_MERCHANT }}
+#           db_password=dummy
+#           postgres_superuser_pass=dummy
+#           docker_hub_password=${{ secrets.DOCKER_PASSWORD }}
+#           ssl_private_key=\"${{ secrets.SSL_PRIV_KEY }}\"
+#           ssl_fullchain=\"${{ secrets.SSL_FULL_CHAIN }}\"
+#           sentry_token=${{ secrets.SENTRY_TOKEN }}
+#           dropbox_auth_token=${{ secrets.DROPBOX_AUTH_TOKEN }}
+#           wss_email_password=${{ secrets.WSS_EMAIL_PASSWORD }}"
+#           deploy.yml
+#           '
+#       - name: Wait for the app to be up
+#         run: sleep 20
+#       - name: Smoke test
+#         run: docker run
+#           --network wss-net
+#           --add-host sharif-wss.ir:$TARGET_HOST
+#           -v `pwd`/.github/scripts/smoke-test.sh:/smoke-test.sh:ro
+#           spy86/ansible:latest
+#           /smoke-test.sh --host "https://sharif-wss.ir"
