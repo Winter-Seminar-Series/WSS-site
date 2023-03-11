@@ -298,12 +298,13 @@ function Form({
               onChange={setDateOfBirth}
               renderInput={({ inputRef, inputProps, InputProps }) => (
                 <div style={{ display: 'flex', alignItems: 'center' }}>
-          <input
+                  <input
                     {...inputProps}
                     ref={inputRef}
-            placeholder="Birthdate *"
-            className="text-input form-control"
-          />
+                    required
+                    placeholder="Birthdate *"
+                    className="text-input form-control"
+                  />
                   {InputProps?.endAdornment}
                 </div>
               )}
