@@ -89,6 +89,8 @@
         GET /api/<year>/sponsorships/count?main=1
         ```
 
+
+
 ## Payment API:
 
 Sending payment request:
