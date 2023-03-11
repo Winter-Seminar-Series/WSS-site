@@ -1,10 +1,16 @@
 
 name: deploy backend
 
-on:
-  push:
-    branches: [ "master" ]
 
+on:
+
+  push:
+    branches:
+    - master
+    paths:
+    - backend
+    
+    
 jobs:
   deploy-back:
     runs-on: ubuntu-20.04
