@@ -1,5 +1,6 @@
 # WSS backend API documentation
 
+
 ## Map the old style (`Jinja2`) to `GET` requests:
 - Primitive fields of WSS
     Fields:
