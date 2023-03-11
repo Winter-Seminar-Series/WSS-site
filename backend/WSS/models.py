@@ -6,6 +6,7 @@ from pip._vendor import requests
 from sorl.thumbnail import ImageField
 from django.core.validators import MinValueValidator
 from events.models import Workshop, RoundTable, LabTalk, Seminar, PosterSession, WssTag
+from django.utils.translation import gettext_lazy as _
 
 GRADE_GROUPS = {
     'Bachelor': ['Bachelor'],
@@ -274,6 +275,14 @@ class Participant(models.Model):
 
     def __str__(self):
         return f"{self.current_wss} - {self.user_profile}"
+
+
+class Payment(models.Model):
+    authority = models.CharField(_("authority"), max_length=36, unique=True)
+    paid = models.BooleanField(default=False)
+    amount = models.PositiveIntegerField(_("amount"))
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name=_("user"))
+    wss = models.ForeignKey(WSS, on_delete=models.CASCADE, verbose_name=_("winter seminar series"))
 
 
 class UserProfile(models.Model):

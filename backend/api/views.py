@@ -12,7 +12,7 @@ from abc import ABC, abstractmethod
 from api import serializers
 from events.models import Workshop, WssTag, Venue, SeminarMaterial, PosterMaterial, WorkshopMaterial, BaseEvent
 from people.models import Speaker, Staff
-from WSS.models import WSS, Participant, UserProfile, Sponsor, GradeDoesNotSpecifiedException, DiscountCode
+from WSS.models import WSS, Participant, UserProfile, Sponsor, GradeDoesNotSpecifiedException, DiscountCode, Payment
 from WSS.payment import send_payment_request, verify
 
 from rest_framework.authtoken.serializers import AuthTokenSerializer
@@ -625,12 +625,8 @@ class PaymentViewSet(viewsets.ViewSet):
             }, status_code=403)
 
         discount_code = request.query_params.get("discount", None)
-        try:
-            amount, _ = wss.calculate_fee(user_profile.is_online_attendant, discount_code)
-        except DiscountCode.DoesNotExist:
-            return ErrorResponse({
-                "message": _("Discount code is INVALID!")
-            })
+
+        amount, _ = wss.calculate_fee(user_profile.is_online_attendant, discount_code)
 
         description = settings.PAYMENT_SETTING['description'].format(
             year, user_profile.email)
@@ -645,6 +641,8 @@ class PaymentViewSet(viewsets.ViewSet):
             })
 
         payment_url = settings.PAYMENT_SETTING['payment_url']
+
+        Payment.objects.create(authority=result.Authority, amount=amount, user=request.user, wss=wss)
 
         return Response({
             "redirect_url": f"{payment_url}{result.Authority}"
@@ -672,14 +670,21 @@ class PaymentViewSet(viewsets.ViewSet):
                     'message': 'Authority should be passed in query string'
                 }, status_code=403)
 
-            amount = wss.registration_fee
+            try:
+                payment = Payment.objects.get(authority=authority)
+            except Payment.DoesNotExist:
+                return ErrorResponse({
+                    'message': 'No payment information found',
+                })
 
-            result = verify(authority, amount)
+            result = verify(authority, payment.amount)
 
             if result.Status == 100:
                 participant = Participant(current_wss=wss, user_profile=user_profile,
-                                          payment_ref_id=str(result.RefID), payment_amount=amount)
+                                          payment_ref_id=str(result.RefID), payment_amount=payment.amount)
                 participant.save()
+                payment.paid = True
+                payment.save()
 
                 # Notify user about successful payment
                 user = participant.user_profile.user
@@ -704,7 +709,8 @@ class PaymentViewSet(viewsets.ViewSet):
             if result.Status == 101:
                 return ErrorResponse({'status': 'ALREADY SUBMITTED'})
 
-            amount = (amount * 2) // 3
+            # TODO: Fix this shit code :/
+            amount = (payment.amount * 2) // 3
             amount = (amount // 10000) * 10000
             result = verify(authority, amount)
 
