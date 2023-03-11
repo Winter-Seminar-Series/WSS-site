@@ -19,6 +19,9 @@ import {
   RadioGroup,
   Select,
 } from '@mui/material';
+import DatePicker from '@mui/lab/DatePicker';
+import AdapterDateFns from '@mui/lab/AdapterDateFns';
+import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import ResponsiveDialog from './Dialog';
 import PhoneInput from 'react-phone-input-2';
 import 'react-phone-input-2/lib/style.css';
@@ -288,18 +291,24 @@ function Form({
         </div>
 
         <div className="col-12 col-lg">
+          <LocalizationProvider dateAdapter={AdapterDateFns}>
+            <DatePicker
+              label="Custom input"
+              value={dateOfBirth}
+              onChange={setDateOfBirth}
+              renderInput={({ inputRef, inputProps, InputProps }) => (
+                <div style={{ display: 'flex', alignItems: 'center' }}>
           <input
-            name="date"
-            type="text"
-            onFocus={(e) => (e.target.type = 'date')}
-            onBlur={(e) => (e.target.type = 'text')}
+                    {...inputProps}
+                    ref={inputRef}
             placeholder="Birthdate *"
             className="text-input form-control"
-            value={dateOfBirth}
-            onChange={(e) => {
-              setDateOfBirth(e.target.value);
-            }}
           />
+                  {InputProps?.endAdornment}
+                </div>
+              )}
+            />
+          </LocalizationProvider>
         </div>
       </div>
       <div className="row">
