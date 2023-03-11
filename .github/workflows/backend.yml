@@ -4,8 +4,6 @@ name: deploy backend
 on:
   push:
     branches: [ "master" ]
-    paths:
-    - backend
 
 jobs:
   deploy-back:
