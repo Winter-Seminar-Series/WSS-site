@@ -1,0 +1,29 @@
+
+name: deploy backend
+
+
+on:
+
+  push:
+    branches:
+    - master
+    paths:
+    - 'backend/**'
+    
+    
+jobs:
+  deploy-back:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Deploy
+        uses: appleboy/ssh-action@v0.1.4
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USER }}
+          port: ${{ secrets.PORT }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            cd ${{ secrets.TARGET_PATH_BACKEND }}
+            git checkout master
+            git pull origin master
+            docker-compose up --build -d

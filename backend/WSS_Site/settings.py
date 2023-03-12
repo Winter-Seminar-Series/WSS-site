@@ -30,7 +30,7 @@ SECRET_KEY = os.environ.get('WSS_SECRET_KEY')
 DEBUG = False
 
 ALLOWED_HOSTS = ['*']
-CORS_ORIGIN_ALLOW_ALL = False
+CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOWED_ORIGINS = [
     'http://localhost',
     'https://localhost',
