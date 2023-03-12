@@ -295,7 +295,9 @@ function Form({
             <DatePicker
               label="Custom input"
               value={dateOfBirth}
-              onChange={setDateOfBirth}
+              onChange={(date) => {
+                setDateOfBirth(new Date(date).toISOString().split('T')[0]);
+              }}
               renderInput={({ inputRef, inputProps, InputProps }) => (
                 <div style={{ display: 'flex', alignItems: 'center' }}>
                   <input
