@@ -464,7 +464,10 @@ class UserProfileViewSet(viewsets.ViewSet):
     @action(methods=['PUT'], detail=False)
     def edit(self, request):
         user_profile = get_user_profile(request.user)
-        user_data_parameter = request.data
+        user_data_parameter: dict = request.data
+
+        if Participant.objects.filter(user_profile=user_profile).exists():  # make 'is_online_attendant' not editable after payment
+            user_data_parameter.pop('is_online_attendant', None)
 
         fields = ['first_name', 'last_name', 'phone_number', 'age',
                   'job', 'university', 'introduction_method',
