@@ -1,6 +1,7 @@
-![Main Workflow Status](https://github.com/Winter-Seminar-Series/WSS-site/workflows/Main%20Workflow/badge.svg?branch=master)
-
 # WSS-site
+![Main Workflow Status](https://github.com/Winter-Seminar-Series/WSS-site/workflows/Main%20Workflow/badge.svg?branch=master)
+![Backend pipeline status](https://github.com/Winter-Seminar-Series/WSS-site/actions/workflows/backend.yml/badge.svg?branch=master)
+![Backend pipeline status](https://github.com/Winter-Seminar-Series/WSS-site/actions/workflows/frontend.yml/badge.svg?branch=master)  
 Source code of the official website of Winter Seminar Series.
 
 
