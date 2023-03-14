@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('WSS_SECRET_KEY', default='localnonsecretsecret!')
+SECRET_KEY = os.environ.get('WSS_SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
@@ -108,7 +108,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'wss_database',
         'USER': 'wss_user',
-        'PASSWORD': os.environ.get('WSS_DB_PASSWORD', default='YBliCul3ea6CrpVLv'),
+        'PASSWORD': os.environ.get('WSS_DB_PASSWORD'),
         'HOST': 'database',
         'PORT': '5432',
     }
@@ -220,13 +220,13 @@ LOGGING = {
 CLIENT_TIME_DELTA = timedelta(hours=3, minutes=30)
 
 PAYMENT_SETTING = {
-    'MERCHANT': os.environ.get('PAYMENT_MERCHANT', default='localnonsecretsecret!'),
-    'wsdl': os.environ.get('PAYMENT_WSDL', default='https://sandbox.zarinpal.com/pg/services/WebGate/wsdl'),
+    'MERCHANT': os.environ.get('PAYMENT_MERCHANT'),
+    'wsdl': os.environ.get('PAYMENT_WSDL'),
     'description': 'WSS {} registration fee for user {}',
-    'payment_url': os.environ.get('PAYMENT_URL', default='https://sandbox.zarinpal.com/pg/StartPay/')
+    'payment_url': os.environ.get('PAYMENT_URL')
 }
 
-SENTRY_TOKEN = os.environ.get('SENTRY_TOKEN', default='dummy')
+SENTRY_TOKEN = os.environ.get('SENTRY_TOKEN')
 sentry_sdk.init(
     dsn=f'https://{SENTRY_TOKEN}@o445959.ingest.sentry.io/5527905',
     integrations=[DjangoIntegration()],
@@ -252,24 +252,24 @@ REST_FRAMEWORK = {
 
 DBBACKUP_STORAGE = 'storages.backends.dropbox.DropBoxStorage'
 DBBACKUP_STORAGE_OPTIONS = {
-    'oauth2_access_token': os.environ.get('DROPBOX_AUTH_TOKEN', default='dummy'),
+    'oauth2_access_token': os.environ.get('DROPBOX_AUTH_TOKEN'),
 }
 # Number of backups to keep when running `dbbackup --clean`
 DBBACKUP_CLEANUP_KEEP = 100
 
 DEFAULT_FILE_STORAGE = 'storages.backends.dropbox.DropBoxStorage'
-DROPBOX_OAUTH2_TOKEN = os.environ.get('DROPBOX_AUTH_TOKEN', default='dummy')
+DROPBOX_OAUTH2_TOKEN = os.environ.get('DROPBOX_AUTH_TOKEN')
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'wss.sharif@gmail.com'
-EMAIL_HOST_PASSWORD = os.environ.get('WSS_EMAIL_PASSWORD', default='dummy')
+EMAIL_HOST_PASSWORD = os.environ.get('WSS_EMAIL_PASSWORD')
 
 # Keep this portion of code always at the end of this file,
 # for the sake of being able to override everything by local_settings.py
-try:
-    from WSS_Site.local_settings import *
-except ImportError:
-    pass
+local_settings_path = os.path.join(
+    os.path.dirname(__file__), 'local_settings.py')
+if os.path.exists(local_settings_path):
+    exec(open(local_settings_path, 'rb').read())
