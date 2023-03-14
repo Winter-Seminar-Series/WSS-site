@@ -58,6 +58,7 @@ class GradeInline(CompactInline):
 class ParticipantAdmin(admin.ModelAdmin):
     readonly_fields = ('payment_timestamp',)
     inlines = (WorkshopRegistrationInline, )
+    list_filter = ('current_wss__year',)
 
 
 class AnnouncementAdmin(admin.ModelAdmin):
