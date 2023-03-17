@@ -264,7 +264,7 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'wss.sharif@gmail.com'
+EMAIL_HOST_USER = os.environ.get('WSS_EMAIL_ADDRESS')
 EMAIL_HOST_PASSWORD = os.environ.get('WSS_EMAIL_PASSWORD')
 
 # Keep this portion of code always at the end of this file,
