@@ -254,8 +254,8 @@ class Grade(models.Model):
         return self.level
 
 
-INTRODUCTION = [(None, 'Please Select'), ('Telegram', 'Telegram'), ('Instagram', 'Instagram'), ('Facebook', 'Facebook'),
-                ('Twitter', 'Twitter'), ('Poster', 'Poster'), ('Linkedin', 'Linkedin'), ('YouTube', 'YouTube'), ('Friends', 'Friends'), ('Other', 'Other')]
+INTRODUCTION = [(None, 'Please Select'), ('Telegram', 'Telegram'), ('Instagram', 'Instagram'), ('Facebook', 'Facebook'), ('SMS', 'SMS'), ('Email', 'Email'),
+                ('Twitter', 'Twitter'), ('Poster', 'Poster'), ('Linkedin', 'Linkedin'), ('Quera', 'Quera'), ('YouTube', 'YouTube'), ('Friends', 'Friends'), ('Other', 'Other')]
 GENDER = [('Female', 'Female'), ('Male', 'Male'), ('Other', 'Other')]
 
 
