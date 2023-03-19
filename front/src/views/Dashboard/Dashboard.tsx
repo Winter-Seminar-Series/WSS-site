@@ -36,7 +36,7 @@ function Dashboard({ match, verifyPayment, thisSeries }) {
             component={UserWorkshopList}
           /> */}
           <Route path={match.url + '/profile'} component={Profile} />
-          <Redirect to={match.url + '/profile'} />
+          <Redirect to={match.url + '/seminar-registration'} />
         </Switch>
       </div>
     </>

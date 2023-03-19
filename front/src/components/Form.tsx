@@ -19,6 +19,9 @@ import {
   RadioGroup,
   Select,
 } from '@mui/material';
+import DatePicker from '@mui/lab/DatePicker';
+import AdapterDateFns from '@mui/lab/AdapterDateFns';
+import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import ResponsiveDialog from './Dialog';
 import PhoneInput from 'react-phone-input-2';
 import 'react-phone-input-2/lib/style.css';
@@ -32,6 +35,7 @@ function Form({
   doesUserHaveRegistered,
   sendPaymentRequest,
   paymentProcess,
+  token,
   isFetching,
   first_name: inputFirstName,
   last_name: inputLastName,
@@ -118,14 +122,14 @@ function Form({
   }, [getProfile]);
 
   useEffect(() => {
-    if (discountIsFocused) return;
+    if (discountIsFocused || is_online_attendant === undefined) return;
 
-    fetchApi(`${ROOT}somewhere`, {
-      method: 'POST',
-      body: JSON.stringify({
-        discount,
-        is_online_attendant,
-      }),
+    //TODO move this to redux or undo hardcoding series name
+    fetchApi(`${ROOT}8th/payment/price?is_online_attendant=${is_online_attendant}&discount=${discount}`, {
+      headers: {
+        Authorization: `Token ${token}`
+      },
+      method: 'GET',
     }).then((response) => {
       setPrice(response.price ?? 0);
     });
@@ -287,18 +291,27 @@ function Form({
         </div>
 
         <div className="col-12 col-lg">
-          <input
-            name="date"
-            type="text"
-            onFocus={(e) => (e.target.type = 'date')}
-            onBlur={(e) => (e.target.type = 'text')}
-            placeholder="Birthdate *"
-            className="text-input form-control"
-            value={dateOfBirth}
-            onChange={(e) => {
-              setDateOfBirth(e.target.value);
-            }}
-          />
+          <LocalizationProvider dateAdapter={AdapterDateFns}>
+            <DatePicker
+              label="Custom input"
+              value={dateOfBirth}
+              onChange={(date) => {
+                setDateOfBirth(new Date(date).toISOString().split('T')[0]);
+              }}
+              renderInput={({ inputRef, inputProps, InputProps }) => (
+                <div style={{ display: 'flex', alignItems: 'center' }}>
+                  <input
+                    {...inputProps}
+                    ref={inputRef}
+                    required
+                    placeholder="Birthdate *"
+                    className="text-input form-control"
+                  />
+                  {InputProps?.endAdornment}
+                </div>
+              )}
+            />
+          </LocalizationProvider>
         </div>
       </div>
       <div className="row">
@@ -486,7 +499,7 @@ function Form({
         <div className="col-12 col-lg">
           <Button
             component="label"
-            className="btn btn-lg btn-primary btn-dark mb-1">
+            className="col-12 col-lg btn btn-lg btn-secondary mb-1">
             {resume ? 'Resume Uploaded' : 'Upload Resume (optional)'}
             <input type="file" hidden onChange={handleCaptureResume} />
           </Button>
@@ -495,7 +508,7 @@ function Form({
 
       <div className="row">
         <em className="mb-1">
-          To increase your chance of getting hired by our sponsers, fill out the
+          To increase your chance of getting hired by our sponsors, fill out the
           optional fields!
         </em>
       </div>
@@ -552,7 +565,7 @@ function Form({
           <button
             disabled={isFetching || paymentProcess}
             type="submit"
-            className="col-12 col-lg btn btn-lg btn-primary btn-blue mb-5">
+            className="col-12 col-lg btn btn-lg btn-primary mb-5">
             {isRegisteration ? (
               <>Go For Payment {price ? ` • ${price}` : ''}</>
             ) : (
@@ -585,7 +598,7 @@ const mapStateToProps = (state, ownProps) => {
     job,
     phone_number,
   } = state.Participant;
-  const { isFetching: paymentProcess } = state.account;
+  const { isFetching: paymentProcess, token } = state.account;
   const { isRegisteration } = ownProps;
   const socialMediaIds = social_media_ids
     ? JSON.parse(social_media_ids)
@@ -593,6 +606,7 @@ const mapStateToProps = (state, ownProps) => {
   return {
     thisSeries: state.account.thisSeries,
     paymentProcess,
+    token,
     isFetching,
     first_name,
     last_name,

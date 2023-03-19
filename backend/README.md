@@ -1,5 +1,8 @@
 # WSS backend API documentation
 
+
+
+
 ## Map the old style (`Jinja2`) to `GET` requests:
 - Primitive fields of WSS
     Fields:
@@ -88,6 +91,8 @@
         ```HTTP
         GET /api/<year>/sponsorships/count?main=1
         ```
+
+
 
 ## Payment API:
 

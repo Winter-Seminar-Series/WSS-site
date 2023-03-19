@@ -6,6 +6,7 @@ from pip._vendor import requests
 from sorl.thumbnail import ImageField
 from django.core.validators import MinValueValidator
 from events.models import Workshop, RoundTable, LabTalk, Seminar, PosterSession, WssTag
+from django.utils.translation import gettext_lazy as _
 
 GRADE_GROUPS = {
     'Bachelor': ['Bachelor'],
@@ -67,12 +68,14 @@ class WSS(models.Model):
 
     def calculate_fee(self, is_online_attendant, discount_code=None):
         final_fee = self.registration_fee
+        discount = None
         if discount_code:
-            discount = self.discount_codes.get(value=discount_code)
-            final_fee *= (1 - discount.off_percentage / 100)
+            discount = self.discount_codes.filter(value=discount_code).first()
+            if discount:
+                final_fee *= (1 - discount.off_percentage / 100)
         if not is_online_attendant:
             final_fee += self.in_person_fee_bias
-        return int(final_fee)
+        return int(final_fee), discount is not None
 
     @property
     def bs_participant_count(self):
@@ -251,8 +254,8 @@ class Grade(models.Model):
         return self.level
 
 
-INTRODUCTION = [(None, 'Please Select'), ('Telegram', 'Telegram'), ('Instagram', 'Instagram'), ('Facebook', 'Facebook'),
-                ('Twitter', 'Twitter'), ('Poster', 'Poster'), ('Linkedin', 'Linkedin'), ('YouTube', 'YouTube'), ('Friends', 'Friends'), ('Other', 'Other')]
+INTRODUCTION = [(None, 'Please Select'), ('Telegram', 'Telegram'), ('Instagram', 'Instagram'), ('Facebook', 'Facebook'), ('SMS', 'SMS'), ('Email', 'Email'),
+                ('Twitter', 'Twitter'), ('Poster', 'Poster'), ('Linkedin', 'Linkedin'), ('Quera', 'Quera'), ('YouTube', 'YouTube'), ('Friends', 'Friends'), ('Other', 'Other')]
 GENDER = [('Female', 'Female'), ('Male', 'Male'), ('Other', 'Other')]
 
 
@@ -272,6 +275,14 @@ class Participant(models.Model):
 
     def __str__(self):
         return f"{self.current_wss} - {self.user_profile}"
+
+
+class Payment(models.Model):
+    authority = models.CharField(_("authority"), max_length=36, unique=True)
+    paid = models.BooleanField(default=False)
+    amount = models.PositiveIntegerField(_("amount"))
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name=_("user"))
+    wss = models.ForeignKey(WSS, on_delete=models.CASCADE, verbose_name=_("winter seminar series"))
 
 
 class UserProfile(models.Model):

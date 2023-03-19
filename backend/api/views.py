@@ -12,7 +12,7 @@ from abc import ABC, abstractmethod
 from api import serializers
 from events.models import Workshop, WssTag, Venue, SeminarMaterial, PosterMaterial, WorkshopMaterial, BaseEvent
 from people.models import Speaker, Staff
-from WSS.models import WSS, Participant, UserProfile, Sponsor, GradeDoesNotSpecifiedException, DiscountCode
+from WSS.models import WSS, Participant, UserProfile, Sponsor, GradeDoesNotSpecifiedException, DiscountCode, Payment
 from WSS.payment import send_payment_request, verify
 
 from rest_framework.authtoken.serializers import AuthTokenSerializer
@@ -48,7 +48,8 @@ def get_wss_object_or_404(title: str) -> WSS:
         "4th": 2018,
         "5th": 2019,
         "6th": 2020,
-        "7th": 2021
+        "7th": 2021,
+        "8th": 2022,
     }
     try:
         year = int(title)
@@ -463,7 +464,10 @@ class UserProfileViewSet(viewsets.ViewSet):
     @action(methods=['PUT'], detail=False)
     def edit(self, request):
         user_profile = get_user_profile(request.user)
-        user_data_parameter = request.data
+        user_data_parameter: dict = request.data
+
+        if Participant.objects.filter(user_profile=user_profile).exists():  # make 'is_online_attendant' not editable after payment
+            user_data_parameter.pop('is_online_attendant', None)
 
         fields = ['first_name', 'last_name', 'phone_number', 'age',
                   'job', 'university', 'introduction_method',
@@ -484,6 +488,8 @@ class UserProfileViewSet(viewsets.ViewSet):
                             content), name=f'{name}.{ext}')
                     else:
                         continue
+                if field == 'is_online_attendant' and not data:
+                    data = False
                 setattr(user_profile, field, data)
 
         user_profile.save()
@@ -568,22 +574,18 @@ class PaymentViewSet(viewsets.ViewSet):
     @action(methods=['GET'], detail=False)
     def price(self, request, year):
         try:
-            is_online_attendant = request.data["is_online_attendant"]
-        except KeyError:
+            is_online_attendant = request.query_params["is_online_attendant"].lower() == 'true'
+        except Exception:
             return ErrorResponse({
                 "message": _("is_online_attendant is required")
             })
         wss = get_wss_object_or_404(year)
-        discount_code = request.data.get("discount", None)
-        try:
-            price = wss.calculate_fee(is_online_attendant, discount_code)
-        except DiscountCode.DoesNotExist:
-            return ErrorResponse({
-                "message": _("Discount code is INVALID!")
-            })
+        discount_code = request.query_params.get("discount", None)
+        price, is_valid_discount = wss.calculate_fee(is_online_attendant, discount_code)
 
         return Response({
-            "price": price
+            "price": price,
+            "is_valid_discount": is_valid_discount,
         })
 
     @action(methods=['GET'], detail=False)
@@ -610,7 +612,7 @@ class PaymentViewSet(viewsets.ViewSet):
         elif ((not user_profile.grade) or (not user_profile.email) or (not user_profile.phone_number)
               or (not user_profile.job) or (not user_profile.university) or (not user_profile.major)
               or (not user_profile.first_name) or (not user_profile.last_name) or (not user_profile.date_of_birth)
-              or (not user_profile.is_online_attendant)):
+              or (user_profile.is_online_attendant is None)):
             return ErrorResponse({
                 "message": "Some required fields are blank."
             })
@@ -626,12 +628,8 @@ class PaymentViewSet(viewsets.ViewSet):
             }, status_code=403)
 
         discount_code = request.query_params.get("discount", None)
-        try:
-            amount = wss.calculate_fee(user_profile.is_online_attendant, discount_code)
-        except DiscountCode.DoesNotExist:
-            return ErrorResponse({
-                "message": _("Discount code is INVALID!")
-            })
+
+        amount, _ = wss.calculate_fee(user_profile.is_online_attendant, discount_code)
 
         description = settings.PAYMENT_SETTING['description'].format(
             year, user_profile.email)
@@ -646,6 +644,8 @@ class PaymentViewSet(viewsets.ViewSet):
             })
 
         payment_url = settings.PAYMENT_SETTING['payment_url']
+
+        Payment.objects.create(authority=result.Authority, amount=amount, user=request.user, wss=wss)
 
         return Response({
             "redirect_url": f"{payment_url}{result.Authority}"
@@ -673,14 +673,21 @@ class PaymentViewSet(viewsets.ViewSet):
                     'message': 'Authority should be passed in query string'
                 }, status_code=403)
 
-            amount = wss.registration_fee
+            try:
+                payment = Payment.objects.get(authority=authority)
+            except Payment.DoesNotExist:
+                return ErrorResponse({
+                    'message': 'No payment information found',
+                })
 
-            result = verify(authority, amount)
+            result = verify(authority, payment.amount)
 
             if result.Status == 100:
                 participant = Participant(current_wss=wss, user_profile=user_profile,
-                                          payment_ref_id=str(result.RefID), payment_amount=amount)
+                                          payment_ref_id=str(result.RefID), payment_amount=payment.amount)
                 participant.save()
+                payment.paid = True
+                payment.save()
 
                 # Notify user about successful payment
                 user = participant.user_profile.user
@@ -705,7 +712,8 @@ class PaymentViewSet(viewsets.ViewSet):
             if result.Status == 101:
                 return ErrorResponse({'status': 'ALREADY SUBMITTED'})
 
-            amount = (amount * 2) // 3
+            # TODO: Fix this shit code :/
+            amount = (payment.amount * 2) // 3
             amount = (amount // 10000) * 10000
             result = verify(authority, amount)
 
