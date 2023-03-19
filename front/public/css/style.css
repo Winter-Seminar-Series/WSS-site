@@ -99,15 +99,6 @@ p {
   line-height: 24px;
   font-size: 14px;
 }
-.padding-left-text
-{
-  padding-left: 25px;
-}
-
-
-.padding-left-text {
-  padding-left: 25px;
-}
 
 
 h1,
@@ -209,10 +200,6 @@ section,
 
 section#ts-programs {
   padding-top: 3rem;
-}
-
-.section-paragraph {
-  font-size: 16px;
 }
 
 .gradient-bg {
