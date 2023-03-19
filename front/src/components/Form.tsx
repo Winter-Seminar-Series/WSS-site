@@ -67,6 +67,9 @@ function Form({
     'Twitter',
     'Linkedin',
     'YouTube',
+    'Quera',
+    'Email',
+    'SMS',
     'Friends',
     'Other',
   ];
