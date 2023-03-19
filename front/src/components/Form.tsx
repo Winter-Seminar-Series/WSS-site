@@ -293,10 +293,19 @@ function Form({
         <div className="col-12 col-lg">
           <LocalizationProvider dateAdapter={AdapterDateFns}>
             <DatePicker
-              label="Custom input"
+              label="Birth date"
               value={dateOfBirth}
-              onChange={(date) => {
-                setDateOfBirth(new Date(date).toISOString().split('T')[0]);
+              onChange={(date: Date) => {
+                if (date && !isNaN(date.getTime())) {
+                  setDateOfBirth(
+                    `${date.getFullYear()}-${(date.getMonth() + 1)
+                      .toString()
+                      .padStart(2, '0')}-${date
+                      .getDate()
+                      .toString()
+                      .padStart(2, '0')}`
+                  );
+                }
               }}
               renderInput={({ inputRef, inputProps, InputProps }) => (
                 <div style={{ display: 'flex', alignItems: 'center' }}>
