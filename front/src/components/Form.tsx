@@ -487,9 +487,9 @@ function Form({
             onChange={() => setOpenToWork(!openToWork)}
             className="form-check-input"
             type="checkbox"
-            id="gridCheck1"
+            id="open-to-work-checkbox"
           />
-          <label className="form-check-label" htmlFor="gridCheck1">
+          <label className="form-check-label" htmlFor="open-to-work-checkbox">
             I'm open to work.
           </label>
         </div>
@@ -535,9 +535,9 @@ function Form({
                 onChange={() => setAgreement(!agreement)}
                 className="form-check-input"
                 type="checkbox"
-                id="gridCheck1"
+                id="agreement-checkbox"
               />
-              <label className="form-check-label" htmlFor="gridCheck1">
+              <label className="form-check-label" htmlFor="agreement-checkbox">
                 <div>
                   I agree to{' '}
                   <a
