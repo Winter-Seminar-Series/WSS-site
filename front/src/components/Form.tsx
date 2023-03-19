@@ -83,6 +83,7 @@ function Form({
   const [agreement, setAgreement] = React.useState(false);
   const [openToWork, setOpenToWork] = React.useState(false);
   const [dateOfBirth, setDateOfBirth] = React.useState('');
+  const [dateOfBirthValidity, setDateOfBirthValidity] = React.useState(true);
   const [major, setMajor] = React.useState('');
   const [github, setGithub] = React.useState('');
   const [linkedIn, setLinkedIn] = React.useState('');
@@ -196,6 +197,9 @@ function Form({
     ) {
       toast.error('Please fill all the required fields');
       return;
+    } else if (!dateOfBirthValidity) {
+      toast.error('Date of birth is invalid. Please enter a valid date');
+      return;
     } else if (!agreement && isRegisteration) {
       toast.error('You should agree to our terms of service');
       return;
@@ -296,7 +300,8 @@ function Form({
               label="Birth date"
               value={dateOfBirth}
               onChange={(date: Date) => {
-                if (date && !isNaN(date.getTime())) {
+                if (!date) return;
+                if (!isNaN(date.getTime())) {
                   setDateOfBirth(
                     `${date.getFullYear()}-${(date.getMonth() + 1)
                       .toString()
@@ -305,6 +310,9 @@ function Form({
                       .toString()
                       .padStart(2, '0')}`
                   );
+                  setDateOfBirthValidity(true);
+                } else {
+                  setDateOfBirthValidity(false);
                 }
               }}
               renderInput={({ inputRef, inputProps, InputProps }) => (
@@ -314,7 +322,9 @@ function Form({
                     ref={inputRef}
                     required
                     placeholder="Birthdate *"
-                    className="text-input form-control"
+                    className={`text-input form-control ${
+                      !dateOfBirthValidity ? 'is-invalid' : ''
+                    }`}
                   />
                   {InputProps?.endAdornment}
                 </div>
