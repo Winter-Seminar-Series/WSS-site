@@ -99,6 +99,11 @@ p {
   line-height: 24px;
   font-size: 14px;
 }
+.padding-left-text
+{
+  padding-left: 25px;
+}
+
 
 .padding-left-text {
   padding-left: 25px;
@@ -197,6 +202,9 @@ section,
 .section-padding {
   padding: 8rem 0;
   position: relative;
+}
+.section-paragraph{
+  font-size: 16px ;
 }
 
 section#ts-programs {
