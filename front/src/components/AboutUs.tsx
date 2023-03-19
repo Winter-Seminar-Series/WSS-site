@@ -20,9 +20,9 @@ export default function AboutUs() {
                     src="images/seminar.png"
                 />
               </div>
-              <div className="col mr-md-3 d-flex flex-column justify-content-center">
-                <h3 className="section-sub-title">Seminars</h3>
-                <p className="section-paragraph">
+              <div className="col mr-md-3 d-flex flex-column justify-content-center ">
+                <h3 className="section-sub-title px-3">Seminars</h3>
+                <p className="section-paragraph px-3">
                   The seminars comprise a four-day event where speakers present their
                   research and ideas, sharing their findings and teaching related topics.
                   Each day of the event features different speakers and topics, providing
@@ -33,22 +33,23 @@ export default function AboutUs() {
 
 
             <div
-                className="row d-flex flex-sm-row-reverse justify-content-start justify-content-sm-between mt-5 mb-md-5">
+                className="row d-flex flex-sm-row justify-content-start justify-content-sm-between mt-5 mb-md-5">
 
-              <div className="col mr-md-3 d-flex flex-column justify-content-center">
-                <h3 className="section-sub-title padding-left-text">Round Tables</h3>
-                <p className="section-paragraph padding-left-text">
-                  During the event, we host round table discussions on specific topics,
-                  inviting experts in the field to share their insights and engage with
-                  participants' concerns. Please note that the round tables are conducted in Persian.
-                </p>
-              </div>
               <div className="p-5 p-md-0 col-md-4 d-flex flex-column justify-content-center">
                 <img
                     className="w-100 h-auto my-auto"
                     src="images/roundtable.png"
                 />
               </div>
+              <div className="col mr-md-3 d-flex flex-column justify-content-center">
+                <h3 className="section-sub-title px-3">Round Tables</h3>
+                <p className="section-paragraph px-3">
+                  During the event, we host round table discussions on specific topics,
+                  inviting experts in the field to share their insights and engage with
+                  participants' concerns. Please note that the round tables are conducted in Persian.
+                </p>
+              </div>
+
             </div>
 
 
@@ -61,8 +62,8 @@ export default function AboutUs() {
                 />
               </div>
               <div className="col justify-content-center">
-                <h3 className="section-sub-title">Lab Talks</h3>
-                <p className="section-paragraph">
+                <h3 className="section-sub-title px-3">Lab Talks</h3>
+                <p className="section-paragraph px-3">
                   This section focuses on the laboratories of the Faculty of
                   Computer Engineering at Sharif University of Technology. <br/>
                   In each session, we feature a different laboratory, with <br/>
