@@ -72,7 +72,8 @@ function Home({
             className="header-video-wrapper"
             style={{
               backgroundImage: 'url(../images/peak.jpg)',
-              backgroundSize: '100% 100%',
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
               backgroundRepeat: 'no-repeat',
             }}>
             {/* <Particles

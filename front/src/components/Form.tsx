@@ -67,6 +67,9 @@ function Form({
     'Twitter',
     'Linkedin',
     'YouTube',
+    'Quera',
+    'Email',
+    'SMS',
     'Friends',
     'Other',
   ];
@@ -83,6 +86,7 @@ function Form({
   const [agreement, setAgreement] = React.useState(false);
   const [openToWork, setOpenToWork] = React.useState(false);
   const [dateOfBirth, setDateOfBirth] = React.useState('');
+  const [dateOfBirthValidity, setDateOfBirthValidity] = React.useState(true);
   const [major, setMajor] = React.useState('');
   const [github, setGithub] = React.useState('');
   const [linkedIn, setLinkedIn] = React.useState('');
@@ -196,6 +200,9 @@ function Form({
     ) {
       toast.error('Please fill all the required fields');
       return;
+    } else if (!dateOfBirthValidity) {
+      toast.error('Date of birth is invalid. Please enter a valid date');
+      return;
     } else if (!agreement && isRegisteration) {
       toast.error('You should agree to our terms of service');
       return;
@@ -293,10 +300,23 @@ function Form({
         <div className="col-12 col-lg">
           <LocalizationProvider dateAdapter={AdapterDateFns}>
             <DatePicker
-              label="Custom input"
+              label="Birth date"
               value={dateOfBirth}
-              onChange={(date) => {
-                setDateOfBirth(new Date(date).toISOString().split('T')[0]);
+              onChange={(date: Date) => {
+                if (!date) return;
+                if (!isNaN(date.getTime())) {
+                  setDateOfBirth(
+                    `${date.getFullYear()}-${(date.getMonth() + 1)
+                      .toString()
+                      .padStart(2, '0')}-${date
+                      .getDate()
+                      .toString()
+                      .padStart(2, '0')}`
+                  );
+                  setDateOfBirthValidity(true);
+                } else {
+                  setDateOfBirthValidity(false);
+                }
               }}
               renderInput={({ inputRef, inputProps, InputProps }) => (
                 <div style={{ display: 'flex', alignItems: 'center' }}>
@@ -305,7 +325,9 @@ function Form({
                     ref={inputRef}
                     required
                     placeholder="Birthdate *"
-                    className="text-input form-control"
+                    className={`text-input form-control ${
+                      !dateOfBirthValidity ? 'is-invalid' : ''
+                    }`}
                   />
                   {InputProps?.endAdornment}
                 </div>
@@ -487,9 +509,9 @@ function Form({
             onChange={() => setOpenToWork(!openToWork)}
             className="form-check-input"
             type="checkbox"
-            id="gridCheck1"
+            id="open-to-work-checkbox"
           />
-          <label className="form-check-label" htmlFor="gridCheck1">
+          <label className="form-check-label" htmlFor="open-to-work-checkbox">
             I'm open to work.
           </label>
         </div>
@@ -535,9 +557,9 @@ function Form({
                 onChange={() => setAgreement(!agreement)}
                 className="form-check-input"
                 type="checkbox"
-                id="gridCheck1"
+                id="agreement-checkbox"
               />
-              <label className="form-check-label" htmlFor="gridCheck1">
+              <label className="form-check-label" htmlFor="agreement-checkbox">
                 <div>
                   I agree to{' '}
                   <a
