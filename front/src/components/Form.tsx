@@ -596,7 +596,8 @@ function Form({
           </button>
           {isRegisteration ? (
             <>
-            <button
+            <button 
+                type="button"
                 className="col-12 col-lg btn btn-sm btn-outline-secondary mb-5 pt-2 pb-2"
                 onClick={() => window.open("https://t.me/wss_info")}>
                   If you experience any issue with payment, please contact us on Telegram (@WSS_info)
