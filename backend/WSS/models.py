@@ -26,6 +26,7 @@ class GradeDoesNotSpecifiedException(Exception):
 
 
 class WSS(models.Model):
+    title = models.CharField(max_length=10, null=True, blank=True)
     year = models.PositiveSmallIntegerField()
     description = models.TextField(null=True, blank=True)
     registration_open = models.BooleanField(null=False, default=False)

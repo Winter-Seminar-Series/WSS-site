@@ -42,21 +42,11 @@ import os
 
 
 def get_wss_object_or_404(title: str) -> WSS:
-    title_to_year = {
-        "1st": 2015,
-        "2nd": 2016,
-        "3rd": 2017,
-        "4th": 2018,
-        "5th": 2019,
-        "6th": 2020,
-        "7th": 2021,
-        "8th": 2022,
-    }
     try:
         year = int(title)
+        return get_object_or_404(WSS, year=year)
     except:
-        year = title_to_year[title]
-    return get_object_or_404(WSS, year=year)
+        return get_object_or_404(WSS, title=title)
 
 
 def get_user_profile(user: User) -> UserProfile:
@@ -122,7 +112,8 @@ class EventViewSet(BaseViewSet, ABC):
 
     @staticmethod
     def user_is_participant(user: User, wss: WSS, pk: int) -> bool:
-        return user.is_authenticated and not user.is_anonymous and wss.participants.filter(user_profile=get_user_profile(user)).count() == 1
+        return user.is_authenticated and not user.is_anonymous and wss.participants.filter(
+            user_profile=get_user_profile(user)).count() == 1
 
     def get_list(self, request, wss):
         queryset = self.queryset_selector(request, wss)
@@ -162,8 +153,8 @@ class WorkshopViewSet(EventViewSet):
 
     @staticmethod
     def user_is_registered_workshop(user, wss, pk):
-        return wss.participants.get(user_profile=user.profile)\
-            .registered_workshops.filter(pk=pk).count() > 0
+        return wss.participants.get(user_profile=user.profile) \
+                   .registered_workshops.filter(pk=pk).count() > 0
 
     @staticmethod
     def user_is_participant(user: User, wss: WSS, pk: int) -> bool:
@@ -714,7 +705,7 @@ class PaymentViewSet(viewsets.ViewSet):
                             user.first_name, participant.payment_ref_id)
                     )
                 )
-                ).start()
+                                 ).start()
 
                 return Response({
                     "message": 'OK',
@@ -747,7 +738,7 @@ class PaymentViewSet(viewsets.ViewSet):
                             user.first_name, participant.payment_ref_id)
                     )
                 )
-                ).start()
+                                 ).start()
 
                 return Response({
                     "message": 'OK',
