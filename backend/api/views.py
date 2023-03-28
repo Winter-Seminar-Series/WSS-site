@@ -21,6 +21,7 @@ from django.contrib.auth import login
 from knox.views import LoginView as KnoxLoginView
 from django.contrib.auth.models import User
 from django.utils.translation import gettext_lazy as _
+from django.core.exceptions import ValidationError
 
 import threading
 from django.core.mail import send_mail
@@ -585,6 +586,14 @@ class PaymentViewSet(viewsets.ViewSet):
             "is_valid_discount": is_valid_discount,
         })
 
+    @staticmethod
+    def _check_profile(profile: UserProfile):
+        empty_fields = profile.empty_fields
+        if len(empty_fields) == 1:
+            raise ValidationError("%s is required" % empty_fields[0])
+        elif len(empty_fields) > 1:
+            raise ValidationError("%s and %s are required" % (', '.join(empty_fields[:-1]), empty_fields[-1]))
+
     @action(methods=['GET'], detail=False)
     def request(self, request, year):
         wss = get_wss_object_or_404(year)
@@ -606,13 +615,13 @@ class PaymentViewSet(viewsets.ViewSet):
             return ErrorResponse({
                 "message": "You already have finished your payment."
             })
-        elif ((not user_profile.grade) or (not user_profile.email) or (not user_profile.phone_number)
-              or (not user_profile.job) or (not user_profile.university) or (not user_profile.major)
-              or (not user_profile.first_name) or (not user_profile.last_name) or (not user_profile.date_of_birth)
-              or (user_profile.is_online_attendant is None)):
-            return ErrorResponse({
-                "message": "Some required fields are blank."
-            })
+        else:
+            try:
+                self._check_profile(user_profile)
+            except ValidationError as e:
+                return ErrorResponse({
+                    "message": str(e).capitalize()
+                })
 
         try:
             if wss.is_capacity_full(user_profile.grade):

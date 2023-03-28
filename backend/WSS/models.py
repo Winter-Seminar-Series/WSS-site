@@ -317,6 +317,9 @@ class UserProfile(models.Model):
     resume = models.FileField(upload_to='uploads', null=True, blank=True)
     is_online_attendant = models.BooleanField(default=False)
 
+    required_fields = ["grade", "email", "phone_number", "job", "university", "major", "first_name", "last_name",
+                       "date_of_birth", "is_online_attendant"]
+
     @property
     def email(self):
         return self.user.email
@@ -336,6 +339,10 @@ class UserProfile(models.Model):
     @last_name.setter
     def last_name(self, value):
         self.user.last_name = value
+
+    @property
+    def empty_fields(self):
+        return [field for field in self.required_fields if getattr(self, field) is None]
 
     def __str__(self):
         return self.first_name + " " + self.last_name
