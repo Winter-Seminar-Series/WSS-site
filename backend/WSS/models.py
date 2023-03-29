@@ -269,6 +269,7 @@ class Participant(models.Model):
     payment_timestamp = models.DateTimeField(auto_now_add=True)
     registered_workshops = models.ManyToManyField(
         Workshop, related_name='participants', blank=True)
+    is_online_attendant = models.BooleanField()
 
     class Meta:
         unique_together = [['current_wss', 'user_profile']]

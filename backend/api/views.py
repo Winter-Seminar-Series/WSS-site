@@ -689,8 +689,14 @@ class PaymentViewSet(viewsets.ViewSet):
             result = verify(authority, payment.amount)
 
             if result.Status == 100:
-                participant = Participant(current_wss=wss, user_profile=user_profile,
-                                          payment_ref_id=str(result.RefID), payment_amount=payment.amount)
+                participant = Participant(
+                    current_wss=wss,
+                    user_profile=user_profile,
+                    payment_ref_id=str(result.RefID),
+                    payment_amount=payment.amount,
+                    is_online_attendant=user_profile.is_online_attendant,
+                )
+
                 participant.save()
                 payment.paid = True
                 payment.save()
