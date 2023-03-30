@@ -4,7 +4,7 @@ from jet.admin import CompactInline
 from people.models import Staff, HoldingTeam, Speaker, TechnicalExpert, Role
 
 
-class StaffInline(admin.TabularInline):
+class StaffInline(CompactInline):
     model = HoldingTeam.staff.through
     extra = 0
 
