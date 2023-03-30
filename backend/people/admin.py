@@ -5,8 +5,7 @@ from people.models import Staff, HoldingTeam, Speaker, TechnicalExpert, Role
 
 
 class StaffInline(admin.TabularInline):
-    model = Staff
-    ordering = ('order',)
+    model = HoldingTeam.staff.through
     extra = 0
 
 
@@ -20,7 +19,6 @@ class HoldingTeamAdmin(admin.ModelAdmin):
     list_display = ('__str__', 'wss')
     list_filter = ('wss__year',)
     inlines = (StaffInline,)
-    ordering = ('order',)
 
 
 admin.site.register(Role)
