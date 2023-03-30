@@ -588,7 +588,7 @@ class PaymentViewSet(viewsets.ViewSet):
 
     @staticmethod
     def _check_profile(profile: UserProfile):
-        empty_fields = profile.empty_fields
+        empty_fields = [field.replace('_', ' ') for field in profile.empty_fields]
         if len(empty_fields) == 1:
             raise ValidationError("%s is required" % empty_fields[0])
         elif len(empty_fields) > 1:
@@ -620,7 +620,7 @@ class PaymentViewSet(viewsets.ViewSet):
                 self._check_profile(user_profile)
             except ValidationError as e:
                 return ErrorResponse({
-                    "message": str(e).capitalize()
+                    "message": e.message.capitalize()
                 })
 
         try:
