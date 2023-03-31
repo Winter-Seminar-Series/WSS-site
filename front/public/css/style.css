@@ -3816,3 +3816,11 @@ input:focus {
 form .row {
   margin-bottom: 2rem;
 }
+
+.fixed-background {
+  background-image: url('../images/hill.png');
+  background-size: 100vw 100vh;
+  background-repeat: no-repeat;
+  background-position: top center;
+  background-attachment: fixed;
+}

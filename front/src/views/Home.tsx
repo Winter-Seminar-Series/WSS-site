@@ -168,7 +168,8 @@ function Home({
       </section>
 
       {/* <div className="purple-background"> */}
-      {!(thisSeries === '8th') && (<section
+      {/* {!(thisSeries === '8th') && ( */}
+      <section
               id="ts-speakers-main"
               className="diagonal-up-right blue-gradient my-5 ">
             <div className="container">
@@ -201,9 +202,10 @@ function Home({
               </div>
             </div>
           </section>
-      )}
+      {/* )} */}
 
-      {!(thisSeries === '8th') && (<section
+      {/* {!(thisSeries === '8th') && ( */}
+      <section
               id="ts-statics"
               className="z-1 ts-statics my-5"
               style={{paddingTop: '10rem'}}>
@@ -257,7 +259,7 @@ function Home({
               </div>
             </div>
           </section>
-      )}
+      {/* )} */}
 
       {/* {sponsors.length > 0 && (
         <section id="ts-sponsors" className="ts-sponsors diagonal pt-0">
