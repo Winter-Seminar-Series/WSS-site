@@ -2,6 +2,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { useLocation } from 'react-router-dom';
+import RegistrationButton from '../../components/RegistrationButton';
 import { setThisSeries as doSetThisSeries } from '../../redux/actions/account';
 
 const matchesScope = (location: string, scopes: string[]): boolean => {
@@ -73,30 +74,17 @@ const Header = ({ isLoggedIn, thisSeries, doSetThisSeries }) => {
         },
       ],
     },
-    {title: 'About Us', persianTitle: 'درباره ما', link: '/about'},
-    {title: 'Seminars', persianTitle: 'سمینارها', link: '/seminars'},
-    {title: 'Lab Talks', persianTitle: 'ارائه آزمایشگاه', link: '/labtalks'},
-    {title: 'Round Tables', persianTitle: 'میزگردها', link: '/roundtables'},
+    { title: 'About Us', persianTitle: 'درباره ما', link: '/about' },
+    { title: 'Seminars', persianTitle: 'سمینارها', link: '/seminars' },
+    { title: 'Lab Talks', persianTitle: 'ارائه آزمایشگاه', link: '/labtalks' },
+    { title: 'Round Tables', persianTitle: 'میزگردها', link: '/roundtables' },
     // {title: 'Sponsor', persianTitle: 'اسپانسر', link: '/sponsor'},
     // { title: 'Speakers', persianTitle: 'سمینارها', link: '/seminars' },
     // { title: 'Opening Ceremony', persianTitle: 'افتتاحیه', link: '/seminar/114' },
     // { title: 'Workshops', persianTitle: 'کارگاه‌ها', link: '/workshops' },
     // { title: 'PosterSession', persianTitle: 'پوسترسشن', link: '/postersessions' },
     // {title: 'Schedule', persianTitle: 'برنامه زمانی', link: '/schedule'},
-    {title: 'Staff', persianTitle: 'استف‌ها', link: '/staff'},
-    {
-      title: 'Sign Up',
-      persianTitle: 'ثبت‌نام',
-      link: '/create-account',
-      style: 'active',
-      loggedIn: 'notAuthorized',
-    },
-    {
-      title: 'Login',
-      persianTitle: 'ورود',
-      link: '/login',
-      loggedIn: 'notAuthorized',
-    },
+    { title: 'Staff', persianTitle: 'استف‌ها', link: '/staff' },
     {
       title: 'Dashboard',
       persianTitle: 'داشبورد',
@@ -110,7 +98,7 @@ const Header = ({ isLoggedIn, thisSeries, doSetThisSeries }) => {
       <nav className="navbar navbar-expand-xl navbar-dark w-100 z-index-master">
         <div className="container">
           <a className="navbar-brand" href="/">
-            <img src="/images/headerlogo.png" height="40" alt=""/>
+            <img src="/images/headerlogo.png" height="40" alt="" />
           </a>
           <button
             className="navbar-toggler"
@@ -126,12 +114,12 @@ const Header = ({ isLoggedIn, thisSeries, doSetThisSeries }) => {
             <ul className="navbar-nav ml-auto mt-2 mt-lg-0">
               {navbarItems.map(
                 (i) =>
-                  ((!i.loggedIn ||
+                  (!i.loggedIn ||
                     //       ((!(thisSeries === '8th') ||
                     // (thisSeries === '8th' &&
                     //     !(i.title === 'Staff'))) && (!i.loggedIn ||
                     (i.loggedIn === 'notAuthorized' && !isLoggedIn) ||
-                    (i.loggedIn === 'authorized' && isLoggedIn))) &&
+                    (i.loggedIn === 'authorized' && isLoggedIn)) &&
                   (i.children ? (
                     <li key={i.title} className="nav-item dropdown">
                       <a
@@ -172,6 +160,7 @@ const Header = ({ isLoggedIn, thisSeries, doSetThisSeries }) => {
                   ))
               )}
             </ul>
+            {isLoggedIn || <RegistrationButton />}
           </div>
         </div>
       </nav>
