@@ -1,8 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
-import Like from './Like';
 import { BASE_URL } from '../../constants/info';
 
 function PublicCard({
@@ -52,7 +49,11 @@ function PublicCard({
                   ? `${BASE_URL}/${person.picture}`
                   : process.env.PUBLIC_URL + '/images/icons/avatar.jpg'
               }
-              alt=""
+              style={{
+                height: "16em",
+                width: "100%"
+              }}
+              alt={person.name}
               onError={({ currentTarget }) => {
                 currentTarget.onerror = null; // prevents looping
                 currentTarget.src = `${process.env.PUBLIC_URL}images/icons/avatar.jpg`;
