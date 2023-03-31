@@ -18,9 +18,10 @@ const Staff = ({
 
   return (
     <>
+    <div className='fixed-background'>
       <section
         id="ts-speakers"
-        className="background-theme ts-speakers diagonal">
+        className="ts-speakers diagonal">
         <div className="container text-white">
           <div className="row mb-3">
             <h2 className="mb-1 col section-sub-title title-white">Staff</h2>
@@ -55,6 +56,7 @@ const Staff = ({
           ))}
         </div>
       </section>
+      </div>
     </>
   );
 };

@@ -126,9 +126,10 @@ const Header = ({ isLoggedIn, thisSeries, doSetThisSeries }) => {
             <ul className="navbar-nav ml-auto mt-2 mt-lg-0">
               {navbarItems.map(
                 (i) =>
-                  ((!(thisSeries === '8th') ||
-                    (thisSeries === '8th' &&
-                        !(i.title === 'Staff'))) && (!i.loggedIn ||
+                  ((!i.loggedIn ||
+                    //       ((!(thisSeries === '8th') ||
+                    // (thisSeries === '8th' &&
+                    //     !(i.title === 'Staff'))) && (!i.loggedIn ||
                     (i.loggedIn === 'notAuthorized' && !isLoggedIn) ||
                     (i.loggedIn === 'authorized' && isLoggedIn))) &&
                   (i.children ? (
