@@ -599,7 +599,7 @@ class PaymentViewSet(viewsets.ViewSet):
         wss = get_wss_object_or_404(year)
         if not wss.registration_open:
             return ErrorResponse({
-                'message': "Sorry, the registration is not available now."
+                'message': "Sorry, the registration is not available now, make sure you have selected the latest event."
             })
 
         callback_url = request.query_params.get("callback", None)
