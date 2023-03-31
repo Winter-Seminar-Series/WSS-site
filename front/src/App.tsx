@@ -5,7 +5,7 @@ import './styles/style.scss';
 import About from './views/About';
 import Dashboard from './views/Dashboard/Dashboard';
 import SeminarDetail from './views/Details/SeminarDetail';
-import RoundTableDetail from "./views/Details/RoundTableDetail";
+import RoundTableDetail from './views/Details/RoundTableDetail';
 import LabTalkDetail from './views/Details/LabTalkDetail';
 import WorkshopDetail from './views/Details/WorkshopDetail';
 import Home from './views/Home';
@@ -15,13 +15,14 @@ import Login from './views/Login';
 import CreateAccount from './views/CreateAccount';
 import Seminars from './views/Seminars';
 import LabTalks from './views/LabTalks';
-import RoundTables from "./views/RoundTables";
+import RoundTables from './views/RoundTables';
 import Staff from './views/Staff';
 import Workshops from './views/Workshops';
 import Schedule from './views/Schedule';
 import ForgotPassword from './views/ForgotPassword';
 import ResetPassword from './views/ResetPassword';
 import Sponsor from './views/Sponsor';
+import NetworkHall from './views/NetworkHall';
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
         <Route path="/roundtable/:id" component={RoundTableDetail} />
         <Route path="/labtalk/:id" component={LabTalkDetail} />
         <Route path="/workshop/:id" component={WorkshopDetail} />
+        <Route path="/networkhall" component={NetworkHall} />
         <Route path="/about" component={About} />
         <Route path="/workshops" component={Workshops} />
         <Route path="/seminars" component={Seminars} />
