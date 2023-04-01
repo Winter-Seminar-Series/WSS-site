@@ -248,7 +248,7 @@ function Form({
       job,
       phone_number: phoneNumber,
     }).then(() => {
-      if (isRegisteration) sendPaymentRequest(discount, thisSeries);
+      if (isRegisteration) sendPaymentRequest(discount);
     });
     // }
   };
