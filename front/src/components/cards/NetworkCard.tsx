@@ -23,8 +23,7 @@ function NetworkCard({ id, image, name, lastName, position, association }) {
         ]}>
         <Typography
           sx={{
-            // textDecoration: 'underline',
-            borderBottom: '1.72px solid #638932',
+            borderBottom: '1.72px solid var(--green-mid)',
             fontSize: '0.97rem',
             fontWeight: '700',
           }}>

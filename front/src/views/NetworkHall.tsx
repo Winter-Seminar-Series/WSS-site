@@ -6,14 +6,29 @@ const NETWORK = {
   name: 'Name',
   lastName: 'Lastname',
   position: 'Associate professor',
-  image: 'https://thinksport.com.au/wp-content/uploads/2020/01/avatar-.jpg',
+  image: process.env.PUBLIC_URL + '/images/icons/avatar.jpg',
   association: 'Oxford University',
 };
 
 function NetworkHall() {
   return (
     <section className="pt-4">
-      <NetworkCard {...NETWORK} />
+      <div className="network-grid">
+        <div className="row wide">
+          <div className="network-container">
+            <NetworkCard {...NETWORK} />
+            <NetworkCard {...NETWORK} />
+            <NetworkCard {...NETWORK} />
+          </div>{' '}
+        </div>
+        <div className="row">
+          <div className="network-container">
+            <NetworkCard {...NETWORK} />
+            <NetworkCard {...NETWORK} />
+            <NetworkCard {...NETWORK} />
+          </div>
+        </div>
+      </div>
     </section>
   );
 }
