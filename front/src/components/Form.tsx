@@ -501,23 +501,23 @@ function Form({
           </FormControl>
         </div>
       </div>
+      
+            <div className="form-group mb-4">
+              <div className="form-check">
+                <input
+                  checked={openToWork}
+                  onChange={() => setOpenToWork(!openToWork)}
+                  className="form-check-input"
+                  type="checkbox"
+                  id="open-to-work-checkbox"
+                />
+                <label className="form-check-label" htmlFor="open-to-work-checkbox">
+                  I'm open to work.
+                </label>
+              </div>
+            </div>
 
-      <div className="form-group mb-4">
-        <div className="form-check">
-          <input
-            checked={openToWork}
-            onChange={() => setOpenToWork(!openToWork)}
-            className="form-check-input"
-            type="checkbox"
-            id="open-to-work-checkbox"
-          />
-          <label className="form-check-label" htmlFor="open-to-work-checkbox">
-            I'm open to work.
-          </label>
-        </div>
-      </div>
-
-      <div className="row">
+      {/* <div className="row">
         <div className="col-12 col-lg">
           <Button
             component="label"
@@ -526,14 +526,14 @@ function Form({
             <input type="file" hidden onChange={handleCaptureResume} />
           </Button>
         </div>
-      </div>
+      </div> */}
 
-      <div className="row">
+      {/* <div className="row">
         <em className="mb-1">
           To increase your chance of getting hired by our sponsors, fill out the
           optional fields!
-        </em>
-      </div>
+          </em>
+        </div> */}
 
       {isRegisteration ? (
         <>
