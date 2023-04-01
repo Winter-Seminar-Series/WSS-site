@@ -49,10 +49,7 @@ function PublicCard({
                   ? `${BASE_URL}/${person.picture}`
                   : process.env.PUBLIC_URL + '/images/icons/avatar.jpg'
               }
-              style={{
-                height: "16em",
-                width: "100%"
-              }}
+              className="card-img"
               alt={person.name}
               onError={({ currentTarget }) => {
                 currentTarget.onerror = null; // prevents looping
