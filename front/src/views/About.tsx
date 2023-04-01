@@ -3,7 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import AboutUs from '../components/AboutUs';
-import Staff from './Staff';
+import AboutStaff from '../components/AboutStaff';
 
 const About = ({ thisSeries }) => {
   const { t } = useTranslation('about', { useSuspense: false });
@@ -46,7 +46,7 @@ const About = ({ thisSeries }) => {
             </div>
             <AboutUs />
 
-            {thisSeries !== '8th' && <Staff />}
+            <AboutStaff />
           </div>
         </div>
       </section>
