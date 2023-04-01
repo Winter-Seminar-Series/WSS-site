@@ -3824,3 +3824,9 @@ form .row {
   background-position: top center;
   background-attachment: fixed;
 }
+
+.card-img {
+  height: 16em;
+  width: 100%;
+  object-fit: cover;
+}
