@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import PublicCard from '../components/cards/PublicCard';
+import SeminarCard from '../components/cards/SeminarCard';
 import { getModelList, MODEL_LISTS_NAMES } from '../redux/actions/WSS';
 
 const Seminars = ({
@@ -15,8 +15,6 @@ const Seminars = ({
     getModelList(MODEL_LISTS_NAMES.SPEAKERS, thisSeries);
   }, [getWSSPrimitiveFields]);
 
-
-
   return (
     <>
       <section
@@ -24,7 +22,7 @@ const Seminars = ({
         className="background-theme ts-speakers pt-4">
         <div className="container text-white">
           <div className="row mb-3">
-             <h3 className="mb-1 col section-sub-title title-white">Seminars</h3>
+            <h3 className="mb-1 col section-sub-title title-white">Seminars</h3>
           </div>
           {seminars.length > 0 && !isFetching && (
             <div className="row">
@@ -40,8 +38,9 @@ const Seminars = ({
                     <div
                       key={index}
                       className="col-xs-10 col-sm-6 col-lg-3 mt-2 mb-4">
-                      <PublicCard
+                      <SeminarCard
                         id={seminars[index].speaker}
+                        poster_picture={seminars[index].poster_picture}
                         presentationLink={'/seminar/' + seminars[index].id}
                       />
                     </div>
