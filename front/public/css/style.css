@@ -58,7 +58,7 @@
   --deep-blue: #120c41;
 
   --blue-446: #446cb3;
-  --blue-base: #243754;
+  --blue-base: #052848;
   --spring-dark-blue: #101321;
 
   --green-light: #94ae3f;
@@ -68,7 +68,8 @@
   --gray-mid: #5E808A;
   --gray-blue: #4A7180;
   --gray-dark: #121c1e;
-  --gray-pure: #0c1417;
+  --gray-pure: #00001C;
+  --dark: #0A001C;
 
   /* --section-background: #36366d; */
   --section-background: var(--gray-mid);
@@ -3824,4 +3825,44 @@ form .row {
   background-repeat: no-repeat;
   background-position: top center;
   background-attachment: fixed;
+}
+
+.theme-secondary {
+  --container-color: var(--green-mid);
+  --border-color: #303030;
+  background-image: url('../images/hexagon.svg');
+  background-repeat: no-repeat;
+  background-position: right bottom;
+}
+
+.theme-primary {
+  --container-color: var(--section-background);
+  --border-color: #303030;
+  background-image: url('../images/square.svg');
+  background-repeat: no-repeat;
+  background-position: right bottom;
+}
+
+.theme-dark {
+  --container-color: var(--dark);
+  --border-color: #303030;
+  background-image: url('../images/heptagon.svg');
+  background-repeat: no-repeat;
+  background-position: right bottom;
+}
+
+.theme-gray {
+  --container-color: var(--gray-light);
+  --border-color: #303030;
+  background-image: url('../images/circle.svg');
+  background-repeat: no-repeat;
+  background-position: right bottom;
+}
+
+.theme-blue {
+  --container-color: var(--component-background);
+  --border-color: #303030;
+  background-image: url('../images/triangle.svg');
+  background-repeat: no-repeat;
+  background-position: right bottom;
 }

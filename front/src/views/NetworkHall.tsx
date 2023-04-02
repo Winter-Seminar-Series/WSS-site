@@ -1,5 +1,6 @@
 import React from 'react';
 import NetworkCard from '../components/cards/NetworkCard';
+import NetworkList from '../components/NetworkList';
 
 const NETWORK = {
   id: 1,
@@ -13,20 +14,32 @@ const NETWORK = {
 function NetworkHall() {
   return (
     <section className="pt-4">
-      <div className="network-grid">
-        <div className="row wide">
-          <div className="network-container">
-            <NetworkCard {...NETWORK} />
-            <NetworkCard {...NETWORK} />
-            <NetworkCard {...NETWORK} />
-          </div>{' '}
+      <div className="network-grid container">
+        <div className="row">
+          <NetworkList title={'title'} networks={Array(6).fill(NETWORK)} />
+          <NetworkList
+            title={'title'}
+            theme="blue"
+            networks={Array(2).fill(NETWORK)}
+          />
+          <NetworkList
+            title={'title'}
+            theme="gray"
+            networks={Array(3).fill(NETWORK)}
+          />
         </div>
         <div className="row">
-          <div className="network-container">
-            <NetworkCard {...NETWORK} />
-            <NetworkCard {...NETWORK} />
-            <NetworkCard {...NETWORK} />
-          </div>
+          <NetworkList
+            title={'title'}
+            theme="dark"
+            networks={Array(3).fill(NETWORK)}
+          />
+
+          <NetworkList
+            title={'title'}
+            theme="primary"
+            networks={Array(1).fill(NETWORK)}
+          />
         </div>
       </div>
     </section>
