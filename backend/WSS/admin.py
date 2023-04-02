@@ -3,7 +3,7 @@ from jet.admin import CompactInline
 
 from WSS.models import Clip, Booklet, WSS, Image, Sponsor, ExternalLink, Sponsorship, Grade, Participant, UserProfile, \
     ShortLink, Reserve, WssTag, Announcement, DiscountCode
-from events.models import Seminar, Workshop, PosterSession, Event
+from events.models import Seminar, Workshop, PosterSession, Event, RoundTable, LabTalk
 from django.contrib.auth.models import User
 from django.contrib.auth.admin import UserAdmin as AuthUserAdmin
 from events.admin import WorkshopRegistrationInline
@@ -31,6 +31,16 @@ class BookletInline(CompactInline):
 
 class SeminarInline(CompactInline):
     model = Seminar
+    extra = 0
+
+
+class RoundTableInline(CompactInline):
+    model = RoundTable
+    extra = 0
+
+
+class LabTalkInline(CompactInline):
+    model = LabTalk
     extra = 0
 
 
@@ -81,7 +91,7 @@ class DiscountCodeInline(CompactInline):
 
 
 class WSSAdmin(admin.ModelAdmin):
-    inlines = (SeminarInline, PosterSessionInline, WorkshopInline, EventInline, SponsorshipInline, ImageInline,
+    inlines = (SeminarInline, LabTalkInline, RoundTableInline, PosterSessionInline, WorkshopInline, EventInline, SponsorshipInline, ImageInline,
                ClipInline, BookletInline, TagInline, DiscountCodeInline)
     readonly_fields = ('bs_participant_count',
                        'ms_participant_count', 'phd_participant_count')
