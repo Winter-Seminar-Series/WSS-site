@@ -83,6 +83,7 @@ const Header = ({ isLoggedIn, thisSeries, doSetThisSeries }) => {
     // { title: 'Workshops', persianTitle: 'کارگاه‌ها', link: '/workshops' },
     // { title: 'PosterSession', persianTitle: 'پوسترسشن', link: '/postersessions' },
     // {title: 'Schedule', persianTitle: 'برنامه زمانی', link: '/schedule'},
+    {title: 'Network Hall', persianTitle: 'شبکه‌ها', link: '/networkhall'},
     {title: 'Staff', persianTitle: 'استف‌ها', link: '/staff'},
     {
       title: 'Sign Up',
