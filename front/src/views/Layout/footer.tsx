@@ -69,6 +69,43 @@ function Footer() {
           </ul>
         </div>
       </div>
+      <div className="col-12 footer-social d-flex justify-content-center">
+        <a href="https://divar.ir/">
+          <img
+              src="/images/sponsors/Divar.png"
+              alt="ssc logo"
+              width="100"
+          />
+        </a>
+        <a href="https://partdp.ai/">
+          <img
+              src="/images/sponsors/fa-logo.png"
+              alt="ssc logo"
+              width="100"
+          />
+        </a>
+        <a href="https://quera.ir/">
+          <img
+              src="/images/sponsors/quera.png"
+              alt="ssc logo"
+              width="100"
+          />
+        </a>
+        <a href="https://flightio.com/">
+          <img
+              src="/images/sponsors/flightio.png"
+              alt="ssc logo"
+              width="100"
+          />
+        </a>
+        <a>
+          <img
+              src="/images/sponsors/MasterFood.png"
+              alt="ssc logo"
+              width="100"
+          />
+        </a>
+      </div>
       <div className="mx-auto copyright-info">
         <span>
           {/* <a href="\staff-list#front">Website Creators</a> */}
