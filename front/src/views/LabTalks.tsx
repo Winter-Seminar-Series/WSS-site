@@ -18,48 +18,50 @@ const LabTalks = ({
 
   return (
     <>
-      <section id="ts-speakers" className="background-theme ts-speakers pt-4">
-        <div className="container text-white">
-          <div className="row mb-3">
-            <h3 className="mb-1 col section-sub-title title-white">
-              Lab Talks
-            </h3>
+      <div className="fixed-background">
+        <section id="ts-speakers" className="ts-speakers pt-4">
+          <div className="container text-white">
+            <div className="row mb-3">
+              <h3 className="mb-1 col section-sub-title title-white">
+                Lab Talks
+              </h3>
+            </div>
+            {labtalks.length > 0 && !isFetching && (
+              <div className="row">
+                {
+                  // seminars.map((seminar) => (
+                  //   <div key={seminar.id} className="col-xs-12 col-sm-6 col-lg-3 mt-2 mb-4">
+                  //     <PublicCard id={seminar.speaker} presentationLink={'/seminar/' + seminar.id}></PublicCard>
+                  //   </div>
+                  // ))
+                  Array.from(Array(labtalks.length).keys())
+                    .sort(() => Math.random() - 0.5)
+                    .map((index) => (
+                      <div
+                        key={index}
+                        className="col-xs-10 col-sm-6 col-lg-3 mt-2 mb-4">
+                        <LabTalkCard
+                          id={labtalks[index].id}
+                          presentationLink={'/labtalk/' + labtalks[index].id}
+                        />
+                      </div>
+                    ))
+                }
+              </div>
+            )}
+            {isFetching && (
+              <div className="row">
+                <div className="col">Loading...</div>
+              </div>
+            )}
+            {labtalks.length === 0 && !isFetching && (
+              <div className="row">
+                <div className="col">Nothing has been added yet</div>
+              </div>
+            )}
           </div>
-          {labtalks.length > 0 && !isFetching && (
-            <div className="row">
-              {
-                // seminars.map((seminar) => (
-                //   <div key={seminar.id} className="col-xs-12 col-sm-6 col-lg-3 mt-2 mb-4">
-                //     <PublicCard id={seminar.speaker} presentationLink={'/seminar/' + seminar.id}></PublicCard>
-                //   </div>
-                // ))
-                Array.from(Array(labtalks.length).keys())
-                  .sort(() => Math.random() - 0.5)
-                  .map((index) => (
-                    <div
-                      key={index}
-                      className="col-xs-10 col-sm-6 col-lg-3 mt-2 mb-4">
-                      <LabTalkCard
-                        id={labtalks[index].id}
-                        presentationLink={'/labtalk/' + labtalks[index].id}
-                      />
-                    </div>
-                  ))
-              }
-            </div>
-          )}
-          {isFetching && (
-            <div className="row">
-              <div className="col">Loading...</div>
-            </div>
-          )}
-          {labtalks.length === 0 && !isFetching && (
-            <div className="row">
-              <div className="col">Nothing has been added yet</div>
-            </div>
-          )}
-        </div>
-      </section>
+        </section>
+      </div>
     </>
   );
 };
