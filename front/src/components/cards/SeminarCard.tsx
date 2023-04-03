@@ -15,7 +15,9 @@ function SeminarCard({
   });
 
   useEffect(() => {
-    setSpeaker(speakers.find((s) => s.id === id));
+    const foundSpeaker = speakers.find((s) => s.id === id);
+    if (foundSpeaker)
+      setSpeaker(foundSpeaker);
   }, [speakers]);
 
   const cardRef = useRef(null);
