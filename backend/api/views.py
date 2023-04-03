@@ -14,6 +14,7 @@ from events.models import Workshop, WssTag, Venue, SeminarMaterial, PosterMateri
 from people.models import Speaker, Staff
 from WSS.models import WSS, Participant, UserProfile, Sponsor, GradeDoesNotSpecifiedException, DiscountCode, Payment
 from WSS.payment import send_payment_request, verify
+from uuid import uuid4
 
 from rest_framework.authtoken.serializers import AuthTokenSerializer
 from knox.models import AuthToken
@@ -637,6 +638,13 @@ class PaymentViewSet(viewsets.ViewSet):
 
         amount, _ = wss.calculate_fee(user_profile.is_online_attendant, discount_code)
 
+        if not amount:
+            fake_authority = uuid4()
+            Payment.objects.create(authority=fake_authority, amount=0, user=request.user, wss=wss, paid=True)
+            return Response({
+                "redirect_url": f"{callback_url}?Status=OK&Authority={fake_authority}"
+            })
+
         description = settings.PAYMENT_SETTING['description'].format(
             year, user_profile.email)
 
@@ -684,6 +692,23 @@ class PaymentViewSet(viewsets.ViewSet):
             except Payment.DoesNotExist:
                 return ErrorResponse({
                     'message': 'No payment information found',
+                })
+
+            if payment.paid:
+                participant = Participant(
+                    current_wss=wss,
+                    user_profile=user_profile,
+                    payment_ref_id=str("987654321"),
+                    payment_amount=payment.amount,
+                    is_online_attendant=user_profile.is_online_attendant,
+                )
+
+                participant.save()
+                payment.paid = True
+                payment.save()
+                return Response({
+                    "message": 'OK',
+                    "RefID": '987654321'
                 })
 
             result = verify(authority, payment.amount)
