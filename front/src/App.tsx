@@ -22,6 +22,7 @@ import Schedule from './views/Schedule';
 import ForgotPassword from './views/ForgotPassword';
 import ResetPassword from './views/ResetPassword';
 import Sponsor from './views/Sponsor';
+import ChatBot from "./views/ChatBot";
 
 function App() {
   return (
@@ -51,6 +52,8 @@ function App() {
         <Route path="/" component={Home} />
       </Switch>
       <Footer />
+      <ChatBot/>
+
     </>
   );
 }

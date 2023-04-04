@@ -67,8 +67,6 @@ function Home({
 
   return (
     <>
-      <ChatBot/>
-
       <section id="banner">
         <div className="banner-item d-flex h-100">
           <div
