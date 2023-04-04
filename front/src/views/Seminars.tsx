@@ -15,15 +15,36 @@ const Seminars = ({
     getModelList(MODEL_LISTS_NAMES.SPEAKERS, thisSeries);
   }, [getWSSPrimitiveFields]);
 
+  const getSeminarList = () => {
+    const seminarKeys = [...seminars.keys()];
+    let seminarList = seminarKeys.filter((key) => seminars[key].is_pinned);
+
+    const unpinnedSeminars = seminarKeys.filter(
+      (key) => !seminars[key].is_pinned
+    );
+
+    seminarList = seminarList.concat(unpinnedSeminars);
+
+    return seminarList.map((index) => (
+      <div key={index} className="col-xs-10 col-sm-6 col-lg-3 mt-2 mb-4">
+        <SeminarCard
+          id={seminars[index].speaker}
+          poster_picture={seminars[index].poster_picture}
+          presentationLink={'/seminar/' + seminars[index].id}
+        />
+      </div>
+    ));
+  };
+
   return (
     <>
       <div className="fixed-background">
-        <section
-          id="ts-speakers"
-          className="ts-speakers pt-4">
+        <section id="ts-speakers" className="ts-speakers pt-4">
           <div className="container text-white">
             <div className="row mb-3">
-              <h3 className="mb-1 col section-sub-title title-white">Seminars</h3>
+              <h3 className="mb-1 col section-sub-title title-white">
+                Seminars
+              </h3>
             </div>
             {seminars.length > 0 && !isFetching && (
               <div className="row">
@@ -33,19 +54,7 @@ const Seminars = ({
                   //     <PublicCard id={seminar.speaker} presentationLink={'/seminar/' + seminar.id}></PublicCard>
                   //   </div>
                   // ))
-                  Array.from(Array(seminars.length).keys())
-                    .sort(() => Math.random() - 0.5)
-                    .map((index) => (
-                      <div
-                        key={index}
-                        className="col-xs-10 col-sm-6 col-lg-3 mt-2 mb-4">
-                        <SeminarCard
-                          id={seminars[index].speaker}
-                          poster_picture={seminars[index].poster_picture}
-                          presentationLink={'/seminar/' + seminars[index].id}
-                        />
-                      </div>
-                    ))
+                  getSeminarList()
                 }
               </div>
             )}
