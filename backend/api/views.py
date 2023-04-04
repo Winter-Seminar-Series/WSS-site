@@ -2,9 +2,8 @@ from rest_framework.decorators import action
 from rest_framework import viewsets, generics, permissions
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
+from rest_framework import generics
 from knox.auth import TokenAuthentication
-
-from django.views.generic.detail import DetailView
 from django.shortcuts import get_object_or_404
 from django.http import JsonResponse, HttpResponse
 from django.conf import settings
@@ -30,6 +29,9 @@ from templates.consts import *
 
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
+
+import datetime
+from django.utils import timezone
 
 from django.dispatch import receiver
 from django_rest_passwordreset.signals import reset_password_token_created
@@ -564,6 +566,23 @@ class TagsViewSet(BaseViewSet):
 
     def queryset_selector(self, request, wss):
         return wss.tag
+
+
+class IncomingStreamsListView(generics.ListAPIView):
+    BASE_INTERVAL = datetime.timedelta(hours=12)
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+    serializer_class = serializers.IncomingEventsSerializer
+
+    def get_queryset(self):
+        wss = get_wss_object_or_404(self.kwargs.get('year', ''))
+        if not Participant.objects.filter(current_wss=wss, user_profile=self.request.user.profile).exists():
+            return BaseEvent.objects.none()
+        return BaseEvent.objects.filter(
+            wss=wss,
+            start_time__gt=timezone.now()-self.BASE_INTERVAL,
+            start_time__lt=timezone.now()+self.BASE_INTERVAL,
+        )
 
 
 class PaymentViewSet(viewsets.ViewSet):
