@@ -34,6 +34,12 @@ function Sidebar({ logout, isRegistered }) {
       link: '/dashboard/profile',
       icon: 'user-circle-o',
     },
+    {
+      title: 'Stream',
+      persianTitle: 'پخش رویدادها',
+      link: '/dashboard/stream',
+      icon: 'play',
+    },
   ]
 
 
