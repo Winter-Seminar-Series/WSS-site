@@ -32,6 +32,7 @@ const initState = {
   roundtables: [],
   postersessions: [],
   postersessions_count: 0,
+  streams: [],
   poster_materials: [],
   poster_materials_count: 0,
   sponsors: [],
