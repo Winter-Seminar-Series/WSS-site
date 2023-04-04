@@ -97,8 +97,6 @@ function SeminarDetail({
                 )}
               </div>
             </div>
-            {console.log(speaker)}
-            {console.log(seminar)}
             <div className="col mt-3">
               <div className="d-flex">
                 {seminar && seminar.id && isLoggedIn && (
