@@ -27,6 +27,7 @@ function SeminarDetail({
     speaker: '',
     tags: [],
     room: '',
+    poster_picture: '',
   });
   const [speaker, setSpeaker] = useState({
     picture: '',
@@ -67,6 +68,7 @@ function SeminarDetail({
         style={{ marginTop: '-15rem', height: '12rem' }}
         className="diagonal blue-gradient"
       />
+      
       <div className="container-fluid px-sm-3" style={{ marginTop: '-3rem' }}>
         <div className="container">
           <div className="row align-items-end">
@@ -79,7 +81,8 @@ function SeminarDetail({
                   backgroundColor: 'rgba(0,0,0,.1)',
                   borderRadius: '5px',
                 }}>
-                {speaker.picture && (
+                 
+                {(seminar.poster_picture ?? speaker.picture) && (
                   <img
                     style={{
                       borderRadius: '5px',
@@ -88,7 +91,7 @@ function SeminarDetail({
                       top: '0',
                       position: 'absolute',
                     }}
-                    src={`${BASE_URL}/${speaker.picture}`}
+                    src={`${BASE_URL}/${seminar.poster_picture ?? speaker.picture}`}
                     alt=""
                   />
                 )}
