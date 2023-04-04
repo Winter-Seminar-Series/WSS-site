@@ -43,7 +43,7 @@ year_router.register(r'staff', views.StaffViewSet, basename='staff')
 year_urlpatterns = year_router.urls + [
     path('registered-workshops', views.RegisteredWorkshopsAPI.as_view(),
          name='registered workshops'),
-    path('streams', views.IncomingStreamsListView.as_view())
+    path('streams/', views.IncomingStreamsListView.as_view())
 ]
 
 base_router = DefaultRouter()
