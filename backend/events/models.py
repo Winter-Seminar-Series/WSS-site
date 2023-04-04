@@ -77,6 +77,7 @@ class LabTalk(BaseEvent):
 class Seminar(BaseEvent):
     abstract = models.TextField()
     is_keynote = models.BooleanField(default=False)
+    is_pinned = models.BooleanField(default=False)
     speaker = models.ForeignKey(
         to='people.Speaker', related_name='seminars', on_delete=models.RESTRICT)
     material = models.OneToOneField(
