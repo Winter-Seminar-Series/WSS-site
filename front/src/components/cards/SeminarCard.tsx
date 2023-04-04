@@ -12,6 +12,7 @@ function SeminarCard({
     name: '',
     degree: '',
     place: '',
+    picture: '',
   });
 
   useEffect(() => {
@@ -40,8 +41,8 @@ function SeminarCard({
           <div className="card-image">
             <img
               src={
-                poster_picture
-                  ? `${BASE_URL}/${poster_picture}`
+                poster_picture ?? speaker.picture
+                  ? `${BASE_URL}/${poster_picture ?? speaker.picture}`
                   : process.env.PUBLIC_URL + '/images/icons/avatar.jpg'
               }
               className="card-img"
