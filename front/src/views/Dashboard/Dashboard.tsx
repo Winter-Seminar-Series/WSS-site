@@ -3,7 +3,8 @@ import { Redirect, Route, Switch, useLocation } from 'react-router-dom';
 // import '../../../node_modules/bootstrap/scss/bootstrap.scss';
 import Profile from './Profile';
 import Registration from './Registration';
-import Stream from './Streams';
+import ViewStream from './ViewStream';
+import Streams from './Streams';
 import Sidebar from './Sidebar';
 import UserSeminarList from './UserSeminarList';
 import UserWorkshopList from './UserWorkshopList';
@@ -37,7 +38,8 @@ function Dashboard({ match, verifyPayment, thisSeries }) {
             component={UserWorkshopList}
           /> */}
           <Route path={match.url + '/profile'} component={Profile} />
-          <Route path={match.url + '/stream'} component={Stream} />
+          <Route path={match.url + "/stream/:id"} component={ViewStream} />
+          <Route path={match.url + '/stream'} component={Streams} />
           <Redirect to={match.url + '/seminar-registration'} />
         </Switch>
       </div>
