@@ -65,28 +65,30 @@ function Home({
   };
 
   const getSeminarList = () => {
-    let seminarList = seminars.filter((seminar) => seminar.is_pinned);
+    const seminarKeys = [...seminars.keys()];
+    let seminarList = seminarKeys
+      .filter((key) => seminars[key].is_pinned)
+      .sort(() => Math.random() - 0.5);
     if (seminarList.length > 8) {
       seminarList = seminarList.slice(0, 8);
     }
 
     if (seminarList.length < 8) {
-      const unpinnedSeminars = Array.from(
-        Array(seminars.filter((seminar) => !seminar.is_pinned).length).keys()
-      )
+      const unpinnedSeminars = seminarKeys
+        .filter((key) => !seminars[key].is_pinned)
         .sort(() => Math.random() - 0.5)
-        .slice(0, 8 - seminarList.length)
-        .map((index) => (
-          <div key={index} className="col-xs-10 col-sm-6 col-lg-3 mt-2 mb-4">
-            <PublicCard
-              id={seminars[index].speaker}
-              presentationLink={'/seminar/' + seminars[index].id}
-            />
-          </div>
-        ));
+        .slice(0, 8 - seminarList.length);
+
       seminarList = seminarList.concat(unpinnedSeminars);
     }
-    return seminarList;
+    return seminarList.map((index) => (
+      <div key={index} className="col-xs-10 col-sm-6 col-lg-3 mt-2 mb-4">
+        <PublicCard
+          id={seminars[index].speaker}
+          presentationLink={'/seminar/' + seminars[index].id}
+        />
+      </div>
+    ));
   };
 
   return (
