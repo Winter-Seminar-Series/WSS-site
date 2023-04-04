@@ -46,6 +46,13 @@
   font-style: normal;
 }
 
+@font-face {
+  font-family: 'IRANYekan';
+  src: local("IRANYekan"),
+  url("../fonts/Qs_Iranyekan.ttf") format("truetype");
+  font-weight: normal;
+}
+
 *[lang='fa'] {
   font-family: Vazir, sans-serif !important;
   direction: rtl !important;
