@@ -451,7 +451,7 @@ function Form({
                 key={'In person'}
                 value={false}
                 label={'In person'}
-                control={<Radio disabled onChange={() => setIsOnlineAttendant(false)} />}
+                control={<Radio onChange={() => setIsOnlineAttendant(false)} />}
               />
             </RadioGroup>
           </FormControl>
