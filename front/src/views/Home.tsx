@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { connect } from 'react-redux';
-import PublicCard from '../components/cards/PublicCard';
+import SeminarCard from '../components/cards/SeminarCard';
 import { BASE_URL } from '../constants/info';
 import moment from 'moment';
 import {
@@ -83,8 +83,9 @@ function Home({
     }
     return seminarList.map((index) => (
       <div key={index} className="col-xs-10 col-sm-6 col-lg-3 mt-2 mb-4">
-        <PublicCard
+        <SeminarCard
           id={seminars[index].speaker}
+          poster_picture={seminars[index].poster_picture}
           presentationLink={'/seminar/' + seminars[index].id}
         />
       </div>
