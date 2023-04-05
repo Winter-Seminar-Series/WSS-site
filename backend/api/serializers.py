@@ -205,7 +205,7 @@ class PosterMaterialSerializer(ModelSerializer):
 class StreamRoomSerializer(ModelSerializer):
     class Meta:
         model = Room
-        fields = ('id', 'tag')
+        fields = ('id', 'tag', 'url')
 
 
 class IncomingEventsSerializer(ModelSerializer):
