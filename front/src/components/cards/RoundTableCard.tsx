@@ -2,7 +2,12 @@ import React, { useEffect, useRef, useState } from 'react';
 import { connect } from 'react-redux';
 import { BASE_URL } from '../../constants/info';
 
-function RoundTableCard({ id, presentationLink = '', roundTables }) {
+function RoundTableCard({
+  id,
+  presentationLink = '',
+  roundTables,
+  blankTarget = false
+}) {
   const [roundTable, setRoundTable] = useState({
     subject: '',
     speakers: [],
@@ -29,6 +34,7 @@ function RoundTableCard({ id, presentationLink = '', roundTables }) {
       className=""
       ref={cardRef}
       href={presentationLink}
+      {...(blankTarget && { target: "_blank" })}
       style={{ textDecoration: 'none' }}>
       <div id="public-card">
         <div className="card">

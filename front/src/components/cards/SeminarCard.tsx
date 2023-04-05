@@ -6,6 +6,7 @@ function SeminarCard({
   id,
   poster_picture,
   presentationLink = '',
+  blankTarget = false,
   speakers,
 }) {
   const [speaker, setSpeaker] = useState({
@@ -35,6 +36,7 @@ function SeminarCard({
       className=""
       ref={cardRef}
       href={presentationLink}
+      {...(blankTarget && {target: "_blank"})}
       style={{ textDecoration: 'none' }}>
       <div id="public-card">
         <div className="card">
