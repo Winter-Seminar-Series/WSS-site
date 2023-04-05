@@ -5,6 +5,8 @@ import { useParams } from 'react-router-dom';
 import {
   getAnEntityOfModelList,
   MODEL_LISTS_NAMES,
+  getWSSPrimitiveFields,
+  getModelList,
 } from '../../redux/actions/WSS';
 import GoToButton from '../../components/GoToButton';
 import FavoriteButton from '../../components/FavoriteButton';
@@ -13,9 +15,12 @@ import moment from 'moment';
 function LabTalkDetail({
   thisSeries,
   getAnEntityOfModelList,
+  getWSSPrimitiveFields,
+  getModelList,
   labTalks,
   speakers,
   isLoggedIn,
+  streams,
 }) {
   const [labTalk, setLabTalk] = useState({
     id: '',
@@ -36,11 +41,20 @@ function LabTalkDetail({
     bio: '',
     name: '',
   });
+  const [stream, setStream] = useState({
+    stream_room: {
+      url: '',
+    }
+  });
   const id = useParams()['id'];
 
   useEffect(() => {
     getAnEntityOfModelList(MODEL_LISTS_NAMES.LAB_TALKS, thisSeries, id);
   }, [getAnEntityOfModelList]);
+
+  useEffect(() => {
+    getModelList(MODEL_LISTS_NAMES.STREAMS, thisSeries);
+  }, [getWSSPrimitiveFields]);
 
   useEffect(() => {
     const labTalk = labTalks.find((lt) => lt.id === +id);
@@ -61,6 +75,15 @@ function LabTalkDetail({
       setHead(head);
     }
   }, [speakers]);
+
+  useEffect(() => {
+    const stream = streams.find((s) => s.id === labTalk.id);
+
+    if (stream) {
+      setStream(stream);
+    }
+  }, [streams]);
+
   return (
     <section id="main-container" className="main-container">
       <div
@@ -130,12 +153,13 @@ function LabTalkDetail({
                 {/*{'To be announced ...'}*/}
               </div>
               <div className="seminar-details mt-3">
-                {isLoggedIn && (
-                  <GoToButton
-                    type="labtalks"
-                    id={labTalk.id}
-                    room_name={'labtalk'}
-                  />
+              {isLoggedIn && stream?.stream_room?.url && (
+                  <a
+                    href={stream.stream_room.url}
+                    target="_blank"
+                    className="btn btn-lg btn-primary mb-2 mt-3">
+                    Attend
+                  </a>
                 )}
               </div>
             </div>
@@ -181,9 +205,12 @@ const mapStateToProps = (state, ownProps) => {
     isLoggedIn: state.account.isLoggedIn,
     speakers: state.WSS.speakers,
     labTalks: state.WSS.labtalks,
+    streams: state.WSS.streams,
   };
 };
 
 export default connect(mapStateToProps, {
   getAnEntityOfModelList,
+  getWSSPrimitiveFields,
+  getModelList,
 })(LabTalkDetail);
