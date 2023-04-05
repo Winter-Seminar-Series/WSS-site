@@ -17,6 +17,7 @@ class WssTag(models.Model):
 
 class Room(models.Model):
     tag = models.TextField()
+    url = models.URLField(blank=True, null=True, max_length=255)
 
     def __str__(self):
         return "Room %d" % self.id
