@@ -448,6 +448,7 @@ function Form({
                 control={<Radio onChange={() => setIsOnlineAttendant(true)} />}
               />
               <FormControlLabel
+                disabled
                 key={'In person'}
                 value={false}
                 label={'In person'}
