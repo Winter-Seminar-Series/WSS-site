@@ -6,7 +6,9 @@ import { getModelList, MODEL_LISTS_NAMES } from '../redux/actions/WSS';
 const DivarSponsor = () => {
   return (
     <>
-      <section className="background-theme" style={{ paddingTop: 25 }}>
+      <section
+        className="background-theme"
+        style={{ paddingTop: 25, fontFamily: 'IRANYekan, sans-serif' }}>
         <div
           style={{
             display: 'flex',
