@@ -38,7 +38,7 @@ const Streams = ({
           <SeminarCard
             id={seminar.speaker}
             poster_picture={seminar.poster_picture}
-            presentationLink={"https://www.aparat.com/WSS_Sut/live"}
+            presentationLink={event.stream_room.url}
             blankTarget
           />
         </div>
@@ -53,7 +53,7 @@ const Streams = ({
           className="col-xs-12 col-sm-6 col-lg-3 mt-2 mb-4">
           <PublicCard
             id={workshop.speaker}
-            presentationLink={"https://www.aparat.com/WSS_Sut/live"}
+            presentationLink={event.stream_room.url}
             blankTarget
           />
         </div>
@@ -68,7 +68,7 @@ const Streams = ({
           className="col-xs-10 col-sm-6 col-lg-3 mt-2 mb-4">
           <RoundTableCard
             id={roundTable.id}
-            presentationLink={"https://www.aparat.com/WSS_Sut/live"}
+            presentationLink={event.stream_room.url}
             blankTarget
           />
         </div>
@@ -83,7 +83,7 @@ const Streams = ({
           className="col-xs-10 col-sm-6 col-lg-3 mt-2 mb-4">
           <LabTalkCard
             id={labTalk.id}
-            presentationLink={"https://www.aparat.com/WSS_Sut/live"}
+            presentationLink={event.stream_room.url}
             blankTarget
           />
         </div>
