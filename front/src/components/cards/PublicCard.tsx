@@ -8,6 +8,7 @@ function PublicCard({
   isStaff = false,
   speakers,
   staff,
+  blankTarget = false,
 }) {
   const [person, setPerson] = useState({
     picture: '',
@@ -39,6 +40,7 @@ function PublicCard({
       className=""
       ref={cardRef}
       href={!isStaff ? presentationLink : null}
+      {...(blankTarget && {target: "_blank"})}
       style={{ textDecoration: 'none' }}>
       <div id="public-card">
         <div className="card">

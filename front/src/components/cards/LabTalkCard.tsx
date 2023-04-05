@@ -2,7 +2,12 @@ import React, { useEffect, useRef, useState } from 'react';
 import { connect } from 'react-redux';
 import { BASE_URL } from '../../constants/info';
 
-function LabTalkCard({ id, presentationLink = '', labTalks }) {
+function LabTalkCard({
+  id,
+  presentationLink = '',
+  labTalks,
+  blankTarget = false,
+}) {
   const [labTalk, setLabTalk] = useState({
     poster_picture: '',
     title: '',
@@ -29,6 +34,7 @@ function LabTalkCard({ id, presentationLink = '', labTalks }) {
       className=""
       ref={cardRef}
       href={presentationLink}
+      {...(blankTarget && {target: "_blank"})}
       style={{ textDecoration: 'none' }}>
       <div id="public-card">
         <div className="card">
