@@ -41,6 +41,7 @@ class BaseEvent(PolymorphicModel):  # Is implicitly Abstract
     calender_link = models.URLField(blank=True, null=True, max_length=512)
     poster_picture = models.CharField(max_length=200, null=True, blank=True)
     stream_room = models.ForeignKey(Room, models.CASCADE, related_name='events', blank=True, null=True)
+    form_url = models.URLField(blank=True, null=True)
 
     class Meta:
         ordering = ('start_time',)
