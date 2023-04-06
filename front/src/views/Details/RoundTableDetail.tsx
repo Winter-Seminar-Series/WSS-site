@@ -5,6 +5,8 @@ import { useParams } from 'react-router-dom';
 import {
   getAnEntityOfModelList,
   MODEL_LISTS_NAMES,
+  getWSSPrimitiveFields,
+  getModelList,
 } from '../../redux/actions/WSS';
 import GoToButton from '../../components/GoToButton';
 import FavoriteButton from '../../components/FavoriteButton';
@@ -13,9 +15,12 @@ import moment from 'moment';
 function RoundTableDetail({
   thisSeries,
   getAnEntityOfModelList,
+  getWSSPrimitiveFields,
+  getModelList,
   roundTables,
   allSpeakers,
   isLoggedIn,
+  streams,
 }) {
   const [roundTable, setRoundTable] = useState({
     id: '',
@@ -39,11 +44,20 @@ function RoundTableDetail({
       name: '',
     },
   ]);
+  const [stream, setStream] = useState({
+    stream_room: {
+      url: '',
+    }
+  });
   const id = useParams()['id'];
 
   useEffect(() => {
     getAnEntityOfModelList(MODEL_LISTS_NAMES.ROUND_TABLES, thisSeries, id);
   }, [getAnEntityOfModelList]);
+
+  useEffect(() => {
+    getModelList(MODEL_LISTS_NAMES.STREAMS, thisSeries);
+  }, [getWSSPrimitiveFields]);
 
   useEffect(() => {
     const roundTable = roundTables.find((lt) => lt.id === +id);
@@ -72,6 +86,15 @@ function RoundTableDetail({
       setSpeakers(speakers);
     }
   }, [allSpeakers]);
+
+  useEffect(() => {
+    const stream = streams.find((s) => s.id === roundTable.id);
+
+    if (stream) {
+      setStream(stream);
+    }
+  }, [streams]);
+
   return (
     <section id="main-container" className="main-container">
       <div
@@ -148,16 +171,16 @@ function RoundTableDetail({
                 {/*{'To be announced ...'}*/}
               </div>
               <div className="seminar-details mt-3">
-                {isLoggedIn && (
-                  <GoToButton
-                    type="roundtables"
-                    id={roundTable.id}
-                    room_name={'rountable'}
-                  // room_name={'roundtable'}
-                  />
+              {isLoggedIn && stream?.stream_room?.url && (
+                  <a
+                    href={stream.stream_room.url}
+                    target="_blank"
+                    className="btn btn-lg btn-primary mb-2 mt-3">
+                    Attend
+                  </a>
                 )}
                 {roundTable.form_url && 
-                <button type = 'button' className = 'btn btn-primary ml-2'
+                <button type = 'button' className = 'btn btn-primary ml-2 mb-2 mt-3'
                 onClick={() => window.open(roundTable.form_url)}>
                   Google Form
                 </button>}
@@ -207,9 +230,12 @@ const mapStateToProps = (state, ownProps) => {
     isLoggedIn: state.account.isLoggedIn,
     allSpeakers: state.WSS.speakers,
     roundTables: state.WSS.roundtables,
+    streams: state.WSS.streams,
   };
 };
 
 export default connect(mapStateToProps, {
   getAnEntityOfModelList,
+  getWSSPrimitiveFields,
+  getModelList,
 })(RoundTableDetail);
