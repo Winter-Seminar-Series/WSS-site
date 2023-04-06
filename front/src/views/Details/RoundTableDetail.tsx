@@ -24,6 +24,7 @@ function RoundTableDetail({
 }) {
   const [roundTable, setRoundTable] = useState({
     id: '',
+    title: '',
     subject: '',
     duration: '',
     start_time: '',
@@ -137,7 +138,7 @@ function RoundTableDetail({
                     id={roundTable.id}
                   />
                 )}
-                <h2 className="ml-3">{roundTable.subject}</h2>
+                <h2 className="ml-3">{roundTable.title}</h2>
               </div>
 
               <div className="seminar-details">
