@@ -38,7 +38,7 @@ function Dashboard({ match, verifyPayment, thisSeries }) {
             component={UserWorkshopList}
           /> */}
           <Route path={match.url + '/profile'} component={Profile} />
-          <Route path={match.url + "/stream/:id"} component={ViewStream} />
+          <Route path={match.url + '/stream/:id'} component={ViewStream} />
           <Route path={match.url + '/stream'} component={Streams} />
           <Redirect to={match.url + '/seminar-registration'} />
         </Switch>
