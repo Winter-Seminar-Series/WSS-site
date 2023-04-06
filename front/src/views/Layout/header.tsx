@@ -77,6 +77,7 @@ const Header = ({ isLoggedIn, thisSeries, doSetThisSeries }) => {
     { title: 'Seminars', persianTitle: 'سمینارها', link: '/seminars' },
     { title: 'Lab Talks', persianTitle: 'ارائه آزمایشگاه', link: '/labtalks' },
     { title: 'Round Tables', persianTitle: 'میزگردها', link: '/roundtables' },
+    { title: 'Workshops', persianTitle: 'کارگاه‌ها', link: '/workshops' },
     {
       title: 'sponsors',
       persianTitle: 'اسپانسرها',
