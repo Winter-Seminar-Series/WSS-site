@@ -79,7 +79,7 @@ function SeminarDetail({
 
   useEffect(() => {
     const stream = streams.find((s) => s.id === seminar.id);
-
+    
     if (stream) {
       setStream(stream);
     }
@@ -172,7 +172,7 @@ function SeminarDetail({
                   </a>
                 )}
                 {seminar.form_url && 
-                <button type = 'button' className = 'btn btn-primary ml-2'
+                <button type = 'button' className = 'btn btn-primary ml-2 mb-2 mt-3'
                 onClick={() => window.open(seminar.form_url)}>
                   Google Form
                 </button>}

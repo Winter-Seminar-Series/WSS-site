@@ -180,7 +180,7 @@ function RoundTableDetail({
                   </a>
                 )}
                 {roundTable.form_url && 
-                <button type = 'button' className = 'btn btn-primary ml-2'
+                <button type = 'button' className = 'btn btn-primary ml-2 mb-2 mt-3'
                 onClick={() => window.open(roundTable.form_url)}>
                   Google Form
                 </button>}

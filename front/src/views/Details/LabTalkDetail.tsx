@@ -175,7 +175,7 @@ function LabTalkDetail({
                   </a>
                 )}
                 {labTalk.form_url && 
-                <button type = 'button' className = 'btn btn-primary ml-2'
+                <button type = 'button' className = 'btn btn-primary ml-2 mb-2 mt-3'
                 onClick={() => window.open(labTalk.form_url)}>
                   Google Form
                 </button>}
