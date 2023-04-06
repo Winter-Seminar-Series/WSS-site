@@ -28,6 +28,7 @@ function RoundTableDetail({
     tags: [],
     link: '',
     poster_picture: '',
+    form_url: '',
   });
   const [speakers, setSpeakers] = useState([
     {
@@ -155,6 +156,11 @@ function RoundTableDetail({
                   // room_name={'roundtable'}
                   />
                 )}
+                {roundTable.form_url && 
+                <button type = 'button' className = 'btn btn-primary ml-2'
+                onClick={() => window.open(roundTable.form_url)}>
+                  Google Form
+                </button>}
               </div>
             </div>
           </div>
