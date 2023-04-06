@@ -14,9 +14,8 @@ const Workshops = ({ getModelList, workshops, isFetching, thisSeries }) => {
 
   return (
     <>
-      <section
-        id="ts-speakers"
-        className="background-theme ts-speakers diagonal">
+    <div className="fixed-background">
+      <section id="ts-speakers" className="ts-speakers pt-4">
         <div className="container text-white">
           <div className="row mb-3">
             <h3 className="mb-1 col section-sub-title title-white">
@@ -48,6 +47,7 @@ const Workshops = ({ getModelList, workshops, isFetching, thisSeries }) => {
           )}
         </div>
       </section>
+    </div>
     </>
   );
 };
