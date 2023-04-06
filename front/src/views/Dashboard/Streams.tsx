@@ -38,7 +38,7 @@ const Streams = ({
           <SeminarCard
             id={seminar.speaker}
             poster_picture={seminar.poster_picture}
-            presentationLink={event?.stream_room?.url}
+            presentationLink={'/dashboard/stream/' + seminar.id}
             blankTarget
           />
         </div>
@@ -53,7 +53,7 @@ const Streams = ({
           className="col-xs-12 col-sm-6 col-lg-3 mt-2 mb-4">
           <PublicCard
             id={workshop.speaker}
-            presentationLink={event?.stream_room?.url}
+            presentationLink={'/dashboard/stream/' + workshop.id}
             blankTarget
           />
         </div>
@@ -68,7 +68,7 @@ const Streams = ({
           className="col-xs-10 col-sm-6 col-lg-3 mt-2 mb-4">
           <RoundTableCard
             id={roundTable.id}
-            presentationLink={event?.stream_room?.url}
+            presentationLink={'/dashboard/stream/' + roundTable.id}
             blankTarget
           />
         </div>
@@ -83,7 +83,7 @@ const Streams = ({
           className="col-xs-10 col-sm-6 col-lg-3 mt-2 mb-4">
           <LabTalkCard
             id={labTalk.id}
-            presentationLink={event?.stream_room?.url}
+            presentationLink={'/dashboard/stream/' + labTalk.id}
             blankTarget
           />
         </div>
