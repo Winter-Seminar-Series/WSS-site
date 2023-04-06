@@ -19,7 +19,7 @@ function Registration({ phoneNumber, isRegistered }) {
             Your registration has been approved successfully.
           </h5>
           <a
-            href={`https://wss.ce.sharif.edu/media/cart/${phoneNumber}.pdf`}
+            href={`https://wss.ce.sharif.edu/media/cart/${phoneNumber}.jpg`}
             target="_blank"
             className="btn btn-lg btn-primary mb-2 mt-5">
             Download Entrance Permit Card
