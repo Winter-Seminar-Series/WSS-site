@@ -10,6 +10,7 @@ function RoundTableCard({
 }) {
   const [roundTable, setRoundTable] = useState({
     subject: '',
+    title: '',
     speakers: [],
     poster_picture: '',
   });
@@ -53,7 +54,7 @@ function RoundTableCard({
             />
           </div>
           <div className="card-description">
-            <h3>{roundTable.subject}</h3>
+            <h3>{roundTable.title}</h3>
             {/* <div className='like'>
               <span>
                 add to your favorite
