@@ -33,6 +33,7 @@ function LabTalkDetail({
     tags: [],
     website_link: '',
     poster_picture: '',
+    form_url: '',
   });
   const [head, setHead] = useState({
     picture: '',
@@ -173,6 +174,11 @@ function LabTalkDetail({
                     Attend
                   </a>
                 )}
+                {labTalk.form_url && 
+                <button type = 'button' className = 'btn btn-primary ml-2'
+                onClick={() => window.open(labTalk.form_url)}>
+                  Google Form
+                </button>}
               </div>
             </div>
           </div>

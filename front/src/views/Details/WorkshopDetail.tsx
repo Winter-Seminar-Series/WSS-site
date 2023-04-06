@@ -41,6 +41,7 @@ function WorkshopDetail({
     price: '',
     speaker: '',
     tags: [],
+    form_url: '',
   });
   const [speaker, setSpeaker] = useState({
     picture: '',
@@ -197,6 +198,11 @@ function WorkshopDetail({
                       Cancel Registration
                     </button>
                   )}
+                  {workshop.form_url && 
+                  <button type = 'button' className = 'btn btn-primary ml-2'
+                  onClick={() => window.open(workshop.form_url)}>
+                    Google Form
+                  </button>}
                 </div>
               )}
             </div>

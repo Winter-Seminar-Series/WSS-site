@@ -33,6 +33,7 @@ function SeminarDetail({
     tags: [],
     room: '',
     poster_picture: '',
+    form_url: ''
   });
   const [speaker, setSpeaker] = useState({
     picture: '',
@@ -170,6 +171,11 @@ function SeminarDetail({
                     Attend
                   </a>
                 )}
+                {seminar.form_url && 
+                <button type = 'button' className = 'btn btn-primary ml-2'
+                onClick={() => window.open(seminar.form_url)}>
+                  Google Form
+                </button>}
               </div>
             </div>
           </div>
