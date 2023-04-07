@@ -13,6 +13,7 @@ const ViewStream = ({
   const id = parseInt(useParams()['id']);
   const [stream, setStream] = useState({
     id: 0,
+    type: '',
     stream_room: {
       tag: '',
       url: '',
@@ -36,29 +37,36 @@ const ViewStream = ({
       {isFetching && (
         <span>Loading...</span>
       )}
-      {!stream?.stream_room?.tag && !isFetching && (
-        <span>An error ocurred</span>
-      )}
-      {stream?.stream_room?.tag && (
-        <div style={{ "width": "50%", "margin": "auto" }} className="py-5">
-          <div dangerouslySetInnerHTML={{ __html: stream?.stream_room?.tag }} />
+      {!stream?.stream_room?.tag && stream?.type !== "workshop" && !isFetching && (
+        <div style={{ "margin": "auto" }} className="py-5 text-center">
+          An error ocurred.
         </div>
       )}
-      <div className="d-flex" style={{"width": "20%", "margin": "auto"}} >
-      {stream.qa_url &&
-        <div className="col text-center">
-          <button type = 'button' className = 'btn btn-primary'
-                  onClick={() => window.open(stream.qa_url)}>
-            Q&A
-          </button>
-        </div>}
-      {stream.feedback_url &&
-        <div className="col text-center">
-          <button type = 'button' className = 'btn btn-primary'
-                  onClick={() => window.open(stream.feedback_url)}>
-            Feedback
-          </button>
-        </div>}
+      {stream?.type === "workshop" && (
+        <div style={{ "margin": "auto" }} className="py-5 text-center">
+          Workshops take place in-person. You will have access to the recorded videos soon.
+        </div>
+      )}
+      {stream?.stream_room?.tag && stream?.type !== "workshop" && (
+        <div style={{ "width": "50%", "margin": "auto" }} className="py-5">
+          <div dangerouslySetInnerHTML={{ __html: stream.stream_room.tag }} />
+        </div>
+      )}
+      <div className="d-flex" style={{ "width": "20%", "margin": "auto" }} >
+        {stream?.qa_url &&
+          <div className="col text-center">
+            <button type='button' className='btn btn-primary'
+              onClick={() => window.open(stream.qa_url)}>
+              Q&A
+            </button>
+          </div>}
+        {stream?.feedback_url &&
+          <div className="col text-center">
+            <button type='button' className='btn btn-primary'
+              onClick={() => window.open(stream.feedback_url)}>
+              Feedback
+            </button>
+          </div>}
       </div>
     </>
   );
@@ -77,4 +85,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, {getModelList, getWSSPrimitiveFields})(ViewStream);
+export default connect(mapStateToProps, { getModelList, getWSSPrimitiveFields })(ViewStream);
