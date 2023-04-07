@@ -22,7 +22,7 @@ const serverUrl = "https://wss.ce.sharif.edu/FAQ/Ask";
 
 const postMessageToServer = async (inputValue) => {
   const response = await axios.post(serverUrl, { question: inputValue });
-  return response.data.message;
+  return response.data;
 };
 
 const replaceLinkWithAnchor = (text) => {
@@ -237,11 +237,11 @@ export const WssChatBotInfo = () => {
 
       <Typography className="IRANYekan" variant="h5" fontWeight="" align="center" gutterBottom
                   sx={{ ...persianText, marginBottom: "1rem" }}>
-        به هشتمین WSS خوش‌آمدید
+        به هشتمین WSS خوش‌ آمدید
       </Typography>
 
       <Typography variant="body1" align="center" gutterBottom sx={persianText}>
-        شما می‌توانید به کمک بات WSS از زمان ارائه‌ها، نحوه‌برگزاری و... مطلع شوید.
+        شما می‌توانید به کمک بات WSS از زمان ارائه‌ها، نحوه‌ برگزاری و... مطلع شوید.
       </Typography>
     </Box>
   );
