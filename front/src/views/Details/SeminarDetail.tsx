@@ -33,7 +33,6 @@ function SeminarDetail({
     tags: [],
     room: '',
     poster_picture: '',
-    form_url: ''
   });
   const [speaker, setSpeaker] = useState({
     picture: '',
@@ -162,21 +161,7 @@ function SeminarDetail({
                   )}
                 {!seminar.start_time && 'To be announced ...'}
               </div>
-              <div className="seminar-details mt-3">
-                {isLoggedIn && stream?.stream_room?.url && (
-                  <a
-                    href={stream.stream_room.url}
-                    target="_blank"
-                    className="btn btn-lg btn-primary mb-2 mt-3">
-                    Attend
-                  </a>
-                )}
-                {seminar.form_url && 
-                <button type = 'button' className = 'btn btn-primary ml-2 mb-2 mt-3'
-                onClick={() => window.open(seminar.form_url)}>
-                  Google Form
-                </button>}
-              </div>
+
             </div>
           </div>
           <div className="mt-5">
