@@ -47,9 +47,9 @@
 }
 
 @font-face {
-  font-family: "IRANYek
+  font-family: "IRANYekan";
   src: local("IRANYekan"),
-  url("../fonts/Qs_Iranyekan.ttf") format("truetype");
+    url("../fonts/Qs_Iranyekan.ttf") format("truetype");
   font-weight: normal;
 }
 
