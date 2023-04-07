@@ -14,7 +14,6 @@ import {
   getRegisteredWorkshops,
 } from '../../redux/actions/participant';
 import moment from 'moment';
-import GoToButton from '../../components/GoToButton';
 
 function WorkshopDetail({
   thisSeries,
@@ -32,6 +31,8 @@ function WorkshopDetail({
   isWorkshopRegistrationOpen,
   streams,
 }) {
+  const id = parseInt(useParams()['id']);
+
   const [workshop, setWorkshop] = useState({
     id: '',
     title: '',
@@ -42,6 +43,7 @@ function WorkshopDetail({
     speaker: '',
     tags: [],
   });
+
   const [speaker, setSpeaker] = useState({
     picture: '',
     degree: '',
@@ -49,21 +51,15 @@ function WorkshopDetail({
     bio: '',
     name: '',
   });
+
   const [stream, setStream] = useState({
     stream_room: {
       url: '',
     },
   });
-  const [isRegisteredInWorkshop, setRegistrationStatus] = useState(false);
-  const id = useParams()['id'];
-
-  useEffect(() => {
-    getWSSPrimitiveFields(thisSeries);
-  }, [getWSSPrimitiveFields]);
 
   useEffect(() => {
     getAnEntityOfModelList(MODEL_LISTS_NAMES.WORKSHOPS, thisSeries, id);
-    getRegisteredWorkshops(thisSeries);
   }, [getAnEntityOfModelList]);
 
   useEffect(() => {
@@ -71,8 +67,8 @@ function WorkshopDetail({
   }, [getWSSPrimitiveFields]);
 
   useEffect(() => {
-    if (workshops.find((s) => s.id === id)) {
-      const workshop = workshops.find((w) => w.id === id);
+    const workshop = workshops.find((w) => w.id === id)
+    if (workshop) {
       setWorkshop(workshop);
       getAnEntityOfModelList(
         MODEL_LISTS_NAMES.SPEAKERS,
@@ -83,22 +79,14 @@ function WorkshopDetail({
   }, [workshops]);
 
   useEffect(() => {
-    if (registeredWorkshops && registeredWorkshops.find((w) => w.id === id)) {
-      setRegistrationStatus(true);
-    } else {
-      setRegistrationStatus(false);
-    }
-  }, [registeredWorkshops]);
-
-  useEffect(() => {
-    if (speakers.find((s) => s.id === workshop.speaker)) {
-      setSpeaker(speakers.find((s) => s.id === workshop.speaker));
+    const speaker = speakers.find((s) => s.id === workshop.speaker)
+    if (speaker) {
+      setSpeaker(speaker);
     }
   }, [speakers]);
 
   useEffect(() => {
     const stream = streams.find((s) => s.id === workshop.id);
-
     if (stream) {
       setStream(stream);
     }
@@ -168,32 +156,6 @@ function WorkshopDetail({
                   )}
                 {!workshop.start_time && 'To be announced ...'}
               </div>
-              {isLoggedIn && (
-                <div className="seminar-details mt-3">
-                  {isWorkshopRegistrationOpen && !isRegisteredInWorkshop && (
-                    <button
-                      disabled={isFetchingForRegistration}
-                      onClick={() => registerWorkshop(thisSeries, id)}
-                      className="btn btn-primary btn-blue"
-                    >
-                      Register Now For Free
-                      <br />
-                      <span style={{ fontSize: '10px' }}>
-                        (Limited capacity)
-                      </span>
-                    </button>
-                  )}
-                  {isWorkshopRegistrationOpen && isRegisteredInWorkshop && (
-                    <button
-                      disabled={isFetchingForRegistration}
-                      onClick={() => cancelWorkshopRegistration(thisSeries, id)}
-                      className="btn btn-outline-primary btn-lg"
-                    >
-                      Cancel Registration
-                    </button>
-                  )}
-                </div>
-              )}
             </div>
           </div>
           <div className="mt-5">
@@ -202,16 +164,16 @@ function WorkshopDetail({
           <div className="row mt-5 justify-content-center">
             <div className="col-xs-12 col-lg-8">
               <div className="ts-speaker-session right">
-                {workshop.syllabus && (
-                  <>
-                    <h4>Syllabus</h4>
-                    <div className="mb-3">{workshop.syllabus}</div>
-                  </>
-                )}
                 {speaker.bio && (
                   <>
                     <h4>Bio</h4>
                     <span>{speaker.bio}</span>
+                  </>
+                )}
+                {workshop.syllabus && (
+                  <>
+                    <h4 className="pt-3">Syllabus</h4>
+                    <div>{workshop.syllabus}</div>
                   </>
                 )}
               </div>
@@ -227,13 +189,9 @@ const mapStateToProps = (state, ownProps) => {
   return {
     thisSeries: state.account.thisSeries,
     isFetching: state.WSS.isFetching,
-    isLoggedIn: state.account.isLoggedIn,
     speakers: state.WSS.speakers,
     workshops: state.WSS.workshops,
     streams: state.WSS.streams,
-    registeredWorkshops: state.Participant.registeredWorkshops,
-    isFetchingForRegistration: state.Participant.isFetching,
-    isWorkshopRegistrationOpen: state.WSS.isWorkshopRegistrationOpen,
   };
 };
 
@@ -241,7 +199,4 @@ export default connect(mapStateToProps, {
   getModelList,
   getWSSPrimitiveFields,
   getAnEntityOfModelList,
-  registerWorkshop,
-  cancelWorkshopRegistration,
-  getRegisteredWorkshops,
 })(WorkshopDetail);
