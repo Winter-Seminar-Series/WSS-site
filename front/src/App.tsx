@@ -22,6 +22,7 @@ import Schedule from './views/Schedule';
 import ForgotPassword from './views/ForgotPassword';
 import ResetPassword from './views/ResetPassword';
 import Sponsor from './views/Sponsor';
+import ChatBot from "./views/ChatBot";
 import DivarSponsor from './views/DivarSponsor';
 import FlightioSponsor from './views/FlightioSponsor';
 import PartSponsor from './views/PartSponsor';
@@ -58,6 +59,8 @@ function App() {
         <Route path="/" component={Home} />
       </Switch>
       <Footer />
+      <ChatBot/>
+
     </>
   );
 }
