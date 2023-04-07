@@ -17,7 +17,8 @@ function FavoriteButton({ series, type, id }) {
       title="Remove from favorites"
       className="btn btn-warning rounded-circle px-0"
       style={{ width: '38px', height: '38px' }}
-      onClick={() => changeFav(false)}>
+      onClick={() => changeFav(false)}
+    >
       <i className="fa fa-star text-center" style={{ width: '100%' }} />
     </button>
   ) : (
@@ -27,7 +28,8 @@ function FavoriteButton({ series, type, id }) {
       title="Add to favorites"
       className="btn btn-outline-warning rounded-circle px-0"
       style={{ width: '38px', height: '38px' }}
-      onClick={() => changeFav(true)}>
+      onClick={() => changeFav(true)}
+    >
       <i className="fa fa-star-o text-center" style={{ width: '100%' }} />
     </button>
   );

@@ -77,7 +77,8 @@ function ScheduleCard({
                 data-toggle="collapse"
                 data-target={`#collapse${seminar.id}`}
                 aria-expanded="false"
-                aria-controls={`collapse${seminar.id}`}>
+                aria-controls={`collapse${seminar.id}`}
+              >
                 details
               </button>
 
@@ -94,7 +95,8 @@ function ScheduleCard({
           <div
             id={`collapse${seminar.id}`}
             className="collapse"
-            data-parent={parentId}>
+            data-parent={parentId}
+          >
             <div className="mt-4 pt-4 border-top">
               {seminar.abstract && (
                 <>

@@ -8,14 +8,16 @@ const DivarSponsor = () => {
     <>
       <section
         className="background-theme"
-        style={{ paddingTop: 25, fontFamily: 'IRANYekan, sans-serif' }}>
+        style={{ paddingTop: 25, fontFamily: 'IRANYekan, sans-serif' }}
+      >
         <div
           style={{
             display: 'flex',
             flexDirection: 'row',
             justifyContent: 'space-evenly',
             alignItems: 'center',
-          }}>
+          }}
+        >
           <img
             src="/images/divar-logo.png"
             alt="Image not found!"
@@ -34,13 +36,15 @@ const DivarSponsor = () => {
             fontSize: '1.5rem',
             backgroundColor: 'rgba(0, 0, 0, 0.3)',
             borderRadius: 8,
-          }}>
+          }}
+        >
           <h4
             style={{
               color: 'lavender',
               textAlign: 'center',
               fontSize: '2rem',
-            }}>
+            }}
+          >
             در دیوار چه می‌کنیم؟
           </h4>
           <br />

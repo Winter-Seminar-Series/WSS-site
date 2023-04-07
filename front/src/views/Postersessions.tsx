@@ -20,7 +20,8 @@ const Postersessions = ({
     <>
       <section
         id="ts-speakers"
-        className="background-theme ts-speakers diagonal">
+        className="background-theme ts-speakers diagonal"
+      >
         <div className="container text-white">
           <div className="row mb-3">
             <h3 className="mb-1 col section-sub-title title-white">
@@ -32,12 +33,12 @@ const Postersessions = ({
               {postersessions.map((postersession) => (
                 <div
                   key={postersession.id}
-                  className="col-xs-12 col-sm-6 col-lg-3">
+                  className="col-xs-12 col-sm-6 col-lg-3"
+                >
                   <PublicCard
                     id={postersession.speaker}
-                    presentationLink={
-                      '/postersession/' + postersession.id
-                    }></PublicCard>
+                    presentationLink={'/postersession/' + postersession.id}
+                  ></PublicCard>
                 </div>
               ))}
             </div>

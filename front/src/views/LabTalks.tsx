@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import PublicCard from '../components/cards/PublicCard';
-import LabTalkCard from "../components/cards/LabTalkCard";
+import LabTalkCard from '../components/cards/LabTalkCard';
 import { getModelList, MODEL_LISTS_NAMES } from '../redux/actions/WSS';
 
 const LabTalks = ({
@@ -39,7 +39,8 @@ const LabTalks = ({
                     .map((index) => (
                       <div
                         key={index}
-                        className="col-xs-10 col-sm-6 col-lg-3 mt-2 mb-4">
+                        className="col-xs-10 col-sm-6 col-lg-3 mt-2 mb-4"
+                      >
                         <LabTalkCard
                           id={labtalks[index].id}
                           presentationLink={'/labtalk/' + labtalks[index].id}

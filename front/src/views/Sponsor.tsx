@@ -13,7 +13,8 @@ const Sponsor = () => {
             flexDirection: 'row',
             justifyContent: 'space-evenly',
             alignItems: 'center',
-          }}>
+          }}
+        >
           <img
             src="/images/Tapsell_logo_png.png"
             alt="Image not found!"
@@ -32,13 +33,15 @@ const Sponsor = () => {
             fontSize: '1.5rem',
             backgroundColor: 'rgba(0, 0, 0, 0.3)',
             borderRadius: 8,
-          }}>
+          }}
+        >
           <h4
             style={{
               color: 'lavender',
               textAlign: 'center',
               fontSize: '2rem',
-            }}>
+            }}
+          >
             در تپسل چه می‌کنیم؟
           </h4>
           <br />
@@ -65,7 +68,8 @@ const Sponsor = () => {
             flexDirection: 'column',
             justifyContent: 'space-evenly',
             alignItems: 'center',
-          }}>
+          }}
+        >
           <div
             style={{
               display: 'flex',
@@ -73,7 +77,8 @@ const Sponsor = () => {
               flexWrap: 'wrap',
               justifyContent: 'space-evenly',
               alignItems: 'center',
-            }}>
+            }}
+          >
             <img
               src="/images/Tapsell_Workspace_2.jpg"
               alt="Image not found!"
@@ -100,7 +105,8 @@ const Sponsor = () => {
               flexWrap: 'wrap',
               justifyContent: 'space-evenly',
               alignItems: 'center',
-            }}>
+            }}
+          >
             <img
               src="/images/Tapsell_Workspace_10.jpg"
               alt="Image not found!"

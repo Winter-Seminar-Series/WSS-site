@@ -21,7 +21,8 @@ function Registration({ phoneNumber, isRegistered }) {
           <a
             href={`https://wss.ce.sharif.edu/media/cart/${phoneNumber}.jpg`}
             target="_blank"
-            className="btn btn-lg btn-primary mb-2 mt-5">
+            className="btn btn-lg btn-primary mb-2 mt-5"
+          >
             Download Entrance Permit Card
           </a>
         </div>

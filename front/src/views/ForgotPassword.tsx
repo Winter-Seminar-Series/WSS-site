@@ -12,7 +12,7 @@ function ForgotPassword({ isLoggedIn, isFetching, requestPasswordReset }) {
 
     if (!email) {
       toast.error('Please enter your email address');
-    //   toast.info('Please enter your email address');
+      //   toast.info('Please enter your email address');
       return;
     }
     requestPasswordReset(email);
@@ -47,7 +47,8 @@ function ForgotPassword({ isLoggedIn, isFetching, requestPasswordReset }) {
             <button
               disabled={isFetching}
               type="submit"
-              className="btn btn-lg btn-primary mb-5">
+              className="btn btn-lg btn-primary mb-5"
+            >
               Send Reset Instructions
             </button>
           </form>
@@ -66,13 +67,11 @@ function ForgotPassword({ isLoggedIn, isFetching, requestPasswordReset }) {
   );
 }
 
-
 const mapStateToProps = (state, ownProps) => ({
-    isFetching: state.account.isFetching,
-    isLoggedIn: state.account.isLoggedIn,
-  });
-  
-  export default connect(mapStateToProps, {
-    requestPasswordReset,
-  })(ForgotPassword);
-  
+  isFetching: state.account.isFetching,
+  isLoggedIn: state.account.isLoggedIn,
+});
+
+export default connect(mapStateToProps, {
+  requestPasswordReset,
+})(ForgotPassword);

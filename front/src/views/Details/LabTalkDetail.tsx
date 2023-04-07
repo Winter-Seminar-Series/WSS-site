@@ -44,7 +44,7 @@ function LabTalkDetail({
   const [stream, setStream] = useState({
     stream_room: {
       url: '',
-    }
+    },
   });
   const id = useParams()['id'];
 
@@ -102,8 +102,8 @@ function LabTalkDetail({
                   position: 'relative',
                   backgroundColor: 'rgba(0,0,0,.1)',
                   borderRadius: '5px',
-                }}>
-
+                }}
+              >
                 {(labTalk.poster_picture ?? head.picture) && (
                   <img
                     style={{
@@ -113,7 +113,9 @@ function LabTalkDetail({
                       top: '0',
                       position: 'absolute',
                     }}
-                    src={`${BASE_URL}/${labTalk.poster_picture ?? head.picture}`}
+                    src={`${BASE_URL}/${
+                      labTalk.poster_picture ?? head.picture
+                    }`}
                     alt=""
                   />
                 )}

@@ -52,7 +52,7 @@ function WorkshopDetail({
   const [stream, setStream] = useState({
     stream_room: {
       url: '',
-    }
+    },
   });
   const [isRegisteredInWorkshop, setRegistrationStatus] = useState(false);
   const id = useParams()['id'];
@@ -121,7 +121,8 @@ function WorkshopDetail({
                   position: 'relative',
                   backgroundColor: 'rgba(0,0,0,.1)',
                   borderRadius: '5px',
-                }}>
+                }}
+              >
                 {speaker.picture && (
                   <img
                     style={{
@@ -173,7 +174,8 @@ function WorkshopDetail({
                     <button
                       disabled={isFetchingForRegistration}
                       onClick={() => registerWorkshop(thisSeries, id)}
-                      className="btn btn-primary btn-blue">
+                      className="btn btn-primary btn-blue"
+                    >
                       Register Now For Free
                       <br />
                       <span style={{ fontSize: '10px' }}>
@@ -185,7 +187,8 @@ function WorkshopDetail({
                     <button
                       disabled={isFetchingForRegistration}
                       onClick={() => cancelWorkshopRegistration(thisSeries, id)}
-                      className="btn btn-outline-primary btn-lg">
+                      className="btn btn-outline-primary btn-lg"
+                    >
                       Cancel Registration
                     </button>
                   )}

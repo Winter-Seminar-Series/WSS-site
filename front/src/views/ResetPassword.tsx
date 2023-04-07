@@ -2,15 +2,13 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { toast } from 'react-toastify';
 import { Redirect, useParams, useHistory } from 'react-router-dom';
-import {
-  resetPassword,
-} from '../redux/actions/account'
+import { resetPassword } from '../redux/actions/account';
 
 function ResetPassword({
   isLoggedIn,
   isFetching,
   resetPassword,
-  doesResetPasswordCompleted
+  doesResetPasswordCompleted,
 }) {
   const history = useHistory();
   const [didButtonClick, setButtonClickStatus] = useState(false);
@@ -23,7 +21,7 @@ function ResetPassword({
     e.preventDefault();
 
     if (password !== confirmPassword) {
-      toast.error('Passwords doesn\'t match');
+      toast.error("Passwords doesn't match");
       return;
     }
     if (!password) {
@@ -33,7 +31,6 @@ function ResetPassword({
     await resetPassword(password, token);
     setButtonClickStatus(true);
   }
-
 
   if (doesResetPasswordCompleted && didButtonClick) {
     return <Redirect exact to="/login" />;
@@ -48,14 +45,10 @@ function ResetPassword({
   }
 
   return (
-
     <>
-      <section
-        dir="rtl"
-        className="auth-container background-theme row">
+      <section dir="rtl" className="auth-container background-theme row">
         <div className="diagonal col-xs-12 col-sm-6 form-container" dir="ltr">
           <form onSubmit={doConfirmPasswordReset}>
-
             <h2>Reset Your Password</h2>
 
             <p>Please choose a new password for your account.</p>
@@ -82,7 +75,8 @@ function ResetPassword({
             <button
               disabled={isFetching}
               type="submit"
-              className="btn btn-lg btn-primary mb-5">
+              className="btn btn-lg btn-primary mb-5"
+            >
               Reset Password
             </button>
           </form>
@@ -107,9 +101,6 @@ const mapStateToProps = (state, ownProps) => ({
   isLoggedIn: state.account.isLoggedIn,
 });
 
-export default connect(
-  mapStateToProps,
-  {
-    resetPassword,
-  }
-)(ResetPassword);
+export default connect(mapStateToProps, {
+  resetPassword,
+})(ResetPassword);

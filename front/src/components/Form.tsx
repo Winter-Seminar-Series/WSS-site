@@ -129,12 +129,15 @@ function Form({
     if (discountIsFocused || is_online_attendant === undefined) return;
 
     //TODO move this to redux or undo hardcoding series name
-    fetchApi(`${ROOT}8th/payment/price?is_online_attendant=${is_online_attendant}&discount=${discount}`, {
-      headers: {
-        Authorization: `Token ${token}`
-      },
-      method: 'GET',
-    }).then((response) => {
+    fetchApi(
+      `${ROOT}8th/payment/price?is_online_attendant=${is_online_attendant}&discount=${discount}`,
+      {
+        headers: {
+          Authorization: `Token ${token}`,
+        },
+        method: 'GET',
+      }
+    ).then((response) => {
       setPrice(response.price ?? 0);
     });
   }, [discount, discountIsFocused, is_online_attendant]);
@@ -142,10 +145,10 @@ function Form({
   useEffect(() => {
     setFirstName(inputFirstName);
     setLastName(inputLastName);
-    setIntroduction_method(inputIntroductionMethod)
-    setGender(inputGender)
-    setGrade(inputGrade)
-    setIsOnlineAttendant(inputIsOnlineAttendant)
+    setIntroduction_method(inputIntroductionMethod);
+    setGender(inputGender);
+    setGrade(inputGrade);
+    setIsOnlineAttendant(inputIsOnlineAttendant);
     setUniversity(inputUniversity);
     setEmail(inputEmail);
     setIntroduction_method(inputIntroductionMethod);
@@ -366,7 +369,8 @@ function Form({
               row
               aria-labelledby="demo-radio-buttons-group-label"
               value={gender}
-              name="radio-buttons-group">
+              name="radio-buttons-group"
+            >
               {genderTypes.map((type) => (
                 <FormControlLabel
                   key={type}
@@ -419,7 +423,8 @@ function Form({
               row
               aria-labelledby="demo-radio-buttons-group-label"
               value={grade}
-              name="radio-buttons-group">
+              name="radio-buttons-group"
+            >
               {gradeTypes.map((type) => (
                 <FormControlLabel
                   key={type}
@@ -440,7 +445,8 @@ function Form({
               row
               aria-labelledby="demo-radio-buttons-group-label"
               value={is_online_attendant}
-              name="radio-buttons-group">
+              name="radio-buttons-group"
+            >
               <FormControlLabel
                 key={'Online'}
                 value={true}
@@ -489,7 +495,8 @@ function Form({
               id="demo-simple-select-required"
               value={introduction_method}
               label="Introduction method *"
-              onChange={(e) => setIntroduction_method(e.target.value)}>
+              onChange={(e) => setIntroduction_method(e.target.value)}
+            >
               {introductionTypes.map((type) => (
                 <MenuItem key={type} value={type}>
                   {type}
@@ -502,21 +509,21 @@ function Form({
           </FormControl>
         </div>
       </div>
-      
-            <div className="form-group mb-4">
-              <div className="form-check">
-                <input
-                  checked={openToWork}
-                  onChange={() => setOpenToWork(!openToWork)}
-                  className="form-check-input"
-                  type="checkbox"
-                  id="open-to-work-checkbox"
-                />
-                <label className="form-check-label" htmlFor="open-to-work-checkbox">
-                  I'm open to work.
-                </label>
-              </div>
-            </div>
+
+      <div className="form-group mb-4">
+        <div className="form-check">
+          <input
+            checked={openToWork}
+            onChange={() => setOpenToWork(!openToWork)}
+            className="form-check-input"
+            type="checkbox"
+            id="open-to-work-checkbox"
+          />
+          <label className="form-check-label" htmlFor="open-to-work-checkbox">
+            I'm open to work.
+          </label>
+        </div>
+      </div>
 
       {/* <div className="row">
         <div className="col-12 col-lg">
@@ -569,7 +576,8 @@ function Form({
                     onClick={(e) => {
                       e.preventDefault();
                       handleClickOpenDialog();
-                    }}>
+                    }}
+                  >
                     terms of service
                   </a>
                 </div>
@@ -588,7 +596,8 @@ function Form({
           <button
             disabled={isFetching || paymentProcess}
             type="submit"
-            className="col-12 col-lg btn btn-lg btn-primary mb-2">
+            className="col-12 col-lg btn btn-lg btn-primary mb-2"
+          >
             {isRegisteration ? (
               <>Go For Payment {price ? ` • ${price}` : ''}</>
             ) : (
@@ -597,11 +606,13 @@ function Form({
           </button>
           {isRegisteration ? (
             <>
-            <button 
+              <button
                 type="button"
                 className="col-12 col-lg btn btn-sm btn-outline-secondary mb-5 pt-2 pb-2"
-                onClick={() => window.open("https://t.me/wss_info")}>
-                  If you experience any issue with payment, please contact us on Telegram (@WSS_info)
+                onClick={() => window.open('https://t.me/wss_info')}
+              >
+                If you experience any issue with payment, please contact us on
+                Telegram (@WSS_info)
               </button>
             </>
           ) : undefined}
