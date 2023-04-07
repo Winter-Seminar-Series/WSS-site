@@ -21,7 +21,7 @@ export const persianText = {
 const serverUrl = "https://wss.ce.sharif.edu/FAQ/Ask";
 
 const postMessageToServer = async (inputValue) => {
-  const response = await axios.post(serverUrl, { message: inputValue });
+  const response = await axios.post(serverUrl, { question: inputValue });
   return response.data.message;
 };
 
