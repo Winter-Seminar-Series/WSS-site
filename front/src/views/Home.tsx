@@ -103,7 +103,8 @@ function Home({
               backgroundSize: 'cover',
               backgroundPosition: 'center',
               backgroundRepeat: 'no-repeat',
-            }}>
+            }}
+          >
             {/* <Particles
               id="tsparticles"
               url="/particles-config.json"
@@ -135,7 +136,8 @@ function Home({
                       />
                       <div
                         style={fontStyle}
-                        className="row ml-4 mt-1 font-weight-bold text-uppercase d-flex justify-content-around">
+                        className="row ml-4 mt-1 font-weight-bold text-uppercase d-flex justify-content-around"
+                      >
                         <div>Winter</div>
                         <div>Seminar</div>
                         <div>Series</div>
@@ -163,7 +165,8 @@ function Home({
                     <p className="banner-btn">
                       <a
                         href="/create-account"
-                        className="btn btn-primary btn-white">
+                        className="btn btn-primary btn-white"
+                      >
                         Register Now
                       </a>
                     </p>
@@ -199,7 +202,8 @@ function Home({
       {/* {!(thisSeries === '8th') && ( */}
       <section
         id="ts-speakers-main"
-        className="diagonal-up-right blue-gradient my-5 ">
+        className="diagonal-up-right blue-gradient my-5 "
+      >
         <div className="container">
           <div className="row text-center">
             <h3 className="title-white mx-auto font-weight-light speaker-title">
@@ -222,7 +226,8 @@ function Home({
       <section
         id="ts-statics"
         className="z-1 ts-statics my-5"
-        style={{ paddingTop: '10rem' }}>
+        style={{ paddingTop: '10rem' }}
+      >
         <div className="container py-4">
           <div className="row d-flex justify-content-center">
             <div className="col-sm-2 m-2 text-center">
@@ -312,14 +317,16 @@ function Home({
           backgroundPositionY: 'center !important',
           position: 'relative',
           overflow: 'hidden',
-        }}>
+        }}
+      >
         <div
           style={{
             position: 'absolute',
             inset: 0,
             background: '#0005',
             transform: 'unset',
-          }}></div>
+          }}
+        ></div>
         {/* <div className="container">
             <h3 className="section-sub-title" style={sectionSubtitleStyle}>
               WSS Venue
@@ -351,7 +358,8 @@ function Home({
                   flexDirection: 'row',
                   alignItems: 'center',
                   flexWrap: 'wrap',
-                }}>
+                }}
+              >
                 {/*<h5 className="section-sub-title text-white mb-3 mt-5">*/}
                 {/*    Sponsored by*/}
                 {/*</h5>*/}

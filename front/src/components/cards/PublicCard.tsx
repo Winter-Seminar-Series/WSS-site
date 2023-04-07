@@ -40,8 +40,9 @@ function PublicCard({
       className=""
       ref={cardRef}
       href={!isStaff ? presentationLink : null}
-      {...(blankTarget && {target: "_blank"})}
-      style={{ textDecoration: 'none' }}>
+      {...(blankTarget && { target: '_blank' })}
+      style={{ textDecoration: 'none' }}
+    >
       <div id="public-card">
         <div className="card">
           <div className="card-image">

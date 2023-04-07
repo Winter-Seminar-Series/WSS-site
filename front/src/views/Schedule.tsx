@@ -141,10 +141,12 @@ function Schedule({
       <section id="main-container" className="main-container pb-5 pt-0">
         <div
           style={{ marginTop: 'calc(-2 * var(--diagonal-offset))' }}
-          className="px-2 pt-4 diagonal background-theme">
+          className="px-2 pt-4 diagonal background-theme"
+        >
           <h2
             className="container section-sub-title title-white"
-            style={containerStyle}>
+            style={containerStyle}
+          >
             Schedule
           </h2>
         </div>
@@ -209,13 +211,15 @@ function Schedule({
                   <div
                     className="btn-group"
                     role="group"
-                    aria-label="Add to Calendar">
+                    aria-label="Add to Calendar"
+                  >
                     {calendarLink && (
                       <a
                         role="button"
                         href={calendarLink}
                         target="_blank"
-                        className="btn btn-blue">
+                        className="btn btn-blue"
+                      >
                         Add Events to Calendar
                       </a>
                     )}
@@ -225,7 +229,8 @@ function Schedule({
                         role="button"
                         href={icalLink}
                         target="_blank"
-                        className="btn btn-secondary">
+                        className="btn btn-secondary"
+                      >
                         iCal
                       </a>
                     )}

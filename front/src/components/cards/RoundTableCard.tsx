@@ -6,7 +6,7 @@ function RoundTableCard({
   id,
   presentationLink = '',
   roundTables,
-  blankTarget = false
+  blankTarget = false,
 }) {
   const [roundTable, setRoundTable] = useState({
     subject: '',
@@ -35,8 +35,9 @@ function RoundTableCard({
       className=""
       ref={cardRef}
       href={presentationLink}
-      {...(blankTarget && { target: "_blank" })}
-      style={{ textDecoration: 'none' }}>
+      {...(blankTarget && { target: '_blank' })}
+      style={{ textDecoration: 'none' }}
+    >
       <div id="public-card">
         <div className="card">
           <div className="card-image">

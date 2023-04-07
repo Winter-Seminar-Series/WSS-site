@@ -18,13 +18,11 @@ const AboutStaff = ({
 
   return (
     <>
-      <section
-        id="ts-speakers"
-        className="ts-speakers diagonal">
+      <section id="ts-speakers" className="ts-speakers diagonal">
         <div className="container text-white">
-        <div className="row mb-3">
-          <h2 className="section-title mx-auto">Staff</h2>
-        </div>
+          <div className="row mb-3">
+            <h2 className="section-title mx-auto">Staff</h2>
+          </div>
           {isFetching && (
             <div className="row">
               <div className="col mb-3 text-center">Loading...</div>
@@ -38,14 +36,17 @@ const AboutStaff = ({
           {holding_teams.map((team) => (
             <>
               <div className="row mb-3">
-                <h3 className="mb-2 mt-4 col section-subtitle text-center">{team.name}</h3>
+                <h3 className="mb-2 mt-4 col section-subtitle text-center">
+                  {team.name}
+                </h3>
               </div>
               {staff.length > 0 && !isFetching && (
                 <div className="row justify-content-center">
                   {team.staff.map((staff) => (
                     <div
                       key={staff}
-                      className="col-xs-12 col-sm-6 col-lg-3 mt-2 mb-4">
+                      className="col-xs-12 col-sm-6 col-lg-3 mt-2 mb-4"
+                    >
                       <PublicCard id={staff} isStaff="true"></PublicCard>
                     </div>
                   ))}

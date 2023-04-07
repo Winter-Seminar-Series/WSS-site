@@ -18,8 +18,7 @@ function SeminarCard({
 
   useEffect(() => {
     const foundSpeaker = speakers.find((s) => s.id === id);
-    if (foundSpeaker)
-      setSpeaker(foundSpeaker);
+    if (foundSpeaker) setSpeaker(foundSpeaker);
   }, [speakers]);
 
   const cardRef = useRef(null);
@@ -36,8 +35,9 @@ function SeminarCard({
       className=""
       ref={cardRef}
       href={presentationLink}
-      {...(blankTarget && {target: "_blank"})}
-      style={{ textDecoration: 'none' }}>
+      {...(blankTarget && { target: '_blank' })}
+      style={{ textDecoration: 'none' }}
+    >
       <div id="public-card">
         <div className="card">
           <div className="card-image">

@@ -47,7 +47,7 @@ function RoundTableDetail({
   const [stream, setStream] = useState({
     stream_room: {
       url: '',
-    }
+    },
   });
   const id = useParams()['id'];
 
@@ -112,7 +112,8 @@ function RoundTableDetail({
                   position: 'relative',
                   backgroundColor: 'rgba(0,0,0,.1)',
                   borderRadius: '5px',
-                }}>
+                }}
+              >
                 {roundTable.poster_picture && (
                   <img
                     style={{
@@ -148,16 +149,16 @@ function RoundTableDetail({
                     moment(roundTable.duration, 'hh:mm:ss').format(`hh`)
                   ) === 12
                     ? parseInt(
-                      moment(roundTable.duration, 'hh:mm:ss').format(`mm`)
-                    ) + ' minutes'
+                        moment(roundTable.duration, 'hh:mm:ss').format(`mm`)
+                      ) + ' minutes'
                     : parseInt(
-                      moment(roundTable.duration, 'hh:mm:ss').format(`hh`)
-                    ) *
-                    60 +
-                    parseInt(
-                      moment(roundTable.duration, 'hh:mm:ss').format(`mm`)
-                    ) +
-                    ' minutes')}
+                        moment(roundTable.duration, 'hh:mm:ss').format(`hh`)
+                      ) *
+                        60 +
+                      parseInt(
+                        moment(roundTable.duration, 'hh:mm:ss').format(`mm`)
+                      ) +
+                      ' minutes')}
                 {/* {!seminar.duration &&  */}
                 {/*{'To be announced ...'}*/}
               </div>
@@ -170,7 +171,6 @@ function RoundTableDetail({
                 {/* {!seminar.start_time &&  */}
                 {/*{'To be announced ...'}*/}
               </div>
-
             </div>
           </div>
           <div className="row mt-5 justify-content-center">

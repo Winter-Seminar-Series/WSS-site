@@ -143,7 +143,8 @@ const Header = ({ isLoggedIn, thisSeries, doSetThisSeries }) => {
             data-target="#wss-navbar"
             aria-controls="wss-navbar"
             aria-expanded="false"
-            aria-label="Toggle navigation">
+            aria-label="Toggle navigation"
+          >
             <span className="navbar-toggler-icon"></span>
           </button>
           <div className="collapse navbar-collapse" id="wss-navbar">
@@ -161,7 +162,8 @@ const Header = ({ isLoggedIn, thisSeries, doSetThisSeries }) => {
                       <a
                         href={i.link}
                         className={`nav-link dropdown-toggle ${i.style || ''}`}
-                        data-toggle="dropdown">
+                        data-toggle="dropdown"
+                      >
                         {i.title}
                       </a>
                       <ul className="dropdown-menu" role="menu">
@@ -171,7 +173,8 @@ const Header = ({ isLoggedIn, thisSeries, doSetThisSeries }) => {
                               href={c.link}
                               className="dropdown-item"
                               onClick={() => i.handler(c.series)}
-                              style={{ cursor: 'pointer' }}>
+                              style={{ cursor: 'pointer' }}
+                            >
                               {c.title}
                             </a>
                           </li>
@@ -188,7 +191,8 @@ const Header = ({ isLoggedIn, thisSeries, doSetThisSeries }) => {
                         )
                           ? i.activeStyle || 'active'
                           : ''
-                      }`}>
+                      }`}
+                    >
                       <a className="nav-link" href={i.link}>
                         {i.title}
                       </a>
