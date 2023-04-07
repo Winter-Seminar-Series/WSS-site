@@ -34,7 +34,6 @@ function RoundTableDetail({
     tags: [],
     link: '',
     poster_picture: '',
-    form_url: '',
   });
   const [speakers, setSpeakers] = useState([
     {
@@ -171,21 +170,7 @@ function RoundTableDetail({
                 {/* {!seminar.start_time &&  */}
                 {/*{'To be announced ...'}*/}
               </div>
-              <div className="seminar-details mt-3">
-              {isLoggedIn && stream?.stream_room?.url && (
-                  <a
-                    href={stream.stream_room.url}
-                    target="_blank"
-                    className="btn btn-lg btn-primary mb-2 mt-3">
-                    Attend
-                  </a>
-                )}
-                {roundTable.form_url && 
-                <button type = 'button' className = 'btn btn-primary ml-2 mb-2 mt-3'
-                onClick={() => window.open(roundTable.form_url)}>
-                  Google Form
-                </button>}
-              </div>
+
             </div>
           </div>
           <div className="row mt-5 justify-content-center">

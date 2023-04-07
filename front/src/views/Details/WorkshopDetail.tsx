@@ -41,7 +41,6 @@ function WorkshopDetail({
     price: '',
     speaker: '',
     tags: [],
-    form_url: '',
   });
   const [speaker, setSpeaker] = useState({
     picture: '',
@@ -170,14 +169,6 @@ function WorkshopDetail({
               </div>
               {isLoggedIn && (
                 <div className="seminar-details mt-3">
-                  {isLoggedIn && stream?.stream_room?.url && (
-                  <a
-                    href={stream.stream_room.url}
-                    target="_blank"
-                    className="btn btn-lg btn-primary mb-2 mt-3">
-                    Attend
-                  </a>
-                )}
                   {isWorkshopRegistrationOpen && !isRegisteredInWorkshop && (
                     <button
                       disabled={isFetchingForRegistration}
@@ -198,11 +189,6 @@ function WorkshopDetail({
                       Cancel Registration
                     </button>
                   )}
-                  {workshop.form_url && 
-                  <button type = 'button' className = 'btn btn-primary ml-2 mb-2 mt-3'
-                  onClick={() => window.open(workshop.form_url)}>
-                    Google Form
-                  </button>}
                 </div>
               )}
             </div>
