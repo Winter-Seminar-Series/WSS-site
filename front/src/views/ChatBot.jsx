@@ -23,8 +23,7 @@ const ChatBot = () => {
 
     // Function to check if the device is a mobile device
     function isMobileDevice() {
-        return true;
-        // return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
     }
 
     useEffect(() => {
