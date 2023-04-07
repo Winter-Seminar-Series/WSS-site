@@ -202,6 +202,20 @@ class PosterMaterialSerializer(ModelSerializer):
         fields = '__all__'
 
 
+class StreamRoomSerializer(ModelSerializer):
+    class Meta:
+        model = Room
+        fields = ('id', 'tag', 'url')
+
+
+class IncomingEventsSerializer(ModelSerializer):
+    stream_room = StreamRoomSerializer()
+
+    class Meta:
+        model = BaseEvent
+        fields = ('id', 'type', 'stream_room', 'form_url', 'qa_url', 'feedback_url')
+
+
 class StaffSerializer(ModelSerializer):
     class Meta:
         model = Staff

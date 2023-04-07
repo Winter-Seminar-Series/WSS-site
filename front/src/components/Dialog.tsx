@@ -22,7 +22,8 @@ export default function ResponsiveDialog({
         fullScreen={fullScreen}
         open={open}
         onClose={handleClose}
-        aria-labelledby="responsive-dialog-title">
+        aria-labelledby="responsive-dialog-title"
+      >
         <DialogTitle id="responsive-dialog-title">
           {'Terms of services'}
         </DialogTitle>

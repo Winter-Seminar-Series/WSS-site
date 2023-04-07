@@ -35,6 +35,7 @@ export const MODEL_LISTS_NAMES = {
   SEMINAR_MATERIALS: 'seminar_materials',
   WORKSHOP_MATERIALS: 'workshop_materials',
   POSTER_MATERIALS: 'poster_materials',
+  STREAMS: 'streams',
 };
 
 export const getAnEntityOfModelList = (

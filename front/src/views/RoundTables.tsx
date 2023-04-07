@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import PublicCard from '../components/cards/PublicCard';
 import LabTalkCard from '../components/cards/LabTalkCard';
-import RoundTableCard from '../components/cards/RoundTableCard'
+import RoundTableCard from '../components/cards/RoundTableCard';
 import { getModelList, MODEL_LISTS_NAMES } from '../redux/actions/WSS';
 
 const RoundTables = ({
@@ -38,7 +38,8 @@ const RoundTables = ({
                   roundTables.map((roundTable) => (
                     <div
                       key={roundTable.id}
-                      className="col-xs-10 col-sm-6 col-lg-3 mt-2 mb-4">
+                      className="col-xs-10 col-sm-6 col-lg-3 mt-2 mb-4"
+                    >
                       <RoundTableCard
                         id={roundTable.id}
                         presentationLink={'/roundtable/' + roundTable.id}

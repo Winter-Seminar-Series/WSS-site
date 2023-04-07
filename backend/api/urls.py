@@ -42,7 +42,8 @@ year_router.register(r'poster_materials',
 year_router.register(r'staff', views.StaffViewSet, basename='staff')
 year_urlpatterns = year_router.urls + [
     path('registered-workshops', views.RegisteredWorkshopsAPI.as_view(),
-         name='registered workshops')
+         name='registered workshops'),
+    path('streams/', views.IncomingStreamsListView.as_view())
 ]
 
 base_router = DefaultRouter()

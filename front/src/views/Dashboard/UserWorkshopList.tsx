@@ -39,10 +39,12 @@ function UserWorkshopList({
               {registeredWorkshops.map((workshop) => (
                 <div
                   key={workshop.id}
-                  className="col-xs-12 col-sm-6 col-lg-3 mt-2 mb-4">
+                  className="col-xs-12 col-sm-6 col-lg-3 mt-2 mb-4"
+                >
                   <PublicCard
                     id={workshop.speaker}
-                    presentationLink={'/workshop/' + workshop.id}></PublicCard>
+                    presentationLink={'/workshop/' + workshop.id}
+                  ></PublicCard>
                 </div>
               ))}
             </div>

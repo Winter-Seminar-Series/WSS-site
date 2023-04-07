@@ -5,6 +5,8 @@ import { useParams } from 'react-router-dom';
 import {
   getAnEntityOfModelList,
   MODEL_LISTS_NAMES,
+  getWSSPrimitiveFields,
+  getModelList,
 } from '../../redux/actions/WSS';
 import GoToButton from '../../components/GoToButton';
 import FavoriteButton from '../../components/FavoriteButton';
@@ -13,9 +15,12 @@ import moment from 'moment';
 function LabTalkDetail({
   thisSeries,
   getAnEntityOfModelList,
+  getWSSPrimitiveFields,
+  getModelList,
   labTalks,
   speakers,
   isLoggedIn,
+  streams,
 }) {
   const [labTalk, setLabTalk] = useState({
     id: '',
@@ -36,11 +41,20 @@ function LabTalkDetail({
     bio: '',
     name: '',
   });
+  const [stream, setStream] = useState({
+    stream_room: {
+      url: '',
+    },
+  });
   const id = useParams()['id'];
 
   useEffect(() => {
     getAnEntityOfModelList(MODEL_LISTS_NAMES.LAB_TALKS, thisSeries, id);
   }, [getAnEntityOfModelList]);
+
+  useEffect(() => {
+    getModelList(MODEL_LISTS_NAMES.STREAMS, thisSeries);
+  }, [getWSSPrimitiveFields]);
 
   useEffect(() => {
     const labTalk = labTalks.find((lt) => lt.id === +id);
@@ -61,30 +75,53 @@ function LabTalkDetail({
       setHead(head);
     }
   }, [speakers]);
+
+  useEffect(() => {
+    const stream = streams.find((s) => s.id === labTalk.id);
+
+    if (stream) {
+      setStream(stream);
+    }
+  }, [streams]);
+
   return (
     <section id="main-container" className="main-container">
       <div
         style={{ marginTop: '-15rem', height: '12rem' }}
         className="diagonal blue-gradient"
       />
+
       <div className="container-fluid px-sm-3" style={{ marginTop: '-3rem' }}>
         <div className="container">
           <div className="row align-items-end">
-            {labTalk.poster_picture && (
-              <div className="col-12 col-md-6 col-lg-4">
-                <img
-                  style={{
-                    borderRadius: '5px',
-                    width: '100%',
-                    boxShadow: '0px 6px 12px rgba(0,0,0,.3)',
-                    aspectRatio: '1 / 1',
-                  }}
-                  src={`${BASE_URL}/${labTalk.poster_picture}`}
-                  alt=""
-                />
+            <div className="col-md-6 col-lg-4 m-0">
+              <div
+                style={{
+                  width: '100%',
+                  paddingTop: '100%',
+                  position: 'relative',
+                  backgroundColor: 'rgba(0,0,0,.1)',
+                  borderRadius: '5px',
+                }}
+              >
+                {(labTalk.poster_picture ?? head.picture) && (
+                  <img
+                    style={{
+                      borderRadius: '5px',
+                      width: '100%',
+                      boxShadow: '0px 6px 12px rgba(0,0,0,.3)',
+                      top: '0',
+                      position: 'absolute',
+                    }}
+                    src={`${BASE_URL}/${
+                      labTalk.poster_picture ?? head.picture
+                    }`}
+                    alt=""
+                  />
+                )}
               </div>
-            )}
-            <div className="col">
+            </div>
+            <div className="col mt-3">
               <div className="d-flex">
                 {labTalk && labTalk.id && isLoggedIn && (
                   <FavoriteButton
@@ -94,7 +131,7 @@ function LabTalkDetail({
                   />
                 )}
 
-                <h1>{head.name}</h1>
+                <h2 className="ml-3">{head.name}</h2>
               </div>
 
               <h5>{`${head.degree}, ${head.place}`}</h5>
@@ -128,15 +165,6 @@ function LabTalkDetail({
                   )}
                 {/* {!seminar.start_time &&  */}
                 {/*{'To be announced ...'}*/}
-              </div>
-              <div className="seminar-details mt-3">
-                {isLoggedIn && (
-                  <GoToButton
-                    type="labtalks"
-                    id={labTalk.id}
-                    room_name={'labtalk'}
-                  />
-                )}
               </div>
             </div>
           </div>
@@ -181,9 +209,12 @@ const mapStateToProps = (state, ownProps) => {
     isLoggedIn: state.account.isLoggedIn,
     speakers: state.WSS.speakers,
     labTalks: state.WSS.labtalks,
+    streams: state.WSS.streams,
   };
 };
 
 export default connect(mapStateToProps, {
   getAnEntityOfModelList,
+  getWSSPrimitiveFields,
+  getModelList,
 })(LabTalkDetail);

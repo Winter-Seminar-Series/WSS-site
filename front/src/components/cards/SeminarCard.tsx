@@ -6,18 +6,19 @@ function SeminarCard({
   id,
   poster_picture,
   presentationLink = '',
+  blankTarget = false,
   speakers,
 }) {
   const [speaker, setSpeaker] = useState({
     name: '',
     degree: '',
     place: '',
+    picture: '',
   });
 
   useEffect(() => {
     const foundSpeaker = speakers.find((s) => s.id === id);
-    if (foundSpeaker)
-      setSpeaker(foundSpeaker);
+    if (foundSpeaker) setSpeaker(foundSpeaker);
   }, [speakers]);
 
   const cardRef = useRef(null);
@@ -34,14 +35,16 @@ function SeminarCard({
       className=""
       ref={cardRef}
       href={presentationLink}
-      style={{ textDecoration: 'none' }}>
+      {...(blankTarget && { target: '_blank' })}
+      style={{ textDecoration: 'none' }}
+    >
       <div id="public-card">
         <div className="card">
           <div className="card-image">
             <img
               src={
-                poster_picture
-                  ? `${BASE_URL}/${poster_picture}`
+                poster_picture ?? speaker.picture
+                  ? `${BASE_URL}/${poster_picture ?? speaker.picture}`
                   : process.env.PUBLIC_URL + '/images/icons/avatar.jpg'
               }
               className="card-img"

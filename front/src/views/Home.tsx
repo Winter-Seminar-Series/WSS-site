@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { connect } from 'react-redux';
-import PublicCard from '../components/cards/PublicCard';
+import SeminarCard from '../components/cards/SeminarCard';
 import { BASE_URL } from '../constants/info';
 import moment from 'moment';
 import {
@@ -65,6 +65,34 @@ function Home({
     videoRef.current.playbackRate = 0.6;
   };
 
+  const getSeminarList = () => {
+    const seminarKeys = [...seminars.keys()];
+    let seminarList = seminarKeys
+      .filter((key) => seminars[key].is_pinned)
+      .sort(() => Math.random() - 0.5);
+    if (seminarList.length > 8) {
+      seminarList = seminarList.slice(0, 8);
+    }
+
+    if (seminarList.length < 8) {
+      const unpinnedSeminars = seminarKeys
+        .filter((key) => !seminars[key].is_pinned)
+        .sort(() => Math.random() - 0.5)
+        .slice(0, 8 - seminarList.length);
+
+      seminarList = seminarList.concat(unpinnedSeminars);
+    }
+    return seminarList.map((index) => (
+      <div key={index} className="col-xs-10 col-sm-6 col-lg-3 mt-2 mb-4">
+        <SeminarCard
+          id={seminars[index].speaker}
+          poster_picture={seminars[index].poster_picture}
+          presentationLink={'/seminar/' + seminars[index].id}
+        />
+      </div>
+    ));
+  };
+
   return (
     <>
       <section id="banner">
@@ -76,7 +104,8 @@ function Home({
               backgroundSize: 'cover',
               backgroundPosition: 'center',
               backgroundRepeat: 'no-repeat',
-            }}>
+            }}
+          >
             {/* <Particles
               id="tsparticles"
               url="/particles-config.json"
@@ -108,7 +137,8 @@ function Home({
                       />
                       <div
                         style={fontStyle}
-                        className="row ml-4 mt-1 font-weight-bold text-uppercase d-flex justify-content-around">
+                        className="row ml-4 mt-1 font-weight-bold text-uppercase d-flex justify-content-around"
+                      >
                         <div>Winter</div>
                         <div>Seminar</div>
                         <div>Series</div>
@@ -121,7 +151,7 @@ function Home({
                     Advanced Topics in Computer Science and Engineering
                   </h2>
                   <h2 className="banner-subtitle my-3 font-weight-bold">
-                    {thisSeries === "8th" && startDate && endDate
+                    {thisSeries === '8th' && startDate && endDate
                       ? moment(startDate, 'YYYY-MM-DD').format(
                           'MMM Do, YYYY -'
                         ) +
@@ -136,7 +166,8 @@ function Home({
                     <p className="banner-btn">
                       <a
                         href="/create-account"
-                        className="btn btn-primary btn-white">
+                        className="btn btn-primary btn-white"
+                      >
                         Register Now
                       </a>
                     </p>
@@ -171,59 +202,47 @@ function Home({
       {/* <div className="purple-background"> */}
       {/* {!(thisSeries === '8th') && ( */}
       <section
-              id="ts-speakers-main"
-              className="diagonal-up-right blue-gradient my-5 ">
-            <div className="container">
-              <div className="row text-center">
-                <h3 className="title-white mx-auto font-weight-light speaker-title">
-                  Seminars
-                </h3>
-              </div>
-              <div className="row justify-content-center">
-                {Array.from(Array(seminars.length).keys())
-                    .sort(() => Math.random() - 0.5)
-                    .slice(0, 8)
-                    .map((index) => (
-                        <div
-                            key={index}
-                            className="col-xs-10 col-sm-6 col-lg-3 mt-2 mb-4">
-                          <PublicCard
-                              id={seminars[index].speaker}
-                              presentationLink={'/seminar/' + seminars[index].id}
-                          />
-                        </div>
-                    ))}
-              </div>
-            </div>
-            <div className="row">
-              <div className="text-center mx-auto mt-5">
-                <a href="/seminars" className="btn btn-primary btn-white">
-                  View All Seminars
-                </a>
-              </div>
-            </div>
-          </section>
+        id="ts-speakers-main"
+        className="diagonal-up-right blue-gradient my-5 "
+      >
+        <div className="container">
+          <div className="row text-center">
+            <h3 className="title-white mx-auto font-weight-light speaker-title">
+              Seminars
+            </h3>
+          </div>
+          <div className="row justify-content-center">{getSeminarList()}</div>
+        </div>
+        <div className="row">
+          <div className="text-center mx-auto mt-5">
+            <a href="/seminars" className="btn btn-primary btn-white">
+              View All Seminars
+            </a>
+          </div>
+        </div>
+      </section>
       {/* )} */}
 
       {/* {!(thisSeries === '8th') && ( */}
       <section
-              id="ts-statics"
-              className="z-1 ts-statics my-5"
-              style={{paddingTop: '10rem'}}>
-            <div className="container py-4">
-              <div className="row d-flex justify-content-center">
-                <div className="col-sm-2 m-2 text-center">
-                  <div className="ts-facts">
-                    <div className="ts-facts-content">
-                      <h2 className="ts-facts-num">
-                        <span className="counterUp">{seminars_count}</span>
-                      </h2>
-                      <h3 className="ts-facts-title">Seminars</h3>
-                    </div>
-                  </div>
+        id="ts-statics"
+        className="z-1 ts-statics my-5"
+        style={{ paddingTop: '10rem' }}
+      >
+        <div className="container py-4">
+          <div className="row d-flex justify-content-center">
+            <div className="col-sm-2 m-2 text-center">
+              <div className="ts-facts">
+                <div className="ts-facts-content">
+                  <h2 className="ts-facts-num">
+                    <span className="counterUp">{seminars_count}</span>
+                  </h2>
+                  <h3 className="ts-facts-title">Seminars</h3>
                 </div>
+              </div>
+            </div>
 
-                {/* <div className="col-sm-2 m-2 text-center">
+            {/* <div className="col-sm-2 m-2 text-center">
                <a data-scroll>
                  <div className="ts-facts">
                    <div className="ts-facts-content">
@@ -257,9 +276,9 @@ function Home({
                  </div>
                </div>
              </div> */}
-              </div>
-            </div>
-          </section>
+          </div>
+        </div>
+      </section>
       {/* )} */}
 
       {/* {sponsors.length > 0 && (
@@ -299,14 +318,16 @@ function Home({
           backgroundPositionY: 'center !important',
           position: 'relative',
           overflow: 'hidden',
-        }}>
+        }}
+      >
         <div
           style={{
             position: 'absolute',
             inset: 0,
             background: '#0005',
             transform: 'unset',
-          }}></div>
+          }}
+        ></div>
         {/* <div className="container">
             <h3 className="section-sub-title" style={sectionSubtitleStyle}>
               WSS Venue
@@ -338,7 +359,8 @@ function Home({
                   flexDirection: 'row',
                   alignItems: 'center',
                   flexWrap: 'wrap',
-                }}>
+                }}
+              >
                 {/*<h5 className="section-sub-title text-white mb-3 mt-5">*/}
                 {/*    Sponsored by*/}
                 {/*</h5>*/}

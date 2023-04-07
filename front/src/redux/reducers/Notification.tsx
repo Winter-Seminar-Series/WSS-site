@@ -7,7 +7,6 @@ const initState = {
 };
 
 function Notification(state = {}, action) {
-
   switch (action.type) {
     case actionTypes.LOGIN_SUCCESS:
       toast.success('Welcome back!');
@@ -26,34 +25,28 @@ function Notification(state = {}, action) {
       return { ...state };
 
     case actionTypes.VERIFY_PAYMENT_REQUEST:
-      toast.warning('Your payment is in process...',
-        {
-          autoClose: false,
-          closeOnClick: false,
-          draggable: false,
-        }
-      );
+      toast.warning('Your payment is in process...', {
+        autoClose: false,
+        closeOnClick: false,
+        draggable: false,
+      });
       return { ...state };
 
     case actionTypes.VERIFY_PAYMENT_SUCCESS:
-      toast.success('Your payment has been successfully done.',
-        {
-          autoClose: false,
-          closeOnClick: false,
-          draggable: false,
-        }
-      );
+      toast.success('Your payment has been successfully done.', {
+        autoClose: false,
+        closeOnClick: false,
+        draggable: false,
+      });
       return { ...state };
 
     case actionTypes.SEND_PAYMENT_FAILURE:
     case actionTypes.VERIFY_PAYMENT_FAILURE:
-      toast.error(action.error,
-        {
-          autoClose: false,
-          closeOnClick: false,
-          draggable: false,
-        }
-      );
+      toast.error(action.error, {
+        autoClose: false,
+        closeOnClick: false,
+        draggable: false,
+      });
       return { ...state };
 
     case actionTypes.UPDATE_PROFILE_SUCCESS:
@@ -61,7 +54,7 @@ function Notification(state = {}, action) {
       return { ...state };
 
     case actionTypes.UPDATE_PROFILE_FAILURE:
-      toast.error('Something went wrong, your information didn\'t update.');
+      toast.error("Something went wrong, your information didn't update.");
       return { ...state };
 
     case actionTypes.CHANGE_PASSWORD_SUCCESS:
@@ -73,7 +66,9 @@ function Notification(state = {}, action) {
       return { ...state };
 
     case actionTypes.REQUEST_PASSWORD_RESET_SUCCESS:
-      toast.success('Instructions to reset password have been sent to you. Please check your email.');
+      toast.success(
+        'Instructions to reset password have been sent to you. Please check your email.'
+      );
       return { ...state };
 
     case actionTypes.REGISTER_WORKSHOP_FAILURE:
@@ -84,7 +79,7 @@ function Notification(state = {}, action) {
       return { ...state };
 
     case actionTypes.RESET_PASSWORD_SUCCESS:
-      toast.success('Password changed successfully.')
+      toast.success('Password changed successfully.');
       return { ...state };
 
     case actionTypes.RESET_PASSWORD_FAILURE:
@@ -92,11 +87,13 @@ function Notification(state = {}, action) {
       return { ...state };
 
     case actionTypes.REGISTER_WORKSHOP_SUCCESS:
-      toast.success('You registered the workshop successfully.')
+      toast.success('You registered the workshop successfully.');
       return { ...state };
 
     case actionTypes.CANCEL_WORKSHOP_REGISTRATION_SUCCESS:
-      toast.success('You canceled your registration in the workshop successfully.')
+      toast.success(
+        'You canceled your registration in the workshop successfully.'
+      );
       return { ...state };
 
     default:

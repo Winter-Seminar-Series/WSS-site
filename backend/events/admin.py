@@ -1,7 +1,9 @@
 from django.contrib import admin
 
-from events.models import Seminar, PosterSession, Workshop, Venue, Event, SeminarMaterial, \
-    WorkshopMaterial, PosterMaterial
+from events.models import (
+    Seminar, PosterSession, Workshop, Venue, Event, SeminarMaterial,
+    WorkshopMaterial, PosterMaterial, Room, LabTalk, RoundTable
+)
 from WSS.models import Participant
 
 
@@ -16,8 +18,7 @@ class WorkshopRegistrationInline(admin.TabularInline):
 
 class WorkshopAdmin(BaseEventAdmin):
     readonly_fields = ('remaining_capacity',)
-    inlines = (WorkshopRegistrationInline, )
-
+    inlines = (WorkshopRegistrationInline,)
 
 
 admin.site.register(Venue)
@@ -28,3 +29,6 @@ admin.site.register(WorkshopMaterial)
 admin.site.register(Seminar, BaseEventAdmin)
 admin.site.register(PosterSession, BaseEventAdmin)
 admin.site.register(Workshop, WorkshopAdmin)
+admin.site.register(Room)
+admin.site.register(LabTalk)
+admin.site.register(RoundTable)

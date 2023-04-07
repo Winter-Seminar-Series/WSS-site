@@ -6,6 +6,7 @@ import {
   getAnEntityOfModelList,
   getWSSPrimitiveFields,
   MODEL_LISTS_NAMES,
+  getModelList,
 } from '../../redux/actions/WSS';
 import {
   registerWorkshop,
@@ -19,6 +20,7 @@ function WorkshopDetail({
   thisSeries,
   getWSSPrimitiveFields,
   getAnEntityOfModelList,
+  getModelList,
   workshops,
   speakers,
   registerWorkshop,
@@ -28,6 +30,7 @@ function WorkshopDetail({
   isLoggedIn,
   isFetchingForRegistration,
   isWorkshopRegistrationOpen,
+  streams,
 }) {
   const [workshop, setWorkshop] = useState({
     id: '',
@@ -46,6 +49,11 @@ function WorkshopDetail({
     bio: '',
     name: '',
   });
+  const [stream, setStream] = useState({
+    stream_room: {
+      url: '',
+    },
+  });
   const [isRegisteredInWorkshop, setRegistrationStatus] = useState(false);
   const id = useParams()['id'];
 
@@ -57,6 +65,10 @@ function WorkshopDetail({
     getAnEntityOfModelList(MODEL_LISTS_NAMES.WORKSHOPS, thisSeries, id);
     getRegisteredWorkshops(thisSeries);
   }, [getAnEntityOfModelList]);
+
+  useEffect(() => {
+    getModelList(MODEL_LISTS_NAMES.STREAMS, thisSeries);
+  }, [getWSSPrimitiveFields]);
 
   useEffect(() => {
     if (workshops.find((s) => s.id === id)) {
@@ -84,6 +96,14 @@ function WorkshopDetail({
     }
   }, [speakers]);
 
+  useEffect(() => {
+    const stream = streams.find((s) => s.id === workshop.id);
+
+    if (stream) {
+      setStream(stream);
+    }
+  }, [streams]);
+
   return (
     <section id="main-container" className="main-container">
       <div
@@ -101,7 +121,8 @@ function WorkshopDetail({
                   position: 'relative',
                   backgroundColor: 'rgba(0,0,0,.1)',
                   borderRadius: '5px',
-                }}>
+                }}
+              >
                 {speaker.picture && (
                   <img
                     style={{
@@ -149,16 +170,12 @@ function WorkshopDetail({
               </div>
               {isLoggedIn && (
                 <div className="seminar-details mt-3">
-                  {isRegisteredInWorkshop && (
-                    <span style={{ marginRight: '20px' }}>
-                      <GoToButton type="workshops" id={workshop.id} />
-                    </span>
-                  )}
                   {isWorkshopRegistrationOpen && !isRegisteredInWorkshop && (
                     <button
                       disabled={isFetchingForRegistration}
                       onClick={() => registerWorkshop(thisSeries, id)}
-                      className="btn btn-primary btn-blue">
+                      className="btn btn-primary btn-blue"
+                    >
                       Register Now For Free
                       <br />
                       <span style={{ fontSize: '10px' }}>
@@ -170,7 +187,8 @@ function WorkshopDetail({
                     <button
                       disabled={isFetchingForRegistration}
                       onClick={() => cancelWorkshopRegistration(thisSeries, id)}
-                      className="btn btn-outline-primary btn-lg">
+                      className="btn btn-outline-primary btn-lg"
+                    >
                       Cancel Registration
                     </button>
                   )}
@@ -212,6 +230,7 @@ const mapStateToProps = (state, ownProps) => {
     isLoggedIn: state.account.isLoggedIn,
     speakers: state.WSS.speakers,
     workshops: state.WSS.workshops,
+    streams: state.WSS.streams,
     registeredWorkshops: state.Participant.registeredWorkshops,
     isFetchingForRegistration: state.Participant.isFetching,
     isWorkshopRegistrationOpen: state.WSS.isWorkshopRegistrationOpen,
@@ -219,6 +238,7 @@ const mapStateToProps = (state, ownProps) => {
 };
 
 export default connect(mapStateToProps, {
+  getModelList,
   getWSSPrimitiveFields,
   getAnEntityOfModelList,
   registerWorkshop,

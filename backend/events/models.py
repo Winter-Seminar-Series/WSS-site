@@ -15,6 +15,17 @@ class WssTag(models.Model):
         max_length=100, verbose_name="Tag", primary_key=True)
 
 
+class Room(models.Model):
+    tag = models.TextField()
+    url = models.URLField(blank=True, null=True, max_length=255)
+
+    def __str__(self):
+        return "Room %d" % self.id
+
+    def __repr__(self):
+        return self.__str__()
+
+
 class BaseEvent(PolymorphicModel):  # Is implicitly Abstract
     wss = models.ForeignKey(
         to='WSS.WSS', related_name='events', on_delete=models.CASCADE)
@@ -29,6 +40,10 @@ class BaseEvent(PolymorphicModel):  # Is implicitly Abstract
     tags = models.ManyToManyField(WssTag, blank=True)
     calender_link = models.URLField(blank=True, null=True, max_length=512)
     poster_picture = models.CharField(max_length=200, null=True, blank=True)
+    stream_room = models.ForeignKey(Room, models.CASCADE, related_name='events', blank=True, null=True)
+    form_url = models.URLField(blank=True, null=True)
+    qa_url = models.URLField(blank=True, null=True)
+    feedback_url = models.URLField(blank=True, null=True)
 
     class Meta:
         ordering = ('start_time',)
@@ -47,6 +62,10 @@ class BaseEvent(PolymorphicModel):  # Is implicitly Abstract
     @property
     def is_available(self):
         return self.start_time <= datetime.datetime.now(tz=datetime.timezone.utc) <= self.end_time
+
+    @property
+    def type(self):
+        return self.__class__.__name__.lower()
 
 
 class Event(BaseEvent):
@@ -77,6 +96,7 @@ class LabTalk(BaseEvent):
 class Seminar(BaseEvent):
     abstract = models.TextField()
     is_keynote = models.BooleanField(default=False)
+    is_pinned = models.BooleanField(default=False)
     speaker = models.ForeignKey(
         to='people.Speaker', related_name='seminars', on_delete=models.RESTRICT)
     material = models.OneToOneField(
@@ -110,7 +130,9 @@ class Workshop(BaseEvent):
         return self.capacity - self.participants.all().count()
 
     def __str__(self):
-        return self.title + ", " + "Speaker: " + self.speaker.name + ", " + (self.start_time.strftime("%A %d %B %Y, %H:%M, ") if self.start_time != None else "") + "Price: " + str(self.price) + " Tomans"
+        return self.title + ", " + "Speaker: " + self.speaker.name + ", " + (
+            self.start_time.strftime("%A %d %B %Y, %H:%M, ") if self.start_time != None else "") + "Price: " + str(
+            self.price) + " Tomans"
 
 
 class Material(PolymorphicModel):

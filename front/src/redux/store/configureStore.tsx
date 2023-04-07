@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import configureStoreDev from './configureStore.dev';
 import configureStoreProd from './configureStore.prod';
 
@@ -8,6 +8,6 @@ const configureStore = (preloadedState) => {
   } else {
     return configureStoreDev(preloadedState);
   }
-}
+};
 
 export default configureStore;

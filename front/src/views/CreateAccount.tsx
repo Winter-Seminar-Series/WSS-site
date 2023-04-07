@@ -35,62 +35,58 @@ function CreateAccount({ register, isLoggedIn, isFetching }) {
 
   return (
     <>
-      <section
-        dir="rtl"
-        className="auth-container background-theme row">
+      <section dir="rtl" className="auth-container background-theme row">
         <div className="diagonal col-xs-12 col-sm-6 form-container" dir="ltr">
           <form onSubmit={doRegister}>
-          <div className="form-group mb-5">
-            <label htmlFor="email">Email</label>
-            <input
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              id="email"
-              type="email"
-              className="form-control"
-            />
-          </div>
-          <div className="form-group mb-5">
-            <label htmlFor="password">Password</label>
-            <input
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              type="password"
-              className="form-control"
-              id="password"
-            />
-          </div>
-          <div className="form-group mb-5">
-            <label htmlFor="confirm password">Confirm Password</label>
-            <input
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              type="password"
-              className="form-control"
-              id="confirm-password"
-            />
-          </div>
-            <div style={{margin: "1rem 0"}}>
+            <div className="form-group mb-5">
+              <label htmlFor="email">Email</label>
+              <input
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                id="email"
+                type="email"
+                className="form-control"
+              />
+            </div>
+            <div className="form-group mb-5">
+              <label htmlFor="password">Password</label>
+              <input
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                type="password"
+                className="form-control"
+                id="password"
+              />
+            </div>
+            <div className="form-group mb-5">
+              <label htmlFor="confirm password">Confirm Password</label>
+              <input
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                type="password"
+                className="form-control"
+                id="confirm-password"
+              />
+            </div>
+            <div style={{ margin: '1rem 0' }}>
               <ReCaptchaV2
                 sitekey={process.env.REACT_APP_RECAPTCHA_SITE_KEY}
                 onChange={(token) => setToken(token)}
                 onExpire={() => setToken(null)}
               />
             </div>
-          <button
-
-            disabled={isFetching}
-            type="submit"
-            className="btn btn-lg btn-primary mb-5 mt-3">
-            Create Account
-          </button>
-          <div className="linkbar">
-            <span className="mr-1">
-              If you have registered before,
-            </span>
-            <a className="link" href="/login">
-              click here
-            </a>
-          </div>
+            <button
+              disabled={isFetching}
+              type="submit"
+              className="btn btn-lg btn-primary mb-5 mt-3"
+            >
+              Create Account
+            </button>
+            <div className="linkbar">
+              <span className="mr-1">If you have registered before,</span>
+              <a className="link" href="/login">
+                click here
+              </a>
+            </div>
           </form>
         </div>
         <div className="d-none d-sm-flex col-6 logo-container" dir="ltr">

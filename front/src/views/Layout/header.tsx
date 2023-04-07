@@ -73,17 +73,41 @@ const Header = ({ isLoggedIn, thisSeries, doSetThisSeries }) => {
         },
       ],
     },
-    {title: 'About Us', persianTitle: 'درباره ما', link: '/about'},
-    {title: 'Seminars', persianTitle: 'سمینارها', link: '/seminars'},
-    {title: 'Lab Talks', persianTitle: 'ارائه آزمایشگاه', link: '/labtalks'},
-    {title: 'Round Tables', persianTitle: 'میزگردها', link: '/roundtables'},
+    { title: 'About Us', persianTitle: 'درباره ما', link: '/about' },
+    { title: 'Seminars', persianTitle: 'سمینارها', link: '/seminars' },
+    { title: 'Lab Talks', persianTitle: 'ارائه آزمایشگاه', link: '/labtalks' },
+    { title: 'Round Tables', persianTitle: 'میزگردها', link: '/roundtables' },
+    { title: 'Workshops', persianTitle: 'کارگاه‌ها', link: '/workshops' },
+    {
+      title: 'sponsors',
+      persianTitle: 'اسپانسرها',
+      link: '/',
+      scopes: ['/'],
+      children: [
+        {
+          title: 'divar',
+          persianTitle: 'دیوار',
+          link: '/sponsor/divar',
+        },
+        {
+          title: 'flightio',
+          persianTitle: 'فلایتیو',
+          link: '/sponsor/flightio',
+        },
+        {
+          title: 'part',
+          persianTitle: 'پارت',
+          link: '/sponsor/part',
+        },
+      ],
+    },
     // {title: 'Sponsor', persianTitle: 'اسپانسر', link: '/sponsor'},
     // { title: 'Speakers', persianTitle: 'سمینارها', link: '/seminars' },
     // { title: 'Opening Ceremony', persianTitle: 'افتتاحیه', link: '/seminar/114' },
     // { title: 'Workshops', persianTitle: 'کارگاه‌ها', link: '/workshops' },
     // { title: 'PosterSession', persianTitle: 'پوسترسشن', link: '/postersessions' },
     // {title: 'Schedule', persianTitle: 'برنامه زمانی', link: '/schedule'},
-    {title: 'Staff', persianTitle: 'استف‌ها', link: '/staff'},
+    { title: 'Staff', persianTitle: 'استف‌ها', link: '/staff' },
     {
       title: 'Sign Up',
       persianTitle: 'ثبت‌نام',
@@ -110,7 +134,7 @@ const Header = ({ isLoggedIn, thisSeries, doSetThisSeries }) => {
       <nav className="navbar navbar-expand-xl navbar-dark w-100 z-index-master">
         <div className="container">
           <a className="navbar-brand" href="/">
-            <img src="/images/headerlogo.png" height="40" alt=""/>
+            <img src="/images/headerlogo.png" height="40" alt="" />
           </a>
           <button
             className="navbar-toggler"
@@ -119,25 +143,27 @@ const Header = ({ isLoggedIn, thisSeries, doSetThisSeries }) => {
             data-target="#wss-navbar"
             aria-controls="wss-navbar"
             aria-expanded="false"
-            aria-label="Toggle navigation">
+            aria-label="Toggle navigation"
+          >
             <span className="navbar-toggler-icon"></span>
           </button>
           <div className="collapse navbar-collapse" id="wss-navbar">
             <ul className="navbar-nav ml-auto mt-2 mt-lg-0">
               {navbarItems.map(
                 (i) =>
-                  ((!i.loggedIn ||
+                  (!i.loggedIn ||
                     //       ((!(thisSeries === '8th') ||
                     // (thisSeries === '8th' &&
                     //     !(i.title === 'Staff'))) && (!i.loggedIn ||
                     (i.loggedIn === 'notAuthorized' && !isLoggedIn) ||
-                    (i.loggedIn === 'authorized' && isLoggedIn))) &&
+                    (i.loggedIn === 'authorized' && isLoggedIn)) &&
                   (i.children ? (
                     <li key={i.title} className="nav-item dropdown">
                       <a
                         href={i.link}
                         className={`nav-link dropdown-toggle ${i.style || ''}`}
-                        data-toggle="dropdown">
+                        data-toggle="dropdown"
+                      >
                         {i.title}
                       </a>
                       <ul className="dropdown-menu" role="menu">
@@ -147,7 +173,8 @@ const Header = ({ isLoggedIn, thisSeries, doSetThisSeries }) => {
                               href={c.link}
                               className="dropdown-item"
                               onClick={() => i.handler(c.series)}
-                              style={{ cursor: 'pointer' }}>
+                              style={{ cursor: 'pointer' }}
+                            >
                               {c.title}
                             </a>
                           </li>
@@ -164,7 +191,8 @@ const Header = ({ isLoggedIn, thisSeries, doSetThisSeries }) => {
                         )
                           ? i.activeStyle || 'active'
                           : ''
-                      }`}>
+                      }`}
+                    >
                       <a className="nav-link" href={i.link}>
                         {i.title}
                       </a>

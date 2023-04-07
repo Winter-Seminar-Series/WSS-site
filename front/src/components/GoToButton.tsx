@@ -28,7 +28,8 @@ function GoToButton({ thisSeries, type, id, getRedirectURL, room_name }) {
     <button
       disabled={!!loading || !id || !type}
       onClick={redirectToClass}
-      className="btn btn-primary btn-blue">
+      className="btn btn-primary btn-blue"
+    >
       Join
     </button>
   );

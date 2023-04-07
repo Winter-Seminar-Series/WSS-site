@@ -5,6 +5,8 @@ import { useParams } from 'react-router-dom';
 import {
   getAnEntityOfModelList,
   MODEL_LISTS_NAMES,
+  getWSSPrimitiveFields,
+  getModelList,
 } from '../../redux/actions/WSS';
 import moment from 'moment';
 import GoToButton from '../../components/GoToButton';
@@ -13,9 +15,12 @@ import FavoriteButton from '../../components/FavoriteButton';
 function SeminarDetail({
   thisSeries,
   getAnEntityOfModelList,
+  getWSSPrimitiveFields,
+  getModelList,
   seminars,
   speakers,
   isLoggedIn,
+  streams,
 }) {
   const [seminar, setSeminar] = useState({
     id: '',
@@ -27,6 +32,7 @@ function SeminarDetail({
     speaker: '',
     tags: [],
     room: '',
+    poster_picture: '',
   });
   const [speaker, setSpeaker] = useState({
     picture: '',
@@ -35,11 +41,20 @@ function SeminarDetail({
     bio: '',
     name: '',
   });
+  const [stream, setStream] = useState({
+    stream_room: {
+      url: '',
+    },
+  });
   const id = useParams()['id'];
 
   useEffect(() => {
     getAnEntityOfModelList(MODEL_LISTS_NAMES.SEMINARS, thisSeries, id);
   }, [getAnEntityOfModelList]);
+
+  useEffect(() => {
+    getModelList(MODEL_LISTS_NAMES.STREAMS, thisSeries);
+  }, [getWSSPrimitiveFields]);
 
   useEffect(() => {
     const seminar = seminars.find((s) => s.id === +id);
@@ -61,12 +76,21 @@ function SeminarDetail({
     }
   }, [speakers]);
 
+  useEffect(() => {
+    const stream = streams.find((s) => s.id === seminar.id);
+
+    if (stream) {
+      setStream(stream);
+    }
+  }, [streams]);
+
   return (
     <section id="main-container" className="main-container">
       <div
         style={{ marginTop: '-15rem', height: '12rem' }}
         className="diagonal blue-gradient"
       />
+
       <div className="container-fluid px-sm-3" style={{ marginTop: '-3rem' }}>
         <div className="container">
           <div className="row align-items-end">
@@ -78,8 +102,9 @@ function SeminarDetail({
                   position: 'relative',
                   backgroundColor: 'rgba(0,0,0,.1)',
                   borderRadius: '5px',
-                }}>
-                {speaker.picture && (
+                }}
+              >
+                {(seminar.poster_picture ?? speaker.picture) && (
                   <img
                     style={{
                       borderRadius: '5px',
@@ -88,7 +113,9 @@ function SeminarDetail({
                       top: '0',
                       position: 'absolute',
                     }}
-                    src={`${BASE_URL}/${speaker.picture}`}
+                    src={`${BASE_URL}/${
+                      seminar.poster_picture ?? speaker.picture
+                    }`}
                     alt=""
                   />
                 )}
@@ -136,15 +163,6 @@ function SeminarDetail({
                   )}
                 {!seminar.start_time && 'To be announced ...'}
               </div>
-              <div className="seminar-details mt-3">
-                {isLoggedIn && (
-                  <GoToButton
-                    type="seminars"
-                    id={seminar.id}
-                    room_name={seminar.room}
-                  />
-                )}
-              </div>
             </div>
           </div>
           <div className="mt-5">
@@ -188,9 +206,12 @@ const mapStateToProps = (state, ownProps) => {
     isLoggedIn: state.account.isLoggedIn,
     speakers: state.WSS.speakers,
     seminars: state.WSS.seminars,
+    streams: state.WSS.streams,
   };
 };
 
 export default connect(mapStateToProps, {
   getAnEntityOfModelList,
+  getWSSPrimitiveFields,
+  getModelList,
 })(SeminarDetail);

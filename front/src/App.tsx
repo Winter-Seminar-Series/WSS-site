@@ -5,7 +5,7 @@ import './styles/style.scss';
 import About from './views/About';
 import Dashboard from './views/Dashboard/Dashboard';
 import SeminarDetail from './views/Details/SeminarDetail';
-import RoundTableDetail from "./views/Details/RoundTableDetail";
+import RoundTableDetail from './views/Details/RoundTableDetail';
 import LabTalkDetail from './views/Details/LabTalkDetail';
 import WorkshopDetail from './views/Details/WorkshopDetail';
 import Home from './views/Home';
@@ -15,7 +15,7 @@ import Login from './views/Login';
 import CreateAccount from './views/CreateAccount';
 import Seminars from './views/Seminars';
 import LabTalks from './views/LabTalks';
-import RoundTables from "./views/RoundTables";
+import RoundTables from './views/RoundTables';
 import Staff from './views/Staff';
 import Workshops from './views/Workshops';
 import Schedule from './views/Schedule';
@@ -23,6 +23,9 @@ import ForgotPassword from './views/ForgotPassword';
 import ResetPassword from './views/ResetPassword';
 import Sponsor from './views/Sponsor';
 import ChatBot from "./views/ChatBot";
+import DivarSponsor from './views/DivarSponsor';
+import FlightioSponsor from './views/FlightioSponsor';
+import PartSponsor from './views/PartSponsor';
 
 function App() {
   return (
@@ -48,7 +51,11 @@ function App() {
         />
         <Route path="/password-reset" component={ForgotPassword} />
         <PrivateRoute path="/dashboard" component={Dashboard} />
-        <Route path="/sponsor" component={Sponsor} />
+        <Route path="/sponsor/divar" component={DivarSponsor} />
+        <Route path="/sponsor/flightio" component={FlightioSponsor} />
+        <Route path="/sponsor/part" component={PartSponsor} />
+        {/* <Route path="/sponsor" component={Sponsor} /> */}
+
         <Route path="/" component={Home} />
       </Switch>
       <Footer />
