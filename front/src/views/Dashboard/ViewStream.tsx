@@ -49,14 +49,14 @@ const ViewStream = ({
         <div className="col text-center">
           <button type = 'button' className = 'btn btn-primary'
                   onClick={() => window.open(stream.qa_url)}>
-            Google Form
+            Q&A
           </button>
         </div>}
       {stream.feedback_url &&
         <div className="col text-center">
           <button type = 'button' className = 'btn btn-primary'
                   onClick={() => window.open(stream.feedback_url)}>
-            Google Form
+            Feedback
           </button>
         </div>}
       </div>
