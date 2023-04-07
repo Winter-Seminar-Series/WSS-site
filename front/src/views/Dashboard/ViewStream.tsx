@@ -17,6 +17,8 @@ const ViewStream = ({
       tag: '',
       url: '',
     },
+    qa_url: '',
+    feedback_url: ''
   });
 
   useEffect(() => {
@@ -42,6 +44,16 @@ const ViewStream = ({
           <div dangerouslySetInnerHTML={{ __html: stream?.stream_room?.tag }} />
         </div>
       )}
+      {stream.qa_url &&
+          <button type = 'button' className = 'btn btn-primary ml-2 mb-2 mt-3'
+                  onClick={() => window.open(stream.qa_url)}>
+            Google Form
+          </button>}
+      {stream.feedback_url &&
+          <button type = 'button' className = 'btn btn-primary ml-2 mb-2 mt-3'
+                  onClick={() => window.open(stream.feedback_url)}>
+            Google Form
+          </button>}
     </>
   );
 };
