@@ -1,8 +1,8 @@
-import { Box, styled, useTheme, Typography, Divider, CircularProgress } from "@mui/material";
+import { Box, CircularProgress, Divider, styled, Typography, useTheme } from "@mui/material";
 import InputBase from "@mui/material/InputBase";
 import IconButton from "@mui/material/IconButton";
 import SearchIcon from "@mui/icons-material/Search";
-import ClearAllIcon from "@mui/icons-material/ClearAll";
+import DeleteSweepIcon from "@mui/icons-material/DeleteSweep";
 import Paper from "@mui/material/Paper";
 import * as React from "react";
 import { useEffect, useRef, useState } from "react";
@@ -25,6 +25,20 @@ const postMessageToServer = async (inputValue) => {
   return response.data;
 };
 
+
+const botResponseChainFilter = (message) => {
+  const chain = [hardCodeHandler, replaceLinkWithAnchor];
+  return chain.reduce((acc, handler) => handler(acc), message);
+};
+
+const hardCodeHandler = (message) => {
+  // if message contains hello
+  if (message.includes("دا!")) {
+    return "ببخشید که نتونستم اونجوری که میخواستید پاسخگو باشم. من هنوز در حال توسعه هستم. این باگ رو میتونید به پشتیبانی گزارش کنید";
+  }
+  return message;
+};
+
 const replaceLinkWithAnchor = (text) => {
   const regex = /(https?:\/\/\S+)/g;
   return text.replace(regex, (url) => {
@@ -40,16 +54,15 @@ export const SendButton = ({ createMessage, clearMessages }) => {
   const addQuestionAndAnswer = async () => {
     createMessage(inputValue, true);
     setIsWaiting(true);
-
     try {
       const responseMessage = await postMessageToServer(inputValue);
-      createMessage(replaceLinkWithAnchor(responseMessage), false);
+      createMessage(botResponseChainFilter(responseMessage), false);
     } catch (error) {
       createMessage("متاسفانه در ارتباط با سرور مشکلی پیش آمده است", false);
     }
 
-    setIsWaiting(false);
     setInputValue("");
+    setIsWaiting(false);
     inputRef.current.focus();
   };
   const handleKeyDown = async (event) => {
@@ -58,6 +71,7 @@ export const SendButton = ({ createMessage, clearMessages }) => {
       event.preventDefault(); // prevent default form submit behavior
     }
   };
+
 
   const handleChange = (event) => {
     setInputValue(event.target.value);
@@ -72,9 +86,9 @@ export const SendButton = ({ createMessage, clearMessages }) => {
         <InputBase
           multiline
           sx={{ ...persianText, ml: 1, flex: 1, textAlign: "justify", direction: "rtl" }}
-          placeholder="سوالت رو برام بنویس"
+          placeholder={!isWaiting ? "سوالت رو برام بنویس" : "در حال جواب دادن به سوالت"}
           inputProps={{ "aria-label": "search google maps" }}
-          value={inputValue}
+          value={!isWaiting ? inputValue : ""}
           onChange={handleChange}
           onKeyDown={handleKeyDown}
           inputRef={inputRef}
@@ -96,7 +110,7 @@ export const SendButton = ({ createMessage, clearMessages }) => {
             clearMessages();
           }
         }>
-          <ClearAllIcon sx={{ color: "#06054b" }} />
+          <DeleteSweepIcon sx={{ color: "#06054b" }} />
         </IconButton>
       </Paper>
     </Box>
