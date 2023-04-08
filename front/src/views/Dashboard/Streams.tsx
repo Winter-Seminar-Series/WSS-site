@@ -30,6 +30,10 @@ const Streams = ({
     getModelList(MODEL_LISTS_NAMES.LAB_TALKS, thisSeries);
   }, [getWSSPrimitiveFields]);
 
+  const getEventPresentationLink = (event) => {
+    return event.streamed_by_aparat ? "/dashboard/stream/" + event.id : event.stream_room.url;
+  };
+
   const mapEventTypeToComponent = {
     seminar: (event, index) => {
       const seminar = seminars.find((seminar) => seminar.id === event.id);
@@ -39,7 +43,7 @@ const Streams = ({
           <SeminarCard
             id={seminar.speaker}
             poster_picture={seminar.poster_picture}
-            presentationLink={'/dashboard/stream/' + seminar.id}
+            presentationLink={getEventPresentationLink(event)}
             blankTarget
           />
         </div>
@@ -55,7 +59,7 @@ const Streams = ({
         >
           <PublicCard
             id={workshop.speaker}
-            presentationLink={'/dashboard/stream/' + workshop.id}
+            presentationLink={getEventPresentationLink(event)}
             blankTarget
           />
         </div>
@@ -73,7 +77,7 @@ const Streams = ({
         >
           <RoundTableCard
             id={roundTable.id}
-            presentationLink={'/dashboard/stream/' + roundTable.id}
+            presentationLink={getEventPresentationLink(event)}
             blankTarget
           />
         </div>
@@ -86,7 +90,7 @@ const Streams = ({
         <div key={labTalk.id} className="col-xs-10 col-sm-6 col-lg-3 mt-2 mb-4">
           <LabTalkCard
             id={labTalk.id}
-            presentationLink={'/dashboard/stream/' + labTalk.id}
+            presentationLink={getEventPresentationLink(event)}
             blankTarget
           />
         </div>
