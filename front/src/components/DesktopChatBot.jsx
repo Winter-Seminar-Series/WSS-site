@@ -36,7 +36,13 @@ export default function DesktopChatBot({ messages, createMessage, clearMessages 
 
   return (
     <Root>
-      <Box sx={{ position: "fixed", bottom: 20, right: 20 }}>
+      <Box
+        sx={{
+          position: 'fixed',
+          bottom: 20,
+          right: 20,
+          zIndex: (theme) => theme.zIndex.drawer,
+        }}>
         <Button onClick={toggleDrawer(true)} sx={buttonStyle}>
           <ChatIcon fontSize={'large'}/>
         </Button>
