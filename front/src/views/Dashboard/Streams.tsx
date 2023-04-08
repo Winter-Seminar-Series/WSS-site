@@ -31,7 +31,9 @@ const Streams = ({
   }, [getWSSPrimitiveFields]);
 
   const getEventPresentationLink = (event) => {
-    return event.streamed_by_aparat ? "/dashboard/stream/" + event.id : event.stream_room.url;
+    return event.streamed_by_aparat
+      ? '/dashboard/stream/' + event.id
+      : event.stream_room.url;
   };
 
   const mapEventTypeToComponent = {

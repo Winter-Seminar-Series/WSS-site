@@ -67,7 +67,7 @@ function WorkshopDetail({
   }, [getWSSPrimitiveFields]);
 
   useEffect(() => {
-    const workshop = workshops.find((w) => w.id === id)
+    const workshop = workshops.find((w) => w.id === id);
     if (workshop) {
       setWorkshop(workshop);
       getAnEntityOfModelList(
@@ -79,7 +79,7 @@ function WorkshopDetail({
   }, [workshops]);
 
   useEffect(() => {
-    const speaker = speakers.find((s) => s.id === workshop.speaker)
+    const speaker = speakers.find((s) => s.id === workshop.speaker);
     if (speaker) {
       setSpeaker(speaker);
     }

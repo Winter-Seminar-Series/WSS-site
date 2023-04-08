@@ -11,7 +11,7 @@ import {
 } from '../redux/actions/WSS';
 import AboutUs from '../components/AboutUs';
 import Particles from 'react-tsparticles';
-import ChatBot from "./ChatBot";
+import ChatBot from './ChatBot';
 
 const fontStyle = {
   fontSize: '1.125rem',

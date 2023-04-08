@@ -1,30 +1,35 @@
-import { Box, CircularProgress, Divider, styled, Typography, useTheme } from "@mui/material";
-import InputBase from "@mui/material/InputBase";
-import IconButton from "@mui/material/IconButton";
-import SearchIcon from "@mui/icons-material/Search";
-import DeleteSweepIcon from "@mui/icons-material/DeleteSweep";
-import Paper from "@mui/material/Paper";
-import * as React from "react";
-import { useEffect, useRef, useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import {
+  Box,
+  CircularProgress,
+  Divider,
+  styled,
+  Typography,
+  useTheme,
+} from '@mui/material';
+import InputBase from '@mui/material/InputBase';
+import IconButton from '@mui/material/IconButton';
+import SearchIcon from '@mui/icons-material/Search';
+import DeleteSweepIcon from '@mui/icons-material/DeleteSweep';
+import Paper from '@mui/material/Paper';
+import * as React from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
 
-import axios from "axios";
+import axios from 'axios';
 
 /*temp obj*/
 
-
 export const persianText = {
-  fontFamily: "IRANYekan",
-  direction: "rtl"
+  fontFamily: 'IRANYekan',
+  direction: 'rtl',
 };
 
-const serverUrl = "https://wss.ce.sharif.edu/FAQ/Ask";
+const serverUrl = 'https://wss.ce.sharif.edu/FAQ/Ask';
 
 const postMessageToServer = async (inputValue) => {
   const response = await axios.post(serverUrl, { question: inputValue });
   return response.data;
 };
-
 
 const botResponseChainFilter = (message) => {
   const chain = [hardCodeHandler, replaceLinkWithAnchor];
@@ -33,8 +38,8 @@ const botResponseChainFilter = (message) => {
 
 const hardCodeHandler = (message) => {
   // if message contains hello
-  if (message.includes("دا!")) {
-    return "ببخشید که نتونستم اونجوری که میخواستید پاسخگو باشم. من هنوز در حال توسعه هستم. این باگ رو میتونید به پشتیبانی گزارش کنید";
+  if (message.includes('دا!')) {
+    return 'ببخشید که نتونستم اونجوری که میخواستید پاسخگو باشم. من هنوز در حال توسعه هستم. این باگ رو میتونید به پشتیبانی گزارش کنید';
   }
   return message;
 };
@@ -47,7 +52,7 @@ const replaceLinkWithAnchor = (text) => {
 };
 
 export const SendButton = ({ createMessage, clearMessages }) => {
-  const [inputValue, setInputValue] = useState("");
+  const [inputValue, setInputValue] = useState('');
   const [isWaiting, setIsWaiting] = useState(false);
   const inputRef = useRef(null);
 
@@ -58,106 +63,121 @@ export const SendButton = ({ createMessage, clearMessages }) => {
       const responseMessage = await postMessageToServer(inputValue);
       createMessage(botResponseChainFilter(responseMessage), false);
     } catch (error) {
-      createMessage("متاسفانه در ارتباط با سرور مشکلی پیش آمده است", false);
+      createMessage('متاسفانه در ارتباط با سرور مشکلی پیش آمده است', false);
     }
 
-    setInputValue("");
+    setInputValue('');
     setIsWaiting(false);
     inputRef.current.focus();
   };
   const handleKeyDown = async (event) => {
-    if (event.key === "Enter") {
+    if (event.key === 'Enter') {
       await addQuestionAndAnswer();
       event.preventDefault(); // prevent default form submit behavior
     }
   };
-
 
   const handleChange = (event) => {
     setInputValue(event.target.value);
   };
 
   return (
-    <Box sx={{ display: "flex", justifyContent: "flex-end", alignItems: "center", width: "100%", marginTop: "5px" }}>
+    <Box
+      sx={{
+        display: 'flex',
+        justifyContent: 'flex-end',
+        alignItems: 'center',
+        width: '100%',
+        marginTop: '5px',
+      }}
+    >
       <Paper
         component="form"
-        sx={{ p: "2px 4px", display: "flex", alignItems: "center", width: 400 }}
+        sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: 400 }}
       >
         <InputBase
           multiline
-          sx={{ ...persianText, ml: 1, flex: 1, textAlign: "justify", direction: "rtl" }}
-          placeholder={!isWaiting ? "سوالت رو برام بنویس" : "در حال جواب دادن به سوالت"}
-          inputProps={{ "aria-label": "search google maps" }}
-          value={!isWaiting ? inputValue : ""}
+          sx={{
+            ...persianText,
+            ml: 1,
+            flex: 1,
+            textAlign: 'justify',
+            direction: 'rtl',
+          }}
+          placeholder={
+            !isWaiting ? 'سوالت رو برام بنویس' : 'در حال جواب دادن به سوالت'
+          }
+          inputProps={{ 'aria-label': 'search google maps' }}
+          value={!isWaiting ? inputValue : ''}
           onChange={handleChange}
           onKeyDown={handleKeyDown}
           inputRef={inputRef}
         />
-        <IconButton sx={{ p: "10px" }} aria-label="search" onClick={
-          async () => {
+        <IconButton
+          sx={{ p: '10px' }}
+          aria-label="search"
+          onClick={async () => {
             await addQuestionAndAnswer();
-          }
-        }>
+          }}
+        >
           {isWaiting ? (
             <CircularProgress size={20} />
           ) : (
-            <SearchIcon sx={{ color: "#06054b" }} />
+            <SearchIcon sx={{ color: '#06054b' }} />
           )}
         </IconButton>
         <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
-        <IconButton sx={{ p: "10px" }} aria-label="directions" onClick={
-          () => {
+        <IconButton
+          sx={{ p: '10px' }}
+          aria-label="directions"
+          onClick={() => {
             clearMessages();
-          }
-        }>
-          <DeleteSweepIcon sx={{ color: "#06054b" }} />
+          }}
+        >
+          <DeleteSweepIcon sx={{ color: '#06054b' }} />
         </IconButton>
       </Paper>
     </Box>
   );
 };
 
-
 const UserMessageContainer = styled(Box)(({ theme }) => ({
-  display: "inline-flex",
-  textAlign: "right",
-  maxWidth: "75%",
-  direction: "ltr",
-  borderRadius: "5px",
-  margin: "0.6rem",
-  padding: "0.6rem"
+  display: 'inline-flex',
+  textAlign: 'right',
+  maxWidth: '75%',
+  direction: 'ltr',
+  borderRadius: '5px',
+  margin: '0.6rem',
+  padding: '0.6rem',
 }));
 
 const BotMessageContainer = styled(Box)(({ theme }) => ({
-  display: "inline-flex",
-  textAlign: "right",
-  maxWidth: "75%",
-  direction: "ltr",
-  borderRadius: "5px",
-  margin: "0.6rem",
-  padding: "0.6rem"
+  display: 'inline-flex',
+  textAlign: 'right',
+  maxWidth: '75%',
+  direction: 'ltr',
+  borderRadius: '5px',
+  margin: '0.6rem',
+  padding: '0.6rem',
 }));
 
-
 export const Message = ({ isFromUser, messageContent }) => {
-  const botBackgroundColor = "white";
-  const userBackgroundColor = "#01003a";
+  const botBackgroundColor = 'white';
+  const userBackgroundColor = '#01003a';
 
   return (
     <div
-      style={
-        {
-          display: "flex",
-          direction: isFromUser ? "rtl" : "ltr"
-        }
-      }
+      style={{
+        display: 'flex',
+        direction: isFromUser ? 'rtl' : 'ltr',
+      }}
     >
       {isFromUser && (
         <UserMessageContainer
           sx={{
             ...persianText,
             backgroundColor: userBackgroundColor,
-            color: "white"
+            color: 'white',
           }}
         >
           <Typography sx={persianText} variant="body1" component="p">
@@ -169,13 +189,12 @@ export const Message = ({ isFromUser, messageContent }) => {
         <BotMessageContainer
           sx={{
             backgroundColor: botBackgroundColor,
-            color: "#131313"
+            color: '#131313',
           }}
         >
           <Typography sx={persianText} variant="body1" component="p">
             <span dangerouslySetInnerHTML={{ __html: messageContent }} />
           </Typography>
-
         </BotMessageContainer>
       )}
     </div>
@@ -195,7 +214,7 @@ export const ChatArea = ({ messages, createMessage, clearMessages }) => {
 
   const variants = {
     visible: { opacity: 1, y: 0 },
-    hidden: { opacity: 0, y: -10 }
+    hidden: { opacity: 0, y: -10 },
   };
 
   return (
@@ -209,7 +228,7 @@ export const ChatArea = ({ messages, createMessage, clearMessages }) => {
             animate="visible"
             exit="hidden"
             transition={{ duration: 0.5 }}
-            style={{ marginBottom: "10px" }}
+            style={{ marginBottom: '10px' }}
           >
             <Message
               messageContent={message.content}
@@ -219,7 +238,6 @@ export const ChatArea = ({ messages, createMessage, clearMessages }) => {
         ))}
       </AnimatePresence>
       <SendButton createMessage={createMessage} clearMessages={clearMessages} />
-
     </div>
   );
 };
@@ -227,14 +245,16 @@ export const ChatArea = ({ messages, createMessage, clearMessages }) => {
 export const WssChatBotInfo = () => {
   useTheme();
   return (
-    <Box sx={{
-      height: "500px"
-    }}>
+    <Box
+      sx={{
+        height: '500px',
+      }}
+    >
       <div
         style={{
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "center"
+          display: 'flex',
+          flexDirection: 'row',
+          justifyContent: 'center',
         }}
       >
         <img
@@ -243,19 +263,26 @@ export const WssChatBotInfo = () => {
           width="50%"
           height="auto"
           style={{
-            marginTop: "2rem",
-            marginBottom: "1rem"
+            marginTop: '2rem',
+            marginBottom: '1rem',
           }}
         />
       </div>
 
-      <Typography className="IRANYekan" variant="h5" fontWeight="" align="center" gutterBottom
-                  sx={{ ...persianText, marginBottom: "1rem" }}>
+      <Typography
+        className="IRANYekan"
+        variant="h5"
+        fontWeight=""
+        align="center"
+        gutterBottom
+        sx={{ ...persianText, marginBottom: '1rem' }}
+      >
         به هشتمین WSS خوش‌ آمدید
       </Typography>
 
       <Typography variant="body1" align="center" gutterBottom sx={persianText}>
-        شما می‌توانید به کمک بات WSS از زمان ارائه‌ها، نحوه‌ برگزاری و... مطلع شوید.
+        شما می‌توانید به کمک بات WSS از زمان ارائه‌ها، نحوه‌ برگزاری و... مطلع
+        شوید.
       </Typography>
     </Box>
   );
