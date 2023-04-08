@@ -213,7 +213,7 @@ class IncomingEventsSerializer(ModelSerializer):
 
     class Meta:
         model = BaseEvent
-        fields = ('id', 'type', 'stream_room', 'form_url', 'qa_url', 'feedback_url')
+        fields = ('id', 'type', 'stream_room', 'form_url', 'qa_url', 'feedback_url', 'streamed_by_aparat')
 
 
 class StaffSerializer(ModelSerializer):

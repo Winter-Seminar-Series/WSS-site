@@ -44,6 +44,7 @@ class BaseEvent(PolymorphicModel):  # Is implicitly Abstract
     form_url = models.URLField(blank=True, null=True)
     qa_url = models.URLField(blank=True, null=True)
     feedback_url = models.URLField(blank=True, null=True)
+    streamed_by_aparat = models.BooleanField(default=True)
 
     class Meta:
         ordering = ('start_time',)
