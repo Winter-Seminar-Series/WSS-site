@@ -42,6 +42,7 @@ function SeminarCard({
         <div className="card">
           <div className="card-image">
             <img
+              loading="lazy"
               src={
                 poster_picture ?? speaker.picture
                   ? `${BASE_URL}/${poster_picture ?? speaker.picture}`
