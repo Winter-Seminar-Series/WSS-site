@@ -1,2 +1,0 @@
-
-# WSS Site Front-End

@@ -1,9 +1,0 @@
-version: "3.3"
-
-services:
-  wss-frontend:
-    container_name: wss-frontend
-    build: .
-    restart: always
-    ports:
-    - "3001:80"
