@@ -1,3 +1,17 @@
+import Footer from './Footer';
+import Header from './Header';
+import Programs from './Programs';
+import Seminars from './Seminars';
+import Staff from './Staff';
+
 export default function Home() {
-  return <h1 className="text-9xl">salam!</h1>;
+  return (
+    <>
+      <Header />
+      <Programs />
+      <Seminars />
+      <Staff />
+      <Footer />
+    </>
+  );
 }
