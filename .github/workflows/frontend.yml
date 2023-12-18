@@ -3,7 +3,7 @@ name: deploy frontend
 
 
 on:
-
+  workflow_dispatch:
   push:
     branches:
     - old
