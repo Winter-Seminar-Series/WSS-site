@@ -1,0 +1,29 @@
+
+name: deploy frontend
+
+
+on:
+
+  push:
+    branches:
+    - old
+    paths:
+    - 'front/**'
+    
+    
+jobs:
+  deploy-front:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Deploy
+        uses: appleboy/ssh-action@v0.1.4
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USER }}
+          port: ${{ secrets.PORT }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            cd ${{ secrets.TARGET_PATH_FRONTEND }}
+            git checkout old
+            git pull origin old
+            docker-compose up --build -d
