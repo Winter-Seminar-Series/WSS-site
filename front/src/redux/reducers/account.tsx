@@ -2,7 +2,7 @@ import { Redirect } from 'react-router-dom';
 import * as actionTypes from '../actionTypes';
 
 const initState = {
-  thisSeries: '8th',
+  thisSeries: '9th',
   isFetching: false,
   isLoggedIn: false,
   doesResetPasswordCompleted: false,

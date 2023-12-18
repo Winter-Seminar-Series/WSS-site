@@ -69,7 +69,7 @@ function Footer() {
           </ul>
         </div>
       </div>
-      <div className="col-12 footer-social d-flex justify-content-center">
+      {/* <div className="col-12 footer-social d-flex justify-content-center">
         <a href="https://divar.ir/">
           <img src="/images/sponsors/Divar.png" alt="ssc logo" width="100" />
         </a>
@@ -89,7 +89,7 @@ function Footer() {
             width="100"
           />
         </a>
-      </div>
+      </div> */}
       <div className="mx-auto copyright-info">
         <span>
           {/* <a href="\staff-list#front">Website Creators</a> */}

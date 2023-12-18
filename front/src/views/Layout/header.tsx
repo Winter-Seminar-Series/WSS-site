@@ -32,6 +32,11 @@ const Header = ({ isLoggedIn, thisSeries, doSetThisSeries }) => {
       },
       children: [
         {
+          title: '9th Series',
+          persianTitle: '9th Series',
+          series: '9th',
+        },
+        {
           title: '8th Series',
           persianTitle: '8th Series',
           series: '8th',
@@ -78,29 +83,29 @@ const Header = ({ isLoggedIn, thisSeries, doSetThisSeries }) => {
     { title: 'Lab Talks', persianTitle: 'ارائه آزمایشگاه', link: '/labtalks' },
     { title: 'Round Tables', persianTitle: 'میزگردها', link: '/roundtables' },
     { title: 'Workshops', persianTitle: 'کارگاه‌ها', link: '/workshops' },
-    {
-      title: 'sponsors',
-      persianTitle: 'اسپانسرها',
-      link: '/',
-      scopes: ['/'],
-      children: [
-        {
-          title: 'divar',
-          persianTitle: 'دیوار',
-          link: '/sponsor/divar',
-        },
-        {
-          title: 'flightio',
-          persianTitle: 'فلایتیو',
-          link: '/sponsor/flightio',
-        },
-        {
-          title: 'part',
-          persianTitle: 'پارت',
-          link: '/sponsor/part',
-        },
-      ],
-    },
+    // {
+    //   title: 'sponsors',
+    //   persianTitle: 'اسپانسرها',
+    //   link: '/',
+    //   scopes: ['/'],
+    //   children: [
+    //     {
+    //       title: 'divar',
+    //       persianTitle: 'دیوار',
+    //       link: '/sponsor/divar',
+    //     },
+    //     {
+    //       title: 'flightio',
+    //       persianTitle: 'فلایتیو',
+    //       link: '/sponsor/flightio',
+    //     },
+    //     {
+    //       title: 'part',
+    //       persianTitle: 'پارت',
+    //       link: '/sponsor/part',
+    //     },
+    //   ],
+    // },
     // {title: 'Sponsor', persianTitle: 'اسپانسر', link: '/sponsor'},
     // { title: 'Speakers', persianTitle: 'سمینارها', link: '/seminars' },
     // { title: 'Opening Ceremony', persianTitle: 'افتتاحیه', link: '/seminar/114' },
@@ -134,7 +139,7 @@ const Header = ({ isLoggedIn, thisSeries, doSetThisSeries }) => {
       <nav className="navbar navbar-expand-xl navbar-dark w-100 z-index-master">
         <div className="container">
           <a className="navbar-brand" href="/">
-            <img src="/images/headerlogo.png" height="40" alt="" />
+            <img src="/images/new_title_hq.png" height="40" alt="" />
           </a>
           <button
             className="navbar-toggler"
