@@ -1,7 +1,7 @@
 import Footer from './Footer';
 import Header from './Header';
 import Programs from './Programs';
-import Seminars from './Seminars';
+import Seminar from './seminars/Seminar';
 import Staff from './Staff';
 
 export default function Home() {
@@ -9,7 +9,7 @@ export default function Home() {
     <>
       <Header />
       <Programs />
-      <Seminars />
+      <Seminar />
       <Staff />
       <Footer />
     </>
