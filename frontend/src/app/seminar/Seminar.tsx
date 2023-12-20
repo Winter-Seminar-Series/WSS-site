@@ -5,14 +5,14 @@ import SeminarLine from './SeminarLine';
 import ViewAllButton from './ViewAllButton';
 
 export type Person = {
-  name: string;
-  surname: string;
-  linkedin: string;
-  instagram: string;
-  facebook: string;
-  image: string;
-  position: string;
-  university: string;
+  name: string,
+  surname: string,
+  linkedin: string,
+  instagram: string,
+  facebook: string,
+  image: string,
+  position: string,
+  university: string,
 }
 
 export default function Seminar() {

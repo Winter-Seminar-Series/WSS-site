@@ -15,7 +15,7 @@ export default function SeminarCard({ key, person }: { key: number, person: Pers
           <SeminarLogo logo={instagram.src} alt={'instagram'} />
           <SeminarLogo logo={facebook.src} alt={'facebook'} />
         </div>
-        <Image src={person.image} alt={person.name} width={200} height={200} className={'relative z-0'}/>
+        <Image src={person.image} alt={person.name + ' ' + person.surname} width={200} height={200} className={'relative z-0'}/>
       </div>
       <div className={'bg-white rounded-lg font-manrope font-normal text-sm text-[#8A8998] w-[230px] pl-4 pt-[40%] pb-5 -translate-y-[50%] z-0'}>
         <div className={'font-semibold text-xl text-black pb-1 pt-3.5'}>
