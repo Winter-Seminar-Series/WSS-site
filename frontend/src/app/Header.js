@@ -48,13 +48,13 @@ export default function Header() {
             <a href="home.html" class="text-[white] no-underline block px-4 py-3 hover:bg-[#ddd0]">
               Home
             </a>
-            <a href="" class="text-[white] no-underline block px-4 py-3 hover:bg-[#ddd]">
+            <a href="" class="text-[white] no-underline block px-4 py-3 hover:bg-[#ddd0]">
               Seminars
             </a>
-            <a href="" class="text-[white] no-underline block px-4 py-3 hover:bg-[#ddd]">
+            <a href="" class="text-[white] no-underline block px-4 py-3 hover:bg-[#ddd0]">
               Lab Talks
             </a>
-            <a href="" class="text-[white] no-underline block px-4 py-3 hover:bg-[#ddd]">
+            <a href="" class="text-[white] no-underline block px-4 py-3 hover:bg-[#ddd0]">
               Round Tables
             </a>
             <a href="about.html" class="text-[white] no-underline block px-4 py-3 hover:bg-[#ddd0]">
