@@ -1,38 +1,42 @@
 import Rectangle from '../../public/source/Rectangle.png';
 import Frame from '../../public/source/Frame.svg';
+import mobile from '../../public/source/mobile.png'
 
 export default function Header() {
   // TODO
   return (
-    <header>
+    <header class="max-lg:w-90">
       <div
-        className="header-main h-[900px] pt-8"
-        style={{
-          // background: 'linear-gradient(180deg, rgba(18, 34, 88, 0.7) 0%, rgba(19, 37, 101, 0.7) 100%)'
-          backgroundImage: `url(${Rectangle.src})`,
-        }}
+        className="header-main max-lg:w-[424px] max-lg:h-[896px] lg:h-[900px] max-lg:pt-8 lg:pt-8 bg-cover bg-center bg-no-repeat max-lg:bg-mobile lg:bg-desktop items-center"
+        // style={{
+        //   // background: 'linear-gradient(180deg, rgba(18, 34, 88, 0.7) 0%, rgba(19, 37, 101, 0.7) 100%)'
+        //   backgroundImage: `url(${Rectangle.src})`,
+        //   'md:max-lg': {
+        //     backgroundImage: `url(${mobile.src})`, // Background image for small screens
+        //   },
+        // }}
       >
         <div
-          class="mx-auto flex h-7 w-[1201px] items-center justify-between mb-8"
+          class="mx-auto flex lg:h-7 lg:w-[1201px] items-center justify-between lg:mb-8 max-lg:w-[312px] max-lg:h-[38px]"
           style={{}}
         >
-          <a href="home.html" class="h-[45.129px] w-[57.98px] shrink-0">
+          <a href="home.html" class="lg:h-[45.129px] lg:w-[57.98px] shrink-0 max-lg:w-[40.8px] max-lg:h-[31.8px]">
             <img
-              class="relative h-[54px] w-[58px] object-cover"
+              class="relative lg:h-[54px] lg:w-[58px] object-cover max-lg:w-[40.8px] max-lg:h-[31.8px]"
               src="source/WSS-LOGO.png"
             />
           </a>
-          <div class="flex items-center justify-center gap-8">
+          <div class="items-center justify-center gap-8 hidden lg:flex">
             <div class="text-base font-medium not-italic leading-[normal] text-neutral-50 no-underline">
               <div class="relative inline-block">
                 <button class="border-[none] bg-[#04aa6d00] p-2.5 text-base text-[white]">
                   9th WSS
                   <img
                     src="source/Frame.svg"
-                    class="inline-block h-6 w-6 shrink-0"
+                    class="inline-block lg:h-6 lg:w-6 shrink-0"
                   />
                 </button>
-                <div class="absolute z-[1] hidden min-w-[160px] bg-[#f1f1f1] shadow-[0px_8px_16px_0px_rgba(0,0,0,0.2)]">
+                <div class="absolute z-[1] hidden lg:min-w-[160px] bg-[#f1f1f1] shadow-[0px_8px_16px_0px_rgba(0,0,0,0.2)]">
                   <a href="home.html">9th Series</a>
                   <a href="#">8th Series</a>
                   <a href="#">7th Series</a>
@@ -64,7 +68,7 @@ export default function Header() {
           <div class="flex items-center gap-1.5">
             <a
               href=""
-              class="flex h-12 items-center justify-center gap-2 rounded-md bg-white px-6 py-0 no-underline"
+              class="flex lg:h-12 max-lg:w-19 max-lg:h-9 max-lg:px-4 items-center justify-center lg:gap-2 rounded-md bg-white lg:px-6 lg:py-0 no-underline"
             >
               <p class="text-base font-semibold not-italic leading-[normal] text-[#0B3678] no-underline">
                 Sign Up
@@ -72,7 +76,7 @@ export default function Header() {
             </a>
             <a
               href=""
-              class="flex h-12 items-center justify-center gap-2 rounded-md border border-solid border-[rgba(255,255,255,0.30)] px-6 py-0"
+              class="flex lg:h-12 max-lg:w-19 max-lg:h-9 items-center justify-center  max-lg:px-4 lg:gap-2 rounded-md border border-solid border-[rgba(255,255,255,0.30)] px-6 py-0"
             >
               <p class="text-base font-semibold not-italic leading-[normal] text-white">
                 Login
@@ -80,68 +84,74 @@ export default function Header() {
             </a>
           </div>
         </div>
-        <div class="flex flex-row max-w-[1200px] mx-auto">
+        <div class="flex lg:flex-row max-lg:flex-col lg:max-w-[1200px] max-lg:w-[312px] mx-auto lg:mt-12 max-lg:mt-10">
           <div>
-            <p class="text-white text-[108px] not-italic font-bold leading-[106px] tracking-[-2.16px] pb-10">WSS - Winter Seminar Series</p>
-            <div class="text-white text-2xl not-italic font-semibold leading-[normal] tracking-[-0.48px]">
+            <p class="text-white lg:text-[108px] not-italic font-bold lg:leading-[106px] max-lg:leading-15 max-lg:tracking-[-1.2px] max-lg:text-6xl lg:tracking-[-2.16px] lg:pb-10 max-lg:pb-6">WSS - Winter Seminar Series</p>
+            <div class="text-white lg:text-2xl max-lg:text-[21px] max-lg:leading-[30px] max-lg:tracking-[-0.42px] not-italic font-semibold leading-[normal] lg:tracking-[-0.48px]">
               <p class="">
                 Advanced Topics in Computer Science and Engineering
               </p>
-              <div className="text-[rgba(255,255,255,0.80)] text-left text-xl not-italic font-normal leading-[normal] mt-2">
-                <img class="w-6 h-6 inline-block mr-2" src="source/Location.svg" />
-                Sharif University of Technology - Tehran, Iran
-              </div>
-              <div class="text-[rgba(255,255,255,0.80)] text-left text-xl not-italic font-normal leading-[normal] mt-2">
-                <img class="w-6 h-6 inline-block  mr-2" src="source/Calendar.svg" />
-                Apr 6th, 2023 -Apr 9th, 2023
+              <div class="flex max-lg:flex-row lg:flex-col max-lg:mt-5 max-lg:gap-4 max-lg:items-start max-lg:self-stretch">
+                <div className="lg:mt-2 flex lg:flex-row max-lg:flex-col max-lg:gap-1.5 max-lg:flex-[1_0_0]">
+                  <img class="w-6 h-6 inline-block lg:mr-2" src="source/Location.svg" />
+                  <p class="max-lg:self-stretch text-[rgba(255,255,255,0.80)] text-left max-lg:text-sm lg:text-xl not-italic font-normal max-lg:leading-[21px] lg:leading-[normal] max-lg:w-37 max-lg:h-16">Sharif University of Technology - Tehran, Iran</p>
+                </div>
+                <div class="lg:mt-2 flex lg:flex-row max-lg:flex-col max-lg:gap-1.5 max-lg:flex-[1_0_0]">
+                  <img class="w-6 h-6 inline-block lg:mr-2" src="source/Calendar.svg" />
+                  <p class="max-lg:self-stretch text-[rgba(255,255,255,0.80)] max-lg:text-sm lg:text-xl not-italic font-normal max-lg:leading-[21px] lg:leading-[normal] max-lg:w-37 max-lg:h-10.5">Apr 6th, 2023 -Apr 9th, 2023</p>
+                </div>
               </div>
             </div>
-            <div class="flex flex-row items-start gap-[52px] text-white text-5xl not-italic font-bold leading-[normal] tracking-[-0.96px] pt-[52px]">
-              <div class="flex flex-col justify-center items-center gap-3 text-white">
-                <div class="flex flex-col justify-center items-center border pt-2 pb-3 px-4 rounded-lg border-solid border-[rgba(255,255,255,0.30)]">21</div>
-                <p class="text-white text-base not-italic font-normal leading-[normal] tracking-[0.32px] uppercase">DAYS</p>
+            <div class="flex flex-row items-start lg:gap-[52px] text-white lg:text-5xl not-italic font-bold leading-[normal] lg:tracking-[-0.96px] lg:pt-[52px] max-lg:pt-7 max-lg:justify-between max-lg:items-start max-lg:mb-9">
+              <div class="flex flex-col justify-center items-center max-lg:gap-1 lg:gap-3 text-white">
+                <div class="flex flex-col justify-center items-center max-lg:text-xl border pt-2 pb-3 px-4 rounded-lg border-solid border-[rgba(255,255,255,0.30)]">21</div>
+                <p class="text-white text-base not-italic font-normal lg:leading-[normal] lg:tracking-[0.32px] uppercase">DAYS</p>
               </div>
-              <div class="text-white text-5xl not-italic font-bold leading-[normal] tracking-[-0.96px]">:</div>
-              <div class="flex flex-col justify-center items-center gap-3 text-white">
-                <div class="flex flex-col justify-center items-center border pt-2 pb-3 px-4 rounded-lg border-solid border-[rgba(255,255,255,0.30)]">16</div>
-                <p class="text-white text-base not-italic font-normal leading-[normal] tracking-[0.32px] uppercase">HOURS</p>
+              <div class="text-white lg:text-5xl not-italic font-bold leading-[normal] lg:tracking-[-0.96px] max-lg:text-[32px] max-lg:leading-[normal] max-lg:tracking-[-0.64px]">:</div>
+              <div class="flex flex-col justify-center items-center max-lg:gap-1 lg:gap-3 text-white">
+                <div class="flex flex-col justify-center items-center max-lg:text-xl border pt-2 pb-3 px-4 rounded-lg border-solid border-[rgba(255,255,255,0.30)]">16</div>
+                <p class="text-white text-base not-italic font-normal leading-[normal] lg:tracking-[0.32px] uppercase">HOURS</p>
               </div>
-              <div class="text-white text-5xl not-italic font-bold leading-[normal] tracking-[-0.96px]">:</div>
-              <div class="flex flex-col justify-center items-center gap-3 text-white">
-                <div class="flex flex-col justify-center items-center border pt-2 pb-3 px-4 rounded-lg border-solid border-[rgba(255,255,255,0.30)]">05</div>
-                <p class="text-white text-base not-italic font-normal leading-[normal] tracking-[0.32px] uppercase">MINUTES</p>
+              <div class="text-white lg:text-5xl not-italic font-bold leading-[normal] lg:tracking-[-0.96px] max-lg:text-[32px] max-lg:leading-[normal] max-lg:tracking-[-0.64px]">:</div>
+              <div class="flex flex-col justify-center items-center max-lg:gap-1 lg:gap-3 text-white">
+                <div class="flex flex-col justify-center items-center max-lg:text-xl border pt-2 pb-3 px-4 rounded-lg border-solid border-[rgba(255,255,255,0.30)]">05</div>
+                <p class="text-white text-base not-italic font-normal leading-[normal] lg:tracking-[0.32px] uppercase">MINUTES</p>
               </div>
-              <div class="text-white text-5xl not-italic font-bold leading-[normal] tracking-[-0.96px]">:</div>
-              <div class="flex flex-col justify-center items-center gap-3 text-white">
-                <div class="flex flex-col justify-center items-center border pt-2 pb-3 px-4 rounded-lg border-solid border-[rgba(255,255,255,0.30)]">45</div>
-                <p class="text-white text-base not-italic font-normal leading-[normal] tracking-[0.32px] uppercase">SECONDS</p>
+              <div class="text-white lg:text-5xl not-italic font-bold leading-[normal] lg:tracking-[-0.96px] max-lg:text-[32px] max-lg:leading-[normal] max-lg:tracking-[-0.64px]">:</div>
+              <div class="flex flex-col justify-center items-center max-lg:gap-1 lg:gap-3 text-white">
+                <div class="flex flex-col justify-center items-center max-lg:text-xl border pt-2 pb-3 px-4 rounded-lg border-solid border-[rgba(255,255,255,0.30)]">45</div>
+                <p class="text-white text-base not-italic font-normal leading-[normal] lg:tracking-[0.32px] uppercase">SECONDS</p>
               </div>
             </div>
           </div>
-          <div class="inline-flex h-[535px] w-[203px] flex-col justify-between items-end shrink-0">
-            <div class="flex flex-col justify-center items-end gap-[-4px]">
-              <p class="text-white text-6xl not-italic font-bold leading-[normal] tracking-[-2.4px]">30+</p>
-              <p class="text-[rgba(255,255,255,0.80)] text-center text-base not-italic font-normal leading-[normal]">Top Level Masters</p>
+          <div class="inline-flex lg:h-[535px] lg:w-[203px] max-lg:h-37 flex-col justify-between lg:items-end shrink-0 max-lg:items-start max-lg:flex-wrap:wrap max-lg:h-20 max-lg:flex-row">
+            <div className='inline-flex flex-col lg:justify-between shrink-0 lg:h-[245px] max-lg:gap-6'>
+            <div class="flex flex-col max-lg:items-start justify-center items-end lg:gap-[-4px] max-lg:h-12.5">
+              <p class="text-white max-lg:text-[40px] max-lg:tracking-[-1.6px] lg:text-6xl not-italic font-bold leading-[normal] lg:tracking-[-2.4px]">30+</p>
+              <p class="text-[rgba(255,255,255,0.80)] max-lg:text-sm text-center text-base not-italic font-normal leading-[normal]">Top Level Masters</p>
             </div>
-            <div class="flex flex-col justify-center items-end gap-[-4px]">
-              <p class="text-white text-6xl not-italic font-bold leading-[normal] tracking-[-2.4px]">15000+</p>
-              <p class="text-[rgba(255,255,255,0.80)] text-center text-base not-italic font-normal leading-[normal]">Total Subscribers</p>
+            <div class="flex flex-col max-lg:items-start justify-center items-end lg:gap-[-4px] max-lg:h-12.5">
+              <p class="text-white max-lg:text-[40px] max-lg:tracking-[-1.6px] lg:text-6xl not-italic font-bold leading-[normal] lg:tracking-[-2.4px]">15000+</p>
+              <p class="text-[rgba(255,255,255,0.80)] max-lg:text-sm text-center text-base not-italic font-normal leading-[normal]">Total Subscribers</p>
             </div>
-            <div class="flex flex-col justify-center items-end gap-[-4px]">
-              <p class="text-white text-6xl not-italic font-bold leading-[normal] tracking-[-2.4px]">12+</p>
-              <p class="text-[rgba(255,255,255,0.80)] text-center text-base not-italic font-normal leading-[normal]">High-Quality Seminars</p>
             </div>
-            <div class="flex flex-col justify-center items-end gap-[-4px]">
-              <p class="text-white text-6xl not-italic font-bold leading-[normal] tracking-[-2.4px]">30+</p>
-              <p class="text-[rgba(255,255,255,0.80)] text-center text-base not-italic font-normal leading-[normal]">Top Level Masters</p>
+            <div className='inline-flex flex-col lg:justify-between shrink-0 lg:h-[245px] max-lg:gap-6'>
+            <div class="flex flex-col max-lg:items-start justify-center items-end lg:gap-[-4px] max-lg:h-12.5">
+              <p class="text-white max-lg:text-[40px] max-lg:tracking-[-1.6px] lg:text-6xl not-italic font-bold leading-[normal] lg:tracking-[-2.4px]">12+</p>
+              <p class="text-[rgba(255,255,255,0.80)] max-lg:text-sm text-center text-base not-italic font-normal leading-[normal]">High-Quality Seminars</p>
+            </div>
+            <div class="flex flex-col max-lg:items-start justify-center items-end lg:gap-[-4px] max-lg:h-12.5">
+              <p class="text-white max-lg:text-[40px] max-lg:tracking-[-1.6px] lg:text-6xl not-italic font-bold leading-[normal] lg:tracking-[-2.4px]">30+</p>
+              <p class="text-[rgba(255,255,255,0.80)] max-lg:text-sm text-center text-base not-italic font-normal leading-[normal]">Top Level Masters</p>
+            </div>
             </div>
           </div>
         </div>
-        <div class="flex w-[1199px] flex-col justify-center items-center gap-8 shadow-[0px_30px_60px_0px_rgba(189,192,199,0.10)] ml-[121px] mr-[120px] mt-[92px] pb-10 rounded-2xl bg-white">
-          <div class="text-[#1F2B3D] text-xl not-italic font-medium leading-[normal] tracking-[0.8px] uppercase mt-10 mb-8">
+        <div class="flex lg:w-[1199px] flex-col justify-center items-center lg:gap-8 shadow-[0px_30px_60px_0px_rgba(189,192,199,0.10)] ml-[121px] mr-[120px] mt-[92px] pb-10 rounded-2xl bg-white hidden lg:flex">
+          <div class="text-[#1F2B3D] text-xl not-italic font-medium leading-[normal] tracking-[0.8px] uppercase lg:mt-10 lg:mb-8">
             Presentations from 15+ top level companies and masters
           </div>
-          <div class="flex flex-row flex-wrap justify-between items-center self-stretch w-[1063px] h-[70px] mx-auto">
+          <div class="flex flex-row flex-wrap justify-between items-center self-stretch lg:w-[1063px] lg:h-[70px] mx-auto">
             <a href="https://www.apple.com">
               <img src="source/logos/Apple.png" />
             </a>
