@@ -147,7 +147,7 @@ export default function Header() {
             </div>
           </div>
         </div>
-        <div class="flex lg:w-[1199px] flex-col justify-center items-center lg:gap-8 shadow-[0px_30px_60px_0px_rgba(189,192,199,0.10)] ml-[121px] mr-[120px] mt-[92px] pb-10 rounded-2xl bg-white hidden lg:flex">
+        <div class="flex lg:max-w-[1199px] flex-col justify-center items-center lg:gap-8 shadow-[0px_30px_60px_0px_rgba(189,192,199,0.10)] mx-auto mt-[92px] pb-10 rounded-2xl bg-white hidden lg:flex">
           <div class="text-[#1F2B3D] text-xl not-italic font-medium leading-[normal] tracking-[0.8px] uppercase lg:mt-10 lg:mb-8">
             Presentations from 15+ top level companies and masters
           </div>
