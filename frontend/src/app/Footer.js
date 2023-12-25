@@ -72,7 +72,7 @@ export default function Footer() {
             </a>
           </div>
         </div>
-        <div className="space-y-1 pb-10">
+        <div className="space-y-1 pb-6">
           <p className="flex items-center justify-start text-sm">
             The event is held by the Student Scientific Chapter (SSC) of
             Computer
@@ -144,26 +144,21 @@ export default function Footer() {
         </div>
         <div className="flex items-center justify-between pb-4 text-gray-400">
           <div className="flex items-center gap-4">
-            <a
-                href=""
-                className="flex items-center justify-center gap-2"
-            ><p className="mt-6 text-sm">About us</p></a>
-            <a
-                href=""
-                className="flex items-center justify-center gap-2"
-            ><p className="mt-6 text-sm">Contact</p></a>
-              <a
-                  href=""
-                  className="flex items-center justify-center gap-2"
-              ><p className="mt-6 text-sm">Privacy Policy</p></a>
-                <a
-                    href=""
-                    className="flex items-center justify-center gap-2"
-                ><p className="mt-6 text-sm">Sitemap</p></a>
-                  <a
-                      href=""
-                      className="flex items-center justify-center gap-2"
-                  ><p className="mt-6 text-sm">Terms of Use</p></a>
+            <a href="" className="flex items-center justify-center gap-2">
+              <p className="mt-4 text-sm">About us</p>
+            </a>
+            <a href="" className="flex items-center justify-center gap-2">
+              <p className="mt-4 text-sm">Contact</p>
+            </a>
+            <a href="" className="flex items-center justify-center gap-2">
+              <p className="mt-4 text-sm">Privacy Policy</p>
+            </a>
+            <a href="" className="flex items-center justify-center gap-2">
+              <p className="mt-4 text-sm">Sitemap</p>
+            </a>
+            <a href="" className="flex items-center justify-center gap-2">
+              <p className="mt-4 text-sm">Terms of Use</p>
+            </a>
           </div>
           <div className="flex items-center justify-between">
             <p className="mt-6 text-sm">© 2000-2021, All Rights Reserved</p>
@@ -177,71 +172,56 @@ export default function Footer() {
 function Timer() {
   return (
     <div
-      className="relative flex h-64 items-center justify-between bg-cover bg-center text-white bg-no-repeat px-28 py-5"
+      className="relative flex h-64 items-center justify-between bg-cover bg-center bg-no-repeat px-28 py-5 text-white"
       style={{
         backgroundImage: 'url(/source/footer_rectangle.svg)',
         backgroundSize: '100% auto', // Adjust this line to control background size
       }}
     >
-        <div className="max-w-screen-lg justify-start items-start">
-          <p className="text-xs uppercase text-left">Overline Goes Here</p>
-          <h1 className="text-4xl font-semibold py-2 text-left">Sign Up and Enjoy it</h1>
+      <div className="max-w-screen-lg items-start justify-start">
+        <p className="text-left text-xs uppercase">Overline Goes Here</p>
+        <h1 className="py-2 text-left text-4xl font-semibold">
+          Sign Up and Enjoy it
+        </h1>
+      </div>
+      <div className="flex space-x-4">
+        <div className="flex flex-col items-center">
+          <span className="rounded-md w-12 border border-white border-opacity-25 p-2 text-2xl font-normal ">
+            21
+          </span>
+          <span className="pt-3 text-xs font-light">DAYS</span>
         </div>
-        <div className="flex space-x-4">
-          <div className="flex flex-col items-center">
-            <span className="text-2xl font-normal border border-opacity-25 border-white rounded-md p-2 ">
-              21
-            </span>
-            <span className="text-xs pt-3">DAYS</span>
-          </div>
-          <div className="flex flex-col items-center">
-            <span className="text-3xl font-semibold py-2">:</span>
-          </div>
-          <div className="flex flex-col items-center">
-            <span className="text-2xl font-normal border border-opacity-25 border-white rounded-md p-2 ">
-              16
-            </span>
-            <span className="text-xs pt-3">HOURS</span>
-          </div>
-          <div className="flex flex-col items-center">
-            <span className="text-3xl font-semibold py-2">:</span>
-          </div>
-          <div className="flex flex-col items-center">
-            <span className="text-2xl font-normal border border-opacity-25 border-white rounded-md p-2 ">
-              05
-            </span>
-            <span className="text-xs pt-3">MINUTES</span>
-          </div>
-          <div className="flex flex-col items-center">
-            <span className="text-3xl font-semibold py-2">:</span>
-          </div>
-          <div className="flex flex-col items-center">
-            <span className="text-2xl font-normal border border-opacity-25 border-white rounded-md p-2 ">
-              45
-            </span>
-            <span className="text-xs pt-3">SECONDS</span>
-          </div>
-
+        <div className="flex flex-col items-center">
+          <span className="py-2 text-3xl font-semibold">:</span>
         </div>
-      <button className="bg-white text-purple-950 py-3 px-6 rounded-md hover:bg-gray-100 transition-colors font-semibold">
+        <div className="flex flex-col items-center">
+          <span className="rounded-md w-12 border border-white border-opacity-25 p-2 text-2xl font-normal ">
+            16
+          </span>
+          <span className="pt-3 text-xs font-light">HOURS</span>
+        </div>
+        <div className="flex flex-col items-center">
+          <span className="py-2 text-3xl font-semibold">:</span>
+        </div>
+        <div className="flex flex-col items-center">
+          <span className="rounded-md w-12 border border-white border-opacity-25 p-2 text-2xl font-normal ">
+            05
+          </span>
+          <span className="pt-3 text-xs font-light">MINUTES</span>
+        </div>
+        <div className="flex flex-col items-center">
+          <span className="py-2 text-3xl font-semibold">:</span>
+        </div>
+        <div className="flex flex-col items-center">
+          <span className="rounded-md w-12 border border-white border-opacity-25 p-2 text-2xl font-normal ">
+            45
+          </span>
+          <span className="pt-3 text-xs font-light">SECONDS</span>
+        </div>
+      </div>
+      <button className="rounded-md bg-white px-6 py-3 font-semibold text-purple-950 transition-colors hover:bg-gray-100">
         Register Now →
       </button>
-
-
-      {/*<div className="flex items-center gap-4 text-white">*/}
-      {/*  <div className="mx-auto max-w-screen-lg space-y-1">*/}
-      {/*    <p className="flex items-center justify-start text-xs">Overline Goes Here</p>*/}
-      {/*    <p className="flex items-center justify-start text-3xl font-semibold">Sign Up and Enjoy it</p>*/}
-      {/*  </div>*/}
-      {/*</div>*/}
-      {/*<div className="flex items-center gap-4 text-white">*/}
-      {/*  <h1 className="mb-4 text-4xl font-bold">Your Text Here</h1>*/}
-      {/*  <p className="text-lg">More Text Goes Here</p>*/}
-      {/*</div>*/}
-      {/*<div className="flex items-center gap-4 text-white">*/}
-      {/*  <h1 className="mb-4 text-4xl font-bold">Your Text Here</h1>*/}
-      {/*  <p className="text-lg">More Text Goes Here</p>*/}
-      {/*</div>*/}
     </div>
   );
 }
