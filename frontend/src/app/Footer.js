@@ -95,10 +95,10 @@ export default function Footer() {
               height="48"
             />
             <div className="mx-auto max-w-screen-lg space-y-1">
-              <p className="flex items-center justify-start text-sm">
+              <p className="flex items-center justify-start text-sm text-gray-400">
                 Location
               </p>
-              <p className="flex items-center justify-start text-sm">
+              <p className="flex items-center justify-start text-sm font-semibold">
                 Sharif University of Technology
               </p>
             </div>
@@ -111,8 +111,8 @@ export default function Footer() {
           >
             <img src="/source/more.svg" alt="Location" width="48" height="48" />
             <div className="mx-auto max-w-screen-lg space-y-1">
-              <p className="flex items-center justify-start text-sm">Address</p>
-              <p className="flex items-center justify-start text-sm">
+              <p className="flex items-center justify-start text-sm text-gray-400">Address</p>
+              <p className="flex items-center justify-start text-sm font-semibold">
                 Azadi Street, District 2, Tehran, Iran
               </p>
             </div>
@@ -123,8 +123,8 @@ export default function Footer() {
           >
             <img src="/source/email.svg" alt="Email" width="48" height="48" />
             <div className="mx-auto max-w-screen-lg space-y-1">
-              <p className="flex items-center justify-start text-sm">Mail</p>
-              <p className="flex items-center justify-start text-sm">
+              <p className="flex items-center justify-start text-sm text-gray-400">Mail</p>
+              <p className="flex items-center justify-start text-sm font-semibold">
                 wss@ce.sharif.edu
               </p>
             </div>
@@ -135,8 +135,8 @@ export default function Footer() {
           >
             <img src="/source/call.svg" alt="Phone" width="48" height="48" />
             <div className="mx-auto max-w-screen-lg space-y-1">
-              <p className="flex items-center justify-start text-sm">Tel</p>
-              <p className="flex items-center justify-start text-sm">
+              <p className="flex items-center justify-start text-sm text-gray-400">Tel</p>
+              <p className="flex items-center justify-start text-sm font-semibold">
                 +98 (021) 66 16 57 8
               </p>
             </div>
@@ -186,7 +186,7 @@ function Timer() {
       </div>
       <div className="flex space-x-4">
         <div className="flex flex-col items-center">
-          <span className="rounded-md w-12 border border-white border-opacity-25 p-2 text-2xl font-normal ">
+          <span className="w-12 rounded-md border border-white border-opacity-25 p-2 text-2xl font-normal ">
             21
           </span>
           <span className="pt-3 text-xs font-light">DAYS</span>
@@ -195,7 +195,7 @@ function Timer() {
           <span className="py-2 text-3xl font-semibold">:</span>
         </div>
         <div className="flex flex-col items-center">
-          <span className="rounded-md w-12 border border-white border-opacity-25 p-2 text-2xl font-normal ">
+          <span className="w-12 rounded-md border border-white border-opacity-25 p-2 text-2xl font-normal ">
             16
           </span>
           <span className="pt-3 text-xs font-light">HOURS</span>
@@ -204,7 +204,7 @@ function Timer() {
           <span className="py-2 text-3xl font-semibold">:</span>
         </div>
         <div className="flex flex-col items-center">
-          <span className="rounded-md w-12 border border-white border-opacity-25 p-2 text-2xl font-normal ">
+          <span className="w-12 rounded-md border border-white border-opacity-25 p-2 text-2xl font-normal ">
             05
           </span>
           <span className="pt-3 text-xs font-light">MINUTES</span>
@@ -213,7 +213,7 @@ function Timer() {
           <span className="py-2 text-3xl font-semibold">:</span>
         </div>
         <div className="flex flex-col items-center">
-          <span className="rounded-md w-12 border border-white border-opacity-25 p-2 text-2xl font-normal ">
+          <span className="w-12 rounded-md border border-white border-opacity-25 p-2 text-2xl font-normal ">
             45
           </span>
           <span className="pt-3 text-xs font-light">SECONDS</span>
