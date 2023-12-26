@@ -1,0 +1,4 @@
+Django==4.2.8
+djangorestframework
+django-storages[s3]
+python-dotenv
