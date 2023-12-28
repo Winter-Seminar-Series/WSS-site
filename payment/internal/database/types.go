@@ -42,11 +42,11 @@ type Payment struct {
 
 type Good struct {
 	// ID of this good
-	ID uint32 `gorm:"primarykey"`
+	ID uint32 `gorm:"primarykey" json:"id"`
 	// Name of it
-	Name string `gorm:"unique;not null"`
+	Name string `gorm:"unique;not null" json:"name"`
 	// The price of this item
-	Price uint64 `gorm:"not null"`
+	Price uint64 `gorm:"not null" json:"price"`
 	// An optional description about this payment
-	Description string
+	Description string `json:"description"`
 }

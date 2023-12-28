@@ -7,17 +7,17 @@ import (
 )
 
 // NewPostgres opens a postgres database and returns the connection
-func NewPostgres(dsn string) (*gorm.DB, error) {
+func NewPostgres(dsn string) (PaymentDatabase, error) {
 	// Create database
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if err != nil {
-		return nil, errors.Wrap(err, "cannot open database")
+		return PaymentDatabase{}, errors.Wrap(err, "cannot open database")
 	}
 	// Gorm automatically pings the database thus we can just migrate tables
 	err = db.AutoMigrate(Good{}, Payment{})
 	if err != nil {
-		return nil, errors.Wrap(err, "cannot migrate database")
+		return PaymentDatabase{}, errors.Wrap(err, "cannot migrate database")
 	}
 	// GTG
-	return db, nil
+	return PaymentDatabase{db}, nil
 }

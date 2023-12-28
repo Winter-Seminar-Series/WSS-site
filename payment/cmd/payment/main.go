@@ -5,7 +5,6 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/go-faster/errors"
 	log "github.com/sirupsen/logrus"
-	"gorm.io/gorm"
 	"net"
 	"net/http"
 	"os"
@@ -19,13 +18,15 @@ func main() {
 	// Create the data needed
 	endpointApi := new(api.API)
 	endpointApi.Database = setupDatabase()
-	defer closeDatabase(endpointApi.Database)
+	defer endpointApi.Database.Close()
 	// Setup endpoints
 	r := gin.New()
 	r.Use(gin.Recovery())
+	r.GET("/health", api.HealthCheck)
 	r.POST("/create")
 	r.GET("/status")
-	r.GET("/health", api.HealthCheck)
+	r.GET("/goods", endpointApi.GetGoods)
+	r.POST("/goods")
 	// Listen
 	srv := &http.Server{
 		Handler: r,
@@ -43,7 +44,7 @@ func main() {
 }
 
 // Setup the database according to the DATABASE_URL environment variable
-func setupDatabase() *gorm.DB {
+func setupDatabase() db.PaymentDatabase {
 	// Check DB url
 	dbURL := os.Getenv("DATABASE_URL")
 	if dbURL == "" {
@@ -55,13 +56,6 @@ func setupDatabase() *gorm.DB {
 		log.Fatalf("cannot connect to database: %s\n", err)
 	}
 	return database
-}
-
-// Closes a gorm database
-func closeDatabase(database *gorm.DB) {
-	if database, err := database.DB(); err == nil {
-		_ = database.Close()
-	}
 }
 
 // getListener will start a listener based on environment variables
