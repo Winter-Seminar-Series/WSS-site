@@ -7,20 +7,27 @@ import (
 	"github.com/go-faster/errors"
 	log "github.com/sirupsen/logrus"
 	"net/http"
-	"os"
 )
 
-// apiKey is the API key used for ID Pay
-var apiKey = os.Getenv("IDPAY_KEY")
+// IDPay is the struct which contains the info needed to call an ID pay endpoint
+type IDPay struct {
+	apiKey    string
+	sandboxed bool
+}
+
+// NewIDPay creates an IDPay client
+func NewIDPay(apiKey string, sandboxed bool) IDPay {
+	return IDPay{apiKey, sandboxed}
+}
 
 // CreateTransaction will create a new transaction in ID pay and return its result (id and link)
-func CreateTransaction(ctx context.Context, reqBody TransactionCreationRequest) (TransactionCreationResult, error) {
+func (idpay IDPay) CreateTransaction(ctx context.Context, reqBody TransactionCreationRequest) (TransactionCreationResult, error) {
 	// Create the request
 	payload, _ := json.Marshal(reqBody)
 	req, _ := http.NewRequestWithContext(ctx, "POST", "https://api.idpay.ir/v1.1/payment", bytes.NewReader(payload))
 	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("X-API-KEY", apiKey)
-	req.Header.Set("X-SANDBOX", getSandboxHeader())
+	req.Header.Set("X-API-KEY", idpay.apiKey)
+	req.Header.Set("X-SANDBOX", idpay.getSandboxHeader())
 	// Send the request
 	resp, err := http.DefaultClient.Do(req)
 	if err != nil {
@@ -46,13 +53,13 @@ func CreateTransaction(ctx context.Context, reqBody TransactionCreationRequest) 
 }
 
 // VerifyTransaction will verify a previously made transaction and report errors if there was a problem with it
-func VerifyTransaction(ctx context.Context, reqBody TransactionVerificationRequest) (TransactionVerificationResult, error) {
+func (idpay IDPay) VerifyTransaction(ctx context.Context, reqBody TransactionVerificationRequest) (TransactionVerificationResult, error) {
 	// Create the request
 	payload, _ := json.Marshal(reqBody)
 	req, _ := http.NewRequestWithContext(ctx, "POST", "https://api.idpay.ir/v1.1/payment/verify", bytes.NewReader(payload))
 	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("X-API-KEY", apiKey)
-	req.Header.Set("X-SANDBOX", getSandboxHeader())
+	req.Header.Set("X-API-KEY", idpay.apiKey)
+	req.Header.Set("X-SANDBOX", idpay.getSandboxHeader())
 	// Send the request
 	resp, err := http.DefaultClient.Do(req)
 	if err != nil {

@@ -9,7 +9,9 @@ import (
 // NewPostgres opens a postgres database and returns the connection
 func NewPostgres(dsn string) (PaymentDatabase, error) {
 	// Create database
-	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
+	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{
+		TranslateError: true,
+	})
 	if err != nil {
 		return PaymentDatabase{}, errors.Wrap(err, "cannot open database")
 	}

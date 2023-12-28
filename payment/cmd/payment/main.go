@@ -9,24 +9,31 @@ import (
 	"net/http"
 	"os"
 	"os/signal"
+	"strconv"
 	"syscall"
 	"wss-payment/api"
 	db "wss-payment/internal/database"
+	"wss-payment/pkg/idpay"
 )
 
 func main() {
 	// Create the data needed
 	endpointApi := new(api.API)
 	endpointApi.Database = setupDatabase()
+	endpointApi.PaymentService = idpay.Mock{ // TODO: remove
+		FailCreation:          false,
+		FailVerification:      false,
+		PaymentVerificationOk: true,
+	}
 	defer endpointApi.Database.Close()
 	// Setup endpoints
 	r := gin.New()
 	r.Use(gin.Recovery())
 	r.GET("/health", api.HealthCheck)
-	r.POST("/create")
+	r.POST("/create", endpointApi.CreateTransaction)
 	r.GET("/status")
 	r.GET("/goods", endpointApi.GetGoods)
-	r.POST("/goods")
+	r.POST("/goods", endpointApi.AddGood)
 	// Listen
 	srv := &http.Server{
 		Handler: r,
@@ -70,5 +77,19 @@ func getListener() net.Listener {
 	if err != nil {
 		log.Fatalf("cannot listen: %s", err)
 	}
+	log.Debug("Listening on", listener.Addr())
 	return listener
+}
+
+// getIDPay gets ID pay credentials from env variables
+func getIDPay() idpay.IDPay {
+	apiKey := os.Getenv("IDPAY_APIKEY")
+	if apiKey == "" {
+		log.Fatal("please set IDPAY_APIKEY environment variable")
+	}
+	sandbox, _ := strconv.ParseBool(os.Getenv("IDPAY_SANDBOX"))
+	if sandbox {
+		log.Warn("IDPay sandbox mode activated")
+	}
+	return idpay.NewIDPay(apiKey, sandbox)
 }
