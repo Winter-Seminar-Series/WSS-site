@@ -1,4 +1,5 @@
 Django==4.2.8
 djangorestframework
+djangorestframework-simplejwt
 django-storages[s3]
-python-dotenv
+python-dotenv~=1.0.0
