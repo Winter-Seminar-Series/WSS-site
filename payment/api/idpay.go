@@ -19,6 +19,12 @@ func (api *API) CreateTransaction(c *gin.Context) {
 		return
 	}
 	logger := log.WithField("body", body)
+	// If buying goods is zero, something's up...
+	if len(body.BuyingGoods) == 0 {
+		logger.Warn("empty buying_goods")
+		c.JSON(http.StatusBadRequest, "empty buying_goods")
+		return
+	}
 	// Try to get the list of goods from database. This will fail if user has bought something
 	// from its BuyingGoods before
 	goods, err := api.Database.GetGoodsFromName(body.BuyingGoods)
