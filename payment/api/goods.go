@@ -14,7 +14,7 @@ func (api *API) GetGoods(c *gin.Context) {
 	goods, err := api.Database.GetGoods()
 	if err != nil {
 		log.WithError(err).Error("cannot get goods")
-		c.JSON(http.StatusInternalServerError, err.Error())
+		c.JSON(http.StatusInternalServerError, "cannot get goods: "+err.Error())
 		return
 	}
 	c.JSON(http.StatusOK, goods)
@@ -43,7 +43,7 @@ func (api *API) AddGood(c *gin.Context) {
 			c.JSON(http.StatusConflict, "good already exists")
 		} else {
 			logger.WithError(err).Error("cannot insert body in database")
-			c.JSON(http.StatusInternalServerError, err.Error())
+			c.JSON(http.StatusInternalServerError, "cannot insert body in database: "+err.Error())
 		}
 		return
 	}

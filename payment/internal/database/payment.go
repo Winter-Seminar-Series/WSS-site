@@ -19,7 +19,7 @@ func (db PaymentDatabase) GetGoodsFromName(names []string) ([]Good, error) {
 	// TODO: There SHOULD be a better way
 	result := make([]Good, len(names))
 	for i, name := range names {
-		if err := db.db.Where("name = ?", name).Find(&result[i]).Error; err != nil {
+		if err := db.db.Where("name = ?", name).First(&result[i]).Error; err != nil {
 			if errors.Is(err, gorm.ErrRecordNotFound) {
 				return nil, GoodNotFoundError{GoodName: name}
 			} else {

@@ -35,7 +35,7 @@ func (api *API) CreateTransaction(c *gin.Context) {
 			c.JSON(http.StatusBadRequest, err.Error())
 		} else {
 			logger.WithError(err).Error("cannot query goods")
-			c.JSON(http.StatusInternalServerError, err.Error())
+			c.JSON(http.StatusInternalServerError, "cannot query goods: "+err.Error())
 		}
 		return
 	}
@@ -50,7 +50,7 @@ func (api *API) CreateTransaction(c *gin.Context) {
 	err = api.Database.InitiateTransaction(&payment)
 	if err != nil {
 		logger.WithError(err).Error("cannot put the transaction in database")
-		c.JSON(http.StatusInternalServerError, err.Error())
+		c.JSON(http.StatusInternalServerError, "cannot put the transaction in database: "+err.Error())
 		return
 	}
 	// Initiate the request in idpay
@@ -65,7 +65,7 @@ func (api *API) CreateTransaction(c *gin.Context) {
 	})
 	if err != nil {
 		logger.WithError(err).Error("cannot start idpay transaction")
-		c.JSON(http.StatusInternalServerError, err.Error())
+		c.JSON(http.StatusInternalServerError, "cannot start idpay transaction: "+err.Error())
 		// Mark the transaction in database as failed
 		api.Database.MarkAsFailed(payment.OrderID)
 		return
