@@ -1,0 +1,772 @@
+{
+	"info": {
+		"_postman_id": "dde20495-42dc-4444-9f6e-41eb48cc6322",
+		"name": "WSS Payment",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "14537487"
+	},
+	"item": [
+		{
+			"name": "Payment",
+			"item": [
+				{
+					"name": "Initiate Payment",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"user_id\": 1234,\n    \"to_pay_amount\": 1000,\n    \"discount_amount\": 1000,\n    \"description\": \"Sample description\",\n    \"buying_goods\": [\"kir\", \"kir2\"],\n    \"name\": \"Crow\",\n    \"phone\": \"09123456789\",\n    \"mail\": \"crow.nest@gmail.com\",\n    \"callback_url\": \"https://google.com/\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/transaction",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"transaction"
+							]
+						},
+						"description": "Creates an payment in idpay and returns the payment URL which user should be forwarded to with order ID (created by us) and payment ID (returned from ID pay).\n\nThe body of this endpoint consists of 9 key and values:\n\n- `user_id`: Who is creating this payment?\n- `to_pay_amount`: How much should this user pay? (After discount) This value must be bigger than zero.\n- `discount_amount`(Optional, defaults to zero): The discount price. Only used for statics.\n- `buying_goods`: A list of items which this user is buying with this transaction. Must contain at least one item. All items must be valid or an error will be thrown.\n- `name`(Optional): The name of user which is paying. Only used for IDPay statics.\n- `phone`(Optional): The phone number of user which is paying. Only used for IDPay statics.\n- `mail`(Optional): The email address of user which is paying. Only used for IDPay statics.\n- `callback_url`: Where should the user return after the payment?"
+					},
+					"response": [
+						{
+							"name": "Payment OK",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"user_id\": 1234,\n    \"to_pay_amount\": 1000,\n    \"discount_amount\": 1000,\n    \"description\": \"Sample description\",\n    \"buying_goods\": [\"kir\"],\n    \"name\": \"Crow\",\n    \"phone\": \"09123456789\",\n    \"mail\": \"crow.nest@gmail.com\",\n    \"callback_url\": \"https://google.com/\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/create",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"create"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 28 Dec 2023 20:22:45 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "129"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"order_id\": \"22c36e72-16ac-4323-81d2-75c1e1e209ff\",\n    \"id\": \"AHW2PEWYLJSHC===\",\n    \"redirect_url\": \"https://example.com/AHW2PEWYLJSHC===\"\n}"
+						},
+						{
+							"name": "Payment OK Minimal",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"user_id\": 1234,\n    \"to_pay_amount\": 1000,\n    \"buying_goods\": [\"kir\"],\n    \"callback_url\": \"https://google.com/\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/create",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"create"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 28 Dec 2023 20:24:04 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "129"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"order_id\": \"61022a22-7643-4803-9eb6-de08090b4cba\",\n    \"id\": \"ZRUJ44RKRUNBU===\",\n    \"redirect_url\": \"https://example.com/ZRUJ44RKRUNBU===\"\n}"
+						},
+						{
+							"name": "Empty Buying Good",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"user_id\": 1234,\n    \"to_pay_amount\": 1000,\n    \"buying_goods\": [],\n    \"callback_url\": \"https://google.com/\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/create",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"create"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 28 Dec 2023 20:25:52 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "20"
+								}
+							],
+							"cookie": [],
+							"body": "\"empty buying_goods\""
+						},
+						{
+							"name": "N/A Good",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"user_id\": 1234,\n    \"to_pay_amount\": 1000,\n    \"discount_amount\": 1000,\n    \"description\": \"Sample description\",\n    \"buying_goods\": [\"not-available-good\"],\n    \"name\": \"Crow\",\n    \"phone\": \"09123456789\",\n    \"mail\": \"crow.nest@gmail.com\",\n    \"callback_url\": \"https://google.com/\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/create",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"create"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 28 Dec 2023 20:47:33 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "38"
+								}
+							],
+							"cookie": [],
+							"body": "\"cannot find good: not-available-good\""
+						},
+						{
+							"name": "IDPay Failed",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"user_id\": 1234,\n    \"to_pay_amount\": 1000,\n    \"discount_amount\": 1000,\n    \"description\": \"Sample description\",\n    \"buying_goods\": [\"kir\"],\n    \"name\": \"Crow\",\n    \"phone\": \"09123456789\",\n    \"mail\": \"crow.nest@gmail.com\",\n    \"callback_url\": \"https://google.com/\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/create",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"create"
+									]
+								}
+							},
+							"status": "Internal Server Error",
+							"code": 500,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 28 Dec 2023 20:50:14 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "46"
+								}
+							],
+							"cookie": [],
+							"body": "\"cannot start idpay transaction: mock failed!\""
+						}
+					]
+				},
+				{
+					"name": "Verify Transaction",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/transaction?order_id=792078b3-2bc4-447f-bda9-fe3ceed76aab",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"transaction"
+							],
+							"query": [
+								{
+									"key": "order_id",
+									"value": "792078b3-2bc4-447f-bda9-fe3ceed76aab",
+									"description": "The UUID of order which we are going to check"
+								}
+							]
+						},
+						"description": "Gets the status of an transaction and cofirms it if needed. This will return an error and fail the transaction if user is already paying the money.\n\nThis endpoint only gets one argument which is the `order_id` that is returned from the Initiate endpoint. Currently, this value is the string of an UUID.\n\nIt returnes the following values in an json:\n\n- `order_id`: The order ID passed in the query.\n- `user_id`: Who has made this payment?\n- `to_pay_amount`: How much user has payed?\n- `discount`: The discount amount applied to this payment.\n- `description`(Optional): Additional information about the payment.\n- `track_id`: Has an value only and only if `payment_status` is success.\n- `payment_track_id`: Has an value only and only if `payment_status` is sucess.\n- `payment_status`: The status of this payment. Can have four values: 1. success 2. failed 3. timeout (not currently used) 4. initiated (not currently used)\n    \n- `bought_goods`: A list of all the items this user has bought.\n    \n- `created_at`: When was this transaction created?\n    \n- `verified_at`: When was this transaction verified or failed? i.e. the status is changed to success or failed."
+					},
+					"response": [
+						{
+							"name": "Verify Transaction",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/transaction?order_id=792078b3-2bc4-447f-bda9-fe3ceed76aab",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"transaction"
+									],
+									"query": [
+										{
+											"key": "order_id",
+											"value": "792078b3-2bc4-447f-bda9-fe3ceed76aab",
+											"description": "The UUID of order which we are going to check"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 30 Dec 2023 07:29:49 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "352"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"order_id\": \"792078b3-2bc4-447f-bda9-fe3ceed76aab\",\n    \"user_id\": 1234,\n    \"to_pay_amount\": 1000,\n    \"discount\": 1000,\n    \"description\": \"Sample description\",\n    \"track_id\": \"HDHSMKZNPSO46===\",\n    \"payment_track_id\": \"F5SH2B6XT7ZLW===\",\n    \"payment_status\": \"success\",\n    \"bought_goods\": [\n        \"kir\",\n        \"kir2\"\n    ],\n    \"created_at\": \"2023-12-30T10:49:38.166476+03:30\",\n    \"verified_at\": \"2023-12-30T10:56:05.334792+03:30\"\n}"
+						},
+						{
+							"name": "Payment Not Found",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/transaction?order_id=792078b3-2bc4-447f-bda9-fe3ceed76aaa",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"transaction"
+									],
+									"query": [
+										{
+											"key": "order_id",
+											"value": "792078b3-2bc4-447f-bda9-fe3ceed76aaa",
+											"description": "The UUID of order which we are going to check"
+										}
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 30 Dec 2023 07:30:15 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "19"
+								}
+							],
+							"cookie": [],
+							"body": "\"payment not found\""
+						},
+						{
+							"name": "IDPay Failed",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/transaction?order_id=b6bd0633-47e9-414f-b92c-bc8cd159db0c",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"transaction"
+									],
+									"query": [
+										{
+											"key": "order_id",
+											"value": "b6bd0633-47e9-414f-b92c-bc8cd159db0c",
+											"description": "The UUID of order which we are going to check"
+										}
+									]
+								}
+							},
+							"status": "Internal Server Error",
+							"code": 500,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 30 Dec 2023 07:31:04 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "41"
+								}
+							],
+							"cookie": [],
+							"body": "\"cannot verify transaction: mock failed!\""
+						},
+						{
+							"name": "Failed Transaction (User fucked up)",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/transaction?order_id=cdadf9c9-f58f-451d-8145-5fe79045e8e5",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"transaction"
+									],
+									"query": [
+										{
+											"key": "order_id",
+											"value": "cdadf9c9-f58f-451d-8145-5fe79045e8e5",
+											"description": "The UUID of order which we are going to check"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 30 Dec 2023 07:31:39 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "286"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"order_id\": \"cdadf9c9-f58f-451d-8145-5fe79045e8e5\",\n    \"user_id\": 1234,\n    \"to_pay_amount\": 1000,\n    \"discount\": 1000,\n    \"description\": \"Sample description\",\n    \"payment_status\": \"failed\",\n    \"bought_goods\": [\n        \"kir\",\n        \"kir2\"\n    ],\n    \"created_at\": \"2023-12-30T11:01:30.15824+03:30\",\n    \"verified_at\": \"2023-12-30T11:01:39.18342+03:30\"\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Goods",
+			"item": [
+				{
+					"name": "List Goods",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/goods",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"goods"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "New Request",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/goods",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"goods"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 28 Dec 2023 19:56:56 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "123"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"ID\": 1,\n        \"Name\": \"kir\",\n        \"Price\": 420,\n        \"Description\": \"random description\"\n    },\n    {\n        \"ID\": 5,\n        \"Name\": \"kir2\",\n        \"Price\": 1000,\n        \"Description\": \"\"\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "Add Good",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"kir\",\n    \"price\": 420,\n    \"description\": \"random description\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/goods",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"goods"
+							]
+						},
+						"description": "Adds a \"good\" to database. A \"good\" is basically an item which can be bought once for each user. This endpoint can create one of them in order to allow the admins to add items on fly.\n\nThe body of this endpoint consists of 3 key and values:\n\n- `name`: The name of the good. This must be unique.\n- `price`: The price of the good. Must be more than zero.\n- `description`(Optional): An description which is only stored in database.\n    \n\nThis endpoint returns the ID of the newly created object."
+					},
+					"response": [
+						{
+							"name": "Add Good",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"kir\",\n    \"price\": 420,\n    \"description\": \"this is a description\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/goods",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"goods"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 28 Dec 2023 19:42:26 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "8"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 1\n}"
+						},
+						{
+							"name": "Add Good Without Description",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"kir2\",\n    \"price\": 1000\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/goods",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"goods"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 28 Dec 2023 19:42:56 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "8"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 2\n}"
+						},
+						{
+							"name": "Existing Good",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"kir\",\n    \"price\": 420,\n    \"description\": \"random description\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/goods",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"goods"
+									]
+								}
+							},
+							"status": "Conflict",
+							"code": 409,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 28 Dec 2023 19:55:39 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "21"
+								}
+							],
+							"cookie": [],
+							"body": "\"good already exists\""
+						},
+						{
+							"name": "Invalid Price",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"kir\",\n    \"price\": 0,\n    \"description\": \"random description\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/goods",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"goods"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Thu, 28 Dec 2023 20:32:00 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "96"
+								},
+								{
+									"key": "Content-Type",
+									"value": "text/plain; charset=utf-8"
+								}
+							],
+							"cookie": [],
+							"body": "\"Key: 'createGoodRequest.Price' Error:Field validation for 'Price' failed on the 'required' tag\""
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Health Check",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BASE_URL}}/health",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"health"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "New Request",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/health",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"health"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 28 Dec 2023 19:26:27 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "2"
+						}
+					],
+					"cookie": [],
+					"body": "{}"
+				}
+			]
+		}
+	]
+}
