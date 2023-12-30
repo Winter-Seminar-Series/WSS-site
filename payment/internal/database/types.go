@@ -2,7 +2,9 @@ package database
 
 import (
 	"database/sql"
+	"github.com/go-faster/errors"
 	"github.com/google/uuid"
+	"strconv"
 	"time"
 )
 
@@ -14,6 +16,20 @@ const (
 	PaymentStatusTimeout   PaymentStatus = 2
 	PaymentStatusSuccess   PaymentStatus = 3
 )
+
+func (paymentStatus PaymentStatus) MarshalText() ([]byte, error) {
+	switch paymentStatus {
+	case PaymentStatusInitiated:
+		return []byte("initiated"), nil
+	case PaymentStatusFailed:
+		return []byte("failed"), nil
+	case PaymentStatusTimeout:
+		return []byte("timeout"), nil
+	case PaymentStatusSuccess:
+		return []byte("success"), nil
+	}
+	return nil, errors.New("invalid payment status: " + strconv.Itoa(int(paymentStatus)))
+}
 
 // Payment represents a payment made by a user
 type Payment struct {

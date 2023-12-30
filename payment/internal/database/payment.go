@@ -56,7 +56,7 @@ func (db PaymentDatabase) MarkAsFailed(orderID uuid.UUID) {
 
 // GetPayment will get a payment from database based on its primary key
 func (db PaymentDatabase) GetPayment(payment *Payment) error {
-	return db.db.Find(payment).Error
+	return db.db.Model(&Payment{}).Preload("BoughtGoods").First(payment).Error
 }
 
 // MarkPaymentAsOK will mark a payment as successful and then updates its track ID, payment track ID and verified at time.

@@ -23,15 +23,15 @@ func main() {
 	endpointApi.PaymentService = idpay.Mock{ // TODO: remove
 		FailCreation:          false,
 		FailVerification:      false,
-		PaymentVerificationOk: true,
+		PaymentVerificationOk: false,
 	}
 	defer endpointApi.Database.Close()
 	// Setup endpoints
 	r := gin.New()
 	r.Use(gin.Recovery())
 	r.GET("/health", api.HealthCheck)
-	r.POST("/create", endpointApi.CreateTransaction)
-	r.GET("/status")
+	r.POST("/transaction", endpointApi.CreateTransaction)
+	r.GET("/transaction", endpointApi.GetTransaction)
 	r.GET("/goods", endpointApi.GetGoods)
 	r.POST("/goods", endpointApi.AddGood)
 	// Listen

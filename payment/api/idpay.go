@@ -3,7 +3,9 @@ package api
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/go-faster/errors"
+	"github.com/google/uuid"
 	log "github.com/sirupsen/logrus"
+	"gorm.io/gorm"
 	"net/http"
 	"wss-payment/internal/database"
 	"wss-payment/pkg/idpay"
@@ -84,18 +86,28 @@ func (api *API) CreateTransaction(c *gin.Context) {
 func (api *API) GetTransaction(c *gin.Context) {
 	// At first parse the body
 	var body getTransactionRequest
-	err := c.BindJSON(&body)
+	err := c.Bind(&body)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, "cannot parse body: "+err.Error())
 		return
 	}
+	orderUUID, err := uuid.Parse(body.OrderID)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, "invalid uuid")
+		return
+	}
 	logger := log.WithField("OrderID", body.OrderID)
 	// Now get the transaction from database
-	payment := database.Payment{OrderID: body.OrderID}
+	payment := database.Payment{OrderID: orderUUID}
 	err = api.Database.GetPayment(&payment)
 	if err != nil {
-		logger.WithError(err).Error("cannot get order from database")
-		c.JSON(http.StatusInternalServerError, "cannot parse body: "+err.Error())
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			logger.Warn("payment not found")
+			c.JSON(http.StatusBadRequest, "payment not found")
+		} else {
+			logger.WithError(err).Error("cannot get payment from database")
+			c.JSON(http.StatusInternalServerError, "cannot parse body: "+err.Error())
+		}
 		return
 	}
 	// Check if it's verified and verify it

@@ -57,7 +57,7 @@ type createGoodResponse struct {
 
 // getTransactionRequest is the request body of the get transaction endpoint
 type getTransactionRequest struct {
-	OrderID uuid.UUID `json:"order_id" binding:"required"`
+	OrderID string `form:"order_id" binding:"required"`
 }
 
 // getTransactionResponse is the response to the get transaction result.
