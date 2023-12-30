@@ -26,7 +26,7 @@ func (api *API) AddGood(c *gin.Context) {
 	var body createGoodRequest
 	err := c.BindJSON(&body)
 	if err != nil {
-		c.JSON(http.StatusBadRequest, err.Error())
+		c.JSON(http.StatusBadRequest, "cannot parse body: "+err.Error())
 		return
 	}
 	logger := log.WithField("body", body)
@@ -49,5 +49,5 @@ func (api *API) AddGood(c *gin.Context) {
 	}
 	logger.Info("added good to database")
 	// Report back to endpoint
-	c.JSON(http.StatusCreated, creteGoodResponse{good.ID})
+	c.JSON(http.StatusCreated, createGoodResponse{good.ID})
 }

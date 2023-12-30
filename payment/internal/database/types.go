@@ -40,7 +40,7 @@ type Payment struct {
 	// When was this payment created?
 	CreatedAt time.Time `gorm:"not null"`
 	// When was it verified? (could be null)
-	VerifiedAt time.Time
+	VerifiedAt sql.NullTime
 }
 
 type Good struct {

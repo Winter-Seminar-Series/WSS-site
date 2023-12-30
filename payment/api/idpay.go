@@ -15,7 +15,7 @@ func (api *API) CreateTransaction(c *gin.Context) {
 	var body createTransactionRequest
 	err := c.BindJSON(&body)
 	if err != nil {
-		c.JSON(http.StatusBadRequest, err.Error())
+		c.JSON(http.StatusBadRequest, "cannot parse body: "+err.Error())
 		return
 	}
 	logger := log.WithField("body", body)
@@ -77,4 +77,69 @@ func (api *API) CreateTransaction(c *gin.Context) {
 		RedirectURL: idpayResult.Link,
 	})
 	return
+}
+
+// GetTransaction verifies a transaction if not already and then returns the transaction
+// information to the requester
+func (api *API) GetTransaction(c *gin.Context) {
+	// At first parse the body
+	var body getTransactionRequest
+	err := c.BindJSON(&body)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, "cannot parse body: "+err.Error())
+		return
+	}
+	logger := log.WithField("OrderID", body.OrderID)
+	// Now get the transaction from database
+	payment := database.Payment{OrderID: body.OrderID}
+	err = api.Database.GetPayment(&payment)
+	if err != nil {
+		logger.WithError(err).Error("cannot get order from database")
+		c.JSON(http.StatusInternalServerError, "cannot parse body: "+err.Error())
+		return
+	}
+	// Check if it's verified and verify it
+	if payment.PaymentStatus == database.PaymentStatusInitiated {
+		// Send the verification request
+		result, err := api.PaymentService.VerifyTransaction(c.Request.Context(), idpay.TransactionVerificationRequest{
+			OrderID: payment.OrderID.String(),
+			ID:      payment.ID.String,
+		})
+		if err != nil {
+			logger.WithError(err).Error("cannot verify transaction")
+			c.JSON(http.StatusInternalServerError, "cannot verify transaction: "+err.Error())
+			return
+		}
+		// Check the result and update database
+		if result.PaymentOK {
+			err = api.Database.MarkPaymentAsOK(&payment, result.TrackID, result.PaymentTrackID)
+		} else {
+			err = api.Database.MarkPaymentAsFailed(&payment)
+		}
+		if err != nil {
+			// NIGGA
+			logger.WithField("result", result).WithError(err).Error("cannot write verified transaction result")
+			c.JSON(http.StatusInternalServerError, "cannot write verified transaction result: "+err.Error())
+			return
+		}
+	}
+	// Return the converted struct
+	result := getTransactionResponse{
+		OrderID:        payment.OrderID,
+		UserID:         payment.UserID,
+		ToPayAmount:    payment.ToPayAmount,
+		Discount:       payment.Discount,
+		Description:    payment.Description,
+		ID:             payment.ID.String,
+		TrackID:        payment.TrackID.String,
+		PaymentTrackID: payment.PaymentTrackID.String,
+		PaymentStatus:  payment.PaymentStatus,
+		BoughtGoods:    make([]string, len(payment.BoughtGoods)),
+		CreatedAt:      payment.CreatedAt,
+		VerifiedAt:     payment.VerifiedAt.Time,
+	}
+	for i := range payment.BoughtGoods {
+		result.BoughtGoods[i] = payment.BoughtGoods[i].Name
+	}
+	c.JSON(http.StatusOK, result)
 }

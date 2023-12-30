@@ -1,6 +1,10 @@
 package api
 
-import "github.com/google/uuid"
+import (
+	"github.com/google/uuid"
+	"time"
+	"wss-payment/internal/database"
+)
 
 // createTransactionRequest is the request body for create transaction endpoint
 type createTransactionRequest struct {
@@ -45,8 +49,42 @@ type createGoodRequest struct {
 	Description string `json:"description"`
 }
 
-// createTransactionRequest is the result of creating goods endpoint
-type creteGoodResponse struct {
+// createGoodResponse is the result of creating goods endpoint
+type createGoodResponse struct {
 	// ID of the created good
 	ID uint32 `json:"id"`
+}
+
+// getTransactionRequest is the request body of the get transaction endpoint
+type getTransactionRequest struct {
+	OrderID uuid.UUID `json:"order_id" binding:"required"`
+}
+
+// getTransactionResponse is the response to the get transaction result.
+// It is mostly based on database.Payment object
+type getTransactionResponse struct {
+	// The order ID which is sent to pay.ir
+	OrderID uuid.UUID `json:"order_id"`
+	// Who has made this payment?
+	UserID uint64 `json:"user_id"`
+	// What is the amount that the user should pay?
+	ToPayAmount uint64 `json:"to_pay_amount"`
+	// The amount which we got a discount
+	Discount uint64 `json:"discount"`
+	// An optional description about this payment
+	Description string `json:"description,omitempty"`
+	// The ID which is returned from idpay after we have initiated the transaction
+	ID string `json:"id,omitempty"`
+	// The track ID which idpay returns to us after verification
+	TrackID string `json:"track_id,omitempty"`
+	// The payment track ID which idpay returns to us after verification
+	PaymentTrackID string `json:"payment_track_id,omitempty"`
+	// What is the status of this payment?
+	PaymentStatus database.PaymentStatus `json:"payment_status"`
+	// List of the Goos which this user has bought in this payment
+	BoughtGoods []string `json:"bought_goods"`
+	// When was this payment created?
+	CreatedAt time.Time `json:"created_at"`
+	// When was it verified? (could be null)
+	VerifiedAt time.Time `json:"verified_at,omitempty"`
 }
