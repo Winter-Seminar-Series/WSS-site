@@ -27,21 +27,11 @@ func (api *API) CreateTransaction(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, "empty buying_goods")
 		return
 	}
-	// Try to get the list of goods from database. This will fail if user has bought something
-	// from its BuyingGoods before
-	goods, err := api.Database.GetGoodsFromName(body.BuyingGoods)
-	if err != nil {
-		var goodError database.GoodNotFoundError
-		if errors.As(err, &goodError) {
-			logger.WithError(err).Warn("unknown good")
-			c.JSON(http.StatusBadRequest, err.Error())
-		} else {
-			logger.WithError(err).Error("cannot query goods")
-			c.JSON(http.StatusInternalServerError, "cannot query goods: "+err.Error())
-		}
-		return
-	}
 	// Now we try to insert it in database. This should probably succeed
+	goods := make([]database.Good, len(body.BuyingGoods))
+	for i := range body.BuyingGoods {
+		goods[i] = database.Good{Name: body.BuyingGoods[i]}
+	}
 	payment := database.Payment{
 		UserID:      body.UserID,
 		ToPayAmount: body.ToPayAmount,

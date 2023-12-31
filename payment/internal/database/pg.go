@@ -16,7 +16,7 @@ func NewPostgres(dsn string) (PaymentDatabase, error) {
 		return PaymentDatabase{}, errors.Wrap(err, "cannot open database")
 	}
 	// Gorm automatically pings the database thus we can just migrate tables
-	err = db.AutoMigrate(Good{}, Payment{})
+	err = db.AutoMigrate(Payment{}, Good{})
 	if err != nil {
 		return PaymentDatabase{}, errors.Wrap(err, "cannot migrate database")
 	}

@@ -32,8 +32,6 @@ func main() {
 	r.GET("/health", api.HealthCheck)
 	r.POST("/transaction", endpointApi.CreateTransaction)
 	r.GET("/transaction", endpointApi.GetTransaction)
-	r.GET("/goods", endpointApi.GetGoods)
-	r.POST("/goods", endpointApi.AddGood)
 	// Listen
 	srv := &http.Server{
 		Handler: r,

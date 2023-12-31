@@ -52,7 +52,7 @@ type Payment struct {
 	// What is the status of this payment?
 	PaymentStatus PaymentStatus `gorm:"not null"`
 	// List of the Goos which this user has bought in this payment
-	BoughtGoods []Good `gorm:"many2many:bought_goods;"`
+	BoughtGoods []Good
 	// When was this payment created?
 	CreatedAt time.Time `gorm:"not null"`
 	// When was it verified? (could be null)
@@ -62,10 +62,8 @@ type Payment struct {
 type Good struct {
 	// ID of this good
 	ID uint32 `gorm:"primarykey"`
+	// To what payment does this belong?
+	PaymentOrderID uuid.UUID
 	// Name of it
-	Name string `gorm:"unique;not null" `
-	// The price of this item
-	Price uint64 `gorm:"not null"`
-	// An optional description about this payment
-	Description string `gorm:"not null"`
+	Name string `gorm:"not null"`
 }

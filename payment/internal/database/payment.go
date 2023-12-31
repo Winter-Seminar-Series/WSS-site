@@ -2,40 +2,10 @@ package database
 
 import (
 	"database/sql"
-	"github.com/go-faster/errors"
 	"github.com/google/uuid"
 	log "github.com/sirupsen/logrus"
-	"gorm.io/gorm"
 	"time"
 )
-
-// GetGoods gets the list of all goods in database
-func (db PaymentDatabase) GetGoods() ([]Good, error) {
-	var payments []Good
-	result := db.db.Find(&payments)
-	return payments, result.Error
-}
-
-// GetGoodsFromName gets the list of all goods from their name in database
-func (db PaymentDatabase) GetGoodsFromName(names []string) ([]Good, error) {
-	// TODO: There SHOULD be a better way
-	result := make([]Good, len(names))
-	for i, name := range names {
-		if err := db.db.Where("name = ?", name).First(&result[i]).Error; err != nil {
-			if errors.Is(err, gorm.ErrRecordNotFound) {
-				return nil, GoodNotFoundError{GoodName: name}
-			} else {
-				return nil, errors.Wrap(err, "cannot query database")
-			}
-		}
-	}
-	return result, nil
-}
-
-// AddGood adds a good to the table
-func (db PaymentDatabase) AddGood(good *Good) error {
-	return db.db.Create(good).Error
-}
 
 // InitiateTransaction will add the given Payment in database with status set to initialized
 func (db PaymentDatabase) InitiateTransaction(payment *Payment) error {
