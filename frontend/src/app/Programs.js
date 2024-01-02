@@ -1,101 +1,139 @@
 export default function Programs() {
-
   return (
-    <div className="Programs w-full h-[1469px] relative bg-white overflow-hidden overflow-auto">
-      <div className="Ellipse absolute top-[636px] right-[-200px] w-72 h-72 bg-zinc-400 bg-opacity-30 rounded-full blur-3xl" />
-      <div className="Ellipse absolute top-[205px] left-[-200px] w-64 h-64 bg-pink-300 bg-opacity-30 rounded-full blur-3xl" />
+    <div className="Programs relative h-[1469px] w-full overflow-auto overflow-hidden bg-white">
+      <div className="Ellipse absolute right-[-200px] top-[636px] h-72 w-72 rounded-full bg-zinc-400 bg-opacity-30 blur-3xl" />
+      <div className="Ellipse absolute left-[-200px] top-[205px] h-64 w-64 rounded-full bg-pink-300 bg-opacity-30 blur-3xl" />
 
-      <ProgramsArea />   
+      <ProgramsArea />
       <ItemsTag />
-      <Button text={buttonText} img={arrowPic}/>
+      <Button text={buttonText} img={arrowPic} />
     </div>
-    );
+  );
 }
 
-const arrowPic = "/arrow--right@2x.png"
-const buttonText = "More About WSS"
+const arrowPic = '/arrow--right@2x.png';
+const buttonText = 'More About WSS';
 
 const items = [
-  {id: 1, title: 'Seminars', overline: 'Overline Goes Here', img: 'tmp', desc: 'The seminars comprise a four-day event where speakers present their research and ideas, sharing their findings and teaching related topics. Each day of the event features different speakers and topics, providing participants with a diverse range of perspectives and knowledge.'},
-  {id: 2, title: 'Round Tables', overline: 'Overline Goes Here', img: 'tmp', desc: 'The seminars comprise a four-day event where speakers present their research and ideas, sharing their findings and teaching related topics. Each day of the event features different speakers and topics, providing participants with a diverse range of perspectives and knowledge.'},
-  {id: 3, title: 'Lab Talks', overline: 'Overline Goes Here', img: 'tmp', desc: 'The seminars comprise a four-day event where speakers present their research and ideas, sharing their findings and teaching related topics. Each day of the event features different speakers and topics, providing participants with a diverse range of perspectives and knowledge.'},
+  {
+    id: 1,
+    title: 'Seminars',
+    overline: 'Overline Goes Here',
+    img: 'tmp',
+    desc: 'The seminars comprise a four-day event where speakers present their research and ideas, sharing their findings and teaching related topics. Each day of the event features different speakers and topics, providing participants with a diverse range of perspectives and knowledge.',
+  },
+  {
+    id: 2,
+    title: 'Round Tables',
+    overline: 'Overline Goes Here',
+    img: 'tmp',
+    desc: "During the event, we host round table discussions on specific topics, inviting experts in the field to share their insights and engage with participants' concerns. Please note that the round tables are conducted in Persian.",
+  },
+  {
+    id: 3,
+    title: 'Lab Talks',
+    overline: 'Overline Goes Here',
+    img: 'tmp',
+    desc: 'This section focuses on the laboratories of the Faculty of Computer Engineering at Sharif University of Technology. In each session, we feature a different laboratory, with members introducing their lab and discussing current research topics. This provides participants with an opportunity to learn about cutting-edge research and developments in computer engineering.',
+  },
 ];
 
 function ProgramsArea() {
   return (
-<div className="AutoLayoutVertical absolute top-[0px] left-[calc(50%_-_145px)] w-[290px] h-[104px] flex-col justify-start items-center inline-flex">
-  <div className="OverlineGoesHere text-neutral-400 text-lg font-medium font-['Manrope'] uppercase tracking-wide">Overline Goes Here</div>
-  <div className="Programs text-slate-800 text-[64px] font-bold font-['Manrope']">Programs</div>
-</div>
-    )
+    <div className="AutoLayoutVertical absolute left-[calc(50%_-_145px)] top-[0px] inline-flex h-[104px] w-[290px] flex-col items-center justify-start">
+      <div className="OverlineGoesHere font-['Manrope'] text-lg font-medium uppercase tracking-wide text-neutral-400">
+        Overline Goes Here
+      </div>
+      <div className="Programs font-['Manrope'] text-[64px] font-bold text-slate-800">
+        Programs
+      </div>
+    </div>
+  );
 }
 
-
-function Button({text, img}) {
+function Button({ text, img }) {
   return (
-<div className="AutoLayoutHorizontal absolute top-[1298px] left-[calc(50%_-_121px)] w-52 h-16 px-8 bg-gray-700 rounded-md justify-center items-center gap-2.5 flex items-center">
-  <div className="MoreAboutWss text-white text-lg font-bold font-['Manrope']">{text}</div>
-  <div className="ArrowRight w-6 h-6 relative">
+    <div className="AutoLayoutHorizontal absolute left-[calc(50%_-_121px)] top-[1298px] flex h-16 w-52 items-center items-center justify-center gap-2.5 rounded-md bg-secondary px-8">
+      <div className="MoreAboutWss font-['Manrope'] text-lg font-bold text-white">
+        {text}
+      </div>
+      <div className="ArrowRight relative h-6 w-6">
         <img
-          className="relative w-6 h-6 overflow-hidden shrink-0 object-cover justify-center"
+          className="relative h-6 w-6 shrink-0 justify-center overflow-hidden object-cover"
           alt="arrow"
           src={img}
         />
-  </div>
-</div>
-    )
+      </div>
+    </div>
+  );
 }
 
-function ItemText({title, overline, description}) {
+function ItemText({ title, overline, description }) {
   return (
-<div className="AutoLayoutVertical w-96 h-[100%] flex-col justify-start items-start gap-2.5 inline-flex">
-  <div className="AutoLayoutVertical flex-col justify-start items-start flex">
-    <div className="overline text-neutral-400 text-[16px] font-medium font-['Manrope'] uppercase tracking-wide">{overline}</div>
-    <div className="title text-slate-800 text-[48px] font-bold font-['Manrope']">{title}</div>
-  </div>
-  <div className="description w-96 text-neutral-400 text-[18px] font-normal font-['Manrope'] leading-relaxed">{description}</div>
-</div>
-);
+    <div className="AutoLayoutVertical inline-flex h-[100%] w-96 flex-col items-start justify-start gap-2.5">
+      <div className="AutoLayoutVertical flex flex-col items-start justify-start">
+        <div className="font-['Manrope'] text-[16px] font-medium uppercase tracking-wide text-neutral-400">
+          {overline}
+        </div>
+        <div className="title font-['Manrope'] text-[48px] font-bold text-slate-800">
+          {title}
+        </div>
+      </div>
+      <div className="description w-96 font-['Manrope'] text-[18px] font-normal leading-relaxed text-neutral-400">
+        {description}
+      </div>
+    </div>
+  );
 }
 
-function ItemImg({img}) {
-  if (img.localeCompare("") == 0) 
-    return <div className="Image grow shrink basis-0 h-72 bg-gray-200 rounded-lg" />
+function ItemImg({ img }) {
+  if (img.localeCompare('') == 0)
+    return (
+      <div className="Image h-72 shrink grow basis-0 rounded-lg bg-gray-200" />
+    );
   else
     return (
-        <div className="Image w-[433px] h-[300px] rounded-lg" >
-          <img
-            className="relative w-full h-full overflow-hidden shrink-0 object-cover"
-            alt=""
-            src={img}
-          />
-        </div>
-      )
+      <div className="Image h-[300px] w-[433px] rounded-lg">
+        <img
+          className="relative h-full w-full shrink-0 overflow-hidden object-cover"
+          alt=""
+          src={img}
+        />
+      </div>
+    );
 }
 
-function ItemTag({item}) {
+function ItemTag({ item }) {
   if (item.id % 2 == 1)
     return (
-      <div className="AutoLayoutHorizontal w-[993px] h-[300px] justify-start items-center gap-20 flex items-center">
-        <ItemText title={item.title} overline={item.overline} description={item.desc} />
+      <div className="AutoLayoutHorizontal flex h-[300px] w-[993px] items-center items-center justify-start gap-20">
+        <ItemText
+          title={item.title}
+          overline={item.overline}
+          description={item.desc}
+        />
         <ItemImg img={item.img} />
       </div>
-      )
+    );
   else
     return (
-      <div className="AutoLayoutHorizontal w-[993px] h-[300px] justify-start items-center gap-20 inline-flex">
+      <div className="AutoLayoutHorizontal inline-flex h-[300px] w-[993px] items-center justify-start gap-20">
         <ItemImg img={item.img} />
-        <ItemText title={item.title} overline={item.overline} description={item.desc} />
+        <ItemText
+          title={item.title}
+          overline={item.overline}
+          description={item.desc}
+        />
       </div>
-      )
+    );
 }
 
 function ItemsTag() {
   return (
-    <div className="relative top-[174px] left-[calc(50%_-_497px)] w-[993px] flex flex-col items-end justify-start gap-[72px] text-base">
+    <div className="relative left-[calc(50%_-_497px)] top-[174px] flex w-[993px] flex-col items-end justify-start gap-[72px] text-base">
       {items.map((item) => (
-      <ItemTag item={item} />
-    ))}
+        <ItemTag item={item} key={item.id} />
+      ))}
     </div>
-    )
+  );
 }
