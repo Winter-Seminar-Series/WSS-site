@@ -44,12 +44,10 @@ export default function StaffLine() {
   ];
 
   return (
-    <div className={'flex flex-wrap justify-center items-center pt-10'}>
-      {
-        staff.map((person, index) => (
-          <StaffCard key={index} person={person} />
-        ))
-      }
+    <div className={'flex flex-wrap items-center justify-center pt-10'}>
+      {staff.map((person, index) => (
+        <StaffCard key={index} person={person} />
+      ))}
     </div>
   );
 }
