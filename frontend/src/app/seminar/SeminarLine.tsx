@@ -105,15 +105,13 @@ export default function SeminarLine() {
     //   position: 'PhD, Assistant Professor',
     //   university: 'University of Waterloo',
     // },
-  ]
+  ];
 
   return (
-    <div className={'flex flex-wrap justify-center items-center'}>
-      {
-        people.map((person, index) => (
-          <SeminarCard key={index} person={person}/>
-        ))
-      }
+    <div className={'flex flex-wrap items-center justify-center'}>
+      {people.map((person, index) => (
+        <SeminarCard key={index} person={person} />
+      ))}
     </div>
-  )
+  );
 }

@@ -13,14 +13,19 @@ export type Person = {
   image: string;
   position: string;
   university: string;
-}
+};
 
 export default function Seminar() {
   return (
-    <div style={{ backgroundImage: `url(${Background.src})` }} className={'flex-col justify-center items-center bg-no-repeat bg-cover bg-center pb-14'}>
+    <div
+      style={{ backgroundImage: `url(${Background.src})` }}
+      className={
+        'flex-col items-center justify-center bg-cover bg-center bg-no-repeat pb-14'
+      }
+    >
       <SeminarHeader />
-      <SeminarLine/>
-      <ViewAllButton text={'View All Seminars'} width={20}/>
+      <SeminarLine />
+      <ViewAllButton text={'View All Seminars'} width={20} />
     </div>
   );
 }
