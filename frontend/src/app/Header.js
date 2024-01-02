@@ -1,42 +1,32 @@
-import Rectangle from '../../public/source/Rectangle.png';
-import Frame from '../../public/source/Frame.svg';
-import mobile from '../../public/source/mobile.png'
-
 export default function Header() {
   // TODO
   return (
-    <header class="max-lg:w-90">
-      <div
-        className="header-main max-lg:w-[424px] max-lg:h-[896px] lg:h-[900px] max-lg:pt-8 lg:pt-8 bg-cover bg-center bg-no-repeat max-lg:bg-mobile lg:bg-desktop items-center"
-        // style={{
-        //   // background: 'linear-gradient(180deg, rgba(18, 34, 88, 0.7) 0%, rgba(19, 37, 101, 0.7) 100%)'
-        //   backgroundImage: `url(${Rectangle.src})`,
-        //   'md:max-lg': {
-        //     backgroundImage: `url(${mobile.src})`, // Background image for small screens
-        //   },
-        // }}
-      >
+    <header className="max-lg:w-90">
+      <div className="header-main items-center bg-cover bg-center bg-no-repeat max-lg:h-[896px] max-lg:w-[424px] max-lg:bg-mobile max-lg:pt-8 lg:h-[900px] lg:bg-desktop lg:pt-8">
         <div
-          class="mx-auto flex lg:h-7 lg:w-[1201px] items-center justify-between lg:mb-8 max-lg:w-[312px] max-lg:h-[38px]"
+          className="mx-auto flex items-center justify-between max-lg:h-[38px] max-lg:w-[312px] lg:mb-8 lg:h-7 lg:w-[1201px]"
           style={{}}
         >
-          <a href="home.html" class="lg:h-[45.129px] lg:w-[57.98px] shrink-0 max-lg:w-[40.8px] max-lg:h-[31.8px]">
+          <a
+            href="home.html"
+            className="shrink-0 max-lg:h-[31.8px] max-lg:w-[40.8px] lg:h-[45.129px] lg:w-[57.98px]"
+          >
             <img
-              class="relative lg:h-[54px] lg:w-[58px] object-cover max-lg:w-[40.8px] max-lg:h-[31.8px]"
+              className="relative object-cover max-lg:h-[31.8px] max-lg:w-[40.8px] lg:h-[54px] lg:w-[58px]"
               src="source/WSS-LOGO.png"
             />
           </a>
-          <div class="items-center justify-center gap-8 hidden lg:flex">
-            <div class="text-base font-medium not-italic leading-[normal] text-neutral-50 no-underline">
-              <div class="relative inline-block">
-                <button class="border-[none] bg-[#04aa6d00] p-2.5 text-base text-[white]">
+          <div className="hidden items-center justify-center gap-8 lg:flex">
+            <div className="text-base font-medium not-italic leading-[normal] text-neutral-50 no-underline">
+              <div className="relative inline-block">
+                <button className="border-[none] bg-[#04aa6d00] p-2.5 text-base text-[white]">
                   9th WSS
                   <img
                     src="source/Frame.svg"
-                    class="inline-block lg:h-6 lg:w-6 shrink-0"
+                    className="inline-block shrink-0 lg:h-6 lg:w-6"
                   />
                 </button>
-                <div class="absolute z-[1] hidden lg:min-w-[160px] bg-[#f1f1f1] shadow-[0px_8px_16px_0px_rgba(0,0,0,0.2)]">
+                <div className="absolute z-[1] hidden bg-[#f1f1f1] shadow-[0px_8px_16px_0px_rgba(0,0,0,0.2)] lg:min-w-[160px]">
                   <a href="home.html">9th Series</a>
                   <a href="#">8th Series</a>
                   <a href="#">7th Series</a>
@@ -49,159 +39,229 @@ export default function Header() {
                 </div>
               </div>
             </div>
-            <a href="home.html" class="text-[white] no-underline block px-4 py-3 hover:bg-[#ddd0]">
+            <a
+              href="home.html"
+              className="block px-4 py-3 text-[white] no-underline hover:bg-[#ddd0]"
+            >
               Home
             </a>
-            <a href="" class="text-[white] no-underline block px-4 py-3 hover:bg-[#ddd0]">
+            <a
+              href=""
+              className="block px-4 py-3 text-[white] no-underline hover:bg-[#ddd0]"
+            >
               Seminars
             </a>
-            <a href="" class="text-[white] no-underline block px-4 py-3 hover:bg-[#ddd0]">
+            <a
+              href=""
+              className="block px-4 py-3 text-[white] no-underline hover:bg-[#ddd0]"
+            >
               Lab Talks
             </a>
-            <a href="" class="text-[white] no-underline block px-4 py-3 hover:bg-[#ddd0]">
+            <a
+              href=""
+              className="block px-4 py-3 text-[white] no-underline hover:bg-[#ddd0]"
+            >
               Round Tables
             </a>
-            <a href="about.html" class="text-[white] no-underline block px-4 py-3 hover:bg-[#ddd0]">
+            <a
+              href="about.html"
+              className="block px-4 py-3 text-[white] no-underline hover:bg-[#ddd0]"
+            >
               About Us
             </a>
           </div>
-          <div class="flex items-center gap-1.5">
+          <div className="flex items-center gap-1.5">
             <a
               href=""
-              class="flex lg:h-12 max-lg:w-19 max-lg:h-9 max-lg:px-4 items-center justify-center lg:gap-2 rounded-md bg-white lg:px-6 lg:py-0 no-underline"
+              className="max-lg:w-19 flex items-center justify-center rounded-md bg-white no-underline max-lg:h-9 max-lg:px-4 lg:h-12 lg:gap-2 lg:px-6 lg:py-0"
             >
-              <p class="text-base font-semibold not-italic leading-[normal] text-[#0B3678] no-underline">
+              <p className="text-base font-semibold not-italic leading-[normal] text-[#0B3678] no-underline">
                 Sign Up
               </p>
             </a>
             <a
               href=""
-              class="flex lg:h-12 max-lg:w-19 max-lg:h-9 items-center justify-center  max-lg:px-4 lg:gap-2 rounded-md border border-solid border-[rgba(255,255,255,0.30)] px-6 py-0"
+              className="max-lg:w-19 flex items-center justify-center rounded-md border  border-solid border-[rgba(255,255,255,0.30)] px-6 py-0 max-lg:h-9 max-lg:px-4 lg:h-12 lg:gap-2"
             >
-              <p class="text-base font-semibold not-italic leading-[normal] text-white">
+              <p className="text-base font-semibold not-italic leading-[normal] text-white">
                 Login
               </p>
             </a>
           </div>
         </div>
-        <div class="flex lg:flex-row max-lg:flex-col lg:max-w-[1200px] max-lg:w-[312px] mx-auto lg:mt-12 max-lg:mt-10">
+        <div className="mx-auto flex max-lg:mt-10 max-lg:w-[312px] max-lg:flex-col lg:mt-12 lg:max-w-[1200px] lg:flex-row">
           <div>
-            <p class="text-white lg:text-[108px] not-italic font-bold lg:leading-[106px] max-lg:leading-15 max-lg:tracking-[-1.2px] max-lg:text-6xl lg:tracking-[-2.16px] lg:pb-10 max-lg:pb-6">WSS - Winter Seminar Series</p>
-            <div class="text-white lg:text-2xl max-lg:text-[21px] max-lg:leading-[30px] max-lg:tracking-[-0.42px] not-italic font-semibold leading-[normal] lg:tracking-[-0.48px]">
-              <p class="">
+            <p className="max-lg:leading-15 font-bold not-italic text-white max-lg:pb-6 max-lg:text-6xl max-lg:tracking-[-1.2px] lg:pb-10 lg:text-[108px] lg:leading-[106px] lg:tracking-[-2.16px]">
+              WSS - Winter Seminar Series
+            </p>
+            <div className="font-semibold not-italic leading-[normal] text-white max-lg:text-[21px] max-lg:leading-[30px] max-lg:tracking-[-0.42px] lg:text-2xl lg:tracking-[-0.48px]">
+              <p className="">
                 Advanced Topics in Computer Science and Engineering
               </p>
-              <div class="flex max-lg:flex-row lg:flex-col max-lg:mt-5 max-lg:gap-4 max-lg:items-start max-lg:self-stretch">
-                <div className="lg:mt-2 flex lg:flex-row max-lg:flex-col max-lg:gap-1.5 max-lg:flex-[1_0_0]">
-                  <img class="w-6 h-6 inline-block lg:mr-2" src="source/Location.svg" />
-                  <p class="max-lg:self-stretch text-[rgba(255,255,255,0.80)] text-left max-lg:text-sm lg:text-xl not-italic font-normal max-lg:leading-[21px] lg:leading-[normal] max-lg:w-37 max-lg:h-16">Sharif University of Technology - Tehran, Iran</p>
+              <div className="flex max-lg:mt-5 max-lg:flex-row max-lg:items-start max-lg:gap-4 max-lg:self-stretch lg:flex-col">
+                <div className="flex max-lg:flex-[1_0_0] max-lg:flex-col max-lg:gap-1.5 lg:mt-2 lg:flex-row">
+                  <img
+                    className="inline-block h-6 w-6 lg:mr-2"
+                    src="source/Location.svg"
+                  />
+                  <p className="max-lg:w-37 text-left font-normal not-italic text-[rgba(255,255,255,0.80)] max-lg:h-16 max-lg:self-stretch max-lg:text-sm max-lg:leading-[21px] lg:text-xl lg:leading-[normal]">
+                    Sharif University of Technology - Tehran, Iran
+                  </p>
                 </div>
-                <div class="lg:mt-2 flex lg:flex-row max-lg:flex-col max-lg:gap-1.5 max-lg:flex-[1_0_0]">
-                  <img class="w-6 h-6 inline-block lg:mr-2" src="source/Calendar.svg" />
-                  <p class="max-lg:self-stretch text-[rgba(255,255,255,0.80)] max-lg:text-sm lg:text-xl not-italic font-normal max-lg:leading-[21px] lg:leading-[normal] max-lg:w-37 max-lg:h-10.5">Apr 6th, 2023 -Apr 9th, 2023</p>
+                <div className="flex max-lg:flex-[1_0_0] max-lg:flex-col max-lg:gap-1.5 lg:mt-2 lg:flex-row">
+                  <img
+                    className="inline-block h-6 w-6 lg:mr-2"
+                    src="source/Calendar.svg"
+                  />
+                  <p className="max-lg:w-37 max-lg:h-10.5 font-normal not-italic text-[rgba(255,255,255,0.80)] max-lg:self-stretch max-lg:text-sm max-lg:leading-[21px] lg:text-xl lg:leading-[normal]">
+                    Apr 6th, 2023 -Apr 9th, 2023
+                  </p>
                 </div>
               </div>
             </div>
-            <div class="flex flex-row items-start lg:gap-[52px] text-white lg:text-5xl not-italic font-bold leading-[normal] lg:tracking-[-0.96px] lg:pt-[52px] max-lg:pt-7 max-lg:justify-between max-lg:items-start max-lg:mb-9">
-              <div class="flex flex-col justify-center items-center max-lg:gap-1 lg:gap-3 text-white">
-                <div class="flex flex-col justify-center items-center max-lg:text-xl border pt-2 pb-3 px-4 rounded-lg border-solid border-[rgba(255,255,255,0.30)]">21</div>
-                <p class="text-white text-base not-italic font-normal lg:leading-[normal] lg:tracking-[0.32px] uppercase">DAYS</p>
+            <div className="flex flex-row items-start font-bold not-italic leading-[normal] text-white max-lg:mb-9 max-lg:items-start max-lg:justify-between max-lg:pt-7 lg:gap-[52px] lg:pt-[52px] lg:text-5xl lg:tracking-[-0.96px]">
+              <div className="flex flex-col items-center justify-center text-white max-lg:gap-1 lg:gap-3">
+                <div className="flex flex-col items-center justify-center rounded-lg border border-solid border-[rgba(255,255,255,0.30)] px-4 pb-3 pt-2 max-lg:text-xl">
+                  21
+                </div>
+                <p className="text-base font-normal uppercase not-italic text-white lg:leading-[normal] lg:tracking-[0.32px]">
+                  DAYS
+                </p>
               </div>
-              <div class="text-white lg:text-5xl not-italic font-bold leading-[normal] lg:tracking-[-0.96px] max-lg:text-[32px] max-lg:leading-[normal] max-lg:tracking-[-0.64px]">:</div>
-              <div class="flex flex-col justify-center items-center max-lg:gap-1 lg:gap-3 text-white">
-                <div class="flex flex-col justify-center items-center max-lg:text-xl border pt-2 pb-3 px-4 rounded-lg border-solid border-[rgba(255,255,255,0.30)]">16</div>
-                <p class="text-white text-base not-italic font-normal leading-[normal] lg:tracking-[0.32px] uppercase">HOURS</p>
+              <div className="font-bold not-italic leading-[normal] text-white max-lg:text-[32px] max-lg:leading-[normal] max-lg:tracking-[-0.64px] lg:text-5xl lg:tracking-[-0.96px]">
+                :
               </div>
-              <div class="text-white lg:text-5xl not-italic font-bold leading-[normal] lg:tracking-[-0.96px] max-lg:text-[32px] max-lg:leading-[normal] max-lg:tracking-[-0.64px]">:</div>
-              <div class="flex flex-col justify-center items-center max-lg:gap-1 lg:gap-3 text-white">
-                <div class="flex flex-col justify-center items-center max-lg:text-xl border pt-2 pb-3 px-4 rounded-lg border-solid border-[rgba(255,255,255,0.30)]">05</div>
-                <p class="text-white text-base not-italic font-normal leading-[normal] lg:tracking-[0.32px] uppercase">MINUTES</p>
+              <div className="flex flex-col items-center justify-center text-white max-lg:gap-1 lg:gap-3">
+                <div className="flex flex-col items-center justify-center rounded-lg border border-solid border-[rgba(255,255,255,0.30)] px-4 pb-3 pt-2 max-lg:text-xl">
+                  16
+                </div>
+                <p className="text-base font-normal uppercase not-italic leading-[normal] text-white lg:tracking-[0.32px]">
+                  HOURS
+                </p>
               </div>
-              <div class="text-white lg:text-5xl not-italic font-bold leading-[normal] lg:tracking-[-0.96px] max-lg:text-[32px] max-lg:leading-[normal] max-lg:tracking-[-0.64px]">:</div>
-              <div class="flex flex-col justify-center items-center max-lg:gap-1 lg:gap-3 text-white">
-                <div class="flex flex-col justify-center items-center max-lg:text-xl border pt-2 pb-3 px-4 rounded-lg border-solid border-[rgba(255,255,255,0.30)]">45</div>
-                <p class="text-white text-base not-italic font-normal leading-[normal] lg:tracking-[0.32px] uppercase">SECONDS</p>
+              <div className="font-bold not-italic leading-[normal] text-white max-lg:text-[32px] max-lg:leading-[normal] max-lg:tracking-[-0.64px] lg:text-5xl lg:tracking-[-0.96px]">
+                :
+              </div>
+              <div className="flex flex-col items-center justify-center text-white max-lg:gap-1 lg:gap-3">
+                <div className="flex flex-col items-center justify-center rounded-lg border border-solid border-[rgba(255,255,255,0.30)] px-4 pb-3 pt-2 max-lg:text-xl">
+                  05
+                </div>
+                <p className="text-base font-normal uppercase not-italic leading-[normal] text-white lg:tracking-[0.32px]">
+                  MINUTES
+                </p>
+              </div>
+              <div className="font-bold not-italic leading-[normal] text-white max-lg:text-[32px] max-lg:leading-[normal] max-lg:tracking-[-0.64px] lg:text-5xl lg:tracking-[-0.96px]">
+                :
+              </div>
+              <div className="flex flex-col items-center justify-center text-white max-lg:gap-1 lg:gap-3">
+                <div className="flex flex-col items-center justify-center rounded-lg border border-solid border-[rgba(255,255,255,0.30)] px-4 pb-3 pt-2 max-lg:text-xl">
+                  45
+                </div>
+                <p className="text-base font-normal uppercase not-italic leading-[normal] text-white lg:tracking-[0.32px]">
+                  SECONDS
+                </p>
               </div>
             </div>
           </div>
-          <div class="inline-flex lg:h-[535px] lg:w-[203px] max-lg:h-37 flex-col justify-between lg:items-end shrink-0 max-lg:items-start max-lg:flex-wrap:wrap max-lg:h-20 max-lg:flex-row">
-            <div className='inline-flex flex-col lg:justify-between shrink-0 lg:h-[245px] max-lg:gap-6'>
-            <div class="flex flex-col max-lg:items-start justify-center items-end lg:gap-[-4px] max-lg:h-12.5">
-              <p class="text-white max-lg:text-[40px] max-lg:tracking-[-1.6px] lg:text-6xl not-italic font-bold leading-[normal] lg:tracking-[-2.4px]">30+</p>
-              <p class="text-[rgba(255,255,255,0.80)] max-lg:text-sm text-center text-base not-italic font-normal leading-[normal]">Top Level Masters</p>
+          <div className="max-lg:h-37 max-lg:flex-wrap:wrap inline-flex shrink-0 flex-col justify-between max-lg:h-20 max-lg:flex-row max-lg:items-start lg:h-[535px] lg:w-[203px] lg:items-end">
+            <div className="inline-flex shrink-0 flex-col max-lg:gap-6 lg:h-[245px] lg:justify-between">
+              <div className="max-lg:h-12.5 flex flex-col items-end justify-center max-lg:items-start lg:gap-[-4px]">
+                <p className="font-bold not-italic leading-[normal] text-white max-lg:text-[40px] max-lg:tracking-[-1.6px] lg:text-6xl lg:tracking-[-2.4px]">
+                  30+
+                </p>
+                <p className="text-center text-base font-normal not-italic leading-[normal] text-[rgba(255,255,255,0.80)] max-lg:text-sm">
+                  Top Level Masters
+                </p>
+              </div>
+              <div className="max-lg:h-12.5 flex flex-col items-end justify-center max-lg:items-start lg:gap-[-4px]">
+                <p className="font-bold not-italic leading-[normal] text-white max-lg:text-[40px] max-lg:tracking-[-1.6px] lg:text-6xl lg:tracking-[-2.4px]">
+                  15000+
+                </p>
+                <p className="text-center text-base font-normal not-italic leading-[normal] text-[rgba(255,255,255,0.80)] max-lg:text-sm">
+                  Total Subscribers
+                </p>
+              </div>
             </div>
-            <div class="flex flex-col max-lg:items-start justify-center items-end lg:gap-[-4px] max-lg:h-12.5">
-              <p class="text-white max-lg:text-[40px] max-lg:tracking-[-1.6px] lg:text-6xl not-italic font-bold leading-[normal] lg:tracking-[-2.4px]">15000+</p>
-              <p class="text-[rgba(255,255,255,0.80)] max-lg:text-sm text-center text-base not-italic font-normal leading-[normal]">Total Subscribers</p>
-            </div>
-            </div>
-            <div className='inline-flex flex-col lg:justify-between shrink-0 lg:h-[245px] max-lg:gap-6'>
-            <div class="flex flex-col max-lg:items-start justify-center items-end lg:gap-[-4px] max-lg:h-12.5">
-              <p class="text-white max-lg:text-[40px] max-lg:tracking-[-1.6px] lg:text-6xl not-italic font-bold leading-[normal] lg:tracking-[-2.4px]">12+</p>
-              <p class="text-[rgba(255,255,255,0.80)] max-lg:text-sm text-center text-base not-italic font-normal leading-[normal]">High-Quality Seminars</p>
-            </div>
-            <div class="flex flex-col max-lg:items-start justify-center items-end lg:gap-[-4px] max-lg:h-12.5">
-              <p class="text-white max-lg:text-[40px] max-lg:tracking-[-1.6px] lg:text-6xl not-italic font-bold leading-[normal] lg:tracking-[-2.4px]">30+</p>
-              <p class="text-[rgba(255,255,255,0.80)] max-lg:text-sm text-center text-base not-italic font-normal leading-[normal]">Top Level Masters</p>
-            </div>
+            <div className="inline-flex shrink-0 flex-col max-lg:gap-6 lg:h-[245px] lg:justify-between">
+              <div className="max-lg:h-12.5 flex flex-col items-end justify-center max-lg:items-start lg:gap-[-4px]">
+                <p className="font-bold not-italic leading-[normal] text-white max-lg:text-[40px] max-lg:tracking-[-1.6px] lg:text-6xl lg:tracking-[-2.4px]">
+                  12+
+                </p>
+                <p className="text-center text-base font-normal not-italic leading-[normal] text-[rgba(255,255,255,0.80)] max-lg:text-sm">
+                  High-Quality Seminars
+                </p>
+              </div>
+              <div className="max-lg:h-12.5 flex flex-col items-end justify-center max-lg:items-start lg:gap-[-4px]">
+                <p className="font-bold not-italic leading-[normal] text-white max-lg:text-[40px] max-lg:tracking-[-1.6px] lg:text-6xl lg:tracking-[-2.4px]">
+                  30+
+                </p>
+                <p className="text-center text-base font-normal not-italic leading-[normal] text-[rgba(255,255,255,0.80)] max-lg:text-sm">
+                  Top Level Masters
+                </p>
+              </div>
             </div>
           </div>
         </div>
-        <div class="flex lg:max-w-[1199px] flex-col justify-center items-center lg:gap-8 shadow-[0px_30px_60px_0px_rgba(189,192,199,0.10)] mx-auto mt-[92px] pb-10 rounded-2xl bg-white hidden lg:flex">
-          <div class="text-[#1F2B3D] text-xl not-italic font-medium leading-[normal] tracking-[0.8px] uppercase lg:mt-10 lg:mb-8">
-            Presentations from 15+ top level companies and masters
-          </div>
-          <div class="flex flex-row flex-wrap justify-between items-center self-stretch lg:w-[1063px] lg:h-[70px] mx-auto">
-            <a href="https://www.apple.com">
-              <img src="source/logos/Apple.png" />
-            </a>
-            <a href="https://www.ed.ac.uk">
-              <img src="source/logos/Edinburgh.png" />
-            </a>
-            <a href="https://www.epfl.ch/en/">
-              <img src="source/logos/EPFL.png" />
-            </a>
-            <a href="https://www.uga.edu">
-              <img src="source/logos/Georgia.png" />
-            </a>
-            <a href="https://www.google.com">
-              <img src="source/logos/Google.png" />
-            </a>
-            <a href="https://www.london.ac.uk">
-              <img src="source/logos/London.png" />
-            </a>
-            <a href="https://www.sharif.edu">
-              <img class="h-[61.668px] shrink-0" src="source/logos/Sharif.png" />
-            </a>
-            <a href="https://umd.edu">
-              <img src="source/logos/Maryland.png" />
-            </a>
-          </div>
-          <div class="flex flex-row flex-wrap justify-between items-center self-stretch w-[1063px] h-[70px] mx-auto">
-            <a href="https://www.microsoft.com/de-de/">
-              <img src="source/logos/Microsoft.png" />
-            </a>
-            <a href="https://www.mit.edu">
-              <img src="source/logos/MIT.png" />
-            </a>
-            <a href="https://openai.com">
-              <img src="source/logos/OpenAI.png" />
-            </a>
-            <a href="https://www.princeton.edu">
-              <img src="source/logos/Princeton.png" />
-            </a>
-            <a href="https://www.stanford.edu">
-              <img src="source/logos/Stanford.png" />
-            </a>
-            <a href="https://www.upenn.edu">
-              <img src="source/logos/UPenn.png" />
-            </a>
-            <a href="https://uwaterloo.ca">
-              <img src="source/logos/Waterloo.png" />
-            </a>
-            <a href="https://www.universityofcalifornia.edu">
-              <img src="source/logos/California.png" />
-            </a>
+        <div className="flex flex-row items-center justify-center">
+          <div className="mt-[92px] flex w-4/5 flex-col items-center justify-center rounded-2xl bg-white pb-10 shadow-[0px_30px_60px_0px_rgba(189,192,199,0.10)] lg:flex lg:gap-8">
+            <div className="text-xl font-medium uppercase not-italic leading-[normal] tracking-[0.8px] text-[#1F2B3D] lg:mb-8 lg:mt-10">
+              Presentations from 15+ top level companies and masters
+            </div>
+            <div className="mx-auto flex flex-row flex-wrap items-center justify-between self-stretch lg:h-[70px] lg:w-[1063px]">
+              <a href="https://www.apple.com">
+                <img src="source/logos/Apple.png" />
+              </a>
+              <a href="https://www.ed.ac.uk">
+                <img src="source/logos/Edinburgh.png" />
+              </a>
+              <a href="https://www.epfl.ch/en/">
+                <img src="source/logos/EPFL.png" />
+              </a>
+              <a href="https://www.uga.edu">
+                <img src="source/logos/Georgia.png" />
+              </a>
+              <a href="https://www.google.com">
+                <img src="source/logos/Google.png" />
+              </a>
+              <a href="https://www.london.ac.uk">
+                <img src="source/logos/London.png" />
+              </a>
+              <a href="https://www.sharif.edu">
+                <img
+                  className="h-[61.668px] shrink-0"
+                  src="source/logos/Sharif.png"
+                />
+              </a>
+              <a href="https://umd.edu">
+                <img src="source/logos/Maryland.png" />
+              </a>
+            </div>
+            <div className="mx-auto flex h-[70px] w-[1063px] flex-row flex-wrap items-center justify-between self-stretch">
+              <a href="https://www.microsoft.com/de-de/">
+                <img src="source/logos/Microsoft.png" />
+              </a>
+              <a href="https://www.mit.edu">
+                <img src="source/logos/MIT.png" />
+              </a>
+              <a href="https://openai.com">
+                <img src="source/logos/OpenAI.png" />
+              </a>
+              <a href="https://www.princeton.edu">
+                <img src="source/logos/Princeton.png" />
+              </a>
+              <a href="https://www.stanford.edu">
+                <img src="source/logos/Stanford.png" />
+              </a>
+              <a href="https://www.upenn.edu">
+                <img src="source/logos/UPenn.png" />
+              </a>
+              <a href="https://uwaterloo.ca">
+                <img src="source/logos/Waterloo.png" />
+              </a>
+              <a href="https://www.universityofcalifornia.edu">
+                <img src="source/logos/California.png" />
+              </a>
+            </div>
           </div>
         </div>
       </div>
