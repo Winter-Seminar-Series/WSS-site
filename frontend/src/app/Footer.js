@@ -161,7 +161,7 @@ export default function Footer() {
             </a>
           </div>
           <div className="flex items-center justify-between">
-            <p className="mt-6 text-sm">© 2000-2021, All Rights Reserved</p>
+            <p className="mt-6 text-sm">© 2015-2024, All Rights Reserved</p>
           </div>
         </div>
       </div>
@@ -179,8 +179,8 @@ function Timer() {
       }}
     >
       <div className="max-w-screen-lg items-start justify-start">
-        <p className="text-left text-xs uppercase">Overline Goes Here</p>
-        <h1 className="py-2 text-left text-4xl font-semibold">
+        <p className="font-manrope font-medium text-left text-lg text-white/60 uppercase">Overline Goes Here</p>
+        <h1 className="font-manrope font-bold text-4xl text-white mt-1">
           Sign Up and Enjoy it
         </h1>
       </div>
