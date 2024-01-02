@@ -1,15 +1,16 @@
-import Footer from './Footer';
+import Footer2 from './Footer';
 import Header from './Header';
 import Programs from './Programs';
-import Seminars from './Seminars';
-import Staff from './Staff';
+import Seminar from './seminar/Seminar';
+import Staff from './staff/Staff';
+import Footer from './Footer';
 
 export default function Home() {
   return (
     <>
       <Header />
       <Programs />
-      <Seminars />
+      <Seminar />
       <Staff />
       <Footer />
     </>
