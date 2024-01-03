@@ -60,9 +60,6 @@ module.exports = {
         dodgerblue: 'rgba(15, 122, 219, 0.8)',
       },
       spacing: {},
-      fontFamily: {
-        manrope: 'Manrope',
-      },
       borderRadius: {
         '77xl': '96px',
         '21xl': '40px',
