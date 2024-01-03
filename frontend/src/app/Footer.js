@@ -3,7 +3,7 @@ export default function Footer() {
   return (
     <footer className="bg-white text-center text-gray-700">
       <Timer />
-      <div className="space-y-6 pe-28 ps-28">
+      <div className="mt-6 space-y-6 pe-28 ps-28">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-4">
             <a
@@ -95,7 +95,7 @@ export default function Footer() {
               height="48"
             />
             <div className="mx-auto max-w-screen-lg space-y-1">
-              <p className="flex items-center justify-start text-sm text-gray-400">
+              <p className="flex items-center justify-start text-sm text-lightslategray">
                 Location
               </p>
               <p className="flex items-center justify-start text-sm font-semibold">
@@ -111,7 +111,7 @@ export default function Footer() {
           >
             <img src="/source/more.svg" alt="Location" width="48" height="48" />
             <div className="mx-auto max-w-screen-lg space-y-1">
-              <p className="flex items-center justify-start text-sm text-gray-400">Address</p>
+              <p className="flex items-center justify-start text-sm text-lightslategray">Address</p>
               <p className="flex items-center justify-start text-sm font-semibold">
                 Azadi Street, District 2, Tehran, Iran
               </p>
@@ -123,7 +123,7 @@ export default function Footer() {
           >
             <img src="/source/email.svg" alt="Email" width="48" height="48" />
             <div className="mx-auto max-w-screen-lg space-y-1">
-              <p className="flex items-center justify-start text-sm text-gray-400">Mail</p>
+              <p className="flex items-center justify-start text-sm text-lightslategray">Mail</p>
               <p className="flex items-center justify-start text-sm font-semibold">
                 wss@ce.sharif.edu
               </p>
@@ -135,14 +135,14 @@ export default function Footer() {
           >
             <img src="/source/call.svg" alt="Phone" width="48" height="48" />
             <div className="mx-auto max-w-screen-lg space-y-1">
-              <p className="flex items-center justify-start text-sm text-gray-400">Tel</p>
+              <p className="flex items-center justify-start text-sm text-lightslategray">Tel</p>
               <p className="flex items-center justify-start text-sm font-semibold">
                 +98 (021) 66 16 57 8
               </p>
             </div>
           </a>
         </div>
-        <div className="flex items-center justify-between pb-4 text-gray-400">
+        <div className="flex items-center justify-between pb-4 text-lightslategray">
           <div className="flex items-center gap-4">
             <a href="" className="flex items-center justify-center gap-2">
               <p className="mt-4 text-sm">About us</p>
@@ -180,7 +180,7 @@ function Timer() {
     >
       <div className="max-w-screen-lg items-start justify-start">
         <p className="font-manrope font-medium text-left text-lg text-white/60 uppercase">Overline Goes Here</p>
-        <h1 className="font-manrope font-bold text-13xl text-white -mt-3">
+        <h1 className="font-manrope font-bold text-13xl text-white">
           Sign Up and Enjoy it
         </h1>
       </div>
@@ -219,7 +219,7 @@ function Timer() {
           <span className="pt-3 text-xs font-light">SECONDS</span>
         </div>
       </div>
-      <button className="rounded-md bg-white px-8 py-5 font-bold transition-colors text-lg hover:bg-gray-100">
+      <button className="rounded-md bg-white px-8 py-5 text-darkslategray-100 font-bold transition-colors text-lg hover:bg-gray-100">
         Register Now →
       </button>
     </div>
