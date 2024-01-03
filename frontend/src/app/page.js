@@ -4,6 +4,9 @@ import Seminar from './seminar/Seminar';
 import Staff from './staff/Staff';
 import Footer from './Footer';
 import Form from './forms/Form';
+import SignUpForm from './forms/SignUpForm';
+import LogInForm from './forms/LogInForm';
+import PasswordResetForm from './forms/PasswordResetForm';
 
 export default function Home() {
   return (
@@ -13,11 +16,9 @@ export default function Home() {
       {/*<Seminar />*/}
       {/*<Staff />*/}
       {/*<Footer />*/}
-      <Form formType={'signUp'} overline={'Overline goes here'} title={'Sign Up'} fields={[
-        { title: 'Email', hint: 'Enter your email', type: 'email' },
-        { title: 'Password', hint: 'Enter your password', type: 'password' },
-        { title: 'Confirm Password', hint: 'Confirm your password', type: 'password' },
-      ]} />
+      <SignUpForm/>
+      <LogInForm/>
+      <PasswordResetForm/>
     </div>
   );
 }

@@ -10,7 +10,10 @@ export default function StaffCard({
   person: Staff;
 }) {
   return (
-    <div className={'flex flex-col items-center justify-center px-5 font-manrope'}>
+    <div
+      key={key}
+      className={'flex flex-col items-center justify-center px-5 font-manrope'}
+    >
       <Image
         src={person.image}
         alt={person.name + ' ' + person.surname}
@@ -21,7 +24,9 @@ export default function StaffCard({
       <div className={'pt-3 text-base font-semibold text-black'}>
         {person.name} {person.surname}
       </div>
-      <div className={'text-xs font-normal text-lightslategray'}>{person.team}</div>
+      <div className={'text-xs font-normal text-lightslategray'}>
+        {person.team}
+      </div>
     </div>
   );
 }

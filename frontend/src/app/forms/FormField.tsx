@@ -1,19 +1,32 @@
 import React from 'react';
 import { FieldType } from './Form';
+import { FormType } from './Form';
 
-export default function FormField({ title, hint, type }: FieldType) {
+export default function FormField({ key, formType, title, placeholder, type }: {
+  key: string,
+  formType: FormType
+} & FieldType) {
   return (
-    <div className={'flex flex-col items-center justify-center w-full'}>
-      <div className={'flex flex-col items-start justify-center w-full'}>
-        <label htmlFor={title}
-               className={'font-manrope font-medium text-left text-base text-lightslategray uppercase'}>
+    <div
+      key={key}
+      className={'flex flex-col mt-7'}
+    >
+      <div className={'flex justify-between'}>
+        <label className={'uppercase text-lightslategray font-medium text-base tracking-wide'} htmlFor={key}>
           {title}
         </label>
-        <input id={title}
-               type={type}
-               className={'w-full px-4 py-2 mt-2 border border-lightslategray rounded-lg focus:outline-none focus:ring-2 focus:ring-darkslategray/50'}
-               placeholder={hint} />
+        {
+          formType == 'logIn' && title == 'Password' && (
+            <span className={'text-primary font-medium underline cursor-pointer'}>
+              Forgot password?
+            </span>
+          )
+        }
       </div>
+      <input
+        className={'text-darkslategray/100 placeholder-lightslategray h-14 border border-lightslategray rounded-md mt-2 pl-3 p-2'}
+        type={type} placeholder={placeholder} id={key}
+      />
     </div>
   );
 }

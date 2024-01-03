@@ -3,32 +3,54 @@ import FormHeader from './FormHeader';
 import Image from 'next/image';
 import BeautifulImage from './assets/beautiful image.svg';
 import CurveBackground from './assets/curve background.svg';
+import FormFields from './FormFields';
+import SubButtonText from './SubButtonText';
 
 export type FieldType = {
-
-  title: string,
-  hint: string,
-  type: 'text' | 'password' | 'email',
-}
+  title: string;
+  placeholder: string;
+  type: 'text' | 'password' | 'email';
+};
 
 export type FieldsType = FieldType[];
 
-export default function Form({ formType, overline, title, fields, submitText = 'Submit', onSubmit }: {
-  formType: 'signUp' | 'logIn' | 'resetPassword',
+export type FormType = 'signUp' | 'logIn' | 'resetPassword';
+
+export default function Form({
+                               formType,
+                               overline,
+                               title,
+                               fields,
+                               submitText = 'Submit',
+                               onSubmit,
+                             }: {
+  formType: FormType,
   overline: string,
   title: string,
   fields: FieldsType,
   submitText?: string,
-  onSubmit?: (e: React.FormEvent<HTMLFormElement>) => void,
+  onSubmit?: () => void,
 }) {
   return (
-    <div style={{ backgroundImage: `url(${CurveBackground.src})` }}
-         className={'flex justify-between'}>
-      <div>
+    <div
+      style={{ backgroundImage: `url(${CurveBackground.src})` }}
+      className={'flex justify-between'}
+    >
+      <div className={'pt-20 ml-40 w-1/3'}>
         <FormHeader overline={overline} title={title} />
-
+        <FormFields formType={formType} fields={fields} />
+        <button
+          onClick={onSubmit}
+          className={'bg-secondary text-white h-16 w-full rounded-md mt-8 text-lg font-medium'}
+        >
+          {submitText}
+        </button>
+        <SubButtonText formType={formType} />
       </div>
-      <Image src={BeautifulImage} alt={'Beautiful Image of a mountain and sea'} />
+      <Image
+        src={BeautifulImage}
+        alt={'Beautiful Image of a mountain and sea'}
+      />
     </div>
-  );
+  )
 }

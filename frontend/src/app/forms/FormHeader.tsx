@@ -1,15 +1,27 @@
 import React from 'react';
 
-export default function FormHeader({ overline, title }: { overline: string, title: string }) {
+export default function FormHeader({
+  overline,
+  title,
+}: {
+  overline: string;
+  title: string;
+}) {
   return (
-    <div className={'flex items-center justify-between px-32 pt-20'}>
+    <div className={'flex items-center justify-between leading-[76px]'}>
       <div>
         <div
-          className={'font-manrope font-medium text-left text-base text-lightslategray uppercase'}
+          className={
+            'text-left font-manrope text-base font-medium uppercase text-lightslategray'
+          }
         >
           {overline}
         </div>
-        <div className={'-mt-2 font-manrope text-[76px] font-bold text-darkslategray/100'}>
+        <div
+          className={
+            'text-darkslategray/100 -mt-2 font-manrope text-[76px] font-bold'
+          }
+        >
           {title}
         </div>
       </div>
