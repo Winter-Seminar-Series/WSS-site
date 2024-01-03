@@ -1,7 +1,7 @@
 import React from 'react';
 import Image from 'next/image';
 
-export default function ViewAllButton({ text }: { text: string; }) {
+export default function ViewAllButton({ text }: { text: string }) {
   return (
     <button
       className={

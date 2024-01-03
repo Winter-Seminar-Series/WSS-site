@@ -3,20 +3,18 @@ import { FormType } from './Form';
 
 export default function SubButtonText({ formType }: { formType: FormType }) {
   return (
-    <div className={'flex mt-5'}>
+    <div className={'mt-5 flex'}>
       <p className={'text-darkslategray/100 text-lg'}>
-        {
-          formType !== 'resetPassword' && (formType === 'signUp'
+        {formType !== 'resetPassword' &&
+          (formType === 'signUp'
             ? 'Already have an account?'
-            : 'Don\'t have an account?')
-        }
-        <span className={'text-primary font-medium ml-1 underline cursor-pointer'}>
-          {
-            formType !== 'resetPassword' && (formType === 'signUp'
-              ? 'Log in'
-              : 'Sign up')
-          }
-          </span>
+            : "Don't have an account?")}
+        <span
+          className={'ml-1 cursor-pointer font-medium text-primary underline'}
+        >
+          {formType !== 'resetPassword' &&
+            (formType === 'signUp' ? 'Log in' : 'Sign up')}
+        </span>
       </p>
     </div>
   );

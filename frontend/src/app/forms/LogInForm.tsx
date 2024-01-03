@@ -8,8 +8,16 @@ export default function LogInForm() {
       overline={'Overline goes here'}
       title={'Log In'}
       fields={[
-        { title: 'Email', placeholder: 'Enter your email address', type: 'email' },
-        { title: 'Password', placeholder: 'Enter your password', type: 'password' },
+        {
+          title: 'Email',
+          placeholder: 'Enter your email address',
+          type: 'email',
+        },
+        {
+          title: 'Password',
+          placeholder: 'Enter your password',
+          type: 'password',
+        },
       ]}
     />
   );

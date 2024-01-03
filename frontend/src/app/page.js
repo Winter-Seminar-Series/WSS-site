@@ -16,9 +16,9 @@ export default function Home() {
       {/*<Seminar />*/}
       {/*<Staff />*/}
       {/*<Footer />*/}
-      <SignUpForm/>
-      <LogInForm/>
-      <PasswordResetForm/>
+      <SignUpForm />
+      <LogInForm />
+      <PasswordResetForm />
     </div>
   );
 }

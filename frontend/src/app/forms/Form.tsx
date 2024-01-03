@@ -17,31 +17,33 @@ export type FieldsType = FieldType[];
 export type FormType = 'signUp' | 'logIn' | 'resetPassword';
 
 export default function Form({
-                               formType,
-                               overline,
-                               title,
-                               fields,
-                               submitText = 'Submit',
-                               onSubmit,
-                             }: {
-  formType: FormType,
-  overline: string,
-  title: string,
-  fields: FieldsType,
-  submitText?: string,
-  onSubmit?: () => void,
+  formType,
+  overline,
+  title,
+  fields,
+  submitText = 'Submit',
+  onSubmit,
+}: {
+  formType: FormType;
+  overline: string;
+  title: string;
+  fields: FieldsType;
+  submitText?: string;
+  onSubmit?: () => void;
 }) {
   return (
     <div
       style={{ backgroundImage: `url(${CurveBackground.src})` }}
       className={'flex justify-between'}
     >
-      <div className={'pt-20 ml-40 w-1/3'}>
+      <div className={'ml-40 w-1/3 pt-20'}>
         <FormHeader overline={overline} title={title} />
         <FormFields formType={formType} fields={fields} />
         <button
           onClick={onSubmit}
-          className={'bg-secondary text-white h-16 w-full rounded-md mt-8 text-lg font-medium'}
+          className={
+            'mt-8 h-16 w-full rounded-md bg-secondary text-lg font-medium text-white'
+          }
         >
           {submitText}
         </button>
@@ -52,5 +54,5 @@ export default function Form({
         alt={'Beautiful Image of a mountain and sea'}
       />
     </div>
-  )
+  );
 }
