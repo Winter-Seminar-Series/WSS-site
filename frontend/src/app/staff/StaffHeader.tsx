@@ -9,7 +9,7 @@ export default function StaffHeader() {
           Overline Goes Here
         </div>
         <div
-          className={'-mt-2 font-manrope text-[64px] font-bold text-darkslategray-100'}
+          className={'-mt-2 font-manrope text-45xl font-bold text-darkslategray-100'}
         >
           Staff Members
         </div>
