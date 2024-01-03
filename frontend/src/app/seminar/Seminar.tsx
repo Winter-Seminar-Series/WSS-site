@@ -1,5 +1,5 @@
 import React from 'react';
-import SeminarHeader from './SminarHeader';
+import SeminarHeader from './SeminarHeader';
 import Background from './assets/background.svg';
 import SeminarLine from './SeminarLine';
 import ViewAllButton from './ViewAllButton';

@@ -180,7 +180,7 @@ function Timer() {
     >
       <div className="max-w-screen-lg items-start justify-start">
         <p className="font-manrope font-medium text-left text-lg text-white/60 uppercase">Overline Goes Here</p>
-        <h1 className="font-manrope font-bold text-4xl text-white mt-1">
+        <h1 className="font-manrope font-bold text-13xl text-white -mt-3">
           Sign Up and Enjoy it
         </h1>
       </div>
@@ -219,7 +219,7 @@ function Timer() {
           <span className="pt-3 text-xs font-light">SECONDS</span>
         </div>
       </div>
-      <button className="rounded-md bg-white px-6 py-3 font-semibold text-purple-950 transition-colors hover:bg-gray-100">
+      <button className="rounded-md bg-white px-8 py-5 font-bold transition-colors text-lg hover:bg-gray-100">
         Register Now →
       </button>
     </div>
