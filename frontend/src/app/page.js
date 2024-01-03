@@ -1,4 +1,3 @@
-import Footer2 from './Footer';
 import Header from './Header';
 import Programs from './Programs';
 import Seminar from './seminar/Seminar';
