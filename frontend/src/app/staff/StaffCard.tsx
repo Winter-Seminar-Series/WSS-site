@@ -24,7 +24,7 @@ export default function StaffCard({
       <div className={'pt-3 text-base font-semibold text-black'}>
         {person.name} {person.surname}
       </div>
-      <div className={'text-xs font-normal text-[#8A8998]'}>{person.team}</div>
+      <div className={'text-xs font-normal text-lightslategray'}>{person.team}</div>
     </div>
   );
 }
