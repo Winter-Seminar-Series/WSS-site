@@ -1,3 +1,5 @@
+import Image from 'next/image'
+
 // components/Footer.js
 export default function Footer() {
   return (
@@ -219,8 +221,15 @@ function Timer() {
           <span className="pt-3 text-xs font-light">SECONDS</span>
         </div>
       </div>
-      <button className="rounded-md bg-white px-8 py-5 text-darkslategray-100 font-bold transition-colors text-lg hover:bg-gray-100">
-        Register Now →
+      <button className="rounded-md w-50 bg-white px-8 py-5 text-darkslategray-100 font-bold transition-colors text-lg flex items-center justify-center hover:bg-gray-100">
+        <div>Register Now</div>
+        <Image
+        src={'/source/arrow_right_black.svg'}
+        alt={'view all arrow'}
+        width={20}
+        height={20}
+        className={'ml-3'}
+      />
       </button>
     </div>
   );

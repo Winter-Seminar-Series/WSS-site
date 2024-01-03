@@ -1,5 +1,4 @@
 import React from 'react';
-import Arrow from './assets/view all arrow.svg';
 import Image from 'next/image';
 
 export default function ViewAllButton({
@@ -17,10 +16,10 @@ export default function ViewAllButton({
     >
       <div>{text}</div>
       <Image
-        src={Arrow}
+        src={'/source/arrow_right_black.svg'}
         alt={'view all arrow'}
-        width={width}
-        height={width}
+        width={20}
+        height={20}
         className={'ml-3'}
       />
     </button>
