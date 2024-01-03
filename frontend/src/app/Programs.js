@@ -1,3 +1,5 @@
+import Image from 'next/image';
+
 export default function Programs() {
   return (
     <div className="Programs relative h-[1469px] w-full overflow-auto overflow-hidden bg-white">
@@ -6,12 +8,11 @@ export default function Programs() {
 
       <ProgramsArea />
       <ItemsTag />
-      <Button text={buttonText} img={arrowPic} />
+      <Button text={buttonText} />
     </div>
   );
 }
 
-const arrowPic = '/arrow--right@2x.png';
 const buttonText = 'More About WSS';
 
 const items = [
@@ -51,17 +52,17 @@ function ProgramsArea() {
   );
 }
 
-function Button({ text, img }) {
+function Button({ text }) {
   return (
-    <div className="AutoLayoutHorizontal absolute left-[calc(50%_-_121px)] top-[1298px] flex h-16 w-52 items-center items-center justify-center gap-2.5 rounded-md bg-secondary px-8">
-      <div className="MoreAboutWss font-['Manrope'] text-lg font-bold text-white">
-        {text}
-      </div>
-      <div className="ArrowRight relative h-6 w-6">
-        <img
-          className="relative h-6 w-6 shrink-0 justify-center overflow-hidden object-cover"
-          alt="arrow"
-          src={img}
+    <div className="AutoLayoutHorizontal absolute left-[calc(50%_-_121px)] top-[1298px] flex h-16 w-64 items-center items-center justify-center gap-2.5 rounded-md bg-secondary px-8 mt-10 text-white">
+      <div className="font-['Manrope'] text-lg font-bold">{text}</div>
+      <div className="relative h-6 w-6">
+        <Image
+          src={'/source/arrow_right_white.svg'}
+          alt=''
+          width={20}
+          height={20}
+          className={'ml-3'}
         />
       </div>
     </div>
