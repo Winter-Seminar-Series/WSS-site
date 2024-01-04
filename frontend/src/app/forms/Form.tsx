@@ -34,9 +34,9 @@ export default function Form({
   return (
     <div
       style={{ backgroundImage: `url(${CurveBackground.src})` }}
-      className={'flex justify-between'}
+      className={'flex min-h-screen'}
     >
-      <div className={'ml-40 w-1/3 pt-20'}>
+      <div className={'mx-20 w-1/3 shrink-0 pt-20'}>
         <FormHeader overline={overline} title={title} />
         <FormFields formType={formType} fields={fields} />
         <button
@@ -51,6 +51,7 @@ export default function Form({
       </div>
       <Image
         src={BeautifulImage}
+        className="grow self-stretch object-cover"
         alt={'Beautiful Image of a mountain and sea'}
       />
     </div>
