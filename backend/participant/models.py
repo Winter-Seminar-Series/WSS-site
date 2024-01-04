@@ -14,6 +14,7 @@ class ParticipantInfo(models.Model):
 class Participant(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     info = models.ForeignKey(ParticipantInfo, on_delete=models.SET_NULL, blank=True, null=True)
+    password_reset_code = models.CharField(max_length=5, blank=True)
 
 class ParticipationType(models.Model):
     name = models.CharField(max_length=50)
