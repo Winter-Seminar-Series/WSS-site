@@ -84,7 +84,7 @@ SIMPLE_JWT = {
     "JTI_CLAIM": "jti",
 
     "SLIDING_TOKEN_REFRESH_EXP_CLAIM": "refresh_exp",
-    "SLIDING_TOKEN_LIFETIME": timedelta(minutes=5),
+    "SLIDING_TOKEN_LIFETIME": timedelta(minutes=30),
     "SLIDING_TOKEN_REFRESH_LIFETIME": timedelta(days=1),
 
     "TOKEN_OBTAIN_SERIALIZER": "rest_framework_simplejwt.serializers.TokenObtainPairSerializer",
@@ -187,4 +187,12 @@ STORAGES = {
             "AWS_S3_CUSTOM_DOMAIN": "https://s3.ir-thr-at1.arvanstorage.com/",
         },
     },
+    "staticfiles": {
+        "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
+    },
 }
+
+AUTHENTICATION_BACKENDS = [
+    'core.models.EmailModelBackend',
+    'django.contrib.auth.backends.ModelBackend',
+]
