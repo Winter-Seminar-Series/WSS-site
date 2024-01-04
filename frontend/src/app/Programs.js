@@ -54,12 +54,12 @@ function ProgramsArea() {
 
 function Button({ text }) {
   return (
-    <div className="AutoLayoutHorizontal absolute left-[calc(50%_-_121px)] top-[1298px] flex h-16 w-64 items-center items-center justify-center gap-2.5 rounded-md bg-secondary px-8 mt-10 text-white">
+    <div className="AutoLayoutHorizontal absolute left-[calc(50%_-_121px)] top-[1298px] mt-10 flex h-16 w-64 items-center items-center justify-center gap-2.5 rounded-md bg-secondary px-8 text-white">
       <div className="font-['Manrope'] text-lg font-bold">{text}</div>
       <div className="relative h-6 w-6">
         <Image
           src={'/source/arrow_right_white.svg'}
-          alt=''
+          alt=""
           width={20}
           height={20}
           className={'ml-3'}

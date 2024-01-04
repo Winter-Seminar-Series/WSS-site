@@ -1,4 +1,4 @@
-import Image from 'next/image'
+import Image from 'next/image';
 
 // components/Footer.js
 export default function Footer() {
@@ -113,7 +113,9 @@ export default function Footer() {
           >
             <img src="/source/more.svg" alt="Location" width="48" height="48" />
             <div className="mx-auto max-w-screen-lg space-y-1">
-              <p className="flex items-center justify-start text-sm text-lightslategray">Address</p>
+              <p className="flex items-center justify-start text-sm text-lightslategray">
+                Address
+              </p>
               <p className="flex items-center justify-start text-sm font-semibold">
                 Azadi Street, District 2, Tehran, Iran
               </p>
@@ -125,7 +127,9 @@ export default function Footer() {
           >
             <img src="/source/email.svg" alt="Email" width="48" height="48" />
             <div className="mx-auto max-w-screen-lg space-y-1">
-              <p className="flex items-center justify-start text-sm text-lightslategray">Mail</p>
+              <p className="flex items-center justify-start text-sm text-lightslategray">
+                Mail
+              </p>
               <p className="flex items-center justify-start text-sm font-semibold">
                 wss@ce.sharif.edu
               </p>
@@ -137,7 +141,9 @@ export default function Footer() {
           >
             <img src="/source/call.svg" alt="Phone" width="48" height="48" />
             <div className="mx-auto max-w-screen-lg space-y-1">
-              <p className="flex items-center justify-start text-sm text-lightslategray">Tel</p>
+              <p className="flex items-center justify-start text-sm text-lightslategray">
+                Tel
+              </p>
               <p className="flex items-center justify-start text-sm font-semibold">
                 +98 (021) 66 16 57 8
               </p>
@@ -181,55 +187,57 @@ function Timer() {
       }}
     >
       <div className="max-w-screen-lg items-start justify-start">
-        <p className="font-manrope font-medium text-left text-lg text-white/60 uppercase">Overline Goes Here</p>
-        <h1 className="font-manrope font-bold text-13xl text-white">
+        <p className="text-left font-manrope text-lg font-medium uppercase text-white/60">
+          Overline Goes Here
+        </p>
+        <h1 className="font-manrope text-13xl font-bold text-white">
           Sign Up and Enjoy it
         </h1>
       </div>
       <div className="flex space-x-4">
         <div className="flex flex-col items-center">
-          <span className="w-12 rounded-md border border-white border-opacity-25 p-2 text-2xl font-normal ">
+          <span className="text-2xl w-12 rounded-md border border-white border-opacity-25 p-2 font-normal ">
             21
           </span>
           <span className="pt-3 text-xs font-light">DAYS</span>
         </div>
         <div className="flex flex-col items-center">
-          <span className="py-2 text-3xl font-semibold">:</span>
+          <span className="text-3xl py-2 font-semibold">:</span>
         </div>
         <div className="flex flex-col items-center">
-          <span className="w-12 rounded-md border border-white border-opacity-25 p-2 text-2xl font-normal ">
+          <span className="text-2xl w-12 rounded-md border border-white border-opacity-25 p-2 font-normal ">
             16
           </span>
           <span className="pt-3 text-xs font-light">HOURS</span>
         </div>
         <div className="flex flex-col items-center">
-          <span className="py-2 text-3xl font-semibold">:</span>
+          <span className="text-3xl py-2 font-semibold">:</span>
         </div>
         <div className="flex flex-col items-center">
-          <span className="w-12 rounded-md border border-white border-opacity-25 p-2 text-2xl font-normal ">
+          <span className="text-2xl w-12 rounded-md border border-white border-opacity-25 p-2 font-normal ">
             05
           </span>
           <span className="pt-3 text-xs font-light">MINUTES</span>
         </div>
         <div className="flex flex-col items-center">
-          <span className="py-2 text-3xl font-semibold">:</span>
+          <span className="text-3xl py-2 font-semibold">:</span>
         </div>
         <div className="flex flex-col items-center">
-          <span className="w-12 rounded-md border border-white border-opacity-25 p-2 text-2xl font-normal ">
+          <span className="text-2xl w-12 rounded-md border border-white border-opacity-25 p-2 font-normal ">
             45
           </span>
           <span className="pt-3 text-xs font-light">SECONDS</span>
         </div>
       </div>
-      <button className="rounded-md w-50 bg-white px-8 py-5 text-darkslategray-100 font-bold transition-colors text-lg flex items-center justify-center hover:bg-gray-100">
+      <button className="w-50 flex items-center justify-center rounded-md bg-white px-8 py-5 text-lg font-bold text-darkslategray-100 transition-colors hover:bg-gray-100">
         <div>Register Now</div>
         <Image
-        src={'/source/arrow_right_black.svg'}
-        alt={'view all arrow'}
-        width={20}
-        height={20}
-        className={'ml-3'}
-      />
+          src={'/source/arrow_right_black.svg'}
+          alt={'view all arrow'}
+          width={20}
+          height={20}
+          className={'ml-3'}
+        />
       </button>
     </div>
   );

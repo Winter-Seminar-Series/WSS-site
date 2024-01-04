@@ -1,17 +1,11 @@
 import React from 'react';
 import Image from 'next/image';
 
-export default function ViewAllButton({
-  text,
-  width,
-}: {
-  text: string;
-  width?: number;
-}) {
+export default function ViewAllButton({ text }: { text: string }) {
   return (
     <button
       className={
-        'bg-secondary mb-3 flex items-center justify-center rounded-md px-8 py-5 font-manrope text-lg font-bold text-white'
+        'mb-3 flex items-center justify-center rounded-md bg-secondary px-8 py-5 font-manrope text-lg font-bold text-white'
       }
     >
       <div>{text}</div>
