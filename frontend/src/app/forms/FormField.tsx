@@ -3,17 +3,15 @@ import { FieldType } from './Form';
 import { FormType } from './Form';
 
 export default function FormField({
-  key,
   formType,
   title,
   placeholder,
   type,
 }: {
-  key: string;
   formType: FormType;
 } & FieldType) {
   return (
-    <div key={key} className={'mt-7 flex flex-col'}>
+    <div className={'mt-7 flex flex-col'}>
       <div className={'flex justify-between'}>
         <label
           className={

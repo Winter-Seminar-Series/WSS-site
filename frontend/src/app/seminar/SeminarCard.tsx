@@ -6,18 +6,9 @@ import { Person } from './Seminar';
 import Image from 'next/image';
 import SeminarLogo from './SeminarLogo';
 
-export default function SeminarCard({
-  key,
-  person,
-}: {
-  key: number;
-  person: Person;
-}) {
+export default function SeminarCard({ person }: { person: Person }) {
   return (
-    <div
-      key={key}
-      className={'w-fit flex-col items-center justify-between px-5 pt-20'}
-    >
+    <div className={'w-fit flex-col items-center justify-between px-5 pt-20'}>
       <div className={'relative z-10 mx-auto flex w-fit justify-end'}>
         <div className={'absolute z-10 mr-2 mt-1 flex-col'}>
           <SeminarLogo logo={linkedin.src} alt={'linkedin'} />

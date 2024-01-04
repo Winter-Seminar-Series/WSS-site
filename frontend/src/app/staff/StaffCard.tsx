@@ -2,16 +2,9 @@ import React from 'react';
 import { Staff } from './Staff';
 import Image from 'next/image';
 
-export default function StaffCard({
-  key,
-  person,
-}: {
-  key: number;
-  person: Staff;
-}) {
+export default function StaffCard({ person }: { person: Staff }) {
   return (
     <div
-      key={key}
       className={'flex flex-col items-center justify-center px-5 font-manrope'}
     >
       <Image
