@@ -7,20 +7,20 @@ export default function StaffHeader() {
       <div>
         <div
           className={
-            'text-left font-manrope text-lg font-medium uppercase text-lightslategray'
+            'font-manrope text-left text-lg font-medium uppercase text-lightslategray'
           }
         >
           Overline Goes Here
         </div>
         <div
           className={
-            '-mt-2 font-manrope text-45xl font-bold text-darkslategray-100'
+            'font-manrope text-45xl -mt-2 font-bold text-darkslategray-100'
           }
         >
           Staff Members
         </div>
       </div>
-      <ViewAllButton text={'View All'} width={20} />
+      <ViewAllButton text={'View All'} />
     </div>
   );
 }

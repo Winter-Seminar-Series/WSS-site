@@ -12,14 +12,14 @@ export default function FormHeader({
       <div>
         <div
           className={
-            'text-left font-manrope text-base font-medium uppercase text-lightslategray'
+            'font-manrope text-left text-base font-medium uppercase text-lightslategray'
           }
         >
           {overline}
         </div>
         <div
           className={
-            'text-darkslategray/100 -mt-2 font-manrope text-[76px] font-bold'
+            'text-darkslategray/100 font-manrope -mt-2 text-[76px] font-bold'
           }
         >
           {title}

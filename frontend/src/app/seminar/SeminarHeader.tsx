@@ -9,12 +9,12 @@ export default function SeminarHeader() {
       <div>
         <div
           className={
-            'text-left font-manrope text-lg font-medium uppercase text-white/60'
+            'font-manrope text-left text-lg font-medium uppercase text-white/60'
           }
         >
           Overline Goes Here
         </div>
-        <div className={'-mt-2 font-manrope text-45xl font-bold text-white'}>
+        <div className={'font-manrope text-45xl -mt-2 font-bold text-white'}>
           Seminars
         </div>
       </div>

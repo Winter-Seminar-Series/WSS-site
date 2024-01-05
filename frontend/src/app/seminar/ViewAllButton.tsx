@@ -11,7 +11,7 @@ export default function ViewAllButton({
   return (
     <button
       className={
-        'm-auto mb-3 flex items-center justify-center rounded-md bg-white px-8 py-5 font-manrope text-lg font-bold'
+        'font-manrope m-auto mb-3 flex items-center justify-center rounded-md bg-white px-8 py-5 text-lg font-bold'
       }
     >
       <div>{text}</div>

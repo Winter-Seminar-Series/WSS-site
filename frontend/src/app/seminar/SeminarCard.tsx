@@ -25,7 +25,7 @@ export default function SeminarCard({ person }: { person: Person }) {
       </div>
       <div
         className={
-          'z-0 w-[230px] -translate-y-[50%] rounded-lg bg-white pb-5 pl-4 pt-[40%] font-manrope text-sm font-normal text-[#8A8998]'
+          'font-manrope z-0 w-[230px] -translate-y-[50%] rounded-lg bg-white pb-5 pl-4 pt-[40%] text-sm font-normal text-[#8A8998]'
         }
       >
         <div className={'pb-1 pt-3.5 text-xl font-semibold text-black'}>

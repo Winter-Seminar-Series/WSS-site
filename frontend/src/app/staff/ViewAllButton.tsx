@@ -5,7 +5,7 @@ export default function ViewAllButton({ text }: { text: string }) {
   return (
     <button
       className={
-        'mb-3 flex items-center justify-center rounded-md bg-secondary px-8 py-5 font-manrope text-lg font-bold text-white'
+        'font-manrope mb-3 flex items-center justify-center rounded-md bg-secondary px-8 py-5 text-lg font-bold text-white'
       }
     >
       <div>{text}</div>

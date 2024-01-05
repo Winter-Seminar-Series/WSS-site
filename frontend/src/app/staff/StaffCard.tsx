@@ -5,7 +5,7 @@ import Image from 'next/image';
 export default function StaffCard({ person }: { person: Staff }) {
   return (
     <div
-      className={'flex flex-col items-center justify-center px-5 font-manrope'}
+      className={'font-manrope flex flex-col items-center justify-center px-5'}
     >
       <Image
         src={person.image}

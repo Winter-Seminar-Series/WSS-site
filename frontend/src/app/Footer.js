@@ -187,7 +187,7 @@ function Timer() {
       }}
     >
       <div className="max-w-screen-lg items-start justify-start">
-        <p className="text-left font-manrope text-lg font-medium uppercase text-white/60">
+        <p className="font-manrope text-left text-lg font-medium uppercase text-white/60">
           Overline Goes Here
         </p>
         <h1 className="font-manrope text-13xl font-bold text-white">
@@ -196,34 +196,34 @@ function Timer() {
       </div>
       <div className="flex space-x-4">
         <div className="flex flex-col items-center">
-          <span className="text-2xl w-12 rounded-md border border-white border-opacity-25 p-2 font-normal ">
+          <span className="w-12 rounded-md border border-white border-opacity-25 p-2 text-2xl font-normal ">
             21
           </span>
           <span className="pt-3 text-xs font-light">DAYS</span>
         </div>
         <div className="flex flex-col items-center">
-          <span className="text-3xl py-2 font-semibold">:</span>
+          <span className="py-2 text-3xl font-semibold">:</span>
         </div>
         <div className="flex flex-col items-center">
-          <span className="text-2xl w-12 rounded-md border border-white border-opacity-25 p-2 font-normal ">
+          <span className="w-12 rounded-md border border-white border-opacity-25 p-2 text-2xl font-normal ">
             16
           </span>
           <span className="pt-3 text-xs font-light">HOURS</span>
         </div>
         <div className="flex flex-col items-center">
-          <span className="text-3xl py-2 font-semibold">:</span>
+          <span className="py-2 text-3xl font-semibold">:</span>
         </div>
         <div className="flex flex-col items-center">
-          <span className="text-2xl w-12 rounded-md border border-white border-opacity-25 p-2 font-normal ">
+          <span className="w-12 rounded-md border border-white border-opacity-25 p-2 text-2xl font-normal ">
             05
           </span>
           <span className="pt-3 text-xs font-light">MINUTES</span>
         </div>
         <div className="flex flex-col items-center">
-          <span className="text-3xl py-2 font-semibold">:</span>
+          <span className="py-2 text-3xl font-semibold">:</span>
         </div>
         <div className="flex flex-col items-center">
-          <span className="text-2xl w-12 rounded-md border border-white border-opacity-25 p-2 font-normal ">
+          <span className="w-12 rounded-md border border-white border-opacity-25 p-2 text-2xl font-normal ">
             45
           </span>
           <span className="pt-3 text-xs font-light">SECONDS</span>
