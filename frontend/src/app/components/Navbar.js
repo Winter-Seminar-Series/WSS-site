@@ -6,15 +6,16 @@ import Link from 'next/link';
 import Logo from './Logo';
 
 export default function Navbar({ fixed = true }) {
-  const [transparent, setTransparent] = useState(true);
+  const [transparent, setTransparent] = useState(fixed);
 
   useEffect(() => {
+    if (!fixed) return;
     const handleScroll = () => {
       setTransparent(window.scrollY <= 10);
     };
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [fixed]);
 
   return (
     <nav

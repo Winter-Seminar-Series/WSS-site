@@ -5,6 +5,8 @@ import BeautifulImage from './assets/beautiful image.svg';
 import CurveBackground from './assets/curve background.svg';
 import FormFields from './FormFields';
 import SubButtonText from './SubButtonText';
+import Navbar from '../components/Navbar';
+import Footer from '../Footer';
 
 export type FieldType = {
   title: string;
@@ -32,26 +34,34 @@ export default function Form({
   onSubmit?: () => void;
 }) {
   return (
-    <div className="flex min-h-screen max-md:flex-col">
-      <div className="relative shrink-0 px-6 pt-20 md:w-1/2 md:px-10 lg:px-20">
-        <Image alt="" src={CurveBackground} className="absolute left-0 top-0" />
-        <FormHeader overline={overline} title={title} />
-        <FormFields formType={formType} fields={fields} />
-        <button
-          onClick={onSubmit}
-          className={
-            'mt-8 h-16 w-full rounded-md bg-secondary text-lg font-medium text-white'
-          }
-        >
-          {submitText}
-        </button>
-        <SubButtonText formType={formType} />
+    <>
+      <Navbar fixed={false} />
+      <div className="flex max-md:mb-14 max-md:flex-col">
+        <div className="relative shrink-0 px-6 pt-20 md:w-1/2 md:px-10 lg:px-20">
+          <Image
+            alt=""
+            src={CurveBackground}
+            className="absolute left-0 top-0"
+          />
+          <FormHeader overline={overline} title={title} />
+          <FormFields formType={formType} fields={fields} />
+          <button
+            onClick={onSubmit}
+            className={
+              'mt-8 h-16 w-full rounded-md bg-secondary text-lg font-medium text-white'
+            }
+          >
+            {submitText}
+          </button>
+          <SubButtonText formType={formType} />
+        </div>
+        <Image
+          src={BeautifulImage}
+          className="self-stretch object-cover max-md:hidden md:w-1/2"
+          alt={'Beautiful Image of a mountain and sea'}
+        />
       </div>
-      <Image
-        src={BeautifulImage}
-        className="self-stretch object-cover max-md:hidden md:w-1/2"
-        alt={'Beautiful Image of a mountain and sea'}
-      />
-    </div>
+      <Footer />
+    </>
   );
 }
