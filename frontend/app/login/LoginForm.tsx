@@ -1,12 +1,12 @@
 import React from 'react';
-import Form from './Form';
+import Form from '../../ui/forms/Form';
 
-export default function SignUpForm() {
+export default function LogInForm() {
   return (
     <Form
-      formType={'signUp'}
+      formType={'logIn'}
       overline={'Overline goes here'}
-      title={'Sign Up'}
+      title={'Log In'}
       fields={[
         {
           title: 'Email',
@@ -16,11 +16,6 @@ export default function SignUpForm() {
         {
           title: 'Password',
           placeholder: 'Enter your password',
-          type: 'password',
-        },
-        {
-          title: 'Confirm Password',
-          placeholder: 'Confirm your password',
           type: 'password',
         },
       ]}

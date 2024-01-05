@@ -1,24 +1,20 @@
 import React from 'react';
-import Form from './Form';
+import Form from '../../ui/forms/Form';
 
-export default function LogInForm() {
+export default function PasswordResetForm() {
   return (
     <Form
-      formType={'logIn'}
+      formType={'resetPassword'}
       overline={'Overline goes here'}
-      title={'Log In'}
+      title={'Password Reset'}
       fields={[
         {
           title: 'Email',
           placeholder: 'Enter your email address',
           type: 'email',
         },
-        {
-          title: 'Password',
-          placeholder: 'Enter your password',
-          type: 'password',
-        },
       ]}
+      submitText={'Reset Password'}
     />
   );
 }
