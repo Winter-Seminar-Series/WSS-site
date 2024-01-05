@@ -1,26 +1,39 @@
+'use client';
+
+import { useEffect, useState } from 'react';
+import Image from 'next/image';
 import Link from 'next/link';
+import Logo from '../../../public/source/WSS-LOGO.png';
 
 export default function Navbar({ fixed = true }) {
+  const [transparent, setTransparent] = useState(true);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setTransparent(window.scrollY <= 10);
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   return (
     <nav
-      className={`${
-        !fixed ? 'static' : 'fixed left-0 right-0 top-0 z-50'
-      } px-6 py-5`}
+      className={`${!fixed ? 'static' : 'fixed left-0 right-0 top-0 z-50'} ${
+        transparent ? 'bg-transparent text-white' : 'bg-white'
+      } px-6 py-5 duration-200`}
     >
       <div className="mx-auto flex h-[38px] max-w-[1200px] items-center justify-between lg:h-[54px]">
-        <Link
-          href="/"
-          className="shrink-0 max-lg:h-[31.8px] max-lg:w-[40.8px] lg:h-[45.129px] lg:w-[57.98px]"
-        >
-          <img
-            className="relative object-cover max-lg:h-[31.8px] max-lg:w-[40.8px] lg:h-[54px] lg:w-[58px]"
-            src="/source/WSS-LOGO.png"
+        <Link href="/" className="shrink-0">
+          <Image
+            className="max-lg:w-[40.8px] lg:w-[58px]"
+            src={Logo}
+            alt="WSS Logo"
           />
         </Link>
         <div className="hidden items-center justify-center gap-8 lg:flex">
-          <div className="text-base font-medium not-italic leading-[normal] text-neutral-50 no-underline">
+          <div className="text-base font-medium not-italic leading-[normal] no-underline">
             <div className="relative inline-block">
-              <button className="border-[none] bg-[#04aa6d00] p-2.5 text-base text-[white]">
+              <button className="border-[none] bg-[#04aa6d00] p-2.5 text-base">
                 9th WSS
                 {/* <img
                     src={Frame.src}
@@ -40,34 +53,19 @@ export default function Navbar({ fixed = true }) {
               </div>
             </div>
           </div>
-          <Link
-            href="/"
-            className="block px-4 py-3 text-[white] no-underline hover:bg-[#ddd0]"
-          >
+          <Link href="/" className="block px-4 py-3">
             Home
           </Link>
-          <Link
-            href=""
-            className="block px-4 py-3 text-[white] no-underline hover:bg-[#ddd0]"
-          >
+          <a href="" className="block px-4 py-3">
             Seminars
-          </Link>
-          <Link
-            href=""
-            className="block px-4 py-3 text-[white] no-underline hover:bg-[#ddd0]"
-          >
+          </a>
+          <a href="" className="block px-4 py-3">
             Lab Talks
-          </Link>
-          <Link
-            href=""
-            className="block px-4 py-3 text-[white] no-underline hover:bg-[#ddd0]"
-          >
+          </a>
+          <a href="" className="block px-4 py-3">
             Round Tables
-          </Link>
-          <Link
-            href="about.html"
-            className="block px-4 py-3 text-[white] no-underline hover:bg-[#ddd0]"
-          >
+          </a>
+          <Link href="/about" className="block px-4 py-3">
             About Us
           </Link>
         </div>
@@ -94,6 +92,6 @@ export default function Navbar({ fixed = true }) {
   );
 }
 
-Navbar.Placeholder = function NavbarPlaceholder() {
-  return <div className="h-[38px] lg:h-[54px]"></div>;
-};
+export function NavbarPlaceholder() {
+  return <div className="h-[78px] lg:h-[94px]"></div>;
+}

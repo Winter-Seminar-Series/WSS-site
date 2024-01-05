@@ -1,4 +1,4 @@
-import Navbar from './components/Navbar';
+import Navbar, { NavbarPlaceholder } from './components/Navbar';
 import Rectangle from '../../public/source/Rectangle.png';
 
 export default function Header() {
@@ -9,7 +9,7 @@ export default function Header() {
         style={{ backgroundImage: `url(${Rectangle.src})` }}
       >
         <Navbar />
-        <Navbar.Placeholder />
+        <NavbarPlaceholder />
         <div className="h-8 lg:h-16" />
         <div className="mx-auto flex px-6 max-lg:flex-col lg:max-w-[1200px] lg:flex-row">
           <div>
