@@ -1,3 +1,5 @@
+import Rectangle from '../../public/source/Rectangle.png';
+
 export default function Header() {
   return (
     <header className="max-lg:w-90 mb-60">

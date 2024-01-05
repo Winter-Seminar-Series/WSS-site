@@ -1,5 +1,10 @@
-<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-<rect x="0.5" y="0.5" width="47" height="47" rx="7.5" stroke="#E2E7EF"/>
-<path fill-rule="evenodd" clip-rule="evenodd" d="M26.5 22.5005C26.5 21.1192 25.3808 20 24.0005 20C22.6192 20 21.5 21.1192 21.5 22.5005C21.5 23.8808 22.6192 25 24.0005 25C25.3808 25 26.5 23.8808 26.5 22.5005Z" stroke="#92A6C3" stroke-linecap="round" stroke-linejoin="round"/>
-<path fill-rule="evenodd" clip-rule="evenodd" d="M23.9995 33C22.801 33 16.5 27.8984 16.5 22.5633C16.5 18.3866 19.8571 15 23.9995 15C28.1419 15 31.5 18.3866 31.5 22.5633C31.5 27.8984 25.198 33 23.9995 33Z" stroke="#92A6C3" stroke-linecap="round" stroke-linejoin="round"/>
+<svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Location">
+<g id="Iconly/Light/Location">
+<g id="Location_2">
+<path id="Stroke-1" fill-rule="evenodd" clip-rule="evenodd" d="M14.5 11.0005C14.5 9.61924 13.3808 8.5 12.0005 8.5C10.6192 8.5 9.5 9.61924 9.5 11.0005C9.5 12.3808 10.6192 13.5 12.0005 13.5C13.3808 13.5 14.5 12.3808 14.5 11.0005Z" stroke="white" stroke-opacity="0.8" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Stroke-3" fill-rule="evenodd" clip-rule="evenodd" d="M11.9995 21.5C10.801 21.5 4.5 16.3984 4.5 11.0633C4.5 6.88664 7.8571 3.5 11.9995 3.5C16.1419 3.5 19.5 6.88664 19.5 11.0633C19.5 16.3984 13.198 21.5 11.9995 21.5Z" stroke="white" stroke-opacity="0.8" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+</g>
+</g>
 </svg>
