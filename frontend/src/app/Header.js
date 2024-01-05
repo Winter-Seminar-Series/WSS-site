@@ -4,10 +4,10 @@ export default function Header() {
   return (
     <header>
       <div
-        className="items-center bg-cover bg-center bg-no-repeat pb-56 pt-8"
+        className="items-center bg-cover bg-center bg-no-repeat pb-56"
         style={{ backgroundImage: `url(${Rectangle.src})` }}
       >
-        <nav className="mx-auto flex items-center justify-between px-6 max-lg:h-[38px] lg:mb-8 lg:h-7 lg:max-w-[1200px]">
+        <nav className="mx-auto mb-8 flex items-center justify-between px-6 py-8 lg:mb-16 lg:max-w-[1200px]">
           <a
             href="home.html"
             className="shrink-0 max-lg:h-[31.8px] max-lg:w-[40.8px] lg:h-[45.129px] lg:w-[57.98px]"
@@ -90,7 +90,7 @@ export default function Header() {
             </a>
           </div>
         </nav>
-        <div className="mx-auto flex px-6 max-lg:mt-10 max-lg:flex-col lg:mt-12 lg:max-w-[1200px] lg:flex-row">
+        <div className="mx-auto flex px-6 max-lg:flex-col lg:max-w-[1200px] lg:flex-row">
           <div>
             <p className="max-lg:leading-15 font-bold not-italic text-white max-lg:pb-6 max-lg:text-6xl max-lg:tracking-[-1.2px] lg:pb-10 lg:text-[108px] lg:leading-[106px] lg:tracking-[-2.16px]">
               WSS - Winter Seminar Series
