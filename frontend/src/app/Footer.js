@@ -74,7 +74,7 @@ export default function Footer() {
             className="flex items-center justify-center gap-2"
           >
             <img
-              src="/source/location.svg"
+              src="/source/footer-location.svg"
               alt="Location"
               width="48"
               height="48"
