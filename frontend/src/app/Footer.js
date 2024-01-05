@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Link from 'next/link';
 
 // components/Footer.js
 export default function Footer() {
@@ -8,32 +9,14 @@ export default function Footer() {
       <div className="mt-6 space-y-6 pe-28 ps-28">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-4">
-            <a
-              href="https://facebook.com"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <img
-                src="/source/sut_footer.svg"
-                alt="Facebook"
-                width="60"
-                height="60"
-              />
-            </a>
-            <a
-              href="https://linkedin.com"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <img src="/source/wss_footer.svg" alt="LinkedIn" width="71" />
-            </a>
-            <a
-              href="https://instagram.com"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <img src="/source/ssc_footer.svg" alt="Instagram" width="95" />
-            </a>
+            <img
+              src="/source/sut_footer.svg"
+              alt="Facebook"
+              width="60"
+              height="60"
+            />
+            <img src="/source/wss_footer.svg" alt="LinkedIn" width="71" />
+            <img src="/source/ssc_footer.svg" alt="Instagram" width="95" />
           </div>
           <div className="flex items-center gap-4">
             <a
@@ -152,21 +135,21 @@ export default function Footer() {
         </div>
         <div className="flex items-center justify-between pb-4 text-lightslategray">
           <div className="flex items-center gap-4">
-            <a href="" className="flex items-center justify-center gap-2">
+            <Link href="" className="flex items-center justify-center gap-2">
               <p className="mt-4 text-sm">About us</p>
-            </a>
-            <a href="" className="flex items-center justify-center gap-2">
+            </Link>
+            <Link href="" className="flex items-center justify-center gap-2">
               <p className="mt-4 text-sm">Contact</p>
-            </a>
-            <a href="" className="flex items-center justify-center gap-2">
+            </Link>
+            <Link href="" className="flex items-center justify-center gap-2">
               <p className="mt-4 text-sm">Privacy Policy</p>
-            </a>
-            <a href="" className="flex items-center justify-center gap-2">
+            </Link>
+            <Link href="" className="flex items-center justify-center gap-2">
               <p className="mt-4 text-sm">Sitemap</p>
-            </a>
-            <a href="" className="flex items-center justify-center gap-2">
+            </Link>
+            <Link href="" className="flex items-center justify-center gap-2">
               <p className="mt-4 text-sm">Terms of Use</p>
-            </a>
+            </Link>
           </div>
           <div className="flex items-center justify-between">
             <p className="mt-6 text-sm">© 2015-2024, All Rights Reserved</p>
