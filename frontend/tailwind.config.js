@@ -13,6 +13,7 @@ module.exports = {
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
         mobile: "url('../../public/source/mobile.png')",
         desktop: "url('../../public/source/Rectangle.png')",
+        navbar: "url('../../public/source/Navbar.png')",
       },
       fontFamily: {
         sans: 'Manrope',
