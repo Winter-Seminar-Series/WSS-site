@@ -13,6 +13,7 @@ export default function Navbar({ fixed = true }) {
     const handleScroll = () => {
       setTransparent(window.scrollY <= 10);
     };
+    handleScroll();
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, [fixed]);
