@@ -32,11 +32,9 @@ export default function Form({
   onSubmit?: () => void;
 }) {
   return (
-    <div
-      style={{ backgroundImage: `url(${CurveBackground.src})` }}
-      className={'flex min-h-screen'}
-    >
-      <div className={'mx-20 w-1/3 shrink-0 pt-20'}>
+    <div className="flex min-h-screen max-md:flex-col">
+      <div className="relative shrink-0 px-6 pt-20 md:w-1/2 md:px-10 lg:px-20">
+        <Image alt="" src={CurveBackground} className="absolute left-0 top-0" />
         <FormHeader overline={overline} title={title} />
         <FormFields formType={formType} fields={fields} />
         <button
@@ -51,7 +49,7 @@ export default function Form({
       </div>
       <Image
         src={BeautifulImage}
-        className="grow self-stretch object-cover"
+        className="self-stretch object-cover max-md:hidden md:w-1/2"
         alt={'Beautiful Image of a mountain and sea'}
       />
     </div>

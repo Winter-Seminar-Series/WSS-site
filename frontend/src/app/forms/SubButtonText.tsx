@@ -1,5 +1,6 @@
 import React from 'react';
 import { FormType } from './Form';
+import Link from 'next/link';
 
 export default function SubButtonText({ formType }: { formType: FormType }) {
   return (
@@ -9,12 +10,15 @@ export default function SubButtonText({ formType }: { formType: FormType }) {
           (formType === 'signUp'
             ? 'Already have an account?'
             : "Don't have an account?")}
-        <span
-          className={'ml-1 cursor-pointer font-medium text-primary underline'}
+        <Link
+          href={formType === 'signUp' ? '/login' : '/signup'}
+          className={
+            'ml-1 cursor-pointer font-medium text-primary hover:underline focus:underline'
+          }
         >
           {formType !== 'resetPassword' &&
             (formType === 'signUp' ? 'Log in' : 'Sign up')}
-        </span>
+        </Link>
       </p>
     </div>
   );
