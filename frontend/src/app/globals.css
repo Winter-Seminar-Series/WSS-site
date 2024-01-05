@@ -3,10 +3,11 @@
 @tailwind utilities;
 
 @font-face {
-    font-family: 'Manrope';
-    src: url('../../public/source/Fonts/Manrope/Manrope-VariableFont_wght.ttf') format('truetype'),
+  font-family: 'Manrope';
+  src: url('../../public/source/Fonts/Manrope/Manrope-VariableFont_wght.ttf')
+    format('truetype');
 }
 
 body {
-    @apply font-sans;
+  @apply font-sans;
 }
