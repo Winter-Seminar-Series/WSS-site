@@ -1,6 +1,7 @@
-from django.db import models
 from core.models import Event
 from django.contrib.auth.models import User
+from django.db import models
+
 
 class ParticipantInfo(models.Model):
     first_name_persian = models.CharField(max_length=50, blank=True)

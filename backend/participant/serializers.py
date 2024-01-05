@@ -20,6 +20,7 @@ class ParticipantInfoSerializer(serializers.ModelSerializer):
         model = ParticipantInfo
         fields = ('first_name_persian', 'last_name_persian', 'national_code', 'phone_number', 'image', 'bio', 'designation')
 
+
 class ParticipantSerializer(serializers.ModelSerializer):
     user = UserSerializer()
 
@@ -34,4 +35,6 @@ class ParticipantSerializer(serializers.ModelSerializer):
         user_data['username'] = user_data['email'].replace('@', '_').replace('.', '_')
         user = User.objects.create(**user_data)
         participant = Participant.objects.create(user=user, **validated_data)
+        participant.info = ParticipantInfo.objects.create()
+        participant.save()
         return participant

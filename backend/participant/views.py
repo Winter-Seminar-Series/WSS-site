@@ -4,11 +4,12 @@ from django.conf import settings
 from django.core.mail import send_mail
 from django.http import Http404
 from django.shortcuts import get_object_or_404
-from rest_framework import permissions, generics, views, status
+from rest_framework import generics, permissions, status, views
 from rest_framework.response import Response
 
-from participant.serializers import ParticipantSerializer, ParticipantInfoSerializer
 from participant.models import Participant
+from participant.serializers import (ParticipantInfoSerializer,
+                                     ParticipantSerializer)
 
 
 class ParticipantCreateAPIView(generics.CreateAPIView):
