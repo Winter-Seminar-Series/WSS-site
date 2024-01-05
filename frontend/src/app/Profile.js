@@ -20,28 +20,28 @@ export default function Profile() {
             <div className="flex flex-row gap-0">
               <div className="flex items-center justify-center gap-2 border-b-2 border-solid border-b-[#9D6D9B] px-6 py-5">
                 <img src="source/Profile.svg" />
-                <a className="text-xl font-semibold not-italic leading-[normal] tracking-[-0.2px] text-[#9D6D9B]">
+                <Link className="text-xl font-semibold not-italic leading-[normal] tracking-[-0.2px] text-[#9D6D9B]">
                   Profile
-                </a>
+                </Link>
               </div>
               <div className="flex items-center justify-center gap-2 px-6 py-5 text-[#1F2B3D]">
                 <img src="source/TicketStar.svg" />
-                <a className="text-xl font-semibold not-italic leading-[normal] tracking-[-0.2px] text-[#1F2B3D]">
+                <Link className="text-xl font-semibold not-italic leading-[normal] tracking-[-0.2px] text-[#1F2B3D]">
                   Registration
-                </a>
+                </Link>
               </div>
               <div className="flex items-center justify-center gap-2 px-6 py-5">
                 <img src="source/Play.svg" />
-                <a className="text-xl font-semibold not-italic leading-[normal] tracking-[-0.2px] text-[#1F2B3D]">
+                <Link className="text-xl font-semibold not-italic leading-[normal] tracking-[-0.2px] text-[#1F2B3D]">
                   Stream
-                </a>
+                </Link>
               </div>
             </div>
             <div className="flex items-center justify-center gap-2 px-6 py-5">
               <img src="source/Logout.svg" />
-              <a className="text-xl font-semibold not-italic leading-[normal] tracking-[-0.2px] text-[#E04545]">
+              <Link className="text-xl font-semibold not-italic leading-[normal] tracking-[-0.2px] text-[#E04545]">
                 Log out
-              </a>
+              </Link>
             </div>
           </div>
           <div className="flex flex-col items-start gap-5 self-stretch">

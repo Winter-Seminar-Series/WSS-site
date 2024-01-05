@@ -24,7 +24,7 @@ export default function Header() {
                 <div className="flex max-lg:flex-[1_0_0] max-lg:flex-col max-lg:gap-1.5 lg:mt-2 lg:flex-row">
                   <img
                     className="inline-block h-6 w-6 lg:mr-2"
-                    src="/source/Location.svg"
+                    src="/source/location.svg"
                   />
                   <p className="max-lg:w-37 text-left font-normal not-italic text-[rgba(255,255,255,0.80)] max-lg:h-16 max-lg:self-stretch max-lg:text-sm max-lg:leading-[21px] lg:text-xl lg:leading-[normal]">
                     Sharif University of Technology - Tehran, Iran
