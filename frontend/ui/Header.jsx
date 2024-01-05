@@ -1,5 +1,5 @@
-import Navbar, { NavbarPlaceholder } from './components/Navbar';
-import Rectangle from '../../public/source/Rectangle.png';
+import Navbar, { NavbarPlaceholder } from './Navbar';
+import Rectangle from '../public/source/Rectangle.png';
 
 export default function Header() {
   return (

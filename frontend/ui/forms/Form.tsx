@@ -5,7 +5,7 @@ import BeautifulImage from './assets/beautiful image.svg';
 import CurveBackground from './assets/curve background.svg';
 import FormFields from './FormFields';
 import SubButtonText from './SubButtonText';
-import Navbar from '../components/Navbar';
+import Navbar from '../Navbar';
 import Footer from '../Footer';
 
 export type FieldType = {
