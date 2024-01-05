@@ -1,4 +1,10 @@
+import { Manrope } from 'next/font/google';
 import './globals.css';
+
+const manrope = Manrope({
+  display: 'swap',
+  subsets: ['latin-ext'],
+});
 
 /**
  * @type {import('next').Metadata}
@@ -14,7 +20,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body className={manrope.className}>{children}</body>
     </html>
   );
 }
