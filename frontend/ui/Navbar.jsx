@@ -1,34 +1,33 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import Image from 'next/image';
 import Link from 'next/link';
-import Logo from '../../../public/source/WSS-LOGO.png';
+import Logo from './Logo';
 
 export default function Navbar({ fixed = true }) {
-  const [transparent, setTransparent] = useState(true);
+  const [transparent, setTransparent] = useState(fixed);
 
   useEffect(() => {
+    if (!fixed) return;
     const handleScroll = () => {
       setTransparent(window.scrollY <= 10);
     };
+    handleScroll();
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [fixed]);
 
   return (
     <nav
       className={`${!fixed ? 'static' : 'fixed left-0 right-0 top-0 z-50'} ${
-        transparent ? 'bg-transparent text-white' : 'bg-white'
+        transparent
+          ? 'bg-transparent text-white'
+          : 'border-b border-neutral-200 bg-white text-darkslategray-100'
       } px-6 py-5 duration-200`}
     >
       <div className="mx-auto flex h-[38px] max-w-[1200px] items-center justify-between lg:h-[54px]">
         <Link href="/" className="shrink-0">
-          <Image
-            className="max-lg:w-[40.8px] lg:w-[58px]"
-            src={Logo}
-            alt="WSS Logo"
-          />
+          <Logo className="max-lg:w-[40.8px] lg:w-[58px]" />
         </Link>
         <div className="hidden items-center justify-center gap-8 lg:flex">
           <div className="text-base font-medium not-italic leading-[normal] no-underline">
@@ -72,19 +71,23 @@ export default function Navbar({ fixed = true }) {
         <div className="flex items-center gap-1.5">
           <Link
             href="/signup"
-            className="max-lg:w-19 flex items-center justify-center rounded-md bg-white no-underline max-lg:h-9 max-lg:px-4 lg:h-12 lg:gap-2 lg:px-6 lg:py-0"
+            className={`flex items-center rounded-md px-6 text-base font-semibold max-lg:h-9 max-lg:px-4 lg:h-12 ${
+              transparent
+                ? 'bg-white text-secondary-500'
+                : 'bg-secondary-500 text-white'
+            }`}
           >
-            <p className="text-base font-semibold not-italic leading-[normal] text-[#0B3678] no-underline">
-              Sign Up
-            </p>
+            Sign Up
           </Link>
           <Link
             href="/login"
-            className="max-lg:w-19 flex items-center justify-center rounded-md border  border-solid border-[rgba(255,255,255,0.30)] px-6 py-0 max-lg:h-9 max-lg:px-4 lg:h-12 lg:gap-2"
+            className={`flex items-center rounded-md border px-6 text-base font-semibold max-lg:h-9 max-lg:px-4 lg:h-12 ${
+              transparent
+                ? 'border-opacity-30 text-white'
+                : 'border-transparent text-secondary-500'
+            }`}
           >
-            <p className="text-base font-semibold not-italic leading-[normal] text-white">
-              Login
-            </p>
+            Login
           </Link>
         </div>
       </div>
