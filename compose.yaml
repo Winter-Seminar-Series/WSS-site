@@ -1,0 +1,37 @@
+version: '3'
+
+services:
+  postgresql:
+    image: postgres
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_PASSWORD=pass
+
+  payment:
+    image: wss:payment
+    ports:
+      - 4000:4000
+    environment:
+      - DATABASE_URL=host=host.docker.internal user=postgres password=pass dbname=postgres port=5432
+      - LISTEN_ADDRESS=0.0.0.0:4000
+      - IDPAY_APIKEY=
+      - IDPAY_SANDBOX=
+      - GIN_MODE=
+    depends_on:
+      - postgresql
+
+  backend:
+    image: wss:backend
+    ports:
+      - 8000:8000
+    depends_on:
+      - postgresql
+
+  frontend:
+    image: wss:front
+    ports:
+      - 3000:3000
+    depends_on:
+      - backend
+      - postgresql
