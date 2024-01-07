@@ -20,21 +20,21 @@ const items = [
     id: 1,
     title: 'Seminars',
     overline: 'Overline Goes Here',
-    img: 'tmp',
+    img: '/landing/seminars.jpg',
     desc: 'The seminars comprise a four-day event where speakers present their research and ideas, sharing their findings and teaching related topics. Each day of the event features different speakers and topics, providing participants with a diverse range of perspectives and knowledge.',
   },
   {
     id: 2,
     title: 'Round Tables',
     overline: 'Overline Goes Here',
-    img: 'tmp',
+    img: '/landing/roundtables.jpg',
     desc: "During the event, we host round table discussions on specific topics, inviting experts in the field to share their insights and engage with participants' concerns. Please note that the round tables are conducted in Persian.",
   },
   {
     id: 3,
     title: 'Lab Talks',
     overline: 'Overline Goes Here',
-    img: 'tmp',
+    img: '/landing/labtalks.jpg ',
     desc: 'This section focuses on the laboratories of the Faculty of Computer Engineering at Sharif University of Technology. In each session, we feature a different laboratory, with members introducing their lab and discussing current research topics. This provides participants with an opportunity to learn about cutting-edge research and developments in computer engineering.',
   },
 ];
@@ -85,7 +85,7 @@ function ItemText({ title, overline, description }) {
 function ItemImg({ img }) {
   return (
     <img
-      className="relative aspect-video w-full max-w-sm shrink-0 rounded-lg object-cover"
+      className="aspect-[4 / 3] relative w-full max-w-sm shrink-0 rounded-lg object-cover object-center"
       alt=""
       src={img}
     />
