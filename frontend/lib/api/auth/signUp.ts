@@ -11,7 +11,7 @@ const FormSchema = z.object({
 });
 
 async function callSignUpAPI(email: string, password: string) {
-  const url = 'http://127.0.0.1:8000/api/sign-up/';
+  const url = `${process.env.API_ORIGIN}/api/sign-up/`;
 
   const formData = formDataFromObject({ user: { email, password } });
 
