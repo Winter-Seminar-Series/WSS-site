@@ -1,5 +1,6 @@
 import React from 'react';
 import Form from '../../ui/forms/Form';
+import login from '../../lib/api/auth/login';
 
 export default function LogInForm() {
   return (
@@ -7,6 +8,7 @@ export default function LogInForm() {
       formType={'login'}
       overline={'Overline goes here'}
       title={'Log In'}
+      onSubmit={login}
       fields={[
         {
           title: 'Email',

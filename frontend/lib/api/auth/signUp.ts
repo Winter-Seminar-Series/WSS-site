@@ -3,6 +3,7 @@
 import { redirect } from 'next/navigation';
 import { z } from 'zod';
 import { formDataFromObject } from '../utils';
+import fetchJson from '../fetchJson';
 
 const FormSchema = z.object({
   email: z.string().email(),
@@ -15,9 +16,7 @@ async function callSignUpAPI(email: string, password: string) {
 
   const formData = formDataFromObject({ user: { email, password } });
 
-  const response = await fetch(url, { method: 'POST', body: formData });
-
-  if (!response.ok) throw new Error(response.statusText);
+  return await fetchJson(url, { method: 'POST', body: formData });
 }
 
 export default async function signUp(formData: FormData) {
@@ -28,7 +27,7 @@ export default async function signUp(formData: FormData) {
   if (password !== confirmPassword)
     throw new Error('Please repeat the password.');
 
-  callSignUpAPI(email, password);
+  await callSignUpAPI(email, password);
 
-  redirect('/dashboard/profile');
+  redirect('/login');
 }
