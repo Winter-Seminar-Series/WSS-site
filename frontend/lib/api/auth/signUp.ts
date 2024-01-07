@@ -17,8 +17,7 @@ async function callSignUpAPI(email: string, password: string) {
 
   const response = await fetch(url, { method: 'POST', body: formData });
 
-  if (!response.ok)
-    throw new Error(response.statusText);
+  if (!response.ok) throw new Error(response.statusText);
 }
 
 export default async function signUp(formData: FormData) {

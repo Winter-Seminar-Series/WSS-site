@@ -38,7 +38,10 @@ export default function Form({
     <>
       <Navbar fixed={false} />
       <div className="flex max-md:mb-14 max-md:flex-col">
-        <form action={action} className="relative shrink-0 px-6 pt-20 md:w-1/2 md:px-10 lg:px-20">
+        <form
+          action={action}
+          className="relative shrink-0 px-6 pt-20 md:w-1/2 md:px-10 lg:px-20"
+        >
           <Image
             alt=""
             src={CurveBackground}

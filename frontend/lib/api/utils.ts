@@ -10,7 +10,7 @@ export function formDataFromObject(object: FormDataInput) {
       const value = object[innerKey];
       const key = outerKey ? outerKey + '.' + innerKey : innerKey;
 
-      if (typeof(value) === "string" || value instanceof Blob) {
+      if (typeof value === 'string' || value instanceof Blob) {
         formData.append(key, value);
       } else {
         writeToFormData(value, key);
