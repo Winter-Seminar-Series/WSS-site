@@ -14,11 +14,13 @@
     "@headlessui/react": "^1.7.17",
     "classnames": "^2.3.2",
     "components": "^0.1.0",
+    "iron-session": "^8.0.1",
     "next": "^14.0.4",
     "react": "^18",
     "react-dom": "^18",
     "react-fast-marquee": "^1.6.2",
-    "sharp": "^0.33.1"
+    "sharp": "^0.33.1",
+    "zod": "^3.22.4"
   },
   "devDependencies": {
     "@types/node": "20.10.4",

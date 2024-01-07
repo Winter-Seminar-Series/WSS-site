@@ -1,4 +1,4 @@
-import React, { useId } from 'react';
+import React from 'react';
 import { FieldType } from './Form';
 import { FormType } from './Form';
 import Link from 'next/link';
@@ -6,12 +6,12 @@ import Link from 'next/link';
 export default function FormField({
   formType,
   title,
+  name,
   placeholder,
   type,
 }: {
   formType: FormType;
 } & FieldType) {
-  const id = useId();
   return (
     <div className={'mt-7 flex flex-col'}>
       <div className={'flex justify-between'}>
@@ -19,11 +19,11 @@ export default function FormField({
           className={
             'text-base font-medium uppercase tracking-wide text-lightslategray'
           }
-          htmlFor={id}
+          htmlFor={name}
         >
           {title}
         </label>
-        {formType == 'logIn' && title == 'Password' && (
+        {formType == 'login' && title == 'Password' && (
           <Link
             className={
               'cursor-pointer font-medium text-primary hover:underline focus:underline'
@@ -40,7 +40,9 @@ export default function FormField({
         }
         type={type}
         placeholder={placeholder}
-        id={id}
+        id={name}
+        name={name}
+        required
       />
     </div>
   );
