@@ -3,7 +3,7 @@ import { getIronSession } from 'iron-session';
 import { cookies } from 'next/headers';
 
 type SessionData = {
-  isLoggedIn: boolean;
+  isLoggedIn?: boolean;
   accessToken?: string;
   refreshToken?: string;
 };

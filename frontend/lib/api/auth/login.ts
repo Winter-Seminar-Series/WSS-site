@@ -2,7 +2,6 @@
 
 import { redirect } from 'next/navigation';
 import { z } from 'zod';
-import { formDataFromObject } from '../utils';
 import fetchJson from '../fetchJson';
 import { getSession } from '../session';
 
@@ -19,22 +18,22 @@ const FormSchema = z.object({
 async function callLoginAPI(email: string, password: string) {
   const url = 'http://127.0.0.1:8000/api/sign-in/';
 
-  const formData = formDataFromObject({ email, password });
+  const body = { email, password };
 
   return await fetchJson<LoginResponse>(url, {
     method: 'POST',
-    body: formData,
+    body: JSON.stringify(body),
   });
 }
 
 async function callRefreshAPI(refresh: string) {
   const url = 'http://127.0.0.1:8000/api/sign-in/refresh/';
 
-  const formData = formDataFromObject({ refresh });
+  const body = { refresh };
 
   return await fetchJson<LoginResponse>(url, {
     method: 'POST',
-    body: formData,
+    body: JSON.stringify(body),
   });
 }
 
