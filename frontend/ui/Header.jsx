@@ -1,7 +1,11 @@
+'use client';
+
 import Navbar, { NavbarPlaceholder } from './Navbar';
 import Rectangle from '../public/source/Rectangle.png';
+import { useTimer } from '../hooks/timer';
 
 export default function Header() {
+  const timer = useTimer();
   return (
     <header>
       <div
@@ -36,15 +40,15 @@ export default function Header() {
                     src="/source/Calendar.svg"
                   />
                   <p className="max-lg:w-37 max-lg:h-10.5 font-normal not-italic text-[rgba(255,255,255,0.80)] max-lg:self-stretch max-lg:text-sm max-lg:leading-[21px] lg:text-xl lg:leading-[normal]">
-                    Apr 6th, 2023 -Apr 9th, 2023
+                    Apr 6th, 2023 - Apr 9th, 2023
                   </p>
                 </div>
               </div>
             </div>
             <div className="flex flex-row items-start font-bold not-italic leading-[normal] text-white max-lg:mb-9 max-lg:items-start max-lg:justify-between max-lg:pt-7 lg:gap-[52px] lg:pt-[52px] lg:text-5xl lg:tracking-[-0.96px]">
               <div className="flex flex-col items-center justify-center text-white max-lg:gap-1 lg:gap-3">
-                <div className="flex flex-col items-center justify-center rounded-lg border border-solid border-[rgba(255,255,255,0.30)] px-4 pb-3 pt-2 max-lg:text-xl">
-                  21
+                <div className="flex flex-col items-center justify-center rounded-lg border border-solid border-[rgba(255,255,255,0.30)] px-4 pb-3 pt-2 tabular-nums max-lg:text-xl">
+                  {timer.days.toString().padStart(2, '0')}
                 </div>
                 <p className="text-base font-normal uppercase not-italic text-white lg:leading-[normal] lg:tracking-[0.32px]">
                   DAYS
@@ -54,8 +58,8 @@ export default function Header() {
                 :
               </div>
               <div className="flex flex-col items-center justify-center text-white max-lg:gap-1 lg:gap-3">
-                <div className="flex flex-col items-center justify-center rounded-lg border border-solid border-[rgba(255,255,255,0.30)] px-4 pb-3 pt-2 max-lg:text-xl">
-                  16
+                <div className="flex flex-col items-center justify-center rounded-lg border border-solid border-[rgba(255,255,255,0.30)] px-4 pb-3 pt-2 tabular-nums max-lg:text-xl">
+                  {timer.hours.toString().padStart(2, '0')}
                 </div>
                 <p className="text-base font-normal uppercase not-italic leading-[normal] text-white lg:tracking-[0.32px]">
                   HOURS
@@ -65,8 +69,8 @@ export default function Header() {
                 :
               </div>
               <div className="flex flex-col items-center justify-center text-white max-lg:gap-1 lg:gap-3">
-                <div className="flex flex-col items-center justify-center rounded-lg border border-solid border-[rgba(255,255,255,0.30)] px-4 pb-3 pt-2 max-lg:text-xl">
-                  05
+                <div className="flex flex-col items-center justify-center rounded-lg border border-solid border-[rgba(255,255,255,0.30)] px-4 pb-3 pt-2 tabular-nums max-lg:text-xl">
+                  {timer.minutes.toString().padStart(2, '0')}
                 </div>
                 <p className="text-base font-normal uppercase not-italic leading-[normal] text-white lg:tracking-[0.32px]">
                   MINUTES
@@ -76,8 +80,8 @@ export default function Header() {
                 :
               </div>
               <div className="flex flex-col items-center justify-center text-white max-lg:gap-1 lg:gap-3">
-                <div className="flex flex-col items-center justify-center rounded-lg border border-solid border-[rgba(255,255,255,0.30)] px-4 pb-3 pt-2 max-lg:text-xl">
-                  45
+                <div className="flex flex-col items-center justify-center rounded-lg border border-solid border-[rgba(255,255,255,0.30)] px-4 pb-3 pt-2 tabular-nums max-lg:text-xl">
+                  {timer.seconds.toString().padStart(2, '0')}
                 </div>
                 <p className="text-base font-normal uppercase not-italic leading-[normal] text-white lg:tracking-[0.32px]">
                   SECONDS

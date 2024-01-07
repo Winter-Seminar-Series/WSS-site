@@ -45,7 +45,7 @@ export default function Form({
           <Image
             alt=""
             src={CurveBackground}
-            className="absolute left-0 top-0"
+            className="pointer-events-none absolute left-0 top-0"
           />
           <FormHeader overline={overline} title={title} />
           <FormFields formType={formType} fields={fields} />
