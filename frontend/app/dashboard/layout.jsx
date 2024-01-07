@@ -48,7 +48,7 @@ export default function DashboardLayout({ children }) {
                 </a>
               </div>
             </div>
-            <LogoutButton/>
+            <LogoutButton />
           </div>
           {children}
         </div>
