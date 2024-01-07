@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { Menu, Transition } from '@headlessui/react';
 import Link from 'next/link';
 import Logo from './Logo';
 
@@ -31,26 +32,72 @@ export default function Navbar({ fixed = true }) {
         </Link>
         <div className="hidden items-center justify-center gap-8 lg:flex">
           <div className="text-base font-medium not-italic leading-[normal] no-underline">
-            <div className="relative inline-block">
-              <button className="border-[none] bg-[#04aa6d00] p-2.5 text-base">
+            <Menu as="div" className="relative">
+              <Menu.Button className="flex items-center gap-x-1 p-2.5 text-base">
                 9th WSS
-                {/* <img
-                    src={Frame.src}
-                    className="inline-block shrink-0 lg:h-6 lg:w-6"
-                  /> */}
-              </button>
-              <div className="absolute z-[1] hidden bg-[#f1f1f1] shadow-[0px_8px_16px_0px_rgba(0,0,0,0.2)] lg:min-w-[160px]">
-                <a href="#">9th Series</a>
-                <a href="#">8th Series</a>
-                <a href="#">7th Series</a>
-                <a href="#">6th Series</a>
-                <a href="#">5th Series</a>
-                <a href="#">4th Series</a>
-                <a href="#">3rd Series</a>
-                <a href="#">2nd Series</a>
-                <a href="#">1st Series</a>
-              </div>
-            </div>
+                <svg
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M12 15.3748L6 9.3748L7.075 8.2998L12 13.2498L16.925 8.3248L18 9.3998L12 15.3748Z"
+                    fill="currentColor"
+                  />
+                </svg>
+              </Menu.Button>
+              <Transition
+                enter="transition duration-100 ease-out"
+                enterFrom="transform scale-95 opacity-0"
+                enterTo="transform scale-100 opacity-100"
+                leave="transition duration-75 ease-out"
+                leaveFrom="transform scale-100 opacity-100"
+                leaveTo="transform scale-95 opacity-0"
+              >
+                <Menu.Items className="absolute left-0 w-40 rounded-lg border border-black border-opacity-10 bg-white bg-opacity-80 shadow-md backdrop-blur-lg">
+                  <Menu.Item>
+                    {({ active, close }) => (
+                      <button
+                        className={`block w-full whitespace-nowrap p-3 text-left font-semibold ${
+                          active ? 'text-secondary-700' : 'text-black'
+                        }`}
+                        onClick={close}
+                      >
+                        9th Series
+                      </button>
+                    )}
+                  </Menu.Item>
+                  {Array(8)
+                    .fill()
+                    .map((_, i) => 8 - i)
+                    .map((i) => (
+                      <Menu.Item key={i}>
+                        {({ active }) => (
+                          <a
+                            href="https://wss.ce.sharif.edu"
+                            target="_blank"
+                            className={`block whitespace-nowrap p-3 ${
+                              active ? 'text-secondary-700' : 'text-black'
+                            }`}
+                          >
+                            {i}
+                            {i === 1
+                              ? 'st'
+                              : i === 2
+                                ? 'nd'
+                                : i === 3
+                                  ? 'rd'
+                                  : 'th'}{' '}
+                            Series
+                          </a>
+                        )}
+                      </Menu.Item>
+                    ))}
+                </Menu.Items>
+              </Transition>
+            </Menu>
           </div>
           <Link href="/" className="block px-4 py-3">
             Home
