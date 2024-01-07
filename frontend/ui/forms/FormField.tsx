@@ -42,6 +42,7 @@ export default function FormField({
         placeholder={placeholder}
         id={name}
         name={name}
+        required
       />
     </div>
   );
