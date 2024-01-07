@@ -16,7 +16,7 @@ const FormSchema = z.object({
 });
 
 async function callLoginAPI(email: string, password: string) {
-  const url = 'http://127.0.0.1:8000/api/sign-in/';
+  const url = `${process.env.API_ORIGIN}/api/sign-in/`;
 
   const body = { email, password };
 
@@ -27,7 +27,7 @@ async function callLoginAPI(email: string, password: string) {
 }
 
 async function callRefreshAPI(refresh: string) {
-  const url = 'http://127.0.0.1:8000/api/sign-in/refresh/';
+  const url = `${process.env.API_ORIGIN}/api/sign-in/refresh/`;
 
   const body = { refresh };
 

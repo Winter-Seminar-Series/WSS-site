@@ -10,9 +10,9 @@ const FormSchema = z.object({
   confirmPassword: z.string(),
 });
 
-const url = `${process.env.API_ORIGIN}/api/sign-up/`;
-
 async function callSignUpAPI(email: string, password: string) {
+  const url = `${process.env.API_ORIGIN}/api/sign-up/`;
+
   const body = { user: { email, password } };
 
   return await fetchJson(url, { method: 'POST', body: JSON.stringify(body) });
