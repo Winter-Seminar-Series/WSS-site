@@ -32,6 +32,9 @@ services:
     image: wss:front
     ports:
       - 3000:3000
+    environment:
+      - API_ORIGIN=host.docker.internal:8000
+      - SECRET_COOKIE_PASSWORD=qawsedrftgbhu
     depends_on:
       - backend
       - postgresql
