@@ -60,7 +60,7 @@ export default function Navbar({ fixed = true }) {
                   <Menu.Item>
                     {({ active, close }) => (
                       <button
-                        className={`block whitespace-nowrap p-3 font-semibold ${
+                        className={`block w-full whitespace-nowrap p-3 text-left font-semibold ${
                           active ? 'text-secondary-700' : 'text-black'
                         }`}
                         onClick={close}
