@@ -11,11 +11,12 @@ export default function FormFields({
 }) {
   return (
     <div className={'mt-20'}>
-      {fields.map(({ title, placeholder, type }) => (
+      {fields.map(({ title, name, placeholder, type }) => (
         <FormField
           key={title}
           formType={formType}
           title={title}
+          name={name}
           placeholder={placeholder}
           type={type}
         />

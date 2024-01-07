@@ -17,7 +17,8 @@
     "react": "^18",
     "react-dom": "^18",
     "react-fast-marquee": "^1.6.2",
-    "sharp": "^0.33.1"
+    "sharp": "^0.33.1",
+    "zod": "^3.22.4"
   },
   "devDependencies": {
     "@types/node": "20.10.4",
