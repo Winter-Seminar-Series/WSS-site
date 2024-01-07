@@ -1,6 +1,10 @@
+'use client';
+
 import Image from 'next/image';
+import { useTimer } from '../hooks/timer';
 
 export default function Timer() {
+  const timer = useTimer();
   return (
     <div
       className="bg-cover bg-center bg-no-repeat py-11 text-white"
@@ -19,8 +23,8 @@ export default function Timer() {
         </div>
         <div className="flex gap-x-4">
           <div className="flex flex-col items-center">
-            <span className="w-12 rounded-md border border-white border-opacity-25 p-2 text-2xl font-normal ">
-              21
+            <span className="w-12 rounded-md border border-white border-opacity-25 p-2 text-center text-2xl font-normal">
+              {timer.days.toString().padStart(2, '0')}
             </span>
             <span className="pt-3 text-xs font-light">DAYS</span>
           </div>
@@ -28,8 +32,8 @@ export default function Timer() {
             <span className="py-2 text-3xl font-semibold">:</span>
           </div>
           <div className="flex flex-col items-center">
-            <span className="w-12 rounded-md border border-white border-opacity-25 p-2 text-2xl font-normal ">
-              16
+            <span className="w-12 rounded-md border border-white border-opacity-25 p-2 text-center text-2xl font-normal">
+              {timer.hours.toString().padStart(2, '0')}
             </span>
             <span className="pt-3 text-xs font-light">HOURS</span>
           </div>
@@ -37,8 +41,8 @@ export default function Timer() {
             <span className="py-2 text-3xl font-semibold">:</span>
           </div>
           <div className="flex flex-col items-center">
-            <span className="w-12 rounded-md border border-white border-opacity-25 p-2 text-2xl font-normal ">
-              05
+            <span className="w-12 rounded-md border border-white border-opacity-25 p-2 text-center text-2xl font-normal">
+              {timer.minutes.toString().padStart(2, '0')}
             </span>
             <span className="pt-3 text-xs font-light">MINUTES</span>
           </div>
@@ -46,8 +50,8 @@ export default function Timer() {
             <span className="py-2 text-3xl font-semibold">:</span>
           </div>
           <div className="flex flex-col items-center">
-            <span className="w-12 rounded-md border border-white border-opacity-25 p-2 text-2xl font-normal ">
-              45
+            <span className="w-12 rounded-md border border-white border-opacity-25 p-2 text-center text-2xl font-normal">
+              {timer.seconds.toString().padStart(2, '0')}
             </span>
             <span className="pt-3 text-xs font-light">SECONDS</span>
           </div>
