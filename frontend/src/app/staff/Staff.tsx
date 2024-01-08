@@ -3,13 +3,6 @@ import Background from './assets/background.svg';
 import StaffHeader from './StaffHeader';
 import StaffLine from './StaffLine';
 
-export type Staff = {
-  name: string;
-  surname: string;
-  team: string;
-  image: string;
-};
-
 export default function Staff() {
   return (
     <div

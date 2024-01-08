@@ -1,13 +1,9 @@
 import React from 'react';
-import { Staff } from '../staff/Staff';
 import Image from 'next/image';
+import Sample from '../staff/assets/Sample.svg';
+import type { Staff } from '../../lib/types';
 
-interface TeamSectionProps {
-  teamName: string;
-  staff: Staff[];
-}
-
-const TeamSection = ({ teamName, staff }: TeamSectionProps) => {
+export default function TeamSection({ teamName, staff }: {teamName: string; staff: Staff[];}) {
   return (
     <div className="pb-14">
       <div className="mb-10 flex items-center justify-center px-12">
@@ -32,8 +28,8 @@ function StaffCard2({ person }: { person: Staff }) {
       className={'font-manrope flex flex-col items-center justify-center px-5'}
     >
       <Image
-        src={person.image}
-        alt={person.name + ' ' + person.surname}
+        src={person.image ?? Sample.src}
+        alt={person.name}
         width={200}
         height={200}
         className={'rounded-full'}
@@ -42,10 +38,8 @@ function StaffCard2({ person }: { person: Staff }) {
         {person.name}
       </div>
       <div className={'text-base font-semibold text-black'}>
-        {person.surname}
+        {person.designation}
       </div>
     </div>
   );
 }
-
-export default TeamSection;
