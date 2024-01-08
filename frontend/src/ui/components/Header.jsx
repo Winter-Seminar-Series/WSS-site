@@ -1,8 +1,8 @@
 'use client';
 
 import Navbar, { NavbarPlaceholder } from './Navbar';
-import Rectangle from '../public/source/Rectangle.png';
-import { useTimer } from '../hooks/timer';
+import Rectangle from '../../../public/source/Rectangle.png';
+import useTimer from '../hooks/timer';
 
 export default function Header() {
   const timer = useTimer();

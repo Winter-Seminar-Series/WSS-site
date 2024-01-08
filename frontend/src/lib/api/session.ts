@@ -6,6 +6,7 @@ type SessionData = {
   isLoggedIn?: boolean;
   accessToken?: string;
   refreshToken?: string;
+  expiresAt?: number;
 };
 
 const sessionOptions: SessionOptions = {

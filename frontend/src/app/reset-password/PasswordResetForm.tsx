@@ -1,5 +1,5 @@
 import React from 'react';
-import Form from '../../ui/forms/Form';
+import Form from '../../ui/components/forms/Form';
 import resetPassword from '../../lib/api/auth/resetPassword';
 
 export default function PasswordResetForm() {

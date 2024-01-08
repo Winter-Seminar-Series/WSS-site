@@ -1,6 +1,6 @@
 'use client';
 
-import logout from '../../lib/api/auth/logout';
+import logout from '../../../lib/api/auth/logout';
 
 export default function LogoutButton() {
   return (

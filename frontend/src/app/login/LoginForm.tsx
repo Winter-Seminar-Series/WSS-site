@@ -1,14 +1,14 @@
 import React from 'react';
-import Form from '../../ui/forms/Form';
-import signUp from '../../lib/api/auth/signUp';
+import Form from '../../ui/components/forms/Form';
+import login from '../../lib/api/auth/login';
 
-export default function SignUpForm() {
+export default function LogInForm() {
   return (
     <Form
-      formType={'signUp'}
+      formType={'login'}
       overline={'Overline goes here'}
-      title={'Sign Up'}
-      onSubmit={signUp}
+      title={'Log In'}
+      onSubmit={login}
       fields={[
         {
           title: 'Email',
@@ -20,12 +20,6 @@ export default function SignUpForm() {
           title: 'Password',
           name: 'password',
           placeholder: 'Enter your password',
-          type: 'password',
-        },
-        {
-          title: 'Confirm Password',
-          name: 'confirmPassword',
-          placeholder: 'Confirm your password',
           type: 'password',
         },
       ]}

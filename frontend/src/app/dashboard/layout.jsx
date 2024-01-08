@@ -1,7 +1,6 @@
-import logout from '../../lib/api/auth/logout';
-import Footer from '../../ui/Footer';
-import Navbar, { NavbarPlaceholder } from '../../ui/Navbar';
-import LogoutButton from '../../ui/dashboard/LogoutButton';
+import Footer from '../../ui/components/Footer';
+import Navbar, { NavbarPlaceholder } from '../../ui/components/Navbar';
+import LogoutButton from '../../ui/components/dashboard/LogoutButton';
 
 export default function DashboardLayout({ children }) {
   return (
