@@ -1,5 +1,5 @@
 import React from 'react';
-import Form from '../../ui/forms/Form';
+import Form from '../../ui/components/forms/Form';
 import signUp from '../../lib/api/auth/signUp';
 
 export default function SignUpForm() {
