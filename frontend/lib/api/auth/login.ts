@@ -4,6 +4,7 @@ import { redirect } from 'next/navigation';
 import { z } from 'zod';
 import fetchJson from '../fetchJson';
 import { getSession } from '../session';
+import { parseJWT } from '../../auth';
 
 type LoginResponse = {
   access: string;
@@ -38,10 +39,15 @@ async function callRefreshAPI(refresh: string) {
 }
 
 async function saveLoginToSession(data: LoginResponse) {
+  const parsedRefreshToken = parseJWT(data.refresh);
+  const expiresAtUnixSecond = parsedRefreshToken.exp;
+  const expiresAtUnixMilliSecond = expiresAtUnixSecond * 1000;
+
   const session = await getSession();
   session.isLoggedIn = true;
   session.accessToken = data.access;
   session.refreshToken = data.refresh;
+  session.expiresAt = expiresAtUnixMilliSecond;
   await session.save();
 }
 
