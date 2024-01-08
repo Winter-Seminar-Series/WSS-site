@@ -1,6 +1,7 @@
 import Image from 'next/image';
+import PropTypes from 'prop-types';
 
-export default function Programs() {
+export default function Programs({ showButton = true }) {
   return (
     <div className="relative mx-auto overflow-hidden px-6">
       <div className="Ellipse absolute right-[-200px] top-[636px] h-72 w-72 rounded-full bg-zinc-400 bg-opacity-30 blur-3xl" />
@@ -9,11 +10,21 @@ export default function Programs() {
       <div className="mx-auto max-w-[993px]">
         <ProgramsArea />
         <ItemsTag />
-        <Button text="More About WSS" />
+        {showButton && <Button text="More About WSS" />}
       </div>
     </div>
   );
 }
+
+// Set default props
+Programs.defaultProps = {
+  showButton: true,
+};
+
+// Prop types
+Programs.propTypes = {
+  showButton: PropTypes.bool,
+};
 
 const items = [
   {
