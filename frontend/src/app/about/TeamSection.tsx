@@ -3,7 +3,13 @@ import Image from 'next/image';
 import Sample from '../staff/assets/Sample.svg';
 import type { Staff } from '../../lib/types';
 
-export default function TeamSection({ teamName, staff }: {teamName: string; staff: Staff[];}) {
+export default function TeamSection({
+  teamName,
+  staff,
+}: {
+  teamName: string;
+  staff: Staff[];
+}) {
   return (
     <div className="pb-14">
       <div className="mb-10 flex items-center justify-center px-12">
@@ -20,7 +26,7 @@ export default function TeamSection({ teamName, staff }: {teamName: string; staf
       </div>
     </div>
   );
-};
+}
 
 function StaffCard2({ person }: { person: Staff }) {
   return (
