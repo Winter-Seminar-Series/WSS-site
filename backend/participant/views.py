@@ -3,17 +3,29 @@ from random import choices
 from django.conf import settings
 from django.core.mail import send_mail
 from django.http import Http404
-from rest_framework import permissions, generics, views, status
+from django.shortcuts import get_object_or_404
+from rest_framework import generics, permissions, status, views
 from rest_framework.response import Response
 
-from participant.serializers import ParticipantSerializer
 from participant.models import Participant
+from participant.serializers import (ParticipantInfoSerializer,
+                                     ParticipantSerializer)
 
 
 class ParticipantCreateAPIView(generics.CreateAPIView):
     queryset = Participant.objects.all()
     serializer_class = ParticipantSerializer
     permission_classes = [permissions.AllowAny, ]
+
+
+class ParticipantInfoRetrieveUpdateAPIView(generics.RetrieveUpdateAPIView):
+    queryset = Participant.objects.all()
+    serializer_class = ParticipantInfoSerializer
+    permission_classes = [permissions.IsAuthenticated, ]
+
+    def get_object(self):
+        participant = get_object_or_404(Participant, user=self.request.user)
+        return participant.info
 
 
 class PasswordResetAPIView(views.APIView):
