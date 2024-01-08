@@ -9,7 +9,6 @@ from staff.serializers import StaffTeamSerializer
 class StaffTeamByEventAPIView(generics.ListAPIView):
     queryset = StaffTeam.objects.all()
     serializer_class = StaffTeamSerializer
-    permission_classes = [permissions.IsAuthenticated, ]
 
     def get_queryset(self):
         return StaffTeam.objects.filter(event=self.kwargs['event_id']).prefetch_related('members__staff')

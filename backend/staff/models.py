@@ -12,5 +12,5 @@ class StaffTeam(models.Model):
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
 
 class StaffTeamMember(models.Model):
-    staff = models.ForeignKey(Staff, on_delete=models.CASCADE)
-    staff_team = models.ForeignKey(StaffTeam, on_delete=models.CASCADE)
+    staff = models.ForeignKey(Staff, on_delete=models.CASCADE, related_name='events')
+    staff_team = models.ForeignKey(StaffTeam, on_delete=models.CASCADE, related_name='members')
