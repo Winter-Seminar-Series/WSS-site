@@ -1,8 +1,8 @@
 import React from 'react';
-import Footer from '../../ui/Footer';
-import Navbar, { NavbarPlaceholder } from '../../ui/Navbar';
-import Timer from '../../ui/Timer';
-import Programs from '../../ui/Programs';
+import Footer from '../../ui/components/Footer';
+import Navbar, { NavbarPlaceholder } from '../../ui/components/Navbar';
+import Timer from '../../ui/components/Timer';
+import Programs from '../../ui/components/Programs';
 import { Staff } from '../staff/Staff';
 import Sample from '../staff/assets/Sample.svg';
 import TeamSection from './TeamSection';
@@ -60,7 +60,6 @@ export default function AboutUs() {
     },
   ];
 
-  // const timer = useTimer();
   return (
     <>
       <Navbar />

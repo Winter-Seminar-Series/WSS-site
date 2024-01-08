@@ -1,9 +1,9 @@
-import Header from '../ui/Header';
-import Programs from '../ui/Programs';
+import Header from '../ui/components/Header';
+import Programs from '../ui/components/Programs';
 import Seminar from './seminar/Seminar';
 import Staff from './staff/Staff';
-import Footer from '../ui/Footer';
-import Timer from '../ui/Timer';
+import Footer from '../ui/components/Footer';
+import Timer from '../ui/components/Timer';
 
 export default function Home() {
   return (

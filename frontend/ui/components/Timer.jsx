@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { useTimer } from '../hooks/timer';
+import useTimer from '../hooks/timer';
 
 export default function Timer() {
   const timer = useTimer();
