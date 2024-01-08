@@ -3,62 +3,11 @@ import Footer from '../../ui/components/Footer';
 import Navbar, { NavbarPlaceholder } from '../../ui/components/Navbar';
 import Timer from '../../ui/components/Timer';
 import Programs from '../../ui/components/Programs';
-import { Staff } from '../staff/Staff';
-import Sample from '../staff/assets/Sample.svg';
 import TeamSection from './TeamSection';
+import { fetchStaffTeams } from '../../lib/api/staff/staff';
 
-export default function AboutUs() {
-  const staff: Staff[] = [
-    {
-      name: 'John Doe',
-      surname: 'Doe',
-      team: 'Team',
-      image: Sample.src,
-    },
-    {
-      name: 'John Doe',
-      surname: 'Doe',
-      team: 'Team',
-      image: Sample.src,
-    },
-
-    {
-      name: 'John Doe',
-      surname: 'Doe',
-      team: 'Team',
-      image: Sample.src,
-    },
-    {
-      name: 'John Doe',
-      surname: 'Doe',
-      team: 'Team',
-      image: Sample.src,
-    },
-    {
-      name: 'John Doe',
-      surname: 'Doe',
-      team: 'Team',
-      image: Sample.src,
-    },
-    {
-      name: 'John Doe',
-      surname: 'Doe',
-      team: 'Team',
-      image: Sample.src,
-    },
-    {
-      name: 'John Doe',
-      surname: 'Doe',
-      team: 'Team',
-      image: Sample.src,
-    },
-    {
-      name: 'John Doe',
-      surname: 'Doe',
-      team: 'Team',
-      image: Sample.src,
-    },
-  ];
+export default async function AboutUs() {
+  const staffTeams = await fetchStaffTeams();
 
   return (
     <>
@@ -111,12 +60,13 @@ export default function AboutUs() {
       </div>
 
       <StaffArea />
-      <TeamSection teamName={'Organizer'} staff={staff} />
-      <TeamSection teamName={'Scientific'} staff={staff} />
-      <TeamSection teamName={'Technical'} staff={staff} />
-      <TeamSection teamName={'Content'} staff={staff} />
-      <TeamSection teamName={'Sponsorship'} staff={staff} />
-      <TeamSection teamName={'Executive'} staff={staff} />
+      {staffTeams.map((staffTeam) => (
+        <TeamSection
+          key={staffTeam.id}
+          teamName={staffTeam.name}
+          staff={staffTeam.members.map((members) => members.staff)}
+        />
+      ))}
       <Timer />
       <Footer />
     </>

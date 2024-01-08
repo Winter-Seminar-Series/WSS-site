@@ -1,71 +1,16 @@
 import React from 'react';
-import { Staff } from './Staff';
 import StaffCard from './StaffCard';
-import Sample from './assets/Sample.svg';
 import Marquee from 'react-fast-marquee';
+import { fetchStaffs } from '../../lib/api/staff/staff';
+import { shuffle } from '../../lib/collections';
 
-export default function StaffLine() {
-  const staff: Staff[] = [
-    {
-      name: 'John Doe',
-      surname: 'Doe',
-      team: 'Team',
-      image: Sample.src,
-    },
-    {
-      name: 'John Doe',
-      surname: 'Doe',
-      team: 'Team',
-      image: Sample.src,
-    },
-    {
-      name: 'John Doe',
-      surname: 'Doe',
-      team: 'Team',
-      image: Sample.src,
-    },
-    {
-      name: 'John Doe',
-      surname: 'Doe',
-      team: 'Team',
-      image: Sample.src,
-    },
-    {
-      name: 'John Doe',
-      surname: 'Doe',
-      team: 'Team',
-      image: Sample.src,
-    },
-    {
-      name: 'John Doe',
-      surname: 'Doe',
-      team: 'Team',
-      image: Sample.src,
-    },
-    {
-      name: 'John Doe',
-      surname: 'Doe',
-      team: 'Team',
-      image: Sample.src,
-    },
-    {
-      name: 'John Doe',
-      surname: 'Doe',
-      team: 'Team',
-      image: Sample.src,
-    },
-    {
-      name: 'John Doe',
-      surname: 'Doe',
-      team: 'Team',
-      image: Sample.src,
-    },
-  ];
+export default async function StaffLine() {
+  const staff = shuffle(await fetchStaffs());
 
   return (
-    <Marquee /*className={'flex flex-wrap items-center justify-center pt-10'}*/>
-      {staff.map((person, index) => (
-        <StaffCard key={index} person={person} />
+    <Marquee>
+      {staff.map((staff, index) => (
+        <StaffCard key={index} person={staff} />
       ))}
     </Marquee>
   );
