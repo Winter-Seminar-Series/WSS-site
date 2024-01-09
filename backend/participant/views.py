@@ -31,6 +31,9 @@ class ParticipantInfoRetrieveUpdateAPIView(generics.RetrieveUpdateAPIView):
     serializer_class = ParticipantInfoSerializer
     permission_classes = [permissions.IsAuthenticated, ParticipantUserPermission]
 
+    def get_queryset(self):
+        Participant.objects.select_related('participant__user__email')
+
     def get_object(self):
         participant = get_object_or_404(Participant, user=self.request.user)
         self.check_object_permissions(self.request, participant)
