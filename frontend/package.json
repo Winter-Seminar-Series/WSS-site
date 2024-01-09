@@ -12,8 +12,10 @@
   },
   "dependencies": {
     "@headlessui/react": "^1.7.17",
+    "camelcase-keys": "^9.1.2",
     "classnames": "^2.3.2",
     "components": "^0.1.0",
+    "decamelize-keys": "^2.0.1",
     "iron-session": "^8.0.1",
     "next": "^14.0.4",
     "react": "^18",
