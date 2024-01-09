@@ -19,7 +19,7 @@ class ParticipantInfoSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ParticipantInfo
-        fields = ('first_name_persian', 'last_name_persian', 'national_code', 'phone_number', 'image', 'bio', 'designation')
+        fields = ('__all__')
 
     def validate_national_code(self, value: str) -> str:
         if value == '':
@@ -35,25 +35,26 @@ class ParticipantInfoSerializer(serializers.ModelSerializer):
                 return value
             raise serializers.ValidationError("National Code is not valid.")
         raise serializers.ValidationError("National Code is not valid.")
-
-    def _validate(self, data):
-        first_name_persian = data.get('first_name_persian', '')
-        last_name_persian = data.get('last_name_persian', '')
-        phone_number = data.get('phone_number', '')
-        assert first_name_persian, 'First name is required.'
-        assert last_name_persian, 'Last name is required.'
-
-        assert phone_number, 'Phone number is required.'
-        assert phone_number.isdigit(), 'Phone number must be digits.'
-        assert len(phone_number) == 11, 'Phone number must be 11 digits.'
-        assert re.match(r'^09\d{9}$', phone_number), 'Invalid phone number.'
-
-    def validate(self, data):
-        try:
-            self._validate(data)
-        except Exception as e:
-            raise serializers.ValidationError(str(e))
-        return data
+    
+    def validate_phone_number(self, value: str) -> str:
+        if re.match(r'^09\d{9}$', value):
+            return value
+        raise serializers.ValidationError("Phone number is not valid.")
+    
+    def validate_birth_date(self, value: str) -> str:
+        if re.match(r'^\d{4}/\d{2}/\d{2}$', value):
+            return value
+        raise serializers.ValidationError("Birth date is not valid.")
+    
+    def validate_gender(self, value: str) -> str:
+        if value in ['M', 'F']:
+            return value
+        raise serializers.ValidationError("Gender is not valid.")
+    
+    def validate_grade(self, value: str) -> str:
+        if value in ['B', 'M', 'P']:
+            return value
+        raise serializers.ValidationError("Grade is not valid.")
 
 class ParticipantSerializer(serializers.ModelSerializer):
     user = UserSerializer()

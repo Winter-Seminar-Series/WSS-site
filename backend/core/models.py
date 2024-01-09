@@ -24,6 +24,18 @@ class Event(models.Model):
     starting_date = models.DateField()
     ending_date = models.DateField()
 
+    def __str__(self) -> str:
+        end = str(self.order)[-1]
+        if end == '1':
+            end = 'st'
+        elif end == '2':
+            end = 'nd'
+        elif end == '3':
+            end = 'rd'
+        else:
+            end = 'th'
+        return f'{self.order}{end} {self.name}'
+
 class SubEvent(models.Model):
     kind = (
         ('S', 'Seminar'),
