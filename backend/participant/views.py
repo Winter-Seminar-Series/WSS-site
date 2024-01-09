@@ -17,6 +17,11 @@ class ParticipantCreateAPIView(generics.CreateAPIView):
     serializer_class = ParticipantSerializer
     permission_classes = [permissions.AllowAny, ]
 
+    def post(self, request, *args, **kwargs):
+        response = super().post(request, *args, **kwargs)
+        response.data['user'].pop('password')
+        return response
+
 class ParticipantUserPermission(permissions.BasePermission):
     def has_object_permission(self, request, view, obj):
         return obj.user == request.user
