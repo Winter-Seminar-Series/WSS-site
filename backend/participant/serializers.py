@@ -16,6 +16,7 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class ParticipantInfoSerializer(serializers.ModelSerializer):
+    email = serializers.CharField(source='participant_set.first.user.email', read_only=True)
 
     class Meta:
         model = ParticipantInfo
