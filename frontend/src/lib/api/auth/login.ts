@@ -1,8 +1,9 @@
 'use server';
 
 import { redirect } from 'next/navigation';
+import { unstable_noStore as noStore } from 'next/cache';
 import { z } from 'zod';
-import fetchJson from '../fetchJson';
+import { fetchJson } from '../fetch';
 import { getSession } from '../session';
 import { parseJWT } from '../../auth';
 
@@ -21,10 +22,11 @@ async function callLoginAPI(email: string, password: string) {
 
   const body = { email, password };
 
-  return await fetchJson<LoginResponse>(url, {
+  const data = await fetchJson<LoginResponse>(url, body, {
     method: 'POST',
-    body: JSON.stringify(body),
   });
+  console.log('login', data);
+  return data;
 }
 
 async function callRefreshAPI(refresh: string) {
@@ -32,10 +34,11 @@ async function callRefreshAPI(refresh: string) {
 
   const body = { refresh };
 
-  return await fetchJson<LoginResponse>(url, {
+  const data = await fetchJson<LoginResponse>(url, body, {
     method: 'POST',
-    body: JSON.stringify(body),
   });
+  console.log('refresh', data);
+  return data;
 }
 
 async function saveLoginToSession(data: LoginResponse) {
@@ -52,6 +55,8 @@ async function saveLoginToSession(data: LoginResponse) {
 }
 
 export default async function login(formData: FormData) {
+  noStore();
+
   const { email, password } = FormSchema.parse(
     Object.fromEntries(formData.entries()),
   );
@@ -64,6 +69,8 @@ export default async function login(formData: FormData) {
 }
 
 export async function refresh() {
+  noStore();
+
   const session = await getSession();
 
   if (!session.refreshToken) {

@@ -1,4 +1,4 @@
-import fetchJson from '../fetchJson';
+import { fetchJson } from '../fetch';
 import type { StaffTeam } from '../../types';
 
 export async function fetchStaffTeams() {

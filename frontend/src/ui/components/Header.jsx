@@ -4,15 +4,16 @@ import Navbar, { NavbarPlaceholder } from './Navbar';
 import Rectangle from '../../../public/source/Rectangle.png';
 import useTimer from '../hooks/timer';
 
-export default function Header() {
+export default function Header({ isAuthenticated = false }) {
   const timer = useTimer();
+
   return (
     <header>
       <div
         className="items-center bg-cover bg-center bg-no-repeat pb-56"
         style={{ backgroundImage: `url(${Rectangle.src})` }}
       >
-        <Navbar />
+        <Navbar isAuthenticated={isAuthenticated} />
         <NavbarPlaceholder />
         <div className="h-8 lg:h-16" />
         <div className="mx-auto flex px-6 max-lg:flex-col lg:max-w-[1200px] lg:flex-row">

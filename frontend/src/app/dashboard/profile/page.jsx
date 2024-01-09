@@ -1,4 +1,8 @@
-export default function Profile() {
+import { fetchEmailAndProfile } from '../../../lib/api/dashboard/profile';
+
+export default async function Profile() {
+  const { email, profile } = await fetchEmailAndProfile();
+
   return (
     <div className="flex flex-col items-start gap-5 self-stretch">
       <label className="text-4xl font-bold not-italic leading-[normal] tracking-[-0.72px] text-[#1F2B3D]">
@@ -11,7 +15,7 @@ export default function Profile() {
               EMAIL
             </label>
             <p className="flex items-center gap-2 self-stretch rounded-lg bg-[#8A89981A] px-5 py-4">
-              sobhan@gmail.com
+              {email}
             </p>
           </div>
           <div className="flex flex-[1_0_0] flex-col items-start gap-[9px] self-stretch">
@@ -38,7 +42,7 @@ export default function Profile() {
                   pattern="[0-9]{10}"
                   minLength={10}
                   maxLength={10}
-                  defaultValue={9123456789}
+                  defaultValue={profile.phoneNumber ?? 9123456789}
                 />
               </div>
             </div>
@@ -57,7 +61,7 @@ export default function Profile() {
               id="fName"
               minLength={3}
               maxLength={15}
-              defaultValue="Sobhan"
+              defaultValue={profile.firstName}
             />
           </div>
         </div>
@@ -72,7 +76,7 @@ export default function Profile() {
               id="lName"
               minLength={3}
               maxLength={20}
-              defaultValue="Aghasi Zadeh"
+              defaultValue={profile.lastName}
             />
           </div>
         </div>
@@ -89,7 +93,7 @@ export default function Profile() {
               id="City"
               minLength={3}
               maxLength={15}
-              defaultValue="Tehran"
+              defaultValue={profile.city}
             />
           </div>
         </div>
@@ -103,6 +107,7 @@ export default function Profile() {
               type="date"
               id="birthday"
               name="birthday"
+              defaultValue={profile.birthDate}
             ></input>
           </div>
         </div>
@@ -117,6 +122,7 @@ export default function Profile() {
               name="gender"
               value="male"
               className="h-3 w-3 shrink-0 fill-[var(--Primary-Color,#342B4C)]"
+              defaultChecked={profile.gender === 'Male'}
             />
             <label
               htmlFor="male"
@@ -131,6 +137,7 @@ export default function Profile() {
               name="gender"
               value="female"
               className="h-3 w-3 shrink-0 fill-[var(--Primary-Color,#342B4C)]"
+              defaultChecked={profile.gender === 'Female'}
             />
             <label
               htmlFor="female"
@@ -145,6 +152,7 @@ export default function Profile() {
               name="gender"
               value="other"
               className="h-3 w-3 shrink-0 fill-[var(--Primary-Color,#342B4C)]"
+              defaultChecked={profile.gender === 'Other'}
             />
             <label
               htmlFor="other"
@@ -174,7 +182,7 @@ export default function Profile() {
                 id="University"
                 minLength={5}
                 maxLength={100}
-                defaultValue="Sharif University of Technology"
+                defaultValue={profile.university}
               />
             </div>
           </div>
@@ -189,7 +197,7 @@ export default function Profile() {
                 id="Major"
                 minLength={5}
                 maxLength={100}
-                defaultValue="Computer Engineering"
+                defaultValue={profile.major}
               />
             </div>
           </div>
@@ -206,7 +214,7 @@ export default function Profile() {
                 id="Job"
                 minLength={5}
                 maxLength={100}
-                defaultValue="Developer"
+                defaultValue={profile.job}
               />
             </div>
           </div>
@@ -216,6 +224,7 @@ export default function Profile() {
             </label>
             <div className="flex items-center gap-2 px-0 py-1">
               <input
+                defaultChecked={profile.isOpenToWork}
                 type="checkbox"
                 id="openToWork"
                 name="openToWork"
@@ -233,7 +242,13 @@ export default function Profile() {
             Fields of interest
           </label>
           <div className="flex items-center gap-2 self-stretch rounded-lg border border-solid border-[rgba(138,137,152,0.30)] px-5 py-4">
-            <select name="field" id="field" className="w-full"></select>
+            <input
+              className="min-w-full text-lg font-semibold not-italic leading-[normal] tracking-[-0.18px] text-[#1F2B3D]"
+              type="text"
+              name="field"
+              id="field"
+              defaultValue={profile.fieldsOfInterest}
+            />
           </div>
         </div>
         <div className="flex items-start gap-6 self-stretch">
@@ -243,6 +258,7 @@ export default function Profile() {
             </label>
             <div className="flex items-center gap-5 px-0 py-1">
               <input
+                defaultChecked={profile.grade === 'Bachelor'}
                 type="radio"
                 id="Bachelor"
                 name="grade"
@@ -257,6 +273,7 @@ export default function Profile() {
               </label>
               <br />
               <input
+                defaultChecked={profile.grade === 'Master'}
                 type="radio"
                 id="Master"
                 name="grade"
@@ -271,6 +288,7 @@ export default function Profile() {
               </label>
               <br />
               <input
+                defaultChecked={profile.grade === 'PhD or higher'}
                 type="radio"
                 id="PhD"
                 name="grade"
@@ -289,6 +307,7 @@ export default function Profile() {
             <label className="text-base font-medium uppercase not-italic leading-[normal] tracking-[0.64px] text-[#8A8998]">
               Introduction Method
             </label>
+            {/* TODO */}
             <div className="flex items-center justify-between self-stretch rounded-lg border border-solid border-[rgba(138,137,152,0.30)] px-5 py-4">
               <select name="field" id="field" className="w-full"></select>
             </div>
@@ -306,7 +325,7 @@ export default function Profile() {
                 id="linkedin"
                 minLength={3}
                 maxLength={100}
-                defaultValue="linkedin.com/address"
+                defaultValue={profile.linkedin}
               />
             </div>
           </div>
@@ -321,7 +340,7 @@ export default function Profile() {
                 id="github"
                 minLength={3}
                 maxLength={100}
-                defaultValue="github.com/address"
+                defaultValue={profile.github}
               />
             </div>
           </div>
