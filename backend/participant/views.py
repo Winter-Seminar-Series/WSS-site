@@ -17,14 +17,18 @@ class ParticipantCreateAPIView(generics.CreateAPIView):
     serializer_class = ParticipantSerializer
     permission_classes = [permissions.AllowAny, ]
 
+class ParticipantUserPermission(permissions.BasePermission):
+    def has_object_permission(self, request, view, obj):
+        return obj.user == request.user
 
 class ParticipantInfoRetrieveUpdateAPIView(generics.RetrieveUpdateAPIView):
     queryset = Participant.objects.all()
     serializer_class = ParticipantInfoSerializer
-    permission_classes = [permissions.IsAuthenticated, ]
+    permission_classes = [permissions.IsAuthenticated, ParticipantUserPermission]
 
     def get_object(self):
         participant = get_object_or_404(Participant, user=self.request.user)
+        self.check_object_permissions(self.request, participant)
         return participant.info
 
 
@@ -41,7 +45,7 @@ class PasswordResetAPIView(views.APIView):
         participant.save()
         send_mail(
             'WSS Password Reset',
-            f'Your WSS password reset link is: https://wss.ce.sharif.edu/password-reset/{participant.password_reset_code}',
+            f'Your WSS password reset link is: https://wss-sharif.com/password-reset/{participant.password_reset_code}',
             settings.EMAIL_HOST_USER,
             [participant.user.email],
         )

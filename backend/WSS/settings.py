@@ -182,9 +182,10 @@ STORAGES = {
     "default": {
         "BACKEND": "storages.backends.s3.S3Storage",
         "OPTIONS": {
-            "AWS_SECRET_ACCESS_KEY": os.environ['AWS_SECRET_ACCESS_KEY'],
-            "AWS_STORAGE_BUCKET_NAME": os.environ['AWS_STORAGE_BUCKET_NAME'],
-            "AWS_S3_CUSTOM_DOMAIN": "https://s3.ir-thr-at1.arvanstorage.com/",
+            "access_key": os.environ['AWS_ACCESS_KEY'],
+            "secret_key": os.environ['AWS_SECRET_KEY'],
+            "bucket_name": os.environ['AWS_STORAGE_BUCKET_NAME'],
+            "endpoint_url": "https://s3.ir-thr-at1.arvanstorage.ir",
         },
     },
     "staticfiles": {
