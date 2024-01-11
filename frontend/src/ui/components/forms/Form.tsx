@@ -26,6 +26,7 @@ export default function Form({
   fields,
   submitText = 'Submit',
   onSubmit: action,
+  error,
 }: {
   formType: FormType;
   overline: string;
@@ -33,6 +34,7 @@ export default function Form({
   fields: FieldsType;
   submitText?: string;
   onSubmit?: (formData: FormData) => Promise<void>;
+  error?: string;
 }) {
   return (
     <>
@@ -48,6 +50,11 @@ export default function Form({
             className="pointer-events-none absolute left-0 top-0"
           />
           <FormHeader overline={overline} title={title} />
+          {error && (
+            <p className="-mb-10 mt-10 rounded-md bg-red-50 p-3 font-medium text-red-600">
+              {error}
+            </p>
+          )}
           <FormFields formType={formType} fields={fields} />
           <button
             className={

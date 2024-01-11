@@ -1,14 +1,25 @@
-import React from 'react';
+'use client';
+
+import React, { useState } from 'react';
 import Form from '../../ui/components/forms/Form';
 import signUp from '../../lib/api/auth/signUp';
 
 export default function SignUpForm() {
+  const [error, setError] = useState('');
   return (
     <Form
+      error={error}
       formType={'signUp'}
       overline={'Overline goes here'}
       title={'Sign Up'}
-      onSubmit={signUp}
+      onSubmit={async (data) => {
+        setError('');
+        try {
+          await signUp(data);
+        } catch (error) {
+          setError(error.message);
+        }
+      }}
       fields={[
         {
           title: 'Email',
