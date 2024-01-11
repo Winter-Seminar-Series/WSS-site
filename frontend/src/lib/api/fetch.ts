@@ -53,8 +53,6 @@ export async function fetchJson<JSON = unknown>(
     fetchInit.body = JSON.stringify(decamelizeKeys(body, { deep: true }));
   }
 
-  console.log(fetchInit.headers);
-
   const response = await fetch(input, fetchInit);
 
   const snakeCaseData = await response.json();

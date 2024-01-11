@@ -22,11 +22,9 @@ async function callLoginAPI(email: string, password: string) {
 
   const body = { email, password };
 
-  const data = await fetchJson<LoginResponse>(url, body, {
+  return await fetchJson<LoginResponse>(url, body, {
     method: 'POST',
   });
-  console.log('login', data);
-  return data;
 }
 
 async function callRefreshAPI(refresh: string) {
@@ -34,11 +32,9 @@ async function callRefreshAPI(refresh: string) {
 
   const body = { refresh };
 
-  const data = await fetchJson<LoginResponse>(url, body, {
+  return await fetchJson<LoginResponse>(url, body, {
     method: 'POST',
   });
-  console.log('refresh', data);
-  return data;
 }
 
 async function saveLoginToSession(data: LoginResponse) {
