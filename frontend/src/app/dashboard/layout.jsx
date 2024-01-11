@@ -1,11 +1,14 @@
+import { isAuthenticated } from '../../lib/auth';
 import Footer from '../../ui/components/Footer';
 import Navbar, { NavbarPlaceholder } from '../../ui/components/Navbar';
 import LogoutButton from '../../ui/components/dashboard/LogoutButton';
 
-export default function DashboardLayout({ children }) {
+export default async function DashboardLayout({ children }) {
+  const authenticated = await isAuthenticated();
+
   return (
     <>
-      <Navbar />
+      <Navbar isAuthenticated={authenticated} />
       <NavbarPlaceholder />
       <div
         style={{ backgroundImage: 'url(/source/Rectangle.png)' }}
@@ -16,7 +19,7 @@ export default function DashboardLayout({ children }) {
           <div className="ml-18 flex flex-row items-start justify-between self-stretch lg:max-w-[1055px]">
             <div className="flex-col gap-2">
               <p className="text-[20px] font-medium uppercase not-italic leading-[normal] tracking-[0.8px] text-[#8A8998]">
-                Welcome back, sobhan
+                Welcome back
               </p>
               <p className="text-[76px] font-bold not-italic leading-[76px] tracking-[-1.52px] text-[#1F2B3D]">
                 Dashboard

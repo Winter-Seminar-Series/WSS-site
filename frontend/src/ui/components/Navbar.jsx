@@ -5,7 +5,7 @@ import { Menu, Transition } from '@headlessui/react';
 import Link from 'next/link';
 import Logo from './Logo';
 
-export default function Navbar({ fixed = true }) {
+export default function Navbar({ fixed = true, isAuthenticated = false }) {
   const [transparent, setTransparent] = useState(fixed);
 
   useEffect(() => {
@@ -115,28 +115,31 @@ export default function Navbar({ fixed = true }) {
             About Us
           </Link>
         </div>
-        <div className="flex items-center gap-1.5">
-          <Link
-            href="/signup"
-            className={`flex items-center rounded-md px-6 text-base font-semibold max-lg:h-9 max-lg:px-4 lg:h-12 ${
-              transparent
-                ? 'bg-white text-secondary-500'
-                : 'bg-secondary-500 text-white'
-            }`}
-          >
-            Sign Up
-          </Link>
-          <Link
-            href="/login"
-            className={`flex items-center rounded-md border px-6 text-base font-semibold max-lg:h-9 max-lg:px-4 lg:h-12 ${
-              transparent
-                ? 'border-opacity-30 text-white'
-                : 'border-transparent text-secondary-500'
-            }`}
-          >
-            Login
-          </Link>
-        </div>
+        {/* TODO: sign out and dashboard button */}
+        {!isAuthenticated && (
+          <div className="flex items-center gap-1.5">
+            <Link
+              href="/signup"
+              className={`flex items-center rounded-md px-6 text-base font-semibold max-lg:h-9 max-lg:px-4 lg:h-12 ${
+                transparent
+                  ? 'bg-white text-secondary-500'
+                  : 'bg-secondary-500 text-white'
+              }`}
+            >
+              Sign Up
+            </Link>
+            <Link
+              href="/login"
+              className={`flex items-center rounded-md border px-6 text-base font-semibold max-lg:h-9 max-lg:px-4 lg:h-12 ${
+                transparent
+                  ? 'border-opacity-30 text-white'
+                  : 'border-transparent text-secondary-500'
+              }`}
+            >
+              Login
+            </Link>
+          </div>
+        )}
       </div>
     </nav>
   );

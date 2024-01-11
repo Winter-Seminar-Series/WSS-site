@@ -2,6 +2,7 @@ import re
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import User
 from rest_framework import serializers
+import participant
 
 from participant.models import Participant, ParticipantInfo
 
@@ -9,10 +10,28 @@ from participant.models import Participant, ParticipantInfo
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('id', 'email', 'password')
+        fields = ('id', 'email')
 
     def validate_password(self, value: str) -> str:
         return make_password(value)
+
+class ParticipantSerializer(serializers.ModelSerializer):
+    user = UserSerializer()
+
+    class Meta:
+        model = Participant
+        fields = ('user', )
+
+    def create(self, validated_data):
+        user_data = validated_data.pop('user')
+        if User.objects.filter(email=user_data['email']).exists():
+            raise serializers.ValidationError('User with this email already exists.')
+        user_data['username'] = user_data['email'].replace('@', '_').replace('.', '_')
+        user = User.objects.create(**user_data)
+        participant = Participant.objects.create(user=user, **validated_data)
+        participant.info = ParticipantInfo.objects.create()
+        participant.save()
+        return participant
 
 
 class ParticipantInfoSerializer(serializers.ModelSerializer):
@@ -56,21 +75,3 @@ class ParticipantInfoSerializer(serializers.ModelSerializer):
         if value in ['B', 'M', 'P']:
             return value
         raise serializers.ValidationError("Grade is not valid.")
-
-class ParticipantSerializer(serializers.ModelSerializer):
-    user = UserSerializer()
-
-    class Meta:
-        model = Participant
-        fields = ('user', )
-
-    def create(self, validated_data):
-        user_data = validated_data.pop('user')
-        if User.objects.filter(email=user_data['email']).exists():
-            raise serializers.ValidationError('User with this email already exists.')
-        user_data['username'] = user_data['email'].replace('@', '_').replace('.', '_')
-        user = User.objects.create(**user_data)
-        participant = Participant.objects.create(user=user, **validated_data)
-        participant.info = ParticipantInfo.objects.create()
-        participant.save()
-        return participant

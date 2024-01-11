@@ -1,8 +1,9 @@
 'use server';
 
 import { redirect } from 'next/navigation';
+import { unstable_noStore as noStore } from 'next/cache';
 import { z } from 'zod';
-import fetchJson from '../fetchJson';
+import { FetchError, fetchJson } from '../fetch';
 import { getSession } from '../session';
 import { parseJWT } from '../../auth';
 
@@ -21,9 +22,8 @@ async function callLoginAPI(email: string, password: string) {
 
   const body = { email, password };
 
-  return await fetchJson<LoginResponse>(url, {
+  return await fetchJson<LoginResponse>(url, body, {
     method: 'POST',
-    body: JSON.stringify(body),
   });
 }
 
@@ -32,9 +32,8 @@ async function callRefreshAPI(refresh: string) {
 
   const body = { refresh };
 
-  return await fetchJson<LoginResponse>(url, {
+  return await fetchJson<LoginResponse>(url, body, {
     method: 'POST',
-    body: JSON.stringify(body),
   });
 }
 
@@ -52,6 +51,8 @@ async function saveLoginToSession(data: LoginResponse) {
 }
 
 export default async function login(formData: FormData) {
+  noStore();
+
   const { email, password } = FormSchema.parse(
     Object.fromEntries(formData.entries()),
   );
@@ -64,13 +65,22 @@ export default async function login(formData: FormData) {
 }
 
 export async function refresh() {
+  noStore();
+
   const session = await getSession();
 
   if (!session.refreshToken) {
     throw new Error('Not already signed in.');
   }
 
-  const data = await callRefreshAPI(session.refreshToken);
-
-  await saveLoginToSession(data);
+  try {
+    const data = await callRefreshAPI(session.refreshToken);
+    await saveLoginToSession(data);
+  } catch (error) {
+    if (error instanceof FetchError && error.data.status === 401) {
+      redirect('/login');
+    } else {
+      throw error;
+    }
+  }
 }

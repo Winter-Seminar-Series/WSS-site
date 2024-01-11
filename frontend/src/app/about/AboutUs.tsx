@@ -4,14 +4,16 @@ import Navbar, { NavbarPlaceholder } from '../../ui/components/Navbar';
 import Timer from '../../ui/components/Timer';
 import Programs from '../../ui/components/Programs';
 import TeamSection from './TeamSection';
-import { fetchStaffTeams } from '../../lib/api/staff/staff';
+import { fetchStaffTeams } from '../../lib/api/about/staff';
+import { isAuthenticated } from '../../lib/auth';
 
 export default async function AboutUs() {
   const staffTeams = await fetchStaffTeams();
+  const authenticated = await isAuthenticated();
 
   return (
     <>
-      <Navbar />
+      <Navbar isAuthenticated={authenticated} />
       <NavbarPlaceholder />
       <div
         style={{ backgroundImage: 'url(/source/Rectangle.png)' }}

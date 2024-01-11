@@ -1,8 +1,9 @@
 'use server';
 
 import { redirect } from 'next/navigation';
+import { unstable_noStore as noStore } from 'next/cache';
 import { z } from 'zod';
-import fetchJson from '../fetchJson';
+import { fetchJson } from '../fetch';
 
 const FormSchema = z.object({
   email: z.string().email(),
@@ -15,10 +16,12 @@ async function callSignUpAPI(email: string, password: string) {
 
   const body = { user: { email, password } };
 
-  return await fetchJson(url, { method: 'POST', body: JSON.stringify(body) });
+  return await fetchJson(url, body, { method: 'POST' });
 }
 
 export default async function signUp(formData: FormData) {
+  noStore();
+
   const { email, password, confirmPassword } = FormSchema.parse(
     Object.fromEntries(formData.entries()),
   );

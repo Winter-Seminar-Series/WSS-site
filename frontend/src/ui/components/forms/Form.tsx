@@ -36,7 +36,7 @@ export default function Form({
 }) {
   return (
     <>
-      <Navbar fixed={false} />
+      <Navbar fixed={false} isAuthenticated={false} />
       <div className="flex max-md:mb-14 max-md:flex-col">
         <form
           action={action}
