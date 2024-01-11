@@ -3,7 +3,7 @@
 import { redirect } from 'next/navigation';
 import { unstable_noStore as noStore } from 'next/cache';
 import { z } from 'zod';
-import { fetchJson } from '../fetch';
+import { FetchError, fetchJson } from '../fetch';
 import { getSession } from '../session';
 import { parseJWT } from '../../auth';
 
@@ -77,7 +77,14 @@ export async function refresh() {
     throw new Error('Not already signed in.');
   }
 
-  const data = await callRefreshAPI(session.refreshToken);
-
-  await saveLoginToSession(data);
+  try {
+    const data = await callRefreshAPI(session.refreshToken);
+    await saveLoginToSession(data);
+  } catch (error) {
+    if (error instanceof FetchError && error.data.status === 401) {
+      redirect('/login');
+    } else {
+      throw error;
+    }
+  }
 }
