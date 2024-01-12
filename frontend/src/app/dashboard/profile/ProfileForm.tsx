@@ -48,32 +48,15 @@ export default function ProfileForm({
               <label className="text-base font-medium uppercase not-italic leading-[normal] tracking-[0.64px] text-[#8A8998]">
                 Phone Number
               </label>
-              <div className="flex items-start gap-[9px] self-stretch">
-                <div className="flex items-center gap-3 rounded-lg border border-solid border-[rgba(138,137,152,0.30)] px-5 py-4">
-                  <div className="h-6 w-8 rounded-sm bg-[#d9d9d9]"></div>
-                  <input
-                    className="w-[43px] text-lg font-semibold not-italic leading-[normal] tracking-[-0.18px] text-[#1F2B3D]"
-                    type="text"
-                    id="areaCodeInput"
-                    pattern="+?[0-9]{1,3}"
-                    maxLength={4}
-                    defaultValue="+98"
-                  />
-                </div>
-                <div className="flex flex-[1_0_0] items-center gap-2 rounded-lg border border-solid border-[rgba(138,137,152,0.30)] px-5 py-4">
-                  <input
-                    className="text-lg font-semibold not-italic leading-[normal] tracking-[-0.18px] text-[#1F2B3D]"
-                    type="text"
-                    id="phoneNumber"
-                    name="phoneNumber"
-                    pattern="[0-9]{10}"
-                    minLength={10}
-                    maxLength={10}
-                    placeholder="9123456789"
-                    defaultValue={profile.phoneNumber}
-                  />
-                </div>
-              </div>
+              <input
+                className="self-stretch rounded-lg border border-solid border-[rgba(138,137,152,0.30)] px-5 py-4 text-lg font-semibold not-italic leading-[normal] tracking-[-0.18px] text-[#1F2B3D]"
+                type="tel"
+                id="phoneNumber"
+                name="phoneNumber"
+                pattern="^(\+98|0)9\d{9}$"
+                placeholder="09123456789"
+                defaultValue={profile.phoneNumber}
+              />
             </div>
           </div>
         </div>
@@ -82,31 +65,29 @@ export default function ProfileForm({
             <label className="text-base font-medium uppercase not-italic leading-[normal] tracking-[0.64px] text-[#8A8998]">
               First name
             </label>
-            <div className="flex items-center gap-2 self-stretch rounded-lg border border-solid border-[rgba(138,137,152,0.30)] px-5 py-4">
-              <input
-                className="text-lg font-semibold not-italic leading-[normal] tracking-[-0.18px] text-[#1F2B3D]"
-                type="text"
-                id="fName"
-                minLength={3}
-                maxLength={15}
-                defaultValue={profile.firstName}
-              />
-            </div>
+            <input
+              className="self-stretch rounded-lg border border-solid border-[rgba(138,137,152,0.30)] px-5 py-4 text-lg font-semibold not-italic leading-[normal] tracking-[-0.18px] text-[#1F2B3D]"
+              type="text"
+              id="fName"
+              minLength={3}
+              maxLength={15}
+              defaultValue={profile.firstName}
+              name="firstName"
+            />
           </div>
           <div className="flex flex-[1_0_0] flex-col items-start gap-[9px] self-stretch">
             <label className="text-base font-medium uppercase not-italic leading-[normal] tracking-[0.64px] text-[#8A8998]">
               Last name
             </label>
-            <div className="flex items-center gap-2 self-stretch rounded-lg border border-solid border-[rgba(138,137,152,0.30)] px-5 py-4">
-              <input
-                className="text-lg font-semibold not-italic leading-[normal] tracking-[-0.18px] text-[#1F2B3D]"
-                type="text"
-                id="lName"
-                minLength={3}
-                maxLength={20}
-                defaultValue={profile.lastName}
-              />
-            </div>
+            <input
+              className="self-stretch rounded-lg border border-solid border-[rgba(138,137,152,0.30)] px-5 py-4 text-lg font-semibold not-italic leading-[normal] tracking-[-0.18px] text-[#1F2B3D]"
+              type="text"
+              id="lName"
+              minLength={3}
+              maxLength={20}
+              defaultValue={profile.lastName}
+              name="lastName"
+            />
           </div>
         </div>
         <div className="flex items-start gap-6 self-stretch">
@@ -114,17 +95,15 @@ export default function ProfileForm({
             <label className="text-base font-medium uppercase not-italic leading-[normal] tracking-[0.64px] text-[#8A8998]">
               CITY
             </label>
-            <div className="flex items-center gap-2 self-stretch rounded-lg border border-solid border-[rgba(138,137,152,0.30)] px-5 py-4">
-              <input
-                className="text-lg font-semibold not-italic leading-[normal] tracking-[-0.18px] text-[#1F2B3D]"
-                type="text"
-                id="city"
-                name="city"
-                minLength={3}
-                maxLength={15}
-                defaultValue={profile.city}
-              />
-            </div>
+            <input
+              className="self-stretch rounded-lg border border-solid border-[rgba(138,137,152,0.30)] px-5 py-4 text-lg font-semibold not-italic leading-[normal] tracking-[-0.18px] text-[#1F2B3D]"
+              type="text"
+              id="city"
+              name="city"
+              minLength={3}
+              maxLength={15}
+              defaultValue={profile.city}
+            />
           </div>
           <div className="flex flex-[1_0_0] flex-col items-start gap-[9px] self-stretch">
             <label className="text-base font-medium uppercase not-italic leading-[normal] tracking-[0.64px] text-[#8A8998]">
@@ -135,7 +114,7 @@ export default function ProfileForm({
                 className="black-text text-lg font-semibold not-italic leading-[normal] tracking-[-0.18px]"
                 type="date"
                 id="birthday"
-                name="birthday"
+                name="birthDate"
                 defaultValue={profile.birthDate?.toISOString().split('T')[0]}
               ></input>
             </div>
@@ -149,8 +128,8 @@ export default function ProfileForm({
                 type="radio"
                 id="male"
                 name="gender"
-                value="male"
-                className="h-3 w-3 shrink-0 fill-[var(--Primary-Color,#342B4C)]"
+                value="Male"
+                className="h-3 w-3 shrink-0 accent-primary-400"
                 defaultChecked={profile.gender === Gender.MALE}
               />
               <label
@@ -164,8 +143,8 @@ export default function ProfileForm({
                 type="radio"
                 id="female"
                 name="gender"
-                value="female"
-                className="h-3 w-3 shrink-0 fill-[var(--Primary-Color,#342B4C)]"
+                value="Female"
+                className="h-3 w-3 shrink-0 accent-primary-400"
                 defaultChecked={profile.gender === Gender.FEMALE}
               />
               <label
@@ -179,8 +158,8 @@ export default function ProfileForm({
                 type="radio"
                 id="other"
                 name="gender"
-                value="other"
-                className="h-3 w-3 shrink-0 fill-[var(--Primary-Color,#342B4C)]"
+                value="Other"
+                className="h-3 w-3 shrink-0 accent-primary-400"
                 defaultChecked={profile.gender === Gender.OTHER}
               />
               <label
@@ -204,31 +183,29 @@ export default function ProfileForm({
               <label className="text-base font-medium uppercase not-italic leading-[normal] tracking-[0.64px] text-[#8A8998]">
                 University
               </label>
-              <div className="flex items-center gap-2 self-stretch rounded-lg border border-solid border-[rgba(138,137,152,0.30)] px-5 py-4">
-                <input
-                  className="min-w-full text-lg font-semibold not-italic leading-[normal] tracking-[-0.18px] text-[#1F2B3D]"
-                  type="text"
-                  id="University"
-                  minLength={5}
-                  maxLength={100}
-                  defaultValue={profile.university}
-                />
-              </div>
+              <input
+                className="py-4min-w-full self-stretch rounded-lg border border-solid border-[rgba(138,137,152,0.30)] px-5 text-lg font-semibold not-italic leading-[normal] tracking-[-0.18px] text-[#1F2B3D]"
+                type="text"
+                id="University"
+                minLength={5}
+                maxLength={100}
+                defaultValue={profile.university}
+                name="university"
+              />
             </div>
             <div className="flex flex-[1_0_0] flex-col items-start gap-[9px] self-stretch">
               <label className="text-base font-medium uppercase not-italic leading-[normal] tracking-[0.64px] text-[#8A8998]">
                 Major
               </label>
-              <div className="flex items-center gap-2 self-stretch rounded-lg border border-solid border-[rgba(138,137,152,0.30)] px-5 py-4">
-                <input
-                  className="min-w-full text-lg font-semibold not-italic leading-[normal] tracking-[-0.18px] text-[#1F2B3D]"
-                  type="text"
-                  id="Major"
-                  minLength={5}
-                  maxLength={100}
-                  defaultValue={profile.major}
-                />
-              </div>
+              <input
+                className="min-w-full self-stretch rounded-lg border border-solid border-[rgba(138,137,152,0.30)] px-5 py-4 text-lg font-semibold not-italic leading-[normal] tracking-[-0.18px] text-[#1F2B3D]"
+                type="text"
+                id="Major"
+                minLength={5}
+                maxLength={100}
+                defaultValue={profile.major}
+                name="major"
+              />
             </div>
           </div>
           <div className="flex items-start gap-8 self-stretch">
@@ -236,16 +213,15 @@ export default function ProfileForm({
               <label className="text-base font-medium uppercase not-italic leading-[normal] tracking-[0.64px] text-[#8A8998]">
                 job
               </label>
-              <div className="flex items-center gap-2 self-stretch rounded-lg border border-solid border-[rgba(138,137,152,0.30)] px-5 py-4">
-                <input
-                  className="min-w-full text-lg font-semibold not-italic leading-[normal] tracking-[-0.18px] text-[#1F2B3D]"
-                  type="text"
-                  id="Job"
-                  minLength={5}
-                  maxLength={100}
-                  defaultValue={profile.job}
-                />
-              </div>
+              <input
+                className="min-w-full self-stretch rounded-lg border border-solid border-[rgba(138,137,152,0.30)] px-5 py-4 text-lg font-semibold not-italic leading-[normal] tracking-[-0.18px] text-[#1F2B3D]"
+                type="text"
+                id="Job"
+                minLength={5}
+                maxLength={100}
+                defaultValue={profile.job}
+                name="job"
+              />
             </div>
             <div className="flex flex-[1_0_0] flex-col items-start gap-[9px] self-stretch">
               <label className="text-base font-medium uppercase not-italic leading-[normal] tracking-[0.64px] text-[#8A8998]">
@@ -256,7 +232,7 @@ export default function ProfileForm({
                   defaultChecked={profile.isOpenToWork}
                   type="checkbox"
                   id="openToWork"
-                  name="openToWork"
+                  name="isOpenToWork"
                   value="open"
                   className="h-4 w-4 shrink-0"
                 />
@@ -270,15 +246,13 @@ export default function ProfileForm({
             <label className="text-base font-medium uppercase not-italic leading-[normal] tracking-[0.64px] text-[#8A8998]">
               Fields of interest
             </label>
-            <div className="flex items-center gap-2 self-stretch rounded-lg border border-solid border-[rgba(138,137,152,0.30)] px-5 py-4">
-              <input
-                className="min-w-full text-lg font-semibold not-italic leading-[normal] tracking-[-0.18px] text-[#1F2B3D]"
-                type="text"
-                name="field"
-                id="field"
-                defaultValue={profile.fieldsOfInterest}
-              />
-            </div>
+            <input
+              className="min-w-full self-stretch rounded-lg border border-solid border-[rgba(138,137,152,0.30)] px-5 py-4 text-lg font-semibold not-italic leading-[normal] tracking-[-0.18px] text-[#1F2B3D]"
+              type="text"
+              name="fieldOfInterest"
+              id="field"
+              defaultValue={profile.fieldsOfInterest}
+            />
           </div>
           <div className="flex items-start gap-6 self-stretch">
             <div className="flex flex-[1_0_0] flex-col items-start gap-[9px] self-stretch">
@@ -338,7 +312,19 @@ export default function ProfileForm({
               </label>
               {/* TODO */}
               <div className="flex items-center justify-between self-stretch rounded-lg border border-solid border-[rgba(138,137,152,0.30)] px-5 py-4">
-                <select name="field" id="field" className="w-full"></select>
+                <select name="field" id="field" className="w-full">
+                  <option>Telegram</option>
+                  <option>Instagram</option>
+                  <option>LinkedIn</option>
+                  <option>YouTube</option>
+                  <option>Quera</option>
+                  <option>Email</option>
+                  <option>SMS</option>
+                  <option>Friends</option>
+                  <option>Professors</option>
+                  <option>Forums</option>
+                  <option>Other</option>
+                </select>
               </div>
             </div>
           </div>
@@ -350,11 +336,12 @@ export default function ProfileForm({
               <div className="flex items-center gap-2 self-stretch rounded-lg border border-solid border-[rgba(138,137,152,0.30)] px-5 py-4">
                 <input
                   className="w-full text-lg font-semibold not-italic leading-[normal] tracking-[-0.18px] text-[#1F2B3D]"
-                  type="text"
+                  type="url"
                   id="linkedin"
                   minLength={3}
                   maxLength={100}
                   defaultValue={profile.linkedin}
+                  name="linkedin"
                 />
               </div>
             </div>
@@ -365,11 +352,12 @@ export default function ProfileForm({
               <div className="flex items-center gap-2 self-stretch rounded-lg border border-solid border-[rgba(138,137,152,0.30)] px-5 py-4">
                 <input
                   className="w-full text-lg font-semibold not-italic leading-[normal] tracking-[-0.18px] text-[#1F2B3D]"
-                  type="text"
+                  type="url"
                   id="github"
                   minLength={3}
                   maxLength={100}
                   defaultValue={profile.github}
+                  name="github"
                 />
               </div>
             </div>
@@ -389,7 +377,8 @@ export default function ProfileForm({
                 <div className="flex items-center gap-2 self-stretch rounded-lg border border-solid border-[rgba(138,137,152,0.30)] px-5 py-4">
                   <input
                     className="w-full text-lg font-semibold not-italic leading-[normal] tracking-[-0.18px] text-[#1F2B3D]"
-                    type="text"
+                    type="password"
+                    autoComplete="current-password"
                     id="currentPass"
                     minLength={3}
                     maxLength={100}
@@ -403,7 +392,8 @@ export default function ProfileForm({
                 <div className="flex items-center gap-2 self-stretch rounded-lg border border-solid border-[rgba(138,137,152,0.30)] px-5 py-4">
                   <input
                     className="w-full text-lg font-semibold not-italic leading-[normal] tracking-[-0.18px] text-[#1F2B3D]"
-                    type="text"
+                    type="password"
+                    autoComplete="new-password"
                     id="newPass"
                     minLength={3}
                     maxLength={100}
@@ -417,7 +407,8 @@ export default function ProfileForm({
                 <div className="flex items-center gap-2 self-stretch rounded-lg border border-solid border-[rgba(138,137,152,0.30)] px-5 py-4">
                   <input
                     className="w-full text-lg font-semibold not-italic leading-[normal] tracking-[-0.18px] text-[#1F2B3D]"
-                    type="text"
+                    type="password"
+                    autoComplete="new-password"
                     id="confirmNewPass"
                     minLength={3}
                     maxLength={100}
