@@ -14,7 +14,6 @@ import (
 	"wss-payment/api"
 	db "wss-payment/internal/database"
 	"wss-payment/pkg/idpay"
-	"wss-payment/pkg/payment"
 	"wss-payment/pkg/zarinpal"
 )
 
@@ -22,11 +21,7 @@ func main() {
 	// Create the data needed
 	endpointApi := new(api.API)
 	endpointApi.Database = setupDatabase()
-	endpointApi.PaymentService = payment.ServiceMock{ // TODO: remove
-		FailCreation:          false,
-		FailVerification:      false,
-		PaymentVerificationOk: false,
-	}
+	endpointApi.PaymentService = getZarinpal()
 	defer endpointApi.Database.Close()
 	// Setup endpoints
 	r := gin.New()
