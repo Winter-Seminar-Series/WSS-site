@@ -4,7 +4,7 @@ import { unstable_noStore as noStore, revalidatePath } from 'next/cache';
 import { z } from 'zod';
 import { Gender, Grade, IntroductionMethod, Profile } from '../../types';
 import { fetchJsonWithAuth } from '../fetch';
-import { joinIssueMessages, throwErrorIfParseUnsuccessful } from '../../error';
+import { joinIssueMessages, cleanSafeParseData } from '../../error';
 
 type ProfileResponse = Profile & { email: string };
 
@@ -66,9 +66,9 @@ export async function updateProfile(formData: FormData) {
 
   const input = FormSchema.safeParse(Object.fromEntries(formData.entries()));
 
-  throwErrorIfParseUnsuccessful(input);
+  const cleanedInput = cleanSafeParseData(input);
 
-  await callUpdateProfileAPI(input.data);
+  await callUpdateProfileAPI(cleanedInput);
 
   revalidatePath('/dashboard/profile');
 }
