@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { updateProfile } from '../../../lib/api/dashboard/profile';
-import { Gender, Grade, Profile } from '../../../lib/types';
+import { Gender, Grade, IntroductionMethod, Profile } from '../../../lib/types';
 
 export default function ProfileForm({
   email,
@@ -136,7 +136,7 @@ export default function ProfileForm({
                 type="radio"
                 id="male"
                 name="gender"
-                value="Male"
+                value="M"
                 className="h-3 w-3 shrink-0 accent-primary-400"
                 defaultChecked={profile.gender === Gender.MALE}
               />
@@ -151,7 +151,7 @@ export default function ProfileForm({
                 type="radio"
                 id="female"
                 name="gender"
-                value="Female"
+                value="F"
                 className="h-3 w-3 shrink-0 accent-primary-400"
                 defaultChecked={profile.gender === Gender.FEMALE}
               />
@@ -166,7 +166,7 @@ export default function ProfileForm({
                 type="radio"
                 id="other"
                 name="gender"
-                value="Other"
+                value="O"
                 className="h-3 w-3 shrink-0 accent-primary-400"
                 defaultChecked={profile.gender === Gender.OTHER}
               />
@@ -273,7 +273,7 @@ export default function ProfileForm({
                   type="radio"
                   id="Bachelor"
                   name="grade"
-                  value="Bachelor"
+                  value="B"
                   className="accent-purple h-3 w-3 shrink-0 fill-[var(--Primary-Color,#342B4C)]"
                 />
                 <label
@@ -288,7 +288,7 @@ export default function ProfileForm({
                   type="radio"
                   id="Master"
                   name="grade"
-                  value="Master"
+                  value="M"
                   className="h-3 w-3 shrink-0 fill-[var(--Primary-Color,#342B4C)]"
                 />
                 <label
@@ -303,7 +303,7 @@ export default function ProfileForm({
                   type="radio"
                   id="PhD"
                   name="grade"
-                  value="PhD"
+                  value="P"
                   className="h-3 w-3 shrink-0 fill-[var(--Primary-Color,#342B4C)]"
                 />
                 <label
@@ -318,20 +318,19 @@ export default function ProfileForm({
               <label className="text-base font-medium uppercase not-italic leading-[normal] tracking-[0.64px] text-[#8A8998]">
                 Introduction Method
               </label>
-              {/* TODO */}
               <div className="flex items-center justify-between self-stretch rounded-lg border border-solid border-[rgba(138,137,152,0.30)] px-5 py-4">
-                <select name="field" id="field" className="w-full">
-                  <option>Telegram</option>
-                  <option>Instagram</option>
-                  <option>LinkedIn</option>
-                  <option>YouTube</option>
-                  <option>Quera</option>
-                  <option>Email</option>
-                  <option>SMS</option>
-                  <option>Friends</option>
-                  <option>Professors</option>
-                  <option>Forums</option>
-                  <option>Other</option>
+                <select name="introductionMethod" id="field" className="w-full">
+                  <option selected={profile.introductionMethod === IntroductionMethod.TELEGRAM}>Telegram</option>
+                  <option selected={profile.introductionMethod === IntroductionMethod.INSTAGRAM}>Instagram</option>
+                  <option selected={profile.introductionMethod === IntroductionMethod.LINKEDIN}>LinkedIn</option>
+                  <option selected={profile.introductionMethod === IntroductionMethod.YOUTUBE}>YouTube</option>
+                  <option selected={profile.introductionMethod === IntroductionMethod.QUERA}>Quera</option>
+                  <option selected={profile.introductionMethod === IntroductionMethod.EMAIL}>Email</option>
+                  <option selected={profile.introductionMethod === IntroductionMethod.SMS}>SMS</option>
+                  <option selected={profile.introductionMethod === IntroductionMethod.FRIENDS}>Friends</option>
+                  <option selected={profile.introductionMethod === IntroductionMethod.PROFESSORS}>Professors</option>
+                  <option selected={profile.introductionMethod === IntroductionMethod.FORUMS}>Forums</option>
+                  <option selected={!profile.introductionMethod || profile.introductionMethod === IntroductionMethod.OTHERS}>Other</option>
                 </select>
               </div>
             </div>
