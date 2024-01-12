@@ -43,12 +43,10 @@ type Payment struct {
 	Discount uint64 `gorm:"not null"`
 	// An optional description about this payment
 	Description string `gorm:"not null"`
-	// The ID which is returned from idpay after we have initiated the transaction
-	ID sql.NullString
-	// The track ID which idpay returns to us after verification
+	// The Order ID which is returned from payment service after we have initiated the transaction
+	ServiceOrderID sql.NullString
+	// The track ID which payment service returns to us after verification
 	TrackID sql.NullString
-	// The payment track ID which idpay returns to us after verification
-	PaymentTrackID sql.NullString
 	// What is the status of this payment?
 	PaymentStatus PaymentStatus `gorm:"not null"`
 	// List of the Goos which this user has bought in this payment
