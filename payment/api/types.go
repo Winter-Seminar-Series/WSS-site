@@ -73,12 +73,10 @@ type getTransactionResponse struct {
 	Discount uint64 `json:"discount"`
 	// An optional description about this payment
 	Description string `json:"description,omitempty"`
-	// The ID which is returned from idpay after we have initiated the transaction
+	// The ID which is returned from payment service after we have initiated the transaction
 	ID string `json:"id,omitempty"`
-	// The track ID which idpay returns to us after verification
+	// The track ID which payment service returns to us after verification
 	TrackID string `json:"track_id,omitempty"`
-	// The payment track ID which idpay returns to us after verification
-	PaymentTrackID string `json:"payment_track_id,omitempty"`
 	// What is the status of this payment?
 	PaymentStatus database.PaymentStatus `json:"payment_status"`
 	// List of the Goos which this user has bought in this payment

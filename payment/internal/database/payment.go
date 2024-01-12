@@ -29,21 +29,19 @@ func (db PaymentDatabase) GetPayment(payment *Payment) error {
 	return db.db.Model(&Payment{}).Preload("BoughtGoods").First(payment).Error
 }
 
-// MarkPaymentAsOK will mark a payment as successful and then updates its track ID, payment track ID and verified at time.
+// MarkPaymentAsOK will mark a payment as successful and then updates its track ID and verified at time.
 // This function will also update the values in payment argument to the ones which will be inserted in database.
-func (db PaymentDatabase) MarkPaymentAsOK(payment *Payment, trackID string, paymentTrackID string) error {
+func (db PaymentDatabase) MarkPaymentAsOK(payment *Payment, trackID string) error {
 	verifiedAt := sql.NullTime{Valid: true, Time: time.Now()}
 	err := db.db.Model(&Payment{OrderID: payment.OrderID}).Updates(&Payment{
-		TrackID:        sql.NullString{Valid: true, String: trackID},
-		PaymentTrackID: sql.NullString{Valid: true, String: paymentTrackID},
-		PaymentStatus:  PaymentStatusSuccess,
-		VerifiedAt:     verifiedAt,
+		TrackID:       sql.NullString{Valid: true, String: trackID},
+		PaymentStatus: PaymentStatusSuccess,
+		VerifiedAt:    verifiedAt,
 	}).Error
 	if err != nil {
 		return err
 	}
 	payment.TrackID = sql.NullString{Valid: true, String: trackID}
-	payment.PaymentTrackID = sql.NullString{Valid: true, String: paymentTrackID}
 	payment.PaymentStatus = PaymentStatusSuccess
 	payment.VerifiedAt = verifiedAt
 	return nil
