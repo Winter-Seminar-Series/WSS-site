@@ -49,18 +49,24 @@ export async function fetchJson<JSON = unknown>(
 
   const response = await fetch(input, fetchInit);
 
-  const data = await response.json();
-  const camelCaseData = camelcaseKeys(data, { deep: true });
+  if (!response.ok) {
+    let message: any;
+    try {
+      message = await response.json();
+    } catch (error) {
+      message = response.statusText;
+    }
 
-  if (response.ok) {
-    return camelCaseData;
+    throw new FetchError({
+      status: response.status,
+      message: message,
+      response,
+    });
   }
 
-  throw new FetchError({
-    status: response.status,
-    message: data,
-    response,
-  });
+  const data = await response.json();
+  const camelCaseData = camelcaseKeys(data, { deep: true });
+  return camelCaseData;
 }
 
 export async function fetchJsonWithAuth<JSON = unknown>(
