@@ -110,6 +110,7 @@ func (api *API) GetTransaction(c *gin.Context) {
 		result, err := api.PaymentService.VerifyTransaction(c.Request.Context(), payment.TransactionVerificationRequest{
 			OrderID:        databasePayment.OrderID.String(),
 			ServiceOrderID: databasePayment.ServiceOrderID.String,
+			PaidAmount:     databasePayment.ToPayAmount,
 		})
 		if err != nil {
 			logger.WithError(err).Error("cannot verify transaction")

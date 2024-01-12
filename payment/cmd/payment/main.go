@@ -15,6 +15,7 @@ import (
 	db "wss-payment/internal/database"
 	"wss-payment/pkg/idpay"
 	"wss-payment/pkg/payment"
+	"wss-payment/pkg/zarinpal"
 )
 
 func main() {
@@ -81,7 +82,7 @@ func getListener() net.Listener {
 }
 
 // getIDPay gets ID pay credentials from env variables
-func getIDPay() idpay.IDPay {
+func getIDPay() idpay.PaymentAdaptor {
 	apiKey := os.Getenv("IDPAY_APIKEY")
 	if apiKey == "" {
 		log.Fatal("please set IDPAY_APIKEY environment variable")
@@ -90,5 +91,14 @@ func getIDPay() idpay.IDPay {
 	if sandbox {
 		log.Warn("IDPay sandbox mode activated")
 	}
-	return idpay.NewIDPay(apiKey, sandbox)
+	return idpay.NewPaymentAdaptor(apiKey, sandbox)
+}
+
+// getZarinpal gets Zarinpal credentials from env variables
+func getZarinpal() zarinpal.PaymentAdaptor {
+	merchantID := os.Getenv("ZARINPAL_MERCHANT_ID")
+	if merchantID == "" {
+		log.Fatal("please set ZARINPAL_MERCHANT_ID environment variable")
+	}
+	return zarinpal.NewPaymentAdaptor(merchantID)
 }

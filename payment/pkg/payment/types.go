@@ -23,6 +23,8 @@ type TransactionVerificationRequest struct {
 	OrderID string
 	// The ID which the payment service returned when we created this order
 	ServiceOrderID string
+	// How much the user has paid?
+	PaidAmount uint64
 }
 
 type TransactionVerificationResult struct {
