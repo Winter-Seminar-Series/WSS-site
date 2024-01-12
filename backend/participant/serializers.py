@@ -61,11 +61,6 @@ class ParticipantInfoSerializer(serializers.ModelSerializer):
             return value
         raise serializers.ValidationError("Phone number is not valid.")
     
-    def validate_birth_date(self, value: str) -> str:
-        if re.match(r'^\d{4}/\d{2}/\d{2}$', value):
-            return value
-        raise serializers.ValidationError("Birth date is not valid.")
-    
     def validate_gender(self, value: str) -> str:
         if value in ['M', 'F']:
             return value
