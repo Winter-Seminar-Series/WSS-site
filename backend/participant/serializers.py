@@ -10,7 +10,7 @@ from participant.models import Participant, ParticipantInfo
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('id', 'email')
+        fields = ('id', 'email', 'password')
 
     def validate_password(self, value: str) -> str:
         return make_password(value)
@@ -44,7 +44,7 @@ class ParticipantInfoSerializer(serializers.ModelSerializer):
     def validate_national_code(self, value: str) -> str:
         if value == '':
             return value
-        if re.match(r'^\d{8}|\d{9}|\d{10}$', value):
+        if re.match(r'^(\+\d{1,3}|0)\d{10}$', value):
             if len(value) < 10:
                 value = '0' * (10 - len(value)) + value
             temp = 0
@@ -60,11 +60,6 @@ class ParticipantInfoSerializer(serializers.ModelSerializer):
         if re.match(r'^09\d{9}$', value):
             return value
         raise serializers.ValidationError("Phone number is not valid.")
-    
-    def validate_birth_date(self, value: str) -> str:
-        if re.match(r'^\d{4}/\d{2}/\d{2}$', value):
-            return value
-        raise serializers.ValidationError("Birth date is not valid.")
     
     def validate_gender(self, value: str) -> str:
         if value in ['M', 'F']:

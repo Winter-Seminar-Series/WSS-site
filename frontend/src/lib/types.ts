@@ -13,23 +13,32 @@ export type StaffTeam = {
   members: { id: number; staff: Staff }[];
 };
 
-export type Gender = 'Male' | 'Female' | 'Other';
+export enum Gender {
+  MALE = 'Male',
+  FEMALE = 'Female',
+  OTHER = 'Other',
+}
 
-export type Grade = 'Bachelor' | 'Master' | 'PhD or higher';
+export enum Grade {
+  BACHELOR = 'Bachelor',
+  MASTER = 'Master',
+  PHD = 'PhD or higher',
+}
 
-export type IntroductionMethod =
-  | 'None'
-  | 'Telegram'
-  | 'Instagram'
-  | 'Facebook'
-  | 'Twitter'
-  | 'LinkedIn'
-  | 'YouTube'
-  | 'Quera'
-  | 'Email'
-  | 'SMS'
-  | 'Friends'
-  | 'Others';
+export enum IntroductionMethod {
+  NONE = 'None',
+  TELEGRAM = 'Telegram',
+  INSTAGRAM = 'Instagram',
+  FACEBOOK = 'Facebook',
+  TWITTER = 'Twitter',
+  LINKEDIN = 'LinkedIn',
+  YOUTUBE = 'YouTube',
+  QUERA = 'Quera',
+  EMAIL = 'Email',
+  SMS = 'SMS',
+  FRIENDS = 'Friends',
+  OTHERS = 'Others',
+}
 
 export type Profile = {
   firstName?: string;
@@ -37,7 +46,7 @@ export type Profile = {
   nationalCode?: string;
   phoneNumber?: string;
   city?: string;
-  birthDate?: Date;
+  birthDate?: string;
   gender?: Gender;
   university?: string;
   major?: string;

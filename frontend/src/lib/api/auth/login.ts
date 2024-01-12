@@ -6,6 +6,7 @@ import { z } from 'zod';
 import { FetchError, fetchJson } from '../fetch';
 import { getSession } from '../session';
 import { parseJWT } from '../../auth';
+import { throwErrorIfParseUnsuccessful } from '../../error';
 
 type LoginResponse = {
   access: string;
@@ -13,8 +14,11 @@ type LoginResponse = {
 };
 
 const FormSchema = z.object({
-  email: z.string().email(),
-  password: z.string(),
+  email: z.string().email('Email is in invalid format.'),
+  password: z
+    .string()
+    .trim()
+    .min(6, 'Password must be at least 6 characters long.'),
 });
 
 async function callLoginAPI(email: string, password: string) {
@@ -22,9 +26,7 @@ async function callLoginAPI(email: string, password: string) {
 
   const body = { email, password };
 
-  return await fetchJson<LoginResponse>(url, body, {
-    method: 'POST',
-  });
+  return await fetchJson<LoginResponse>(url, body, { method: 'POST' });
 }
 
 async function callRefreshAPI(refresh: string) {
@@ -32,9 +34,7 @@ async function callRefreshAPI(refresh: string) {
 
   const body = { refresh };
 
-  return await fetchJson<LoginResponse>(url, body, {
-    method: 'POST',
-  });
+  return await fetchJson<LoginResponse>(url, body, { method: 'POST' });
 }
 
 async function saveLoginToSession(data: LoginResponse) {
@@ -53,9 +53,11 @@ async function saveLoginToSession(data: LoginResponse) {
 export default async function login(formData: FormData) {
   noStore();
 
-  const { email, password } = FormSchema.parse(
-    Object.fromEntries(formData.entries()),
-  );
+  const input = FormSchema.safeParse(Object.fromEntries(formData.entries()));
+
+  throwErrorIfParseUnsuccessful(input);
+
+  const { email, password } = input.data;
 
   const data = await callLoginAPI(email, password);
 
@@ -77,7 +79,7 @@ export async function refresh() {
     const data = await callRefreshAPI(session.refreshToken);
     await saveLoginToSession(data);
   } catch (error) {
-    if (error instanceof FetchError && error.data.status === 401) {
+    if (error instanceof FetchError && error.status === 401) {
       redirect('/login');
     } else {
       throw error;
