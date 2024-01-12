@@ -17,12 +17,12 @@ export default function ProfileForm({
   return (
     <>
       {!error && successful && (
-        <p className="rounded-md bg-green-50 p-3 font-medium text-green-600">
+        <p className="w-full rounded-md bg-green-50 p-3 font-medium text-green-600">
           Profile updated successfully!
         </p>
       )}
       {error && (
-        <p className="rounded-md bg-red-50 p-3 font-medium text-red-600">
+        <p className="w-full rounded-md bg-red-50 p-3 font-medium text-red-600">
           {error}
         </p>
       )}
@@ -64,6 +64,7 @@ export default function ProfileForm({
                 pattern="^(\+98|0)9\d{9}$"
                 placeholder="09123456789"
                 defaultValue={profile.phoneNumber}
+                required
               />
             </div>
           </div>
@@ -81,6 +82,7 @@ export default function ProfileForm({
               maxLength={15}
               defaultValue={profile.firstName}
               name="firstName"
+              required
             />
           </div>
           <div className="flex flex-[1_0_0] flex-col items-start gap-[9px] self-stretch">
@@ -95,6 +97,7 @@ export default function ProfileForm({
               maxLength={20}
               defaultValue={profile.lastName}
               name="lastName"
+              required
             />
           </div>
         </div>
