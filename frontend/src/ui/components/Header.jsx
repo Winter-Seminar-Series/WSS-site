@@ -132,52 +132,52 @@ export default function Header({ isAuthenticated = false }) {
         </div>
         <div className="grid grid-cols-4 items-center justify-center gap-8 self-stretch md:grid-cols-8 md:gap-x-16 md:gap-y-4">
           <a href="https://www.apple.com">
-            <img src="/source/logos/Apple.png" />
+            <img src="/source/logos/Apple.png" className="w-full" />
           </a>
           <a href="https://www.ed.ac.uk">
-            <img src="/source/logos/Edinburgh.png" />
+            <img src="/source/logos/Edinburgh.png" className="w-full" />
           </a>
           <a href="https://www.epfl.ch/en/">
-            <img src="/source/logos/EPFL.png" />
+            <img src="/source/logos/EPFL.png" className="w-full" />
           </a>
           <a href="https://www.uga.edu">
-            <img src="/source/logos/Georgia.png" />
+            <img src="/source/logos/Georgia.png" className="w-full" />
           </a>
           <a href="https://www.google.com">
-            <img src="/source/logos/Google.png" />
+            <img src="/source/logos/Google.png" className="w-full" />
           </a>
           <a href="https://www.london.ac.uk">
-            <img src="/source/logos/London.png" />
+            <img src="/source/logos/London.png" className="w-full" />
           </a>
           <a href="https://www.sharif.edu">
-            <img src="/source/logos/Sharif.png" />
+            <img src="/source/logos/Sharif.png" className="w-full" />
           </a>
           <a href="https://umd.edu">
-            <img src="/source/logos/Maryland.png" />
+            <img src="/source/logos/Maryland.png" className="w-full" />
           </a>
           <a href="https://www.microsoft.com/de-de/">
-            <img src="/source/logos/Microsoft.png" />
+            <img src="/source/logos/Microsoft.png" className="w-full" />
           </a>
           <a href="https://www.mit.edu">
-            <img src="/source/logos/MIT.png" />
+            <img src="/source/logos/MIT.png" className="w-full" />
           </a>
           <a href="https://openai.com">
-            <img src="/source/logos/OpenAI.png" />
+            <img src="/source/logos/OpenAI.png" className="w-full" />
           </a>
           <a href="https://www.princeton.edu">
-            <img src="/source/logos/Princeton.png" />
+            <img src="/source/logos/Princeton.png" className="w-full" />
           </a>
           <a href="https://www.stanford.edu">
-            <img src="/source/logos/Stanford.png" />
+            <img src="/source/logos/Stanford.png" className="w-full" />
           </a>
           <a href="https://www.upenn.edu">
-            <img src="/source/logos/UPenn.png" />
+            <img src="/source/logos/UPenn.png" className="w-full" />
           </a>
           <a href="https://uwaterloo.ca">
-            <img src="/source/logos/Waterloo.png" />
+            <img src="/source/logos/Waterloo.png" className="w-full" />
           </a>
           <a href="https://www.universityofcalifornia.edu">
-            <img src="/source/logos/California.png" />
+            <img src="/source/logos/California.png" className="w-full" />
           </a>
         </div>
       </div>
