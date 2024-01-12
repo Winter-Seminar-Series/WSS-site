@@ -10,7 +10,7 @@ from participant.models import Participant, ParticipantInfo
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('id', 'email')
+        fields = ('id', 'email', 'password')
 
     def validate_password(self, value: str) -> str:
         return make_password(value)
