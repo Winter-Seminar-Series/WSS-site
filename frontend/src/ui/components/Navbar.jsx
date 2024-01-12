@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { Menu, Transition } from '@headlessui/react';
 import Link from 'next/link';
 import Logo from './Logo';
+import LogoutButton from './dashboard/LogoutButton';
 
 export default function Navbar({ fixed = true, isAuthenticated = false }) {
   const [transparent, setTransparent] = useState(fixed);
@@ -116,7 +117,20 @@ export default function Navbar({ fixed = true, isAuthenticated = false }) {
           </Link>
         </div>
         {/* TODO: sign out and dashboard button */}
-        {!isAuthenticated && (
+        {isAuthenticated ? (
+          <div className="flex items-center gap-1.5">
+          <Link
+            href="/dashboard/profile"
+            className={`flex items-center rounded-md px-6 text-base font-semibold max-lg:h-9 max-lg:px-4 lg:h-12 ${
+              transparent
+                ? 'bg-white text-secondary-500'
+                : 'bg-secondary-500 text-white'
+            }`}
+          >
+            Dashboard
+          </Link>
+        </div>
+        ) : (
           <div className="flex items-center gap-1.5">
             <Link
               href="/signup"

@@ -22,9 +22,7 @@ async function callLoginAPI(email: string, password: string) {
 
   const body = { email, password };
 
-  return await fetchJson<LoginResponse>(url, body, {
-    method: 'POST',
-  });
+  return await fetchJson<LoginResponse>(url, body, { method: 'POST' });
 }
 
 async function callRefreshAPI(refresh: string) {
@@ -32,9 +30,7 @@ async function callRefreshAPI(refresh: string) {
 
   const body = { refresh };
 
-  return await fetchJson<LoginResponse>(url, body, {
-    method: 'POST',
-  });
+  return await fetchJson<LoginResponse>(url, body, { method: 'POST' });
 }
 
 async function saveLoginToSession(data: LoginResponse) {
@@ -77,7 +73,7 @@ export async function refresh() {
     const data = await callRefreshAPI(session.refreshToken);
     await saveLoginToSession(data);
   } catch (error) {
-    if (error instanceof FetchError && error.data.status === 401) {
+    if (error instanceof FetchError && error.status === 401) {
       redirect('/login');
     } else {
       throw error;

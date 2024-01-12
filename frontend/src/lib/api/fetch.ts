@@ -7,23 +7,16 @@ import { refresh } from './auth/login';
 
 export class FetchError extends Error {
   response: Response;
-  data: {
-    status: number;
-    message: string;
-  };
+  status: number;
+  message: string;
   constructor({
     status,
     message,
     response,
-    data,
   }: {
     status: number;
     message: string;
     response: Response;
-    data: {
-      status: number;
-      message: string;
-    };
   }) {
     super(message);
 
@@ -33,7 +26,8 @@ export class FetchError extends Error {
 
     this.name = 'FetchError';
     this.response = response;
-    this.data = data ?? { message, status };
+    this.status = status;
+    this.message = message;
   }
 }
 
@@ -66,7 +60,6 @@ export async function fetchJson<JSON = unknown>(
     status: response.status,
     message: response.statusText,
     response,
-    data: camelCaseData,
   });
 }
 
@@ -92,7 +85,7 @@ export async function fetchJsonWithAuth<JSON = unknown>(
   try {
     return await fetchJson<JSON>(input, body, init);
   } catch (error) {
-    if (error instanceof FetchError && error.data.status === 401) {
+    if (error instanceof FetchError && error.status === 401) {
       await refresh();
       return await fetchJson<JSON>(input, body, init);
     } else {
