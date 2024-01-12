@@ -6,7 +6,7 @@ import { z } from 'zod';
 import { FetchError, fetchJson } from '../fetch';
 import { getSession } from '../session';
 import { parseJWT } from '../../auth';
-import { throwErrorIfParseUnsuccessful } from '../../error';
+import { cleanSafeParseData } from '../../error';
 
 type LoginResponse = {
   access: string;
@@ -55,9 +55,9 @@ export default async function login(formData: FormData) {
 
   const input = FormSchema.safeParse(Object.fromEntries(formData.entries()));
 
-  throwErrorIfParseUnsuccessful(input);
+  const cleanedInput = cleanSafeParseData(input);
 
-  const { email, password } = input.data;
+  const { email, password } = cleanedInput;
 
   const data = await callLoginAPI(email, password);
 
