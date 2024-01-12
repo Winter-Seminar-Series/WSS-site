@@ -15,9 +15,8 @@ services:
     environment:
       - DATABASE_URL=host=host.docker.internal user=postgres password= dbname=postgres port=5432
       - LISTEN_ADDRESS=0.0.0.0:4000
-      - IDPAY_APIKEY=
-      - IDPAY_SANDBOX=
-      - GIN_MODE=
+      - ZARINPAL_MERCHANT_ID=
+      - GIN_MODE=release
     depends_on:
       - postgresql
 
