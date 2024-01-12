@@ -1,6 +1,8 @@
 import { SafeParseReturnType, ZodError } from 'zod';
 
-export function cleanSafeParseData<SuccessType, ErrorType>(input: SafeParseReturnType<SuccessType, ErrorType>) {
+export function cleanSafeParseData<SuccessType, ErrorType>(
+  input: SafeParseReturnType<SuccessType, ErrorType>,
+) {
   if (!input.success) {
     // @ts-ignore
     throw Error(joinIssueMessages(input.error));
