@@ -13,7 +13,7 @@ export default async function Home() {
     <>
       <Header isAuthenticated={authenticated} />
       <Programs />
-      <Seminar />
+      {/* <Seminar /> */}
       <Staff />
       <Timer />
       <Footer />
