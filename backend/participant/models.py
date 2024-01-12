@@ -7,6 +7,7 @@ class ParticipantInfo(models.Model):
     GENDER_CHOICES = (
         ('M', 'Male'),
         ('F', 'Female'),
+        ('O', 'Other')
     )
     GRADE_CHOICES = (
         ('B', 'Bachelor'),
