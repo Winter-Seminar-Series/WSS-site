@@ -44,7 +44,7 @@ class ParticipantInfoSerializer(serializers.ModelSerializer):
     def validate_national_code(self, value: str) -> str:
         if value == '':
             return value
-        if re.match(r'^\d{8}|\d{9}|\d{10}$', value):
+        if re.match(r'^(\+\d{1,3}|0)\d{10}$', value):
             if len(value) < 10:
                 value = '0' * (10 - len(value)) + value
             temp = 0
