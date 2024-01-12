@@ -6,14 +6,14 @@ services:
     ports:
       - 5432:5432
     environment:
-      - POSTGRES_PASSWORD=pass
+      - POSTGRES_PASSWORD=
 
   payment:
     image: wss:payment
     ports:
       - 4000:4000
     environment:
-      - DATABASE_URL=host=host.docker.internal user=postgres password=pass dbname=postgres port=5432
+      - DATABASE_URL=host=host.docker.internal user=postgres password= dbname=postgres port=5432
       - LISTEN_ADDRESS=0.0.0.0:4000
       - IDPAY_APIKEY=
       - IDPAY_SANDBOX=
@@ -34,7 +34,7 @@ services:
       - 3000:3000
     environment:
       - API_ORIGIN=host.docker.internal:8000
-      - SECRET_COOKIE_PASSWORD=qawsedrftgbhu
+      - SECRET_COOKIE_PASSWORD=
     depends_on:
       - backend
       - postgresql
