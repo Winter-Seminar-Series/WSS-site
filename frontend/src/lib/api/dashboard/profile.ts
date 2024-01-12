@@ -56,8 +56,6 @@ async function callUpdateProfileAPI(input: FormInput) {
 
   const body = input;
 
-  console.log('body', body);
-
   return await fetchJsonWithAuth<ProfileResponse>(url, body, {
     method: 'PATCH',
   });
