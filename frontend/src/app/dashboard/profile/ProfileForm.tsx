@@ -320,17 +320,86 @@ export default function ProfileForm({
               </label>
               <div className="flex items-center justify-between self-stretch rounded-lg border border-solid border-[rgba(138,137,152,0.30)] px-5 py-4">
                 <select name="introductionMethod" id="field" className="w-full">
-                  <option selected={profile.introductionMethod === IntroductionMethod.TELEGRAM}>Telegram</option>
-                  <option selected={profile.introductionMethod === IntroductionMethod.INSTAGRAM}>Instagram</option>
-                  <option selected={profile.introductionMethod === IntroductionMethod.LINKEDIN}>LinkedIn</option>
-                  <option selected={profile.introductionMethod === IntroductionMethod.YOUTUBE}>YouTube</option>
-                  <option selected={profile.introductionMethod === IntroductionMethod.QUERA}>Quera</option>
-                  <option selected={profile.introductionMethod === IntroductionMethod.EMAIL}>Email</option>
-                  <option selected={profile.introductionMethod === IntroductionMethod.SMS}>SMS</option>
-                  <option selected={profile.introductionMethod === IntroductionMethod.FRIENDS}>Friends</option>
-                  <option selected={profile.introductionMethod === IntroductionMethod.PROFESSORS}>Professors</option>
-                  <option selected={profile.introductionMethod === IntroductionMethod.FORUMS}>Forums</option>
-                  <option selected={!profile.introductionMethod || profile.introductionMethod === IntroductionMethod.OTHERS}>Other</option>
+                  <option
+                    selected={
+                      profile.introductionMethod === IntroductionMethod.TELEGRAM
+                    }
+                  >
+                    Telegram
+                  </option>
+                  <option
+                    selected={
+                      profile.introductionMethod ===
+                      IntroductionMethod.INSTAGRAM
+                    }
+                  >
+                    Instagram
+                  </option>
+                  <option
+                    selected={
+                      profile.introductionMethod === IntroductionMethod.LINKEDIN
+                    }
+                  >
+                    LinkedIn
+                  </option>
+                  <option
+                    selected={
+                      profile.introductionMethod === IntroductionMethod.YOUTUBE
+                    }
+                  >
+                    YouTube
+                  </option>
+                  <option
+                    selected={
+                      profile.introductionMethod === IntroductionMethod.QUERA
+                    }
+                  >
+                    Quera
+                  </option>
+                  <option
+                    selected={
+                      profile.introductionMethod === IntroductionMethod.EMAIL
+                    }
+                  >
+                    Email
+                  </option>
+                  <option
+                    selected={
+                      profile.introductionMethod === IntroductionMethod.SMS
+                    }
+                  >
+                    SMS
+                  </option>
+                  <option
+                    selected={
+                      profile.introductionMethod === IntroductionMethod.FRIENDS
+                    }
+                  >
+                    Friends
+                  </option>
+                  <option
+                    selected={
+                      profile.introductionMethod ===
+                      IntroductionMethod.PROFESSORS
+                    }
+                  >
+                    Professors
+                  </option>
+                  <option
+                    selected={
+                      profile.introductionMethod === IntroductionMethod.FORUMS
+                    }
+                  >
+                    Forums
+                  </option>
+                  <option
+                    selected={
+                      !profile.introductionMethod ||
+                      profile.introductionMethod === IntroductionMethod.OTHERS
+                    }
+                  >
+                    Other
+                  </option>
                 </select>
               </div>
             </div>
