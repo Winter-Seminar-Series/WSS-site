@@ -14,29 +14,28 @@ export type StaffTeam = {
 };
 
 export enum Gender {
-  MALE = 'Male',
-  FEMALE = 'Female',
-  OTHER = 'Other',
+  MALE = 'M',
+  FEMALE = 'F',
+  OTHER = 'O',
 }
 
 export enum Grade {
-  BACHELOR = 'Bachelor',
-  MASTER = 'Master',
-  PHD = 'PhD or higher',
+  BACHELOR = 'B',
+  MASTER = 'M',
+  PHD = 'P',
 }
 
 export enum IntroductionMethod {
-  NONE = 'None',
   TELEGRAM = 'Telegram',
   INSTAGRAM = 'Instagram',
-  FACEBOOK = 'Facebook',
-  TWITTER = 'Twitter',
   LINKEDIN = 'LinkedIn',
   YOUTUBE = 'YouTube',
   QUERA = 'Quera',
   EMAIL = 'Email',
   SMS = 'SMS',
   FRIENDS = 'Friends',
+  PROFESSORS = 'Professors',
+  FORUMS = 'Forums',
   OTHERS = 'Others',
 }
 

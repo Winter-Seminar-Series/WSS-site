@@ -3,18 +3,14 @@ import ViewAllButton from './ViewAllButton';
 
 export default function StaffHeader() {
   return (
-    <div className={'flex items-center justify-between px-32 pt-20'}>
+    <div className={'flex items-center justify-between px-32 pb-10 pt-20'}>
       <div>
-        <div
-          className={
-            'font-manrope text-left text-lg font-medium uppercase text-lightslategray'
-          }
-        >
+        <div className="text-lg font-medium uppercase tracking-wide text-neutral-400">
           Overline Goes Here
         </div>
         <div
           className={
-            'font-manrope text-45xl -mt-2 font-bold text-darkslategray-100'
+            'font-manrope mt-2 text-5xl font-bold text-darkslategray-100'
           }
         >
           Staff Members

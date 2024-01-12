@@ -1,6 +1,6 @@
 'use server';
 
-import { unstable_noStore as noStore } from 'next/cache';
+import { unstable_noStore as noStore, revalidatePath } from 'next/cache';
 import { z } from 'zod';
 import { Gender, Grade, IntroductionMethod, Profile } from '../../types';
 import { fetchJsonWithAuth } from '../fetch';
@@ -69,4 +69,6 @@ export async function updateProfile(formData: FormData) {
   throwErrorIfParseUnsuccessful(input);
 
   await callUpdateProfileAPI(input.data);
+
+  revalidatePath('/dashboard/profile');
 }
