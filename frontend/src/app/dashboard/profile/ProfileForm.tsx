@@ -12,9 +12,15 @@ export default function ProfileForm({
   profile: Profile;
 }) {
   const [error, setError] = useState('');
+  const [successful, setSuccessful] = useState(false);
 
   return (
     <>
+      {!error && successful && (
+        <p className="rounded-md bg-green-50 p-3 font-medium text-green-600">
+          Profile updated successfully!
+        </p>
+      )}
       {error && (
         <p className="rounded-md bg-red-50 p-3 font-medium text-red-600">
           {error}
@@ -23,8 +29,10 @@ export default function ProfileForm({
       <form
         action={async (data) => {
           setError('');
+          setSuccessful(false);
           try {
             await updateProfile(data);
+            setSuccessful(true);
           } catch (error) {
             setError(error.message);
           }
@@ -111,11 +119,11 @@ export default function ProfileForm({
             </label>
             <div className="flex items-center gap-2 self-stretch rounded-lg border border-solid border-[rgba(138,137,152,0.30)] px-5 py-4">
               <input
-                className="black-text text-lg font-semibold not-italic leading-[normal] tracking-[-0.18px]"
+                className="black-text min-w-full text-lg font-semibold not-italic leading-[normal] tracking-[-0.18px]"
                 type="date"
                 id="birthday"
                 name="birthDate"
-                defaultValue={profile.birthDate?.toISOString().split('T')[0]}
+                defaultValue={profile.birthDate}
               ></input>
             </div>
           </div>
@@ -184,7 +192,7 @@ export default function ProfileForm({
                 University
               </label>
               <input
-                className="py-4min-w-full self-stretch rounded-lg border border-solid border-[rgba(138,137,152,0.30)] px-5 text-lg font-semibold not-italic leading-[normal] tracking-[-0.18px] text-[#1F2B3D]"
+                className="min-w-full self-stretch rounded-lg border border-solid border-[rgba(138,137,152,0.30)] px-5 py-4 text-lg font-semibold not-italic leading-[normal] tracking-[-0.18px] text-[#1F2B3D]"
                 type="text"
                 id="University"
                 minLength={5}

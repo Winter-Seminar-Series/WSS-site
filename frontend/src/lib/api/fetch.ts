@@ -49,8 +49,8 @@ export async function fetchJson<JSON = unknown>(
 
   const response = await fetch(input, fetchInit);
 
-  const snakeCaseData = await response.json();
-  const camelCaseData = camelcaseKeys(snakeCaseData, { deep: true });
+  const data = await response.json();
+  const camelCaseData = camelcaseKeys(data, { deep: true });
 
   if (response.ok) {
     return camelCaseData;
@@ -58,7 +58,7 @@ export async function fetchJson<JSON = unknown>(
 
   throw new FetchError({
     status: response.status,
-    message: response.statusText,
+    message: data,
     response,
   });
 }

@@ -6,6 +6,7 @@ import { z } from 'zod';
 import { FetchError, fetchJson } from '../fetch';
 import { getSession } from '../session';
 import { parseJWT } from '../../auth';
+import { throwErrorIfParseUnsuccessful } from '../../error';
 
 type LoginResponse = {
   access: string;
@@ -13,8 +14,11 @@ type LoginResponse = {
 };
 
 const FormSchema = z.object({
-  email: z.string().email(),
-  password: z.string(),
+  email: z.string().email('Email is in invalid format.'),
+  password: z
+    .string()
+    .trim()
+    .min(6, 'Password must be at least 6 characters long.'),
 });
 
 async function callLoginAPI(email: string, password: string) {
@@ -49,9 +53,11 @@ async function saveLoginToSession(data: LoginResponse) {
 export default async function login(formData: FormData) {
   noStore();
 
-  const { email, password } = FormSchema.parse(
-    Object.fromEntries(formData.entries()),
-  );
+  const input = FormSchema.safeParse(Object.fromEntries(formData.entries()));
+
+  throwErrorIfParseUnsuccessful(input);
+
+  const { email, password } = input.data;
 
   const data = await callLoginAPI(email, password);
 

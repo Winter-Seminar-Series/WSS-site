@@ -46,7 +46,7 @@ export type Profile = {
   nationalCode?: string;
   phoneNumber?: string;
   city?: string;
-  birthDate?: Date;
+  birthDate?: string;
   gender?: Gender;
   university?: string;
   major?: string;

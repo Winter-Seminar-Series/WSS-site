@@ -6,8 +6,11 @@ import { z } from 'zod';
 import { fetchJson } from '../fetch';
 
 const FormSchema = z.object({
-  email: z.string().email(),
-  password: z.string(),
+  email: z.string().email('Email is in invalid format.'),
+  password: z
+    .string()
+    .trim()
+    .min(6, 'Password must be at least 6 characters long.'),
   confirmPassword: z.string(),
 });
 
