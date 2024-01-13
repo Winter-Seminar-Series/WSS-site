@@ -1,19 +1,25 @@
 version: '3'
 
+networks:
+  app-network:
+    driver: bridge
+
 services:
   postgresql:
     image: postgres
-    ports:
-      - 5432:5432
+    container_name: postgres
+    networks:
+      - app-network
     environment:
-      - POSTGRES_PASSWORD=
+      - POSTGRES_PASSWORD=pass
 
   payment:
     image: wss:payment
-    ports:
-      - 4000:4000
+    container_name: payment
+    networks:
+      - app-network
     environment:
-      - DATABASE_URL=host=host.docker.internal user=postgres password= dbname=postgres port=5432
+      - DATABASE_URL=host=postgres user=postgres password=pass dbname=postgres port=5432
       - LISTEN_ADDRESS=0.0.0.0:4000
       - ZARINPAL_MERCHANT_ID=
       - GIN_MODE=release
@@ -22,18 +28,22 @@ services:
 
   backend:
     image: wss:backend
-    ports:
-      - 8000:8000
+    container_name: backend
+    networks:
+      - app-network
     depends_on:
       - postgresql
 
   frontend:
-    image: wss:front
+    image: wss:frontend
+    container_name: frontend
     ports:
       - 3000:3000
+    networks:
+      - app-network
     environment:
-      - API_ORIGIN=host.docker.internal:8000
-      - SECRET_COOKIE_PASSWORD=
+      - API_ORIGIN=backend:8000
+      - SECRET_COOKIE_PASSWORD=qwertyu1234567890lkjhgfdsa0987654321
     depends_on:
       - backend
       - postgresql
