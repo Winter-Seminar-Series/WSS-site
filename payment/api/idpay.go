@@ -64,13 +64,23 @@ func (api *API) CreateTransaction(c *gin.Context) {
 		api.Database.MarkAsFailed(databasePayment.OrderID)
 		return
 	}
+	logger = logger.WithField("result", paymentResult)
+	// Save the ServiceOrderID
+	err = api.Database.SaveServiceOrderID(&databasePayment, paymentResult.ServiceOrderID)
+	if err != nil {
+		logger.WithError(err).Error("cannot save save service order ID")
+		c.JSON(http.StatusInternalServerError, "cannot save save service order ID: "+err.Error())
+		// Mark the transaction in database as failed
+		api.Database.MarkAsFailed(databasePayment.OrderID)
+		return
+	}
 	// Now we return back the order ID and link and stuff to the other service
 	c.JSON(http.StatusCreated, createTransactionResponse{
 		OrderID:     databasePayment.OrderID,
 		ID:          paymentResult.ServiceOrderID,
 		RedirectURL: paymentResult.RedirectLink,
 	})
-	logger.WithField("result", paymentResult).Info("created transaction")
+	logger.Info("created transaction")
 }
 
 // GetTransaction verifies a transaction if not already and then returns the transaction

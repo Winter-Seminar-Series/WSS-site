@@ -18,6 +18,11 @@ import (
 )
 
 func main() {
+	ll, err := log.ParseLevel(os.Getenv("LOG_LEVEL"))
+	if err != nil {
+		ll = log.InfoLevel
+	}
+	log.SetLevel(ll)
 	// Create the data needed
 	endpointApi := new(api.API)
 	endpointApi.Database = setupDatabase()
@@ -72,7 +77,7 @@ func getListener() net.Listener {
 	if err != nil {
 		log.Fatalf("cannot listen: %s", err)
 	}
-	log.Debug("Listening on", listener.Addr())
+	log.Debug("Listening on ", listener.Addr())
 	return listener
 }
 

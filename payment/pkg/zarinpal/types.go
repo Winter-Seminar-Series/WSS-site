@@ -32,7 +32,7 @@ type TransactionVerificationRequest struct {
 	Amount     uint64 `json:"amount"`
 }
 
-type TransactionVerificationResult struct {
+type TransactionVerificationResultOk struct {
 	Data struct {
 		Code     int    `json:"code"`
 		Message  string `json:"message"`
@@ -42,5 +42,18 @@ type TransactionVerificationResult struct {
 		FeeType  string `json:"fee_type"`
 		Fee      int    `json:"fee"`
 	} `json:"data"`
-	Errors []interface{} `json:"errors"`
+}
+
+type TransactionVerificationResultError struct {
+	Errors struct {
+		Code        int           `json:"code"`
+		Message     string        `json:"message"`
+		Validations []interface{} `json:"validations"`
+	} `json:"errors"`
+}
+
+type TransactionVerificationResult struct {
+	Message string
+	Code    int
+	RefId   int
 }

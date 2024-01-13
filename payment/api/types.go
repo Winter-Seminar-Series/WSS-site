@@ -39,22 +39,6 @@ type createTransactionResponse struct {
 	RedirectURL string `json:"redirect_url"`
 }
 
-// createTransactionRequest is the request body for creating goods endpoint
-type createGoodRequest struct {
-	// Name of it
-	Name string `json:"name" binding:"required"`
-	// The price of this item
-	Price uint64 `json:"price" binding:"required,gte=1"`
-	// An optional description about this payment
-	Description string `json:"description"`
-}
-
-// createGoodResponse is the result of creating goods endpoint
-type createGoodResponse struct {
-	// ID of the created good
-	ID uint32 `json:"id"`
-}
-
 // getTransactionRequest is the request body of the get transaction endpoint
 type getTransactionRequest struct {
 	OrderID string `form:"order_id" binding:"required"`
