@@ -7,9 +7,8 @@ from django.shortcuts import get_object_or_404
 from rest_framework import generics, permissions, status, views
 from rest_framework.response import Response
 
-from participant.models import Participant
-from participant.serializers import (ParticipantInfoSerializer,
-                                     ParticipantSerializer)
+from participant.models import Participant, ParticipationPlan
+from participant.serializers import ParticipantInfoSerializer, ParticipantSerializer, ParticipationPlanSerializer
 
 
 class ParticipantCreateAPIView(generics.CreateAPIView):
@@ -22,17 +21,10 @@ class ParticipantCreateAPIView(generics.CreateAPIView):
         response.data['user'].pop('password')
         return response
 
-class ParticipantUserPermission(permissions.BasePermission):
-    def has_object_permission(self, request, view, obj):
-        return obj.user == request.user
-
 class ParticipantInfoRetrieveUpdateAPIView(generics.RetrieveUpdateAPIView):
     queryset = Participant.objects.all()
     serializer_class = ParticipantInfoSerializer
-    permission_classes = [permissions.IsAuthenticated, ParticipantUserPermission]
-
-    def get_queryset(self):
-        Participant.objects.select_related('participant__user__email')
+    permission_classes = [permissions.IsAuthenticated]
 
     def get_object(self):
         participant = get_object_or_404(Participant, user=self.request.user)
@@ -81,3 +73,10 @@ class PasswordResetAPIView(views.APIView):
                 'Password reset code is not correct',
                 status=status.HTTP_406_NOT_ACCEPTABLE
             )
+
+class ParticipationPlanByEventAPIView(generics.ListAPIView):
+    queryset = ParticipationPlan.objects.all()
+    serializer_class = ParticipationPlanSerializer
+
+    def get_queryset(self):
+        return ParticipationPlan.objects.filter(event=self.kwargs['event_id'])

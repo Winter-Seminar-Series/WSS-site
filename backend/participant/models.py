@@ -40,15 +40,16 @@ class Participant(models.Model):
     def __str__(self):
         return f'{self.user.first_name} {self.user.last_name}'
 
-class ParticipationType(models.Model):
+class ParticipationPlan(models.Model):
     name = models.CharField(max_length=50)
     price = models.IntegerField(default=0)
+    description = models.TextField(blank=True)
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
 
 class Participation(models.Model):
     participant = models.ForeignKey(Participant, on_delete=models.CASCADE)
     info = models.ForeignKey(ParticipantInfo, on_delete=models.CASCADE)
-    participation_type = models.ForeignKey(ParticipationType, on_delete=models.CASCADE)
+    plan = models.ForeignKey(ParticipationPlan, on_delete=models.CASCADE)
     date = models.DateTimeField(auto_now_add=True)
 
 class ParticipationAttachment(models.Model):

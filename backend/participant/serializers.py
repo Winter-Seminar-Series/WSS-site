@@ -2,9 +2,8 @@ import re
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import User
 from rest_framework import serializers
-import participant
 
-from participant.models import Participant, ParticipantInfo
+from participant.models import Participant, ParticipantInfo, ParticipationPlan
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -70,3 +69,10 @@ class ParticipantInfoSerializer(serializers.ModelSerializer):
         if value in ['B', 'M', 'P']:
             return value
         raise serializers.ValidationError("Grade is not valid.")
+
+class ParticipationPlanSerializer(serializers.ModelSerializer):
+    event = serializers.CharField(source='event.name', read_only=True)
+    
+    class Meta:
+        model = ParticipationPlan
+        fields = ('id', 'name', 'price', 'description', 'event')
