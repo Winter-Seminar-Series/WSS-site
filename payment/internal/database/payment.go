@@ -16,6 +16,11 @@ func (db PaymentDatabase) InitiateTransaction(payment *Payment) error {
 	return db.db.Create(payment).Error
 }
 
+// SaveServiceOrderID will save the value of Payment.ServiceOrderID in database
+func (db PaymentDatabase) SaveServiceOrderID(payment *Payment, serviceOrderID string) error {
+	return db.db.Model(&Payment{OrderID: payment.OrderID}).Update("ServiceOrderID", serviceOrderID).Error
+}
+
 // MarkAsFailed will simply mark a payment as failed
 func (db PaymentDatabase) MarkAsFailed(orderID uuid.UUID) {
 	err := db.db.Model(&Payment{OrderID: orderID}).Update("PaymentStatus", PaymentStatusFailed).Error

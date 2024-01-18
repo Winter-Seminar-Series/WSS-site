@@ -2,7 +2,6 @@ package zarinpal
 
 import (
 	"context"
-	log "github.com/sirupsen/logrus"
 	"strconv"
 	"wss-payment/pkg/payment"
 )
@@ -29,7 +28,11 @@ func (adaptor PaymentAdaptor) CreateTransaction(ctx context.Context, req payment
 		Amount: req.Amount,
 	}
 	if req.Description == "" { // we cannot have empty description in zarinpal
-		req.Description = "WSS payment for user " + req.UsersPhone
+		req.Description = "Payment for user " + req.UsersPhone
+	}
+	req.Description = "[WSS] " + req.Description
+	if len(req.Description) > 500 { // zarinpal only allows descriptions as long as 500 chars
+		req.Description = req.Description[:500]
 	}
 	zarinpalResult, err := adaptor.zarinpal.CreateTransaction(ctx, zarinpalRequest)
 	if err != nil {
@@ -52,15 +55,14 @@ func (adaptor PaymentAdaptor) VerifyTransaction(ctx context.Context, req payment
 		return payment.TransactionVerificationResult{}, err
 	}
 	return payment.TransactionVerificationResult{
-		TrackID:   strconv.Itoa(zarinpalResult.Data.RefId),
+		TrackID:   strconv.Itoa(zarinpalResult.RefId),
 		PaymentOK: isPaymentOk(zarinpalResult),
 	}, nil
 }
 
 func isPaymentOk(response TransactionVerificationResult) bool {
-	if response.Data.Code == 100 || response.Data.Code == 101 {
+	if response.Code == 100 || response.Code == 101 {
 		return true
 	}
-	log.WithField("response", response).Info("not ok transaction")
 	return false
 }
