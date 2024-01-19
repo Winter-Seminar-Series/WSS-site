@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import Link from 'next/link';
 
 export default function Footer() {
@@ -17,37 +18,61 @@ export default function Footer() {
           </div>
           <div className="flex items-center gap-4">
             <a
-              href="https://facebook.com"
+              href="https://t.me/WSS_SUT"
               target="_blank"
               rel="noopener noreferrer"
             >
-              <img
-                src="/source/facebook.svg"
-                alt="Facebook"
+              <Image
+                src="/source/socials/telegram.svg"
+                alt="Telegram"
                 width="56"
                 height="56"
               />
             </a>
             <a
-              href="https://instagram.com"
+              href="https://www.instagram.com/wss_sut"
               target="_blank"
               rel="noopener noreferrer"
             >
-              <img
-                src="/source/instagram.svg"
+              <Image
+                src="/source/socials/instagram.svg"
                 alt="Instagram"
                 width="56"
                 height="56"
               />
             </a>
             <a
-              href="https://linkedin.com"
+              href="https://www.linkedin.com/company/wss-sut/"
               target="_blank"
               rel="noopener noreferrer"
             >
-              <img
-                src="/source/linkedin.svg"
+              <Image
+                src="/source/socials/linkedin.svg"
                 alt="LinkedIn"
+                width="56"
+                height="56"
+              />
+            </a>
+            <a
+              href="https://www.youtube.com/@Winter-Seminar-Series-SUT/videos"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Image
+                src="/source/socials/youtube.svg"
+                alt="Youtube"
+                width="56"
+                height="56"
+              />
+            </a>
+            <a
+              href="https://twitter.com/wss_sut"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Image
+                src="/source/socials/twitter.svg"
+                alt="Twitter"
                 width="56"
                 height="56"
               />

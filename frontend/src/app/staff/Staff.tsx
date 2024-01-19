@@ -1,5 +1,5 @@
 import React from 'react';
-import Background from './assets/background.svg';
+import Background from './assets/background.png';
 import StaffHeader from './StaffHeader';
 import StaffLine from './StaffLine';
 

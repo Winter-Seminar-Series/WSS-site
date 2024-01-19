@@ -1,11 +1,13 @@
 import React from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 
 export default function ViewAllButton({ text }: { text: string }) {
   return (
-    <button
+    <Link
+    href="/about#staff-area"
       className={
-        'font-manrope mb-3 flex items-center justify-center rounded-md bg-secondary px-8 py-5 text-lg font-bold text-white'
+        'font-manrope mb-3 flex items-center justify-center rounded-md bg-secondary hover:bg-secondary-400 px-8 py-5 text-lg font-bold text-white'
       }
     >
       <div>{text}</div>
@@ -16,6 +18,6 @@ export default function ViewAllButton({ text }: { text: string }) {
         height={20}
         className={'ml-3'}
       />
-    </button>
+    </Link>
   );
 }

@@ -69,7 +69,11 @@ export async function updateProfile(formData: FormData) {
     return { error: errorMessage };
   }
 
-  await callUpdateProfileAPI(cleanedInput);
+  try {
+    await callUpdateProfileAPI(cleanedInput);
+  } catch (error) {
+    return { error: error.message };
+  }
 
   revalidatePath('/dashboard/profile');
 }
