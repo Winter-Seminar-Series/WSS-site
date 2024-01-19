@@ -1,13 +1,20 @@
-import { SafeParseReturnType, ZodError } from 'zod';
+import { z, ZodError, ZodRawShape } from 'zod';
 
-export function cleanSafeParseData<SuccessType, ErrorType>(
-  input: SafeParseReturnType<SuccessType, ErrorType>,
-) {
-  if (!input.success) {
+export function cleanInput<InputType extends ZodRawShape>(
+  FormSchema: z.ZodObject<InputType>,
+  formData: FormData,
+): { cleanedInput: any; errorMessage: string } {
+  const input = FormSchema.safeParse(Object.fromEntries(formData.entries()));
+
+  let errorMessage: string | undefined, cleanedInput: any;
+  if (input.success) {
+    cleanedInput = input.data;
+  } else {
     // @ts-ignore
-    throw Error(joinIssueMessages(input.error));
+    errorMessage = joinIssueMessages(input.error);
   }
-  return input.data;
+
+  return { cleanedInput, errorMessage };
 }
 
 export function joinIssueMessages(error: ZodError) {

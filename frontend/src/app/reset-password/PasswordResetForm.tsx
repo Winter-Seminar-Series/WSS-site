@@ -14,10 +14,9 @@ export default function PasswordResetForm() {
       title={'Password Reset'}
       onSubmit={async (data) => {
         setError('');
-        try {
-          await resetPassword(data);
-        } catch (error) {
-          setError(error.message);
+        const response = await resetPassword(data);
+        if (response.error) {
+          setError(response.error);
         }
       }}
       fields={[

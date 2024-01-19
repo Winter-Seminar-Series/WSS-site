@@ -14,10 +14,9 @@ export default function SignUpForm() {
       title={'Sign Up'}
       onSubmit={async (data) => {
         setError('');
-        try {
-          await signUp(data);
-        } catch (error) {
-          setError(error.message);
+        const response = await signUp(data);
+        if (response.error) {
+          setError(response.error);
         }
       }}
       fields={[

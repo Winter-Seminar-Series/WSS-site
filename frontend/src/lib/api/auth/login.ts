@@ -6,7 +6,7 @@ import { z } from 'zod';
 import { FetchError, fetchJson } from '../fetch';
 import { getSession } from '../session';
 import { parseJWT } from '../../auth';
-import { cleanSafeParseData } from '../../error';
+import { cleanInput } from '../../error';
 
 type LoginResponse = {
   access: string;
@@ -50,18 +50,29 @@ async function saveLoginToSession(data: LoginResponse) {
   await session.save();
 }
 
+export async function loginWithEmailAndPassword(
+  email: string,
+  password: string,
+) {
+  const data = await callLoginAPI(email, password);
+  await saveLoginToSession(data);
+}
+
 export default async function login(formData: FormData) {
   noStore();
 
-  const input = FormSchema.safeParse(Object.fromEntries(formData.entries()));
-
-  const cleanedInput = cleanSafeParseData(input);
+  const { cleanedInput, errorMessage } = cleanInput(FormSchema, formData);
+  if (errorMessage) {
+    return { error: errorMessage };
+  }
 
   const { email, password } = cleanedInput;
 
-  const data = await callLoginAPI(email, password);
-
-  await saveLoginToSession(data);
+  try {
+    await loginWithEmailAndPassword(email, password);
+  } catch (error) {
+    return { error: error.message.detail };
+  }
 
   redirect('/dashboard/profile');
 }
