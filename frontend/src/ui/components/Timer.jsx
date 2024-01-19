@@ -57,7 +57,10 @@ export default function Timer() {
             <span className="pt-3 text-xs font-light">SECONDS</span>
           </div>
         </div>
-        <Link href="/dashboard/register" className="w-50 flex items-center justify-center rounded-md bg-white px-8 py-5 text-lg font-bold text-darkslategray-100 transition-colors hover:bg-whitesmoke">
+        <Link
+          href="/dashboard/register"
+          className="w-50 flex items-center justify-center rounded-md bg-white px-8 py-5 text-lg font-bold text-darkslategray-100 transition-colors hover:bg-whitesmoke"
+        >
           <div>Register Now</div>
           <Image
             src={'/source/arrow_right_black.svg'}

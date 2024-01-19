@@ -132,52 +132,100 @@ export default function Header({ isAuthenticated = false }) {
         </div>
         <div className="grid grid-cols-4 items-center justify-center gap-8 self-stretch md:grid-cols-8 md:gap-x-16 md:gap-y-4">
           <a href="https://www.apple.com">
-            <img src="/source/logos/Apple.png" className="m-auto w-full m-auto w-full max-w-[61px] grayscale opacity-60 hover:opacity-100 hover:grayscale-0" />
+            <img
+              src="/source/logos/Apple.png"
+              className="m-auto m-auto w-full w-full max-w-[61px] opacity-60 grayscale hover:opacity-100 hover:grayscale-0"
+            />
           </a>
           <a href="https://www.ed.ac.uk">
-            <img src="/source/logos/Edinburgh.png" className="m-auto w-full m-auto w-full max-w-[70px] grayscale opacity-60 hover:opacity-100 hover:grayscale-0" />
+            <img
+              src="/source/logos/Edinburgh.png"
+              className="m-auto m-auto w-full w-full max-w-[70px] opacity-60 grayscale hover:opacity-100 hover:grayscale-0"
+            />
           </a>
           <a href="https://www.epfl.ch/en/">
-            <img src="/source/logos/EPFL.png" className="m-auto w-full max-w-[101px] grayscale opacity-60 hover:opacity-100 hover:grayscale-0" />
+            <img
+              src="/source/logos/EPFL.png"
+              className="m-auto w-full max-w-[101px] opacity-60 grayscale hover:opacity-100 hover:grayscale-0"
+            />
           </a>
           <a href="https://www.uga.edu">
-            <img src="/source/logos/Georgia.png" className="m-auto w-full m-auto w-full max-w-[60px] grayscale opacity-60 hover:opacity-100 hover:grayscale-0" />
+            <img
+              src="/source/logos/Georgia.png"
+              className="m-auto m-auto w-full w-full max-w-[60px] opacity-60 grayscale hover:opacity-100 hover:grayscale-0"
+            />
           </a>
           <a href="https://www.google.com">
-            <img src="/source/logos/Google.png" className="m-auto w-full m-auto w-full max-w-[52px] grayscale opacity-60 hover:opacity-100 hover:grayscale-0" />
+            <img
+              src="/source/logos/Google.png"
+              className="m-auto m-auto w-full w-full max-w-[52px] opacity-60 grayscale hover:opacity-100 hover:grayscale-0"
+            />
           </a>
           <a href="https://www.london.ac.uk">
-            <img src="/source/logos/London.png" className="m-auto w-full m-auto w-full max-w-[97px] grayscale opacity-60 hover:opacity-100 hover:grayscale-0" />
+            <img
+              src="/source/logos/London.png"
+              className="m-auto m-auto w-full w-full max-w-[97px] opacity-60 grayscale hover:opacity-100 hover:grayscale-0"
+            />
           </a>
           <a href="https://www.sharif.edu">
-            <img src="/source/logos/Sharif.png" className="m-auto w-full m-auto w-full max-w-[63px] grayscale opacity-60 hover:opacity-100 hover:grayscale-0" />
+            <img
+              src="/source/logos/Sharif.png"
+              className="m-auto m-auto w-full w-full max-w-[63px] opacity-60 grayscale hover:opacity-100 hover:grayscale-0"
+            />
           </a>
           <a href="https://umd.edu">
-            <img src="/source/logos/Maryland.png" className="m-auto w-full m-auto w-full max-w-[63px] grayscale opacity-60 hover:opacity-100 hover:grayscale-0" />
+            <img
+              src="/source/logos/Maryland.png"
+              className="m-auto m-auto w-full w-full max-w-[63px] opacity-60 grayscale hover:opacity-100 hover:grayscale-0"
+            />
           </a>
           <a href="https://www.microsoft.com/de-de/">
-            <img src="/source/logos/Microsoft.png" className="m-auto w-full m-auto w-full max-w-[70px] grayscale opacity-60 hover:opacity-100 hover:grayscale-0" />
+            <img
+              src="/source/logos/Microsoft.png"
+              className="m-auto m-auto w-full w-full max-w-[70px] opacity-60 grayscale hover:opacity-100 hover:grayscale-0"
+            />
           </a>
           <a href="https://www.mit.edu">
-            <img src="/source/logos/MIT.png" className="m-auto w-full m-auto w-full max-w-[75px] grayscale opacity-60 hover:opacity-100 hover:grayscale-0" />
+            <img
+              src="/source/logos/MIT.png"
+              className="m-auto m-auto w-full w-full max-w-[75px] opacity-60 grayscale hover:opacity-100 hover:grayscale-0"
+            />
           </a>
           <a href="https://openai.com">
-            <img src="/source/logos/OpenAI.png" className="m-auto w-full m-auto w-full max-w-[58px] grayscale opacity-60 hover:opacity-100 hover:grayscale-0" />
+            <img
+              src="/source/logos/OpenAI.png"
+              className="m-auto m-auto w-full w-full max-w-[58px] opacity-60 grayscale hover:opacity-100 hover:grayscale-0"
+            />
           </a>
           <a href="https://www.princeton.edu">
-            <img src="/source/logos/Princeton.png" className="m-auto w-full m-auto w-full max-w-[70px] grayscale opacity-60 hover:opacity-100 hover:grayscale-0" />
+            <img
+              src="/source/logos/Princeton.png"
+              className="m-auto m-auto w-full w-full max-w-[70px] opacity-60 grayscale hover:opacity-100 hover:grayscale-0"
+            />
           </a>
           <a href="https://www.stanford.edu">
-            <img src="/source/logos/Stanford.png" className="m-auto w-full m-auto w-full max-w-[70px] grayscale opacity-60 hover:opacity-100 hover:grayscale-0" />
+            <img
+              src="/source/logos/Stanford.png"
+              className="m-auto m-auto w-full w-full max-w-[70px] opacity-60 grayscale hover:opacity-100 hover:grayscale-0"
+            />
           </a>
           <a href="https://www.upenn.edu">
-            <img src="/source/logos/UPenn.png" className="m-auto w-full m-auto w-full max-w-[70px] grayscale opacity-60 hover:opacity-100 hover:grayscale-0" />
+            <img
+              src="/source/logos/UPenn.png"
+              className="m-auto m-auto w-full w-full max-w-[70px] opacity-60 grayscale hover:opacity-100 hover:grayscale-0"
+            />
           </a>
           <a href="https://uwaterloo.ca">
-            <img src="/source/logos/Waterloo.png" className="m-auto w-full m-auto w-full max-w-[65px] grayscale opacity-60 hover:opacity-100 hover:grayscale-0" />
+            <img
+              src="/source/logos/Waterloo.png"
+              className="m-auto m-auto w-full w-full max-w-[65px] opacity-60 grayscale hover:opacity-100 hover:grayscale-0"
+            />
           </a>
           <a href="https://www.universityofcalifornia.edu">
-            <img src="/source/logos/California.png" className="m-auto w-full m-auto w-full max-w-[63px] grayscale opacity-60 hover:opacity-100 hover:grayscale-0" />
+            <img
+              src="/source/logos/California.png"
+              className="m-auto m-auto w-full w-full max-w-[63px] opacity-60 grayscale hover:opacity-100 hover:grayscale-0"
+            />
           </a>
         </div>
       </div>

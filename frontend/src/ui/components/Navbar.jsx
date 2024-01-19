@@ -123,8 +123,8 @@ export default function Navbar({ fixed = true, isAuthenticated = false }) {
               href="/dashboard/profile"
               className={`flex items-center rounded-md px-6 text-base font-semibold max-lg:h-9 max-lg:px-4 lg:h-12 ${
                 transparent
-                  ? 'bg-white hover:bg-whitesmoke text-secondary-500'
-                  : 'bg-secondary-500 hover:bg-secondary-400 text-white'
+                  ? 'bg-white text-secondary-500 hover:bg-whitesmoke'
+                  : 'bg-secondary-500 text-white hover:bg-secondary-400'
               }`}
             >
               Dashboard
@@ -136,8 +136,8 @@ export default function Navbar({ fixed = true, isAuthenticated = false }) {
               href="/signup"
               className={`flex items-center rounded-md px-6 text-base font-semibold max-lg:h-9 max-lg:px-4 lg:h-12 ${
                 transparent
-                  ? 'bg-white hover:bg-whitesmoke text-secondary-500'
-                  : 'bg-secondary-500 hover:bg-secondary-400 text-white'
+                  ? 'bg-white text-secondary-500 hover:bg-whitesmoke'
+                  : 'bg-secondary-500 text-white hover:bg-secondary-400'
               }`}
             >
               Sign Up
@@ -146,8 +146,8 @@ export default function Navbar({ fixed = true, isAuthenticated = false }) {
               href="/login"
               className={`flex items-center rounded-md border px-6 text-base font-semibold max-lg:h-9 max-lg:px-4 lg:h-12 ${
                 transparent
-                  ? 'border-opacity-30 hover:bg-secondary-400 text-white'
-                  : 'border-transparent hover:bg-whitesmoke text-secondary-500'
+                  ? 'border-opacity-30 text-white hover:bg-secondary-400'
+                  : 'border-transparent text-secondary-500 hover:bg-whitesmoke'
               }`}
             >
               Login

@@ -67,7 +67,7 @@ function Button({ text }) {
     <div className="mb-32 mt-20 flex justify-center">
       <Link
         href="/about"
-        className="inline-flex h-16 items-center justify-center gap-2.5 gap-x-2.5 rounded-md bg-secondary hover:bg-secondary-400 px-8 text-white"
+        className="inline-flex h-16 items-center justify-center gap-2.5 gap-x-2.5 rounded-md bg-secondary px-8 text-white hover:bg-secondary-400"
       >
         <span className="text-lg font-bold">{text}</span>
         <Image
@@ -90,7 +90,7 @@ function ItemText({ title, overline, description }) {
       <div className="text-5xl font-bold leading-normal text-slate-800">
         {title}
       </div>
-      <div className="mt-2.5 text-lg leading-relaxed text-neutral-400 text-justify">
+      <div className="mt-2.5 text-justify text-lg leading-relaxed text-neutral-400">
         {description}
       </div>
     </div>
