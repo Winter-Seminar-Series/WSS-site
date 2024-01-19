@@ -4,6 +4,8 @@ import { redirect } from 'next/navigation';
 import { unstable_noStore as noStore } from 'next/cache';
 import { z } from 'zod';
 import { fetchJson } from '../fetch';
+import { cleanInput } from '../../error';
+import { loginWithEmailAndPassword } from './login';
 
 const FormSchema = z.object({
   email: z.string().email('Email is in invalid format.'),
@@ -25,14 +27,22 @@ async function callSignUpAPI(email: string, password: string) {
 export default async function signUp(formData: FormData) {
   noStore();
 
-  const { email, password, confirmPassword } = FormSchema.parse(
-    Object.fromEntries(formData.entries()),
-  );
+  const { cleanedInput, errorMessage } = cleanInput(FormSchema, formData);
+  if (errorMessage) {
+    return { error: errorMessage };
+  }
+
+  const { email, password, confirmPassword } = cleanedInput;
 
   if (password !== confirmPassword)
-    throw new Error('Please repeat the password.');
+    return { error: 'Please repeat the password.' };
 
-  await callSignUpAPI(email, password);
+  try {
+    await callSignUpAPI(email, password);
+    await loginWithEmailAndPassword(email, password);
+  } catch (error) {
+    return { error: error.message.join(' ') };
+  }
 
-  redirect('/login');
+  redirect('/dashboard/profile');
 }

@@ -14,10 +14,9 @@ export default function LogInForm() {
       title={'Log In'}
       onSubmit={async (data) => {
         setError('');
-        try {
-          await login(data);
-        } catch (error) {
-          setError(error.message);
+        const response = await login(data);
+        if (response.error) {
+          setError(response.error);
         }
       }}
       fields={[
