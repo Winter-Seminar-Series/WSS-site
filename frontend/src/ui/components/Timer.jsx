@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image';
+import Link from 'next/link';
 import useTimer from '../hooks/timer';
 
 export default function Timer() {
@@ -56,7 +57,10 @@ export default function Timer() {
             <span className="pt-3 text-xs font-light">SECONDS</span>
           </div>
         </div>
-        <button className="w-50 flex items-center justify-center rounded-md bg-white px-8 py-5 text-lg font-bold text-darkslategray-100 transition-colors hover:bg-gray-100">
+        <Link
+          href="/dashboard/register"
+          className="w-50 flex items-center justify-center rounded-md bg-white px-8 py-5 text-lg font-bold text-darkslategray-100 transition-colors hover:bg-whitesmoke"
+        >
           <div>Register Now</div>
           <Image
             src={'/source/arrow_right_black.svg'}
@@ -65,7 +69,7 @@ export default function Timer() {
             height={20}
             className={'ml-3'}
           />
-        </button>
+        </Link>
       </div>
     </div>
   );

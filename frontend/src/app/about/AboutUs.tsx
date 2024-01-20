@@ -77,7 +77,7 @@ export default async function AboutUs() {
 
 function StaffArea() {
   return (
-    <div className="mx-auto mb-14 mt-28 text-center">
+    <div id="staff-area" className="mx-auto pb-14 pt-28 text-center">
       <div className="text-lg font-medium uppercase tracking-wide text-neutral-400">
         Overline Goes Here
       </div>

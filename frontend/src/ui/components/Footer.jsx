@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import Link from 'next/link';
 
 export default function Footer() {
@@ -5,60 +6,118 @@ export default function Footer() {
     <footer className="border-t border-neutral-200 bg-white pb-7 pt-14 text-gray-700">
       <div className="mx-auto max-w-[1200px] px-6">
         <div className="flex items-center justify-between gap-y-4 max-md:flex-col">
-          <div className="flex items-center gap-4">
-            <img
-              src="/source/sut_footer.svg"
-              alt="Facebook"
-              width="60"
-              height="60"
-            />
-            <img src="/source/wss_footer.svg" alt="LinkedIn" width="71" />
-            <img src="/source/ssc_footer.svg" alt="Instagram" width="95" />
+          <Image
+            src="/source/sut_footer.svg"
+            alt="Facebook"
+            width="60"
+            height="60"
+          />
+          <Image
+            src="/source/wss_footer.svg"
+            alt="LinkedIn"
+            width="71"
+            height="47"
+          />
+          <Image
+            src="/source/ssc_footer.svg"
+            alt="Instagram"
+            width="95"
+            height="46"
+          />
+          <Image
+            src="/source/sponsors/divar.svg"
+            alt="Divar"
+            width="69"
+            height="40"
+          />
+          <Image
+            src="/source/sponsors/quera.svg"
+            alt="Quera"
+            width="131"
+            height="24"
+          />
+          <Image
+            src="/source/sponsors/ramzinex.svg"
+            alt="Ramzinex"
+            width="140"
+            height="32"
+          />
+          <Image
+            src="/source/sponsors/bazar.svg"
+            alt="Bazar"
+            width="100"
+            height="40"
+          />
+        </div>
+        <div className="my-8 flex items-center justify-between gap-y-4 max-md:flex-col">
+          <div className="max-md:text-center">
+            <p className="max-w-prose text-sm">
+              The event is held by the Student Scientific Chapter (SSC) of
+              Computer Engineering Department of Sharif University of Technology
+            </p>
           </div>
           <div className="flex items-center gap-4">
             <a
-              href="https://facebook.com"
+              href="https://t.me/WSS_SUT"
               target="_blank"
               rel="noopener noreferrer"
             >
-              <img
-                src="/source/facebook.svg"
-                alt="Facebook"
+              <Image
+                src="/source/socials/telegram.svg"
+                alt="Telegram"
                 width="56"
                 height="56"
               />
             </a>
             <a
-              href="https://instagram.com"
+              href="https://www.instagram.com/wss_sut"
               target="_blank"
               rel="noopener noreferrer"
             >
-              <img
-                src="/source/instagram.svg"
+              <Image
+                src="/source/socials/instagram.svg"
                 alt="Instagram"
                 width="56"
                 height="56"
               />
             </a>
             <a
-              href="https://linkedin.com"
+              href="https://www.linkedin.com/company/wss-sut/"
               target="_blank"
               rel="noopener noreferrer"
             >
-              <img
-                src="/source/linkedin.svg"
+              <Image
+                src="/source/socials/linkedin.svg"
                 alt="LinkedIn"
                 width="56"
                 height="56"
               />
             </a>
+            <a
+              href="https://www.youtube.com/@WSS-SUT"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Image
+                src="/source/socials/youtube.svg"
+                alt="Youtube"
+                width="56"
+                height="56"
+              />
+            </a>
+            <a
+              href="https://twitter.com/wss_sut"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Image
+                src="/source/socials/twitter.svg"
+                alt="Twitter"
+                width="56"
+                height="56"
+              />
+            </a>
           </div>
-        </div>
-        <div className="mb-10 mt-4 max-md:text-center">
-          <p className="max-w-prose text-sm">
-            The event is held by the Student Scientific Chapter (SSC) of
-            Computer Engineering Department of Sharif University of Technology
-          </p>
         </div>
         <div className="mb-8 grid grid-cols-1 items-start gap-5 sm:grid-cols-2 md:grid-cols-4">
           <a
@@ -127,27 +186,10 @@ export default function Footer() {
             </div>
           </a>
         </div>
-        <div className="flex items-center justify-between gap-y-4 pb-4 text-lightslategray max-md:flex-col">
-          <div className="flex items-center max-md:w-full max-md:flex-col max-md:items-start md:gap-4">
-            <Link href="" className="flex items-center justify-center gap-2">
-              <p className="mt-4 text-sm">About us</p>
-            </Link>
-            <Link href="" className="flex items-center justify-center gap-2">
-              <p className="mt-4 text-sm">Contact</p>
-            </Link>
-            <Link href="" className="flex items-center justify-center gap-2">
-              <p className="mt-4 text-sm">Privacy Policy</p>
-            </Link>
-            <Link href="" className="flex items-center justify-center gap-2">
-              <p className="mt-4 text-sm">Sitemap</p>
-            </Link>
-            <Link href="" className="flex items-center justify-center gap-2">
-              <p className="mt-4 text-sm">Terms of Use</p>
-            </Link>
-          </div>
-          <div className="flex items-center justify-between">
-            <p className="mt-6 text-sm">© 2015-2024, All Rights Reserved</p>
-          </div>
+        <div className="flex-row-reverse items-center justify-between">
+          <p className="text-right text-sm">
+            © 2015-2024, All Rights Reserved
+          </p>
         </div>
       </div>
     </footer>

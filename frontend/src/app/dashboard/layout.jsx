@@ -1,7 +1,10 @@
+import Link from 'next/link';
+import { Tab } from '@headlessui/react';
 import { isAuthenticated } from '../../lib/auth';
 import Footer from '../../ui/components/Footer';
 import Navbar, { NavbarPlaceholder } from '../../ui/components/Navbar';
 import LogoutButton from '../../ui/components/dashboard/LogoutButton';
+import DashboardNavbar from './DashboardNavbar';
 
 export default async function DashboardLayout({ children }) {
   const authenticated = await isAuthenticated();
@@ -29,29 +32,7 @@ export default async function DashboardLayout({ children }) {
               Not Registered Yet
             </p>
           </div>
-          <div className="flex items-center justify-between self-stretch border-b border-solid border-b-[rgba(138,137,152,0.30)]">
-            <div className="flex flex-row gap-0">
-              <div className="flex items-center justify-center gap-2 border-b-2 border-solid border-b-[#9D6D9B] px-6 py-5">
-                <img src="/source/Profile.svg" />
-                <a className="text-xl font-semibold not-italic leading-[normal] tracking-[-0.2px] text-[#9D6D9B]">
-                  Profile
-                </a>
-              </div>
-              <div className="flex items-center justify-center gap-2 px-6 py-5 text-[#1F2B3D]">
-                <img src="/source/TicketStar.svg" />
-                <a className="text-xl font-semibold not-italic leading-[normal] tracking-[-0.2px] text-[#1F2B3D]">
-                  Registration
-                </a>
-              </div>
-              <div className="flex items-center justify-center gap-2 px-6 py-5">
-                <img src="/source/Play.svg" />
-                <a className="text-xl font-semibold not-italic leading-[normal] tracking-[-0.2px] text-[#1F2B3D]">
-                  Stream
-                </a>
-              </div>
-            </div>
-            <LogoutButton />
-          </div>
+          <DashboardNavbar />
           {children}
         </div>
       </div>
