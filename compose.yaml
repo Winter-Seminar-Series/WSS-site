@@ -3,8 +3,10 @@ version: '3'
 services:
   postgresql:
     image: postgres
-    ports:
-      - 5432:5432
+    expose:
+      - 5432
+    volumes:
+      - postgres-db:/var/lib/postgresql/data
     environment:
       - POSTGRES_PASSWORD=
 
@@ -37,3 +39,7 @@ services:
     depends_on:
       - backend
       - postgresql
+
+volumes:
+  postgres-db:
+    driver: local
