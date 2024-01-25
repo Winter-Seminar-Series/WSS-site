@@ -3,7 +3,9 @@ from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import User
 from rest_framework import serializers
 
-from participant.models import Participant, ParticipantInfo, ParticipationPlan
+from core.serializers import WorkshopSerializer
+
+from participant.models import ModeOfAttendance, Participant, ParticipantInfo, ParticipationPlan
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -70,9 +72,15 @@ class ParticipantInfoSerializer(serializers.ModelSerializer):
             return value
         raise serializers.ValidationError("Grade is not valid.")
 
+class ModeOfAttendanceSerializer(serializers.ModelField):
+    class Meta:
+        model = ModeOfAttendance
+        fields = '__all__'
+
 class ParticipationPlanSerializer(serializers.ModelSerializer):
     event = serializers.CharField(source='event.name', read_only=True)
+    workshop = WorkshopSerializer()
     
     class Meta:
         model = ParticipationPlan
-        fields = ('id', 'name', 'price', 'description', 'event')
+        fields = ('id', 'price', 'event', 'kind', 'workshop', 'mode_of_attendance')

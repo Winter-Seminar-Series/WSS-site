@@ -73,8 +73,15 @@ class Seminar(models.Model):
     speaker = models.ForeignKey(Speaker, on_delete=models.CASCADE)
 
 class Workshop(models.Model):
-    sub_event = models.OneToOneField(SubEvent, on_delete=models.CASCADE)
-    speaker = models.ForeignKey(Speaker, on_delete=models.CASCADE)
+    speakers = models.ManyToManyField(Speaker)
+    name = models.TextField(max_length=100)
+    description = models.TextField(max_length=1000, blank=True)
+
+class WorkshopSession(models.Model):
+    workshop = models.ForeignKey(Workshop, on_delete=models.CASCADE)
+    starting_time = models.TimeField()
+    ending_time = models.TimeField()
+    date = models.DateField()
 
 class RoundTable(models.Model):
     sub_event = models.OneToOneField(SubEvent, on_delete=models.CASCADE)

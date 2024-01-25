@@ -2,7 +2,7 @@ from django.contrib.auth.models import User
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.serializers import TokenObtainSerializer
 from rest_framework import serializers
-from core.models import Event
+from core.models import Event, Workshop
 
 class EmailTokenObtainSerializer(TokenObtainSerializer):
     username_field = User.EMAIL_FIELD
@@ -23,4 +23,9 @@ class CustomTokenObtainPairSerializer(EmailTokenObtainSerializer):
 class EventSerializer(serializers.ModelSerializer):
     class Meta:
         model = Event
+        fields = '__all__'
+
+class WorkshopSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Workshop
         fields = '__all__'

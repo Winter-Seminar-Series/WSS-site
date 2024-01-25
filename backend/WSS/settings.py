@@ -211,5 +211,5 @@ AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
 ]
 
-PAYMENT_SERVICE_URL = os.environ.get('PAYMENT_SERVICE_URL', 'https://wss-sharif.com/payment')
-PAYMENT_CALLBACK_URL = os.environ.get('PAYMENT_CALLBACK_URL', 'https://wss-sharif.com/callback')
+PAYMENT_SERVICE_URL = os.environ.get('PAYMENT_SERVICE_URL')
+PAYMENT_CALLBACK_URL = os.environ.get('PAYMENT_CALLBACK_URL')

@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
 from payment.models import PaymentRequest, PaymentDiscount
-from participant.models import Participation
+from participant.models import Participation, ParticipationPlan
 
 from django.db.models import Q
 
@@ -11,19 +11,22 @@ import requests
 class PaymentRequestCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = PaymentRequest
-        fields = ['plan', 'participant', 'discount_code']
+        fields = ['plans', 'participant', 'discount_code']
     
     def validate(self, attrs):
         discount_code = attrs.get('discount_code', None)
-        plan = attrs.get('plan', None)
-        if plan is None:
-            raise serializers.ValidationError('Invalid plan')
-        participant = attrs.get('participant', None)
-        if participant is None:
-            raise serializers.ValidationError('Invalid participant')
+        plans = attrs.get('plans', None)
+        if plans is None:
+            raise serializers.ValidationError('Invalid plans')
+        plans = ParticipationPlan.objects.filter(pk__in=plans)
+        events = [plan.event for plan in plans]
+        if events:
+            event = events[0]
+        else:
+            event = -1
         if discount_code is None:
             return attrs
-        discounts = PaymentDiscount.objects.filter(code=discount_code).filter(Q(event=plan.event) | Q(plan=plan)).filter(Q(count=-1) | Q(count__gt=0))
+        discounts = PaymentDiscount.objects.filter(code=discount_code).filter(event=event).filter(Q(count=-1) | Q(count__gt=0))
         if discounts.count() == 0:
             raise serializers.ValidationError('Invalid discount code')
         discount = discounts[0]

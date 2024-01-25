@@ -1,4 +1,4 @@
-from core.models import Event
+from core.models import Event, Workshop
 from django.contrib.auth.models import User
 from django.db import models
 
@@ -40,11 +40,22 @@ class Participant(models.Model):
     def __str__(self):
         return f'{self.user.first_name} {self.user.last_name}'
 
-class ParticipationPlan(models.Model):
+class ModeOfAttendance(models.Model):
     name = models.CharField(max_length=50)
+    is_national_code_required = models.BooleanField(default=False)
+
+class ParticipationPlan(models.Model):
+
+    KIND_CHOICES = (
+        ('W', 'Workshop'),
+        ('M', 'Mode of Attendance')
+    )
+
     price = models.IntegerField(default=0)
-    description = models.TextField(blank=True)
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
+    kind = models.CharField(max_length=1, choices=KIND_CHOICES)
+    workshop = models.ForeignKey(Workshop, on_delete=models.CASCADE, blank=True)
+    mode_of_attendance = models.ForeignKey(ModeOfAttendance, on_delete=models.CASCADE, blank=True)
 
 class Participation(models.Model):
     participant = models.ForeignKey(Participant, on_delete=models.CASCADE)
