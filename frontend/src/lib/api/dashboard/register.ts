@@ -19,7 +19,7 @@ export function setPaidParticipationPlans(
   ...participationPlansArray: ParticipationPlan[][]
 ) {
   const planIds = new Set(participation.plans);
-  
+
   participationPlansArray.forEach((participationPlans) => {
     participationPlans.forEach((plan) => {
       plan.paid = planIds.has(plan.id);

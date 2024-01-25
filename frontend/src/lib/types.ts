@@ -70,7 +70,7 @@ export type ParticipationPlan = {
   id: number;
   type: ParticipationPlanKind;
   paid: boolean;
-}
+};
 
 export type ModeOfAttendance = {
   kind: ParticipationPlanKind.MODE_OF_ATTENDANCE;
