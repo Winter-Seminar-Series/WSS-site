@@ -76,6 +76,7 @@ export type ModeOfAttendance = {
   kind: ParticipationPlanKind.MODE_OF_ATTENDANCE;
   paid: boolean;
   name: string;
+  requiresNationalCode: boolean;
 } & ParticipationPlan;
 
 export type Workshop = {

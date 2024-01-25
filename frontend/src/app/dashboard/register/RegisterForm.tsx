@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { ModeOfAttendance, Participation, Workshop } from '../../../lib/types';
+import { ModeOfAttendance, Workshop } from '../../../lib/types';
 
 export default function RegisterForm({
   workshops,
