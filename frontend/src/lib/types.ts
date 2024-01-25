@@ -60,8 +60,6 @@ export type Profile = {
 
 export type ParticipationPlan = {
   id: number;
-}
+};
 
-export type Participation = {
-
-}
+export type Participation = {};
