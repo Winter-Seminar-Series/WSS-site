@@ -34,7 +34,7 @@ export async function fetchParticipationPlans() {
     await fetchJsonWithAuth<ParticipationPlanResponse[]>(url);
 
   // @ts-ignore
-  const workshops = participationPlans.filter(
+  const workshops: Workshop[] = participationPlans.filter(
     (plan) => plan.kind === ParticipationPlanKind.WORKSHOP,
   );
 
@@ -54,4 +54,27 @@ export async function fetchParticipation() {
   const participation = await fetchJsonWithAuth<Participation>(url);
 
   return participation;
+}
+
+type PriceResponse = {
+  price: number;
+};
+
+export async function fetchPrice(plans: number[], discountCode?: string) {
+  noStore();
+
+  const url = `${process.env.API_ORIGIN}/api/price`;
+
+  // @ts-ignore
+  const searchParams = new URLSearchParams({ plans });
+
+  if (discountCode) {
+    searchParams.append('discount', discountCode);
+  }
+
+  const { price } = await fetchJsonWithAuth<PriceResponse>(
+    `${url}?${searchParams}`,
+  );
+
+  return price;
 }

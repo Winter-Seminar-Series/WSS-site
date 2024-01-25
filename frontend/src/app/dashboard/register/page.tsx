@@ -23,5 +23,11 @@ export default async function Register() {
 
   setPaidParticipationPlans(participation, workshops, modesOfAttendance);
 
-  return <RegisterForm profile={profile} email={email} />;
+  return (
+    <RegisterForm
+      workshops={workshops}
+      modesOfAttendance={modesOfAttendance}
+      nationalCode={nationalCode}
+    />
+  );
 }
