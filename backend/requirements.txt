@@ -5,3 +5,5 @@ django-storages[s3]
 python-dotenv~=1.0.0
 Pillow
 django-cors-headers
+psycopg
+requests
