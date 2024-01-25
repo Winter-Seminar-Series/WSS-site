@@ -38,19 +38,6 @@ services:
     env_file:
       - .env.backend
 
-
-  frontend:
-    image: wss:frontend
-    container_name: frontend
-    ports:
-      - 3000:3000
-    networks:
-      - app-network
-    env_file:
-      - .env.frontend
-    depends_on:
-      - backend
-      - postgresql
 volumes:
   postgres-data:
     driver: local
