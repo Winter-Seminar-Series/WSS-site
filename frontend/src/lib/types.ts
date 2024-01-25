@@ -58,8 +58,39 @@ export type Profile = {
   github?: string;
 };
 
-export type ParticipationPlan = {
+export type Speaker = {
   id: number;
+  name: string;
+  designation: string;
+  description: string;
+  image: string;
 };
 
-export type Participation = {};
+export type ParticipationPlan = {
+  id: number;
+  type: ParticipationPlanKind;
+  paid: boolean;
+}
+
+export type ModeOfAttendance = {
+  kind: ParticipationPlanKind.MODE_OF_ATTENDANCE;
+  paid: boolean;
+  name: string;
+} & ParticipationPlan;
+
+export type Workshop = {
+  kind: ParticipationPlanKind.WORKSHOP;
+  paid: boolean;
+  name: string;
+  image: string;
+  speakers: Speaker[];
+} & ParticipationPlan;
+
+export enum ParticipationPlanKind {
+  WORKSHOP = 'W',
+  MODE_OF_ATTENDANCE = 'M',
+}
+
+export type Participation = {
+  plans: number[];
+};
