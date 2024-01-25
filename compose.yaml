@@ -40,7 +40,7 @@ services:
 
 
   frontend:
-    image: wss:front
+    image: wss:frontend
     container_name: frontend
     ports:
       - 3000:3000
