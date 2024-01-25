@@ -26,7 +26,9 @@ COPY . .
 # Learn more here: https://nextjs.org/telemetry
 # Uncomment the following line in case you want to disable telemetry during the build.
 # ENV NEXT_TELEMETRY_DISABLED 1
-
+ENV API_ORIGIN http://172.17.0.1:8000
+ENV SECRET_COOKIE_PASSWORD MEOWMEOW
+ENV GA_TRACKING_ID G-QCX3G9KSPC
 RUN yarn build
 
 # If using npm comment out above and use below instead
