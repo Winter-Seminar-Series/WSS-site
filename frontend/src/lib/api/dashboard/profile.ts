@@ -4,7 +4,7 @@ import { unstable_noStore as noStore, revalidatePath } from 'next/cache';
 import { z } from 'zod';
 import { Gender, Grade, IntroductionMethod, Profile } from '../../types';
 import { fetchJsonWithAuth } from '../fetch';
-import { joinIssueMessages, cleanInput } from '../../error';
+import { cleanInput } from '../../error';
 
 type ProfileResponse = Profile & { email: string };
 

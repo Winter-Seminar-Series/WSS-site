@@ -57,3 +57,11 @@ export type Profile = {
   linkedin?: string;
   github?: string;
 };
+
+export type ParticipationPlan = {
+  id: number;
+}
+
+export type Participation = {
+
+}
