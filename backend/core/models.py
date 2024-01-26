@@ -18,7 +18,7 @@ class Event(models.Model):
     class Meta:
         unique_together = ['name', 'order']
 
-    name = models.TextField(max_length=50, blank=False)
+    name = models.TextField(max_length=50)
     order = models.IntegerField(default=1)
     description = models.TextField(max_length=1000, blank=True)
     starting_date = models.DateField()
@@ -52,36 +52,49 @@ class SubEvent(models.Model):
 
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
     kind = models.CharField(max_length=1, choices=kind, default='S')
-    name = models.TextField(max_length=200, blank=False)
+    name = models.TextField(max_length=200)
     description = models.TextField(max_length=1000, blank=True)
     starting_time = models.TimeField()
     ending_time = models.TimeField()
     date = models.DateField()
     venue = models.CharField(max_length=1, choices=venue_choices, default='V')
     link = models.URLField(max_length=200, blank=True)
-    poster = models.ImageField(upload_to='posters/', blank=True)
-    thumbnail = models.ImageField(upload_to='thumbnails/', blank=True)
+    poster = models.ImageField(upload_to='posters/', null=True, blank=True)
+    thumbnail = models.ImageField(upload_to='thumbnails/', null=True, blank=True)
 
 class Speaker(models.Model):
     name = models.TextField(max_length=50, blank=False)
     designation = models.TextField(max_length=50, blank=True)
     description = models.TextField(max_length=1000, blank=True)
-    image = models.ImageField(upload_to='speakers/', blank=True)
+    image = models.ImageField(upload_to='speakers/', null=True, blank=True)
+
+    def __str__(self) -> str:
+        return f'{self.name}'
 
 class Seminar(models.Model):
     sub_event = models.OneToOneField(SubEvent, on_delete=models.CASCADE)
     speaker = models.ForeignKey(Speaker, on_delete=models.CASCADE)
 
 class Workshop(models.Model):
-    speakers = models.ManyToManyField(Speaker)
     name = models.TextField(max_length=100)
     description = models.TextField(max_length=1000, blank=True)
+    poster = models.ImageField(upload_to='posters/', null=True, blank=True)
+    thumbnail = models.ImageField(upload_to='thumbnails/', null=True, blank=True)
+
+    def __str__(self) -> str:
+        return f'{self.name}'
 
 class WorkshopSession(models.Model):
     workshop = models.ForeignKey(Workshop, on_delete=models.CASCADE)
+    speaker = models.ForeignKey(Speaker, on_delete=models.CASCADE)
+    name = models.TextField(max_length=100)
+    description = models.TextField(max_length=1000, blank=True)
     starting_time = models.TimeField()
     ending_time = models.TimeField()
     date = models.DateField()
+
+    def __str__(self):
+        return f'{self.workshop} - {self.date}'
 
 class RoundTable(models.Model):
     sub_event = models.OneToOneField(SubEvent, on_delete=models.CASCADE)

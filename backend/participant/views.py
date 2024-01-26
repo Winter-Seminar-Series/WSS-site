@@ -74,9 +74,34 @@ class PasswordResetAPIView(views.APIView):
                 status=status.HTTP_406_NOT_ACCEPTABLE
             )
 
+class ParticipationByEventAPIView(generics.ListAPIView):
+    queryset = ParticipationPlan.objects.all()
+    serializer_class = ParticipationPlanSerializer
+
+    def get_queryset(self):
+        return ParticipationPlan.objects.filter(event=self.kwargs['event_id'], participation_set__participant=self.kwargs['participant'])
+    
+    def get(self, request, *args, **kwargs):
+        self.kwargs['participant'] = get_object_or_404(Participant, user=self.request.user)
+        return self.list(request, *args, **kwargs)
+
 class ParticipationPlanByEventAPIView(generics.ListAPIView):
     queryset = ParticipationPlan.objects.all()
     serializer_class = ParticipationPlanSerializer
 
     def get_queryset(self):
         return ParticipationPlan.objects.filter(event=self.kwargs['event_id'])
+
+class WorkshopByEventAPIView(generics.ListAPIView):
+    queryset = ParticipationPlan.objects.all()
+    serializer_class = ParticipationPlanSerializer
+
+    def get_queryset(self):
+        return ParticipationPlan.objects.filter(event=self.kwargs['event_id'], kind='W')
+
+class ModeOfAttendanceByEventAPIView(generics.ListAPIView):
+    queryset = ParticipationPlan.objects.all()
+    serializer_class = ParticipationPlanSerializer
+
+    def get_queryset(self):
+        return ParticipationPlan.objects.filter(event=self.kwargs['event_id'], kind='M')

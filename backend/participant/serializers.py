@@ -45,7 +45,7 @@ class ParticipantInfoSerializer(serializers.ModelSerializer):
     def validate_national_code(self, value: str) -> str:
         if value == '':
             return value
-        if re.match(r'^(\+\d{1,3}|0)\d{10}$', value):
+        if re.match(r'^\d{8,10}$', value):
             if len(value) < 10:
                 value = '0' * (10 - len(value)) + value
             temp = 0
@@ -58,7 +58,7 @@ class ParticipantInfoSerializer(serializers.ModelSerializer):
         raise serializers.ValidationError("National Code is not valid.")
     
     def validate_phone_number(self, value: str) -> str:
-        if re.match(r'^09\d{9}$', value):
+        if re.match(r'^(\+\d{1,3}|0)\d{10}$', value):
             return value
         raise serializers.ValidationError("Phone number is not valid.")
     
@@ -72,7 +72,7 @@ class ParticipantInfoSerializer(serializers.ModelSerializer):
             return value
         raise serializers.ValidationError("Grade is not valid.")
 
-class ModeOfAttendanceSerializer(serializers.ModelField):
+class ModeOfAttendanceSerializer(serializers.ModelSerializer):
     class Meta:
         model = ModeOfAttendance
         fields = '__all__'
@@ -80,6 +80,7 @@ class ModeOfAttendanceSerializer(serializers.ModelField):
 class ParticipationPlanSerializer(serializers.ModelSerializer):
     event = serializers.CharField(source='event.name', read_only=True)
     workshop = WorkshopSerializer()
+    mode_of_attendance = ModeOfAttendanceSerializer()
     
     class Meta:
         model = ParticipationPlan
