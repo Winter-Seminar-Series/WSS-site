@@ -77,6 +77,7 @@ class PasswordResetAPIView(views.APIView):
 class ParticipationByEventAPIView(generics.ListAPIView):
     queryset = ParticipationPlan.objects.all()
     serializer_class = ParticipationPlanSerializer
+    permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
         return ParticipationPlan.objects.filter(event=self.kwargs['event_id'], participation_set__participant=self.kwargs['participant'])
