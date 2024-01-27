@@ -25,9 +25,9 @@ export default async function Register() {
 
   return (
     <RegisterForm
-      // workshops={workshops}
-      // modesOfAttendance={modesOfAttendance}
-      // nationalCode={nationalCode}
+    // workshops={workshops}
+    // modesOfAttendance={modesOfAttendance}
+    // nationalCode={nationalCode}
     />
   );
 }

@@ -7,22 +7,21 @@ import Workshops from './Workshps';
 import AttendanceInfo from './AttendanceInfo';
 
 export type workshopType = {
-  image: string,
-  startMonth: string,
-  startDay: number,
-  endMonth: string,
-  endDay: number,
-  moduleNumber: number,
-  name: string,
-  price: number,
-  isAttended: boolean,
-}
+  image: string;
+  startMonth: string;
+  startDay: number;
+  endMonth: string;
+  endDay: number;
+  moduleNumber: number;
+  name: string;
+  price: number;
+  isAttended: boolean;
+};
 
-export default function RegisterForm({
-  // workshops,
-  // modesOfAttendance,
-  // nationalCode,
-}: {
+export default function RegisterForm({} // workshops,
+// modesOfAttendance,
+// nationalCode,
+: {
   // workshops: Workshop[];
   // modesOfAttendance: ModeOfAttendance[];
   // nationalCode?: string;
@@ -85,8 +84,8 @@ export default function RegisterForm({
       name: 'Big Data and Artificial Intelligence: Driving Personalised Medicine of the Future',
       price: 120000,
       isAttended: true,
-    }
-  ]
+    },
+  ];
 
   return (
     <>
@@ -101,7 +100,7 @@ export default function RegisterForm({
         </div>
         <Workshops workshops={workshops} />
       </div>
-      <div>
+      <div className={'flex w-full flex-col'}>
         <div
           className={
             'text-4xl font-bold tracking-[-0.72px] text-darkslategray-100'
@@ -110,6 +109,10 @@ export default function RegisterForm({
           Attendance Info
         </div>
         <AttendanceInfo />
+
+        <button className={'w-full bg-secondary mt-14 py-6 rounded-lg font-bold text-xl text-white'}>
+          Checkout
+        </button>
       </div>
     </>
   );
