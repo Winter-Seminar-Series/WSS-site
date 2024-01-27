@@ -6,15 +6,15 @@ import {
   Participation,
   ParticipationPlan,
   ParticipationPlanKind,
-  Workshop,
+  WorkshopType,
 } from '../../types';
 import { fetchJsonWithAuth } from '../fetch';
 
 type ParticipationPlanResponse = {
   id: number;
-} & (ModeOfAttendance | Workshop);
+} & (ModeOfAttendance | WorkshopType);
 
-export function setPaidParticipationPlans(
+export async function setPaidParticipationPlans(
   participation: Participation,
   ...participationPlansArray: ParticipationPlan[][]
 ) {
@@ -34,7 +34,7 @@ export async function fetchParticipationPlans() {
     await fetchJsonWithAuth<ParticipationPlanResponse[]>(url);
 
   // @ts-ignore
-  const workshops: Workshop[] = participationPlans.filter(
+  const workshops: WorkshopType[] = participationPlans.filter(
     (plan) => plan.kind === ParticipationPlanKind.WORKSHOP,
   );
 

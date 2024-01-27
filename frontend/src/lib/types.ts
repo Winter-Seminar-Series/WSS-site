@@ -79,7 +79,7 @@ export type ModeOfAttendance = {
   requiresNationalCode: boolean;
 } & ParticipationPlan;
 
-export type Workshop = {
+export type WorkshopType = {
   kind: ParticipationPlanKind.WORKSHOP;
   paid: boolean;
   name: string;

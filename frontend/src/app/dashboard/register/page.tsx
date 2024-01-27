@@ -9,25 +9,25 @@ import {
 import RegisterForm from './RegisterForm';
 
 export default async function Register() {
-  const [
-    participation,
-    { workshops, modesOfAttendance },
-    {
-      profile: { nationalCode },
-    },
-  ] = await Promise.all([
-    fetchParticipation(),
-    fetchParticipationPlans(),
-    fetchEmailAndProfile(),
-  ]);
+  // const [
+  //   participation,
+  //   { workshops, modesOfAttendance },
+  //   {
+  //     profile: { nationalCode },
+  //   },
+  // ] = await Promise.all([
+  //   fetchParticipation(),
+  //   fetchParticipationPlans(),
+  //   fetchEmailAndProfile(),
+  // ]);
 
-  setPaidParticipationPlans(participation, workshops, modesOfAttendance);
+  // setPaidParticipationPlans(participation, workshops, modesOfAttendance);
 
   return (
     <RegisterForm
-      workshops={workshops}
-      modesOfAttendance={modesOfAttendance}
-      nationalCode={nationalCode}
+      // workshops={workshops}
+      // modesOfAttendance={modesOfAttendance}
+      // nationalCode={nationalCode}
     />
   );
 }
