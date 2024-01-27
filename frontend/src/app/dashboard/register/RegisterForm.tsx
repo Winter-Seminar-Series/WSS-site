@@ -88,19 +88,29 @@ export default function RegisterForm({
     }
   ]
 
-  return <>
-    <ProfileCompletionWarning />
-    <div className={'flex flex-col w-full'}>
-      <div className={'font-bold text-4xl tracking-[-0.72px] text-darkslategray-100'}>
-        Workshops
+  return (
+    <>
+      <ProfileCompletionWarning />
+      <div className={'flex w-full flex-col'}>
+        <div
+          className={
+            'text-4xl font-bold tracking-[-0.72px] text-darkslategray-100'
+          }
+        >
+          Workshops
+        </div>
+        <Workshops workshops={workshops} />
       </div>
-      <Workshops workshops={workshops} />
-    </div>
-    <div>
-      <div className={'font-bold text-4xl tracking-[-0.72px] text-darkslategray-100'}>
-        Attendance Info
+      <div>
+        <div
+          className={
+            'text-4xl font-bold tracking-[-0.72px] text-darkslategray-100'
+          }
+        >
+          Attendance Info
+        </div>
+        <AttendanceInfo />
       </div>
-      <AttendanceInfo />
-    </div>
-  </>;
+    </>
+  );
 }

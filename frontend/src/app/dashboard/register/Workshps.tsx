@@ -11,5 +11,4 @@ export default function Workshops({ workshops }: { workshops: workshopType[] }) 
       ))}
     </div>
   );
-
 }

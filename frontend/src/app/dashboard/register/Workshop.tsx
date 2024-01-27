@@ -3,14 +3,17 @@
 import React from 'react';
 import { workshopType } from './RegisterForm';
 
-export default function Workshop({ key, workshop }: { key: string, workshop: workshopType }) {
+export default function Workshop({
+  key,
+  workshop,
+}: {
+  key: string;
+  workshop: workshopType;
+}) {
   const getOrderedDay = (day: number) => {
-    if (day === 1 || day === 21 || day === 31)
-      return `${day}st`;
-    else if (day === 2 || day === 22)
-      return `${day}nd`;
-    else if (day === 3 || day === 23)
-      return `${day}rd`;
+    if (day === 1 || day === 21 || day === 31) return `${day}st`;
+    else if (day === 2 || day === 22) return `${day}nd`;
+    else if (day === 3 || day === 23) return `${day}rd`;
 
     return `${day}th`;
   };

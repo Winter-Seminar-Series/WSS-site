@@ -6,17 +6,24 @@ export default function AttendanceInfo() {
       <div>
         Mode Of attendance
         <div>
-          <input type={'radio'} id={'html'} name={'fav_language'} value={'HTML'} />
+          <input
+            type={'radio'}
+            id={'html'}
+            name={'fav_language'}
+            value={'HTML'}
+          />
           <label htmlFor={'html'}>HTML</label>
-          <input type={'radio'} id={'css'} name={'fav_language'} value={'CSS'} />
+          <input
+            type={'radio'}
+            id={'css'}
+            name={'fav_language'}
+            value={'CSS'}
+          />
           <label htmlFor={'css'}>CSS</label>
         </div>
       </div>
 
-
-      <div>
-
-      </div>
+      <div></div>
     </div>
   );
 }
