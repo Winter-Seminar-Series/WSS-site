@@ -3,11 +3,11 @@ from rest_framework_simplejwt.views import (
     TokenRefreshView,
 )
 
-from core.views import EmailTokenObtainPairView
-from core.views import EventAPIView
+from core.views import EmailTokenObtainPairView, EventAPIView, SpeakerByEventAPIView
 
 urlpatterns = [
     path('sign-in/', EmailTokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('sign-in/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('event/', EventAPIView.as_view(), name='events'),
+    path('speaker/<int:event_id>/', SpeakerByEventAPIView.as_view(), name='speakers'),
 ]
