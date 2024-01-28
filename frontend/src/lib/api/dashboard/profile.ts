@@ -18,7 +18,7 @@ export async function fetchEmailAndProfile() {
   return { email, profile };
 }
 
-const FormSchema = z.object({
+const UpdateProfileFormSchema = z.object({
   firstName: z.string().trim().min(1, 'First name is required.'),
   lastName: z.string().trim().min(1, 'Last name is required.'),
   nationalCode: z
@@ -49,22 +49,25 @@ const FormSchema = z.object({
   github: z.string().url().optional().or(z.literal('')),
 });
 
-type FormInput = z.infer<typeof FormSchema>;
+type UpdateProfileFormInput = z.infer<typeof UpdateProfileFormSchema>;
 
-async function callUpdateProfileAPI(input: FormInput) {
+async function callUpdateProfileAPI(input: UpdateProfileFormInput) {
   const url = `${process.env.API_ORIGIN}/api/profile/`;
 
   const body = input;
 
   return await fetchJsonWithAuth<ProfileResponse>(url, body, {
-    method: 'PATCH',
+    method: 'PUT',
   });
 }
 
 export async function updateProfile(formData: FormData) {
   noStore();
 
-  const { cleanedInput, errorMessage } = cleanInput(FormSchema, formData);
+  const { cleanedInput, errorMessage } = cleanInput(
+    UpdateProfileFormSchema,
+    formData,
+  );
   if (errorMessage) {
     return { error: errorMessage };
   }
@@ -76,4 +79,42 @@ export async function updateProfile(formData: FormData) {
   }
 
   revalidatePath('/dashboard/profile');
+  revalidatePath('/dashboard/register');
+}
+
+const UpdateNationalCodeFormSchema = z.object({
+  nationalCode: z.string().regex(/^\d{10}$/),
+});
+
+async function callUpdateNationalCodeAPI(nationalCode: string) {
+  const url = `${process.env.API_ORIGIN}/api/profile/`;
+
+  const body = { nationalCode };
+
+  return await fetchJsonWithAuth<ProfileResponse>(url, body, {
+    method: 'PATCH',
+  });
+}
+
+export async function updateNationalCode(formData: FormData) {
+  noStore();
+
+  const { cleanedInput, errorMessage } = cleanInput(
+    UpdateNationalCodeFormSchema,
+    formData,
+  );
+  if (errorMessage) {
+    return { error: errorMessage };
+  }
+
+  const { nationalCode } = cleanedInput;
+
+  try {
+    await callUpdateNationalCodeAPI(nationalCode);
+  } catch (error) {
+    return { error: error.message };
+  }
+
+  revalidatePath('/dashboard/profile');
+  revalidatePath('/dashboard/register');
 }

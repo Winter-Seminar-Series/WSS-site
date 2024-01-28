@@ -65,8 +65,8 @@ REST_FRAMEWORK = {
 }
 
 SIMPLE_JWT = {
-    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=5),
-    "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
+    "ACCESS_TOKEN_LIFETIME": timedelta(hours=2),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=5),
     "ROTATE_REFRESH_TOKENS": True,
     "BLACKLIST_AFTER_ROTATION": True,
     "UPDATE_LAST_LOGIN": False,
@@ -211,5 +211,5 @@ AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
 ]
 
-PAYMENT_SERVICE_URL = os.environ.get('PAYMENT_SERVICE_URL', 'https://wss-sharif.com/payment')
-PAYMENT_CALLBACK_URL = os.environ.get('PAYMENT_CALLBACK_URL', 'https://wss-sharif.com/callback')
+PAYMENT_SERVICE_URL = os.environ.get('PAYMENT_SERVICE_URL')
+PAYMENT_CALLBACK_URL = os.environ.get('PAYMENT_CALLBACK_URL')
