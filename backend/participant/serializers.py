@@ -5,7 +5,7 @@ from rest_framework import serializers
 
 from core.serializers import WorkshopSerializer
 
-from participant.models import ModeOfAttendance, Participant, ParticipantInfo, ParticipationPlan
+from participant.models import ModeOfAttendance, Participant, ParticipantInfo, Participation, ParticipationPlan
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -76,6 +76,13 @@ class ModeOfAttendanceSerializer(serializers.ModelSerializer):
     class Meta:
         model = ModeOfAttendance
         fields = '__all__'
+
+class ParticipationSerializer(serializers.ModelSerializer):
+    plan = serializers.IntegerField(source='plan.id', read_only=True)
+    
+    class Meta:
+        model = Participation
+        fields = ('plan',)
 
 class ParticipationPlanSerializer(serializers.ModelSerializer):
     event = serializers.CharField(source='event.name', read_only=True)

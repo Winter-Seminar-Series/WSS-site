@@ -40,4 +40,4 @@ class WorkshopSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Workshop
-        fields = ('name', 'description', 'sessions')
+        fields = ('name', 'description', 'sessions', 'poster', 'thumbnail')
