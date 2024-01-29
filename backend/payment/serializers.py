@@ -34,13 +34,13 @@ def validate_plans(attrs):
         event = -1
     else:
         raise serializers.ValidationError('Invalid discount code from multiple events')
-    return event
+    return event.pk if event != -1 else None
 
 def validate_discount(attrs, event):
     discount_code = attrs.get('discount', None)
     if discount_code is None:
         return attrs
-    discounts = PaymentDiscount.objects.filter(code=discount_code).filter(event=event).filter(Q(count=-1) | Q(count__gt=0))
+    discounts = PaymentDiscount.objects.filter(code=discount_code, event=event).filter(Q(count=-1) | Q(count__gt=0))
     if discounts.count() == 0:
         raise serializers.ValidationError('Invalid discount code')
     discount = discounts[0]
