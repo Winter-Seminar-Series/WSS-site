@@ -14,5 +14,5 @@ class PaymentRequest(models.Model):
     participant = models.ForeignKey(Participant, on_delete=models.CASCADE)
     timestamp = models.DateTimeField(auto_now_add=True)
     paid = models.BooleanField(default=False)
-    discount = models.ForeignKey(PaymentDiscount, on_delete=models.CASCADE, blank=True)
+    discount = models.ForeignKey(PaymentDiscount, on_delete=models.CASCADE, null=True, blank=True)
     order_id = models.CharField(max_length=100, blank=True)
