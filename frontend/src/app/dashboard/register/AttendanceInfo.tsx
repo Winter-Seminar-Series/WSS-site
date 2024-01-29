@@ -1,47 +1,117 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
+import { ModeOfAttendance } from '../../../lib/types';
 
-export default function AttendanceInfo() {
+export default function AttendanceInfo({
+  modesOfAttendance,
+  selectPlan,
+  removePlan,
+}: {
+  modesOfAttendance: ModeOfAttendance[];
+  selectPlan: (planId: number) => void;
+  removePlan: (planId: number) => void;
+}) {
+  console.log(modesOfAttendance);
+  const [selectedModeIndex, setSelectedModeIndex] = useState<number>(
+    modesOfAttendance.findIndex((mode) => mode.paid),
+  );
+
+  const onModeChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
+    const id = parseInt(event.target.value);
+    console.log(id);
+    const previousSelectedMode = modesOfAttendance[selectedModeIndex];
+    if (previousSelectedMode && previousSelectedMode.paid) {
+      return;
+    }
+    if (previousSelectedMode) {
+      removePlan(previousSelectedMode.id);
+    }
+    const newSelectedMode = modesOfAttendance.findIndex(
+      (mode) => mode.id === id,
+    );
+    setSelectedModeIndex(newSelectedMode);
+    selectPlan(id);
+  };
+
   return (
-    <div className={'flex-col items-center justify-between mt-5 w-full'}>
-      <div className={'flex items-start justify-between w-full'}>
-        <div className={'flex-col font-medium text-base text-lightslategray'}>
+    <div className={'mt-5 w-full flex-col items-center justify-between'}>
+      <div className={'flex w-full items-start justify-between'}>
+        <div className={'flex-col text-base font-medium text-lightslategray'}>
           MODE OF ATTENDANCE
-          <div className={'flex flex-row items-center mt-2 font-semibold text-lg text-darkslategray-100'}>
-            <input type={'radio'} id={'Online'} name={'modeOfAttendance'} value={'Online'} />
-            <label htmlFor={'Online'} className={'ml-2'}>Online</label>
-            <input type={'radio'} id={'In Person'} name={'modeOfAttendance'} value={'In Person'}
-                   className={'ml-5'} />
-            <label htmlFor={'In Person'} className={'ml-2'}>In Person</label>
+          <div
+            className={
+              'mt-2 flex flex-row items-center text-lg font-semibold text-darkslategray-100'
+            }
+          >
+            {modesOfAttendance.map((modeOfAttendance) => (
+              <div key={modeOfAttendance.id} className="pr-6">
+                <input
+                  type={'radio'}
+                  id={modeOfAttendance.name}
+                  name={'modeOfAttendance'}
+                  value={modeOfAttendance.id}
+                  disabled={modesOfAttendance[selectedModeIndex]?.paid}
+                  defaultChecked={
+                    modesOfAttendance[selectedModeIndex]?.id ===
+                    modeOfAttendance.id
+                  }
+                  onChange={onModeChange}
+                />
+                <label htmlFor={modeOfAttendance.name} className={'ml-2'}>
+                  {modeOfAttendance.name}
+                </label>
+              </div>
+            ))}
           </div>
         </div>
 
-        <div className={'flex-col font-medium text-base text-lightslategray w-1/2'}>
+        <div
+          className={`w-1/2 flex-col text-base font-medium text-lightslategray ${
+            modesOfAttendance[selectedModeIndex]?.isNationalCodeRequired
+              ? 'visible'
+              : 'invisible'
+          }`}
+        >
           NATIONAL CODE (NEEDED FOR ENTRANCE)
-          <input type={'text'}
-                 className={'mt-2 w-full h-14 px-5 py-4 font-semibold text-lg text-darkslategray-100 border border-lightslategray border-opacity-30 rounded-lg focus:outline-none'} />
+          <input
+            type={'text'}
+            className={
+              'mt-2 h-14 w-full rounded-lg border border-lightslategray border-opacity-30 px-5 py-4 text-lg font-semibold text-darkslategray-100 focus:outline-none'
+            }
+          />
         </div>
       </div>
 
-
-      <div className={'flex items-start justify-between w-full mt-12'}>
-        <div className={'flex-col font-medium text-base text-lightslategray w-1/2'}>
+      <div className={'mt-12 flex w-full items-start justify-between'}>
+        <div
+          className={'w-1/2 flex-col text-base font-medium text-lightslategray'}
+        >
           PRICE
-          <div className={'flex items-end text-black font-semibold'}>
+          <div className={'flex items-end font-semibold text-black'}>
             <div className={'text-4xl'}>120000</div>
             <div className={'text-base'}>&nbsp;Tomans</div>
           </div>
         </div>
 
-        <div className={'flex-col font-medium text-base text-lightslategray w-1/2'}>
+        <div
+          className={'w-1/2 flex-col text-base font-medium text-lightslategray'}
+        >
           DISCOUNT CODE
-          <div className={'mt-2 flex grow-[2] outline outline-1 outline-lightslategray/[0.3] rounded-lg m-0'}>
-            <input type={'text'}
-                   className={'w-full h-14 px-5 py-4 font-semibold text-lg text-darkslategray-100 focus:outline-none'} />
-          <button className={'mr-5 text-primary font-semibold text-lg'}>
-            APPLY
-          </button>
+          <div
+            className={
+              'm-0 mt-2 flex grow-[2] rounded-lg outline outline-1 outline-lightslategray/[0.3]'
+            }
+          >
+            <input
+              type={'text'}
+              className={
+                'h-14 w-full px-5 py-4 text-lg font-semibold text-darkslategray-100 focus:outline-none'
+              }
+            />
+            <button className={'mr-5 text-lg font-semibold text-primary'}>
+              APPLY
+            </button>
           </div>
         </div>
       </div>

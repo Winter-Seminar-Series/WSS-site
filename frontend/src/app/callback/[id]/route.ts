@@ -18,8 +18,8 @@ export async function GET(
 
   await fetchJsonWithAuth<VerifyPaymentResponse>(url);
 
-  revalidatePath("/dashboard/register");
-  redirect("/dashboard/register");
+  revalidatePath('/dashboard/register');
+  redirect('/dashboard/register');
 }
 
 export const dynamic = 'force-dynamic';

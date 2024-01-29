@@ -68,29 +68,36 @@ export type Speaker = {
 
 export type ParticipationPlan = {
   id: number;
-  type: ParticipationPlanKind;
-  paid: boolean;
+  paid?: boolean;
+  price: number;
 };
 
 export type ModeOfAttendance = {
-  kind: ParticipationPlanKind.MODE_OF_ATTENDANCE;
-  paid: boolean;
+  id: number;
   name: string;
-  requiresNationalCode: boolean;
+  isNationalCodeRequired: boolean;
 } & ParticipationPlan;
 
-export type WorkshopType = {
-  kind: ParticipationPlanKind.WORKSHOP;
-  paid: boolean;
+export type WorkshopSession = {
+  id: number;
   name: string;
-  image: string;
-  speakers: Speaker[];
-} & ParticipationPlan;
+  speaker: Speaker;
+  startingTime: Date;
+  endingTime: Date;
+  date: Date;
+  description: string;
+};
 
-export enum ParticipationPlanKind {
-  WORKSHOP = 'W',
-  MODE_OF_ATTENDANCE = 'M',
-}
+export type Workshop = {
+  paid?: boolean;
+  name: string;
+  poster: string;
+  thumbnail: string;
+  description: string;
+  startDate?: Date;
+  endDate?: Date;
+  sessions: WorkshopSession[];
+} & ParticipationPlan;
 
 export type Participation = {
   plans: number[];

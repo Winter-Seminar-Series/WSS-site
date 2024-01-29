@@ -30,11 +30,9 @@ export default function ProfileForm({
         action={async (data) => {
           setError('');
           setSuccessful(false);
-          try {
-            await updateProfile(data);
-            setSuccessful(true);
-          } catch (error) {
-            setError(error.message);
+          const response = await updateProfile(data);
+          if (response.error) {
+            setError(response.error);
           }
         }}
         className="flex flex-col items-start gap-5 self-stretch"
@@ -401,7 +399,7 @@ export default function ProfileForm({
                       profile.introductionMethod === IntroductionMethod.OTHERS
                     }
                   >
-                    Other
+                    Others
                   </option>
                 </select>
               </div>
