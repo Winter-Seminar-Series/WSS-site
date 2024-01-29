@@ -69,6 +69,9 @@ class Participation(models.Model):
     plan = models.ForeignKey(ParticipationPlan, on_delete=models.CASCADE)
     date = models.DateTimeField(auto_now_add=True)
 
+    def __str__(self):
+        return f'{self.participant} - {self.plan}'
+
 class ParticipationAttachment(models.Model):
     participation = models.ForeignKey(Participation, on_delete=models.CASCADE)
     attachment = models.FileField(upload_to='participation/', null=True, blank=True)

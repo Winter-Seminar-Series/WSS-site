@@ -19,7 +19,7 @@ class CustomTokenObtainPairSerializer(EmailTokenObtainSerializer):
         data["refresh"] = str(refresh)
         data["access"] = str(refresh.access_token)
         return data
-    
+
 class EventSerializer(serializers.ModelSerializer):
     class Meta:
         model = Event
@@ -40,4 +40,4 @@ class WorkshopSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Workshop
-        fields = ('name', 'description', 'sessions')
+        fields = ('name', 'description', 'sessions', 'poster', 'thumbnail')
