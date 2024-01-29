@@ -47,12 +47,12 @@ def validate_discount(attrs, event):
     return discount
 
 class PaymentRequestPriceSerializer(serializers.ModelSerializer):
-    total_price = serializers.IntegerField()
-    calculated_price = serializers.IntegerField()
+    total_price = serializers.IntegerField(required=False)
+    calculated_price = serializers.IntegerField(required=False)
 
     class Meta:
         model = PaymentRequest
-        fields = ['plans', 'participant', 'discount', 'total_price', 'calculated_price']
+        fields = ['plans', 'discount', 'total_price', 'calculated_price']
     
     def validate(self, attrs):
         event = validate_plans(attrs)
