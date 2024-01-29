@@ -36,8 +36,8 @@ def validate_plans(attrs):
         raise serializers.ValidationError('Invalid discount code from multiple events')
     return event
 
-def validate_discount_code(attrs, event):
-    discount_code = attrs.get('discount_code', None)
+def validate_discount(attrs, event):
+    discount_code = attrs.get('discount', None)
     if discount_code is None:
         return attrs
     discounts = PaymentDiscount.objects.filter(code=discount_code).filter(event=event).filter(Q(count=-1) | Q(count__gt=0))
@@ -52,21 +52,21 @@ class PaymentRequestPriceSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = PaymentRequest
-        fields = ['plans', 'participant', 'discount_code', 'total_price', 'calculated_price']
+        fields = ['plans', 'participant', 'discount', 'total_price', 'calculated_price']
     
     def validate(self, attrs):
         event = validate_plans(attrs)
-        attrs['discount'] = validate_discount_code(attrs, event)
+        attrs['discount'] = validate_discount(attrs, event)
         return attrs
 
 class PaymentRequestCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = PaymentRequest
-        fields = ['plans', 'participant', 'discount_code']
+        fields = ['plans', 'participant', 'discount']
     
     def validate(self, attrs):
         event = validate_plans(attrs)
-        attrs['discount'] = validate_discount_code(attrs, event)
+        attrs['discount'] = validate_discount(attrs, event)
         return attrs
     
     def create(self, validated_data):
