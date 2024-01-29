@@ -5,14 +5,9 @@ import {
   ModeOfAttendance,
   Participation,
   ParticipationPlan,
-  ParticipationPlanKind,
-  WorkshopType,
 } from '../../types';
-import { fetchJsonWithAuth } from '../fetch';
-
-type ParticipationPlanResponse = {
-  id: number;
-} & (ModeOfAttendance | WorkshopType);
+import { FetchError, fetchJsonWithAuth } from '../fetch';
+import { fetchWorkshops } from '../events/workshop';
 
 export async function setPaidParticipationPlans(
   participation: Participation,
@@ -27,31 +22,20 @@ export async function setPaidParticipationPlans(
   });
 }
 
-export async function fetchParticipationPlans() {
-  const url = `${process.env.API_ORIGIN}/api/plan/1/`;
-
-  const participationPlans =
-    await fetchJsonWithAuth<ParticipationPlanResponse[]>(url);
-
-  // @ts-ignore
-  const workshops: WorkshopType[] = participationPlans.filter(
-    (plan) => plan.kind === ParticipationPlanKind.WORKSHOP,
-  );
-
-  // @ts-ignore
-  const modesOfAttendance: ModeOfAttendance[] = participationPlans.filter(
-    (plan) => plan.kind === ParticipationPlanKind.MODE_OF_ATTENDANCE,
-  );
-
-  return { workshops, modesOfAttendance };
-}
+type ParticipationResponse = {
+  plan: number;
+}[];
 
 export async function fetchParticipation() {
   noStore();
 
   const url = `${process.env.API_ORIGIN}/api/participation/1/`;
 
-  const participation = await fetchJsonWithAuth<Participation>(url);
+  const response = await fetchJsonWithAuth<ParticipationResponse>(url);
+
+  const participation: Participation = {
+    plans: response.map((participationResponse) => participationResponse.plan),
+  };
 
   return participation;
 }

@@ -1,104 +1,56 @@
 'use client';
 
 import { useState } from 'react';
-import { ModeOfAttendance, WorkshopType } from '../../../lib/types';
 import ProfileCompletionWarning from './ProfileCompletionWarning';
-import Workshops from './Workshps';
+import Workshops from './Workshops';
 import AttendanceInfo from './AttendanceInfo';
+import { ModeOfAttendance, Workshop } from '../../../lib/types';
 
-export type workshopType = {
-  image: string;
-  startMonth: string;
-  startDay: number;
-  endMonth: string;
-  endDay: number;
-  moduleNumber: number;
-  name: string;
-  price: number;
-  isAttended: boolean;
-};
-
-export default function RegisterForm({} // workshops,
-// modesOfAttendance,
-// nationalCode,
-: {
-  // workshops: Workshop[];
-  // modesOfAttendance: ModeOfAttendance[];
-  // nationalCode?: string;
+export default function RegisterForm({
+  workshops,
+  modesOfAttendance,
+  nationalCode,
+  isProfileComplete,
+}: {
+  workshops: Workshop[];
+  modesOfAttendance: ModeOfAttendance[];
+  nationalCode?: string;
+  isProfileComplete: boolean;
 }) {
   const [error, setError] = useState('');
   const [successful, setSuccessful] = useState(false);
+  const [selectedPlans, setSelectedPlans] = useState<number[]>(
+    workshops
+      .filter((workshop) => workshop.paid)
+      .map((workshop) => workshop.id),
+  );
 
-  const workshops: workshopType[] = [
-    {
-      image: '/source/dashboard/register/sample.svg',
-      startMonth: 'APRIL',
-      startDay: 7,
-      endMonth: 'JUNE',
-      endDay: 11,
-      moduleNumber: 7,
-      name: 'Big Data and Artificial Intelligence: Driving Personalised Medicine of the Future',
-      price: 120000,
-      isAttended: false,
-    },
-    {
-      image: '/source/dashboard/register/sample.svg',
-      startMonth: 'APRIL',
-      startDay: 7,
-      endMonth: 'JUNE',
-      endDay: 11,
-      moduleNumber: 7,
-      name: 'Big Data and Artificial Intelligence: Driving Personalised Medicine of the Future',
-      price: 120000,
-      isAttended: true,
-    },
-    {
-      image: '/source/dashboard/register/sample.svg',
-      startMonth: 'APRIL',
-      startDay: 7,
-      endMonth: 'JUNE',
-      endDay: 11,
-      moduleNumber: 7,
-      name: 'Big Data and Artificial Intelligence: Driving Personalised Medicine of the Future',
-      price: 120000,
-      isAttended: true,
-    },
-    {
-      image: '/source/dashboard/register/sample.svg',
-      startMonth: 'APRIL',
-      startDay: 7,
-      endMonth: 'JUNE',
-      endDay: 11,
-      moduleNumber: 7,
-      name: 'Big Data and Artificial Intelligence: Driving Personalised Medicine of the Future',
-      price: 120000,
-      isAttended: false,
-    },
-    {
-      image: '/source/dashboard/register/sample.svg',
-      startMonth: 'APRIL',
-      startDay: 7,
-      endMonth: 'JUNE',
-      endDay: 11,
-      moduleNumber: 7,
-      name: 'Big Data and Artificial Intelligence: Driving Personalised Medicine of the Future',
-      price: 120000,
-      isAttended: true,
-    },
-  ];
+  const selectPlan = (planId: number) => {
+    setSelectedPlans((selectedPlans) => [...selectedPlans, planId]);
+  };
+
+  const removePlan = (planId: number) => {
+    setSelectedPlans((selectedPlans) =>
+      selectedPlans.filter((selectedPlanId) => selectedPlanId !== planId),
+    );
+  };
 
   return (
     <>
-      <ProfileCompletionWarning />
+      {!isProfileComplete && <ProfileCompletionWarning />}
       <div className={'flex w-full flex-col'}>
         <div
           className={
-            'text-4xl font-bold tracking-[-0.72px] text-darkslategray-100'
+            'py-4 text-4xl font-bold tracking-[-0.72px] text-darkslategray-100'
           }
         >
           Workshops
         </div>
-        <Workshops workshops={workshops} />
+        <Workshops
+          workshops={workshops}
+          selectPlan={selectPlan}
+          removePlan={removePlan}
+        />
       </div>
       <div className={'flex w-full flex-col'}>
         <div
@@ -108,9 +60,17 @@ export default function RegisterForm({} // workshops,
         >
           Attendance Info
         </div>
-        <AttendanceInfo />
+        <AttendanceInfo
+          modesOfAttendance={modesOfAttendance}
+          selectPlan={selectPlan}
+          removePlan={removePlan}
+        />
 
-        <button className={'w-full bg-secondary mt-14 py-6 rounded-lg font-bold text-xl text-white'}>
+        <button
+          className={
+            'mt-14 w-full rounded-lg bg-secondary py-6 text-xl font-bold text-white'
+          }
+        >
           Checkout
         </button>
       </div>

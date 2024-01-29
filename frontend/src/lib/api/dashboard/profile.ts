@@ -80,6 +80,8 @@ export async function updateProfile(formData: FormData) {
 
   revalidatePath('/dashboard/profile');
   revalidatePath('/dashboard/register');
+
+  return {};
 }
 
 const UpdateNationalCodeFormSchema = z.object({
