@@ -52,7 +52,7 @@ class PaymentRequestPriceSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = PaymentRequest
-        fields = ['plans', 'participant', 'discount_code']
+        fields = ['plans', 'participant', 'discount_code', 'total_price', 'calculated_price']
     
     def validate(self, attrs):
         event = validate_plans(attrs)
