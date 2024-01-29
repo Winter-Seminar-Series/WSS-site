@@ -1,0 +1,6 @@
+server {
+    listen 80;
+    location / {
+        proxy_pass http://172.17.0.1:3000;
+    }
+}
