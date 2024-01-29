@@ -1,11 +1,11 @@
 import React from 'react';
 import calender from './assets/Calendar.svg';
 import category from './assets/Category.svg';
-import { WorkShop } from './WorkshopList';
 import Image from 'next/image';
+import { Workshop } from '../../lib/types';
 // import SeminarLogo from './SeminarLogo';
 
-export default function WorkshopCard({ workshop }: { workshop: WorkShop }) {
+export default function WorkshopCard({ workshop }: { workshop: Workshop }) {
   const formatDate = (date: Date) => {
     const options: Intl.DateTimeFormatOptions = {
       month: 'long', // 'numeric', '2-digit', 'long', 'short', or 'narrow'
@@ -22,7 +22,7 @@ export default function WorkshopCard({ workshop }: { workshop: WorkShop }) {
     >
       <div className="relative z-10 mx-auto h-[231px] w-[347px] overflow-hidden rounded-lg bg-cover">
         <Image
-          src={workshop.image}
+          src={workshop.thumbnail}
           alt={workshop.name}
           layout="fill"
           objectFit="cover"
@@ -46,7 +46,7 @@ export default function WorkshopCard({ workshop }: { workshop: WorkShop }) {
           </div>
           <div className="flex items-center space-x-1">
             <Image src={category} alt="Category" width={20} height={20} />
-            <span>{workshop.modules} MODULES</span>
+            <span>{workshop.sessions.length} MODULES</span>
           </div>
         </div>
         <div className="verflow-hidden line-clamp-2 w-full overflow-ellipsis pb-1 pt-3.5 text-xl font-semibold text-black">
