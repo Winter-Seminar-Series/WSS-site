@@ -32,7 +32,7 @@ export default async function Register() {
     <RegisterForm
       workshops={workshops}
       modesOfAttendance={modesOfAttendance}
-      nationalCode={nationalCode}
+      profileNationalCode={nationalCode}
       isProfileComplete={isProfileComplete}
     />
   );

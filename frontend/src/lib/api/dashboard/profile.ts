@@ -85,7 +85,9 @@ export async function updateProfile(formData: FormData) {
 }
 
 const UpdateNationalCodeFormSchema = z.object({
-  nationalCode: z.string().regex(/^\d{10}$/),
+  nationalCode: z
+    .string({ required_error: 'National code is required.' })
+    .regex(/^\d{10}$/, 'National code has invalid format.'),
 });
 
 async function callUpdateNationalCodeAPI(nationalCode: string) {
@@ -119,4 +121,6 @@ export async function updateNationalCode(formData: FormData) {
 
   revalidatePath('/dashboard/profile');
   revalidatePath('/dashboard/register');
+
+  return {};
 }
