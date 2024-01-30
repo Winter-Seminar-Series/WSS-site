@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Workshop } from '../../../lib/types';
 import Image from 'next/image';
 import { getOrderedDay } from '../../../lib/date';
@@ -14,22 +14,32 @@ export default function WorkshopCard({
 }: {
   key: number;
   workshop: Workshop;
-  selectPlan: (planId: number) => void;
-  removePlan: (planId: number) => void;
+  selectPlan: (planId: number) => Promise<void>;
+  removePlan: (planId: number) => Promise<void>;
 }) {
   const [isSelected, setSelected] = useState<boolean>(workshop.paid);
 
-  const onButtonClick = () => {
+  const updatePlan = useCallback(async () => {
     if (isSelected) {
-      setSelected(workshop.paid);
+      await selectPlan(workshop.id);
     } else {
-      setSelected(true);
+      await removePlan(workshop.id);
     }
+  }, [selectPlan, removePlan, isSelected, workshop.id]);
 
-    if (isSelected) {
-      selectPlan(workshop.id);
-    } else {
-      removePlan(workshop.id);
+  useEffect(() => {
+    const doUpdatePlan = async () => {
+      await updatePlan();
+    };
+
+    doUpdatePlan();
+  }, [updatePlan]);
+
+  const onButtonClick = async () => {
+    if (isSelected && !workshop.paid) {
+      setSelected(false);
+    } else if (!isSelected) {
+      setSelected(true);
     }
   };
 

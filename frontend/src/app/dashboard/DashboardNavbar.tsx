@@ -40,21 +40,21 @@ export default function DashboardNavbar() {
             isRegister ? 'border-b-primary' : undefined
           }`}
         >
-            <Image
-              width={24}
-              height={24}
-              className={isRegister ? 'filter-primary' : undefined}
-              src="/source/TicketStar.svg"
-              alt=""
-            />
-            <Link
-              href="/dashboard/register"
-              className={`text-xl font-semibold not-italic leading-[normal] tracking-[-0.2px] ${
-                isRegister ? 'text-primary' : 'text-darkslategray-100'
-              }`}
-            >
-              Registration
-            </Link>
+          <Image
+            width={24}
+            height={24}
+            className={isRegister ? 'filter-primary' : undefined}
+            src="/source/TicketStar.svg"
+            alt=""
+          />
+          <Link
+            href="/dashboard/register"
+            className={`text-xl font-semibold not-italic leading-[normal] tracking-[-0.2px] ${
+              isRegister ? 'text-primary' : 'text-darkslategray-100'
+            }`}
+          >
+            Registration
+          </Link>
         </div>
         {/* <div className="flex items-center justify-center gap-2 px-6 py-5">
         <img src="/source/Play.svg" />

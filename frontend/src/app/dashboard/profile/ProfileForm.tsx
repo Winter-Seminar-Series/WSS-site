@@ -33,6 +33,8 @@ export default function ProfileForm({
           const response = await updateProfile(data);
           if (response.error) {
             setError(response.error);
+          } else {
+            setSuccessful(true);
           }
         }}
         className="flex flex-col items-start gap-5 self-stretch"

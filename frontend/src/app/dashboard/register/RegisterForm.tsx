@@ -1,39 +1,70 @@
 'use client';
 
-import { useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import ProfileCompletionWarning from './ProfileCompletionWarning';
 import Workshops from './Workshops';
 import AttendanceInfo from './AttendanceInfo';
 import { ModeOfAttendance, Workshop } from '../../../lib/types';
+import { fetchPrice } from '../../../lib/api/dashboard/register';
 
 export default function RegisterForm({
   workshops,
   modesOfAttendance,
-  nationalCode,
+  profileNationalCode,
   isProfileComplete,
 }: {
   workshops: Workshop[];
   modesOfAttendance: ModeOfAttendance[];
-  nationalCode?: string;
+  profileNationalCode?: string;
   isProfileComplete: boolean;
 }) {
   const [error, setError] = useState('');
   const [successful, setSuccessful] = useState(false);
+  const [price, setPrice] = useState(0);
+  const [discountCode, setDiscountCode] = useState('');
+  const [isDiscountCodeValid, setDiscountCodeValid] = useState(true);
+  const [nationalCode, setNationalCode] = useState(profileNationalCode);
   const [selectedPlans, setSelectedPlans] = useState<number[]>(
     workshops
       .filter((workshop) => workshop.paid)
       .map((workshop) => workshop.id),
   );
 
-  const selectPlan = (planId: number) => {
+  const selectPlan = useCallback(async (planId: number) => {
     setSelectedPlans((selectedPlans) => [...selectedPlans, planId]);
-  };
+  }, []);
 
-  const removePlan = (planId: number) => {
+  const removePlan = useCallback(async (planId: number) => {
     setSelectedPlans((selectedPlans) =>
       selectedPlans.filter((selectedPlanId) => selectedPlanId !== planId),
     );
-  };
+  }, []);
+
+  const updatePrice = useCallback(async () => {
+    if (!selectedPlans || !selectedPlans.length) {
+      setPrice(0);
+      return;
+    }
+    const {
+      price: { calculatedPrice },
+      isDiscountCodeValid,
+      error,
+    } = await fetchPrice(selectedPlans, discountCode);
+    if (!isDiscountCodeValid) {
+      setDiscountCodeValid(false);
+      return;
+    }
+    setDiscountCodeValid(true);
+    setPrice(calculatedPrice);
+  }, [discountCode, selectedPlans]);
+
+  useEffect(() => {
+    const doUpdatePrice = async () => {
+      await updatePrice();
+    };
+
+    doUpdatePrice();
+  }, [updatePrice]);
 
   return (
     <>
@@ -64,6 +95,14 @@ export default function RegisterForm({
           modesOfAttendance={modesOfAttendance}
           selectPlan={selectPlan}
           removePlan={removePlan}
+          nationalCode={nationalCode}
+          setNationalCode={setNationalCode}
+          price={price}
+          updatePrice={updatePrice}
+          discountCode={discountCode}
+          setDiscountCode={setDiscountCode}
+          isDiscountCodeValid={isDiscountCodeValid}
+          setDiscountCodeValid={setDiscountCodeValid}
         />
 
         <button
