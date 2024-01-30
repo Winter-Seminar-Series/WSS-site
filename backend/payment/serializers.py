@@ -13,10 +13,10 @@ def calculate_price(plans, discount):
     calculated_price = total_price
     if discount is not None:
         print(discount)
-        if discount['amount'] != 0:
-            calculated_price -= discount['amount']
-        elif discount['percentage'] > 0:
-            calculated_price -= calculated_price * discount['percentage'] / 100.
+        if discount.amount != 0:
+            calculated_price -= discount.amount
+        elif discount.percentage > 0:
+            calculated_price -= calculated_price * discount.percentage / 100.
     calculated_price = int(calculated_price)
     return total_price, calculated_price
 
@@ -43,11 +43,7 @@ def validate_discount(attrs):
     if discounts.count() == 0:
         raise serializers.ValidationError('Invalid discount code')
     discount = discounts[0]
-    attrs['discount'] = {
-        'amount': discount.amount,
-        'percentage': discount.percentage,
-        'count': discount.count
-    }
+    attrs['discount'] = discount
     return attrs
 
 class PaymentRequestPriceSerializer(serializers.ModelSerializer):
@@ -65,13 +61,15 @@ class PaymentRequestPriceSerializer(serializers.ModelSerializer):
         return attrs
 
 class PaymentRequestCreateSerializer(serializers.ModelSerializer):
+    discount_code = serializers.CharField(required=False)
+    
     class Meta:
         model = PaymentRequest
-        fields = ['plans', 'participant', 'discount']
+        fields = ['plans', 'participant', 'discount_code', 'discount']
     
     def validate(self, attrs):
-        event = validate_plans(attrs)
-        attrs['discount'] = validate_discount(attrs, event)
+        validate_plans(attrs)
+        validate_discount(attrs)
         return attrs
     
     def create(self, validated_data):
@@ -80,16 +78,19 @@ class PaymentRequestCreateSerializer(serializers.ModelSerializer):
             if discount.count != -1:
                 discount.count -= 1
                 discount.save()
-        req = super().create(validated_data)
+        model_dict = validated_data.copy()
+        model_dict.pop('discount_code', None)
+        model_dict.pop('event', None)
+        req = super().create(model_dict)
         participant = req.participant
-        plans = req.plans
-        total_price, calculated_price = calculate_price(plans, req.discount)
+        plans = validated_data['plans']
+        total_price, calculated_price = calculate_price(plans, validated_data.get('discount'))
         url = settings.PAYMENT_SERVICE_URL + '/create'
         data = {
             "user_id": participant.id,
             "to_pay_amount": calculated_price,
             "discount_amount": total_price - calculated_price,
-            "buying_goods": [plan.name for plan in plans],
+            "buying_goods": [str(plan) for plan in plans],
             "name": participant.user.first_name + ' ' + participant.user.last_name,
             "phone": participant.info.phone_number,
             "mail": participant.user.email,

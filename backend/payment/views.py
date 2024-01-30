@@ -19,7 +19,7 @@ class PaymentRequestCreateAPIView(generics.CreateAPIView):
 
     def post(self, request, *args, **kwargs):
         participant = get_object_or_404(Participant, user=self.request.user)
-        request.data['participant'] = participant
+        request.data['participant'] = participant.pk
         return self.create(request, *args, **kwargs)
 
 class PaymentRequestPriceAPIView(generics.GenericAPIView):
