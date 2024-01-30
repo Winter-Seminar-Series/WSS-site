@@ -29,11 +29,11 @@ class PaymentRequestPriceAPIView(generics.GenericAPIView):
     def post(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        total_price, calculated_price = calculate_price(serializer.plans, serializer.discount)
-        return Response(self.serializer_class(data={
+        total_price, calculated_price = calculate_price(serializer.validated_data['plans'], serializer.validated_data.get('discount'))
+        return Response({
             'total_price': total_price,
-            'calculated_price': calculated_price,
-        }))
+            'calculated_price': calculated_price
+        })
 
 class PaymentRequestVerifyAPIView(generics.GenericAPIView):
     serializer_class = PaymentRequestVerifySerializer

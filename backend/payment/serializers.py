@@ -12,10 +12,11 @@ def calculate_price(plans, discount):
     total_price = sum(plan.price for plan in plans)
     calculated_price = total_price
     if discount is not None:
-        if discount.amount != 0:
-            calculated_price -= discount.amount
-        elif discount.percentage > 0:
-            calculated_price -= calculated_price * discount.percentage / 100.
+        print(discount)
+        if discount['amount'] != 0:
+            calculated_price -= discount['amount']
+        elif discount['percentage'] > 0:
+            calculated_price -= calculated_price * discount['percentage'] / 100.
     calculated_price = int(calculated_price)
     return total_price, calculated_price
 
@@ -23,40 +24,44 @@ def validate_plans(attrs):
     plans = attrs.get('plans', None)
     if plans is None:
         raise serializers.ValidationError('Invalid plans')
-    participation_plans = ParticipationPlan.objects.filter(pk__in=plans)
-    if len(plans) != len(participation_plans):
-        raise serializers.ValidationError('Invalid plans')
-    plans = participation_plans
     events = set([plan.event for plan in plans])
     if len(events) == 1:
-        event = events[0]
+        event = list(events)[0]
     elif len(events) == 0:
         event = -1
     else:
         raise serializers.ValidationError('Invalid discount code from multiple events')
-    return event.pk if event != -1 else None
+    attrs['event'] = event
+    return attrs
 
-def validate_discount(attrs, event):
-    discount_code = attrs.get('discount', None)
+def validate_discount(attrs):
+    event = attrs.get('event', None)
+    discount_code = attrs.get('discount_code', None)
     if discount_code is None:
         return attrs
     discounts = PaymentDiscount.objects.filter(code=discount_code, event=event).filter(Q(count=-1) | Q(count__gt=0))
     if discounts.count() == 0:
         raise serializers.ValidationError('Invalid discount code')
     discount = discounts[0]
-    return discount
+    attrs['discount'] = {
+        'amount': discount.amount,
+        'percentage': discount.percentage,
+        'count': discount.count
+    }
+    return attrs
 
 class PaymentRequestPriceSerializer(serializers.ModelSerializer):
     total_price = serializers.IntegerField(required=False)
     calculated_price = serializers.IntegerField(required=False)
+    discount_code = serializers.CharField(required=False)
 
     class Meta:
         model = PaymentRequest
-        fields = ['plans', 'discount', 'total_price', 'calculated_price']
+        fields = ['plans', 'discount_code', 'discount', 'total_price', 'calculated_price']
     
     def validate(self, attrs):
-        event = validate_plans(attrs)
-        attrs['discount'] = validate_discount(attrs, event)
+        validate_plans(attrs)
+        validate_discount(attrs)
         return attrs
 
 class PaymentRequestCreateSerializer(serializers.ModelSerializer):
