@@ -2,13 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-.filtered {
-  background: theme(colors.primary.DEFAULT);
-}
-
-.filtered img {
-  mix-blend-mode: screen;
-  -webkit-filter: grayscale(100%) contrast(200%);
-  filter: grayscale(100%) contrast(200%);
-  opacity: 1;
+.filter-primary {
+  filter: invert(47%) sepia(14%) saturate(1118%) hue-rotate(253deg)
+    brightness(99%) contrast(84%);
 }
