@@ -2,8 +2,9 @@ import { z, ZodError, ZodRawShape } from 'zod';
 
 export function cleanInput<InputType extends ZodRawShape>(
   FormSchema: z.ZodObject<InputType>,
-  formData: FormData,
+  formData: FormData | z.infer<typeof FormSchema>,
 ): { cleanedInput: any; errorMessage: string } {
+  // @ts-ignore
   const input = FormSchema.safeParse(Object.fromEntries(formData.entries()));
 
   let errorMessage: string | undefined, cleanedInput: any;
