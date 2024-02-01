@@ -2,7 +2,6 @@ from django.shortcuts import render
 
 from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated
-from django.shortcuts import get_object_or_404
 from participant.models import Participant, Participation
 from rest_framework.response import Response
 from rest_framework import serializers
@@ -18,7 +17,10 @@ class PaymentRequestCreateAPIView(generics.CreateAPIView):
     permission_classes = [IsAuthenticated]
 
     def post(self, request, *args, **kwargs):
-        participant = get_object_or_404(Participant, user=self.request.user)
+        try:
+            participant = Participant.objects.get(user=self.request.user)
+        except:
+            raise serializers.ValidationError('Participant not found')
         request.data['participant'] = participant.pk
         return self.create(request, *args, **kwargs)
 
