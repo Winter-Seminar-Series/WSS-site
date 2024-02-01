@@ -106,7 +106,7 @@ class PaymentRequestCreateSerializer(serializers.ModelSerializer):
         res = requests.post(url, json=data)
         logger.info(f'response: {res.status_code} {res.text}')
         logger.info(f'{res.request.body}')
-        if res.status_code != 200:
+        if res.status_code != 201:
             logger.error('Payment service error')
             raise serializers.ValidationError('Payment service error')
         res = res.json()
