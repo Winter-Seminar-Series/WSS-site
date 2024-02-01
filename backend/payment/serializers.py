@@ -7,6 +7,10 @@ from django.db.models import Q
 
 from django.conf import settings
 import requests
+import logging
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 def calculate_price(plans, discount):
     total_price = sum(plan.price for plan in plans)
@@ -86,6 +90,8 @@ class PaymentRequestCreateSerializer(serializers.ModelSerializer):
         plans = validated_data['plans']
         total_price, calculated_price = calculate_price(plans, validated_data.get('discount'))
         url = settings.PAYMENT_SERVICE_URL + '/create'
+        logger.info('Payment request for participant %d, total price: %d, calculated price: %d', participant.id, total_price, calculated_price)
+        logger.info(f'sending request to {url}')
         data = {
             "user_id": participant.id,
             "to_pay_amount": calculated_price,
@@ -96,8 +102,11 @@ class PaymentRequestCreateSerializer(serializers.ModelSerializer):
             "mail": participant.user.email,
             "callback_url": settings.PAYMENT_CALLBACK_URL + '/' + str(req.id),
         }
+        logger.info(f'sending data: {data}')
         res = requests.post(url, data=data)
+        logger.info(f'response: {res.status_code}, {res.text}')
         if res.status_code != 200:
+            logger.error('Payment service error')
             raise serializers.ValidationError('Payment service error')
         res = res.json()
         req.order_id = res['order_id']
