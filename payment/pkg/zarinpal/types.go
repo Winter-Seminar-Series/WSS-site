@@ -10,8 +10,8 @@ type TransactionCreationRequest struct {
 }
 
 type TransactionCreationRequestMetadata struct {
-	Phone   string `json:"mobile"`
-	Email   string `json:"email"`
+	Phone   string `json:"mobile,omitempty"`
+	Email   string `json:"email,omitempty"`
 	OrderID string `json:"orderID"`
 }
 
