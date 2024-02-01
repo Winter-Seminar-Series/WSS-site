@@ -103,8 +103,9 @@ class PaymentRequestCreateSerializer(serializers.ModelSerializer):
             "callback_url": settings.PAYMENT_CALLBACK_URL + '/' + str(req.id),
         }
         logger.info(f'sending data: {data}')
-        res = requests.post(url, data=data)
-        logger.info(f'response: {res.status_code}, {res.text}')
+        res = requests.post(url, json=data)
+        logger.info(f'response: {res.status_code} {res.text}')
+        logger.info(f'{res.request.body}')
         if res.status_code != 200:
             logger.error('Payment service error')
             raise serializers.ValidationError('Payment service error')
