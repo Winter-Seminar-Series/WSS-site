@@ -31,7 +31,10 @@ func (zarinpal Zarinpal) CreateTransaction(ctx context.Context, reqBody Transact
 	}
 	// Parse body
 	var body TransactionCreationResult
-	err = json.NewDecoder(resp.Body).Decode(&body)
+	bodyBytes, _ := io.ReadAll(resp.Body)
+	logger := log.WithField("status", resp.Status).WithField("response", string(bodyBytes)).WithField("request", reqBody)
+	logger.Trace("got creation result")
+	err = json.Unmarshal(bodyBytes, &body)
 	_ = resp.Body.Close()
 	if err != nil {
 		return TransactionCreationResult{}, errors.Wrap(err, "cannot parse transaction body")
