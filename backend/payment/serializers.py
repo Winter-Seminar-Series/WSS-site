@@ -89,7 +89,7 @@ class PaymentRequestCreateSerializer(serializers.ModelSerializer):
         participant = req.participant
         plans = validated_data['plans']
         total_price, calculated_price = calculate_price(plans, validated_data.get('discount'))
-        url = settings.PAYMENT_SERVICE_URL + '/create'
+        url = settings.PAYMENT_SERVICE_URL + '/transaction'
         logger.info('Payment request for participant %d, total price: %d, calculated price: %d', participant.id, total_price, calculated_price)
         logger.info(f'sending request to {url}')
         data = {
