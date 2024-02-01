@@ -27,12 +27,12 @@ func (adaptor PaymentAdaptor) CreateTransaction(ctx context.Context, req payment
 		},
 		Amount: req.Amount,
 	}
-	if req.Description == "" { // we cannot have empty description in zarinpal
-		req.Description = "Payment for user " + req.UsersPhone
+	if zarinpalRequest.Description == "" { // we cannot have empty description in zarinpal
+		zarinpalRequest.Description = "Payment for user " + req.UsersPhone
 	}
-	req.Description = "[WSS] " + req.Description
+	zarinpalRequest.Description = "[WSS] " + zarinpalRequest.Description
 	if len(req.Description) > 500 { // zarinpal only allows descriptions as long as 500 chars
-		req.Description = req.Description[:500]
+		zarinpalRequest.Description = zarinpalRequest.Description[:500]
 	}
 	zarinpalResult, err := adaptor.zarinpal.CreateTransaction(ctx, zarinpalRequest)
 	if err != nil {
