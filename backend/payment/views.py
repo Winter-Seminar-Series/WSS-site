@@ -92,4 +92,5 @@ class PaymentRequestVerifyAPIView(generics.GenericAPIView):
             instance.paid = False
         instance.save()
         logger.error(f'Payment request {pk} updated')
-        return Response(instance)
+        serializer = self.get_serializer(instance)
+        return Response(serializer.data)
