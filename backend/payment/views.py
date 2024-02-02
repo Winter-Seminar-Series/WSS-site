@@ -83,7 +83,7 @@ class PaymentRequestVerifyAPIView(generics.GenericAPIView):
             for plan in instance.plans.all():
                 Participation.objects.create(
                     participant=instance.participant,
-                    plans=plan,
+                    plan=plan,
                     info=info
                 )
                 logger.error(f'Participation for plan {plan.pk} created')
