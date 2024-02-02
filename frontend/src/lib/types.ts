@@ -106,4 +106,4 @@ export type Participation = {
 export type Price = {
   totalPrice: number;
   calculatedPrice: number;
-}
+};

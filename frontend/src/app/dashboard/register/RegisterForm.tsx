@@ -6,6 +6,7 @@ import Workshops from './Workshops';
 import AttendanceInfo from './AttendanceInfo';
 import { ModeOfAttendance, Workshop } from '../../../lib/types';
 import { fetchPrice } from '../../../lib/api/dashboard/register';
+import { createPayment } from '../../../lib/api/dashboard/payment';
 
 export default function RegisterForm({
   workshops,
@@ -19,7 +20,6 @@ export default function RegisterForm({
   isProfileComplete: boolean;
 }) {
   const [error, setError] = useState('');
-  const [successful, setSuccessful] = useState(false);
   const [price, setPrice] = useState(0);
   const [discountCode, setDiscountCode] = useState('');
   const [isDiscountCodeValid, setDiscountCodeValid] = useState(true);
@@ -66,10 +66,30 @@ export default function RegisterForm({
     doUpdatePrice();
   }, [updatePrice]);
 
+  const onCheckoutClick: React.MouseEventHandler<HTMLButtonElement> = async (
+    event,
+  ) => {
+    setError('');
+
+    const response = await createPayment({
+      plans: selectedPlans,
+      discountCode,
+    });
+
+    if (response.error) {
+      setError(response.error);
+    }
+  };
+
   return (
     <>
       {!isProfileComplete && <ProfileCompletionWarning />}
       <div className={'flex w-full flex-col'}>
+        {error && (
+          <p className="w-full rounded-md bg-red-50 p-3 font-medium text-red-600">
+            {error}
+          </p>
+        )}
         <div
           className={
             'py-4 text-4xl font-bold tracking-[-0.72px] text-darkslategray-100'
@@ -109,6 +129,7 @@ export default function RegisterForm({
           className={
             'mt-14 w-full rounded-lg bg-secondary py-6 text-xl font-bold text-white'
           }
+          onClick={onCheckoutClick}
         >
           Checkout
         </button>

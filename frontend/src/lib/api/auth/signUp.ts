@@ -4,7 +4,7 @@ import { redirect } from 'next/navigation';
 import { unstable_noStore as noStore } from 'next/cache';
 import { z } from 'zod';
 import { fetchJson } from '../fetch';
-import { cleanInput } from '../../error';
+import { cleanFormData } from '../../error';
 import { loginWithEmailAndPassword } from './login';
 
 const FormSchema = z.object({
@@ -27,7 +27,7 @@ async function callSignUpAPI(email: string, password: string) {
 export default async function signUp(formData: FormData) {
   noStore();
 
-  const { cleanedInput, errorMessage } = cleanInput(FormSchema, formData);
+  const { cleanedInput, errorMessage } = cleanFormData(FormSchema, formData);
   if (errorMessage) {
     return { error: errorMessage };
   }
