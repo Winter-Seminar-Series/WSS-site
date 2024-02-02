@@ -11,7 +11,7 @@ type CreatePaymentResponse = {
 };
 
 async function callCreatePaymentAPI(plans: number[], discountCode?: string) {
-  const url = `${process.env.API_ORIGIN}/api/payment/create`;
+  const url = `${process.env.API_ORIGIN}/api/payment/create/`;
 
   const body = { plans, discountCode };
 
