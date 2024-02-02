@@ -2,7 +2,6 @@ from django.shortcuts import render
 
 from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated
-from participant.models import Participant, Participation
 from rest_framework.response import Response
 from rest_framework import serializers
 
@@ -10,6 +9,9 @@ from django.conf import settings
 import requests
 
 from payment.serializers import PaymentRequestCreateSerializer, PaymentRequestPriceSerializer, PaymentRequestVerifySerializer, calculate_price
+
+from payment.models import PaymentRequest
+from participant.models import Participant, Participation
 
 # Create your views here.
 class PaymentRequestCreateAPIView(generics.CreateAPIView):
@@ -40,12 +42,18 @@ class PaymentRequestPriceAPIView(generics.GenericAPIView):
 class PaymentRequestVerifyAPIView(generics.GenericAPIView):
     serializer_class = PaymentRequestVerifySerializer
     permission_classes = [IsAuthenticated]
-
-    def get_object(self):
-        return super().get_object()
     
     def get(self, request, *args, **kwargs):
-        instance = self.get_object()
+        if 'pk' not in self.kwargs:
+            raise serializers.ValidationError('Payment request not found')
+        pk = self.kwargs['pk']
+        try:
+            participant = Participant.objects.get(user=self.request.user)
+            instance = PaymentRequest.objects.get(pk=pk)
+        except:
+            raise serializers.ValidationError('Participant or request not found')
+        if instance.participant != participant:
+            raise serializers.ValidationError('Participant does not match')
         if instance.paid:
             return instance
         url = f'{settings.PAYMENT_SERVICE_URL}/transaction?order_id={instance.order_id}'
