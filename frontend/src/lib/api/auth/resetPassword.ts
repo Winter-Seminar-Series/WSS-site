@@ -5,7 +5,7 @@ import { unstable_noStore as noStore } from 'next/cache';
 import { z } from 'zod';
 import { fetchJson } from '../fetch';
 import { getSession } from '../session';
-import { cleanInput } from '../../error';
+import { cleanFormData } from '../../error';
 
 const FormSchema = z.object({
   email: z.string().email('Email is in invalid format.'),
@@ -22,7 +22,7 @@ async function callResetPasswordAPI(email: string) {
 export default async function resetPassword(formData: FormData) {
   noStore();
 
-  const { cleanedInput, errorMessage } = cleanInput(FormSchema, formData);
+  const { cleanedInput, errorMessage } = cleanFormData(FormSchema, formData);
   if (errorMessage) {
     return { error: errorMessage };
   }
