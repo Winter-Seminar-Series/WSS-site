@@ -11,7 +11,7 @@ import requests
 from payment.serializers import PaymentRequestCreateSerializer, PaymentRequestPriceSerializer, PaymentRequestVerifySerializer, calculate_price
 
 from payment.models import PaymentRequest
-from participant.models import Participant, Participation
+from participant.models import Participant, ParticipantInfo, Participation
 
 # Create your views here.
 class PaymentRequestCreateAPIView(generics.CreateAPIView):
@@ -63,7 +63,15 @@ class PaymentRequestVerifyAPIView(generics.GenericAPIView):
         res = res.json()
         if res['payment_status'] == 'success':
             instance.paid = True
-            Participation.objects.create(participant=instance.participant, plan=instance.plan, info=instance.participant.info)
+            info = instance.participant.info
+            info.pk = None
+            info.save()
+            for plan in instance.plans.all():
+                Participation.objects.create(
+                    participant=instance.participant,
+                    plans=plan,
+                    info=info
+                )
         else:
             instance.paid = False
         instance.save()
