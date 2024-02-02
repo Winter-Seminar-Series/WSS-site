@@ -2,7 +2,7 @@
 
 import { unstable_noStore as noStore } from 'next/cache';
 import { z } from 'zod';
-import { cleanFormData, cleanInput } from '../../error';
+import { cleanInput } from '../../error';
 import { fetchJsonWithAuth } from '../fetch';
 import { redirect } from 'next/navigation';
 
@@ -12,6 +12,10 @@ type CreatePaymentResponse = {
 
 async function callCreatePaymentAPI(plans: number[], discountCode?: string) {
   const url = `${process.env.API_ORIGIN}/api/payment/create/`;
+
+  if (!discountCode) {
+    discountCode = undefined;
+  }
 
   const body = { plans, discountCode };
 
@@ -41,7 +45,7 @@ export async function createPayment(input: FormInput) {
   try {
     ({ redirectUrl } = await callCreatePaymentAPI(plans, discountCode));
   } catch (error) {
-    return { error: error.message };
+    return { error: JSON.stringify(error.message) };
   }
 
   redirect(redirectUrl);
