@@ -16,7 +16,7 @@ export async function GET(
 
   console.log('kiram too zarinpal', params.id);
 
-  const url = `${process.env.API_ORIGIN}/payment/verify/${params.id}/`;
+  const url = `${process.env.API_ORIGIN}/api/payment/verify/${params.id}/`;
 
   await fetchJsonWithAuth<VerifyPaymentResponse>(url);
 
