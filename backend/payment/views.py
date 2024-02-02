@@ -55,9 +55,9 @@ class PaymentRequestVerifyAPIView(generics.GenericAPIView):
         pk = self.kwargs['pk']
         try:
             participant = Participant.objects.get(user=self.request.user)
-            logger.info(f'Participant {participant.pk} is verifying payment request {pk}')
+            logger.error(f'Participant {participant.pk} is verifying payment request {pk}')
             instance = PaymentRequest.objects.get(pk=pk)
-            logger.info(f'Payment request {pk} found')
+            logger.error(f'Payment request {pk} found')
         except:
             logger.error('Participant or request not found')
             raise serializers.ValidationError('Participant or request not found')
@@ -69,27 +69,27 @@ class PaymentRequestVerifyAPIView(generics.GenericAPIView):
             return instance
         url = f'{settings.PAYMENT_SERVICE_URL}/transaction?order_id={instance.order_id}'
         res = requests.get(url)
-        logger.info(f'Payment service response: {res.status_code} {res.text}')
+        logger.error(f'Payment service response: {res.status_code} {res.text}')
         if res.status_code != 200:
             raise serializers.ValidationError('Payment service error')
         res = res.json()
         if res['payment_status'] == 'success':
-            logger.info('Payment request paid')
+            logger.error('Payment request paid')
             instance.paid = True
             info = instance.participant.info
             info.pk = None
             info.save()
-            logger.info(f'Participant info {info.pk} created')
+            logger.error(f'Participant info {info.pk} created')
             for plan in instance.plans.all():
                 Participation.objects.create(
                     participant=instance.participant,
                     plans=plan,
                     info=info
                 )
-                logger.info(f'Participation for plan {plan.pk} created')
+                logger.error(f'Participation for plan {plan.pk} created')
         else:
             logger.error('Payment request not paid')
             instance.paid = False
         instance.save()
-        logger.info(f'Payment request {pk} updated')
+        logger.error(f'Payment request {pk} updated')
         return Response(instance)
