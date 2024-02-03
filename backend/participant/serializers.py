@@ -21,7 +21,7 @@ class ParticipantSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Participant
-        fields = ('user', )
+        fields = ('id', 'user', 'is_confirmed')
 
     def create(self, validated_data):
         user_data = validated_data.pop('user')

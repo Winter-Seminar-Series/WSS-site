@@ -36,6 +36,8 @@ class Participant(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     info = models.ForeignKey(ParticipantInfo, on_delete=models.SET_NULL, null=True, blank=True)
     password_reset_code = models.CharField(max_length=5, blank=True)
+    is_confirmed = models.BooleanField(default=False)
+    confirmation_code = models.CharField(max_length=5, blank=True)
 
     def __str__(self):
         return f'{self.user.first_name} {self.user.last_name}'
