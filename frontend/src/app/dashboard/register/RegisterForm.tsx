@@ -69,6 +69,10 @@ export default function RegisterForm({
   const onCheckoutClick: React.MouseEventHandler<HTMLButtonElement> = async (
     event,
   ) => {
+    if (!isProfileComplete) {
+      return;
+    }
+
     setError('');
 
     const response = await createPayment({
@@ -130,6 +134,7 @@ export default function RegisterForm({
             'mt-14 w-full rounded-lg bg-secondary py-6 text-xl font-bold text-white'
           }
           onClick={onCheckoutClick}
+          disabled={!isProfileComplete}
         >
           Checkout
         </button>
