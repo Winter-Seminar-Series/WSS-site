@@ -82,11 +82,6 @@ export default function RegisterForm({
       scrollToTop();
       return;
     }
-    if (!isDiscountCodeValid) {
-      setError('Please enter a valid discount code.');
-      scrollToTop();
-      return;
-    }
     if (!modesOfAttendance[selectedModeIndex]) {
       setError('Please select a mode of attendance.');
       scrollToTop();
@@ -103,7 +98,7 @@ export default function RegisterForm({
 
     const response = await createPayment({
       plans: selectedPlans,
-      discountCode,
+      ...(isDiscountCodeValid ? { discountCode } : {}),
     });
 
     if (response.error) {
