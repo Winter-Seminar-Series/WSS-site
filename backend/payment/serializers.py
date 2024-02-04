@@ -16,11 +16,12 @@ def calculate_price(plans, discount):
     total_price = sum(plan.price for plan in plans)
     calculated_price = total_price
     if discount is not None:
-        print(discount)
-        if discount.amount != 0:
-            calculated_price -= discount.amount
-        elif discount.percentage > 0:
-            calculated_price -= calculated_price * discount.percentage / 100.
+        amount = int(discount.amount)
+        percentage = float(discount.percentage)
+        if amount != 0:
+            calculated_price -= amount
+        elif percentage > 0:
+            calculated_price -= calculated_price * percentage / 100.
     calculated_price = int(calculated_price)
     return total_price, calculated_price
 
