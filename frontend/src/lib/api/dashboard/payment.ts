@@ -45,7 +45,9 @@ export async function createPayment(input: FormInput) {
   try {
     ({ redirectUrl } = await callCreatePaymentAPI(plans, discountCode));
   } catch (error) {
-    return { error: JSON.stringify(error.message) };
+    // TODO: return a more meaningful error message
+    return { error: 'Something wrong happened. Please try again.' };
+    // return { error: JSON.stringify(error.message) };
   }
 
   redirect(redirectUrl);

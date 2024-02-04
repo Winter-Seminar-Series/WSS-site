@@ -42,7 +42,7 @@ export default async function DashboardLayout({ children }) {
             <p
               className={`flex items-center justify-center gap-[13px] rounded-md px-[23px] py-4 ${
                 registeredModeOfAttendance
-                  ? 'bg-green-300 text-green-900'
+                  ? 'bg-green-100 text-green-900'
                   : 'bg-[#E7ECF3]'
               }`}
             >
