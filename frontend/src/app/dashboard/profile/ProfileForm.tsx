@@ -36,6 +36,10 @@ export default function ProfileForm({
           } else {
             setSuccessful(true);
           }
+          window.scrollTo({
+            top: 0,
+            behavior: 'smooth',
+          });
         }}
         className="flex flex-col items-start gap-5 self-stretch"
       >

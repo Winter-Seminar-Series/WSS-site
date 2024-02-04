@@ -14,6 +14,8 @@ export default function AttendanceInfo({
   updatePrice,
   discountCode,
   setDiscountCode,
+  selectedModeIndex,
+  setSelectedModeIndex,
   isDiscountCodeValid,
   setDiscountCodeValid,
 }: {
@@ -26,12 +28,11 @@ export default function AttendanceInfo({
   updatePrice: () => void;
   discountCode: string;
   setDiscountCode: Dispatch<SetStateAction<string>>;
+  selectedModeIndex: number;
+  setSelectedModeIndex: Dispatch<SetStateAction<number>>;
   isDiscountCodeValid: boolean;
   setDiscountCodeValid: Dispatch<SetStateAction<boolean>>;
 }) {
-  const [selectedModeIndex, setSelectedModeIndex] = useState<number>(
-    modesOfAttendance.findIndex((mode) => mode.paid),
-  );
   const [hasNationalCodeChanged, setNationalCodeChanged] = useState(true);
   const [nationalCodeError, setNationalCodeError] = useState('');
   const [inputDiscountCode, setInputDiscountCode] = useState(discountCode);

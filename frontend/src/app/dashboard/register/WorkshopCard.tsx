@@ -36,7 +36,8 @@ export default function WorkshopCard({
   }, [updatePlan]);
 
   const onButtonClick = async () => {
-    if (isSelected && !workshop.paid) {
+    if (workshop.paid) return;
+    if (isSelected) {
       setSelected(false);
     } else if (!isSelected) {
       setSelected(true);
@@ -115,21 +116,23 @@ export default function WorkshopCard({
         </div>
 
         <div className={'flex items-center justify-between'}>
-          <Link
+          <a
+            target="_blank"
             className={
               'mr-2 w-full rounded-md bg-[#EBE8F2] py-4 text-center text-xs font-bold text-secondary'
             }
             href={`/workshop/${workshop.id}`}
           >
             View Details
-          </Link>
+          </a>
           <button
             onClick={onButtonClick}
-            className={
-              'w-full rounded-md bg-secondary py-4 text-xs font-bold text-white'
-            }
+            disabled={workshop.paid}
+            className={`w-full rounded-md py-4 text-xs font-bold text-white ${
+              workshop.paid ? 'bg-green-600' : 'bg-secondary'
+            }`}
           >
-            {isSelected ? 'Remove' : 'Add'}
+            {workshop.paid ? 'Registered' : isSelected ? 'Remove' : 'Add'}
           </button>
         </div>
       </div>
