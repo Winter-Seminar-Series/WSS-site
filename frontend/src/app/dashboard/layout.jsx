@@ -5,9 +5,20 @@ import Footer from '../../ui/components/Footer';
 import Navbar, { NavbarPlaceholder } from '../../ui/components/Navbar';
 import LogoutButton from '../../ui/components/dashboard/LogoutButton';
 import DashboardNavbar from './DashboardNavbar';
+import { fetchParticipation } from '../../lib/api/dashboard/register';
+import { fetchModesOfAttendance } from '../../lib/api/events/modeOfAttendance';
 
 export default async function DashboardLayout({ children }) {
   const authenticated = await isAuthenticated();
+  const participation = await fetchParticipation();
+  const modesOfAttendance = await fetchModesOfAttendance();
+
+  const registeredModeOfAttendance =
+    participation.plans.length === 0
+      ? null
+      : modesOfAttendance.find((mode) =>
+          participation.plans.some((plan) => plan === mode.id),
+        );
 
   return (
     <>
@@ -28,8 +39,16 @@ export default async function DashboardLayout({ children }) {
                 Dashboard
               </p>
             </div>
-            <p className="flex items-center justify-center gap-[13px] rounded-md bg-gray-300 px-[23px] py-4">
-              Not Registered Yet
+            <p
+              className={`flex items-center justify-center gap-[13px] rounded-md px-[23px] py-4 ${
+                registeredModeOfAttendance
+                  ? 'bg-green-300 text-green-900'
+                  : 'bg-[#E7ECF3]'
+              }`}
+            >
+              {registeredModeOfAttendance
+                ? `Registered ${registeredModeOfAttendance.name}`
+                : 'Not Registered Yet'}
             </p>
           </div>
           <DashboardNavbar />
