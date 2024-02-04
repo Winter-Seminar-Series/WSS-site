@@ -45,7 +45,7 @@ export async function fetchParticipation() {
 function getIsDiscountCodeValidFromResponse(response: {
   nonFieldErrors: string[];
 }) {
-  return !response.nonFieldErrors.includes('Invalid discount code');
+  return !response.nonFieldErrors?.includes('Invalid discount code') ?? true;
 }
 
 export async function fetchPrice(plans: number[], discountCode?: string) {
