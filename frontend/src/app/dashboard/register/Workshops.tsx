@@ -13,7 +13,7 @@ export default function Workshops({
   removePlan: (planId: number) => Promise<void>;
 }) {
   return (
-    <div className={'grid grid-cols-3 gap-5 overflow-auto pl-2'}>
+    <div className={'grid grid-cols-1 gap-5 pl-2 md:grid-cols-3'}>
       {workshops
         .sort((a, b) => (a.paid ? -1 : 1))
         .map((workshop) => (

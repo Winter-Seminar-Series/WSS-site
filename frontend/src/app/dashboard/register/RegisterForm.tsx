@@ -166,10 +166,10 @@ export default function RegisterForm({
           removePlan={removePlan}
         />
 
-        <div className={'mb-8 flex w-full items-end justify-between'}>
+        <div className="mb-8 flex w-full items-end justify-between gap-y-4 max-md:flex-col max-md:items-stretch">
           <div
             className={
-              'w-1/2 flex-col text-base font-medium text-lightslategray'
+              'grow flex-col text-base font-medium text-lightslategray'
             }
           >
             PRICE
@@ -179,11 +179,7 @@ export default function RegisterForm({
             </div>
           </div>
 
-          <div
-            className={
-              'w-1/2 flex-col text-base font-medium text-lightslategray'
-            }
-          >
+          <div className="flex-col text-base font-medium text-lightslategray max-md:grow md:w-1/2">
             <p
               className={`mb-3 w-full rounded-md bg-red-50 p-3 font-medium text-red-600 ${
                 isDiscountCodeValid ? 'hidden' : ''
@@ -194,7 +190,7 @@ export default function RegisterForm({
             <div>DISCOUNT CODE</div>
             <div
               className={
-                'm-0 mt-2 flex grow-[2] rounded-lg outline outline-1 outline-lightslategray/[0.3]'
+                'm-0 mt-2 flex rounded-lg outline outline-1 outline-lightslategray/[0.3]'
               }
             >
               <input

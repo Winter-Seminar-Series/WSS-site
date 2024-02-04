@@ -70,16 +70,23 @@ export default function AttendanceInfo({
 
   return (
     <div className={'mt-6 w-full'}>
-      <div className={'flex w-full items-start justify-between'}>
+      <div
+        className={
+          'flex w-full items-start justify-between gap-y-4 max-md:flex-col'
+        }
+      >
         <div className={'flex-col text-base font-medium text-lightslategray'}>
           MODE OF ATTENDANCE
           <div
             className={
-              'mt-2 flex flex-row items-center text-lg font-semibold text-darkslategray-100'
+              'mt-2 flex flex-row items-center gap-x-6 text-lg font-semibold text-darkslategray-100 max-md:flex-col max-md:items-start'
             }
           >
             {modesOfAttendance.map((modeOfAttendance) => (
-              <div key={modeOfAttendance.id} className="pr-6">
+              <label
+                key={modeOfAttendance.id}
+                className={'flex items-center gap-x-2'}
+              >
                 <input
                   type={'radio'}
                   id={modeOfAttendance.name}
@@ -92,17 +99,15 @@ export default function AttendanceInfo({
                   }
                   onChange={onModeChange}
                 />
-                <label htmlFor={modeOfAttendance.name} className={'ml-2'}>
-                  {modeOfAttendance.name}
-                </label>
-              </div>
+                <span>{modeOfAttendance.name}</span>
+              </label>
             ))}
           </div>
         </div>
 
         {modesOfAttendance[selectedModeIndex]?.isNationalCodeRequired && (
           <form
-            className="w-1/2 flex-col text-base font-medium text-lightslategray"
+            className="w-1/2 flex-col text-base font-medium text-lightslategray max-md:w-full"
             action={onNationalCodeSubmit}
           >
             <p
@@ -115,7 +120,7 @@ export default function AttendanceInfo({
             <div>NATIONAL CODE (NEEDED FOR ENTRANCE)</div>
             <div
               className={
-                'm-0 mt-2 flex grow-[2] rounded-lg outline outline-1 outline-lightslategray/[0.3]'
+                'mt-2 flex rounded-lg outline outline-1 outline-lightslategray/[0.3]'
               }
             >
               <input

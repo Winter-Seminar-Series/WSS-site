@@ -31,7 +31,7 @@ export default function WorkshopCard({
   };
 
   return (
-    <div key={key} className={'w-fit flex-col items-center justify-between'}>
+    <div key={key} className={'flex-col items-center justify-between'}>
       <div
         className={'relative z-10 mx-auto w-fit flex-col items-end justify-end'}
       >
@@ -54,7 +54,7 @@ export default function WorkshopCard({
       </div>
 
       <div
-        className={`z-0 w-[330px] -translate-y-[25%] rounded-lg p-5 pt-24
+        className={`z-0 w-full -translate-y-[25%] rounded-lg p-5 pt-24
           ${
             isSelected
               ? 'border-[0.7px] border-secondary'
