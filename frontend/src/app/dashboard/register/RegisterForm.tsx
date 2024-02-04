@@ -21,8 +21,10 @@ export default function RegisterForm({
 }) {
   const [error, setError] = useState('');
   const [price, setPrice] = useState(0);
+  const [inputDiscountCode, setInputDiscountCode] = useState('');
   const [discountCode, setDiscountCode] = useState('');
   const [isDiscountCodeValid, setDiscountCodeValid] = useState(true);
+  const [discountCodeApplied, setDiscountCodeApplied] = useState(false);
   const [nationalCode, setNationalCode] = useState(profileNationalCode);
   const [selectedPlans, setSelectedPlans] = useState<number[]>([]);
   const [selectedModeIndex, setSelectedModeIndex] = useState<number>(
@@ -54,6 +56,7 @@ export default function RegisterForm({
       return;
     }
     setDiscountCodeValid(true);
+    setDiscountCodeApplied(discountCode && isDiscountCodeValid);
     setPrice(calculatedPrice);
   }, [discountCode, selectedPlans]);
 
@@ -82,11 +85,6 @@ export default function RegisterForm({
       scrollToTop();
       return;
     }
-    if (!isDiscountCodeValid) {
-      setError('Please enter a valid discount code.');
-      scrollToTop();
-      return;
-    }
     if (!modesOfAttendance[selectedModeIndex]) {
       setError('Please select a mode of attendance.');
       scrollToTop();
@@ -103,13 +101,25 @@ export default function RegisterForm({
 
     const response = await createPayment({
       plans: selectedPlans,
-      discountCode,
+      ...(isDiscountCodeValid ? { discountCode } : {}),
     });
 
     if (response.error) {
       setError(response.error);
       scrollToTop();
     }
+  };
+
+  const onDiscountCodeChange: React.ChangeEventHandler<HTMLInputElement> = (
+    event,
+  ) => {
+    setDiscountCodeValid(true);
+    setInputDiscountCode(event.target.value);
+    setDiscountCodeApplied(false);
+  };
+
+  const applyDiscountCode = () => {
+    setDiscountCode(inputDiscountCode);
   };
 
   return (
@@ -145,7 +155,7 @@ export default function RegisterForm({
         />
         <div
           className={
-            'py-4 text-4xl font-bold tracking-[-0.72px] text-darkslategray-100'
+            'mt-8 py-4 text-4xl font-bold tracking-[-0.72px] text-darkslategray-100'
           }
         >
           Workshops
@@ -155,6 +165,56 @@ export default function RegisterForm({
           selectPlan={selectPlan}
           removePlan={removePlan}
         />
+
+        <div className="mb-8 flex w-full items-end justify-between gap-y-4 max-md:flex-col max-md:items-stretch">
+          <div
+            className={
+              'grow flex-col text-base font-medium text-lightslategray'
+            }
+          >
+            PRICE
+            <div className={'flex items-end font-semibold text-black'}>
+              <div className={'text-4xl'}>{price}</div>
+              <div className={'text-base'}>&nbsp;Tomans</div>
+            </div>
+          </div>
+
+          <div className="flex-col text-base font-medium text-lightslategray max-md:grow md:w-1/2">
+            <p
+              className={`mb-3 w-full rounded-md bg-red-50 p-3 font-medium text-red-600 ${
+                isDiscountCodeValid ? 'hidden' : ''
+              }`}
+            >
+              Discount code is invalid.
+            </p>
+            <div>DISCOUNT CODE</div>
+            <div
+              className={
+                'm-0 mt-2 flex rounded-lg outline outline-1 outline-lightslategray/[0.3]'
+              }
+            >
+              <input
+                type={'text'}
+                className={
+                  'h-14 w-full px-5 py-4 text-lg font-semibold text-darkslategray-100 focus:outline-none'
+                }
+                name="discountCode"
+                id="discountCode"
+                defaultValue={discountCode}
+                onChange={onDiscountCodeChange}
+                onBlur={applyDiscountCode}
+              />
+              <button
+                className={`mr-5 text-lg font-semibold uppercase ${
+                  discountCodeApplied ? 'text-green-600' : 'text-primary'
+                }`}
+                onClick={applyDiscountCode}
+              >
+                {discountCodeApplied ? 'Applied' : 'Apply'}
+              </button>
+            </div>
+          </div>
+        </div>
         <button
           className={
             'w-full rounded-lg bg-secondary py-6 text-xl font-bold text-white'

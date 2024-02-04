@@ -13,17 +13,32 @@ export default function Workshops({
   removePlan: (planId: number) => Promise<void>;
 }) {
   return (
-    <div className={'grid grid-cols-3 gap-5 overflow-auto pl-2'}>
-      {workshops
-        .sort((a, b) => (a.paid ? -1 : 1))
-        .map((workshop) => (
-          <WorkshopCard
-            key={workshop.id}
-            workshop={workshop}
-            selectPlan={selectPlan}
-            removePlan={removePlan}
-          />
-        ))}
-    </div>
+    <>
+      <div className="mb-4 text-lg leading-relaxed text-lightslategray">
+        Important points:
+        <ol className="list-inside list-decimal">
+          <li>
+            The workshops serve as additional sessions, held outside the main
+            event schedule.
+          </li>
+          <li>
+            Participation in these supplementary workshops requires registration
+            for the main event.
+          </li>
+        </ol>
+      </div>
+      <div className={'grid grid-cols-1 gap-5 pl-2 md:grid-cols-3'}>
+        {workshops
+          .sort((a, b) => (a.paid ? -1 : 1))
+          .map((workshop) => (
+            <WorkshopCard
+              key={workshop.id}
+              workshop={workshop}
+              selectPlan={selectPlan}
+              removePlan={removePlan}
+            />
+          ))}
+      </div>
+    </>
   );
 }

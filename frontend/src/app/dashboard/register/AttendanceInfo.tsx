@@ -35,7 +35,6 @@ export default function AttendanceInfo({
 }) {
   const [hasNationalCodeChanged, setNationalCodeChanged] = useState(true);
   const [nationalCodeError, setNationalCodeError] = useState('');
-  const [inputDiscountCode, setInputDiscountCode] = useState(discountCode);
 
   const onModeChange: React.ChangeEventHandler<HTMLInputElement> = async (
     event,
@@ -55,19 +54,6 @@ export default function AttendanceInfo({
     await selectPlan(id);
   };
 
-  const onDiscountCodeChange: React.ChangeEventHandler<HTMLInputElement> = (
-    event,
-  ) => {
-    setDiscountCodeValid(true);
-    setInputDiscountCode(event.target.value);
-  };
-
-  const onDiscountCodeClick: React.MouseEventHandler<HTMLButtonElement> = (
-    event,
-  ) => {
-    setDiscountCode(inputDiscountCode);
-  };
-
   const onNationalCodeSubmit = async (formData: FormData) => {
     setNationalCodeError('');
 
@@ -83,17 +69,39 @@ export default function AttendanceInfo({
   };
 
   return (
-    <div className={'mt-5 w-full flex-col items-center justify-between'}>
-      <div className={'flex w-full items-start justify-between'}>
+    <div className={'mt-6 w-full'}>
+      <div className="mb-6 text-lg leading-relaxed text-lightslategray">
+        The main event spans four days (Feb 29th - Mar 3rd, 2024), with the
+        first two days in person and the following two days entirely virtual.
+        <br />
+        <br />
+        The plans to participate in the event are as follows:
+        <br />
+        <ul className="list-outside list-disc pl-[1.5em]">
+          <li>
+            In person: the first two days in person (Feb 29th - Mar 1st) and the
+            second two virtual days (Mar 2nd - Mar 3rd)
+          </li>
+          <li>Online: four days virtually (Feb 29th - Mar 3rd)</li>
+        </ul>
+      </div>
+      <div
+        className={
+          'flex w-full items-start justify-between gap-y-4 max-md:flex-col'
+        }
+      >
         <div className={'flex-col text-base font-medium text-lightslategray'}>
           MODE OF ATTENDANCE
           <div
             className={
-              'mt-2 flex flex-row items-center text-lg font-semibold text-darkslategray-100'
+              'mt-2 flex flex-row items-center gap-x-6 text-lg font-semibold text-darkslategray-100 max-md:flex-col max-md:items-start'
             }
           >
             {modesOfAttendance.map((modeOfAttendance) => (
-              <div key={modeOfAttendance.id} className="pr-6">
+              <label
+                key={modeOfAttendance.id}
+                className={'flex items-center gap-x-2'}
+              >
                 <input
                   type={'radio'}
                   id={modeOfAttendance.name}
@@ -106,22 +114,20 @@ export default function AttendanceInfo({
                   }
                   onChange={onModeChange}
                 />
-                <label htmlFor={modeOfAttendance.name} className={'ml-2'}>
-                  {modeOfAttendance.name}
-                </label>
-              </div>
+                <span>{modeOfAttendance.name}</span>
+              </label>
             ))}
           </div>
         </div>
 
         {modesOfAttendance[selectedModeIndex]?.isNationalCodeRequired && (
           <form
-            className="w-1/2 flex-col text-base font-medium text-lightslategray"
+            className="w-1/2 flex-col text-base font-medium text-lightslategray max-md:w-full"
             action={onNationalCodeSubmit}
           >
             <p
               className={`mb-3 w-full rounded-md bg-red-50 p-3 font-medium text-red-600 ${
-                nationalCodeError ? 'visible' : 'invisible'
+                nationalCodeError ? '' : 'hidden'
               }`}
             >
               {nationalCodeError}
@@ -129,7 +135,7 @@ export default function AttendanceInfo({
             <div>NATIONAL CODE (NEEDED FOR ENTRANCE)</div>
             <div
               className={
-                'm-0 mt-2 flex grow-[2] rounded-lg outline outline-1 outline-lightslategray/[0.3]'
+                'mt-2 flex rounded-lg outline outline-1 outline-lightslategray/[0.3]'
               }
             >
               <input
@@ -154,54 +160,6 @@ export default function AttendanceInfo({
           </form>
         )}
       </div>
-
-      <div className={'mt-12 flex w-full items-start justify-between'}>
-        <div
-          className={'w-1/2 flex-col text-base font-medium text-lightslategray'}
-        >
-          PRICE
-          <div className={'flex items-end font-semibold text-black'}>
-            <div className={'text-4xl'}>{price}</div>
-            <div className={'text-base'}>&nbsp;Tomans</div>
-          </div>
-        </div>
-
-        <div
-          className={'w-1/2 flex-col text-base font-medium text-lightslategray'}
-        >
-          <p
-            className={`mb-3 w-full rounded-md bg-red-50 p-3 font-medium text-red-600 ${
-              isDiscountCodeValid ? 'invisible' : 'visible'
-            }`}
-          >
-            Discount code is invalid.
-          </p>
-          <div>DISCOUNT CODE</div>
-          <div
-            className={
-              'm-0 mt-2 flex grow-[2] rounded-lg outline outline-1 outline-lightslategray/[0.3]'
-            }
-          >
-            <input
-              type={'text'}
-              className={
-                'h-14 w-full px-5 py-4 text-lg font-semibold text-darkslategray-100 focus:outline-none'
-              }
-              name="discountCode"
-              id="discountCode"
-              defaultValue={discountCode}
-              onChange={onDiscountCodeChange}
-            />
-            <button
-              className={'mr-5 text-lg font-semibold text-primary'}
-              onClick={onDiscountCodeClick}
-            >
-              APPLY
-            </button>
-          </div>
-        </div>
-      </div>
     </div>
   );
 }
-// border border-lightslategray border-opacity-30 rounded-md

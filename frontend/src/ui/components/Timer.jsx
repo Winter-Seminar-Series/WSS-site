@@ -13,7 +13,7 @@ export default function Timer() {
         backgroundImage: 'url(/source/footer_rectangle.svg)',
       }}
     >
-      <div className="mx-auto flex max-w-[1200px] items-center justify-between px-6">
+      <div className="mx-auto flex max-w-[1200px] items-center justify-between gap-y-8 px-6 max-md:flex-col">
         <div>
           <p className="font-manrope text-left text-lg font-medium uppercase text-white/60">
             Overline Goes Here

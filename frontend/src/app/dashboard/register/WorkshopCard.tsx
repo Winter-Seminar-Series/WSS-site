@@ -19,33 +19,19 @@ export default function WorkshopCard({
 }) {
   const [isSelected, setSelected] = useState<boolean>(workshop.paid);
 
-  const updatePlan = useCallback(async () => {
-    if (isSelected) {
-      await selectPlan(workshop.id);
-    } else {
-      await removePlan(workshop.id);
-    }
-  }, [selectPlan, removePlan, isSelected, workshop.id]);
-
-  useEffect(() => {
-    const doUpdatePlan = async () => {
-      await updatePlan();
-    };
-
-    doUpdatePlan();
-  }, [updatePlan]);
-
   const onButtonClick = async () => {
     if (workshop.paid) return;
     if (isSelected) {
       setSelected(false);
+      removePlan(workshop.id);
     } else if (!isSelected) {
       setSelected(true);
+      selectPlan(workshop.id);
     }
   };
 
   return (
-    <div key={key} className={'w-fit flex-col items-center justify-between'}>
+    <div key={key} className={'flex-col items-center justify-between'}>
       <div
         className={'relative z-10 mx-auto w-fit flex-col items-end justify-end'}
       >
@@ -68,7 +54,7 @@ export default function WorkshopCard({
       </div>
 
       <div
-        className={`z-0 w-[330px] -translate-y-[25%] rounded-lg p-5 pt-24
+        className={`z-0 w-full -translate-y-[25%] rounded-lg p-5 pt-24
           ${
             isSelected
               ? 'border-[0.7px] border-secondary'
