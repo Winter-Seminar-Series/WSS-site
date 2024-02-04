@@ -14,7 +14,7 @@ export default function Workshops({
 }) {
   return (
     <>
-      <p className="mb-4 text-lg leading-relaxed text-lightslategray">
+      <div className="mb-4 text-lg leading-relaxed text-lightslategray">
         Important points:
         <ol className="list-inside list-decimal">
           <li>
@@ -26,7 +26,7 @@ export default function Workshops({
             for the main event.
           </li>
         </ol>
-      </p>
+      </div>
       <div className={'grid grid-cols-1 gap-5 pl-2 md:grid-cols-3'}>
         {workshops
           .sort((a, b) => (a.paid ? -1 : 1))

@@ -70,7 +70,7 @@ export default function AttendanceInfo({
 
   return (
     <div className={'mt-6 w-full'}>
-      <p className="mb-6 text-lg leading-relaxed text-lightslategray">
+      <div className="mb-6 text-lg leading-relaxed text-lightslategray">
         The main event spans four days (Feb 29th - Mar 3rd, 2024), with the
         first two days in person and the following two days entirely virtual.
         <br />
@@ -84,7 +84,7 @@ export default function AttendanceInfo({
           </li>
           <li>Online: four days virtually (Feb 29th - Mar 3rd)</li>
         </ul>
-      </p>
+      </div>
       <div
         className={
           'flex w-full items-start justify-between gap-y-4 max-md:flex-col'
