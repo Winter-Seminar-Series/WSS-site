@@ -155,7 +155,7 @@ export default function RegisterForm({
         />
         <div
           className={
-            'py-4 text-4xl font-bold tracking-[-0.72px] text-darkslategray-100'
+            'mt-8 py-4 text-4xl font-bold tracking-[-0.72px] text-darkslategray-100'
           }
         >
           Workshops

@@ -272,7 +272,7 @@ export default function ProfileForm({
               <div className="text-base font-medium uppercase not-italic leading-[normal] tracking-[0.64px] text-[#8A8998]">
                 grade
               </div>
-              <div className="flex items-center gap-y-1 px-0 py-1 max-md:flex-col max-md:items-stretch">
+              <div className="flex items-center gap-x-5 gap-y-1 px-0 py-1 max-md:flex-col max-md:items-stretch">
                 <label className="flex items-center gap-x-5 text-lg font-semibold not-italic leading-[normal] tracking-[-0.18px] text-[#1F2B3D]">
                   <input
                     defaultChecked={profile.grade === Grade.BACHELOR}
