@@ -116,14 +116,15 @@ export default function WorkshopCard({
         </div>
 
         <div className={'flex items-center justify-between'}>
-          <Link
+          <a
+            target="_blank"
             className={
               'mr-2 w-full rounded-md bg-[#EBE8F2] py-4 text-center text-xs font-bold text-secondary'
             }
             href={`/workshop/${workshop.id}`}
           >
             View Details
-          </Link>
+          </a>
           <button
             onClick={onButtonClick}
             disabled={workshop.paid}
