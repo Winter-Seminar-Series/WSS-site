@@ -91,32 +91,18 @@ export default function RegisterForm({
   return (
     <>
       {!isProfileComplete && <ProfileCompletionWarning />}
-      <div className={'flex w-full flex-col'}>
-        {error && (
-          <p className="w-full rounded-md bg-red-50 p-3 font-medium text-red-600">
-            {error}
-          </p>
-        )}
-        <div
-          className={
-            'py-4 text-4xl font-bold tracking-[-0.72px] text-darkslategray-100'
-          }
-        >
-          Workshops
-        </div>
-        <Workshops
-          workshops={workshops}
-          selectPlan={selectPlan}
-          removePlan={removePlan}
-        />
-      </div>
+      {error && (
+        <p className="w-full rounded-md bg-red-50 p-3 font-medium text-red-600">
+          {error}
+        </p>
+      )}
       <div className={'flex w-full flex-col'}>
         <div
           className={
             'text-4xl font-bold tracking-[-0.72px] text-darkslategray-100'
           }
         >
-          Attendance Info
+          Registeration
         </div>
         <AttendanceInfo
           modesOfAttendance={modesOfAttendance}
@@ -133,10 +119,21 @@ export default function RegisterForm({
           isDiscountCodeValid={isDiscountCodeValid}
           setDiscountCodeValid={setDiscountCodeValid}
         />
-
+        <div
+          className={
+            'py-4 text-4xl font-bold tracking-[-0.72px] text-darkslategray-100'
+          }
+        >
+          Workshops
+        </div>
+        <Workshops
+          workshops={workshops}
+          selectPlan={selectPlan}
+          removePlan={removePlan}
+        />
         <button
           className={
-            'mt-14 w-full rounded-lg bg-secondary py-6 text-xl font-bold text-white'
+            'w-full rounded-lg bg-secondary py-6 text-xl font-bold text-white'
           }
           onClick={onCheckoutClick}
           disabled={!isProfileComplete}
