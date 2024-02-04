@@ -19,3 +19,24 @@ export function getOrderedDay(day?: number) {
 
   return `${day}th`;
 }
+
+const months = [
+  'January',
+  'February',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'August',
+  'September',
+  'October',
+  'November',
+  'December',
+];
+export function formatToMonthAndDay(date: Date) {
+  const day = getOrderedDay(date.getDate());
+  const month = months[date.getMonth()];
+
+  return `${month} ${day}`;
+}
