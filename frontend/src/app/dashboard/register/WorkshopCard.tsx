@@ -36,7 +36,8 @@ export default function WorkshopCard({
   }, [updatePlan]);
 
   const onButtonClick = async () => {
-    if (isSelected && !workshop.paid) {
+    if (workshop.paid) return;
+    if (isSelected) {
       setSelected(false);
     } else if (!isSelected) {
       setSelected(true);
@@ -125,11 +126,12 @@ export default function WorkshopCard({
           </Link>
           <button
             onClick={onButtonClick}
-            className={
-              'w-full rounded-md bg-secondary py-4 text-xs font-bold text-white'
-            }
+            disabled={workshop.paid}
+            className={`w-full rounded-md py-4 text-xs font-bold text-white ${
+              workshop.paid ? 'bg-green-600' : 'bg-secondary'
+            }`}
           >
-            {isSelected ? 'Remove' : 'Add'}
+            {workshop.paid ? 'Registered' : isSelected ? 'Remove' : 'Add'}
           </button>
         </div>
       </div>
