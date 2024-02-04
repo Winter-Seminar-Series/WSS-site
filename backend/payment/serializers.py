@@ -27,7 +27,7 @@ def calculate_price(plans, discount):
     calculated_price += sum(plan.price for plan in plans if plan.kind == 'W')
     return total_price, calculated_price
 
-def validate_plans(attrs):
+def validate_plans(attrs, check_mode=True):
     plans = attrs.get('plans', None)
     if plans is None:
         raise serializers.ValidationError('Invalid plans')
@@ -38,14 +38,15 @@ def validate_plans(attrs):
         event = -1
     else:
         raise serializers.ValidationError('Invalid discount code from multiple events')
-    has_mode = False
-    for plan in plans:
-        if plan.kind == 'M' and has_mode:
-            raise serializers.ValidationError('Multiple mode of attendance selected')
-        elif plan.kind == 'M':
-            has_mode = True
-    if not has_mode:
-        raise serializers.ValidationError('No mode of attendance selected')
+    if check_mode:
+        has_mode = False
+        for plan in plans:
+            if plan.kind == 'M' and has_mode:
+                raise serializers.ValidationError('Multiple mode of attendance selected')
+            elif plan.kind == 'M':
+                has_mode = True
+        if not has_mode:
+            raise serializers.ValidationError('No mode of attendance selected')
     attrs['event'] = event
     return attrs
 
@@ -71,7 +72,7 @@ class PaymentRequestPriceSerializer(serializers.ModelSerializer):
         fields = ['plans', 'discount_code', 'discount', 'total_price', 'calculated_price']
     
     def validate(self, attrs):
-        validate_plans(attrs)
+        validate_plans(attrs, check_mode=False)
         validate_discount(attrs)
         return attrs
 
@@ -83,7 +84,7 @@ class PaymentRequestCreateSerializer(serializers.ModelSerializer):
         fields = ['plans', 'participant', 'discount_code', 'discount']
     
     def validate(self, attrs):
-        validate_plans(attrs)
+        validate_plans(attrs, check_mode=True)
         validate_discount(attrs)
         return attrs
     
