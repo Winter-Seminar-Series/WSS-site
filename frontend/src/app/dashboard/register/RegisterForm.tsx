@@ -24,6 +24,7 @@ export default function RegisterForm({
   const [inputDiscountCode, setInputDiscountCode] = useState('');
   const [discountCode, setDiscountCode] = useState('');
   const [isDiscountCodeValid, setDiscountCodeValid] = useState(true);
+  const [discountCodeApplied, setDiscountCodeApplied] = useState(false);
   const [nationalCode, setNationalCode] = useState(profileNationalCode);
   const [selectedPlans, setSelectedPlans] = useState<number[]>([]);
   const [selectedModeIndex, setSelectedModeIndex] = useState<number>(
@@ -55,6 +56,7 @@ export default function RegisterForm({
       return;
     }
     setDiscountCodeValid(true);
+    setDiscountCodeApplied(discountCode && isDiscountCodeValid);
     setPrice(calculatedPrice);
   }, [discountCode, selectedPlans]);
 
@@ -113,6 +115,7 @@ export default function RegisterForm({
   ) => {
     setDiscountCodeValid(true);
     setInputDiscountCode(event.target.value);
+    setDiscountCodeApplied(false);
   };
 
   const applyDiscountCode = () => {
@@ -206,10 +209,12 @@ export default function RegisterForm({
                 onBlur={applyDiscountCode}
               />
               <button
-                className={'mr-5 text-lg font-semibold text-primary'}
+                className={`mr-5 text-lg font-semibold uppercase ${
+                  discountCodeApplied ? 'text-green-600' : 'text-primary'
+                }`}
                 onClick={applyDiscountCode}
               >
-                APPLY
+                {discountCodeApplied ? 'Applied' : 'Apply'}
               </button>
             </div>
           </div>
