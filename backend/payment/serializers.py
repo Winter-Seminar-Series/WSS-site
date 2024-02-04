@@ -13,7 +13,7 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 def calculate_price(plans, discount):
-    total_price = sum(plan.price for plan in plans)
+    total_price = sum(plan.price for plan in plans if plan.kind == 'M')
     calculated_price = total_price
     if discount is not None:
         amount = int(discount.amount)
@@ -23,6 +23,8 @@ def calculate_price(plans, discount):
         elif percentage > 0:
             calculated_price -= calculated_price * percentage / 100.
     calculated_price = int(calculated_price)
+    total_price += sum(plan.price for plan in plans if plan.kind == 'W')
+    calculated_price += sum(plan.price for plan in plans if plan.kind == 'W')
     return total_price, calculated_price
 
 def validate_plans(attrs):
