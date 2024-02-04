@@ -38,9 +38,15 @@ def validate_plans(attrs, check_mode=True):
         event = -1
     else:
         raise serializers.ValidationError('Invalid discount code from multiple events')
+    participant = attrs.get('participant', None)
+    registered_plans = ParticipationPlan.objects.filter(participation__participant=participant, participation__event=event)
+    for plan in plans:
+        if plan in registered_plans:
+            raise serializers.ValidationError('Plan already registered')
+    registered_plans = list(registered_plans)
     if check_mode:
         has_mode = False
-        for plan in plans:
+        for plan in plans + registered_plans:
             if plan.kind == 'M' and has_mode:
                 raise serializers.ValidationError('Multiple mode of attendance selected')
             elif plan.kind == 'M':
