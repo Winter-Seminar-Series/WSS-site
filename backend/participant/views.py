@@ -76,6 +76,42 @@ class PasswordResetAPIView(views.APIView):
                 status=status.HTTP_406_NOT_ACCEPTABLE
             )
 
+class ParticipantConfirmAPIView(views.APIView):
+    permission_classes = [permissions.IsAuthenticated, ]
+
+    def get(self, request):
+        participant = Participant.objects.get(user=request.user)
+        participant.confirmation_code = ''.join(
+            choices([str(i) for i in range(10)], k=5))
+        participant.save()
+        send_mail(
+            'Codocodile Confirmation Code',
+            'Your Codocodile confirmation code is {0}. Ignore this email if you\'re not a particpant.'.format(
+                participant.confirmation_code),
+            settings.EMAIL_HOST_USER,
+            [participant.user.email],
+        )
+        return Response(
+            'Confirmation code sent to the email address ({0})'.format(
+                participant.user.email),
+            status=status.HTTP_200_OK
+        )
+
+    def post(self, request):
+        participant = Participant.objects.get(user=request.user)
+        if participant.confirmation_code == request.data['confirmation_code']:
+            participant.is_confirmed = True
+            participant.save()
+            return Response(
+                'Participant confirmed successfully',
+                status=status.HTTP_200_OK
+            )
+        else:
+            return Response(
+                'Confirmation code is not correct',
+                status=status.HTTP_406_NOT_ACCEPTABLE
+            )
+
 class ParticipationByEventAPIView(generics.ListAPIView):
     serializer_class = ParticipationSerializer
     permission_classes = [permissions.IsAuthenticated]
