@@ -113,46 +113,45 @@ export default function AttendanceInfo({
           </div>
         </div>
 
-        <form
-          className={`w-1/2 flex-col text-base font-medium text-lightslategray ${
-            modesOfAttendance[selectedModeIndex]?.isNationalCodeRequired
-              ? 'visible'
-              : 'invisible'
-          }`}
-          action={onNationalCodeSubmit}
-        >
-          <p
-            className={`mb-3 w-full rounded-md bg-red-50 p-3 font-medium text-red-600 ${
-              nationalCodeError ? 'visible' : 'invisible'
-            }`}
+        {modesOfAttendance[selectedModeIndex]?.isNationalCodeRequired && (
+          <form
+            className="w-1/2 flex-col text-base font-medium text-lightslategray"
+            action={onNationalCodeSubmit}
           >
-            {nationalCodeError}
-          </p>
-          <div>NATIONAL CODE (NEEDED FOR ENTRANCE)</div>
-          <div
-            className={
-              'm-0 mt-2 flex grow-[2] rounded-lg outline outline-1 outline-lightslategray/[0.3]'
-            }
-          >
-            <input
-              type={'text'}
-              name="nationalCode"
-              id="nationalCode"
-              className={
-                'h-14 w-full px-5 py-4 text-lg font-semibold text-darkslategray-100 focus:outline-none'
-              }
-              defaultValue={nationalCode}
-              onChange={() => setNationalCodeChanged(true)}
-            />
-            <button
-              className={`mr-5 text-lg font-semibold ${
-                hasNationalCodeChanged ? 'text-primary' : 'text-green-600'
+            <p
+              className={`mb-3 w-full rounded-md bg-red-50 p-3 font-medium text-red-600 ${
+                nationalCodeError ? 'visible' : 'invisible'
               }`}
             >
-              UPDATE{!hasNationalCodeChanged && 'D'}
-            </button>
-          </div>
-        </form>
+              {nationalCodeError}
+            </p>
+            <div>NATIONAL CODE (NEEDED FOR ENTRANCE)</div>
+            <div
+              className={
+                'm-0 mt-2 flex grow-[2] rounded-lg outline outline-1 outline-lightslategray/[0.3]'
+              }
+            >
+              <input
+                type={'text'}
+                name="nationalCode"
+                id="nationalCode"
+                className={
+                  'h-14 w-full px-5 py-4 text-lg font-semibold text-darkslategray-100 focus:outline-none'
+                }
+                defaultValue={nationalCode}
+                required
+                onChange={() => setNationalCodeChanged(true)}
+              />
+              <button
+                className={`mr-5 text-lg font-semibold ${
+                  hasNationalCodeChanged ? 'text-primary' : 'text-green-600'
+                }`}
+              >
+                UPDATE{!hasNationalCodeChanged && 'D'}
+              </button>
+            </div>
+          </form>
+        )}
       </div>
 
       <div className={'mt-12 flex w-full items-start justify-between'}>
