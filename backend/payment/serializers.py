@@ -38,6 +38,14 @@ def validate_plans(attrs):
         event = -1
     else:
         raise serializers.ValidationError('Invalid discount code from multiple events')
+    has_mode = False
+    for plan in plans:
+        if plan.kind == 'M' and has_mode:
+            raise serializers.ValidationError('Multiple mode of attendance selected')
+        elif plan.kind == 'M':
+            has_mode = True
+    if not has_mode:
+        raise serializers.ValidationError('No mode of attendance selected')
     attrs['event'] = event
     return attrs
 
