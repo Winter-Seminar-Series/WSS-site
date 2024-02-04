@@ -48,6 +48,12 @@ export default function Footer() {
             width="100"
             height="40"
           />
+          <Image
+            src="/source/sponsors/irancell.svg"
+            alt="Irancell"
+            width="100"
+            height="40"
+          />
         </div>
         <div className="my-8 flex items-center justify-between gap-y-4 max-md:flex-col">
           <div className="max-md:text-center">
