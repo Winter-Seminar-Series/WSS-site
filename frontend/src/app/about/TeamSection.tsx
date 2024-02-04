@@ -33,12 +33,14 @@ function StaffCard2({ person }: { person: Staff }) {
     <div
       className={'font-manrope flex flex-col items-center justify-center px-5'}
     >
-      <Image
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
         src={person.image ?? Sample.src}
         alt={person.name}
         width={200}
         height={200}
         className={'rounded-full'}
+        loading="lazy"
       />
       <div className={'pt-3 text-base font-semibold text-black'}>
         {person.name}
