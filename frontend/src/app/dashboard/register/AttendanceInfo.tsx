@@ -62,9 +62,7 @@ export default function AttendanceInfo({
     setInputDiscountCode(event.target.value);
   };
 
-  const onDiscountCodeClick: React.MouseEventHandler<HTMLButtonElement> = (
-    event,
-  ) => {
+  const applyDiscountCode = () => {
     setDiscountCode(inputDiscountCode);
   };
 
@@ -191,10 +189,11 @@ export default function AttendanceInfo({
               id="discountCode"
               defaultValue={discountCode}
               onChange={onDiscountCodeChange}
+              onBlur={applyDiscountCode}
             />
             <button
               className={'mr-5 text-lg font-semibold text-primary'}
-              onClick={onDiscountCodeClick}
+              onClick={applyDiscountCode}
             >
               APPLY
             </button>
