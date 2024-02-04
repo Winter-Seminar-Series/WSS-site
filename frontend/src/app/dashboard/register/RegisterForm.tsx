@@ -85,6 +85,10 @@ export default function RegisterForm({
 
     if (response.error) {
       setError(response.error);
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth',
+      });
     }
   };
 
