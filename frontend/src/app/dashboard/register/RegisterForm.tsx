@@ -21,6 +21,7 @@ export default function RegisterForm({
 }) {
   const [error, setError] = useState('');
   const [price, setPrice] = useState(0);
+  const [inputDiscountCode, setInputDiscountCode] = useState('');
   const [discountCode, setDiscountCode] = useState('');
   const [isDiscountCodeValid, setDiscountCodeValid] = useState(true);
   const [nationalCode, setNationalCode] = useState(profileNationalCode);
@@ -107,6 +108,17 @@ export default function RegisterForm({
     }
   };
 
+  const onDiscountCodeChange: React.ChangeEventHandler<HTMLInputElement> = (
+    event,
+  ) => {
+    setDiscountCodeValid(true);
+    setInputDiscountCode(event.target.value);
+  };
+
+  const applyDiscountCode = () => {
+    setDiscountCode(inputDiscountCode);
+  };
+
   return (
     <>
       {!isProfileComplete && <ProfileCompletionWarning />}
@@ -150,6 +162,58 @@ export default function RegisterForm({
           selectPlan={selectPlan}
           removePlan={removePlan}
         />
+
+        <div className={'mb-8 flex w-full items-end justify-between'}>
+          <div
+            className={
+              'w-1/2 flex-col text-base font-medium text-lightslategray'
+            }
+          >
+            PRICE
+            <div className={'flex items-end font-semibold text-black'}>
+              <div className={'text-4xl'}>{price}</div>
+              <div className={'text-base'}>&nbsp;Tomans</div>
+            </div>
+          </div>
+
+          <div
+            className={
+              'w-1/2 flex-col text-base font-medium text-lightslategray'
+            }
+          >
+            <p
+              className={`mb-3 w-full rounded-md bg-red-50 p-3 font-medium text-red-600 ${
+                isDiscountCodeValid ? 'hidden' : ''
+              }`}
+            >
+              Discount code is invalid.
+            </p>
+            <div>DISCOUNT CODE</div>
+            <div
+              className={
+                'm-0 mt-2 flex grow-[2] rounded-lg outline outline-1 outline-lightslategray/[0.3]'
+              }
+            >
+              <input
+                type={'text'}
+                className={
+                  'h-14 w-full px-5 py-4 text-lg font-semibold text-darkslategray-100 focus:outline-none'
+                }
+                name="discountCode"
+                id="discountCode"
+                defaultValue={discountCode}
+                onChange={onDiscountCodeChange}
+                onBlur={applyDiscountCode}
+              />
+              <button
+                className={'mr-5 text-lg font-semibold text-primary'}
+                onClick={applyDiscountCode}
+              >
+                APPLY
+              </button>
+            </div>
+          </div>
+        </div>
         <button
           className={
             'w-full rounded-lg bg-secondary py-6 text-xl font-bold text-white'

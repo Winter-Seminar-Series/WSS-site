@@ -35,7 +35,6 @@ export default function AttendanceInfo({
 }) {
   const [hasNationalCodeChanged, setNationalCodeChanged] = useState(true);
   const [nationalCodeError, setNationalCodeError] = useState('');
-  const [inputDiscountCode, setInputDiscountCode] = useState(discountCode);
 
   const onModeChange: React.ChangeEventHandler<HTMLInputElement> = async (
     event,
@@ -55,17 +54,6 @@ export default function AttendanceInfo({
     await selectPlan(id);
   };
 
-  const onDiscountCodeChange: React.ChangeEventHandler<HTMLInputElement> = (
-    event,
-  ) => {
-    setDiscountCodeValid(true);
-    setInputDiscountCode(event.target.value);
-  };
-
-  const applyDiscountCode = () => {
-    setDiscountCode(inputDiscountCode);
-  };
-
   const onNationalCodeSubmit = async (formData: FormData) => {
     setNationalCodeError('');
 
@@ -81,7 +69,7 @@ export default function AttendanceInfo({
   };
 
   return (
-    <div className={'mt-5 w-full flex-col items-center justify-between'}>
+    <div className={'mt-6 w-full'}>
       <div className={'flex w-full items-start justify-between'}>
         <div className={'flex-col text-base font-medium text-lightslategray'}>
           MODE OF ATTENDANCE
@@ -119,7 +107,7 @@ export default function AttendanceInfo({
           >
             <p
               className={`mb-3 w-full rounded-md bg-red-50 p-3 font-medium text-red-600 ${
-                nationalCodeError ? 'visible' : 'invisible'
+                nationalCodeError ? '' : 'hidden'
               }`}
             >
               {nationalCodeError}
@@ -152,55 +140,6 @@ export default function AttendanceInfo({
           </form>
         )}
       </div>
-
-      <div className={'mt-12 flex w-full items-start justify-between'}>
-        <div
-          className={'w-1/2 flex-col text-base font-medium text-lightslategray'}
-        >
-          PRICE
-          <div className={'flex items-end font-semibold text-black'}>
-            <div className={'text-4xl'}>{price}</div>
-            <div className={'text-base'}>&nbsp;Tomans</div>
-          </div>
-        </div>
-
-        <div
-          className={'w-1/2 flex-col text-base font-medium text-lightslategray'}
-        >
-          <p
-            className={`mb-3 w-full rounded-md bg-red-50 p-3 font-medium text-red-600 ${
-              isDiscountCodeValid ? 'invisible' : 'visible'
-            }`}
-          >
-            Discount code is invalid.
-          </p>
-          <div>DISCOUNT CODE</div>
-          <div
-            className={
-              'm-0 mt-2 flex grow-[2] rounded-lg outline outline-1 outline-lightslategray/[0.3]'
-            }
-          >
-            <input
-              type={'text'}
-              className={
-                'h-14 w-full px-5 py-4 text-lg font-semibold text-darkslategray-100 focus:outline-none'
-              }
-              name="discountCode"
-              id="discountCode"
-              defaultValue={discountCode}
-              onChange={onDiscountCodeChange}
-              onBlur={applyDiscountCode}
-            />
-            <button
-              className={'mr-5 text-lg font-semibold text-primary'}
-              onClick={applyDiscountCode}
-            >
-              APPLY
-            </button>
-          </div>
-        </div>
-      </div>
     </div>
   );
 }
-// border border-lightslategray border-opacity-30 rounded-md
