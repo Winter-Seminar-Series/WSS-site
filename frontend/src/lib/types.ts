@@ -102,3 +102,8 @@ export type Workshop = {
 export type Participation = {
   plans: number[];
 };
+
+export type Price = {
+  totalPrice: number;
+  calculatedPrice: number;
+};

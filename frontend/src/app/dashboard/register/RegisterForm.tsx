@@ -1,44 +1,148 @@
 'use client';
 
-import { useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import ProfileCompletionWarning from './ProfileCompletionWarning';
 import Workshops from './Workshops';
 import AttendanceInfo from './AttendanceInfo';
 import { ModeOfAttendance, Workshop } from '../../../lib/types';
+import { fetchPrice } from '../../../lib/api/dashboard/register';
+import { createPayment } from '../../../lib/api/dashboard/payment';
 
 export default function RegisterForm({
   workshops,
   modesOfAttendance,
-  nationalCode,
+  profileNationalCode,
   isProfileComplete,
 }: {
   workshops: Workshop[];
   modesOfAttendance: ModeOfAttendance[];
-  nationalCode?: string;
+  profileNationalCode?: string;
   isProfileComplete: boolean;
 }) {
   const [error, setError] = useState('');
-  const [successful, setSuccessful] = useState(false);
-  const [selectedPlans, setSelectedPlans] = useState<number[]>(
-    workshops
-      .filter((workshop) => workshop.paid)
-      .map((workshop) => workshop.id),
+  const [price, setPrice] = useState(0);
+  const [discountCode, setDiscountCode] = useState('');
+  const [isDiscountCodeValid, setDiscountCodeValid] = useState(true);
+  const [nationalCode, setNationalCode] = useState(profileNationalCode);
+  const [selectedPlans, setSelectedPlans] = useState<number[]>([]);
+  const [selectedModeIndex, setSelectedModeIndex] = useState<number>(
+    modesOfAttendance.findIndex((mode) => mode.paid),
   );
 
-  const selectPlan = (planId: number) => {
+  const selectPlan = useCallback(async (planId: number) => {
     setSelectedPlans((selectedPlans) => [...selectedPlans, planId]);
-  };
+  }, []);
 
-  const removePlan = (planId: number) => {
+  const removePlan = useCallback(async (planId: number) => {
     setSelectedPlans((selectedPlans) =>
       selectedPlans.filter((selectedPlanId) => selectedPlanId !== planId),
     );
+  }, []);
+
+  const updatePrice = useCallback(async () => {
+    if (!selectedPlans || !selectedPlans.length) {
+      setPrice(0);
+      return;
+    }
+    const {
+      price: { calculatedPrice },
+      isDiscountCodeValid,
+      error,
+    } = await fetchPrice(selectedPlans, discountCode);
+    if (!isDiscountCodeValid) {
+      setDiscountCodeValid(false);
+      return;
+    }
+    setDiscountCodeValid(true);
+    setPrice(calculatedPrice);
+  }, [discountCode, selectedPlans]);
+
+  useEffect(() => {
+    const doUpdatePrice = async () => {
+      await updatePrice();
+    };
+
+    doUpdatePrice();
+  }, [updatePrice]);
+
+  const onCheckoutClick: React.MouseEventHandler<
+    HTMLButtonElement
+  > = async () => {
+    const scrollToTop = () => {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth',
+      });
+    };
+
+    setError('');
+
+    if (!isProfileComplete) {
+      setError('Please complete your profile before proceeding to checkout.');
+      scrollToTop();
+      return;
+    }
+    if (!isDiscountCodeValid) {
+      setError('Please enter a valid discount code.');
+      scrollToTop();
+      return;
+    }
+    if (!modesOfAttendance[selectedModeIndex]) {
+      setError('Please select a mode of attendance.');
+      scrollToTop();
+      return;
+    }
+    if (
+      modesOfAttendance[selectedModeIndex]?.isNationalCodeRequired &&
+      !nationalCode
+    ) {
+      setError('Please enter your national code.');
+      scrollToTop();
+      return;
+    }
+
+    const response = await createPayment({
+      plans: selectedPlans,
+      discountCode,
+    });
+
+    if (response.error) {
+      setError(response.error);
+      scrollToTop();
+    }
   };
 
   return (
     <>
       {!isProfileComplete && <ProfileCompletionWarning />}
+      {error && (
+        <p className="w-full rounded-md bg-red-50 p-3 font-medium text-red-600">
+          {error}
+        </p>
+      )}
       <div className={'flex w-full flex-col'}>
+        <div
+          className={
+            'text-4xl font-bold tracking-[-0.72px] text-darkslategray-100'
+          }
+        >
+          Registeration
+        </div>
+        <AttendanceInfo
+          modesOfAttendance={modesOfAttendance}
+          selectPlan={selectPlan}
+          removePlan={removePlan}
+          nationalCode={nationalCode}
+          setNationalCode={setNationalCode}
+          price={price}
+          updatePrice={updatePrice}
+          discountCode={discountCode}
+          setDiscountCode={setDiscountCode}
+          selectedModeIndex={selectedModeIndex}
+          setSelectedModeIndex={setSelectedModeIndex}
+          isDiscountCodeValid={isDiscountCodeValid}
+          setDiscountCodeValid={setDiscountCodeValid}
+        />
         <div
           className={
             'py-4 text-4xl font-bold tracking-[-0.72px] text-darkslategray-100'
@@ -51,25 +155,12 @@ export default function RegisterForm({
           selectPlan={selectPlan}
           removePlan={removePlan}
         />
-      </div>
-      <div className={'flex w-full flex-col'}>
-        <div
-          className={
-            'text-4xl font-bold tracking-[-0.72px] text-darkslategray-100'
-          }
-        >
-          Attendance Info
-        </div>
-        <AttendanceInfo
-          modesOfAttendance={modesOfAttendance}
-          selectPlan={selectPlan}
-          removePlan={removePlan}
-        />
-
         <button
           className={
-            'mt-14 w-full rounded-lg bg-secondary py-6 text-xl font-bold text-white'
+            'w-full rounded-lg bg-secondary py-6 text-xl font-bold text-white'
           }
+          onClick={onCheckoutClick}
+          disabled={!isProfileComplete}
         >
           Checkout
         </button>

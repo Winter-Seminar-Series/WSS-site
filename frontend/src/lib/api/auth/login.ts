@@ -6,7 +6,7 @@ import { z } from 'zod';
 import { FetchError, fetchJson } from '../fetch';
 import { getSession } from '../session';
 import { parseJWT } from '../../auth';
-import { cleanInput } from '../../error';
+import { cleanFormData } from '../../error';
 
 type LoginResponse = {
   access: string;
@@ -61,7 +61,7 @@ export async function loginWithEmailAndPassword(
 export default async function login(formData: FormData) {
   noStore();
 
-  const { cleanedInput, errorMessage } = cleanInput(FormSchema, formData);
+  const { cleanedInput, errorMessage } = cleanFormData(FormSchema, formData);
   if (errorMessage) {
     return { error: errorMessage };
   }

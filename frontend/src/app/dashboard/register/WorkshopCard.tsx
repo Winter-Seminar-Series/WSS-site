@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Workshop } from '../../../lib/types';
 import Image from 'next/image';
 import { getOrderedDay } from '../../../lib/date';
@@ -14,22 +14,33 @@ export default function WorkshopCard({
 }: {
   key: number;
   workshop: Workshop;
-  selectPlan: (planId: number) => void;
-  removePlan: (planId: number) => void;
+  selectPlan: (planId: number) => Promise<void>;
+  removePlan: (planId: number) => Promise<void>;
 }) {
   const [isSelected, setSelected] = useState<boolean>(workshop.paid);
 
-  const onButtonClick = () => {
+  const updatePlan = useCallback(async () => {
     if (isSelected) {
-      setSelected(workshop.paid);
+      await selectPlan(workshop.id);
     } else {
-      setSelected(true);
+      await removePlan(workshop.id);
     }
+  }, [selectPlan, removePlan, isSelected, workshop.id]);
 
+  useEffect(() => {
+    const doUpdatePlan = async () => {
+      await updatePlan();
+    };
+
+    doUpdatePlan();
+  }, [updatePlan]);
+
+  const onButtonClick = async () => {
+    if (workshop.paid) return;
     if (isSelected) {
-      selectPlan(workshop.id);
-    } else {
-      removePlan(workshop.id);
+      setSelected(false);
+    } else if (!isSelected) {
+      setSelected(true);
     }
   };
 
@@ -105,21 +116,23 @@ export default function WorkshopCard({
         </div>
 
         <div className={'flex items-center justify-between'}>
-          <Link
+          <a
+            target="_blank"
             className={
               'mr-2 w-full rounded-md bg-[#EBE8F2] py-4 text-center text-xs font-bold text-secondary'
             }
             href={`/workshop/${workshop.id}`}
           >
             View Details
-          </Link>
+          </a>
           <button
             onClick={onButtonClick}
-            className={
-              'w-full rounded-md bg-secondary py-4 text-xs font-bold text-white'
-            }
+            disabled={workshop.paid}
+            className={`w-full rounded-md py-4 text-xs font-bold text-white ${
+              workshop.paid ? 'bg-green-600' : 'bg-secondary'
+            }`}
           >
-            {isSelected ? 'Remove' : 'Add'}
+            {workshop.paid ? 'Registered' : isSelected ? 'Remove' : 'Add'}
           </button>
         </div>
       </div>

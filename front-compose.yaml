@@ -9,7 +9,7 @@ services:
     image: wss:frontend
     container_name: frontend
     ports:
-      - 30000:3000
+      - 3000:3000
     networks:
       - app-network
     env_file:

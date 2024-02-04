@@ -5,9 +5,11 @@ import {
   ModeOfAttendance,
   Participation,
   ParticipationPlan,
+  Price,
 } from '../../types';
 import { FetchError, fetchJsonWithAuth } from '../fetch';
 import { fetchWorkshops } from '../events/workshop';
+import camelcaseKeys from 'camelcase-keys';
 
 export async function setPaidParticipationPlans(
   participation: Participation,
@@ -40,25 +42,38 @@ export async function fetchParticipation() {
   return participation;
 }
 
-type PriceResponse = {
-  price: number;
-};
+function getIsDiscountCodeValidFromResponse(response: {
+  nonFieldErrors: string[];
+}) {
+  return !response.nonFieldErrors?.includes('Invalid discount code') ?? true;
+}
 
 export async function fetchPrice(plans: number[], discountCode?: string) {
   noStore();
 
-  const url = `${process.env.API_ORIGIN}/api/price`;
+  const url = `${process.env.API_ORIGIN}/api/payment/price/`;
 
-  // @ts-ignore
-  const searchParams = new URLSearchParams({ plans });
-
-  if (discountCode) {
-    searchParams.append('discount', discountCode);
+  if (!discountCode) {
+    discountCode = undefined;
   }
 
-  const { price } = await fetchJsonWithAuth<PriceResponse>(
-    `${url}?${searchParams}`,
-  );
+  const body = { plans, discountCode, totalPrice: 0, calculatedPrice: 0 };
 
-  return price;
+  try {
+    const price = await fetchJsonWithAuth<Price>(url, body, {
+      method: 'POST',
+    });
+
+    return { price, isDiscountCodeValid: true };
+  } catch (error) {
+    const errorResponse = camelcaseKeys(error.message);
+    const isDiscountCodeValid =
+      getIsDiscountCodeValidFromResponse(errorResponse);
+
+    return {
+      price: { totalPrice: 0, calculatedPrice: 0 },
+      error: error.message,
+      isDiscountCodeValid,
+    };
+  }
 }

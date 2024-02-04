@@ -4,6 +4,7 @@ import { Tab } from '@headlessui/react';
 import LogoutButton from '../../ui/components/dashboard/LogoutButton';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import Image from 'next/image';
 
 export default function DashboardNavbar() {
   const pathname = usePathname();
@@ -18,9 +19,13 @@ export default function DashboardNavbar() {
             isProfile ? 'border-b-primary' : undefined
           }`}
         >
-          <div className={isProfile ? 'filtered' : undefined}>
-            <img src="/source/Profile.svg" />
-          </div>
+          <Image
+            width={24}
+            height={24}
+            className={isProfile ? 'filter-primary' : undefined}
+            src="/source/Profile.svg"
+            alt=""
+          />
           <Link
             href="/dashboard/profile"
             className={`text-xl font-semibold not-italic leading-[normal] tracking-[-0.2px] ${
@@ -35,19 +40,21 @@ export default function DashboardNavbar() {
             isRegister ? 'border-b-primary' : undefined
           }`}
         >
-          <div className={isRegister && 'border-b-primary'}>
-            {/* <div className={isRegister ? 'filtered' : undefined}> */}
-            <img className="fill-primary" src="/source/TicketStar.svg" />
-            {/* </div> */}
-            <Link
-              href="/dashboard/register"
-              className={`text-xl font-semibold not-italic leading-[normal] tracking-[-0.2px] ${
-                isRegister ? 'text-primary' : 'text-darkslategray-100'
-              }`}
-            >
-              Registration
-            </Link>
-          </div>
+          <Image
+            width={24}
+            height={24}
+            className={isRegister ? 'filter-primary' : undefined}
+            src="/source/TicketStar.svg"
+            alt=""
+          />
+          <Link
+            href="/dashboard/register"
+            className={`text-xl font-semibold not-italic leading-[normal] tracking-[-0.2px] ${
+              isRegister ? 'text-primary' : 'text-darkslategray-100'
+            }`}
+          >
+            Registration
+          </Link>
         </div>
         {/* <div className="flex items-center justify-center gap-2 px-6 py-5">
         <img src="/source/Play.svg" />

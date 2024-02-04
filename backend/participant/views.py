@@ -3,7 +3,6 @@ from random import choices
 from django.conf import settings
 from django.core.mail import send_mail
 from django.http import Http404
-from django.shortcuts import get_object_or_404
 from rest_framework import generics, permissions, status, views
 from rest_framework.response import Response
 
@@ -27,7 +26,10 @@ class ParticipantInfoRetrieveUpdateAPIView(generics.RetrieveUpdateAPIView):
     permission_classes = [permissions.IsAuthenticated]
 
     def get_object(self):
-        participant = get_object_or_404(Participant, user=self.request.user)
+        try:
+            participant = Participant.objects.get(user=self.request.user)
+        except Participant.DoesNotExist:
+            raise Http404
         self.check_object_permissions(self.request, participant)
         return participant.info
 
@@ -82,7 +84,10 @@ class ParticipationByEventAPIView(generics.ListAPIView):
         return Participation.objects.filter(plan__event=self.kwargs['event_id'], participant=self.kwargs['participant'])
 
     def get(self, request, *args, **kwargs):
-        self.kwargs['participant'] = get_object_or_404(Participant, user=self.request.user)
+        try:
+            self.kwargs['participant'] = Participant.objects.get(user=self.request.user)
+        except Participant.DoesNotExist:
+            raise Http404
         return self.list(request, *args, **kwargs)
 
 class ParticipationPlanByEventAPIView(generics.ListAPIView):

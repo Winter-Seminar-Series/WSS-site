@@ -4,7 +4,7 @@ import { unstable_noStore as noStore, revalidatePath } from 'next/cache';
 import { z } from 'zod';
 import { Gender, Grade, IntroductionMethod, Profile } from '../../types';
 import { fetchJsonWithAuth } from '../fetch';
-import { cleanInput } from '../../error';
+import { cleanFormData } from '../../error';
 
 type ProfileResponse = Profile & { email: string };
 
@@ -64,7 +64,7 @@ async function callUpdateProfileAPI(input: UpdateProfileFormInput) {
 export async function updateProfile(formData: FormData) {
   noStore();
 
-  const { cleanedInput, errorMessage } = cleanInput(
+  const { cleanedInput, errorMessage } = cleanFormData(
     UpdateProfileFormSchema,
     formData,
   );
@@ -85,7 +85,9 @@ export async function updateProfile(formData: FormData) {
 }
 
 const UpdateNationalCodeFormSchema = z.object({
-  nationalCode: z.string().regex(/^\d{10}$/),
+  nationalCode: z
+    .string({ required_error: 'National code is required.' })
+    .regex(/^\d{10}$/, 'National code has invalid format.'),
 });
 
 async function callUpdateNationalCodeAPI(nationalCode: string) {
@@ -101,7 +103,7 @@ async function callUpdateNationalCodeAPI(nationalCode: string) {
 export async function updateNationalCode(formData: FormData) {
   noStore();
 
-  const { cleanedInput, errorMessage } = cleanInput(
+  const { cleanedInput, errorMessage } = cleanFormData(
     UpdateNationalCodeFormSchema,
     formData,
   );
@@ -119,4 +121,6 @@ export async function updateNationalCode(formData: FormData) {
 
   revalidatePath('/dashboard/profile');
   revalidatePath('/dashboard/register');
+
+  return {};
 }

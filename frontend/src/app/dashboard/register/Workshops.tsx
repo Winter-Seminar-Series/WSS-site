@@ -9,8 +9,8 @@ export default function Workshops({
   removePlan,
 }: {
   workshops: Workshop[];
-  selectPlan: (planId: number) => void;
-  removePlan: (planId: number) => void;
+  selectPlan: (planId: number) => Promise<void>;
+  removePlan: (planId: number) => Promise<void>;
 }) {
   return (
     <div className={'grid grid-cols-3 gap-5 overflow-auto pl-2'}>

@@ -7,66 +7,84 @@ from django.db.models import Q
 
 from django.conf import settings
 import requests
+import logging
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 def calculate_price(plans, discount):
-    total_price = sum(plan.price for plan in plans)
+    total_price = sum(plan.price for plan in plans if plan.kind == 'M')
     calculated_price = total_price
     if discount is not None:
-        if discount.amount != 0:
-            calculated_price -= discount.amount
-        elif discount.percentage > 0:
-            calculated_price -= calculated_price * discount.percentage / 100.
+        amount = int(discount.amount)
+        percentage = float(discount.percentage)
+        if amount != 0:
+            calculated_price -= amount
+        elif percentage > 0:
+            calculated_price -= calculated_price * percentage / 100.
     calculated_price = int(calculated_price)
+    total_price += sum(plan.price for plan in plans if plan.kind == 'W')
+    calculated_price += sum(plan.price for plan in plans if plan.kind == 'W')
     return total_price, calculated_price
 
 def validate_plans(attrs):
     plans = attrs.get('plans', None)
     if plans is None:
         raise serializers.ValidationError('Invalid plans')
-    participation_plans = ParticipationPlan.objects.filter(pk__in=plans)
-    if len(plans) != len(participation_plans):
-        raise serializers.ValidationError('Invalid plans')
-    plans = participation_plans
     events = set([plan.event for plan in plans])
     if len(events) == 1:
-        event = events[0]
+        event = list(events)[0]
     elif len(events) == 0:
         event = -1
     else:
         raise serializers.ValidationError('Invalid discount code from multiple events')
-    return event
+    has_mode = False
+    for plan in plans:
+        if plan.kind == 'M' and has_mode:
+            raise serializers.ValidationError('Multiple mode of attendance selected')
+        elif plan.kind == 'M':
+            has_mode = True
+    if not has_mode:
+        raise serializers.ValidationError('No mode of attendance selected')
+    attrs['event'] = event
+    return attrs
 
-def validate_discount_code(attrs, event):
+def validate_discount(attrs):
+    event = attrs.get('event', None)
     discount_code = attrs.get('discount_code', None)
     if discount_code is None:
         return attrs
-    discounts = PaymentDiscount.objects.filter(code=discount_code).filter(event=event).filter(Q(count=-1) | Q(count__gt=0))
+    discounts = PaymentDiscount.objects.filter(code=discount_code, event=event).filter(Q(count=-1) | Q(count__gt=0))
     if discounts.count() == 0:
         raise serializers.ValidationError('Invalid discount code')
     discount = discounts[0]
-    return discount
+    attrs['discount'] = discount
+    return attrs
 
 class PaymentRequestPriceSerializer(serializers.ModelSerializer):
-    total_price = serializers.IntegerField()
-    calculated_price = serializers.IntegerField()
+    total_price = serializers.IntegerField(required=False)
+    calculated_price = serializers.IntegerField(required=False)
+    discount_code = serializers.CharField(required=False)
 
     class Meta:
         model = PaymentRequest
-        fields = ['plans', 'participant', 'discount_code']
+        fields = ['plans', 'discount_code', 'discount', 'total_price', 'calculated_price']
     
     def validate(self, attrs):
-        event = validate_plans(attrs)
-        attrs['discount'] = validate_discount_code(attrs, event)
+        validate_plans(attrs)
+        validate_discount(attrs)
         return attrs
 
 class PaymentRequestCreateSerializer(serializers.ModelSerializer):
+    discount_code = serializers.CharField(required=False)
+    
     class Meta:
         model = PaymentRequest
-        fields = ['plans', 'participant', 'discount_code']
+        fields = ['plans', 'participant', 'discount_code', 'discount']
     
     def validate(self, attrs):
-        event = validate_plans(attrs)
-        attrs['discount'] = validate_discount_code(attrs, event)
+        validate_plans(attrs)
+        validate_discount(attrs)
         return attrs
     
     def create(self, validated_data):
@@ -75,23 +93,32 @@ class PaymentRequestCreateSerializer(serializers.ModelSerializer):
             if discount.count != -1:
                 discount.count -= 1
                 discount.save()
-        req = super().create(validated_data)
+        model_dict = validated_data.copy()
+        model_dict.pop('discount_code', None)
+        model_dict.pop('event', None)
+        req = super().create(model_dict)
         participant = req.participant
-        plans = req.plans
-        total_price, calculated_price = calculate_price(plans, req.discount)
-        url = settings.PAYMENT_SERVICE_URL + '/create'
+        plans = validated_data['plans']
+        total_price, calculated_price = calculate_price(plans, validated_data.get('discount'))
+        url = settings.PAYMENT_SERVICE_URL + '/transaction'
+        logger.info('Payment request for participant %d, total price: %d, calculated price: %d', participant.id, total_price, calculated_price)
+        logger.info(f'sending request to {url}')
         data = {
             "user_id": participant.id,
             "to_pay_amount": calculated_price,
             "discount_amount": total_price - calculated_price,
-            "buying_goods": [plan.name for plan in plans],
+            "buying_goods": [str(plan) for plan in plans],
             "name": participant.user.first_name + ' ' + participant.user.last_name,
             "phone": participant.info.phone_number,
             "mail": participant.user.email,
             "callback_url": settings.PAYMENT_CALLBACK_URL + '/' + str(req.id),
         }
-        res = requests.post(url, data=data)
-        if res.status_code != 200:
+        logger.info(f'sending data: {data}')
+        res = requests.post(url, json=data)
+        logger.info(f'response: {res.status_code} {res.text}')
+        logger.info(f'{res.request.body}')
+        if res.status_code != 201:
+            logger.error('Payment service error')
             raise serializers.ValidationError('Payment service error')
         res = res.json()
         req.order_id = res['order_id']

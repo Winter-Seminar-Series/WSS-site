@@ -15,7 +15,8 @@ export default function SeminarCard({ person }: { person: Person }) {
           <SeminarLogo logo={instagram.src} alt={'instagram'} />
           <SeminarLogo logo={facebook.src} alt={'facebook'} />
         </div>
-        <Image
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
           src={person.image}
           alt={person.name + ' ' + person.surname}
           width={200}
