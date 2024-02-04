@@ -87,9 +87,15 @@ class PaymentRequestVerifyAPIView(generics.GenericAPIView):
                     info=info
                 )
                 logger.error(f'Participation for plan {plan.pk} created')
-        else:
+        elif res['payment_status'] == 'failed':
             logger.error('Payment request not paid')
             instance.paid = False
+            if instance.discount is not None:
+                instance.discount.count += 1
+                instance.discount.save()
+        else:
+            logger.error('Payment service error')
+            raise serializers.ValidationError('Payment service error')
         instance.save()
         logger.error(f'Payment request {pk} updated')
         serializer = self.get_serializer(instance)
