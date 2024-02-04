@@ -19,28 +19,14 @@ export default function WorkshopCard({
 }) {
   const [isSelected, setSelected] = useState<boolean>(workshop.paid);
 
-  const updatePlan = useCallback(async () => {
-    if (isSelected) {
-      await selectPlan(workshop.id);
-    } else {
-      await removePlan(workshop.id);
-    }
-  }, [selectPlan, removePlan, isSelected, workshop.id]);
-
-  useEffect(() => {
-    const doUpdatePlan = async () => {
-      await updatePlan();
-    };
-
-    doUpdatePlan();
-  }, [updatePlan]);
-
   const onButtonClick = async () => {
     if (workshop.paid) return;
     if (isSelected) {
       setSelected(false);
+      removePlan(workshop.id);
     } else if (!isSelected) {
       setSelected(true);
+      selectPlan(workshop.id);
     }
   };
 
