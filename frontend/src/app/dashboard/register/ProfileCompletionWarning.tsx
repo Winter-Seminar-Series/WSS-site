@@ -1,5 +1,7 @@
 'use client';
 
+import Link from 'next/link';
+
 export default function ProfileCompletionWarning() {
   return (
     <div
@@ -19,7 +21,8 @@ export default function ProfileCompletionWarning() {
         />
         Please complete your profile information first
       </div>
-      <div
+      <Link
+        href={'profile'}
         className={
           'flex cursor-pointer items-center justify-center text-lg text-primary'
         }
@@ -29,7 +32,7 @@ export default function ProfileCompletionWarning() {
           src="/source/dashboard/register/rightArrow.svg"
           className={'ml-2'}
         />
-      </div>
+      </Link>
     </div>
   );
 }
