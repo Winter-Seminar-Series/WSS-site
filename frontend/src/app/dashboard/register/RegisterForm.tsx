@@ -24,10 +24,9 @@ export default function RegisterForm({
   const [discountCode, setDiscountCode] = useState('');
   const [isDiscountCodeValid, setDiscountCodeValid] = useState(true);
   const [nationalCode, setNationalCode] = useState(profileNationalCode);
-  const [selectedPlans, setSelectedPlans] = useState<number[]>(
-    workshops
-      .filter((workshop) => workshop.paid)
-      .map((workshop) => workshop.id),
+  const [selectedPlans, setSelectedPlans] = useState<number[]>([]);
+  const [selectedModeIndex, setSelectedModeIndex] = useState<number>(
+    modesOfAttendance.findIndex((mode) => mode.paid),
   );
 
   const selectPlan = useCallback(async (planId: number) => {
@@ -66,10 +65,14 @@ export default function RegisterForm({
     doUpdatePrice();
   }, [updatePrice]);
 
-  const onCheckoutClick: React.MouseEventHandler<HTMLButtonElement> = async (
-    event,
-  ) => {
-    if (!isProfileComplete) {
+  const onCheckoutClick: React.MouseEventHandler<
+    HTMLButtonElement
+  > = async () => {
+    if (
+      !isProfileComplete ||
+      (modesOfAttendance[selectedModeIndex]?.isNationalCodeRequired &&
+        !nationalCode)
+    ) {
       return;
     }
 
@@ -125,6 +128,8 @@ export default function RegisterForm({
           updatePrice={updatePrice}
           discountCode={discountCode}
           setDiscountCode={setDiscountCode}
+          selectedModeIndex={selectedModeIndex}
+          setSelectedModeIndex={setSelectedModeIndex}
           isDiscountCodeValid={isDiscountCodeValid}
           setDiscountCodeValid={setDiscountCodeValid}
         />
