@@ -68,15 +68,38 @@ export default function RegisterForm({
   const onCheckoutClick: React.MouseEventHandler<
     HTMLButtonElement
   > = async () => {
-    if (
-      !isProfileComplete ||
-      (modesOfAttendance[selectedModeIndex]?.isNationalCodeRequired &&
-        !nationalCode)
-    ) {
-      return;
-    }
+    const scrollToTop = () => {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth',
+      });
+    };
 
     setError('');
+
+    if (!isProfileComplete) {
+      setError('Please complete your profile before proceeding to checkout.');
+      scrollToTop();
+      return;
+    }
+    if (!isDiscountCodeValid) {
+      setError('Please enter a valid discount code.');
+      scrollToTop();
+      return;
+    }
+    if (!modesOfAttendance[selectedModeIndex]) {
+      setError('Please select a mode of attendance.');
+      scrollToTop();
+      return;
+    }
+    if (
+      modesOfAttendance[selectedModeIndex]?.isNationalCodeRequired &&
+      !nationalCode
+    ) {
+      setError('Please enter your national code.');
+      scrollToTop();
+      return;
+    }
 
     const response = await createPayment({
       plans: selectedPlans,
@@ -85,10 +108,7 @@ export default function RegisterForm({
 
     if (response.error) {
       setError(response.error);
-      window.scrollTo({
-        top: 0,
-        behavior: 'smooth',
-      });
+      scrollToTop();
     }
   };
 
