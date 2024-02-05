@@ -39,7 +39,7 @@ def validate_plans(attrs, check_mode=True):
     else:
         raise serializers.ValidationError('Invalid discount code from multiple events')
     participant = attrs.get('participant', None)
-    registered_plans = ParticipationPlan.objects.filter(participation__participant=participant, participation__event=event)
+    registered_plans = ParticipationPlan.objects.filter(participation__participant=participant)
     for plan in plans:
         if plan in registered_plans:
             raise serializers.ValidationError('Plan already registered')
