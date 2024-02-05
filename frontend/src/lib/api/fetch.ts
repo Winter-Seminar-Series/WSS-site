@@ -48,7 +48,6 @@ export async function fetchJson<JSON = unknown>(
   }
 
   const response = await fetch(input, fetchInit);
-  console.log(input);
 
   if (!response.ok) {
     let message: any;
