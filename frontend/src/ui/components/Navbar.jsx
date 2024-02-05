@@ -112,6 +112,9 @@ export default function Navbar({ fixed = true, isAuthenticated = false }) {
           <a href="" className="block px-4 py-3">
             Round Tables
           </a> */}
+          <Link href="/workshop" className="block px-4 py-3">
+            Workshops
+          </Link>
           <Link href="/about" className="block px-4 py-3">
             About Us
           </Link>

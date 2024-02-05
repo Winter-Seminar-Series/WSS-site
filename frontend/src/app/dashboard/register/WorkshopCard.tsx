@@ -4,7 +4,6 @@ import React, { useState } from 'react';
 import { Workshop } from '../../../lib/types';
 import Image from 'next/image';
 import { getOrderedDay } from '../../../lib/date';
-import Link from 'next/link';
 
 export default function WorkshopCard({
   key,
