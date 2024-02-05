@@ -8,6 +8,8 @@ import DashboardNavbar from './DashboardNavbar';
 import { fetchParticipation } from '../../lib/api/dashboard/register';
 import { fetchModesOfAttendance } from '../../lib/api/events/modeOfAttendance';
 
+export const revalidate = 3600;
+
 export default async function DashboardLayout({ children }) {
   const authenticated = await isAuthenticated();
   const participation = await fetchParticipation();

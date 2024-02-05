@@ -1,18 +1,17 @@
 import React from 'react';
 import Footer from '../../ui/components/Footer';
-import Navbar, { NavbarPlaceholder } from '../../ui/components/Navbar';
+import ServerNavbar from '../../ui/components/ServerNavbar';
+import { NavbarPlaceholder } from '../../ui/components/Navbar';
 import Timer from '../../ui/components/Timer';
-import { isAuthenticated } from '../../lib/auth';
 import WorkshopCard from './WorkshopCard';
 import { fetchWorkshops } from '../../lib/api/events/workshop';
 
 export default async function WorkshopList() {
   const workshops = await fetchWorkshops();
-  const authenticated = await isAuthenticated();
 
   return (
     <>
-      <Navbar isAuthenticated={authenticated} />
+      <ServerNavbar />
       <NavbarPlaceholder />
       <div
         style={{ backgroundImage: 'url(/source/SmallRectangle.png)' }}
