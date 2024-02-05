@@ -77,7 +77,7 @@ class Seminar(models.Model):
 
 class Workshop(models.Model):
     name = models.TextField(max_length=100)
-    description = models.TextField(max_length=1000, blank=True)
+    description = models.TextField(max_length=3000, blank=True)
     poster = models.ImageField(upload_to='posters/', null=True, blank=True)
     thumbnail = models.ImageField(upload_to='thumbnails/', null=True, blank=True)
 
@@ -88,7 +88,7 @@ class WorkshopSession(models.Model):
     workshop = models.ForeignKey(Workshop, on_delete=models.CASCADE)
     speaker = models.ForeignKey(Speaker, on_delete=models.CASCADE)
     name = models.TextField(max_length=100)
-    description = models.TextField(max_length=1000, blank=True)
+    description = models.TextField(max_length=3000, blank=True)
     starting_time = models.TimeField()
     ending_time = models.TimeField()
     date = models.DateField()
