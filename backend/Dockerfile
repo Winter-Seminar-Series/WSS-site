@@ -19,4 +19,6 @@ WORKDIR /app
 EXPOSE 8000
 ENV PYTHONUNBUFFERED 1
 
+RUN python manage.py collectstatic --noinput
+
 CMD ["gunicorn", "--bind", ":8000", "--workers", "4", "WSS.wsgi:application"]
