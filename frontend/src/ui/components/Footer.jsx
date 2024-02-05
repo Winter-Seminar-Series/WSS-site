@@ -24,36 +24,46 @@ export default function Footer() {
             width="95"
             height="46"
           />
-          <Image
-            src="/source/sponsors/divar.svg"
-            alt="Divar"
-            width="69"
-            height="40"
-          />
-          <Image
-            src="/source/sponsors/quera.svg"
-            alt="Quera"
-            width="131"
-            height="24"
-          />
-          <Image
-            src="/source/sponsors/ramzinex.svg"
-            alt="Ramzinex"
-            width="140"
-            height="32"
-          />
-          <Image
-            src="/source/sponsors/bazar.svg"
-            alt="Bazar"
-            width="100"
-            height="40"
-          />
-          <Image
-            src="/source/sponsors/irancell.svg"
-            alt="Irancell"
-            width="100"
-            height="40"
-          />
+          <a href="https://divar.ir/" target="_blank">
+            <Image
+              src="/source/sponsors/divar.svg"
+              alt="Divar"
+              width="69"
+              height="40"
+            />
+          </a>
+          <a href="https://quera.org/" target="_blank">
+            <Image
+              src="/source/sponsors/quera.svg"
+              alt="Quera"
+              width="131"
+              height="24"
+            />
+          </a>
+          <a href="https://ramzinex.com/" target="_blank">
+            <Image
+              src="/source/sponsors/ramzinex.svg"
+              alt="Ramzinex"
+              width="140"
+              height="32"
+            />
+          </a>
+          <a href="https://cafebazaar.ir/app" target="_blank">
+            <Image
+              src="/source/sponsors/bazar.svg"
+              alt="Bazar"
+              width="100"
+              height="40"
+            />
+          </a>
+          <a href="https://irancell.ir/" target="_blank">
+            <Image
+              src="/source/sponsors/irancell.svg"
+              alt="Irancell"
+              width="100"
+              height="40"
+            />
+          </a>
         </div>
         <div className="my-8 flex items-center justify-between gap-y-4 max-md:flex-col">
           <div className="max-md:text-center">

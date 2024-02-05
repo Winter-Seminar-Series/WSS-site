@@ -73,7 +73,7 @@ export async function fetchWorkshops() {
       return {
         ...workshopResponse.workshop,
         id: workshopResponse.id,
-        price: workshopResponse.price,
+        price: workshopResponse.price / 10,
         description,
         sessions,
         startDate,

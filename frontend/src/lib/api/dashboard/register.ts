@@ -64,7 +64,11 @@ export async function fetchPrice(plans: number[], discountCode?: string) {
       method: 'POST',
     });
 
-    return { price, isDiscountCodeValid: true };
+    return {
+      totalPrice: price.totalPrice / 10,
+      calculatedPrice: price.calculatedPrice,
+      isDiscountCodeValid: true,
+    };
   } catch (error) {
     const errorResponse = camelcaseKeys(error.message);
     const isDiscountCodeValid =

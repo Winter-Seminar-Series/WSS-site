@@ -19,7 +19,7 @@ export async function fetchModesOfAttendance() {
     (modeOfAttendanceResponse) => {
       return {
         id: modeOfAttendanceResponse.id,
-        price: modeOfAttendanceResponse.price,
+        price: modeOfAttendanceResponse.price / 10,
         ...modeOfAttendanceResponse.modeOfAttendance,
       };
     },
