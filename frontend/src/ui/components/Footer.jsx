@@ -187,7 +187,7 @@ export default function Footer() {
                 Tel
               </p>
               <p className="flex items-center justify-start text-sm font-semibold">
-                +98 (021) 66 16 57 8
+                +98 (021) 66 16 57 81
               </p>
             </div>
           </a>
