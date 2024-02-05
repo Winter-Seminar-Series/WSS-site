@@ -8,3 +8,8 @@ services:
       - "5000:5000"
     volumes:
       - /root/WSS-site/nginx.conf:/etc/nginx/conf.d/default.conf
+      - staticfiles:/root/WSS-site/backend/staticfiles
+
+volume:
+  staticfiles:
+    external: true

@@ -37,7 +37,11 @@ services:
       - 8000:8000
     env_file:
       - .env.backend
+    volumes:
+      - staticfiles:/root/WSS-site/backend/staticfiles
 
 volumes:
   postgres-data:
     driver: local
+  staticfiles:
+    external: true
