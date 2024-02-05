@@ -10,7 +10,7 @@ export default function SignUpForm() {
     <Form
       error={error}
       formType={'signUp'}
-      overline={'Overline goes here'}
+      overline={'Your Key to Numerous Talks'}
       title={'Sign Up'}
       onSubmit={async (data) => {
         setError('');

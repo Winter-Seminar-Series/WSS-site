@@ -23,7 +23,7 @@ export default async function WorkshopList() {
           <div className="ml-18 flex flex-row items-start justify-between self-stretch lg:max-w-[1055px]">
             <div className="flex-col gap-2">
               <p className="max-md:text-md text-xl font-medium uppercase not-italic leading-[normal] tracking-[0.8px] text-[#8A8998]">
-                Overline goes here
+                Engage in Transformative Workshops
               </p>
               <p className="text-[76px] font-bold not-italic leading-none tracking-[-1.52px] text-[#1F2B3D] max-md:text-5xl">
                 Workshops

@@ -24,7 +24,7 @@ export default async function AboutUs() {
           <div className="ml-18 flex flex-row items-start justify-between self-stretch lg:max-w-[1055px]">
             <div className="flex-col gap-2">
               <p className="text-[20px] font-medium uppercase not-italic leading-[normal] tracking-[0.8px] text-[#8A8998]">
-                Overline goes here
+                Discover Our Story
               </p>
               <p className="text-[76px] font-bold not-italic leading-[76px] tracking-[-1.52px] text-[#1F2B3D]">
                 About Us
@@ -79,7 +79,7 @@ function StaffArea() {
   return (
     <div id="staff-area" className="mx-auto pb-14 pt-28 text-center">
       <div className="text-lg font-medium uppercase tracking-wide text-neutral-400">
-        Overline Goes Here
+        The heartbeat of the event
       </div>
       <div className="text-[64px] font-bold text-slate-800">Staff Members</div>
     </div>

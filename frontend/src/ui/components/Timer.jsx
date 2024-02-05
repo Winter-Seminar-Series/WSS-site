@@ -16,10 +16,10 @@ export default function Timer() {
       <div className="mx-auto flex max-w-[1200px] items-center justify-between gap-y-8 px-6 max-md:flex-col">
         <div>
           <p className="font-manrope text-left text-lg font-medium uppercase text-white/60">
-            Overline Goes Here
+            Unlock the gateway to revelation
           </p>
-          <h1 className="font-manrope text-5xl font-bold leading-normal text-white">
-            Sign Up and Enjoy it
+          <h1 className="font-manrope text-4xl font-bold leading-normal text-white">
+            Sign Up and Secure Your Spot!
           </h1>
         </div>
         <div className="flex gap-x-4">

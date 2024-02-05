@@ -31,21 +31,21 @@ const items = [
   {
     id: 1,
     title: 'Seminars',
-    overline: 'Overline Goes Here',
+    overline: 'A four-day journey of discovery and learning',
     img: '/landing/seminars.jpg',
     desc: 'The seminars comprise a four-day event where speakers present their research and ideas, sharing their findings and teaching related topics. Each day of the event features different speakers and topics, providing participants with a diverse range of perspectives and knowledge.',
   },
   {
     id: 2,
     title: 'Round Tables',
-    overline: 'Overline Goes Here',
+    overline: 'A deep dive into expert-led discussions',
     img: '/landing/roundtables.jpg',
     desc: "During the event, we host round table discussions on specific topics, inviting experts in the field to share their insights and engage with participants' concerns. Please note that the round tables are conducted in Persian.",
   },
   {
     id: 3,
     title: 'Lab Talks',
-    overline: 'Overline Goes Here',
+    overline: 'Exploring innovation at the core',
     img: '/landing/labtalks.jpg ',
     desc: 'This section focuses on the laboratories of the Faculty of Computer Engineering at Sharif University of Technology. In each session, we feature a different laboratory, with members introducing their lab and discussing current research topics. This provides participants with an opportunity to learn about cutting-edge research and developments in computer engineering.',
   },
@@ -55,7 +55,7 @@ function ProgramsArea() {
   return (
     <div className="mx-auto mb-20 text-center">
       <div className="text-lg font-medium uppercase tracking-wide text-neutral-400">
-        Overline Goes Here
+        Explore the realm of Computer Science
       </div>
       <div className="text-[64px] font-bold text-slate-800">Programs</div>
     </div>

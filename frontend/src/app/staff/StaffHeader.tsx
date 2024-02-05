@@ -10,7 +10,7 @@ export default function StaffHeader() {
     >
       <div>
         <div className="text-lg font-medium uppercase tracking-wide text-neutral-400">
-          Overline Goes Here
+          The heartbeat of the event
         </div>
         <div
           className={
