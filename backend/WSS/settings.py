@@ -35,7 +35,8 @@ CORS_ALLOWED_ORIGINS = [
     'http://localhost:3000',
     'http://localhost',
     'http://wss-sharif.com:3000',
-    'http://wss-sharif.com'
+    'http://wss-sharif.com',
+    'http://91.107.166.3:5000'
 ]
 
 
