@@ -2,7 +2,16 @@ import { formatToMonthAndDay } from '../../../lib/date';
 import { Workshop as WorkshopType } from '../../../lib/types';
 
 export default function Workshop({ workshop }: { workshop: WorkshopType }) {
-  const presenters = workshop.sessions.map((session) => session.speaker);
+  const presenters = workshop.sessions
+    .map((session) => session.speaker)
+    .filter(
+      (speaker, index) =>
+        index ===
+        workshop.sessions.findIndex(
+          (newSpeaker) => newSpeaker.id === speaker.id,
+        ),
+    );
+
   return (
     <div>
       <div
@@ -39,9 +48,10 @@ export default function Workshop({ workshop }: { workshop: WorkshopType }) {
               <label className="text-[32px] font-semibold not-italic leading-[normal] tracking-[-0.32px] text-black">
                 Abstract
               </label>
-              <p className="text-base font-normal not-italic leading-[25px] text-[#8A8998]">
-                {workshop.description}
-              </p>
+              <div
+                className="text-base font-normal not-italic leading-[25px] text-[#8A8998]"
+                dangerouslySetInnerHTML={{ __html: workshop.description }}
+              />
             </div>
             <div className="w-full space-y-2">
               <div className="text-[32px] font-semibold not-italic leading-[normal] tracking-[-0.32px] text-black">
@@ -82,9 +92,12 @@ export default function Workshop({ workshop }: { workshop: WorkshopType }) {
                       <p className="self-stretch text-lg font-normal not-italic leading-[27px] text-[#8A8998]">
                         {presenter.designation}
                       </p>
-                      <p className="text-base font-normal not-italic leading-[25px] text-[#8A8998]">
-                        {presenter.description}
-                      </p>
+                      <div
+                        className="text-base font-normal not-italic leading-[25px] text-[#8A8998]"
+                        dangerouslySetInnerHTML={{
+                          __html: presenter.description,
+                        }}
+                      />
                     </div>
                   </div>
                 ))}

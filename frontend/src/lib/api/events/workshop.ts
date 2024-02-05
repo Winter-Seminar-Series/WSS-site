@@ -1,4 +1,5 @@
 import { convertTimeToDate } from '../../date';
+import { convertMarkdownToHTML } from '../../markdown';
 import { Speaker, Workshop, WorkshopSession } from '../../types';
 import { fetchJson } from '../fetch';
 import { fetchSpeakerById } from './speaker';
@@ -33,17 +34,24 @@ export async function fetchWorkshops() {
       const sessions: WorkshopSession[] = await Promise.all(
         workshopResponse.workshop.sessions.map(async (sessionResponse) => {
           const speaker = await fetchSpeakerById(sessionResponse.speaker);
+          const description = await convertMarkdownToHTML(
+            sessionResponse.description,
+          );
           const startingTime = convertTimeToDate(sessionResponse.startingTime);
           const endingTime = convertTimeToDate(sessionResponse.endingTime);
           const date = new Date(sessionResponse.date);
           return {
             ...sessionResponse,
             speaker,
+            description,
             startingTime,
             endingTime,
             date,
           };
         }),
+      );
+      const description = await convertMarkdownToHTML(
+        workshopResponse.workshop.description,
       );
       // @ts-ignore
       const startDate: Date = sessions.reduce((startDate, session) => {
@@ -66,6 +74,7 @@ export async function fetchWorkshops() {
         ...workshopResponse.workshop,
         id: workshopResponse.id,
         price: workshopResponse.price,
+        description,
         sessions,
         startDate,
         endDate,
