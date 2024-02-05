@@ -27,7 +27,7 @@ def calculate_price(plans, discount):
     calculated_price += sum(plan.price for plan in plans if plan.kind == 'W')
     return total_price, calculated_price
 
-def validate_plans(attrs, check_mode=True):
+def validate_plans(attrs, is_price=True):
     plans = attrs.get('plans', None)
     if plans is None:
         raise serializers.ValidationError('Invalid plans')
@@ -38,13 +38,13 @@ def validate_plans(attrs, check_mode=True):
         event = -1
     else:
         raise serializers.ValidationError('Invalid discount code from multiple events')
-    participant = attrs.get('participant', None)
-    registered_plans = ParticipationPlan.objects.filter(participation__participant=participant)
-    for plan in plans:
-        if plan in registered_plans:
-            raise serializers.ValidationError('Plan already registered')
-    registered_plans = list(registered_plans)
-    if check_mode:
+    if not is_price:
+        participant = attrs.get('participant', None)
+        registered_plans = ParticipationPlan.objects.filter(participation__participant=participant)
+        for plan in plans:
+            if plan in registered_plans:
+                raise serializers.ValidationError('Plan already registered')
+        registered_plans = list(registered_plans)
         has_mode = False
         for plan in plans + registered_plans:
             if plan.kind == 'M' and has_mode:
@@ -78,7 +78,7 @@ class PaymentRequestPriceSerializer(serializers.ModelSerializer):
         fields = ['plans', 'discount_code', 'discount', 'total_price', 'calculated_price']
     
     def validate(self, attrs):
-        validate_plans(attrs, check_mode=False)
+        validate_plans(attrs, is_price=True)
         validate_discount(attrs)
         return attrs
 
@@ -90,7 +90,7 @@ class PaymentRequestCreateSerializer(serializers.ModelSerializer):
         fields = ['plans', 'participant', 'discount_code', 'discount']
     
     def validate(self, attrs):
-        validate_plans(attrs, check_mode=True)
+        validate_plans(attrs, is_price=False)
         validate_discount(attrs)
         return attrs
     
