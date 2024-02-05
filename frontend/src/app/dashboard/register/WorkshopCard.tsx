@@ -99,7 +99,7 @@ export default function WorkshopCard({
           <div className={'text-2xl font-semibold'}>
             {(workshop.price ?? 0).toLocaleString()}
           </div>
-          <div className={'text-sm font-medium'}>&nbsp;Rial</div>
+          <div className={'text-sm font-medium'}>&nbsp;Tooman</div>
         </div>
 
         <div className={'flex items-center justify-between'}>

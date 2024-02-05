@@ -175,7 +175,7 @@ export default function RegisterForm({
             PRICE
             <div className={'flex items-end font-semibold text-black'}>
               <div className={'text-4xl'}>{price.toLocaleString()}</div>
-              <div className={'text-base'}>&nbsp;Rial</div>
+              <div className={'text-base'}>&nbsp;Tooman</div>
             </div>
           </div>
 
