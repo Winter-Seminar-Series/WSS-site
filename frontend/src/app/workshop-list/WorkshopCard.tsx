@@ -56,7 +56,7 @@ export default function WorkshopCard({ workshop }: { workshop: Workshop }) {
           <div className="pb-1 pt-3.5 text-xl font-semibold text-black">
             {workshop.price.toLocaleString()}
           </div>
-          <div className="pt-4 text-base font-medium text-black">Tomans</div>
+          <div className="pt-4 text-base font-medium text-black">Rial</div>
         </div>
       </div>
     </div>

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Workshop } from '../../../lib/types';
 import Image from 'next/image';
 import { getOrderedDay } from '../../../lib/date';
@@ -98,7 +98,7 @@ export default function WorkshopCard({
 
         <div className={'mb-5 flex items-end text-black'}>
           <div className={'text-2xl font-semibold'}>{workshop.price}</div>
-          <div className={'text-sm font-medium'}>&nbsp;Tomans</div>
+          <div className={'text-sm font-medium'}>&nbsp;Rial</div>
         </div>
 
         <div className={'flex items-center justify-between'}>
