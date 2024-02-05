@@ -96,7 +96,7 @@ export default function WorkshopCard({
         </div>
 
         <div className={'mb-5 flex items-end text-black'}>
-          <div className={'text-2xl font-semibold'}>{workshop.price}</div>
+          <div className={'text-2xl font-semibold'}>{(workshop.price ?? 0).toLocaleString()}</div>
           <div className={'text-sm font-medium'}>&nbsp;Rial</div>
         </div>
 
