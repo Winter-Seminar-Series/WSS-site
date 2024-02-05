@@ -38,6 +38,7 @@ CORS_ALLOWED_ORIGINS = [
     'http://wss-sharif.com',
     'http://91.107.166.3:5000'
 ]
+CSRF_TRUSTED_ORIGINS = CORS_ALLOWED_ORIGINS
 
 
 # Application definition
