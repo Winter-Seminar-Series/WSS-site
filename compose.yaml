@@ -38,7 +38,7 @@ services:
     env_file:
       - .env.backend
     volumes:
-      - staticfiles:/root/WSS-site/backend/staticfiles
+      - staticfiles:/var/www/static
 
 volumes:
   postgres-data:
