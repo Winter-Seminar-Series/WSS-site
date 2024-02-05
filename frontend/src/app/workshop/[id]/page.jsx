@@ -8,6 +8,7 @@ export default async function WorkshopPage({ params: { id } }) {
   const authenticated = await isAuthenticated();
   const workshops = await fetchWorkshops();
   const workshop = workshops.find((workshop) => workshop.id === parseInt(id));
+
   return (
     <>
       <Navbar isAuthenticated={authenticated} />
