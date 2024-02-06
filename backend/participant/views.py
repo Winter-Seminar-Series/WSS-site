@@ -76,6 +76,23 @@ class PasswordResetAPIView(views.APIView):
                 status=status.HTTP_406_NOT_ACCEPTABLE
             )
 
+class ParticipantPasswordChangeAPIView(views.APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def put(self, request):
+        participant = Participant.objects.get(user=request.user)
+        if not participant.user.check_password(request.data['old_password']):
+            return Response(
+                'Old password is not correct',
+                status=status.HTTP_406_NOT_ACCEPTABLE
+            )
+        participant.user.set_password(request.data['new_password'])
+        participant.user.save()
+        return Response(
+            'Password changed successfully',
+            status=status.HTTP_200_OK
+        )
+
 class ParticipationByEventAPIView(generics.ListAPIView):
     serializer_class = ParticipationSerializer
     permission_classes = [permissions.IsAuthenticated]

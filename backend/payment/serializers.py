@@ -19,7 +19,7 @@ def calculate_price(plans, discount):
         amount = int(discount.amount)
         percentage = float(discount.percentage)
         if amount != 0:
-            calculated_price -= amount
+            calculated_price = max(0, calculated_price - amount)
         elif percentage > 0:
             calculated_price -= calculated_price * percentage / 100.
     calculated_price = int(calculated_price)
@@ -107,6 +107,19 @@ class PaymentRequestCreateSerializer(serializers.ModelSerializer):
         participant = req.participant
         plans = validated_data['plans']
         total_price, calculated_price = calculate_price(plans, validated_data.get('discount'))
+        if calculated_price == 0:
+            req.paid = True
+            req.save()
+            info = participant.info
+            info.pk = None
+            info.save()
+            for plan in plans:
+                Participation.objects.create(
+                    participant=participant,
+                    plan=plan,
+                    info=info
+                )
+            return 'https://wss-sharif.com/dashboard/profile'
         url = settings.PAYMENT_SERVICE_URL + '/transaction'
         logger.info('Payment request for participant %d, total price: %d, calculated price: %d', participant.id, total_price, calculated_price)
         logger.info(f'sending request to {url}')
