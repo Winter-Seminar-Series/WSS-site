@@ -5,7 +5,7 @@ from participant.models import Participant, ParticipationPlan
 class PaymentDiscount(models.Model):
     event = models.ForeignKey(Event, on_delete=models.CASCADE, blank=True)
     code = models.CharField(max_length=50, blank=False, unique=True)
-    percentage = models.DecimalField(max_digits=4, decimal_places=2, default=0.0)
+    percentage = models.DecimalField(max_digits=5, decimal_places=2, default=0.0)
     amount = models.IntegerField(default=0)
     count = models.IntegerField(default=-1)
 
