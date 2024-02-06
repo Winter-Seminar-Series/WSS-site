@@ -65,8 +65,10 @@ export async function fetchPrice(plans: number[], discountCode?: string) {
     });
 
     return {
-      totalPrice: price.totalPrice / 10,
-      calculatedPrice: price.calculatedPrice,
+      price: {
+        totalPrice: price.totalPrice / 10,
+        calculatedPrice: price.calculatedPrice / 10,
+      },
       isDiscountCodeValid: true,
     };
   } catch (error) {
