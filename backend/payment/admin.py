@@ -12,8 +12,8 @@ class CsvImportForm(forms.Form):
     csv_file = forms.FileField()
 
 class PaymentDiscountAdmin(admin.ModelAdmin):
-    search_fields = ('discount_code',)
-    list_display = ('discount_code', 'percentage', 'amount', 'count')
+    search_fields = ('code',)
+    list_display = ('code', 'percentage', 'amount', 'count')
 
     change_list_template = "discount_changelist.html"
 
@@ -23,7 +23,7 @@ class PaymentDiscountAdmin(admin.ModelAdmin):
             reader = csv.reader(codecs.iterdecode(csv_file, 'UTF-8'))
             for row in reader:
                 _, created = PaymentDiscount.objects.get_or_create(
-                    discount_code=row[0],
+                    code=row[0],
                     percentage=row[1],
                     amount=row[2],
                     count=row[3]
