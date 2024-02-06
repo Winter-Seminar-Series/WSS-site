@@ -17,7 +17,7 @@ class PaymentDiscountAdmin(admin.ModelAdmin):
 
     change_list_template = "discount_changelist.html"
 
-    def import_from_csv(self, request, queryset):
+    def import_from_csv(self, request):
         if request.method == 'POST':
             csv_file = request.FILES["csv_file"]
             reader = csv.reader(codecs.iterdecode(csv_file, 'UTF-8'))
