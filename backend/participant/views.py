@@ -43,7 +43,7 @@ class PasswordResetAPIView(views.APIView):
         if not participant:
             raise Http404
         participant.password_reset_code = ''.join(
-            choices([str(i) for i in range(10)], k=17))
+            choices([str(i) for i in range(10)], k=5))
         participant.save()
         send_mail(
             'WSS Password Reset',

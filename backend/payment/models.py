@@ -16,3 +16,18 @@ class PaymentRequest(models.Model):
     paid = models.BooleanField(default=False)
     discount = models.ForeignKey(PaymentDiscount, on_delete=models.CASCADE, null=True, blank=True)
     order_id = models.CharField(max_length=100, blank=True)
+
+    def get_price(self):
+        total_price = sum(plan.price for plan in self.plans if plan.kind == 'M')
+        calculated_price = total_price
+        if self.discount is not None:
+            amount = int(self.discount.amount)
+            percentage = float(self.discount.percentage)
+            if amount != 0:
+                calculated_price -= amount
+            elif percentage > 0:
+                calculated_price -= calculated_price * percentage / 100.
+        calculated_price = int(calculated_price)
+        total_price += sum(plan.price for plan in self.plans if plan.kind == 'W')
+        calculated_price += sum(plan.price for plan in self.plans if plan.kind == 'W')
+        return total_price, calculated_price
