@@ -114,7 +114,7 @@ export default function AttendanceInfo({
                   }
                   onChange={onModeChange}
                 />
-                <span>{modeOfAttendance.name}</span>
+                <span>{modeOfAttendance.name} - {(modeOfAttendance.price ?? 0).toLocaleString()} Tooman</span>
               </label>
             ))}
           </div>
