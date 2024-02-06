@@ -7,6 +7,7 @@ import AttendanceInfo from './AttendanceInfo';
 import { ModeOfAttendance, Workshop } from '../../../lib/types';
 import { fetchPrice } from '../../../lib/api/dashboard/register';
 import { createPayment } from '../../../lib/api/dashboard/payment';
+import { convertDigitsToLatin } from '../../../lib/string';
 
 export default function RegisterForm({
   workshops,
@@ -119,7 +120,7 @@ export default function RegisterForm({
   };
 
   const applyDiscountCode = () => {
-    setDiscountCode(inputDiscountCode);
+    setDiscountCode(convertDigitsToLatin(inputDiscountCode));
   };
 
   return (
