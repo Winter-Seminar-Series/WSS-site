@@ -2,6 +2,7 @@ import codecs
 from django import forms
 from django.contrib import admin
 import csv
+from django.shortcuts import redirect, render
 from django.urls import path
 
 from payment.models import PaymentDiscount, PaymentRequest
@@ -29,6 +30,12 @@ class PaymentDiscountAdmin(admin.ModelAdmin):
                     count=row[3]
                 )
             self.message_user(request, "Your csv file has been imported")
+            return redirect("..")
+        form = CsvImportForm()
+        payload = {"form": form}
+        return render(
+            request, "csv_form.html", payload
+        )
 
     def get_urls(self):
         urls = super().get_urls()
