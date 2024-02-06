@@ -6,6 +6,7 @@ from django.shortcuts import redirect, render
 from django.urls import path
 
 from payment.models import PaymentDiscount, PaymentRequest
+from core.models import Event
 
 # Register your models here.
 
@@ -24,6 +25,7 @@ class PaymentDiscountAdmin(admin.ModelAdmin):
             reader = csv.reader(codecs.iterdecode(csv_file, 'UTF-8'))
             for row in reader:
                 _, created = PaymentDiscount.objects.get_or_create(
+                    event=Event.objects.last(),
                     code=row[0],
                     percentage=row[1],
                     amount=row[2],
