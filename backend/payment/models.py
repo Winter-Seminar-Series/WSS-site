@@ -18,7 +18,8 @@ class PaymentRequest(models.Model):
     order_id = models.CharField(max_length=100, blank=True)
 
     def get_price(self):
-        total_price = sum(plan.price for plan in self.plans if plan.kind == 'M')
+        plans = self.plans.all()
+        total_price = sum(plan.price for plan in plans if plan.kind == 'M')
         calculated_price = total_price
         if self.discount is not None:
             amount = int(self.discount.amount)
@@ -28,6 +29,6 @@ class PaymentRequest(models.Model):
             elif percentage > 0:
                 calculated_price -= calculated_price * percentage / 100.
         calculated_price = int(calculated_price)
-        total_price += sum(plan.price for plan in self.plans if plan.kind == 'W')
-        calculated_price += sum(plan.price for plan in self.plans if plan.kind == 'W')
+        total_price += sum(plan.price for plan in plans if plan.kind == 'W')
+        calculated_price += sum(plan.price for plan in plans if plan.kind == 'W')
         return total_price, calculated_price
