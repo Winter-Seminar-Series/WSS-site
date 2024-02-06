@@ -48,4 +48,17 @@ class PaymentDiscountAdmin(admin.ModelAdmin):
 
 admin.site.register(PaymentDiscount, PaymentDiscountAdmin)
 
-admin.site.register(PaymentRequest)
+class PaymentRequestAdmin(admin.ModelAdmin):
+    list_display = ('participant', 'timestamp', 'paid', 'discount_code', 'order_id', 'base_price', 'paid_price')
+    list_filter = ('paid', 'discount__code')
+
+    def base_price(self, obj):
+        return obj.get_price()[0]
+    
+    def paid_price(self, obj):
+        return obj.get_price()[1]
+    
+    def discount_code(self, obj):
+        return obj.discount.code if obj.discount is not None else None
+
+admin.site.register(PaymentRequest, PaymentRequestAdmin)
