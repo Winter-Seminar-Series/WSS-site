@@ -63,7 +63,7 @@ class ParticipantInfoSerializer(serializers.ModelSerializer):
         raise serializers.ValidationError("Phone number is not valid.")
     
     def validate_gender(self, value: str) -> str:
-        if value in ['M', 'F']:
+        if value in ['M', 'F', 'O']:
             return value
         raise serializers.ValidationError("Gender is not valid.")
     
