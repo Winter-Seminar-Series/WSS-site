@@ -1,5 +1,8 @@
+import Image from 'next/image';
+import { Disclosure } from '@headlessui/react';
 import { formatToMonthAndDay } from '../../../lib/date';
 import { Workshop as WorkshopType } from '../../../lib/types';
+import WorkshopModules from '../../../ui/components/events/workshops/WorkshopModules';
 
 export default function Workshop({ workshop }: { workshop: WorkshopType }) {
   const speakers = workshop.sessions.map((session) => session.speaker);
@@ -50,22 +53,7 @@ export default function Workshop({ workshop }: { workshop: WorkshopType }) {
                 dangerouslySetInnerHTML={{ __html: workshop.description }}
               />
             </div>
-            <div className="w-full space-y-2">
-              <div className="text-[32px] font-semibold not-italic leading-[normal] tracking-[-0.32px] text-black">
-                Modules
-              </div>
-              {workshop.sessions?.map((session, index) => (
-                <div
-                  className="flex items-start gap-2 rounded-lg border border-solid border-[rgba(201,201,207,0.40)] px-5 py-4"
-                  key={session.id}
-                >
-                  <label className="text-base font-medium not-italic leading-[normal] tracking-[-0.16px] text-black">
-                    Module {index + 1}: {session.name} ({session.speaker.name})
-                  </label>
-                  <img src="/Arrow.svg"></img>
-                </div>
-              ))}
-            </div>
+            <WorkshopModules sessions={workshop.sessions} />
             <div className="flex flex-col items-start gap-7 self-stretch">
               <label className="text-[32px] font-semibold not-italic leading-[normal] tracking-[-0.32px] text-black">
                 Presenters
