@@ -45,15 +45,6 @@ export default function WorkshopModules({
             </>
           )}
         </Disclosure>
-        // <div
-        //   className="flex items-start gap-2 rounded-lg border border-solid border-[rgba(201,201,207,0.40)] px-5 py-4"
-        //   key={session.id}
-        // >
-        //   <label className="text-base font-medium not-italic leading-[normal] tracking-[-0.16px] text-black">
-        //     Module {index + 1}: {session.name} ({session.speaker.name})
-        //   </label>
-        //   <img src="/Arrow.svg"></img>
-        // </div>
       ))}
     </div>
   );
