@@ -21,3 +21,6 @@ class SpeakerAPIView(generics.RetrieveAPIView):
 class SeminarAPIView(generics.ListAPIView):
     queryset = Seminar.objects.all()
     serializer_class = SeminarSerializer
+    
+    def get_queryset(self):
+        return Seminar.objects.filter(sub_event__event=self.kwargs['event_id'])
