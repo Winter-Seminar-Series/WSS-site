@@ -2,7 +2,7 @@ from django.contrib.auth.models import User
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.serializers import TokenObtainSerializer
 from rest_framework import serializers
-from core.models import Event, Speaker, Workshop, WorkshopSession
+from core.models import Event, Seminar, Speaker, SubEvent, Workshop, WorkshopSession
 
 class EmailTokenObtainSerializer(TokenObtainSerializer):
     username_field = User.EMAIL_FIELD
@@ -41,3 +41,21 @@ class WorkshopSerializer(serializers.ModelSerializer):
     class Meta:
         model = Workshop
         fields = ('name', 'description', 'sessions', 'poster', 'thumbnail')
+
+class SpeakerSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Speaker
+        fields = '__all__'
+
+class SubEventSerializer(serializers.ModelSerializer):
+    # event = EventSerializer()
+    class Meta:
+        model = SubEvent
+        fields = '__all__'
+
+class SeminarSerializer(serializers.ModelSerializer):
+    sub_event = SubEventSerializer()
+    speaker = SpeakerSerializer()
+    class Meta:
+        model = Seminar
+        fields = ('sub_event', 'speaker')
