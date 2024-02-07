@@ -2,15 +2,12 @@ import { formatToMonthAndDay } from '../../../lib/date';
 import { Workshop as WorkshopType } from '../../../lib/types';
 
 export default function Workshop({ workshop }: { workshop: WorkshopType }) {
-  const presenters = workshop.sessions
-    .map((session) => session.speaker)
-    .filter(
-      (speaker, index) =>
-        index ===
-        workshop.sessions.findIndex(
-          (newSpeaker) => newSpeaker.id === speaker.id,
-        ),
-    );
+  const speakers = workshop.sessions.map((session) => session.speaker);
+  const presenters = speakers.filter(
+    (speaker, index) =>
+      index ===
+      speakers.findIndex((newSpeaker) => newSpeaker.id === speaker.id),
+  );
 
   return (
     <div>

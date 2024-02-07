@@ -34,7 +34,7 @@ const UpdateProfileFormSchema = z.object({
     ),
   city: z.string().optional(),
   birthDate: z.coerce
-    .date()
+    .date({ invalid_type_error: 'Birth date is in invalid format.' })
     .transform((date) => date.toISOString().split('T')[0])
     .optional(),
   gender: z.nativeEnum(Gender).optional(),
@@ -45,8 +45,12 @@ const UpdateProfileFormSchema = z.object({
   fieldsOfInterest: z.string().optional(),
   grade: z.nativeEnum(Grade).optional(),
   introductionMethod: z.nativeEnum(IntroductionMethod).optional(),
-  linkedin: z.string().url().optional().or(z.literal('')),
-  github: z.string().url().optional().or(z.literal('')),
+  linkedin: z
+    .string()
+    .url('LinkedIn URL is invalid.')
+    .optional()
+    .or(z.literal('')),
+  github: z.string().url('GitHub URL is invalid.').optional().or(z.literal('')),
 });
 
 type UpdateProfileFormInput = z.infer<typeof UpdateProfileFormSchema>;
