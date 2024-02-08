@@ -20,7 +20,7 @@ class Event(models.Model):
 
     name = models.TextField(max_length=50)
     order = models.IntegerField(default=1)
-    description = models.TextField(max_length=1000, blank=True)
+    description = models.TextField(max_length=5000, blank=True)
     starting_date = models.DateField()
     ending_date = models.DateField()
 
@@ -53,7 +53,7 @@ class SubEvent(models.Model):
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
     kind = models.CharField(max_length=1, choices=kind, default='S')
     name = models.TextField(max_length=200)
-    description = models.TextField(max_length=1000, blank=True)
+    description = models.TextField(max_length=5000, blank=True)
     starting_time = models.TimeField()
     ending_time = models.TimeField()
     date = models.DateField()
@@ -68,7 +68,7 @@ class SubEvent(models.Model):
 class Speaker(models.Model):
     name = models.TextField(max_length=50, blank=False)
     designation = models.TextField(max_length=150, blank=True)
-    description = models.TextField(max_length=1000, blank=True)
+    description = models.TextField(max_length=5000, blank=True)
     image = models.ImageField(upload_to='speakers/', null=True, blank=True)
 
     def __str__(self) -> str:
@@ -83,7 +83,7 @@ class Seminar(models.Model):
 
 class Workshop(models.Model):
     name = models.TextField(max_length=100)
-    description = models.TextField(max_length=3000, blank=True)
+    description = models.TextField(max_length=5000, blank=True)
     poster = models.ImageField(upload_to='posters/', null=True, blank=True)
     thumbnail = models.ImageField(upload_to='thumbnails/', null=True, blank=True)
 
@@ -94,7 +94,7 @@ class WorkshopSession(models.Model):
     workshop = models.ForeignKey(Workshop, on_delete=models.CASCADE)
     speaker = models.ForeignKey(Speaker, on_delete=models.CASCADE)
     name = models.TextField(max_length=100)
-    description = models.TextField(max_length=3000, blank=True)
+    description = models.TextField(max_length=5000, blank=True)
     starting_time = models.TimeField()
     ending_time = models.TimeField()
     date = models.DateField()

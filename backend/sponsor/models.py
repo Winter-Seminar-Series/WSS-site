@@ -3,7 +3,7 @@ from core.models import Event
 
 class Sponsor(models.Model):
     name = models.TextField(max_length=50, blank=False)
-    description = models.TextField(max_length=1000, blank=True)
+    description = models.TextField(max_length=5000, blank=True)
     thumbnail = models.ImageField(upload_to='sponsors/', blank=True)
     website = models.URLField(blank=True)
 
