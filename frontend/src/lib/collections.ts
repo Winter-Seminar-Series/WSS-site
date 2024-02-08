@@ -14,3 +14,10 @@ export function shuffle(array: any[]) {
 
   return array;
 }
+
+export function removeDuplicateID<T extends { id: any }>(array: T[]) {
+  return array.filter(
+    (value, index) =>
+      index === array.findIndex((otherValue) => otherValue.id === value.id),
+  );
+}

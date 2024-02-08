@@ -2,23 +2,17 @@ import React from 'react';
 import linkedin from './assets/linkedin.svg';
 import instagram from './assets/instagram.svg';
 import facebook from './assets/facebook.svg';
-import { Person } from './Seminar';
-import Image from 'next/image';
 import SeminarLogo from './SeminarLogo';
+import { Speaker } from '../../../lib/types';
 
-export default function SeminarCard({ person }: { person: Person }) {
+export default function SeminarCard({ speaker }: { speaker: Speaker }) {
   return (
     <div className={'w-fit flex-col items-center justify-between px-5 pt-20'}>
       <div className={'relative z-10 mx-auto flex w-fit justify-end'}>
-        <div className={'absolute z-10 mr-2 mt-1 flex-col'}>
-          <SeminarLogo logo={linkedin.src} alt={'linkedin'} />
-          <SeminarLogo logo={instagram.src} alt={'instagram'} />
-          <SeminarLogo logo={facebook.src} alt={'facebook'} />
-        </div>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src={person.image}
-          alt={person.name + ' ' + person.surname}
+          src={speaker.image}
+          alt={speaker.name}
           width={200}
           height={200}
           className={'relative z-0'}
@@ -30,10 +24,9 @@ export default function SeminarCard({ person }: { person: Person }) {
         }
       >
         <div className={'pb-1 pt-3.5 text-xl font-semibold text-black'}>
-          {person.name} {person.surname}
+          {speaker.name}
         </div>
-        <div>• {person.position}</div>
-        <div>• {person.university}</div>
+        <div>• {speaker.designation}</div>
       </div>
     </div>
   );

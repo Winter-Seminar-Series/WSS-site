@@ -34,9 +34,16 @@ const months = [
   'November',
   'December',
 ];
+
 export function formatToMonthAndDay(date: Date) {
   const day = getOrderedDay(date.getDate());
   const month = months[date.getMonth()];
 
   return `${month} ${day}`;
+}
+
+export function getTimeSpanInMinutes(from: Date, to: Date) {
+  const milliseconds = to.getTime() - from.getTime();
+  const minutes = Math.floor(milliseconds / (1000 * 60));
+  return minutes;
 }

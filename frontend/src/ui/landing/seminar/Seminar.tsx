@@ -3,19 +3,11 @@ import SeminarHeader from './SeminarHeader';
 import Background from './assets/background.svg';
 import SeminarLine from './SeminarLine';
 import ViewAllButton from './ViewAllButton';
+import { fetchSeminarSpeakers } from '../../../lib/api/events/seminar';
 
-export type Person = {
-  name: string;
-  surname: string;
-  linkedin: string;
-  instagram: string;
-  facebook: string;
-  image: string;
-  position: string;
-  university: string;
-};
+export default async function Seminar() {
+  const seminarSpeakers = await fetchSeminarSpeakers();
 
-export default function Seminar() {
   return (
     <div
       style={{ backgroundImage: `url(${Background.src})` }}
@@ -24,7 +16,7 @@ export default function Seminar() {
       }
     >
       <SeminarHeader />
-      <SeminarLine />
+      <SeminarLine speakers={seminarSpeakers} />
       <ViewAllButton text={'View All Seminars'} width={20} />
     </div>
   );

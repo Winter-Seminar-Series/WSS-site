@@ -15,7 +15,7 @@ export default function WorkshopCard({ workshop }: { workshop: Workshop }) {
   };
 
   return (
-    <Link href={`/workshop/${workshop.id}`}>
+    <Link href={`/workshops/${workshop.id}`}>
       <div
         className={
           'flex w-fit flex-col items-center justify-between overflow-hidden px-1'

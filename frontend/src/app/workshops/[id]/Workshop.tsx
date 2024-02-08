@@ -1,16 +1,11 @@
-import Image from 'next/image';
-import { Disclosure } from '@headlessui/react';
 import { formatToMonthAndDay } from '../../../lib/date';
 import { Workshop as WorkshopType } from '../../../lib/types';
 import WorkshopModules from '../../../ui/components/events/workshops/WorkshopModules';
+import { removeDuplicateID } from '../../../lib/collections';
 
 export default function Workshop({ workshop }: { workshop: WorkshopType }) {
   const speakers = workshop.sessions.map((session) => session.speaker);
-  const presenters = speakers.filter(
-    (speaker, index) =>
-      index ===
-      speakers.findIndex((newSpeaker) => newSpeaker.id === speaker.id),
-  );
+  const presenters = removeDuplicateID(speakers);
 
   return (
     <div>
@@ -20,7 +15,7 @@ export default function Workshop({ workshop }: { workshop: WorkshopType }) {
       ></div>
       <main>
         <div className="my-13 px-auto py-auto mx-auto max-w-[1200px] rounded-2xl bg-white shadow-[0px_30px_60px_0px_rgba(189,192,199,0.10)]">
-          <div className="flex flex-col items-start justify-center gap-8 px-8 py-[60px] md:px-[140px]">
+          <div className="flex flex-col items-start justify-center gap-8 px-20 py-[60px]">
             <div className="flex flex-col items-start justify-center  gap-2.5 self-stretch">
               <div className="flex items-center gap-4">
                 <div className="flex items-center gap-1">
@@ -43,7 +38,10 @@ export default function Workshop({ workshop }: { workshop: WorkshopType }) {
                 {workshop.name}
               </div>
             </div>
-            <img className="w-full" src=""></img>
+            <img
+              className="w-full rounded-2xl object-cover object-center"
+              src={workshop.poster}
+            />
             <div className="flex flex-col items-start gap-2">
               <label className="text-[32px] font-semibold not-italic leading-[normal] tracking-[-0.32px] text-black">
                 Abstract
