@@ -62,6 +62,9 @@ class SubEvent(models.Model):
     poster = models.ImageField(upload_to='posters/', null=True, blank=True)
     thumbnail = models.ImageField(upload_to='thumbnails/', null=True, blank=True)
 
+    def __str__(self) -> str:
+        return f'{self.name}'
+
 class Speaker(models.Model):
     name = models.TextField(max_length=50, blank=False)
     designation = models.TextField(max_length=150, blank=True)
@@ -74,6 +77,9 @@ class Speaker(models.Model):
 class Seminar(models.Model):
     sub_event = models.OneToOneField(SubEvent, on_delete=models.CASCADE)
     speaker = models.ForeignKey(Speaker, on_delete=models.CASCADE)
+
+    def __str__(self) -> str:
+        return f'{self.sub_event}'
 
 class Workshop(models.Model):
     name = models.TextField(max_length=100)
@@ -100,10 +106,19 @@ class RoundTable(models.Model):
     sub_event = models.OneToOneField(SubEvent, on_delete=models.CASCADE)
     speakers = models.ManyToManyField(Speaker)
 
+    def __str__(self) -> str:
+        return f'{self.sub_event}'
+
 class LabTalk(models.Model):
     sub_event = models.OneToOneField(SubEvent, on_delete=models.CASCADE)
     speaker = models.ForeignKey(Speaker, on_delete=models.CASCADE)
 
+    def __str__(self) -> str:
+        return f'{self.sub_event}'
+
 class PosterSession(models.Model):
     sub_event = models.OneToOneField(SubEvent, on_delete=models.CASCADE)
     speaker = models.ForeignKey(Speaker, on_delete=models.CASCADE)
+
+    def __str__(self) -> str:
+        return f'{self.sub_event}'

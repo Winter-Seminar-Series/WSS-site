@@ -32,13 +32,16 @@ class ParticipantInfo(models.Model):
     linkedin = models.CharField(max_length=100, blank=True)
     github = models.CharField(max_length=100, blank=True)
 
+    def __str__(self):
+        return f'{self.first_name} {self.last_name}'
+
 class Participant(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     info = models.ForeignKey(ParticipantInfo, on_delete=models.SET_NULL, null=True, blank=True)
     password_reset_code = models.CharField(max_length=5, blank=True)
 
     def __str__(self):
-        return f'{self.user.first_name} {self.user.last_name}'
+        return f'{self.info.first_name} {self.info.last_name}'
 
 class ModeOfAttendance(models.Model):
     name = models.CharField(max_length=50)

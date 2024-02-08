@@ -9,6 +9,9 @@ class PaymentDiscount(models.Model):
     amount = models.IntegerField(default=0)
     count = models.IntegerField(default=-1)
 
+    def __str__(self) -> str:
+        return f'{self.code}'
+
 class PaymentRequest(models.Model):
     plans = models.ManyToManyField(ParticipationPlan)
     participant = models.ForeignKey(Participant, on_delete=models.CASCADE)
@@ -32,3 +35,6 @@ class PaymentRequest(models.Model):
         total_price += sum(plan.price for plan in plans if plan.kind == 'W')
         calculated_price += sum(plan.price for plan in plans if plan.kind == 'W')
         return total_price, calculated_price
+    
+    def __str__(self) -> str:
+        return f'{self.participant} - {self.timestamp}'
