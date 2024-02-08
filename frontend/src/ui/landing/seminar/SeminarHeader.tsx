@@ -14,7 +14,7 @@ export default function SeminarHeader() {
         >
           Overline Goes Here
         </div>
-        <div className={'font-manrope text-45xl -mt-2 font-bold text-white'}>
+        <div className={'font-manrope mt-2 text-5xl font-bold text-white'}>
           Seminars
         </div>
       </div>
