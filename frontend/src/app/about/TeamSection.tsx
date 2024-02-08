@@ -1,6 +1,5 @@
 import React from 'react';
-import Image from 'next/image';
-import Sample from '../staff/assets/Sample.svg';
+import Sample from '../../ui/landing/staff/assets/Sample.svg';
 import type { Staff } from '../../lib/types';
 
 export default function TeamSection({
