@@ -44,10 +44,10 @@ const items = [
   },
   {
     id: 3,
-    title: 'Lab Talks',
-    overline: 'Exploring innovation at the core',
+    title: 'Workshops',
+    overline: 'Exploring education at the core',
     img: '/landing/labtalks.jpg ',
-    desc: 'This section focuses on the laboratories of the Faculty of Computer Engineering at Sharif University of Technology. In each session, we feature a different laboratory, with members introducing their lab and discussing current research topics. This provides participants with an opportunity to learn about cutting-edge research and developments in computer engineering.',
+    desc: 'This section includes some educational workshops, each comprising a number of sessions in which an aspect of the workshop\'s topic is covered. Workshops are held online by alumni of Sharif University of Technology, focusing on practical subjects of Computer Science and Engineering.',
   },
 ];
 

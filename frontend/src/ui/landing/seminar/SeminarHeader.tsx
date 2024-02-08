@@ -18,10 +18,10 @@ export default function SeminarHeader() {
           Seminars
         </div>
       </div>
-      <div className={'flex'}>
-        <NextPreButton src={PreArrow} direction={'pre'} />
-        <NextPreButton src={NextArrow} direction={'next'} className={'ml-4'} />
-      </div>
+      {/*<div className={'flex'}>*/}
+      {/*  <NextPreButton src={PreArrow} direction={'pre'} />*/}
+      {/*  <NextPreButton src={NextArrow} direction={'next'} className={'ml-4'} />*/}
+      {/*</div>*/}
     </div>
   );
 }

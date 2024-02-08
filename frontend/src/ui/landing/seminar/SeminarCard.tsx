@@ -1,8 +1,4 @@
 import React from 'react';
-import linkedin from './assets/linkedin.svg';
-import instagram from './assets/instagram.svg';
-import facebook from './assets/facebook.svg';
-import SeminarLogo from './SeminarLogo';
 import { Speaker } from '../../../lib/types';
 
 export default function SeminarCard({ speaker }: { speaker: Speaker }) {
@@ -23,10 +19,12 @@ export default function SeminarCard({ speaker }: { speaker: Speaker }) {
           'font-manrope z-0 w-[230px] -translate-y-[50%] rounded-lg bg-white pb-5 pl-4 pt-[40%] text-sm font-normal text-[#8A8998]'
         }
       >
-        <div className={'pb-1 pt-3.5 text-xl font-semibold text-black'}>
+        <div className={'pb-1 pt-3.5 text-xl font-semibold text-black mt-4 leading-6'}>
           {speaker.name}
         </div>
-        <div>• {speaker.designation}</div>
+        <div className={'pr-2'}>
+          • {speaker.designation}
+        </div>
       </div>
     </div>
   );
