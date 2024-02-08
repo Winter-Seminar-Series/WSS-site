@@ -64,7 +64,7 @@ class SubEvent(models.Model):
 
 class Speaker(models.Model):
     name = models.TextField(max_length=50, blank=False)
-    designation = models.TextField(max_length=50, blank=True)
+    designation = models.TextField(max_length=150, blank=True)
     description = models.TextField(max_length=1000, blank=True)
     image = models.ImageField(upload_to='speakers/', null=True, blank=True)
 
