@@ -12,7 +12,7 @@ export default function SeminarHeader() {
             'font-manrope text-left text-lg font-medium uppercase text-white/60'
           }
         >
-          Overline Goes Here
+          Unveiling the Frontiers of Knowledge
         </div>
         <div className={'font-manrope mt-2 text-5xl font-bold text-white'}>
           Seminars
