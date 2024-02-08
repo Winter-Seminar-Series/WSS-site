@@ -1,6 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
-import type { Staff } from '../../lib/types';
+import type { Staff } from '../../../lib/types';
 import Sample from './assets/Sample.svg';
 
 export default function StaffCard({ person }: { person: Staff }) {

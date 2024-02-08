@@ -103,6 +103,18 @@ export type Participation = {
   plans: number[];
 };
 
+export type Seminar = {
+  id: number;
+  name: string;
+  description: string;
+  startingTime: Date;
+  endingTime: Date;
+  date: Date;
+  poster: string;
+  thumbnail: string;
+  speaker: Speaker;
+};
+
 export type Price = {
   totalPrice: number;
   calculatedPrice: number;

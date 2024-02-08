@@ -103,16 +103,16 @@ export default function Navbar({ fixed = true, isAuthenticated = false }) {
           <Link href="/" className="block px-4 py-3">
             Home
           </Link>
-          {/* <a href="" className="block px-4 py-3">
+          <Link href="/seminars" className="block px-4 py-3">
             Seminars
-          </a>
-          <a href="" className="block px-4 py-3">
+          </Link>
+          {/* <a href="" className="block px-4 py-3">
             Lab Talks
           </a>
           <a href="" className="block px-4 py-3">
             Round Tables
           </a> */}
-          <Link href="/workshop" className="block px-4 py-3">
+          <Link href="/workshops" className="block px-4 py-3">
             Workshops
           </Link>
           <Link href="/about" className="block px-4 py-3">
