@@ -49,7 +49,7 @@ export default function Navbar({ fixed = true, isAuthenticated = false }) {
               <Logo className="max-lg:w-[40.8px] lg:w-[58px]" />
             </Link>
           </div>
-          <div className="hidden items-center justify-center gap-8 lg:flex">
+          <div className="hidden items-center justify-center gap-8 max-lg:gap-4 md:flex">
             {/* <div className="text-base font-medium not-italic leading-[normal] no-underline">
             <Menu as="div" className="relative">
               <Menu.Button className="flex items-center gap-x-1 p-2.5 text-base">
