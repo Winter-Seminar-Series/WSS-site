@@ -47,7 +47,7 @@ const items = [
     title: 'Workshops',
     overline: 'Exploring education at the core',
     img: '/landing/labtalks.jpg ',
-    desc: 'This section includes some educational workshops, each comprising a number of sessions in which an aspect of the workshop\'s topic is covered. Workshops are held online by alumni of Sharif University of Technology, focusing on practical subjects of Computer Science and Engineering.',
+    desc: "This section includes some educational workshops, each comprising a number of sessions in which an aspect of the workshop's topic is covered. Workshops are held online by alumni of Sharif University of Technology, focusing on practical subjects of Computer Science and Engineering.",
   },
 ];
 

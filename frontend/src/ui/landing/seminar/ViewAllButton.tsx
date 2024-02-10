@@ -13,7 +13,7 @@ export default function ViewAllButton({
     <Link
       href={'/seminars'}
       className={
-        'font-manrope w-fit m-auto mb-3 flex items-center justify-center rounded-md bg-white px-8 py-5 text-lg font-bold hover:bg-whitesmoke'
+        'font-manrope m-auto mb-3 flex w-fit items-center justify-center rounded-md bg-white px-8 py-5 text-lg font-bold hover:bg-whitesmoke'
       }
     >
       <div>{text}</div>

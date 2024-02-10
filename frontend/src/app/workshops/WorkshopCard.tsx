@@ -32,7 +32,7 @@ export default function WorkshopCard({ workshop }: { workshop: Workshop }) {
         <div
           style={{ borderColor: 'rgba(201, 201, 207, 0.4)' }}
           className={
-            'z-0 -mt-[110px] flex h-[300px] w-[380px] flex-col justify-between rounded-lg border bg-white px-4 pb-5 pt-[130px] text-sm font-normal text-[#8A8998]'
+            'z-0 -mt-[110px] flex h-[360px] w-[380px] flex-col justify-between rounded-lg border bg-white px-4 pb-5 pt-[130px] text-sm font-normal text-[#8A8998]'
           }
         >
           <div className="flex items-center space-x-4">

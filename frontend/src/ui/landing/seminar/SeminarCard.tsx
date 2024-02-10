@@ -19,12 +19,14 @@ export default function SeminarCard({ speaker }: { speaker: Speaker }) {
           'font-manrope z-0 w-[230px] -translate-y-[50%] rounded-lg bg-white pb-5 pl-4 pt-[40%] text-sm font-normal text-[#8A8998]'
         }
       >
-        <div className={'pb-1 pt-3.5 text-xl font-semibold text-black mt-4 leading-6'}>
+        <div
+          className={
+            'mt-4 pb-1 pt-3.5 text-xl font-semibold leading-6 text-black'
+          }
+        >
           {speaker.name}
         </div>
-        <div className={'pr-2'}>
-          • {speaker.designation}
-        </div>
+        <div className={'pr-2'}>• {speaker.designation}</div>
       </div>
     </div>
   );
