@@ -137,7 +137,7 @@ export default function RegisterForm({
             'text-4xl font-bold tracking-[-0.72px] text-darkslategray-100'
           }
         >
-          Registeration
+          Registration
         </div>
         <AttendanceInfo
           modesOfAttendance={modesOfAttendance}
