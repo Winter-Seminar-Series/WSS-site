@@ -58,6 +58,11 @@ module.exports = {
         gainsboro: '#e2e7ef',
         dodgerblue: 'rgba(15, 122, 219, 0.8)',
       },
+      listStyleType: {
+        disc: 'disc',
+        decimal: 'decimal',
+        circle: 'circle',
+      },
     },
   },
   plugins: [],

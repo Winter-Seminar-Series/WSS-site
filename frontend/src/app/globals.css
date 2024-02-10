@@ -7,8 +7,20 @@
     @apply list-decimal;
   }
 
+  ol ol {
+    @apply list-decimal pl-3;
+  }
+
   ul {
     @apply list-disc;
+  }
+
+  ul ul {
+    @apply list-circle pl-3;
+  }
+
+  ul ul ul {
+    @apply list-disc pl-3;
   }
 
   h1 {
