@@ -83,7 +83,6 @@ export default function ProfileForm({
               type="text"
               id="fName"
               minLength={3}
-              maxLength={15}
               defaultValue={profile.firstName}
               name="firstName"
               required
@@ -98,7 +97,6 @@ export default function ProfileForm({
               type="text"
               id="lName"
               minLength={3}
-              maxLength={20}
               defaultValue={profile.lastName}
               name="lastName"
               required
@@ -116,7 +114,6 @@ export default function ProfileForm({
               id="city"
               name="city"
               minLength={3}
-              maxLength={15}
               defaultValue={profile.city}
             />
           </div>
@@ -203,7 +200,6 @@ export default function ProfileForm({
                 type="text"
                 id="University"
                 minLength={5}
-                maxLength={100}
                 defaultValue={profile.university}
                 name="university"
               />
@@ -217,7 +213,6 @@ export default function ProfileForm({
                 type="text"
                 id="Major"
                 minLength={5}
-                maxLength={100}
                 defaultValue={profile.major}
                 name="major"
               />
@@ -233,7 +228,6 @@ export default function ProfileForm({
                 type="text"
                 id="Job"
                 minLength={5}
-                maxLength={100}
                 defaultValue={profile.job}
                 name="job"
               />
@@ -407,7 +401,6 @@ export default function ProfileForm({
                 className="w-full self-stretch rounded-lg border border-solid border-[rgba(138,137,152,0.30)] px-5 py-4 text-lg font-semibold not-italic leading-[normal] tracking-[-0.18px] text-[#1F2B3D]"
                 id="linkedin"
                 minLength={3}
-                maxLength={100}
                 defaultValue={profile.linkedin}
                 name="linkedin"
               />
@@ -420,7 +413,6 @@ export default function ProfileForm({
                 className="w-full self-stretch rounded-lg border border-solid border-[rgba(138,137,152,0.30)] px-5 py-4 text-lg font-semibold not-italic leading-[normal] tracking-[-0.18px] text-[#1F2B3D]"
                 id="github"
                 minLength={3}
-                maxLength={100}
                 defaultValue={profile.github}
                 name="github"
               />
@@ -445,7 +437,6 @@ export default function ProfileForm({
                     autoComplete="current-password"
                     id="currentPass"
                     minLength={3}
-                    maxLength={100}
                   />
                 </div>
               </div>
@@ -460,7 +451,6 @@ export default function ProfileForm({
                     autoComplete="new-password"
                     id="newPass"
                     minLength={3}
-                    maxLength={100}
                   />
                 </div>
               </div>
@@ -475,7 +465,6 @@ export default function ProfileForm({
                     autoComplete="new-password"
                     id="confirmNewPass"
                     minLength={3}
-                    maxLength={100}
                   />
                 </div>
               </div>
