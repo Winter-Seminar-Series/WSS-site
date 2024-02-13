@@ -43,18 +43,14 @@ export default function WorkshopModules({
           {({ open }) => (
             <>
               <Disclosure.Button className="flex w-full justify-between gap-2 text-base font-medium not-italic leading-[normal] tracking-[-0.16px] text-black">
-                <span>
+                <div className="flex-shrink text-left">
                   Module {index + 1}: {session.name} ({session.speaker.name})
-                </span>
-                <div className="flex items-center space-x-4 text-sm font-medium uppercase not-italic leading-[normal] tracking-[0.72px] text-[#8A8998]">
-                  <div className="flex justify-end">
-                    <div className="flex items-center space-x-2 uppercase">
-                      <span>
-                        {formatDate(session.date)},{' '}
-                        {formatTime(session.startingTime)} -{' '}
-                        {formatTime(session.endingTime)}
-                      </span>
-                    </div>
+                </div>
+                <div className="flex flex-grow items-center space-x-4 text-sm font-medium uppercase not-italic leading-[normal] tracking-[0.72px] text-[#8A8998]">
+                  <div className="flex flex-grow items-center justify-end space-x-2 uppercase">
+                    {formatDate(session.date)},{' '}
+                    {formatTime(session.startingTime)} -{' '}
+                    {formatTime(session.endingTime)}
                   </div>
                   <Image
                     src="/Arrow.svg"
