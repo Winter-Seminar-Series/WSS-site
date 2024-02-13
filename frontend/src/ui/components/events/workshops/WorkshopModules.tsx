@@ -9,8 +9,7 @@ import { getTimeSpanInMinutes } from '../../../../lib/date';
 
 const formatDate = (date: Date) => {
   const options: Intl.DateTimeFormatOptions = {
-    weekday: 'short',
-    month: 'long', // 'numeric', '2-digit', 'long', 'short', or 'narrow'
+    month: 'short', // 'numeric', '2-digit', 'long', 'short', or 'narrow'
     day: 'numeric', // 'numeric' or '2-digit'
   };
   return date?.toLocaleDateString('en-US', options);
@@ -50,20 +49,10 @@ export default function WorkshopModules({
                 <div className="flex items-center space-x-4 text-sm font-medium uppercase not-italic leading-[normal] tracking-[0.72px] text-[#8A8998]">
                   <div className="flex justify-end">
                     <div className="flex items-center space-x-2 uppercase">
-                      <Image src={calender} alt="" width={16} height={16} />
                       <span>
                         {formatDate(session.date)},{' '}
-                        {formatTime(session.startingTime)}
-                      </span>
-                    </div>
-                    <div className="flex items-center space-x-1 pl-3">
-                      <Image src={clock} alt="" width={16} height={16} />
-                      <span>
-                        {getTimeSpanInMinutes(
-                          session.startingTime,
-                          session.endingTime,
-                        )}{' '}
-                        MINUTES
+                        {formatTime(session.startingTime)} -{' '}
+                        {formatTime(session.endingTime)}
                       </span>
                     </div>
                   </div>
