@@ -23,4 +23,5 @@ urlpatterns = [
     path('api/', include('participant.urls')),
     path('api/', include('staff.urls')),
     path('api/payment/', include('payment.urls')),
+    path('api/skyroom/', include('skyroom.urls')),
 ]

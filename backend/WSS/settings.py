@@ -58,6 +58,7 @@ INSTALLED_APPS = [
     'sponsor',
     'staff',
     'payment',
+    'skyroom',
 ]
 
 REST_FRAMEWORK = {
@@ -216,3 +217,5 @@ AUTHENTICATION_BACKENDS = [
 
 PAYMENT_SERVICE_URL = os.environ.get('PAYMENT_SERVICE_URL')
 PAYMENT_CALLBACK_URL = os.environ.get('PAYMENT_CALLBACK_URL')
+
+SKYROOM_API_ENDPOINT = f"https://www.skyroom.online/skyroom/api/{os.environ.get('SKYROOM_API_KEY')}"
