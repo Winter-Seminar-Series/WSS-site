@@ -51,7 +51,7 @@ export default function Form({
           />
           <FormHeader overline={overline} title={title} />
           {error && (
-            <p className="-mb-10 mt-10 rounded-md bg-red-50 p-3 font-medium text-red-600">
+            <p className="bg-red-50 text-red-600 -mb-10 mt-10 rounded-md p-3 font-medium">
               {error}
             </p>
           )}

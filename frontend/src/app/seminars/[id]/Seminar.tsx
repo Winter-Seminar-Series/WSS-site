@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { formatToMonthAndDay, getTimeSpanInMinutes } from '../../../lib/date';
+import { getTimeSpanInMinutes } from '../../../lib/date';
 import { Seminar } from '../../../lib/types';
 import calender from '../assets/Calendar.svg';
 import clock from '../assets/Clock.svg';

@@ -22,7 +22,7 @@ export default function ProfileForm({
         </p>
       )}
       {error && (
-        <p className="w-full rounded-md bg-red-50 p-3 font-medium text-red-600">
+        <p className="bg-red-50 text-red-600 w-full rounded-md p-3 font-medium">
           {error}
         </p>
       )}

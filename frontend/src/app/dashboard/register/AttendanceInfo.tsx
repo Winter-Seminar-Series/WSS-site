@@ -129,7 +129,7 @@ export default function AttendanceInfo({
             action={onNationalCodeSubmit}
           >
             <p
-              className={`mb-3 w-full rounded-md bg-red-50 p-3 font-medium text-red-600 ${
+              className={`bg-red-50 text-red-600 mb-3 w-full rounded-md p-3 font-medium ${
                 nationalCodeError ? '' : 'hidden'
               }`}
             >
