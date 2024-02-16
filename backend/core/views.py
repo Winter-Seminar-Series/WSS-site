@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from rest_framework import generics, permissions
-from core.models import Event, Seminar, Speaker
-from core.serializers import EventSerializer, SeminarSerializer, SpeakerSerializer
+from core.models import Event, Seminar, Speaker, RoundTable
+from core.serializers import EventSerializer, SeminarSerializer, SpeakerSerializer, RoundTableSerializer
 
 # Create your views here.
 from rest_framework_simplejwt.views import TokenObtainPairView
@@ -24,3 +24,10 @@ class SeminarAPIView(generics.ListAPIView):
     
     def get_queryset(self):
         return Seminar.objects.filter(sub_event__event=self.kwargs['event_id'])
+
+class RoundTableAPIView(generics.ListAPIView):
+    queryset = RoundTable.objects.all()
+    serializer_class = RoundTableSerializer
+    
+    def get_queryset(self):
+        return RoundTable.objects.filter(sub_event__event=self.kwargs['event_id'])
