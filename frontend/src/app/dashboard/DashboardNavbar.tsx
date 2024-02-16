@@ -10,6 +10,7 @@ export default function DashboardNavbar() {
   const pathname = usePathname();
   const isProfile = pathname === '/dashboard/profile';
   const isRegister = pathname === '/dashboard/register';
+  const isStream = pathname === '/dashboard/stream';
 
   return (
     <div className="flex items-center justify-between self-stretch border-b border-solid border-b-[rgba(138,137,152,0.30)] max-md:-mx-6">
@@ -60,12 +61,29 @@ export default function DashboardNavbar() {
             Registration
           </Link>
         </div>
-        {/* <div className="flex items-center justify-center gap-2 px-6 py-5">
-        <img src="/source/Play.svg" />
-        <a className="text-xl font-semibold not-italic leading-[normal] tracking-[-0.2px] text-[#1F2B3D]">
-          Stream
-        </a>
-      </div> */}
+        <div
+          className={`flex items-center justify-center gap-2 border-b-2 border-solid px-6 py-5 max-md:gap-1 max-md:px-3 max-md:py-2 ${
+            isStream ? 'border-b-primary' : undefined
+          }`}
+        >
+          <Image
+            width={24}
+            height={24}
+            className={`${
+              isStream ? 'filter-primary' : undefined
+            } h-6 w-6 max-md:h-5 max-md:w-5`}
+            src="/source/stream.svg"
+            alt=""
+          />
+          <Link
+            href="/dashboard/stream"
+            className={`text-xl font-semibold not-italic leading-normal tracking-[-0.2px] max-md:text-base ${
+              isStream ? 'text-primary' : 'text-darkslategray-100'
+            }`}
+          >
+            Stream
+          </Link>
+        </div>
       </div>
       <LogoutButton />
     </div>

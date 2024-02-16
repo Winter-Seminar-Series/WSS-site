@@ -119,3 +119,16 @@ export type Price = {
   totalPrice: number;
   calculatedPrice: number;
 };
+
+export type StreamEvent = {
+  id: number;
+  room: {
+    roomId: number;
+    name: string;
+    title: string;
+  };
+  plan: number;
+  title: string;
+  description: string;
+  startingTime: Date;
+};
