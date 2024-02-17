@@ -22,7 +22,7 @@ export default function StreamEvent({
   streamEvent: StreamEvent;
 }) {
   // @ts-ignore
-  const hasStarted = new Date() - streamEvent.startingTime > 5 * 60 * 1000;
+  const hasStarted = new Date() > streamEvent.startingTime;
 
   const onAttendClick: React.MouseEventHandler<HTMLButtonElement> = async (
     event,
@@ -72,15 +72,13 @@ export default function StreamEvent({
                 <Disclosure.Button className="w-32 rounded-md bg-selago p-3 text-center text-secondary-200 transition-colors hover:bg-selago-300">
                   {open ? 'Hide' : 'Show'} Details
                 </Disclosure.Button>
-                {hasStarted && (
-                  <button
-                    onClick={onAttendClick}
-                    className="ml-4 flex w-28 justify-around rounded-md bg-secondary p-3 text-center text-white transition-colors hover:bg-secondary-400"
-                  >
-                    <Image src={play} height={22} width={22} alt="" />
-                    Attend
-                  </button>
-                )}
+                <button
+                  onClick={onAttendClick}
+                  className="ml-4 flex w-28 justify-around rounded-md bg-secondary p-3 text-center text-white transition-colors hover:bg-secondary-400"
+                >
+                  <Image src={play} height={22} width={22} alt="" />
+                  Attend
+                </button>
               </div>
             </div>
             <Disclosure.Panel className="p-4">
