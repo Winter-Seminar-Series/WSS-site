@@ -6,30 +6,40 @@ export default function Footer() {
     <footer className="border-t border-neutral-200 bg-white pb-7 pt-14 text-gray-700">
       <div className="mx-auto max-w-[1200px] px-6">
         <div className="flex items-center justify-between gap-y-4 max-md:flex-col">
-          <Image
-            src="/source/sut_footer.svg"
-            alt="Facebook"
-            width="60"
-            height="60"
-          />
-          <Image
-            src="/source/wss_footer.svg"
-            alt="LinkedIn"
-            width="71"
-            height="47"
-          />
-          <Image
-            src="/source/ssc_footer.svg"
-            alt="Instagram"
-            width="95"
-            height="46"
-          />
+          <Link href="/">
+            <Image
+              src="/source/wss_footer.svg"
+              alt="Winter Seminar Series"
+              width="71"
+              height="47"
+              className="opacity-60 grayscale hover:opacity-100 hover:grayscale-0"
+            />
+          </Link>
+          <a href="https://www.sharif.edu/" target="_blank">
+            <Image
+              src="/source/sut_footer.svg"
+              alt="Sharif University of Technology"
+              width="60"
+              height="60"
+              className="opacity-60 grayscale hover:opacity-100 hover:grayscale-0"
+            />
+          </a>
+          <a href="https://t.me/ssc_public" target="_blank">
+            <Image
+              src="/source/ssc_footer.svg"
+              alt="Students' Scientific Chapter"
+              width="95"
+              height="46"
+              className="opacity-60 grayscale hover:opacity-100 hover:grayscale-0"
+            />
+          </a>
           <a href="https://divar.ir/" target="_blank">
             <Image
               src="/source/sponsors/divar.svg"
               alt="Divar"
               width="69"
               height="40"
+              className="opacity-60 grayscale hover:opacity-100 hover:grayscale-0"
             />
           </a>
           <a href="https://quera.org/" target="_blank">
@@ -38,6 +48,7 @@ export default function Footer() {
               alt="Quera"
               width="131"
               height="24"
+              className="opacity-60 grayscale hover:opacity-100 hover:grayscale-0"
             />
           </a>
           <a href="https://ramzinex.com/" target="_blank">
@@ -46,6 +57,7 @@ export default function Footer() {
               alt="Ramzinex"
               width="140"
               height="32"
+              className="opacity-60 grayscale hover:opacity-100 hover:grayscale-0"
             />
           </a>
           <a href="https://cafebazaar.ir/app" target="_blank">
@@ -54,6 +66,7 @@ export default function Footer() {
               alt="Bazar"
               width="100"
               height="40"
+              className="opacity-60 grayscale hover:opacity-100 hover:grayscale-0"
             />
           </a>
           <a href="https://irancell.ir/" target="_blank">
@@ -62,6 +75,7 @@ export default function Footer() {
               alt="Irancell"
               width="100"
               height="40"
+              className="opacity-60 grayscale hover:opacity-100 hover:grayscale-0"
             />
           </a>
         </div>
