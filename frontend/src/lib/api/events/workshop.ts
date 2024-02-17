@@ -82,5 +82,10 @@ export async function fetchWorkshops() {
     }),
   );
 
+  workshops.forEach((workshop) => {
+    // @ts-ignore
+    workshop.sessions.sort((a, b) => a.date - b.date);
+  });
+
   return workshops;
 }

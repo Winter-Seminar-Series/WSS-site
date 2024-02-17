@@ -37,6 +37,9 @@ export async function fetchStreamEvents() {
     }),
   );
 
+  // @ts-ignore
+  streamEvents.sort((a, b) => a.startingTime - b.startingTime);
+
   return streamEvents;
 }
 

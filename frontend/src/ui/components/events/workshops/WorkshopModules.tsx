@@ -46,8 +46,8 @@ export default function WorkshopModules({
                 <div className="flex-shrink text-left">
                   Module {index + 1}: {session.name} ({session.speaker.name})
                 </div>
-                <div className="flex flex-grow items-center space-x-4 text-sm font-medium uppercase not-italic leading-[normal] tracking-[0.72px] text-[#8A8998]">
-                  <div className="flex flex-grow items-center justify-end space-x-2 uppercase">
+                <div className="my-auto flex w-80 flex-shrink flex-grow items-center space-x-4 text-sm font-medium uppercase not-italic leading-[normal] tracking-[0.72px] text-[#8A8998]">
+                  <div className="my-auto flex w-fit flex-grow items-center justify-end space-x-2 uppercase">
                     {formatDate(session.date)},{' '}
                     {formatTime(session.startingTime)} -{' '}
                     {formatTime(session.endingTime)}
