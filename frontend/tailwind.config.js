@@ -39,6 +39,19 @@ module.exports = {
           800: '#a69ac6',
           900: '#d3cde3',
         },
+        selago: {
+          DEFAULT: '#ebe8f2',
+          100: '#f3f0f7',
+          200: '#ebe8f2',
+          300: '#d5cfe3',
+          400: '#beb2d3',
+          500: '#a593bf',
+          600: '#9479ae',
+          700: '#81679a',
+          800: '#6c5681',
+          900: '#59486a',
+        },
+
         white: '#fff',
         darkslategray: {
           100: '#1f2b3d',
@@ -57,6 +70,7 @@ module.exports = {
         whitesmoke: '#e8eaee',
         gainsboro: '#e2e7ef',
         dodgerblue: 'rgba(15, 122, 219, 0.8)',
+        red: '#E04545',
       },
       listStyleType: {
         disc: 'disc',
