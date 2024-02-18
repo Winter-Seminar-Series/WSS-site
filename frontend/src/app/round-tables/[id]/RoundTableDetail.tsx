@@ -79,9 +79,7 @@ export default function RoundTableDetail({
               </label>
               {roundTable.speakers.map((speaker) => (
                 <div key={speaker.id}>
-                  <div
-                    className="flex flex-col items-start gap-12 self-stretch"
-                  >
+                  <div className="flex flex-col items-start gap-12 self-stretch">
                     <div
                       className="flex flex-col items-start justify-center gap-2 self-stretch"
                       key={speaker.id}

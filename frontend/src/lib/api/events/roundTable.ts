@@ -1,7 +1,7 @@
-import { convertTimeToDate } from "../../date";
-import { convertMarkdownToHTML } from "../../markdown";
-import { RoundTable } from "../../types";
-import { fetchJson } from "../fetch";
+import { convertTimeToDate } from '../../date';
+import { convertMarkdownToHTML } from '../../markdown';
+import { RoundTable } from '../../types';
+import { fetchJson } from '../fetch';
 
 type RoundTableResponse = {
   subEvent: {
@@ -36,7 +36,9 @@ export async function fetchRoundTables() {
       const startingTime = convertTimeToDate(
         roundTableResponse.subEvent.startingTime,
       );
-      const endingTime = convertTimeToDate(roundTableResponse.subEvent.endingTime);
+      const endingTime = convertTimeToDate(
+        roundTableResponse.subEvent.endingTime,
+      );
       const date = new Date(roundTableResponse.subEvent.date);
 
       return {
