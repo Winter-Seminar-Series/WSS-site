@@ -7,7 +7,7 @@ export default function StreamEvents({
   events: StreamEventType[];
 }) {
   return (
-    <div className="w-full rounded-lg border border-solid border-lightslategray/30 p-6">
+    <div className="w-full">
       {events && events.length ? (
         <div className="flex flex-col">
           {events.map((event) => (

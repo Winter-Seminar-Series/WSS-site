@@ -40,7 +40,7 @@ export default function StreamEvent({
     <>
       <Disclosure
         as="div"
-        className="m-2 rounded-lg border border-solid border-lightslategray/20 p-4"
+        className="my-2 rounded-lg border border-solid border-lightslategray/30 p-4"
       >
         {({ open }) => (
           <>
