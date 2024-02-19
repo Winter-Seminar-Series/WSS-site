@@ -59,6 +59,7 @@ INSTALLED_APPS = [
     'staff',
     'payment',
     'skyroom',
+    'spotplayer',
 ]
 
 REST_FRAMEWORK = {
@@ -219,3 +220,5 @@ PAYMENT_SERVICE_URL = os.environ.get('PAYMENT_SERVICE_URL')
 PAYMENT_CALLBACK_URL = os.environ.get('PAYMENT_CALLBACK_URL')
 
 SKYROOM_API_ENDPOINT = f"https://www.skyroom.online/skyroom/api/{os.environ.get('SKYROOM_API_KEY')}"
+
+SPOTPLAYER_API_KEY = os.environ.get('SPOTPLAYER_API_KEY')

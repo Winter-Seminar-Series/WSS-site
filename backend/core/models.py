@@ -76,7 +76,7 @@ class Speaker(models.Model):
 
 class Seminar(models.Model):
     sub_event = models.OneToOneField(SubEvent, on_delete=models.CASCADE)
-    speaker = models.ForeignKey(Speaker, on_delete=models.CASCADE)
+    speaker = models.ForeignKey(Speaker, on_delete=models.RESTRICT)
 
     def __str__(self) -> str:
         return f'{self.sub_event}'
@@ -92,7 +92,7 @@ class Workshop(models.Model):
 
 class WorkshopSession(models.Model):
     workshop = models.ForeignKey(Workshop, on_delete=models.CASCADE)
-    speaker = models.ForeignKey(Speaker, on_delete=models.CASCADE)
+    speaker = models.ForeignKey(Speaker, on_delete=models.RESTRICT)
     name = models.TextField(max_length=100)
     description = models.TextField(max_length=5000, blank=True)
     starting_time = models.TimeField()
@@ -111,14 +111,14 @@ class RoundTable(models.Model):
 
 class LabTalk(models.Model):
     sub_event = models.OneToOneField(SubEvent, on_delete=models.CASCADE)
-    speaker = models.ForeignKey(Speaker, on_delete=models.CASCADE)
+    speaker = models.ForeignKey(Speaker, on_delete=models.RESTRICT)
 
     def __str__(self) -> str:
         return f'{self.sub_event}'
 
 class PosterSession(models.Model):
     sub_event = models.OneToOneField(SubEvent, on_delete=models.CASCADE)
-    speaker = models.ForeignKey(Speaker, on_delete=models.CASCADE)
+    speaker = models.ForeignKey(Speaker, on_delete=models.RESTRICT)
 
     def __str__(self) -> str:
         return f'{self.sub_event}'

@@ -2,6 +2,7 @@ from rest_framework import serializers
 
 from payment.models import PaymentRequest, PaymentDiscount
 from participant.models import Participation, ParticipationPlan
+from spotplayer.models import SpotPlayerAPI
 
 from django.db.models import Q
 
@@ -113,11 +114,16 @@ class PaymentRequestCreateSerializer(serializers.ModelSerializer):
             info = participant.info
             info.pk = None
             info.save()
+            license = None
+            spotplayer_courses = [plan.spotplayer_course for plan in plans if plan.spotplayer_course is not None]
+            if len(spotplayer_courses) > 0:
+                license = SpotPlayerAPI().create_license(spotplayer_courses, participant)
             for plan in plans:
                 Participation.objects.create(
                     participant=participant,
                     plan=plan,
-                    info=info
+                    info=info,
+                    spotplayer_license=license if plan.spotplayer_course is not None else None
                 )
             return 'https://wss-sharif.com/dashboard/profile'
         url = settings.PAYMENT_SERVICE_URL + '/transaction'

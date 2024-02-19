@@ -1,4 +1,7 @@
 from core.models import Event, Workshop
+
+from spotplayer.models import SpotPlayerCourse, SpotPlayerLicense
+
 from django.contrib.auth.models import User
 from django.db import models
 
@@ -62,15 +65,17 @@ class ParticipationPlan(models.Model):
     kind = models.CharField(max_length=1, choices=KIND_CHOICES)
     workshop = models.ForeignKey(Workshop, on_delete=models.CASCADE, null=True, blank=True)
     mode_of_attendance = models.ForeignKey(ModeOfAttendance, on_delete=models.CASCADE, null=True, blank=True)
+    spotplayer_course = models.ForeignKey(SpotPlayerCourse, on_delete=models.SET_NULL, null=True, blank=True)
 
     def __str__(self):
         return f'{self.event} - {self.workshop if self.kind == "W" else self.mode_of_attendance}'
 
 class Participation(models.Model):
     participant = models.ForeignKey(Participant, on_delete=models.CASCADE)
-    info = models.ForeignKey(ParticipantInfo, on_delete=models.CASCADE)
+    info = models.ForeignKey(ParticipantInfo, on_delete=models.SET_NULL, null=True, blank=True)
     plan = models.ForeignKey(ParticipationPlan, on_delete=models.CASCADE)
     date = models.DateTimeField(auto_now_add=True)
+    spotplayer_license = models.ForeignKey(SpotPlayerLicense, on_delete=models.SET_NULL, null=True, blank=True)
 
     def __str__(self):
         return f'{self.participant} - {self.plan}'

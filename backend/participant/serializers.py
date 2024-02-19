@@ -79,10 +79,11 @@ class ModeOfAttendanceSerializer(serializers.ModelSerializer):
 
 class ParticipationSerializer(serializers.ModelSerializer):
     plan = serializers.IntegerField(source='plan.id', read_only=True)
+    license_key = serializers.CharField(source='spotplayer_license.license_key', read_only=True)
     
     class Meta:
         model = Participation
-        fields = ('plan',)
+        fields = ('plan', 'license_key')
 
 class ParticipationPlanSerializer(serializers.ModelSerializer):
     event = serializers.CharField(source='event.name', read_only=True)
