@@ -115,6 +115,18 @@ export type Seminar = {
   speaker: Speaker;
 };
 
+export type RoundTable = {
+  id: number;
+  name: string;
+  description: string;
+  startingTime: Date;
+  endingTime: Date;
+  date: Date;
+  poster: string;
+  thumbnail: string;
+  speakers: Speaker[];
+};
+
 export type Price = {
   totalPrice: number;
   calculatedPrice: number;

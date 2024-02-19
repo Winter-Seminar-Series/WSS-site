@@ -7,6 +7,7 @@ import Logo from './Logo';
 const links = [
   { href: '/', label: 'Home' },
   { href: '/seminars', label: 'Seminars' },
+  { href: '/round-tables', label: 'Round Tables' },
   { href: '/workshops', label: 'Workshops' },
   { href: '/about', label: 'About Us' },
 ];
@@ -124,12 +125,9 @@ export default function Navbar({ fixed = true, isAuthenticated = false }) {
             <Link href="/seminars" className="block px-4 py-3">
               Seminars
             </Link>
-            {/* <a href="" className="block px-4 py-3">
-            Lab Talks
-          </a>
-          <a href="" className="block px-4 py-3">
-            Round Tables
-          </a> */}
+            <Link href="/round-tables" className="block px-4 py-3">
+              Round Tables
+            </Link>
             <Link href="/workshops" className="block px-4 py-3">
               Workshops
             </Link>
