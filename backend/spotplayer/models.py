@@ -9,7 +9,7 @@ class SpotPlayerAPI:
         self.headers = {
             "Content-Type": "application/json",
             "$API": settings.SPOTPLAYER_API_KEY,
-            "$LEVEL": -1,
+            "$LEVEL": "-1",
         }
     
     def create_license(self, courses, participant):
