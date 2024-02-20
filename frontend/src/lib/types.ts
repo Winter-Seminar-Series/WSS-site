@@ -68,13 +68,13 @@ export type Speaker = {
 
 export type ParticipationPlan = {
   id: number;
-  paid?: boolean;
+  name: string;
   price: number;
+  paid?: boolean;
 };
 
 export type ModeOfAttendance = {
   id: number;
-  name: string;
   isNationalCodeRequired: boolean;
 } & ParticipationPlan;
 
@@ -90,7 +90,6 @@ export type WorkshopSession = {
 
 export type Workshop = {
   paid?: boolean;
-  name: string;
   poster: string;
   thumbnail: string;
   description: string;
@@ -99,8 +98,13 @@ export type Workshop = {
   sessions: WorkshopSession[];
 } & ParticipationPlan;
 
+export type PaidParticipationPlan = {
+  plan: number;
+  licenseKey: string;
+};
+
 export type Participation = {
-  plans: number[];
+  plans: PaidParticipationPlan[];
 };
 
 export type Seminar = {
@@ -143,4 +147,9 @@ export type StreamEvent = {
   title: string;
   description: string;
   startingTime: Date;
+};
+
+export type StreamEventLicense = {
+  title: string;
+  licenseKey: string;
 };

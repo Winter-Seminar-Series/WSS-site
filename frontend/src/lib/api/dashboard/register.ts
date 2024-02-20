@@ -1,21 +1,15 @@
 'use server';
 
 import { unstable_noStore as noStore } from 'next/cache';
-import {
-  ModeOfAttendance,
-  Participation,
-  ParticipationPlan,
-  Price,
-} from '../../types';
-import { FetchError, fetchJsonWithAuth } from '../fetch';
-import { fetchWorkshops } from '../events/workshop';
+import { Participation, ParticipationPlan, Price } from '../../types';
+import { fetchJsonWithAuth } from '../fetch';
 import camelcaseKeys from 'camelcase-keys';
 
 export async function setPaidParticipationPlans(
   participation: Participation,
   ...participationPlansArray: ParticipationPlan[][]
 ) {
-  const planIds = new Set(participation.plans);
+  const planIds = new Set(participation.plans.map((plan) => plan.plan));
 
   participationPlansArray.forEach((participationPlans) => {
     participationPlans.forEach((plan) => {
@@ -26,6 +20,7 @@ export async function setPaidParticipationPlans(
 
 type ParticipationResponse = {
   plan: number;
+  licenseKey: string;
 }[];
 
 export async function fetchParticipation() {
@@ -35,8 +30,8 @@ export async function fetchParticipation() {
 
   const response = await fetchJsonWithAuth<ParticipationResponse>(url);
 
-  const participation: Participation = {
-    plans: response.map((participationResponse) => participationResponse.plan),
+  const participation = {
+    plans: response,
   };
 
   return participation;

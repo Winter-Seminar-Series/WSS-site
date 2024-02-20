@@ -11,6 +11,7 @@ export default function DashboardNavbar() {
   const isProfile = pathname === '/dashboard/profile';
   const isRegister = pathname === '/dashboard/register';
   const isStream = pathname === '/dashboard/stream';
+  const isVideos = pathname === '/dashboard/videos';
 
   return (
     <div className="flex items-center justify-between self-stretch border-b border-solid border-b-[rgba(138,137,152,0.30)] max-md:-mx-6">
@@ -82,6 +83,29 @@ export default function DashboardNavbar() {
             }`}
           >
             Stream
+          </Link>
+        </div>
+        <div
+          className={`flex items-center justify-center gap-2 border-b-2 border-solid px-6 py-5 max-md:gap-1 max-md:px-3 max-md:py-2 ${
+            isVideos ? 'border-b-primary' : undefined
+          }`}
+        >
+          <Image
+            width={24}
+            height={24}
+            className={`${
+              isVideos ? 'filter-primary' : undefined
+            } h-6 w-6 max-md:h-5 max-md:w-5`}
+            src="/source/download.svg"
+            alt=""
+          />
+          <Link
+            href="/dashboard/videos"
+            className={`text-xl font-semibold not-italic leading-normal tracking-[-0.2px] max-md:text-base ${
+              isVideos ? 'text-primary' : 'text-darkslategray-100'
+            }`}
+          >
+            Videos
           </Link>
         </div>
       </div>
