@@ -12,6 +12,7 @@ from payment.serializers import PaymentRequestCreateSerializer, PaymentRequestPr
 
 from payment.models import PaymentRequest
 from participant.models import Participant, ParticipantInfo, Participation
+from spotplayer.models import SpotPlayerAPI
 
 import logging
 
@@ -55,9 +56,7 @@ class PaymentRequestVerifyAPIView(generics.GenericAPIView):
         pk = self.kwargs['pk']
         try:
             participant = Participant.objects.get(user=self.request.user)
-            logger.error(f'Participant {participant.pk} is verifying payment request {pk}')
             instance = PaymentRequest.objects.get(pk=pk)
-            logger.error(f'Payment request {pk} found')
         except:
             logger.error('Participant or request not found')
             raise serializers.ValidationError('Participant or request not found')
@@ -65,28 +64,33 @@ class PaymentRequestVerifyAPIView(generics.GenericAPIView):
             logger.error('Participant does not match')
             raise serializers.ValidationError('Participant does not match')
         if instance.paid:
-            logger.error('Payment request already paid')
+            logger.warning('Payment request already paid')
             return instance
         url = f'{settings.PAYMENT_SERVICE_URL}/transaction?order_id={instance.order_id}'
         res = requests.get(url)
-        logger.error(f'Payment service response: {res.status_code} {res.text}')
+        logger.debug(f'Payment service response: {res.status_code} {res.text}')
         if res.status_code != 200:
             raise serializers.ValidationError('Payment service error')
         res = res.json()
         if res['payment_status'] == 'success':
-            logger.error('Payment request paid')
+            logger.info('Payment request paid')
             instance.paid = True
             info = instance.participant.info
             info.pk = None
             info.save()
-            logger.error(f'Participant info {info.pk} created')
-            for plan in instance.plans.all():
+            plans = instance.plans.all()
+            license = None
+            spotplayer_courses = [plan.spotplayer_course for plan in plans if plan.spotplayer_course is not None]
+            if len(spotplayer_courses) > 0:
+                license = SpotPlayerAPI().create_license(spotplayer_courses, instance.participant)
+            for plan in plans:
                 Participation.objects.create(
                     participant=instance.participant,
                     plan=plan,
-                    info=info
+                    info=info,
+                    spotplayer_license=license if plan.spotplayer_course is not None else None
                 )
-                logger.error(f'Participation for plan {plan.pk} created')
+                logger.info(f'Participation for plan {plan.pk} created')
         elif res['payment_status'] == 'failed':
             logger.error('Payment request not paid')
             instance.paid = False
@@ -97,6 +101,6 @@ class PaymentRequestVerifyAPIView(generics.GenericAPIView):
             logger.error('Payment service error')
             raise serializers.ValidationError('Payment service error')
         instance.save()
-        logger.error(f'Payment request {pk} updated')
+        logger.info(f'Payment request {pk} updated')
         serializer = self.get_serializer(instance)
         return Response(serializer.data)
