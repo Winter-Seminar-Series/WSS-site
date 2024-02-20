@@ -16,7 +16,7 @@ function getStreamLicensesFromResponse(
   const plansDictionary = participation.plans.reduce((dictionary, plan) => {
     dictionary[plan.plan] = plan.licenseKey;
     return dictionary;
-  });
+  }, {});
 
   const streamLicenses: StreamEventLicense[] = participationPlansArray
     .flat()
