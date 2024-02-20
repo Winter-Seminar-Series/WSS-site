@@ -16,8 +16,10 @@ export default function VideoEntry({
   return (
     <div className="space-y-3">
       <div className="text-2xl font-bold">{title}</div>
-      <div className="flex items-center gap-y-2 rounded-md border border-[rgba(238,238,241,1)] py-2 pl-5 pr-2.5 max-md:flex-col max-md:items-stretch max-md:p-3">
-        <div className="grow select-all">{licenseKey}</div>
+      <div className="flex items-center gap-2 rounded-md border border-[rgba(238,238,241,1)] py-2 pl-5 pr-2.5 max-md:flex-col max-md:items-stretch max-md:p-3">
+        <div className="grow select-all overflow-hidden text-ellipsis">
+          {licenseKey}
+        </div>
         <div className="flex shrink-0 items-center gap-x-2">
           <button className="h-10 w-full whitespace-nowrap rounded bg-primary-900 px-4 text-base font-semibold text-primary-100">
             How to Use
