@@ -22,7 +22,8 @@ function getStreamLicensesFromResponse(
     .flat()
     .map((plan) => {
       return { title: plan.name, licenseKey: plansDictionary[plan.id] };
-    });
+    })
+    .filter((streamLicense) => streamLicense.licenseKey);
 
   return streamLicenses;
 }
