@@ -21,9 +21,13 @@ export default function VideoEntry({
           {licenseKey}
         </div>
         <div className="flex shrink-0 items-center gap-x-2">
-          <button className="h-10 w-full whitespace-nowrap rounded bg-primary-900 px-4 text-base font-semibold text-primary-100">
+          <a
+            className="h-10 w-full whitespace-nowrap rounded bg-primary-900 px-4 text-base font-semibold text-primary-100"
+            href="https://app.spotplayer.ir/player/help/"
+            target="_blank"
+          >
             How to Use
-          </button>
+          </a>
           <button
             className="flex h-10 w-full items-center justify-center gap-1 whitespace-nowrap rounded bg-secondary pl-4 pr-5 text-base font-semibold text-white"
             onClick={copyToClipboard}
