@@ -75,6 +75,7 @@ class PaymentRequestVerifyAPIView(generics.GenericAPIView):
         if res['payment_status'] == 'success':
             logger.info('Payment request paid')
             instance.paid = True
+            instance.save()
             info = instance.participant.info
             info.pk = None
             info.save()
@@ -82,7 +83,10 @@ class PaymentRequestVerifyAPIView(generics.GenericAPIView):
             license = None
             spotplayer_courses = [plan.spotplayer_course for plan in plans if plan.spotplayer_course is not None]
             if len(spotplayer_courses) > 0:
-                license = SpotPlayerAPI().create_license(spotplayer_courses, instance.participant)
+                try:
+                    license = SpotPlayerAPI().create_license(spotplayer_courses, instance.participant)
+                except:
+                    license = None
             for plan in plans:
                 Participation.objects.create(
                     participant=instance.participant,
@@ -94,13 +98,13 @@ class PaymentRequestVerifyAPIView(generics.GenericAPIView):
         elif res['payment_status'] == 'failed':
             logger.error('Payment request not paid')
             instance.paid = False
+            instance.save()
             if instance.discount is not None:
                 instance.discount.count += 1
                 instance.discount.save()
         else:
             logger.error('Payment service error')
             raise serializers.ValidationError('Payment service error')
-        instance.save()
         logger.info(f'Payment request {pk} updated')
         serializer = self.get_serializer(instance)
         return Response(serializer.data)

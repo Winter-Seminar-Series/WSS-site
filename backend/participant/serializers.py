@@ -32,6 +32,8 @@ class ParticipantSerializer(serializers.ModelSerializer):
         participant = Participant.objects.create(user=user, **validated_data)
         participant.info = ParticipantInfo.objects.create()
         participant.save()
+        participant.info.is_open_to_work = True
+        participant.info.save()
         return participant
 
 
