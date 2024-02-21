@@ -19,7 +19,7 @@ export default async function DashboardLayout({ children }) {
     participation.plans.length === 0
       ? null
       : modesOfAttendance.find((mode) =>
-          participation.plans.some((plan) => plan === mode.id),
+          participation.plans.some((plan) => plan.plan === mode.id),
         );
 
   return (
