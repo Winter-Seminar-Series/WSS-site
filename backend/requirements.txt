@@ -8,3 +8,4 @@ Pillow
 django-cors-headers
 psycopg
 requests
+drf-standardized-errors
