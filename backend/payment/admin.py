@@ -4,6 +4,7 @@ from django.contrib import admin
 import csv
 from django.shortcuts import redirect, render
 from django.urls import path
+from core.admin import ExportCSVMixin
 
 from payment.models import PaymentDiscount, PaymentRequest
 from core.models import Event
@@ -13,9 +14,10 @@ from core.models import Event
 class CsvImportForm(forms.Form):
     csv_file = forms.FileField()
 
-class PaymentDiscountAdmin(admin.ModelAdmin):
+class PaymentDiscountAdmin(admin.ModelAdmin, ExportCSVMixin):
     search_fields = ('code',)
     list_display = ('code', 'percentage', 'amount', 'count')
+    actions = ["export_as_csv"]
 
     change_list_template = "discount_changelist.html"
 
@@ -48,9 +50,10 @@ class PaymentDiscountAdmin(admin.ModelAdmin):
 
 admin.site.register(PaymentDiscount, PaymentDiscountAdmin)
 
-class PaymentRequestAdmin(admin.ModelAdmin):
+class PaymentRequestAdmin(admin.ModelAdmin, ExportCSVMixin):
     list_display = ('participant', 'timestamp', 'paid', 'discount_code', 'order_id', 'base_price', 'paid_price')
     list_filter = ('paid', 'discount__code')
+    actions = ["export_as_csv"]
 
     def base_price(self, obj):
         return obj.get_price()[0]
