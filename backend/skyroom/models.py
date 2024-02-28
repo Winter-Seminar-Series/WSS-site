@@ -55,7 +55,7 @@ class SkyroomRoom(models.Model):
 
 class SkyroomEvent(models.Model):
     room = models.ForeignKey(SkyroomRoom, on_delete=models.CASCADE)
-    plan = models.ForeignKey(ParticipationPlan, on_delete=models.CASCADE, null=True, blank=True)
+    plans = models.ManyToManyField(ParticipationPlan)
     title = models.CharField(max_length=200)
     description = models.TextField(max_length=5000, blank=True)
     starting_time = models.DateTimeField()

@@ -12,7 +12,7 @@ class SkyroomEventSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = SkyroomEvent
-        fields = ('id', 'room', 'plan', 'title', 'description', 'starting_time', 'duration')
+        fields = ('id', 'room', 'plans', 'title', 'description', 'starting_time', 'duration')
 
 class SkyroomEventWithLinkSerializer(serializers.ModelSerializer):
     link = serializers.CharField()

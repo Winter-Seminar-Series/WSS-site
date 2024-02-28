@@ -23,11 +23,15 @@ class SeminarAPIView(generics.ListAPIView):
     serializer_class = SeminarSerializer
     
     def get_queryset(self):
-        return Seminar.objects.filter(sub_event__event=self.kwargs['event_id'])
+        return Seminar.objects.filter(
+            sub_event__event=self.kwargs['event_id']
+            ).order_by('sub_event__date', 'sub_event__starting_time')
 
 class RoundTableAPIView(generics.ListAPIView):
     queryset = RoundTable.objects.all()
     serializer_class = RoundTableSerializer
     
     def get_queryset(self):
-        return RoundTable.objects.filter(sub_event__event=self.kwargs['event_id'])
+        return RoundTable.objects.filter(
+            sub_event__event=self.kwargs['event_id']
+            ).order_by('sub_event__date', 'sub_event__starting_time')

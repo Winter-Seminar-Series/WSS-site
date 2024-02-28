@@ -22,9 +22,10 @@ class SkyroomEventsView(ListAPIView):
         except:
             raise serializers.ValidationError('Participant not found')
         participant_plans = Participation.objects.filter(participant=participant).values_list('plan', flat=True)
-        events = SkyroomEvent.objects.filter(plan__in=participant_plans)
+        events = SkyroomEvent.objects.filter(plans__in=participant_plans)
         events = events.filter(starting_time__lte=timezone.now() + F('tolerance'))
         events = events.filter(starting_time__gte=timezone.now() - F('duration') - F('tolerance'))
+        events = events.order_by('starting_time')
         serializer = self.get_serializer(events, many=True)
         return Response(serializer.data)
 
