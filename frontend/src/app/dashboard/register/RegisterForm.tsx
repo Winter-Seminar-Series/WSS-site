@@ -86,11 +86,11 @@ export default function RegisterForm({
       scrollToTop();
       return;
     }
-    if (!modesOfAttendance[selectedModeIndex]) {
-      setError('Please select a mode of attendance.');
-      scrollToTop();
-      return;
-    }
+    // if (!modesOfAttendance[selectedModeIndex]) {
+    //   setError('Please select a mode of attendance.');
+    //   scrollToTop();
+    //   return;
+    // }
     if (
       modesOfAttendance[selectedModeIndex]?.isNationalCodeRequired &&
       !nationalCode

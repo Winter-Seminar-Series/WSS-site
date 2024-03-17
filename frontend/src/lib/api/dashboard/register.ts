@@ -30,7 +30,7 @@ export async function fetchParticipation() {
 
   const response = await fetchJsonWithAuth<ParticipationResponse>(url);
 
-  const participation = {
+  const participation: Participation = {
     plans: response,
   };
 
