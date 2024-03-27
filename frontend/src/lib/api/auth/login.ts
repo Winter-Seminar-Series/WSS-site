@@ -6,7 +6,7 @@ import { z } from 'zod';
 import { FetchError, fetchJson } from '../fetch';
 import { getSession } from '../session';
 import { parseJWT } from '../../auth';
-import { cleanFormData } from '../../error';
+import { cleanFormData, getAPIErrorMessage } from '../../error';
 
 type LoginResponse = {
   access: string;
@@ -71,7 +71,7 @@ export default async function login(formData: FormData) {
   try {
     await loginWithEmailAndPassword(email, password);
   } catch (error) {
-    return { error: error.message.detail };
+    return { error: getAPIErrorMessage(error) };
   }
 
   redirect('/dashboard/profile');

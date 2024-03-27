@@ -4,6 +4,7 @@ import { unstable_noStore as noStore } from 'next/cache';
 import { Participation, ParticipationPlan, Price } from '../../types';
 import { fetchJsonWithAuth } from '../fetch';
 import camelcaseKeys from 'camelcase-keys';
+import { getAPIErrorMessage } from '../../error';
 
 export async function setPaidParticipationPlans(
   participation: Participation,
@@ -37,10 +38,8 @@ export async function fetchParticipation() {
   return participation;
 }
 
-function getIsDiscountCodeValidFromResponse(response: {
-  nonFieldErrors: string[];
-}) {
-  return !response.nonFieldErrors?.includes('Invalid discount code') ?? true;
+function getIsDiscountCodeValidFromResponse(error: any) {
+  return error.message.errors[0].code === 'invalid';
 }
 
 export async function fetchPrice(plans: number[], discountCode?: string) {
@@ -67,13 +66,11 @@ export async function fetchPrice(plans: number[], discountCode?: string) {
       isDiscountCodeValid: true,
     };
   } catch (error) {
-    const errorResponse = camelcaseKeys(error.message);
-    const isDiscountCodeValid =
-      getIsDiscountCodeValidFromResponse(errorResponse);
+    const isDiscountCodeValid = getIsDiscountCodeValidFromResponse(error);
 
     return {
       price: { totalPrice: 0, calculatedPrice: 0 },
-      error: error.message,
+      error: getAPIErrorMessage(error),
       isDiscountCodeValid,
     };
   }

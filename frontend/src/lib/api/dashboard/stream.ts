@@ -5,7 +5,7 @@ import { z } from 'zod';
 import { convertMarkdownToHTML } from '../../markdown';
 import { StreamEvent } from '../../types';
 import { fetchJsonWithAuth } from '../fetch';
-import { cleanInput } from '../../error';
+import { cleanInput, getAPIErrorMessage } from '../../error';
 
 type StreamEventResponse = {
   id: number;
@@ -76,6 +76,6 @@ export async function attendStream(input: FormInput) {
     const link = await callAttendSeminarAPI(id);
     return { link };
   } catch (error) {
-    return { error: 'Something wrong happened. Please try again later.' };
+    return { error: getAPIErrorMessage(error) };
   }
 }

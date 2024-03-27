@@ -1,4 +1,5 @@
 import { z, ZodError, ZodRawShape } from 'zod';
+import { FetchError } from './api/fetch';
 
 function cleanParsedInput(parsedInput: any) {
   let errorMessage: string | undefined, cleanedInput: any;
@@ -34,4 +35,8 @@ export function cleanFormData<InputType extends ZodRawShape>(
 
 export function joinIssueMessages(error: ZodError) {
   return error.issues.map((issue) => issue.message).join(' ');
+}
+
+export function getAPIErrorMessage(error: any) {
+  return error.message.errors[0].detail;
 }

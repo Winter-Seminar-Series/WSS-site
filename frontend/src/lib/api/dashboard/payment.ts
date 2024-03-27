@@ -2,7 +2,7 @@
 
 import { unstable_noStore as noStore } from 'next/cache';
 import { z } from 'zod';
-import { cleanInput } from '../../error';
+import { cleanInput, getAPIErrorMessage } from '../../error';
 import { fetchJsonWithAuth } from '../fetch';
 import { redirect } from 'next/navigation';
 
@@ -46,8 +46,7 @@ export async function createPayment(input: FormInput) {
     ({ redirectUrl } = await callCreatePaymentAPI(plans, discountCode));
   } catch (error) {
     // TODO: return a more meaningful error message
-    return { error: 'Something wrong happened. Please try again.' };
-    // return { error: JSON.stringify(error.message) };
+    return { error: getAPIErrorMessage(error) };
   }
 
   redirect(redirectUrl);

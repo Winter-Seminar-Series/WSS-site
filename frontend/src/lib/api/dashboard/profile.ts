@@ -4,7 +4,7 @@ import { unstable_noStore as noStore, revalidatePath } from 'next/cache';
 import { z } from 'zod';
 import { Gender, Grade, IntroductionMethod, Profile } from '../../types';
 import { fetchJsonWithAuth } from '../fetch';
-import { cleanFormData } from '../../error';
+import { cleanFormData, getAPIErrorMessage } from '../../error';
 
 type ProfileResponse = Profile & { email: string };
 
@@ -79,7 +79,7 @@ export async function updateProfile(formData: FormData) {
   try {
     await callUpdateProfileAPI(cleanedInput);
   } catch (error) {
-    return { error: error.message };
+    return { error: getAPIErrorMessage(error) };
   }
 
   revalidatePath('/dashboard/profile');
@@ -120,7 +120,7 @@ export async function updateNationalCode(formData: FormData) {
   try {
     await callUpdateNationalCodeAPI(nationalCode);
   } catch (error) {
-    return { error: error.message };
+    return { error: getAPIErrorMessage(error) };
   }
 
   revalidatePath('/dashboard/profile');
