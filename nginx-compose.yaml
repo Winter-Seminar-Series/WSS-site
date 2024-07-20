@@ -7,7 +7,7 @@ services:
       - "80:80"
       - "5000:5000"
     volumes:
-      - /root/WSS-site/nginx.conf:/etc/nginx/conf.d/default.conf
+      - /root/wss/WSS-site/nginx.conf:/etc/nginx/conf.d/default.conf
       - staticfiles:/var/www/static
 
 volumes:

@@ -1,3 +1,4 @@
+import base64
 import re
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import User
@@ -5,7 +6,7 @@ from rest_framework import serializers
 
 from core.serializers import WorkshopSerializer
 
-from participant.models import ModeOfAttendance, Participant, ParticipantInfo, Participation, ParticipationPlan
+from participant.models import ModeOfAttendance, Participant, ParticipantInfo, Participation, ParticipationPlan, ParticipationAttachment
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -95,3 +96,18 @@ class ParticipationPlanSerializer(serializers.ModelSerializer):
     class Meta:
         model = ParticipationPlan
         fields = ('id', 'price', 'event', 'kind', 'workshop', 'mode_of_attendance')
+
+class ParticipationAttachmentSerializer(serializers.ModelSerializer):
+    UUID = serializers.CharField(source='attachment', read_only=True)
+
+    def to_representation(self, instance):
+        ret = super().to_representation(instance)
+        ret['UUID'] = base64.base64encode(ret['UUID'].encode('utf-8'))
+        return ret
+
+    class Meta:
+        model = ParticipationAttachment
+        fields = ['id', 'participation', 'description', 'date', 'UUID']
+
+class FileSerializer(serializers.Serializer):
+    attachment = serializers.CharField()

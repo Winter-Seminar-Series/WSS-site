@@ -153,3 +153,13 @@ export type StreamEventLicense = {
   title: string;
   licenseKey: string;
 };
+
+export type CertificateInfo = {
+  description: string;
+  date: Date;
+  uuid: string;
+};
+
+export type FileInfo = {
+  attachment: string;
+};
