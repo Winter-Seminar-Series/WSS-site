@@ -137,7 +137,7 @@ class ParticipationAttachmentByEventAPIView(generics.ListAPIView):
     def get_queryset(self):
         return ParticipationAttachment.objects.filter(participation__plan__event=self.kwargs['event_id'], participation__participant=self.kwargs['participant'])
 
-    def get(sekf, request, *args, **kwargs):
+    def get(self, request, *args, **kwargs):
         try:
             self.kwargs['participant'] = Participant.objects.get(user=self.request.user)
         except Participant.DoesNotExist:
