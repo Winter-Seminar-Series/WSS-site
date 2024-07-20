@@ -1,7 +1,7 @@
 import { FileInfo } from '../../types';
 import { fetchJson } from '../fetch';
 
-type FileInfoResponse = { attachment: string; }
+type FileInfoResponse = { attachment: string };
 
 export async function fetchFileInfo(id: string) {
   const url = `${process.env.API_ORIGIN}/api/file/${id}/`;
@@ -12,4 +12,3 @@ export async function fetchFileInfo(id: string) {
 
   return fileInfo;
 }
-

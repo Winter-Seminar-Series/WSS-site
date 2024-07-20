@@ -5,7 +5,7 @@ import { CertificateInfo } from '../../../lib/types';
 export default function CertificateEntry({
   certificateInfo,
 }: {
-  certificateInfo: CertificateInfo
+  certificateInfo: CertificateInfo;
 }) {
   const { description, uuid } = certificateInfo;
   const certificateUrl = `${process.env.ORIGIN}/files/${uuid}`;
@@ -15,8 +15,8 @@ export default function CertificateEntry({
   };
 
   const view = () => {
-    window.open(certificateUrl, "_blank").focus();
-  }
+    window.open(certificateUrl, '_blank').focus();
+  };
 
   return (
     <div className="space-y-3">
