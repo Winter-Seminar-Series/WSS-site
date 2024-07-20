@@ -1,13 +1,15 @@
+import base64
 from random import choices
 
 from django.conf import settings
 from django.core.mail import send_mail
 from django.http import Http404
+from django.core.files import storage
 from rest_framework import generics, permissions, status, views
 from rest_framework.response import Response
 
-from participant.models import Participant, Participation, ParticipationPlan
-from participant.serializers import ParticipantInfoSerializer, ParticipantSerializer, ParticipationPlanSerializer, ParticipationSerializer
+from participant.models import Participant, Participation, ParticipationPlan, ParticipationAttachment
+from participant.serializers import ParticipantInfoSerializer, ParticipantSerializer, ParticipationPlanSerializer, ParticipationSerializer, ParticipationAttachmentSerializer, FileSerializer
 
 
 class ParticipantCreateAPIView(generics.CreateAPIView):
@@ -127,3 +129,24 @@ class ModeOfAttendanceByEventAPIView(generics.ListAPIView):
 
     def get_queryset(self):
         return ParticipationPlan.objects.filter(event=self.kwargs['event_id'], kind='M')
+
+class ParticipationAttachmentByEventAPIView(generics.ListAPIView):
+    serializer_class = ParticipationAttachmentSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        return ParticipationAttachment.objects.filter(participation__plan__event=self.kwargs['event_id'], participation__participant=self.kwargs['participant'])
+
+    def get(sekf, request, *args, **kwargs):
+        try:
+            self.kwargs['participant'] = Participant.objects.get(user=self.request.user)
+        except Participant.DoesNotExist:
+            raise Http404
+        return self.list(request, *args, **kwargs)
+
+class FileByIDAPIView(views.APIView):
+    serializer_class = FileSerializer
+
+    def get(self, request, *args, **kwargs):
+        url = base64.base64decode(self.kwargs['file_id']).decode()
+        return Response(FileSerializer({'attachment': storage.default_storage.url(url)}).data)
