@@ -148,5 +148,5 @@ class FileByIDAPIView(views.APIView):
     serializer_class = FileSerializer
 
     def get(self, request, *args, **kwargs):
-        url = base64.base64decode(self.kwargs['file_id']).decode()
+        url = base64.b64decode(self.kwargs['file_id']).decode()
         return Response(FileSerializer({'attachment': storage.default_storage.url(url)}).data)

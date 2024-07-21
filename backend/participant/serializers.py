@@ -102,7 +102,7 @@ class ParticipationAttachmentSerializer(serializers.ModelSerializer):
 
     def to_representation(self, instance):
         ret = super().to_representation(instance)
-        ret['UUID'] = base64.base64encode(ret['UUID'].encode('utf-8'))
+        ret['UUID'] = base64.b64encode(ret['UUID'].encode('utf-8'))
         return ret
 
     class Meta:
