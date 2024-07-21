@@ -3,7 +3,6 @@
 import { unstable_noStore as noStore } from 'next/cache';
 import { Participation, ParticipationPlan, Price } from '../../types';
 import { fetchJsonWithAuth } from '../fetch';
-import camelcaseKeys from 'camelcase-keys';
 import { getAPIErrorMessage } from '../../error';
 
 export async function setPaidParticipationPlans(

@@ -8,13 +8,13 @@ export default function CertificateEntry({
   certificateInfo: CertificateInfo;
 }) {
   const { description, uuid } = certificateInfo;
-  const certificateUrl = `${process.env.ORIGIN}/files/${uuid}`;
+  const certificateUrl = `${process.env.NEXT_PUBLIC_ORIGIN}/files/${uuid}`;
 
-  const copyToClipboard = () => {
+  const copyURL = () => {
     navigator.clipboard.writeText(certificateUrl);
   };
 
-  const view = () => {
+  const download = () => {
     window.open(certificateUrl, '_blank').focus();
   };
 
@@ -22,13 +22,10 @@ export default function CertificateEntry({
     <div className="space-y-3">
       <div className="text-2xl font-bold">{description}</div>
       <div className="flex items-center gap-2 rounded-md border border-[rgba(238,238,241,1)] py-2 pl-5 pr-2.5 max-md:flex-col max-md:items-stretch max-md:p-3">
-        <div className="grow select-all overflow-hidden text-ellipsis">
-          {certificateUrl}
-        </div>
         <div className="flex shrink-0 items-center gap-x-2">
           <button
             className="flex h-10 w-full items-center justify-center gap-1 whitespace-nowrap rounded bg-secondary pl-4 pr-5 text-base font-semibold text-white"
-            onClick={copyToClipboard}
+            onClick={copyURL}
           >
             <svg
               width="16"
@@ -42,11 +39,11 @@ export default function CertificateEntry({
                 fill="white"
               />
             </svg>
-            Copy to Clipboard
+            Copy URL
           </button>
           <button
             className="flex h-10 w-full items-center justify-center gap-1 whitespace-nowrap rounded bg-secondary pl-4 pr-5 text-base font-semibold text-white"
-            onClick={view}
+            onClick={download}
           >
             <svg
               width="16"
@@ -60,7 +57,7 @@ export default function CertificateEntry({
                 fill="white"
               />
             </svg>
-            View
+            Download
           </button>
         </div>
       </div>
