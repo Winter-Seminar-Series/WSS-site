@@ -29,6 +29,7 @@ COPY . .
 ENV API_ORIGIN http://172.17.0.1:8000
 ENV SECRET_COOKIE_PASSWORD MEOWMEOW
 ENV GA_TRACKING_ID G-QCX3G9KSPC
+ENV NEXT_PUBLIC_ORIGIN=https://wss-sharif.com
 RUN yarn build
 
 # If using npm comment out above and use below instead
