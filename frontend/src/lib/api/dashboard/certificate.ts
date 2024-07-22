@@ -14,7 +14,17 @@ export async function fetchCertificateInfos() {
 
   const response = await fetchJsonWithAuth<CertificateInfoResponse>(url);
 
-  const certificateInfos: CertificateInfo[] = response;
+  const certificateInfos: CertificateInfo[] = await Promise.all(
+    response.map((certificateInfoResponse) => {
+      const date = new Date(certificateInfoResponse.date);
+
+      return {
+        date,
+        uuid: certificateInfoResponse.uuid,
+        plan: certificateInfoResponse.plan,
+      };
+    }),
+  );
 
   return certificateInfos;
 }
