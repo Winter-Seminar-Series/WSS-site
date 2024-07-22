@@ -3,7 +3,7 @@ import { fetchJsonWithAuth } from '../fetch';
 
 type CertificateInfoResponse = {
   id: number;
-  participation: number;
+  plan: string;
   description: string;
   date: string;
   uuid: string;
@@ -14,17 +14,7 @@ export async function fetchCertificateInfos() {
 
   const response = await fetchJsonWithAuth<CertificateInfoResponse>(url);
 
-  const certificateInfos: CertificateInfo[] = await Promise.all(
-    response.map(async (certificateInfoResponse) => {
-      const date = new Date(certificateInfoResponse.date);
-
-      return {
-        date,
-        description: certificateInfoResponse.description,
-        uuid: certificateInfoResponse.uuid,
-      };
-    }),
-  );
+  const certificateInfos: CertificateInfo[] = response;
 
   return certificateInfos;
 }

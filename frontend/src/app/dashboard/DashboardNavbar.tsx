@@ -120,7 +120,7 @@ export default function DashboardNavbar() {
             className={`${
               isCertificates ? 'filter-primary' : undefined
             } h-6 w-6 max-md:h-5 max-md:w-5`}
-            src="/source/download.svg"
+            src="/source/certificate.svg"
             alt=""
           />
           <Link
