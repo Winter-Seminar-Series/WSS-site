@@ -155,6 +155,7 @@ export type StreamEventLicense = {
 };
 
 export type CertificateInfo = {
+  date: Date;
   plan: string;
   uuid: string;
 };
