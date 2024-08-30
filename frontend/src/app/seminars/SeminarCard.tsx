@@ -61,7 +61,7 @@ export default function SeminarCard({ seminar }: { seminar: Seminar }) {
               </span>
             </div>
           </div>
-          <div className="line-clamp-2 w-full overflow-hidden overflow-ellipsis pb-1 text-2xl font-semibold text-black">
+          <div className="line-clamp-2 w-full overflow-hidden overflow-ellipsis pb-1 text-xl font-semibold text-black mt-1">
             {seminar?.name}
           </div>
           <div className="flex flex-col space-x-1">
