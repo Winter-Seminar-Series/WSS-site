@@ -173,8 +173,7 @@ export default function Navbar({ fixed = true, isAuthenticated = false }) {
           {/*    </Link>*/}
           {/*  </div>*/}
           {/*)}*/}
-              <Dropdown transparent={transparent} />
-
+          <Dropdown transparent={transparent} />
         </div>
       </nav>
       <div
