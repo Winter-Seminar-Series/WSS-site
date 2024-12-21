@@ -11,7 +11,7 @@ const manrope = Manrope({
  * @type {import('next').Metadata}
  */
 export const metadata = {
-  title: '9th WSS',
+  title: 'Winter Seminar Series',
   description: 'Winter Seminar Series',
   other: {
     'theme-color': '#342b4c',
