@@ -1,6 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
 
-
 export default function Dropdown({ transparent }) {
   const historyData = [
     { name: '9th WSS', url: 'https://wss-sharif.com' },
@@ -12,7 +11,7 @@ export default function Dropdown({ transparent }) {
   const dropdownRef = useRef(null);
 
   useEffect(() => {
-    function handleClickOutside(event: { target: any; }) {
+    function handleClickOutside(event: { target: any }) {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
         setIsOpen(false);
       }
@@ -30,13 +29,13 @@ export default function Dropdown({ transparent }) {
         onClick={() => setIsOpen(!isOpen)}
         className={`flex items-center rounded-md px-6 text-base font-semibold max-lg:h-9 max-lg:px-4 lg:h-12 ${
           transparent
-            ? 'bg-secondary-500 border text-white hover:bg-secondary-400'
-            :'bg-white text-secondary-500 hover:bg-whitesmoke' 
+            ? 'border bg-secondary-500 text-white hover:bg-secondary-400'
+            : 'bg-white text-secondary-500 hover:bg-whitesmoke'
         }`}
       >
         History
         <svg
-          className="w-5 h-5 ml-2 -mr-1"
+          className="-mr-1 ml-2 h-5 w-5"
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 20 20"
           fill="currentColor"
@@ -51,23 +50,20 @@ export default function Dropdown({ transparent }) {
       </button>
 
       {isOpen && (
-        <div
-          className=" absolute right-0 z-10 w-56 mt-2 origin-top-right bg-white divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5">
+        <div className=" absolute right-0 z-10 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5">
           <div className="py-2">
-            {
-              historyData.map(value => {
-                return (
-                  <a
-                    key={value.url}
-                    href={value.url}
-                    target={'_blank'}
-                    className="block px-4 p-2 text-sm text-gray-700  hover:bg-gray-100 hover:text-gray-900 "
-                  >
-                    {value.name}
-                  </a>
-                );
-              })
-            }
+            {historyData.map((value) => {
+              return (
+                <a
+                  key={value.url}
+                  href={value.url}
+                  target={'_blank'}
+                  className="block p-2 px-4 text-sm text-gray-700  hover:bg-gray-100 hover:text-gray-900 "
+                >
+                  {value.name}
+                </a>
+              );
+            })}
           </div>
         </div>
       )}
