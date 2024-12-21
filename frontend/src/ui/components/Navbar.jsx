@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Logo from './Logo';
+import Dropdown from './dashboard/DropDown';
 
 const links = [
   { href: '/', label: 'Home' },
@@ -171,6 +172,7 @@ export default function Navbar({ fixed = true, isAuthenticated = false }) {
               >
                 Login
               </Link>
+              <Dropdown transparent={transparent} />
             </div>
           )}
         </div>
