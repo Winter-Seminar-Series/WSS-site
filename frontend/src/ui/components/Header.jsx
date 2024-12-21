@@ -96,12 +96,12 @@ export default function Header({ isAuthenticated = false }) {
                 2000+
               </p>
               <p className="text-white text-opacity-80 max-lg:text-sm">
-                Participants in 8th WSS
+                Participants in 9th WSS
               </p>
             </div>
             <div className="shrink-0 max-lg:w-1/2">
               <p className="text-6xl font-bold leading-snug tracking-tight text-white max-lg:text-[40px]">
-                120+
+                160+
               </p>
               <p className="text-white text-opacity-80 max-lg:text-sm">
                 Presentations in all series
