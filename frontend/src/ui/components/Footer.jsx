@@ -53,7 +53,7 @@ export default function Footer() {
           </a>
           <a href="https://ramzinex.com/" target="_blank">
             <Image
-              src="/source/sponsors/ramzinex.svg"
+              src="/source/sponsors/ramzinex.png"
               alt="Ramzinex"
               width="140"
               height="32"
