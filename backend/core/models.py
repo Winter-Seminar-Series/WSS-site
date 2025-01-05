@@ -86,6 +86,12 @@ class Workshop(models.Model):
     description = models.TextField(max_length=5000, blank=True)
     poster = models.ImageField(upload_to='posters/', null=True, blank=True)
     thumbnail = models.ImageField(upload_to='thumbnails/', null=True, blank=True)
+    event = models.ForeignKey(
+        Event,
+        on_delete=models.CASCADE,
+        null=False,
+        blank=False
+        )
 
     def __str__(self) -> str:
         return f'{self.name}'
