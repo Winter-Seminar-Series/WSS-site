@@ -12,6 +12,7 @@ urlpatterns = [
     path('event/', EventAPIView.as_view(), name='events'),
     path('seminar/<int:event_id>/', SeminarAPIView.as_view(), name='seminars'),
     path('lab-talk/<int:event_id>/', LabTalkAPIView.as_view(), name='lab-talks'),
+    path('poster-session/<int:event_id>/', LabTalkAPIView.as_view(), name='lab-talks'),
     path('round-table/<int:event_id>/', RoundTableAPIView.as_view(), name='round-tables'),
     path('speaker/<pk>/', SpeakerAPIView.as_view(), name='speaker'),
 ]

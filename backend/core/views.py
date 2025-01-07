@@ -1,7 +1,8 @@
 from django.shortcuts import render
 from rest_framework import generics, permissions
-from core.models import Event, LabTalk, Seminar, Speaker, RoundTable
-from core.serializers import EventSerializer, SeminarSerializer, SpeakerSerializer, RoundTableSerializer
+from core.models import Event, LabTalk, Seminar, Speaker, RoundTable, PosterSession
+from core.serializers import EventSerializer, SeminarSerializer, SpeakerSerializer, RoundTableSerializer, \
+    PosterSessionSerializer
 
 # Create your views here.
 from rest_framework_simplejwt.views import TokenObtainPairView
@@ -38,6 +39,16 @@ class LabTalkAPIView(generics.ListAPIView):
 
     def get_queryset(self):
         return LabTalk.objects.filter(
+            sub_event__event=self.kwargs['event_id']
+        ).order_by('sub_event__date', 'sub_event__starting_time')
+
+
+class PosterSessionAPIView(generics.ListAPIView):
+    queryset = PosterSession.objects.all()
+    serializer_class = PosterSessionSerializer
+
+    def get_queryset(self):
+        return PosterSession.objects.filter(
             sub_event__event=self.kwargs['event_id']
         ).order_by('sub_event__date', 'sub_event__starting_time')
 
