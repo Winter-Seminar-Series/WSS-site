@@ -91,7 +91,7 @@ export default function Header({ isAuthenticated = false }) {
             </div>
           </div>
           <div className="flex shrink-0 flex-col justify-between gap-y-6 text-end max-lg:flex-row max-lg:flex-wrap max-lg:text-start">
-            <div className="shrink-0 pr max-lg:w-1/2">
+            <div className="pr shrink-0 max-lg:w-1/2">
               <p className="text-6xl font-bold leading-snug tracking-tight text-white max-lg:text-[40px]">
                 1600+
               </p>
