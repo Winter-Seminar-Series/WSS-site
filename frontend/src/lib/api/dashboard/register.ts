@@ -26,7 +26,7 @@ type ParticipationResponse = {
 export async function fetchParticipation() {
   noStore();
 
-  const url = `${process.env.API_ORIGIN}/api/participation/1/`;
+  const url = `${process.env.API_ORIGIN}/api/participation/${process.env.WSS_ORDER}/`;
 
   const response = await fetchJsonWithAuth<ParticipationResponse>(url);
 

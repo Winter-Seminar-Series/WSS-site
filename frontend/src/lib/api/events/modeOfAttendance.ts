@@ -11,7 +11,7 @@ type ModeOfAttendanceResponse = {
 }[];
 
 export async function fetchModesOfAttendance() {
-  const url = `${process.env.API_ORIGIN}/api/mode/1/`;
+  const url = `${process.env.API_ORIGIN}/api/mode/${process.env.WSS_ORDER}/`;
 
   const response = await fetchJson<ModeOfAttendanceResponse>(url);
 

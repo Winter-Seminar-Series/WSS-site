@@ -10,7 +10,7 @@ type CertificateInfoResponse = {
 }[];
 
 export async function fetchCertificateInfos() {
-  const url = `${process.env.API_ORIGIN}/api/attachment/1/`;
+  const url = `${process.env.API_ORIGIN}/api/attachment/${process.env.WSS_ORDER}/`;
 
   const response = await fetchJsonWithAuth<CertificateInfoResponse>(url);
 
