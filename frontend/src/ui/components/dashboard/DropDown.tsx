@@ -54,8 +54,7 @@ export default function Dropdown({ transparent }) {
       </button>
 
       {isOpen && (
-        <div
-          className=" absolute right-0 z-10 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white opacity-90 shadow-lg ring-1 ring-black ring-opacity-5">
+        <div className=" absolute right-0 z-10 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white opacity-90 shadow-lg ring-1 ring-black ring-opacity-5">
           <ul className="py-2">
             {historyData.map((value, index) => {
               return (
@@ -66,13 +65,11 @@ export default function Dropdown({ transparent }) {
                     animationDelay: `${index * 100}ms`,
                   }}
                 >
-                  <Logo
-                    className="mr-2 h-3 w-4 opacity-0 transition-opacity duration-300 group-hover:opacity-100 sm:w-[18px] lg:w-[24px]" />
+                  <Logo className="mr-2 h-3 w-4 opacity-0 transition-opacity duration-300 group-hover:opacity-100 sm:w-[18px] lg:w-[24px]" />
                   <a href={value.url} target={'_blank'}>
                     {value.name}
                   </a>
-                  <div
-                    className="absolute bottom-0 left-[15%] h-0.5 w-[70%] origin-left scale-x-0 bg-black transition-all duration-500 ease-in-out group-hover:scale-x-100"></div>
+                  <div className="absolute bottom-0 left-[15%] h-0.5 w-[70%] origin-left scale-x-0 bg-black transition-all duration-500 ease-in-out group-hover:scale-x-100"></div>
                 </li>
               );
             })}
