@@ -30,7 +30,7 @@ export async function fetchSeminars() {
   const response = await fetchJson<SeminarResponse>(url);
 
   const seminars: Seminar[] = await Promise.all(
-    response.map(async (seminarResponse) => {
+    response.reverse().map(async (seminarResponse) => {
       const description = await convertMarkdownToHTML(
         seminarResponse.subEvent.description,
       );

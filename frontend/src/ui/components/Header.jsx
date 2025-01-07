@@ -91,12 +91,12 @@ export default function Header({ isAuthenticated = false }) {
             </div>
           </div>
           <div className="flex shrink-0 flex-col justify-between gap-y-6 text-end max-lg:flex-row max-lg:flex-wrap max-lg:text-start">
-            <div className="shrink-0 pr-2 max-lg:w-1/2">
+            <div className="shrink-0 pr max-lg:w-1/2">
               <p className="text-6xl font-bold leading-snug tracking-tight text-white max-lg:text-[40px]">
                 1600+
               </p>
               <p className="text-white text-opacity-80 max-lg:text-sm">
-                Participants in 9th WSS
+                Participants
               </p>
             </div>
             <div className="shrink-0 max-lg:w-1/2">
@@ -104,15 +104,15 @@ export default function Header({ isAuthenticated = false }) {
                 42+
               </p>
               <p className="text-white text-opacity-80 max-lg:text-sm">
-                Presentationsin 9th WSS
+                Presentations
               </p>
             </div>
-            <div className="shrink-0 pr-2 max-lg:w-1/2">
+            <div className="shrink-0 max-lg:w-1/2">
               <p className="text-6xl font-bold leading-snug tracking-tight text-white max-lg:text-[40px]">
                 18+
               </p>
               <p className="text-white text-opacity-80 max-lg:text-sm">
-                Workshops in 9th WSS
+                Workshop-Sessions
               </p>
             </div>
             <div className="shrink-0 max-lg:w-1/2">
