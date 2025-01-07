@@ -41,7 +41,7 @@ export default function Header({ isAuthenticated = false }) {
                     src="/source/Calendar.svg"
                   />
                   <p className="max-lg:w-37 max-lg:h-10.5 font-normal not-italic text-[rgba(255,255,255,0.80)] max-lg:self-stretch max-lg:text-sm max-lg:leading-[21px] lg:text-xl lg:leading-[normal]">
-                    February 28th, 2024 - March 3rd, 2025
+                    February 28th, 2024 - March 3rd, 2024
                   </p>
                 </div>
               </div>
