@@ -8,7 +8,7 @@ export default function Timer() {
   const timer = useTimer();
   return (
     <div
-      className="bg-cover bg-center bg-no-repeat py-11 text-white"
+      className="bg-cover bg-center bg-no-repeat py-16 text-white"
       style={{
         backgroundImage: 'url(/source/footer_rectangle.svg)',
       }}

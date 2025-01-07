@@ -101,26 +101,26 @@ export default function Header({ isAuthenticated = false }) {
             </div>
             <div className="shrink-0 max-lg:w-1/2">
               <p className="text-6xl font-bold leading-snug tracking-tight text-white max-lg:text-[40px]">
-                160+
+                42+
               </p>
               <p className="text-white text-opacity-80 max-lg:text-sm">
-                Presentations in all series
+                Presentationsin 9th WSS
               </p>
             </div>
             <div className="shrink-0 pr-2 max-lg:w-1/2">
               <p className="text-6xl font-bold leading-snug tracking-tight text-white max-lg:text-[40px]">
-                30+
+                18+
               </p>
               <p className="text-white text-opacity-80 max-lg:text-sm">
-                Workshops in all series
+                Workshops in 9th WSS
               </p>
             </div>
             <div className="shrink-0 max-lg:w-1/2">
               <p className="text-6xl font-bold leading-snug tracking-tight text-white max-lg:text-[40px]">
-                20+
+                16+
               </p>
               <p className="text-white text-opacity-80 max-lg:text-sm">
-                Subfields of Computer Science
+                Poster-Sessions and Round-Tables
               </p>
             </div>
           </div>
