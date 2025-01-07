@@ -24,7 +24,7 @@ type WorkshopResponse = {
 }[];
 
 export async function fetchWorkshops() {
-  const url = `${process.env.API_ORIGIN}/api/workshop/1/`;
+  const url = `${process.env.API_ORIGIN}/api/workshop/${process.env.WSS_ORDER}/`;
 
   const response = await fetchJson<WorkshopResponse>(url);
 
