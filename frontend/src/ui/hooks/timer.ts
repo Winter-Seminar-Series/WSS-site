@@ -15,11 +15,11 @@ export default function useTimer() {
     );
     const offset = utcDate.getTime() - tzDate.getTime();
 
-    const startDate = new Date(2025, 4, 10, 8);
+    const startDate = new Date(2024, 1, 29, 19);
     startDate.setTime(startDate.getTime() + offset); // force the timezone to Tehran time
 
     const interval = setInterval(() => {
-      const diff = Math.max(0, startDate.getTime() - Date.now());
+      const diff = startDate.getTime() - Date.now();
       const days = Math.floor(diff / (1000 * 60 * 60 * 24));
       const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
       const minutes = Math.floor((diff / 1000 / 60) % 60);

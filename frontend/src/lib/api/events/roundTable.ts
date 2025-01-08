@@ -24,7 +24,7 @@ type RoundTableResponse = {
 }[];
 
 export async function fetchRoundTables() {
-  const url = `${process.env.API_ORIGIN}/api/round-table/1/`;
+  const url = `${process.env.API_ORIGIN}/api/round-table/${process.env.WSS_ORDER}/`;
 
   const response = await fetchJson<RoundTableResponse>(url);
 

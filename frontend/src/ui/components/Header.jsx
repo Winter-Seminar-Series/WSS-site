@@ -41,7 +41,7 @@ export default function Header({ isAuthenticated = false }) {
                     src="/source/Calendar.svg"
                   />
                   <p className="max-lg:w-37 max-lg:h-10.5 font-normal not-italic text-[rgba(255,255,255,0.80)] max-lg:self-stretch max-lg:text-sm max-lg:leading-[21px] lg:text-xl lg:leading-[normal]">
-                    April 10th, 2025 - April 11th, 2025
+                    February 28th, 2024 - March 3rd, 2024
                   </p>
                 </div>
               </div>
@@ -91,36 +91,36 @@ export default function Header({ isAuthenticated = false }) {
             </div>
           </div>
           <div className="flex shrink-0 flex-col justify-between gap-y-6 text-end max-lg:flex-row max-lg:flex-wrap max-lg:text-start">
-            <div className="shrink-0 pr-2 max-lg:w-1/2">
+            <div className="pr shrink-0 max-lg:w-1/2">
               <p className="text-6xl font-bold leading-snug tracking-tight text-white max-lg:text-[40px]">
-                2000+
+                1600+
               </p>
               <p className="text-white text-opacity-80 max-lg:text-sm">
-                Participants in 9th WSS
+                Participants
               </p>
             </div>
             <div className="shrink-0 max-lg:w-1/2">
               <p className="text-6xl font-bold leading-snug tracking-tight text-white max-lg:text-[40px]">
-                160+
+                42+
               </p>
               <p className="text-white text-opacity-80 max-lg:text-sm">
-                Presentations in all series
-              </p>
-            </div>
-            <div className="shrink-0 pr-2 max-lg:w-1/2">
-              <p className="text-6xl font-bold leading-snug tracking-tight text-white max-lg:text-[40px]">
-                30+
-              </p>
-              <p className="text-white text-opacity-80 max-lg:text-sm">
-                Workshops in all series
+                Presentations
               </p>
             </div>
             <div className="shrink-0 max-lg:w-1/2">
               <p className="text-6xl font-bold leading-snug tracking-tight text-white max-lg:text-[40px]">
-                20+
+                18+
               </p>
               <p className="text-white text-opacity-80 max-lg:text-sm">
-                Subfields of Computer Science
+                Workshop-Sessions
+              </p>
+            </div>
+            <div className="shrink-0 max-lg:w-1/2">
+              <p className="text-6xl font-bold leading-snug tracking-tight text-white max-lg:text-[40px]">
+                16+
+              </p>
+              <p className="text-white text-opacity-80 max-lg:text-sm">
+                Poster-Sessions and Round-Tables
               </p>
             </div>
           </div>

@@ -132,6 +132,9 @@ export default function Navbar({ fixed = true, isAuthenticated = false }) {
             <Link href="/workshops" className="block px-4 py-3">
               Workshops
             </Link>
+            <Link href="/lab-talks" className="block px-4 py-3">
+              Lab Talks
+            </Link>
             <Link href="/about" className="block px-4 py-3">
               About Us
             </Link>

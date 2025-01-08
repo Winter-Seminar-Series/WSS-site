@@ -2,17 +2,19 @@ from django.db import models
 from django.contrib.auth import get_user_model
 from django.contrib.auth.backends import ModelBackend
 
+
 class EmailModelBackend(ModelBackend):
     def authenticate(self, request, email=None, password=None, **kwargs):
-        UserModel = get_user_model()
+        user_model = get_user_model()
         try:
-            user = UserModel.objects.get(email=email)
-        except UserModel.DoesNotExist:
+            user = user_model.objects.get(email=email)
+        except user_model.DoesNotExist:
             return None
         else:
             if user.check_password(password):
                 return user
         return None
+
 
 class Event(models.Model):
     class Meta:
@@ -35,6 +37,7 @@ class Event(models.Model):
         else:
             end = 'th'
         return f'{self.order}{end} {self.name}'
+
 
 class SubEvent(models.Model):
     kind = (
@@ -65,6 +68,7 @@ class SubEvent(models.Model):
     def __str__(self) -> str:
         return f'{self.name}'
 
+
 class Speaker(models.Model):
     name = models.TextField(max_length=50, blank=False)
     designation = models.TextField(max_length=150, blank=True)
@@ -74,6 +78,7 @@ class Speaker(models.Model):
     def __str__(self) -> str:
         return f'{self.name}'
 
+
 class Seminar(models.Model):
     sub_event = models.OneToOneField(SubEvent, on_delete=models.CASCADE)
     speaker = models.ForeignKey(Speaker, on_delete=models.RESTRICT)
@@ -81,13 +86,18 @@ class Seminar(models.Model):
     def __str__(self) -> str:
         return f'{self.sub_event}'
 
+
 class Workshop(models.Model):
     name = models.TextField(max_length=100)
     description = models.TextField(max_length=5000, blank=True)
     poster = models.ImageField(upload_to='posters/', null=True, blank=True)
     thumbnail = models.ImageField(upload_to='thumbnails/', null=True, blank=True)
-    def __str__(self) -> str:
-        return f'{self.name}'
+    event = models.ForeignKey(
+        Event,
+        on_delete=models.CASCADE,
+        null=False,
+        blank=False
+    )
 
 class WorkshopSession(models.Model):
     workshop = models.ForeignKey(Workshop, on_delete=models.CASCADE)
@@ -101,6 +111,7 @@ class WorkshopSession(models.Model):
     def __str__(self):
         return f'{self.workshop} - {self.date}'
 
+
 class RoundTable(models.Model):
     sub_event = models.OneToOneField(SubEvent, on_delete=models.CASCADE)
     speakers = models.ManyToManyField(Speaker)
@@ -108,12 +119,14 @@ class RoundTable(models.Model):
     def __str__(self) -> str:
         return f'{self.sub_event}'
 
+
 class LabTalk(models.Model):
     sub_event = models.OneToOneField(SubEvent, on_delete=models.CASCADE)
     speaker = models.ForeignKey(Speaker, on_delete=models.RESTRICT)
 
     def __str__(self) -> str:
         return f'{self.sub_event}'
+
 
 class PosterSession(models.Model):
     sub_event = models.OneToOneField(SubEvent, on_delete=models.CASCADE)

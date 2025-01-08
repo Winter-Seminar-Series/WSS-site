@@ -119,6 +119,18 @@ export type Seminar = {
   speaker: Speaker;
 };
 
+export type LabTalk = {
+  id: number;
+  name: string;
+  description: string;
+  startingTime: Date;
+  endingTime: Date;
+  date: Date;
+  poster: string;
+  thumbnail: string;
+  speaker: Speaker;
+};
+
 export type RoundTable = {
   id: number;
   name: string;
