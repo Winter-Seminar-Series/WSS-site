@@ -99,10 +99,6 @@ class Workshop(models.Model):
         blank=False
     )
 
-    def __str__(self) -> str:
-        return f'{self.name}'
-
-
 class WorkshopSession(models.Model):
     workshop = models.ForeignKey(Workshop, on_delete=models.CASCADE)
     speaker = models.ForeignKey(Speaker, on_delete=models.RESTRICT)
