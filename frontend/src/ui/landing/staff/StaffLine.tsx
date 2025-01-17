@@ -9,9 +9,11 @@ export default async function StaffLine() {
 
   return (
     <Marquee>
-      {staff.map((staff, index) => (
-        <StaffCard key={index} person={staff} />
-      ))}
+      {staff
+        .filter(staff => staff.image)
+        .map((staff, index) => (
+          <StaffCard key={index} person={staff} />
+        ))}
     </Marquee>
   );
 }
