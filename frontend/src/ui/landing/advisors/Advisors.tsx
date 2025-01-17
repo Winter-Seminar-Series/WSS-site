@@ -2,7 +2,7 @@ import React from 'react';
 import Background from './assets/background.svg';
 import Link from 'next/link';
 import Image from 'next/image';
-import StaffCard from './StaffCard';
+import AdvisorCard from './AdvisorCard';
 import Marquee from 'react-fast-marquee';
 
 export const advisorsData = [
@@ -65,7 +65,7 @@ export default function Advisors() {
       >
         <div>
           <div className="text-lg font-medium uppercase tracking-wide text-neutral-400">
-            Our Guides
+            {/*Our Guides*/}
           </div>
           <div
             className={
@@ -95,7 +95,7 @@ export default function Advisors() {
         {advisorsData
           .filter((staff) => staff.image)
           .map((staff, index) => (
-            <StaffCard key={index} person={staff} />
+            <AdvisorCard key={index} person={staff} />
           ))}
       </div>
     </div>

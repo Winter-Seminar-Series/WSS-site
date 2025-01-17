@@ -3,10 +3,9 @@ import Image from 'next/image';
 import type { Staff } from '../../../lib/types';
 import Sample from './assets/Sample.svg';
 
-export default function StaffCard({ person }: { person: Staff }) {
+export default function AdvisorCard({ person }: { person: Staff }) {
   return (
     <div className={'flex flex-col items-center justify-center px-5'}>
-      {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src={person.image ?? Sample.src}
         alt={person.name}
@@ -18,7 +17,7 @@ export default function StaffCard({ person }: { person: Staff }) {
         {person.name}
       </div>
       <div className={'text-xs font-normal text-lightslategray'}>
-        {person.team}
+        {person.designation}
       </div>
     </div>
   );
