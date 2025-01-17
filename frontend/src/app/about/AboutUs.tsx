@@ -23,15 +23,13 @@ export default async function AboutUs() {
         <div className="flex max-w-[1199px] flex-col items-start justify-center gap-8 px-[72px] py-[60px]">
           <div className="ml-18 flex flex-row items-start justify-between self-stretch lg:max-w-[1055px]">
             <div className="flex-col gap-2">
-              <p
-                className="text-[20px] font-medium uppercase not-italic leading-[normal] tracking-[0.8px] text-[#8A8998]">
+              <p className="text-[20px] font-medium uppercase not-italic leading-[normal] tracking-[0.8px] text-[#8A8998]">
                 Discover Our Story
               </p>
               <p className="text-[76px] font-bold not-italic leading-[76px] tracking-[-1.52px] text-[#1F2B3D]">
                 About Us
               </p>
-              <p
-                className="flex items-center justify-center gap-[13px] pb-4 pt-10 text-lg leading-relaxed text-neutral-400">
+              <p className="flex items-center justify-center gap-[13px] pb-4 pt-10 text-lg leading-relaxed text-neutral-400">
                 The Winter Seminar Series (WSS) has been established to bring
                 together successful Iranians from around the world and build a
                 professional community focused on computer science and
@@ -42,11 +40,12 @@ export default async function AboutUs() {
                 ideas and research.
               </p>
               <p className="flex items-center justify-center gap-[13px] py-4 text-lg leading-relaxed text-neutral-400">
-                WSS was initiated {new Date().getFullYear() - 2015} years ago by the Student Scientific Chapter
-                at Sharif University of Technology as a global effort to connect
-                expert researchers. Currently, WSS is held as a two-day event
-                where speakers present their research and ideas each day, while
-                also sharing their findings and teaching related topics.
+                WSS was initiated {new Date().getFullYear() - 2015} years ago by
+                the Student Scientific Chapter at Sharif University of
+                Technology as a global effort to connect expert researchers.
+                Currently, WSS is held as a two-day event where speakers present
+                their research and ideas each day, while also sharing their
+                findings and teaching related topics.
               </p>
               <p className="flex items-center justify-center gap-[13px] py-4 text-lg leading-relaxed text-neutral-400">
                 This event comprises presentations and roundtable discussions

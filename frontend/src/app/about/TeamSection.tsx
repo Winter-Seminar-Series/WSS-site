@@ -3,13 +3,13 @@ import Sample from '../../ui/landing/staff/assets/Sample.svg';
 import type { Staff } from '../../lib/types';
 
 export default function TeamSection({
-                                      teamName,
-                                      staff,
-                                      sort = true,
-                                    }: {
+  teamName,
+  staff,
+  sort = true,
+}: {
   teamName: string;
   staff: Staff[];
-  sort: Boolean
+  sort: Boolean;
 }) {
   const priorityKeywords = [
     'President',
