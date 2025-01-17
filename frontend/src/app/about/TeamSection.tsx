@@ -3,10 +3,10 @@ import Sample from '../../ui/landing/staff/assets/Sample.svg';
 import type { Staff } from '../../lib/types';
 
 export default function TeamSection({
-                                      teamName,
-                                      staff,
-                                      sort = true,
-                                    }: {
+  teamName,
+  staff,
+  sort = true,
+}: {
   teamName: string;
   staff: Staff[];
   sort: Boolean;
@@ -35,12 +35,24 @@ export default function TeamSection({
               return 1;
             }
 
-            const aPriority = priorityKeywords.findIndex((keyword) => a.designation.startsWith(keyword));
-            const bPriority = priorityKeywords.findIndex((keyword) => b.designation.startsWith(keyword));
-            if ((a.designation === '') && (b.designation !== '' && bPriority === -1)) {
+            const aPriority = priorityKeywords.findIndex((keyword) =>
+              a.designation.startsWith(keyword),
+            );
+            const bPriority = priorityKeywords.findIndex((keyword) =>
+              b.designation.startsWith(keyword),
+            );
+            if (
+              a.designation === '' &&
+              b.designation !== '' &&
+              bPriority === -1
+            ) {
               return 1;
             }
-            if ((b.designation === '') && (a.designation !== '' && aPriority === -1)) {
+            if (
+              b.designation === '' &&
+              a.designation !== '' &&
+              aPriority === -1
+            ) {
               return -1;
             }
             if (aPriority !== -1 && bPriority !== -1) {
