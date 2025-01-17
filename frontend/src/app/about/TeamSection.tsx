@@ -3,12 +3,13 @@ import Sample from '../../ui/landing/staff/assets/Sample.svg';
 import type { Staff } from '../../lib/types';
 
 export default function TeamSection({
-  teamName,
-  staff,
-}: {
+                                      teamName,
+                                      staff,
+                                    }: {
   teamName: string;
   staff: Staff[];
 }) {
+  const priorityKeywords = ['President', 'Vice President', 'Head', 'Sub-Head', 'Senior'];
   return (
     <div className="pb-14">
       <div className="mb-10 flex items-center justify-center px-12">
@@ -19,9 +20,25 @@ export default function TeamSection({
         <hr className="ml-8 flex-grow border-neutral-200" />
       </div>
       <div className="flex flex-wrap justify-center gap-6">
-        {staff.map((person, index) => (
-          <StaffCard2 key={index} person={person} />
-        ))}
+        {
+          staff
+            .slice()
+            .sort((a, b) => {
+              const aPriority = priorityKeywords.findIndex(keyword => a.designation.startsWith(keyword));
+              const bPriority = priorityKeywords.findIndex(keyword => b.designation.startsWith(keyword));
+              if (aPriority !== -1 && bPriority !== -1) {
+                return aPriority - bPriority;
+              } else if (aPriority !== -1) {
+                return -1;
+              } else if (bPriority !== -1) {
+                return 1;
+              }
+              return a.designation.localeCompare(b.designation);
+            })
+            .map((person, index) => (
+              <StaffCard2 key={index} person={person} />
+            ))
+        }
       </div>
     </div>
   );

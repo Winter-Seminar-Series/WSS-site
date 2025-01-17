@@ -42,7 +42,7 @@ export default async function AboutUs() {
               <p className="flex items-center justify-center gap-[13px] py-4 text-lg leading-relaxed text-neutral-400">
                 WSS was initiated 8 years ago by the Student Scientific Chapter
                 at Sharif University of Technology as a global effort to connect
-                expert researchers. Currently, WSS is held as a four-day event
+                expert researchers. Currently, WSS is held as a two-day event
                 where speakers present their research and ideas each day, while
                 also sharing their findings and teaching related topics.
               </p>

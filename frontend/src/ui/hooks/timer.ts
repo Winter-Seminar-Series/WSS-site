@@ -15,7 +15,7 @@ export default function useTimer() {
     );
     const offset = utcDate.getTime() - tzDate.getTime();
 
-    const startDate = new Date(2024, 1, 29, 19);
+    const startDate = new Date(2025, 3, 10, 8);
     startDate.setTime(startDate.getTime() + offset); // force the timezone to Tehran time
 
     const interval = setInterval(() => {

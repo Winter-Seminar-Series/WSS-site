@@ -4,10 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5dd4af7b-773f-4aad-be42-c7e64ab99492" name="Changes" comment="">
+    <list default="true" id="5dd4af7b-773f-4aad-be42-c7e64ab99492" name="Changes" comment="fix: add WSS_ORDER to Dockerfile">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/ui/components/dashboard/DropDown.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/ui/components/dashboard/DropDown.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -60,11 +58,25 @@
       <workItem from="1734780306839" duration="8000" />
       <workItem from="1734949291246" duration="507000" />
       <workItem from="1736279923740" duration="92000" />
-      <workItem from="1736280725333" duration="2200000" />
+      <workItem from="1736280725333" duration="2744000" />
+      <workItem from="1736443599729" duration="3000" />
     </task>
+    <task id="LOCAL-00001" summary="fix: add WSS_ORDER to Dockerfile">
+      <option name="closed" value="true" />
+      <created>1736283469418</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1736283469418</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="fix: add WSS_ORDER to Dockerfile" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix: add WSS_ORDER to Dockerfile" />
   </component>
 </project>

@@ -82,7 +82,7 @@ export default function AttendanceInfo({
             In person: the first two days in person (Feb 29th - Mar 1st) and the
             second two virtual days (Mar 2nd - Mar 3rd)
           </li>
-          <li>Online: four days virtually (Feb 29th - Mar 3rd)</li>
+          <li>Online: four days virtually (April 10th - April 11th)</li>
         </ul>
       </div>
       <div

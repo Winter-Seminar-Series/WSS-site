@@ -31,9 +31,9 @@ const items = [
   {
     id: 1,
     title: 'Seminars',
-    overline: 'A four-day journey of discovery and learning',
+    overline: 'A two-day journey of discovery and learning',
     img: '/landing/seminars.jpg',
-    desc: 'The seminars comprise a four-day event where speakers present their research and ideas, sharing their findings and teaching related topics. Each day of the event features different speakers and topics, providing participants with a diverse range of perspectives and knowledge.',
+    desc: 'The seminars comprise a two-day event where speakers present their research and ideas, sharing their findings and teaching related topics. Each day of the event features different speakers and topics, providing participants with a diverse range of perspectives and knowledge.',
   },
   {
     id: 2,
