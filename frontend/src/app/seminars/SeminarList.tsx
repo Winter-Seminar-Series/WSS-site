@@ -5,9 +5,10 @@ import { NavbarPlaceholder } from '../../ui/components/Navbar';
 import Timer from '../../ui/components/Timer';
 import SeminarCard from './SeminarCard';
 import { fetchSeminars } from '../../lib/api/events/seminar';
+import { Seminar, Speaker } from '../../lib/types';
 
 export default async function SeminarList() {
-  const seminars = await fetchSeminars();
+  const seminars: Seminar[] = await fetchSeminars();
 
   return (
     <>
