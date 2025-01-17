@@ -3,11 +3,13 @@ import Sample from '../../ui/landing/staff/assets/Sample.svg';
 import type { Staff } from '../../lib/types';
 
 export default function TeamSection({
-  teamName,
-  staff,
-}: {
+                                      teamName,
+                                      staff,
+                                      sort = true,
+                                    }: {
   teamName: string;
   staff: Staff[];
+  sort: Boolean
 }) {
   const priorityKeywords = [
     'President',
@@ -23,12 +25,15 @@ export default function TeamSection({
         <span className="text-[40px] font-bold text-slate-800 ">
           {teamName}
         </span>
-        <hr className="ml-8 flex-grow border-neutral-200" />
+        <hr className="ml-8 flex-grow border-neutral-200 " />
       </div>
-      <div className="flex flex-wrap justify-center gap-6">
+      <div className="flex flex-wrap justify-center gap-8">
         {staff
           .slice()
           .sort((a, b) => {
+            if (!sort) {
+              return 1;
+            }
             const aPriority = priorityKeywords.findIndex((keyword) =>
               a.designation.startsWith(keyword),
             );

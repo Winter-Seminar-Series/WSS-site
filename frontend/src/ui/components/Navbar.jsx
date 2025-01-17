@@ -9,7 +9,6 @@ const links = [
   { href: '/', label: 'Home' },
   { href: '/seminars', label: 'Seminars' },
   { href: '/round-tables', label: 'Round Tables' },
-  { href: '/workshops', label: 'Workshops' },
   { href: '/about', label: 'About Us' },
 ];
 
@@ -128,12 +127,6 @@ export default function Navbar({ fixed = true, isAuthenticated = false }) {
             </Link>
             <Link href="/round-tables" className="block px-4 py-3">
               Round Tables
-            </Link>
-            <Link href="/workshops" className="block px-4 py-3">
-              Workshops
-            </Link>
-            <Link href="/lab-talks" className="block px-4 py-3">
-              Lab Talks
             </Link>
             <Link href="/about" className="block px-4 py-3">
               About Us

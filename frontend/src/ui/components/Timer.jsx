@@ -11,7 +11,7 @@ export default function Timer() {
     <div
       className="bg-cover bg-center bg-no-repeat py-16 text-white"
       style={{
-        backgroundImage: 'url(/source/footer_rectangle.svg)',
+        backgroundImage: 'url(/source/footer_rectangle.png)',
       }}
     >
       <div className="mx-auto flex max-w-[1200px] items-center justify-between gap-y-8 px-6 max-md:flex-col">

@@ -5,8 +5,10 @@ import PropTypes from 'prop-types';
 export default function Programs({ showButton = true }) {
   return (
     <div className="relative mx-auto overflow-hidden px-6">
-      <div className="Ellipse absolute right-[-200px] top-[636px] h-72 w-72 rounded-full bg-zinc-400 bg-opacity-30 blur-3xl" />
-      <div className="Ellipse absolute left-[-200px] top-[205px] h-64 w-64 rounded-full bg-pink-300 bg-opacity-30 blur-3xl" />
+      <div
+        className="Ellipse absolute right-[-200px] top-[636px] h-72 w-72 rounded-full bg-zinc-400 bg-opacity-30 blur-3xl" />
+      <div
+        className="Ellipse absolute left-[-200px] top-[205px] h-64 w-64 rounded-full bg-pink-300 bg-opacity-30 blur-3xl" />
 
       <div className="mx-auto max-w-[993px]">
         <ProgramsArea />
@@ -40,14 +42,14 @@ const items = [
     title: 'Round Tables',
     overline: 'A deep dive into expert-led discussions',
     img: '/landing/roundtables.jpg',
-    desc: "During the event, we host round table discussions on specific topics, inviting experts in the field to share their insights and engage with participants' concerns. Please note that the round tables are conducted in Persian.",
+    desc: 'During the event, we host round table discussions on specific topics, inviting experts in the field to share their insights and engage with participants\' concerns. Please note that the round tables are conducted in Persian.',
   },
   {
     id: 3,
-    title: 'Workshops',
+    title: 'Poster-Sessions',
     overline: 'Exploring education at the core',
-    img: '/landing/labtalks.jpg ',
-    desc: "This section includes some educational workshops, each comprising a number of sessions in which an aspect of the workshop's topic is covered. Workshops are held online by alumni of Sharif University of Technology, focusing on practical subjects of Computer Science and Engineering.",
+    img: '/landing/posterSession.jpg ',
+    desc: 'This section features a series of poster sessions where participants present and discuss their ideas, research findings, or technical projects. These sessions are held in person, providing an interactive platform for knowledge sharing, receiving feedback, and fostering collaboration in various fields of computer science and engineering.',
   },
 ];
 
