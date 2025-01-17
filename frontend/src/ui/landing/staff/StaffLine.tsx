@@ -10,7 +10,7 @@ export default async function StaffLine() {
   return (
     <Marquee>
       {staff
-        .filter(staff => staff.image)
+        .filter((staff) => staff.image)
         .map((staff, index) => (
           <StaffCard key={index} person={staff} />
         ))}

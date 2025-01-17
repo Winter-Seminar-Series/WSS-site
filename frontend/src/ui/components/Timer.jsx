@@ -25,8 +25,7 @@ export default function Timer() {
         </div>
         <div className="flex gap-x-4">
           <div className="flex flex-col items-center">
-            <span
-              className="w-fit rounded-md border border-white border-opacity-25 p-2 text-center text-2xl font-normal">
+            <span className="w-fit rounded-md border border-white border-opacity-25 p-2 text-center text-2xl font-normal">
               {timer.days.toString().padStart(2, '0')}
             </span>
             <span className="pt-3 text-xs font-light">DAYS</span>
@@ -35,8 +34,7 @@ export default function Timer() {
             <span className="py-2 text-3xl font-semibold">:</span>
           </div>
           <div className="flex flex-col items-center">
-            <span
-              className="w-12 rounded-md border border-white border-opacity-25 p-2 text-center text-2xl font-normal">
+            <span className="w-12 rounded-md border border-white border-opacity-25 p-2 text-center text-2xl font-normal">
               {timer.hours.toString().padStart(2, '0')}
             </span>
             <span className="pt-3 text-xs font-light">HOURS</span>
@@ -45,8 +43,7 @@ export default function Timer() {
             <span className="py-2 text-3xl font-semibold">:</span>
           </div>
           <div className="flex flex-col items-center">
-             <span
-               className="w-12 rounded-md border border-white border-opacity-25 p-2 text-center text-2xl font-normal">
+            <span className="w-12 rounded-md border border-white border-opacity-25 p-2 text-center text-2xl font-normal">
               {timer.minutes.toString().padStart(2, '0')}
             </span>
             <span className="pt-3 text-xs font-light">MINUTES</span>
@@ -55,8 +52,7 @@ export default function Timer() {
             <span className="py-2 text-3xl font-semibold">:</span>
           </div>
           <div className="flex flex-col items-center">
-             <span
-               className="w-12 rounded-md border border-white border-opacity-25 p-2 text-center text-2xl font-normal">
+            <span className="w-12 rounded-md border border-white border-opacity-25 p-2 text-center text-2xl font-normal">
               {timer.seconds.toString().padStart(2, '0')}
             </span>
             <span className="pt-3 text-xs font-light">SECONDS</span>
