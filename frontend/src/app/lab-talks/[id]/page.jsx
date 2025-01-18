@@ -2,7 +2,7 @@ import { isAuthenticated } from '../../../lib/auth';
 import Footer from '../../../ui/components/Footer';
 import Navbar, { NavbarPlaceholder } from '../../../ui/components/Navbar';
 import LabTalk from './LabTalks';
-import { fetchLabTalks } from '@/lib/api/events/labTalks';
+import { fetchLabTalks } from '../../../lib/api/events/labTalks';
 
 export default async function WorkshopPage({ params: { id } }) {
   const authenticated = await isAuthenticated();
