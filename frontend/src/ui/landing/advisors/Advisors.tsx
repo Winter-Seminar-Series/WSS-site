@@ -25,7 +25,7 @@ export const advisorsData = [
   {
     id: 5,
     name: 'Ehsaneddin Asgari',
-    designation: 'Research Scientist @ Helmholtz',
+    designation: 'Research Scientist @ Qatar Computing Research Institute',
     description: '',
     image: './advisors/asgari.png',
     team: 'Scientific Advisors',
@@ -75,23 +75,23 @@ export default function Advisors() {
             Scientific Advisors
           </div>
         </div>
-        <Link
-          href="/advisors"
-          className={
-            'font-manrope mb-3 flex items-center justify-center rounded-md bg-secondary px-8 py-5 text-lg font-bold text-white hover:bg-secondary-400'
-          }
-        >
-          <div>{'View All'}</div>
-          <Image
-            src={'/source/arrow_right_white.svg'}
-            alt={'view all arrow'}
-            width={20}
-            height={20}
-            className={'ml-3'}
-          />
-        </Link>
+        {/*<Link*/}
+        {/*  href="/advisors"*/}
+        {/*  className={*/}
+        {/*    'font-manrope mb-3 flex items-center justify-center rounded-md bg-secondary px-8 py-5 text-lg font-bold text-white hover:bg-secondary-400'*/}
+        {/*  }*/}
+        {/*>*/}
+        {/*  <div>{'View All'}</div>*/}
+        {/*  <Image*/}
+        {/*    src={'/source/arrow_right_white.svg'}*/}
+        {/*    alt={'view all arrow'}*/}
+        {/*    width={20}*/}
+        {/*    height={20}*/}
+        {/*    className={'ml-3'}*/}
+        {/*  />*/}
+        {/*</Link>*/}
       </div>
-      <div className="flex flex-wrap justify-center gap-8">
+      <div className="flex flex-wrap justify-between gap-0 px-10">
         {advisorsData
           .filter((staff) => staff.image)
           .map((staff, index) => (
