@@ -4,7 +4,7 @@ from rest_framework_simplejwt.views import (
 )
 
 from core.views import EmailTokenObtainPairView, EventAPIView, LabTalkAPIView, SeminarAPIView, SpeakerAPIView, \
-    RoundTableAPIView
+    RoundTableAPIView, PosterSessionImageCreateAPIView, PosterSessionImageAPIView
 
 urlpatterns = [
     path('sign-in/', EmailTokenObtainPairView.as_view(), name='token_obtain_pair'),
@@ -15,4 +15,6 @@ urlpatterns = [
     path('poster-session/<int:event_id>/', LabTalkAPIView.as_view(), name='lab-talks'),
     path('round-table/<int:event_id>/', RoundTableAPIView.as_view(), name='round-tables'),
     path('speaker/<pk>/', SpeakerAPIView.as_view(), name='speaker'),
+    path('poster-session/image/', PosterSessionImageAPIView.as_view(), name='poster-session-image'),
+    path('poster-session/image/create/', PosterSessionImageCreateAPIView.as_view(), name='create-poster-session-image'),
 ]
