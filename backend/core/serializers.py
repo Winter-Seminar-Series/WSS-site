@@ -2,7 +2,8 @@ from django.contrib.auth.models import User
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.serializers import TokenObtainSerializer
 from rest_framework import serializers
-from core.models import Event, LabTalk, RoundTable, Seminar, Speaker, SubEvent, Workshop, WorkshopSession, PosterSession
+from core.models import Event, LabTalk, RoundTable, Seminar, Speaker, SubEvent, Workshop, WorkshopSession, \
+    PosterSession, PosterSessionImage
 
 
 class EmailTokenObtainSerializer(TokenObtainSerializer):
@@ -95,3 +96,17 @@ class RoundTableSerializer(serializers.ModelSerializer):
     class Meta:
         model = RoundTable
         fields = ('sub_event', 'speakers')
+
+
+class PosterSessionImageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = PosterSessionImage
+        fields = ('image',)
+
+    def create(self, validated_data):
+        user = self.context['request'].user
+
+        if PosterSessionImage.objects.filter(user=user).exists():
+            raise serializers.ValidationError("User already has a poster session image.")
+
+        return PosterSessionImage.objects.create(user=user, **validated_data)
