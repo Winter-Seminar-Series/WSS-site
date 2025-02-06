@@ -9,7 +9,7 @@ export default function Footer() {
           <Link href="/">
             <Image
               src="/source/wss_footer.svg"
-              alt="Winter Seminar Series"
+              alt="Winter Sponsor Series"
               width="71"
               height="47"
               className="opacity-60 grayscale hover:opacity-100 hover:grayscale-0"
@@ -115,7 +115,7 @@ export default function Footer() {
         </div>
         <div className="mb-8 grid grid-cols-1 items-start gap-7 sm:grid-cols-2 md:grid-cols-4">
           <a
-            href="https://www.google.com/maps/place/Sharif+University+of+Technology"
+            href="https://maps.app.goo.gl/oGLAVseFLrysarjG6"
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center justify-start gap-2"
@@ -136,7 +136,7 @@ export default function Footer() {
             </div>
           </a>
           <a
-            href="https://www.google.com/maps/place/Sharif+University+of+Technology"
+            href="https://maps.app.goo.gl/oGLAVseFLrysarjG6"
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center justify-start gap-2"

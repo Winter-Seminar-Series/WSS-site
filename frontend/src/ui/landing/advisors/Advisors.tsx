@@ -91,7 +91,7 @@ export default function Advisors() {
         {/*  />*/}
         {/*</Link>*/}
       </div>
-      <div className="flex flex-wrap justify-center gap-12 mx-32">
+      <div className="mx-32 flex flex-wrap justify-center gap-16">
         {advisorsData
           .filter((staff) => staff.image)
           .map((staff, index) => (

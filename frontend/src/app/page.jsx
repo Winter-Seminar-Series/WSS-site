@@ -15,7 +15,7 @@ export default async function Home() {
       <Header isAuthenticated={authenticated} />
       <Programs />
       <Advisors />
-      {/*<Seminar />*/}
+      {/*<Sponsor />*/}
       <Staff />
       <Timer />
       <Footer />
