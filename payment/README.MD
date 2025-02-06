@@ -1,10 +1,10 @@
 # Payment service
 
-Payment service is the adaptor that connects to IDPay in and logs all of the payments.
+Payment service is the adaptor that connects to IDPay/Zarinpal/Zibal in and logs all of the payments.
 
 ## Compiling
 
-Compiling is easy with go 1.21. Just run `go build ./cmd/payment/` in project directory.
+Compiling is easy with go 1.23. Just run `go build ./cmd/payment/` in project directory.
 
 ## Running
 
@@ -17,6 +17,7 @@ Configuration is done via environment variables. These are the list of environme
 * `IDPAY_SANDBOX`: Should we run IDPay in sandbox environment for testing? This value should be a boolean and defaults
   to false. Only effective if you are using IDPay.
 * `ZARINPAL_MERCHANT_ID`: The merchant ID of Zarinpal. This is a GUID. Only needed if you are using Zarinpal.
+* `ZIBAL_MERCHANT`: The merchant ID of Zibal. Only needed if you are using Zibal.
 * `GIN_MODE`: Set this value to `release` in production, otherwise leave it empty.
 * `LOG_LEVEL`: Sets the log level. Can be one of these: `trace`, `debug`, `info`, `warn`, `error`, `fatal`, `panic`.
   Defaults to `info`.
