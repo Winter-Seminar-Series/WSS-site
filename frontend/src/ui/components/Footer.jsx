@@ -113,7 +113,7 @@ export default function Footer() {
             </a>
           </div>
         </div>
-        <div className="mb-8 grid grid-cols-1 items-start gap-5 sm:grid-cols-2 md:grid-cols-4">
+        <div className="mb-8 grid grid-cols-1 items-start gap-7 sm:grid-cols-2 md:grid-cols-4">
           <a
             href="https://www.google.com/maps/place/Sharif+University+of+Technology"
             target="_blank"
@@ -147,12 +147,12 @@ export default function Footer() {
                 Address
               </p>
               <p className="flex items-center justify-start text-sm font-semibold">
-                Azadi Street, District 2, Tehran, Iran
+                Azadi Street, Tehran, Iran
               </p>
             </div>
           </a>
           <a
-            href="mailto:wss@ce.sharif.edu"
+            href="mailto:wss.sharif@gmail.com"
             className="flex items-center justify-start gap-2"
           >
             <img src="/source/email.svg" alt="Email" width="48" height="48" />
@@ -161,7 +161,7 @@ export default function Footer() {
                 Mail
               </p>
               <p className="flex items-center justify-start text-sm font-semibold">
-                wss@ce.sharif.edu
+                wss.sharif@gmail.com
               </p>
             </div>
           </a>
