@@ -1,8 +1,10 @@
-from django.shortcuts import render
-from rest_framework import generics, permissions
-from core.models import Event, LabTalk, Seminar, Speaker, RoundTable, PosterSession
+from django.shortcuts import render, get_object_or_404
+from rest_framework import generics
+from rest_framework.exceptions import NotFound
+
+from core.models import Event, LabTalk, Seminar, Speaker, RoundTable, PosterSession, PosterSessionImage
 from core.serializers import EventSerializer, SeminarSerializer, SpeakerSerializer, RoundTableSerializer, \
-    PosterSessionSerializer
+    PosterSessionSerializer, PosterSessionImageSerializer
 
 # Create your views here.
 from rest_framework_simplejwt.views import TokenObtainPairView
@@ -61,3 +63,14 @@ class RoundTableAPIView(generics.ListAPIView):
         return RoundTable.objects.filter(
             sub_event__event=self.kwargs['event_id']
         ).order_by('sub_event__date', 'sub_event__starting_time')
+
+
+class PosterSessionImageAPIView(generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = PosterSessionImageSerializer
+
+    def get_object(self):
+        return get_object_or_404(PosterSessionImage, user=self.request.user)
+
+
+class PosterSessionImageCreateAPIView(generics.CreateAPIView):
+    serializer_class = PosterSessionImageSerializer

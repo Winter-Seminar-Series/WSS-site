@@ -15,6 +15,7 @@ import (
 	db "wss-payment/internal/database"
 	"wss-payment/pkg/idpay"
 	"wss-payment/pkg/zarinpal"
+	"wss-payment/pkg/zibal"
 )
 
 func main() {
@@ -26,7 +27,7 @@ func main() {
 	// Create the data needed
 	endpointApi := new(api.API)
 	endpointApi.Database = setupDatabase()
-	endpointApi.PaymentService = getZarinpal()
+	endpointApi.PaymentService = getZibal()
 	defer endpointApi.Database.Close()
 	// Setup endpoints
 	r := gin.New()
@@ -101,4 +102,13 @@ func getZarinpal() zarinpal.PaymentAdaptor {
 		log.Fatal("please set ZARINPAL_MERCHANT_ID environment variable")
 	}
 	return zarinpal.NewPaymentAdaptor(merchantID)
+}
+
+// getZibal gets Zibal credentials from env variables
+func getZibal() zibal.PaymentAdaptor {
+	merchantID := os.Getenv("ZIBAL_MERCHANT")
+	if merchantID == "" {
+		log.Fatal("please set ZIBAL_MERCHANT environment variable")
+	}
+	return zibal.NewPaymentAdaptor(merchantID)
 }

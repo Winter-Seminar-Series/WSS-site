@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.db import models
 from django.contrib.auth import get_user_model
 from django.contrib.auth.backends import ModelBackend
@@ -134,3 +135,11 @@ class PosterSession(models.Model):
 
     def __str__(self) -> str:
         return f'{self.sub_event}'
+
+
+class PosterSessionImage(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    image = models.ImageField(upload_to='poster-images/')
+
+    def __str__(self):
+        return f"Poster Image of {self.user.username}"
