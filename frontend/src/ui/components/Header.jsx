@@ -19,7 +19,7 @@ export default function Header({ isAuthenticated = false }) {
         <div className="mx-auto flex px-6 max-lg:flex-col lg:max-w-[1200px] lg:flex-row">
           <div>
             <p className="max-lg:leading-15 font-bold not-italic text-white max-lg:pb-6 max-lg:text-6xl max-lg:tracking-[-1.2px] lg:pb-10 lg:text-[108px] lg:leading-[106px] lg:tracking-[-2.16px]">
-              WSS - Winter Seminar Series
+              10th Winter Seminar Series
             </p>
             <div className="font-semibold not-italic leading-[normal] text-white max-lg:text-[21px] max-lg:leading-[30px] max-lg:tracking-[-0.42px] lg:text-2xl lg:tracking-[-0.48px]">
               <p className="">Building Bridges at the Edge of Knowledge</p>
