@@ -9,3 +9,4 @@ django-cors-headers
 psycopg
 requests
 drf-standardized-errors
+s3transfer==0.10.4
