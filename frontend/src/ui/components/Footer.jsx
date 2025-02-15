@@ -9,7 +9,7 @@ export default function Footer() {
           <Link href="/">
             <Image
               src="/source/wss_footer.svg"
-              alt="Winter Sponsor Series"
+              alt="Winter Seminar Series"
               width="71"
               height="47"
               className="opacity-60 grayscale hover:opacity-100 hover:grayscale-0"

@@ -28,10 +28,10 @@ export default function RootLayout({ children }) {
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
         {/*Open Graph Meta Tags */}
-        <meta property="og:title" content="Winter Sponsor Series" />
+        <meta property="og:title" content="Winter Seminar Series" />
         <meta
           property="og:description"
-          content="The Winter Sponsor Series (WSS) has been established to bring together successful Iranians from around the world and build a professional community focused on computer science and engineering topics. Over the years, this seminar has grown to become one of the premier events at the Sharif University of Technology. WSS is open to anyone who works in or is interested in computer science topics and seeks to share and express their ideas and research."
+          content="The Winter Seminar Series (WSS) has been established to bring together successful Iranians from around the world and build a professional community focused on computer science and engineering topics. Over the years, this seminar has grown to become one of the premier events at the Sharif University of Technology. WSS is open to anyone who works in or is interested in computer science topics and seeks to share and express their ideas and research."
         />
         <meta
           property="og:image"
@@ -47,10 +47,10 @@ export default function RootLayout({ children }) {
           name="twitter:card"
           content="https://wss-sharif.com/preview.png"
         />
-        <meta name="twitter:title" content="Winter Sponsor Series" />
+        <meta name="twitter:title" content="Winter Seminar Series" />
         <meta
           name="twitter:description"
-          content="The Winter Sponsor Series (WSS) has been established to bring together successful Iranians from around the world and build a professional community focused on computer science and engineering topics. Over the years, this seminar has grown to become one of the premier events at the Sharif University of Technology. WSS is open to anyone who works in or is interested in computer science topics and seeks to share and express their ideas and research."
+          content="The Winter Seminar Series (WSS) has been established to bring together successful Iranians from around the world and build a professional community focused on computer science and engineering topics. Over the years, this seminar has grown to become one of the premier events at the Sharif University of Technology. WSS is open to anyone who works in or is interested in computer science topics and seeks to share and express their ideas and research."
         />
         <meta
           name="twitter:image"
