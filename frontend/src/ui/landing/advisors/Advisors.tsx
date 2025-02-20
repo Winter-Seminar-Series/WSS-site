@@ -11,7 +11,7 @@ export const advisorsData = [
     name: 'Vahab Mirrokni',
     designation: 'VP @ Google Research',
     description: '',
-    image: './advisors/mirrokni.jpg',
+    image: './advisors/mirrokni.png',
     team: 'Scientific Advisors',
   },
   {
