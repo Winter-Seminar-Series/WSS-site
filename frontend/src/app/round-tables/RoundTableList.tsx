@@ -24,7 +24,7 @@ export default async function RoundTableList() {
               <p className="max-md:text-md text-xl font-medium uppercase not-italic leading-[normal] tracking-[0.8px] text-[#8A8998]">
                 Collaborative Insights in Computer Science
               </p>
-              <p className="text-[76px] font-bold not-italic leading-none tracking-[-1.52px] text-[#1F2B3D] max-md:text-5xl">
+              <p className="text-[76px] font-bold not-italic leading-none  tracking-[2px] text-[#1F2B3D] max-md:text-5xl">
                 Round Tables
               </p>
             </div>

@@ -1,16 +1,10 @@
 version: '3'
 
-networks:
-  app-network:
-    driver: bridge
-
 services:
   frontend:
-    image: wss:frontend
+    image: wss:front10
     container_name: frontend
     ports:
-      - 3000:3000
-    networks:
-      - app-network
+      - 3020:3000
     env_file:
-      - .env
+      - .env.frontend
