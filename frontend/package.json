@@ -21,12 +21,14 @@
     "react": "^18",
     "react-dom": "^18",
     "react-fast-marquee": "^1.6.2",
+    "react-markdown": "^10.0.0",
     "remark": "^15.0.1",
     "remark-html": "^16.0.1",
     "sharp": "^0.33.1",
     "zod": "^3.22.4"
   },
   "devDependencies": {
+    "@tailwindcss/typography": "^0.5.16",
     "@types/node": "20.10.4",
     "@types/react": "18.2.45",
     "autoprefixer": "^10.0.1",
