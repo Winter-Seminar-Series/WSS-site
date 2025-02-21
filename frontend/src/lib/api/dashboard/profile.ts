@@ -14,7 +14,6 @@ export async function fetchEmailAndProfile() {
   const url = `${process.env.API_ORIGIN}/api/profile/`;
 
   const { email, ...profile } = await fetchJsonWithAuth<ProfileResponse>(url);
-
   return { email, profile };
 }
 

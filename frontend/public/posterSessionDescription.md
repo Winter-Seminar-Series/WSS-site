@@ -6,7 +6,8 @@
   - **Venue**: [Sharif University of Technology, Tehran, Iran](https://maps.app.goo.gl/A24SRLUYxWioobQw6)
 
 - **Goal**
-  - Providing a platform for students and researchers in computer science, data science, and engineering to present their projects, exchange ideas, and compete for awards.
+  - Providing a platform for students and researchers in computer science, data science, and engineering to present
+    their projects, exchange ideas, and compete for awards.
 - **Who Can Participate?**
   - Open to all undergraduate, graduate, and postgraduate researchers.
 
@@ -14,20 +15,25 @@
 
 - **In-Person Display**
 
-  - Posters will be displayed for **90 minutes** on the first day of the event. The poster session will take place on **Thursday, 10 April (21 Farvardin), Iran Standard Time (GMT +3:30), from 13:30 to 15:00**.
+  - Posters will be displayed for **90 minutes** on the first day of the event. The poster session will take place on
+    **Thursday, 10 April (21 Farvardin), Iran Standard Time (GMT +3:30), from 13:30 to 15:00**.
 
   - Presenters must stand by their posters during this session to discuss their work with judges and attendees.
 
 - **Two-Step Judging Process**
 
-  - Prior to the event, a **review panel** will examine all submitted posters (**in PDF format**) to ensure they meet **adequate quality and relevance standards**. Each submission will be reviewed by specialists in its respective field. **Only selected submissions will move on to the on-site round.**
-  - During the **WSS poster session**, a **panel of field-specific reviewers** will assess each filtered poster **in person**, focusing on the following evaluation criteria:
+  - Prior to the event, a **review panel** will examine all submitted posters (**in PDF format**) to ensure they meet
+    **adequate quality and relevance standards**. Each submission will be reviewed by specialists in its respective
+    field. **Only selected submissions will move on to the on-site round.**
+  - During the **WSS poster session**, a **panel of field-specific reviewers** will assess each filtered poster **in
+    person**, focusing on the following evaluation criteria:
 
     - **Presentation Quality**: The **clarity and effectiveness** of the presenter's explanation.
 
     - **Poster Quality**: The **design, readability, and informativeness** of the poster.
 
-    - **Publication Quality:** Whether the research has been accepted in a recognized conference or journal (this is an advantage but not mandatory).
+    - **Publication Quality:** Whether the research has been accepted in a recognized conference or journal (this is
+      an advantage but not mandatory).
 
 - **Awards ??**
 
@@ -59,7 +65,8 @@
 
   - **Font Usage**: **Large, legible fonts** (minimum 28 pt for body text).
 
-  - **Language**: Persian or English. If using Persian, consider **Nazanin** or **Lotus** for a formal, professional look.
+  - **Language**: Persian or English. If using Persian, consider **Nazanin** or **Lotus** for a formal, professional
+    look.
 
 ## **4. On-Site Presentation**
 
@@ -75,7 +82,8 @@
 
 - **On-Site Evaluation and Awards**
 
-  - The **filtered** posters are judged in person. The final ranking is announced at the closing ceremony on the first day, and awards are presented.
+  - The **filtered** posters are judged in person. The final ranking is announced at the closing ceremony on the first
+    day, and awards are presented.
 
   - **People’s Choice Vote**: Attendees cast their votes during the session.
 
@@ -84,5 +92,3 @@
 - **Help Desk**
 
   - For any inquiries regarding submissions or logistics, feel free to [**contact us**](https://t.me/wss_info)**.**
-
-## **7.** [**Designing an Award-Winning Poster**](https://blogs.lse.ac.uk/impactofsocialsciences/2018/05/11/how-to-design-an-award-winning-conference-poster/) 
