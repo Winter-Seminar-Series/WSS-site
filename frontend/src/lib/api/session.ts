@@ -24,6 +24,6 @@ export async function getSession() {
 
 export async function getAccessToken() {
   const session = await getIronSession<SessionData>(cookies(), sessionOptions);
-  const token = session.accessToken
+  const token = session.accessToken;
   return token;
 }

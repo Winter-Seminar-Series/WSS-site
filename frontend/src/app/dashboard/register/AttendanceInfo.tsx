@@ -5,20 +5,20 @@ import { ModeOfAttendance } from '../../../lib/types';
 import { updateNationalCode } from '../../../lib/api/dashboard/profile';
 
 export default function AttendanceInfo({
-                                         modesOfAttendance,
-                                         selectPlan,
-                                         removePlan,
-                                         nationalCode,
-                                         setNationalCode,
-                                         price,
-                                         updatePrice,
-                                         discountCode,
-                                         setDiscountCode,
-                                         selectedModeIndex,
-                                         setSelectedModeIndex,
-                                         isDiscountCodeValid,
-                                         setDiscountCodeValid,
-                                       }: {
+  modesOfAttendance,
+  selectPlan,
+  removePlan,
+  nationalCode,
+  setNationalCode,
+  price,
+  updatePrice,
+  discountCode,
+  setDiscountCode,
+  selectedModeIndex,
+  setSelectedModeIndex,
+  isDiscountCodeValid,
+  setDiscountCodeValid,
+}: {
   modesOfAttendance: ModeOfAttendance[];
   selectPlan: (planId: number) => Promise<void>;
   removePlan: (planId: number) => Promise<void>;
@@ -78,9 +78,7 @@ export default function AttendanceInfo({
         The plans to participate in the event are as follows:
         <br />
         <ul className="list-outside list-disc pl-[1.5em]">
-          <li>
-            In person
-          </li>
+          <li>In person</li>
           <li>Online</li>
         </ul>
       </div>
