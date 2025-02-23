@@ -7,11 +7,11 @@ import Marquee from 'react-fast-marquee';
 
 export const advisorsData = [
   {
-    id: 3,
-    name: 'Vahab Mirrokni',
-    designation: 'VP @ Google Research',
+    id: 5,
+    name: 'Ehsaneddin Asgari',
+    designation: 'Research Scientist @ Qatar Computing Research Institute',
     description: '',
-    image: './advisors/mirrokni.png',
+    image: './advisors/asgari.png',
     team: 'Scientific Advisors',
   },
   {
@@ -20,14 +20,6 @@ export const advisorsData = [
     designation: 'Postdoctoral Fellow @ Eurecom',
     description: '',
     image: './advisors/salimi.jpg',
-    team: 'Scientific Advisors',
-  },
-  {
-    id: 5,
-    name: 'Ehsaneddin Asgari',
-    designation: 'Research Scientist @ Qatar Computing Research Institute',
-    description: '',
-    image: './advisors/asgari.png',
     team: 'Scientific Advisors',
   },
   {
@@ -91,7 +83,7 @@ export default function Advisors() {
         {/*  />*/}
         {/*</Link>*/}
       </div>
-      <div className="mx-32 flex flex-wrap justify-center gap-x-36 gap-y-8">
+      <div className="mx-32 flex flex-wrap justify-between gap-y-8">
         {advisorsData
           .filter((staff) => staff.image)
           .map((staff, index) => (
