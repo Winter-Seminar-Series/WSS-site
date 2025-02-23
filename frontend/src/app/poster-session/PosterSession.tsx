@@ -27,7 +27,8 @@ export default async function PosterSession() {
         <div className="flex max-w-[1199px] flex-col items-start justify-center gap-8 px-[72px] py-[60px] shadow-2xl">
           <div className="ml-18 flex flex-row items-start justify-between self-stretch lg:max-w-[1055px] ">
             <div className="min-h-screen flex-col gap-2 ">
-              <p className="text-[20px] font-medium uppercase not-italic leading-[normal] tracking-[0.8px] text-[#8A8998]">
+              <p
+                className="text-[20px] font-medium uppercase not-italic leading-[normal] tracking-[0.8px] text-[#8A8998]">
                 Join our new competition
               </p>
               <div className={''}>
@@ -35,16 +36,15 @@ export default async function PosterSession() {
                   Poster Session
                 </p>
               </div>
-              <img
-                className="aspect-[4 / 3] relative my-4 w-full max-w-md shrink-0 rounded-lg object-cover object-center"
-                alt=""
-                src={'/landing/posterSession.jpg'}
-              />
-              <MarkdownRenderer className={''} content={markdownContent} />
-
-              <br />
+              {/*<img*/}
+              {/*  className="aspect-[4 / 3] relative my-4 w-full max-w-md shrink-0 rounded-lg object-cover object-center"*/}
+              {/*  alt=""*/}
+              {/*  src={'/landing/posterSession.jpg'}*/}
+              {/*/>*/}
+              <br/>
               <hr className={'bg-black'} />
-              <br />
+              <br/>
+              <MarkdownRenderer className={''} content={markdownContent} />
             </div>
           </div>
         </div>
