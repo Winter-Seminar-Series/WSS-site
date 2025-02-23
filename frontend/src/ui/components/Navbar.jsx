@@ -70,43 +70,43 @@ export default function Navbar({ fixed = true, isAuthenticated = false }) {
               </span>
             </Link>
           </div>
-          {/*{isAuthenticated ? (*/}
-          {/*  <div className="flex items-center gap-1.5">*/}
-          {/*    <Link*/}
-          {/*      href="/dashboard/profile"*/}
-          {/*      className={`flex items-center rounded-md px-6 text-base font-semibold max-lg:h-9 max-lg:px-4 lg:h-12 ${*/}
-          {/*        transparent*/}
-          {/*          ? 'bg-white text-secondary-500 hover:bg-whitesmoke'*/}
-          {/*          : 'bg-secondary-500 text-white hover:bg-secondary-400'*/}
-          {/*      }`}*/}
-          {/*    >*/}
-          {/*      Dashboard*/}
-          {/*    </Link>*/}
-          {/*  </div>*/}
-          {/*) : (*/}
-          {/*  <div className="flex items-center gap-1.5">*/}
-          {/*    <Link*/}
-          {/*      href="/signup"*/}
-          {/*      className={`flex items-center rounded-md px-6 text-base font-semibold max-lg:h-9 max-lg:px-4 lg:h-12 ${*/}
-          {/*        transparent*/}
-          {/*          ? 'bg-white text-secondary-500 hover:bg-whitesmoke'*/}
-          {/*          : 'bg-secondary-500 text-white hover:bg-secondary-400'*/}
-          {/*      }`}*/}
-          {/*    >*/}
-          {/*      Sign Up*/}
-          {/*    </Link>*/}
-          {/*    <Link*/}
-          {/*      href="/login"*/}
-          {/*      className={`flex items-center rounded-md border px-6 text-base font-semibold max-lg:h-9 max-lg:px-4 lg:h-12 ${*/}
-          {/*        transparent*/}
-          {/*          ? 'border-opacity-30 text-white hover:bg-secondary-400'*/}
-          {/*          : 'border-transparent text-secondary-500 hover:bg-whitesmoke'*/}
-          {/*      }`}*/}
-          {/*    >*/}
-          {/*      Login*/}
-          {/*    </Link>*/}
-          {/*  </div>*/}
-          {/*)}*/}
+          {isAuthenticated ? (
+            <div className="flex items-center gap-1.5">
+              <Link
+                href="/dashboard/profile"
+                className={`flex items-center rounded-md px-6 text-base font-semibold max-lg:h-9 max-lg:px-4 lg:h-12 ${
+                  transparent
+                    ? 'bg-white text-secondary-500 hover:bg-whitesmoke'
+                    : 'bg-secondary-500 text-white hover:bg-secondary-400'
+                }`}
+              >
+                Dashboard
+              </Link>
+            </div>
+          ) : (
+            <div className="flex items-center gap-1.5">
+              <Link
+                href="/signup"
+                className={`flex items-center rounded-md px-6 text-base font-semibold max-lg:h-9 max-lg:px-4 lg:h-12 ${
+                  transparent
+                    ? 'bg-white text-secondary-500 hover:bg-whitesmoke'
+                    : 'bg-secondary-500 text-white hover:bg-secondary-400'
+                }`}
+              >
+                Sign Up
+              </Link>
+              <Link
+                href="/login"
+                className={`flex items-center rounded-md border px-6 text-base font-semibold max-lg:h-9 max-lg:px-4 lg:h-12 ${
+                  transparent
+                    ? 'border-opacity-30 text-white hover:bg-secondary-400'
+                    : 'border-transparent text-secondary-500 hover:bg-whitesmoke'
+                }`}
+              >
+                Login
+              </Link>
+            </div>
+          )}
           <Dropdown transparent={transparent} />
         </div>
       </nav>
