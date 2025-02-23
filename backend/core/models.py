@@ -139,7 +139,7 @@ class PosterSession(models.Model):
 
 class PosterSessionImage(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    image = models.ImageField(upload_to='poster-images/')
+    image = models.FileField(upload_to='poster-images/')
 
     def __str__(self):
         return f"Poster Image of {self.user.username}"
