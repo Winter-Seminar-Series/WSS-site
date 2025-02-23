@@ -136,7 +136,7 @@ export default function PosterSessionForm(props: IPosterSessionForm) {
 
               <input
                 type="file"
-                accept={'image/*'}
+                accept={'application/pdf'}
                 ref={fileInputRef}
                 onChange={handleFileChange}
                 name={'image'}

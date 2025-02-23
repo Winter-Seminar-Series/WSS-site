@@ -4,11 +4,7 @@ import { fetchEmailAndProfile } from '../../../lib/api/dashboard/profile';
 import ProfileCompletionWarning from '../register/ProfileCompletionWarning';
 import React from 'react';
 import PosterSessionForm from './PosterSessionForm';
-import {
-  createPosterSessionImage,
-  getPosterSessionImage,
-  updatePosterSessionImage,
-} from '../../../lib/api/dashboard/posterSession';
+import { getPosterSessionImage } from '../../../lib/api/dashboard/posterSession';
 import { getAccessToken } from '../../../lib/api/session';
 
 export default async function PosterSessionPanel() {
