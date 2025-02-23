@@ -5,9 +5,11 @@ import { updateProfile } from '../../../lib/api/dashboard/profile';
 import { Gender, Grade, IntroductionMethod, Profile } from '../../../lib/types';
 import Select from 'react-select';
 
-import { OptionsOrGroups, GroupBase } from 'react-select';
-
-const provinceOptions: OptionsOrGroups<string, GroupBase<string>> = [
+type OptionType = {
+  value: string;
+  label: string;
+};
+const provinceOptions: OptionType[] = [
   { value: 'Outside of Iran', label: 'Outside of Iran' },
   { value: 'East Azerbaijan', label: 'East Azerbaijan' },
   { value: 'West Azerbaijan', label: 'West Azerbaijan' },
@@ -42,7 +44,7 @@ const provinceOptions: OptionsOrGroups<string, GroupBase<string>> = [
   { value: 'Yazd', label: 'Yazd' },
 ];
 
-const jobOptions: OptionsOrGroups<string, GroupBase<string>> = [
+const jobOptions: OptionType[] = [
   { value: 'Software Engineer', label: 'Software Engineer' },
   { value: 'Backend Developer', label: 'Backend Developer' },
   { value: 'Frontend Developer', label: 'Frontend Developer' },
@@ -184,6 +186,7 @@ export default function ProfileForm({
                 Province
               </label>
               <Select
+                // @ts-ignore
                 options={provinceOptions}
                 value={selectedProvince}
                 onChange={handleChangeProvince}
@@ -306,6 +309,7 @@ export default function ProfileForm({
                   Job
                 </label>
                 <Select
+                  // @ts-ignore
                   options={jobOptions}
                   value={selectedJob}
                   onChange={handleChangeJob}
