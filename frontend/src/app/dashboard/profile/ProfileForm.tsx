@@ -1,19 +1,93 @@
 'use client';
 
-import { useState } from 'react';
+import { SetStateAction, useState } from 'react';
 import { updateProfile } from '../../../lib/api/dashboard/profile';
 import { Gender, Grade, IntroductionMethod, Profile } from '../../../lib/types';
+import Select from 'react-select';
+
+import { OptionsOrGroups, GroupBase } from 'react-select';
+
+const provinceOptions: OptionsOrGroups<string, GroupBase<string>> = [
+  { value: 'Outside of Iran', label: 'Outside of Iran' },
+  { value: 'East Azerbaijan', label: 'East Azerbaijan' },
+  { value: 'West Azerbaijan', label: 'West Azerbaijan' },
+  { value: 'Ardabil', label: 'Ardabil' },
+  { value: 'Isfahan', label: 'Isfahan' },
+  { value: 'Alborz', label: 'Alborz' },
+  { value: 'Ilam', label: 'Ilam' },
+  { value: 'Bushehr', label: 'Bushehr' },
+  { value: 'Tehran', label: 'Tehran' },
+  { value: 'Chaharmahal and Bakhtiari', label: 'Chaharmahal and Bakhtiari' },
+  { value: 'South Khorasan', label: 'South Khorasan' },
+  { value: 'Razavi Khorasan', label: 'Razavi Khorasan' },
+  { value: 'North Khorasan', label: 'North Khorasan' },
+  { value: 'Khuzestan', label: 'Khuzestan' },
+  { value: 'Zanjan', label: 'Zanjan' },
+  { value: 'Semnan', label: 'Semnan' },
+  { value: 'Sistan and Baluchestan', label: 'Sistan and Baluchestan' },
+  { value: 'Fars', label: 'Fars' },
+  { value: 'Qazvin', label: 'Qazvin' },
+  { value: 'Qom', label: 'Qom' },
+  { value: 'Kurdistan', label: 'Kurdistan' },
+  { value: 'Kerman', label: 'Kerman' },
+  { value: 'Kermanshah', label: 'Kermanshah' },
+  { value: 'Kohgiluyeh and Boyer-Ahmad', label: 'Kohgiluyeh and Boyer-Ahmad' },
+  { value: 'Golestan', label: 'Golestan' },
+  { value: 'Gilan', label: 'Gilan' },
+  { value: 'Lorestan', label: 'Lorestan' },
+  { value: 'Mazandaran', label: 'Mazandaran' },
+  { value: 'Markazi', label: 'Markazi' },
+  { value: 'Hormozgan', label: 'Hormozgan' },
+  { value: 'Hamedan', label: 'Hamedan' },
+  { value: 'Yazd', label: 'Yazd' },
+];
+
+const jobOptions: OptionsOrGroups<string, GroupBase<string>> = [
+  { value: 'Software Engineer', label: 'Software Engineer' },
+  { value: 'Backend Developer', label: 'Backend Developer' },
+  { value: 'Frontend Developer', label: 'Frontend Developer' },
+  { value: 'Full Stack Developer', label: 'Full Stack Developer' },
+  { value: 'DevOps Engineer', label: 'DevOps Engineer' },
+  { value: 'Machine Learning Engineer', label: 'Machine Learning Engineer' },
+  { value: 'Data Scientist', label: 'Data Scientist' },
+  { value: 'Data Engineer', label: 'Data Engineer' },
+  { value: 'AI Researcher', label: 'AI Researcher' },
+  { value: 'Computer Vision Engineer', label: 'Computer Vision Engineer' },
+  { value: 'NLP Engineer', label: 'NLP Engineer' },
+  { value: 'Cybersecurity Engineer', label: 'Cybersecurity Engineer' },
+  { value: 'Cloud Engineer', label: 'Cloud Engineer' },
+  { value: 'Embedded Systems Engineer', label: 'Embedded Systems Engineer' },
+  { value: 'Blockchain Developer', label: 'Blockchain Developer' },
+  { value: 'Game Developer', label: 'Game Developer' },
+  { value: 'Research Scientist', label: 'Research Scientist' },
+  { value: 'PhD Student', label: 'PhD Student' },
+  { value: 'Master’s Student', label: 'Master’s Student' },
+  { value: 'Undergraduate Student', label: 'Undergraduate Student' },
+  { value: 'University Professor', label: 'University Professor' },
+  { value: 'Researcher', label: 'Researcher' },
+  { value: 'Research Assistant', label: 'Research Assistant' },
+  { value: 'Technical Product Manager', label: 'Technical Product Manager' },
+  { value: 'Other', label: 'Other (please specify)' },
+];
+
 
 export default function ProfileForm({
-  email,
-  profile,
-}: {
+                                      email,
+                                      profile,
+                                    }: {
   email: string;
   profile: Profile;
 }) {
   const [error, setError] = useState('');
   const [successful, setSuccessful] = useState(false);
-
+  const [selectedProvince, setSelectedProvince] = useState('');
+  const [selectedJob, setSelectedJob] = useState('');
+  const handleChangeProvince = (option: SetStateAction<string>) => {
+    setSelectedProvince(option);
+  };
+  const handleChangeJob = (option: SetStateAction<string>) => {
+    setSelectedJob(option);
+  };
   return (
     <>
       {!error && successful && (
@@ -30,6 +104,7 @@ export default function ProfileForm({
         action={async (data) => {
           setError('');
           setSuccessful(false);
+          data.set('city', selectedProvince);
           const response = await updateProfile(data);
           if (response.error) {
             setError(response.error);
@@ -49,7 +124,8 @@ export default function ProfileForm({
         <div className="flex flex-col items-start gap-8 self-stretch">
           <div className="flex items-start gap-6 self-stretch max-md:flex-col">
             <div className="flex flex-[1_0_0] flex-col items-start gap-[9px] self-stretch">
-              <label className="text-base font-medium uppercase not-italic leading-[normal] tracking-[0.64px] text-[#8A8998]">
+              <label
+                className="text-base font-medium uppercase not-italic leading-[normal] tracking-[0.64px] text-[#8A8998]">
                 EMAIL
               </label>
               <p className="flex items-center gap-2 self-stretch rounded-lg bg-[#8A89981A] px-5 py-4">
@@ -57,7 +133,8 @@ export default function ProfileForm({
               </p>
             </div>
             <div className="flex flex-[1_0_0] flex-col items-start gap-[9px] self-stretch">
-              <label className="text-base font-medium uppercase not-italic leading-[normal] tracking-[0.64px] text-[#8A8998]">
+              <label
+                className="text-base font-medium uppercase not-italic leading-[normal] tracking-[0.64px] text-[#8A8998]">
                 Phone Number
               </label>
               <input
@@ -75,7 +152,8 @@ export default function ProfileForm({
         </div>
         <div className="flex items-start gap-6 self-stretch max-md:flex-col">
           <div className="flex flex-[1_0_0] flex-col items-start gap-[9px] self-stretch">
-            <label className="text-base font-medium uppercase not-italic leading-[normal] tracking-[0.64px] text-[#8A8998]">
+            <label
+              className="text-base font-medium uppercase not-italic leading-[normal] tracking-[0.64px] text-[#8A8998]">
               First name
             </label>
             <input
@@ -89,7 +167,8 @@ export default function ProfileForm({
             />
           </div>
           <div className="flex flex-[1_0_0] flex-col items-start gap-[9px] self-stretch">
-            <label className="text-base font-medium uppercase not-italic leading-[normal] tracking-[0.64px] text-[#8A8998]">
+            <label
+              className="text-base font-medium uppercase not-italic leading-[normal] tracking-[0.64px] text-[#8A8998]">
               Last name
             </label>
             <input
@@ -105,23 +184,45 @@ export default function ProfileForm({
         </div>
         <div className="flex items-start gap-6 self-stretch max-md:flex-col">
           <div className="flex flex-[1_0_0] flex-col items-start gap-[9px] self-stretch">
-            <label className="text-base font-medium uppercase not-italic leading-[normal] tracking-[0.64px] text-[#8A8998]">
-              CITY
-            </label>
-            <input
-              className="self-stretch rounded-lg border border-solid border-[rgba(138,137,152,0.30)] px-5 py-4 text-lg font-semibold not-italic leading-[normal] tracking-[-0.18px] text-[#1F2B3D]"
-              type="text"
-              id="city"
-              name="city"
-              minLength={3}
-              defaultValue={profile.city}
-            />
+            <div className="flex flex-[1_0_0] flex-col items-start gap-[9px] self-stretch">
+              <label
+                className="text-base font-medium uppercase not-italic leading-normal tracking-[0.64px] text-[#8A8998]">
+                Province
+              </label>
+              <Select
+                options={provinceOptions}
+                value={selectedProvince}
+                onChange={handleChangeProvince}
+                placeholder="Choose your province"
+                isSearchable
+                className="w-full h-full"
+                styles={{
+                  control: (base) => ({
+                    ...base,
+                    borderColor: '#ebe2eb',
+                    '&:hover': { borderColor: '#9d6d9b' },
+                    boxShadow: '0 0 0 1px #ffffff',
+                  }),
+                  option: (base, { isFocused, isSelected }) => ({
+                    ...base,
+                    backgroundColor: isSelected
+                      ? ''
+                      : isFocused
+                        ? '#c4a7c3'
+                        : 'white',
+                    color: isSelected ? 'white' : 'black',
+                  }),
+                }}
+              />
+            </div>
           </div>
           <div className="flex flex-[1_0_0] flex-col items-start gap-[9px] self-stretch">
-            <label className="text-base font-medium uppercase not-italic leading-[normal] tracking-[0.64px] text-[#8A8998]">
+            <label
+              className="text-base font-medium uppercase not-italic leading-[normal] tracking-[0.64px] text-[#8A8998]">
               Birthday
             </label>
-            <div className="flex items-center gap-2 self-stretch rounded-lg border border-solid border-[rgba(138,137,152,0.30)] px-5 py-4">
+            <div
+              className="flex items-center gap-2 self-stretch rounded-lg border border-solid border-[rgba(138,137,152,0.30)] px-5 py-4">
               <input
                 className="black-text min-w-full text-lg font-semibold not-italic leading-[normal] tracking-[-0.18px]"
                 type="date"
@@ -132,7 +233,8 @@ export default function ProfileForm({
             </div>
           </div>
           <div className="flex flex-[1_0_0] flex-col items-start gap-[9px] self-stretch">
-            <label className="text-base font-medium uppercase not-italic leading-[normal] tracking-[0.64px] text-[#8A8998]">
+            <label
+              className="text-base font-medium uppercase not-italic leading-[normal] tracking-[0.64px] text-[#8A8998]">
               Gender
             </label>
             <div className="flex items-center gap-5 px-0 py-1">
@@ -166,20 +268,6 @@ export default function ProfileForm({
                 Female
               </label>
               <br />
-              <input
-                type="radio"
-                id="other"
-                name="gender"
-                value="O"
-                className="h-3 w-3 shrink-0 accent-primary-400"
-                defaultChecked={profile.gender === Gender.OTHER}
-              />
-              <label
-                htmlFor="other"
-                className="text-lg font-semibold not-italic leading-[normal] tracking-[-0.18px] text-[#1F2B3D]"
-              >
-                Other
-              </label>
             </div>
           </div>
         </div>
@@ -192,7 +280,8 @@ export default function ProfileForm({
         <div className="ma flex flex-col items-start gap-8 self-stretch">
           <div className="flex items-start gap-6 self-stretch max-md:flex-col">
             <div className="flex flex-[1_0_0] flex-col items-start gap-[9px] self-stretch">
-              <label className="text-base font-medium uppercase not-italic leading-[normal] tracking-[0.64px] text-[#8A8998]">
+              <label
+                className="text-base font-medium uppercase not-italic leading-[normal] tracking-[0.64px] text-[#8A8998]">
                 University
               </label>
               <input
@@ -200,18 +289,21 @@ export default function ProfileForm({
                 type="text"
                 id="University"
                 minLength={5}
+                required
                 defaultValue={profile.university}
                 name="university"
               />
             </div>
             <div className="flex flex-[1_0_0] flex-col items-start gap-[9px] self-stretch">
-              <label className="text-base font-medium uppercase not-italic leading-[normal] tracking-[0.64px] text-[#8A8998]">
+              <label
+                className="text-base font-medium uppercase not-italic leading-[normal] tracking-[0.64px] text-[#8A8998]">
                 Major
               </label>
               <input
                 className="min-w-full self-stretch rounded-lg border border-solid border-[rgba(138,137,152,0.30)] px-5 py-4 text-lg font-semibold not-italic leading-[normal] tracking-[-0.18px] text-[#1F2B3D]"
                 type="text"
                 id="Major"
+                required
                 minLength={5}
                 defaultValue={profile.major}
                 name="major"
@@ -220,23 +312,45 @@ export default function ProfileForm({
           </div>
           <div className="flex items-start gap-8 self-stretch max-md:flex-col">
             <div className="flex h-[88px] w-full flex-[1_0_0] flex-col items-start gap-[9px]">
-              <label className="text-base font-medium uppercase not-italic leading-[normal] tracking-[0.64px] text-[#8A8998]">
-                job
-              </label>
-              <input
-                className="min-w-full self-stretch rounded-lg border border-solid border-[rgba(138,137,152,0.30)] px-5 py-4 text-lg font-semibold not-italic leading-[normal] tracking-[-0.18px] text-[#1F2B3D]"
-                type="text"
-                id="Job"
-                minLength={5}
-                defaultValue={profile.job}
-                name="job"
-              />
+              <div className="flex flex-[1_0_0] flex-col items-start gap-[9px] self-stretch">
+                <label
+                  className="text-base font-medium uppercase not-italic leading-normal tracking-[0.64px] text-[#8A8998]">
+                  Job
+                </label>
+                <Select
+                  options={jobOptions}
+                  value={selectedJob}
+                  onChange={handleChangeJob}
+                  placeholder="Choose your Job"
+                  isSearchable
+                  className="w-full h-full"
+                  styles={{
+                    control: (base) => ({
+                      ...base,
+                      borderColor: '#ebe2eb',
+                      '&:hover': { borderColor: '#9d6d9b' },
+                      boxShadow: '0 0 0 1px #ffffff',
+                    }),
+                    option: (base, { isFocused, isSelected }) => ({
+                      ...base,
+                      backgroundColor: isSelected
+                        ? ''
+                        : isFocused
+                          ? '#c4a7c3'
+                          : 'white',
+                      color: isSelected ? 'white' : 'black',
+                    }),
+                  }}
+                />
+              </div>
             </div>
             <div className="flex flex-[1_0_0] flex-col items-start gap-[9px] self-stretch">
-              <label className="text-base font-medium uppercase not-italic leading-[normal] tracking-[0.64px] text-[#8A8998]">
+              <label
+                className="text-base font-medium uppercase not-italic leading-[normal] tracking-[0.64px] text-[#8A8998]">
                 Status
               </label>
-              <label className="flex items-center gap-2 px-0 py-1 text-lg font-semibold not-italic leading-[normal] tracking-[-0.18px] text-[#1F2B3D]">
+              <label
+                className="flex items-center gap-2 px-0 py-1 text-lg font-semibold not-italic leading-[normal] tracking-[-0.18px] text-[#1F2B3D]">
                 <input
                   defaultChecked={profile.isOpenToWork}
                   type="checkbox"
@@ -250,7 +364,8 @@ export default function ProfileForm({
             </div>
           </div>
           <div className="flex h-[88px] flex-col items-start gap-[9px] self-stretch">
-            <label className="text-base font-medium uppercase not-italic leading-[normal] tracking-[0.64px] text-[#8A8998]">
+            <label
+              className="text-base font-medium uppercase not-italic leading-[normal] tracking-[0.64px] text-[#8A8998]">
               Fields of interest
             </label>
             <input
@@ -263,11 +378,13 @@ export default function ProfileForm({
           </div>
           <div className="flex items-start gap-6 self-stretch max-md:flex-col">
             <div className="flex flex-[1_0_0] flex-col items-start gap-[9px] self-stretch">
-              <div className="text-base font-medium uppercase not-italic leading-[normal] tracking-[0.64px] text-[#8A8998]">
+              <div
+                className="text-base font-medium uppercase not-italic leading-[normal] tracking-[0.64px] text-[#8A8998]">
                 grade
               </div>
               <div className="flex items-center gap-x-5 gap-y-1 px-0 py-1 max-md:flex-col max-md:items-stretch">
-                <label className="flex items-center gap-x-5 text-lg font-semibold not-italic leading-[normal] tracking-[-0.18px] text-[#1F2B3D]">
+                <label
+                  className="flex items-center gap-x-5 text-lg font-semibold not-italic leading-[normal] tracking-[-0.18px] text-[#1F2B3D]">
                   <input
                     defaultChecked={profile.grade === Grade.BACHELOR}
                     type="radio"
@@ -278,7 +395,8 @@ export default function ProfileForm({
                   />
                   Bachelor
                 </label>
-                <label className="flex items-center gap-x-5 text-lg font-semibold not-italic leading-[normal] tracking-[-0.18px] text-[#1F2B3D]">
+                <label
+                  className="flex items-center gap-x-5 text-lg font-semibold not-italic leading-[normal] tracking-[-0.18px] text-[#1F2B3D]">
                   <input
                     defaultChecked={profile.grade === Grade.MASTER}
                     type="radio"
@@ -289,7 +407,8 @@ export default function ProfileForm({
                   />
                   Master
                 </label>
-                <label className="flex items-center gap-x-5 text-lg font-semibold not-italic leading-[normal] tracking-[-0.18px] text-[#1F2B3D]">
+                <label
+                  className="flex items-center gap-x-5 text-lg font-semibold not-italic leading-[normal] tracking-[-0.18px] text-[#1F2B3D]">
                   <input
                     defaultChecked={profile.grade === Grade.PHD}
                     type="radio"
@@ -303,10 +422,12 @@ export default function ProfileForm({
               </div>
             </div>
             <div className="flex flex-[1_0_0] flex-col items-start gap-[9px] self-stretch">
-              <label className="text-base font-medium uppercase not-italic leading-[normal] tracking-[0.64px] text-[#8A8998]">
+              <label
+                className="text-base font-medium uppercase not-italic leading-[normal] tracking-[0.64px] text-[#8A8998]">
                 Introduction Method
               </label>
-              <div className="flex items-center justify-between self-stretch rounded-lg border border-solid border-[rgba(138,137,152,0.30)] px-5 py-4">
+              <div
+                className="flex items-center justify-between self-stretch rounded-lg border border-solid border-[rgba(138,137,152,0.30)] px-5 py-4">
                 <select name="introductionMethod" id="field" className="w-full">
                   <option
                     selected={
@@ -380,21 +501,14 @@ export default function ProfileForm({
                   >
                     Forums
                   </option>
-                  <option
-                    selected={
-                      !profile.introductionMethod ||
-                      profile.introductionMethod === IntroductionMethod.OTHERS
-                    }
-                  >
-                    Others
-                  </option>
                 </select>
               </div>
             </div>
           </div>
           <div className="flex items-start gap-6 self-stretch max-md:flex-col">
             <div className="flex flex-[1_0_0] flex-col items-start gap-[9px] self-stretch">
-              <label className="text-base font-medium uppercase not-italic leading-[normal] tracking-[0.64px] text-[#8A8998]">
+              <label
+                className="text-base font-medium uppercase not-italic leading-[normal] tracking-[0.64px] text-[#8A8998]">
                 Linkedin
               </label>
               <input
@@ -406,7 +520,8 @@ export default function ProfileForm({
               />
             </div>
             <div className="flex flex-[1_0_0] flex-col items-start gap-[9px] self-stretch">
-              <label className="text-base font-medium uppercase not-italic leading-[normal] tracking-[0.64px] text-[#8A8998]">
+              <label
+                className="text-base font-medium uppercase not-italic leading-[normal] tracking-[0.64px] text-[#8A8998]">
                 github
               </label>
               <input
@@ -418,7 +533,8 @@ export default function ProfileForm({
               />
             </div>
           </div>
-          <button className="mb-8 flex h-[72px] items-center justify-center gap-2.5 self-stretch rounded-lg bg-[#342B4C] px-8 py-0 text-xl font-bold not-italic leading-[normal] tracking-[-0.2px] text-white">
+          <button
+            className="mb-8 flex h-[72px] items-center justify-center gap-2.5 self-stretch rounded-lg bg-[#342B4C] px-8 py-0 text-xl font-bold not-italic leading-[normal] tracking-[-0.2px] text-white">
             Update Profile
           </button>
           <div className="flex flex-col items-start gap-5 self-stretch">
@@ -427,10 +543,12 @@ export default function ProfileForm({
             </label>
             <div className="flex items-start gap-6 self-stretch max-md:flex-col">
               <div className="flex flex-[1_0_0] flex-col items-start gap-[9px] self-stretch">
-                <label className="text-base font-medium uppercase not-italic leading-[normal] tracking-[0.64px] text-[#8A8998]">
+                <label
+                  className="text-base font-medium uppercase not-italic leading-[normal] tracking-[0.64px] text-[#8A8998]">
                   Current Password
                 </label>
-                <div className="flex items-center gap-2 self-stretch rounded-lg border border-solid border-[rgba(138,137,152,0.30)] px-5 py-4">
+                <div
+                  className="flex items-center gap-2 self-stretch rounded-lg border border-solid border-[rgba(138,137,152,0.30)] px-5 py-4">
                   <input
                     className="w-full text-lg font-semibold not-italic leading-[normal] tracking-[-0.18px] text-[#1F2B3D]"
                     type="password"
@@ -441,10 +559,12 @@ export default function ProfileForm({
                 </div>
               </div>
               <div className="flex flex-[1_0_0] flex-col items-start gap-[9px] self-stretch">
-                <label className="text-base font-medium uppercase not-italic leading-[normal] tracking-[0.64px] text-[#8A8998]">
+                <label
+                  className="text-base font-medium uppercase not-italic leading-[normal] tracking-[0.64px] text-[#8A8998]">
                   New Password
                 </label>
-                <div className="flex items-center gap-2 self-stretch rounded-lg border border-solid border-[rgba(138,137,152,0.30)] px-5 py-4">
+                <div
+                  className="flex items-center gap-2 self-stretch rounded-lg border border-solid border-[rgba(138,137,152,0.30)] px-5 py-4">
                   <input
                     className="w-full text-lg font-semibold not-italic leading-[normal] tracking-[-0.18px] text-[#1F2B3D]"
                     type="password"
@@ -455,10 +575,12 @@ export default function ProfileForm({
                 </div>
               </div>
               <div className="flex flex-[1_0_0] flex-col items-start gap-[9px] self-stretch">
-                <label className="text-base font-medium uppercase not-italic leading-[normal] tracking-[0.64px] text-[#8A8998]">
+                <label
+                  className="text-base font-medium uppercase not-italic leading-[normal] tracking-[0.64px] text-[#8A8998]">
                   confirm new Password
                 </label>
-                <div className="flex items-center gap-2 self-stretch rounded-lg border border-solid border-[rgba(138,137,152,0.30)] px-5 py-4">
+                <div
+                  className="flex items-center gap-2 self-stretch rounded-lg border border-solid border-[rgba(138,137,152,0.30)] px-5 py-4">
                   <input
                     className="w-full text-lg font-semibold not-italic leading-[normal] tracking-[-0.18px] text-[#1F2B3D]"
                     type="password"
@@ -470,7 +592,8 @@ export default function ProfileForm({
               </div>
             </div>
           </div>
-          <button className="mb-8 flex h-[72px] items-center justify-center gap-2.5 self-stretch rounded-lg bg-[#342B4C] px-8 py-0 text-xl font-bold not-italic leading-[normal] tracking-[-0.2px] text-white">
+          <button
+            className="mb-8 flex h-[72px] items-center justify-center gap-2.5 self-stretch rounded-lg bg-[#342B4C] px-8 py-0 text-xl font-bold not-italic leading-[normal] tracking-[-0.2px] text-white">
             Update Password
           </button>
         </div>

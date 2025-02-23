@@ -154,18 +154,18 @@ export default function RegisterForm({
           isDiscountCodeValid={isDiscountCodeValid}
           setDiscountCodeValid={setDiscountCodeValid}
         />
-        <div
-          className={
-            'mt-8 py-4 text-4xl font-bold tracking-[-0.72px] text-darkslategray-100'
-          }
-        >
-          Workshops
-        </div>
-        <Workshops
-          workshops={workshops}
-          selectPlan={selectPlan}
-          removePlan={removePlan}
-        />
+        {/*<div*/}
+        {/*  className={*/}
+        {/*    'mt-8 py-4 text-4xl font-bold tracking-[-0.72px] text-darkslategray-100'*/}
+        {/*  }*/}
+        {/*>*/}
+        {/*  Workshops*/}
+        {/*</div>*/}
+        {/*<Workshops*/}
+        {/*  workshops={workshops}*/}
+        {/*  selectPlan={selectPlan}*/}
+        {/*  removePlan={removePlan}*/}
+        {/*/>*/}
 
         <div className="mb-8 flex w-full items-end justify-between gap-y-4 max-md:flex-col max-md:items-stretch">
           <div

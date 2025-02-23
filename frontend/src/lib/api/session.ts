@@ -2,7 +2,7 @@ import type { SessionOptions } from 'iron-session';
 import { getIronSession } from 'iron-session';
 import { cookies } from 'next/headers';
 
-type SessionData = {
+export type SessionData = {
   isLoggedIn?: boolean;
   accessToken?: string;
   refreshToken?: string;
@@ -19,6 +19,11 @@ const sessionOptions: SessionOptions = {
 
 export async function getSession() {
   const session = await getIronSession<SessionData>(cookies(), sessionOptions);
-
   return session;
+}
+
+export async function getAccessToken() {
+  const session = await getIronSession<SessionData>(cookies(), sessionOptions);
+  const token = session.accessToken
+  return token;
 }

@@ -48,7 +48,6 @@ export async function fetchJson<JSON = unknown>(
   }
 
   const response = await fetch(input, fetchInit);
-
   if (!response.ok) {
     let message: any;
     try {
@@ -80,14 +79,12 @@ export async function fetchJsonWithAuth<JSON = unknown>(
 
   const session = await getSession();
   const accessToken = session.accessToken;
-
   init ??= {};
 
   init.headers = {
     ...init?.headers,
     Authorization: `Bearer ${accessToken}`,
   };
-
   try {
     return await fetchJson<JSON>(input, body, init);
   } catch (error) {

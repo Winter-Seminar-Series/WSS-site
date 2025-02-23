@@ -5,20 +5,20 @@ import { ModeOfAttendance } from '../../../lib/types';
 import { updateNationalCode } from '../../../lib/api/dashboard/profile';
 
 export default function AttendanceInfo({
-  modesOfAttendance,
-  selectPlan,
-  removePlan,
-  nationalCode,
-  setNationalCode,
-  price,
-  updatePrice,
-  discountCode,
-  setDiscountCode,
-  selectedModeIndex,
-  setSelectedModeIndex,
-  isDiscountCodeValid,
-  setDiscountCodeValid,
-}: {
+                                         modesOfAttendance,
+                                         selectPlan,
+                                         removePlan,
+                                         nationalCode,
+                                         setNationalCode,
+                                         price,
+                                         updatePrice,
+                                         discountCode,
+                                         setDiscountCode,
+                                         selectedModeIndex,
+                                         setSelectedModeIndex,
+                                         isDiscountCodeValid,
+                                         setDiscountCodeValid,
+                                       }: {
   modesOfAttendance: ModeOfAttendance[];
   selectPlan: (planId: number) => Promise<void>;
   removePlan: (planId: number) => Promise<void>;
@@ -71,18 +71,17 @@ export default function AttendanceInfo({
   return (
     <div className={'mt-6 w-full'}>
       <div className="mb-6 text-lg leading-relaxed text-lightslategray">
-        The main event spans four days (Feb 29th - Mar 3rd, 2024), with the
-        first two days in person and the following two days entirely virtual.
+        The main event spans two days (April 10th - April 11th, 2025), with the
+        first day in person and the following day entirely virtual.
         <br />
         <br />
         The plans to participate in the event are as follows:
         <br />
         <ul className="list-outside list-disc pl-[1.5em]">
           <li>
-            In person: the first two days in person (Feb 29th - Mar 1st) and the
-            second two virtual days (Mar 2nd - Mar 3rd)
+            In person
           </li>
-          <li>Online: four days virtually (April 10th - April 11th)</li>
+          <li>Online</li>
         </ul>
       </div>
       <div
