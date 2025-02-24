@@ -33,10 +33,10 @@ export default function Navbar({ fixed = true, isAuthenticated = false }) {
           transparent
             ? 'bg-transparent text-white'
             : 'border-b border-neutral-200 bg-white text-darkslategray-100'
-        } px-6 py-5 duration-200`}
+        } px-0 py-5 duration-200`}
       >
         <div className="mx-auto flex h-[38px] max-w-[1200px] items-center justify-between lg:h-[54px]">
-          <div className="flex shrink-0 items-center gap-x-4">
+          <div className="flex shrink-0 items-center gap-x-2">
             <button
               className="flex w-6 flex-col items-stretch gap-y-1 md:hidden"
               onClick={() => setSidebarOpen(true)}
@@ -63,50 +63,50 @@ export default function Navbar({ fixed = true, isAuthenticated = false }) {
             <Link href="/about" className="block px-4 py-3">
               About Us
             </Link>
-            {/*<Link href="/poster-session" className="relative block px-4 py-3">*/}
-            {/*  Poster Session*/}
-            {/*  <span className="absolute -right-2 -top-1 animate-pulse rounded-full border-2 bg-secondary px-1.5 py-0.5 text-[10px] font-bold text-white">*/}
-            {/*    NEW*/}
-            {/*  </span>*/}
-            {/*</Link>*/}
+            <Link href="/poster-session" className="relative block px-4 py-3">
+              Poster Session
+              <span className="absolute -right-2 -top-1 animate-pulse rounded-full border-2 bg-secondary px-1.5 py-0.5 text-[10px] font-bold text-white">
+                NEW
+              </span>
+            </Link>
           </div>
-          {/*{isAuthenticated ? (*/}
-          {/*  <div className="flex items-center gap-1.5">*/}
-          {/*    <Link*/}
-          {/*      href="/dashboard/profile"*/}
-          {/*      className={`flex items-center rounded-md px-6 text-base font-semibold max-lg:h-9 max-lg:px-4 lg:h-12 ${*/}
-          {/*        transparent*/}
-          {/*          ? 'bg-white text-secondary-500 hover:bg-whitesmoke'*/}
-          {/*          : 'bg-secondary-500 text-white hover:bg-secondary-400'*/}
-          {/*      }`}*/}
-          {/*    >*/}
-          {/*      Dashboard*/}
-          {/*    </Link>*/}
-          {/*  </div>*/}
-          {/*) : (*/}
-          {/*  <div className="flex items-center gap-1.5">*/}
-          {/*    <Link*/}
-          {/*      href="/signup"*/}
-          {/*      className={`flex items-center rounded-md px-6 text-base font-semibold max-lg:h-9 max-lg:px-4 lg:h-12 ${*/}
-          {/*        transparent*/}
-          {/*          ? 'bg-white text-secondary-500 hover:bg-whitesmoke'*/}
-          {/*          : 'bg-secondary-500 text-white hover:bg-secondary-400'*/}
-          {/*      }`}*/}
-          {/*    >*/}
-          {/*      Sign Up*/}
-          {/*    </Link>*/}
-          {/*    <Link*/}
-          {/*      href="/login"*/}
-          {/*      className={`flex items-center rounded-md border px-6 text-base font-semibold max-lg:h-9 max-lg:px-4 lg:h-12 ${*/}
-          {/*        transparent*/}
-          {/*          ? 'border-opacity-30 text-white hover:bg-secondary-400'*/}
-          {/*          : 'border-transparent text-secondary-500 hover:bg-whitesmoke'*/}
-          {/*      }`}*/}
-          {/*    >*/}
-          {/*      Login*/}
-          {/*    </Link>*/}
-          {/*  </div>*/}
-          {/*)}*/}
+          {isAuthenticated ? (
+            <div className="flex items-center gap-1.5">
+              <Link
+                href="/dashboard/profile"
+                className={`flex items-center rounded-md px-6 text-base font-semibold max-lg:h-9 max-lg:px-4 lg:h-12 ${
+                  transparent
+                    ? 'bg-white text-secondary-500 hover:bg-whitesmoke'
+                    : 'bg-secondary-500 text-white hover:bg-secondary-400'
+                }`}
+              >
+                Dashboard
+              </Link>
+            </div>
+          ) : (
+            <div className="flex flex-grow items-center justify-center gap-2">
+              <Link
+                href="/signup"
+                className={`flex items-center rounded-md px-6 text-base font-semibold max-lg:h-9 max-lg:px-4 lg:h-12  ${
+                  transparent
+                    ? 'bg-white text-secondary-500 hover:bg-whitesmoke'
+                    : 'bg-secondary-500 text-white hover:bg-secondary-400'
+                }`}
+              >
+                Sign Up
+              </Link>
+              <Link
+                href="/login"
+                className={`flex items-center rounded-md border px-6 text-base font-semibold max-lg:h-9 max-lg:px-4 lg:h-12 ${
+                  transparent
+                    ? 'border-opacity-30 text-white hover:bg-secondary-400'
+                    : 'border-transparent text-secondary-500 hover:bg-whitesmoke'
+                }`}
+              >
+                Login
+              </Link>
+            </div>
+          )}
           <Dropdown transparent={transparent} />
         </div>
       </nav>
@@ -126,12 +126,12 @@ export default function Navbar({ fixed = true, isAuthenticated = false }) {
               {label}
             </Link>
           ))}
-          {/*<Link href="/poster-session" className="relative block px-4 py-3">*/}
-          {/*  Poster Session*/}
-          {/*  <span className="absolute right-2 animate-pulse rounded-full border-2 bg-secondary px-1.5 py-0.5 text-[10px] font-bold text-white">*/}
-          {/*    NEW*/}
-          {/*  </span>*/}
-          {/*</Link>*/}
+          <Link href="/poster-session" className="relative block px-4 py-3">
+            Poster Session
+            <span className="absolute right-2 animate-pulse rounded-full border-2 bg-secondary px-1.5 py-0.5 text-[10px] font-bold text-white">
+              NEW
+            </span>
+          </Link>
         </aside>
       </div>
     </>
