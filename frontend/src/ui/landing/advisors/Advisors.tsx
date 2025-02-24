@@ -83,7 +83,7 @@ export default function Advisors() {
         {/*  />*/}
         {/*</Link>*/}
       </div>
-      <div className="mx-32 flex flex-wrap justify-between gap-y-8">
+      <div className="mx-16 flex justify-between gap-y-8">
         {advisorsData
           .filter((staff) => staff.image)
           .map((staff, index) => (
