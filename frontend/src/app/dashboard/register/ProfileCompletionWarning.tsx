@@ -6,7 +6,7 @@ export default function ProfileCompletionWarning() {
   return (
     <div
       className={
-        'flex w-full items-center justify-between rounded-md bg-[#E7ECF3] p-5 font-semibold'
+        'flex w-full items-center justify-between rounded-md bg-rose-300 p-5 font-semibold'
       }
     >
       <div
@@ -21,18 +21,6 @@ export default function ProfileCompletionWarning() {
         />
         Please complete your profile information first
       </div>
-      <Link
-        href={'profile'}
-        className={
-          'flex cursor-pointer items-center justify-center text-lg text-primary'
-        }
-      >
-        PROFILE
-        <img
-          src="/source/dashboard/register/rightArrow.svg"
-          className={'ml-2'}
-        />
-      </Link>
     </div>
   );
 }
