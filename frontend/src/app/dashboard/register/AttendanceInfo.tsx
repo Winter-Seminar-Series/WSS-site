@@ -3,6 +3,7 @@
 import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { ModeOfAttendance } from '../../../lib/types';
 import { updateNationalCode } from '../../../lib/api/dashboard/profile';
+import { ID } from 'postcss-selector-parser';
 
 export default function AttendanceInfo({
   modesOfAttendance,
@@ -33,6 +34,16 @@ export default function AttendanceInfo({
   isDiscountCodeValid: boolean;
   setDiscountCodeValid: Dispatch<SetStateAction<boolean>>;
 }) {
+  // TODO: Remove this fucking hard code!
+  const ID_OF_LAUNCH = modesOfAttendance.find((mode) =>
+    mode.name.toLowerCase().includes('lunch'),
+  )?.id;
+  const inPersonIndex = modesOfAttendance.findIndex(
+    (mod) => mod.id !== ID_OF_LAUNCH && mod.name.includes('Person'),
+  );
+  const lunchIndex = modesOfAttendance.findIndex(
+    (mod) => mod.id === ID_OF_LAUNCH,
+  );
   const [hasNationalCodeChanged, setNationalCodeChanged] = useState(true);
   const [nationalCodeError, setNationalCodeError] = useState('');
 
@@ -40,17 +51,35 @@ export default function AttendanceInfo({
     event,
   ) => {
     const id = parseInt(event.target.value);
+
     const previousSelectedMode = modesOfAttendance[selectedModeIndex];
+    const newSelectedMode = modesOfAttendance.findIndex(
+      (mode) => mode.id === id,
+    );
+    if (id === ID_OF_LAUNCH) {
+      if (!event.target.checked) {
+        for (const mode of modesOfAttendance) {
+          await removePlan(ID_OF_LAUNCH);
+          if (mode.name.includes('Person') && mode.id !== ID_OF_LAUNCH) {
+            await selectPlan(mode.id);
+            setSelectedModeIndex(
+              modesOfAttendance.findIndex((element) => element.id === mode.id),
+            );
+          }
+        }
+        return;
+      }
+    }
+
     if (previousSelectedMode && previousSelectedMode.paid) {
       return;
     }
     if (previousSelectedMode) {
       await removePlan(previousSelectedMode.id);
     }
-    const newSelectedMode = modesOfAttendance.findIndex(
-      (mode) => mode.id === id,
-    );
+
     setSelectedModeIndex(newSelectedMode);
+
     await selectPlan(id);
   };
 
@@ -94,16 +123,44 @@ export default function AttendanceInfo({
               'mt-2 flex flex-row items-center gap-x-6 text-lg font-semibold text-darkslategray-100 max-md:flex-col max-md:items-start'
             }
           >
-            {modesOfAttendance.map((modeOfAttendance) => (
+            {modesOfAttendance.map((modeOfAttendance) =>
+              modeOfAttendance.id !== ID_OF_LAUNCH ? (
+                <label
+                  key={modeOfAttendance.id}
+                  className={'flex items-center gap-x-2'}
+                >
+                  <input
+                    type={'radio'}
+                    id={modeOfAttendance.name}
+                    name={'modeOfAttendance'}
+                    value={modeOfAttendance.id}
+                    disabled={modesOfAttendance[selectedModeIndex]?.paid}
+                    defaultChecked={
+                      modesOfAttendance[selectedModeIndex]?.id ===
+                      modeOfAttendance.id
+                    }
+                    onChange={onModeChange}
+                  />
+                  <span>
+                    {modeOfAttendance.name} -{' '}
+                    {(modeOfAttendance.price ?? 0).toLocaleString()} Tooman
+                  </span>
+                </label>
+              ) : null,
+            )}
+          </div>
+          {modesOfAttendance.map((modeOfAttendance) =>
+            modeOfAttendance.id === ID_OF_LAUNCH &&
+            modesOfAttendance[selectedModeIndex]?.name.includes('In Person') ? (
               <label
                 key={modeOfAttendance.id}
-                className={'flex items-center gap-x-2'}
+                className={'mt-2 flex items-center gap-x-2'}
               >
                 <input
-                  type={'radio'}
+                  type={'checkbox'}
                   id={modeOfAttendance.name}
                   name={'modeOfAttendance'}
-                  value={modeOfAttendance.id}
+                  value={ID_OF_LAUNCH}
                   disabled={modesOfAttendance[selectedModeIndex]?.paid}
                   defaultChecked={
                     modesOfAttendance[selectedModeIndex]?.id ===
@@ -112,12 +169,16 @@ export default function AttendanceInfo({
                   onChange={onModeChange}
                 />
                 <span>
-                  {modeOfAttendance.name} -{' '}
-                  {(modeOfAttendance.price ?? 0).toLocaleString()} Tooman
+                  {'lunch'} - {''}
+                  {(
+                    modesOfAttendance[lunchIndex].price -
+                      modesOfAttendance[inPersonIndex].price ?? 0
+                  ).toLocaleString()}{' '}
+                  Tooman
                 </span>
               </label>
-            ))}
-          </div>
+            ) : null,
+          )}
         </div>
 
         {modesOfAttendance[selectedModeIndex]?.isNationalCodeRequired && (
