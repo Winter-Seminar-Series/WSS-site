@@ -63,5 +63,5 @@ func (adaptor PaymentAdaptor) VerifyTransaction(ctx context.Context, req payment
 }
 
 func isPaymentOk(response TransactionVerificationResult) bool {
-	return !isHardError(response) && response.Status == 1
+	return !isHardError(response) && (response.Status == 1 || response.Result == 201)
 }
