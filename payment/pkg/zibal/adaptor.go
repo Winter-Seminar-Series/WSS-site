@@ -57,7 +57,7 @@ func (adaptor PaymentAdaptor) VerifyTransaction(ctx context.Context, req payment
 	}
 	// Parse back the response
 	return payment.TransactionVerificationResult{
-		TrackID:   strconv.FormatInt(zibalResult.RefNumber, 10),
+		TrackID:   zibalResult.RefNumber,
 		PaymentOK: isPaymentOk(zibalResult),
 	}, nil
 }

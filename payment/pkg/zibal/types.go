@@ -26,8 +26,8 @@ type TransactionVerificationResult struct {
 	CardNumber  string `json:"cardNumber"`
 	OrderID     string `json:"orderId"`
 	Message     string `json:"message"`
+	RefNumber   string `json:"refNumber"`
 	Amount      uint64 `json:"amount"`
-	RefNumber   int64  `json:"refNumber"`
 	Result      int    `json:"result"`
 	Status      int    `json:"status"`
 }
