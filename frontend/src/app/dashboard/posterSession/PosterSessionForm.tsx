@@ -58,7 +58,7 @@ export default function PosterSessionForm(props: IPosterSessionForm) {
     <>
       {!error && successful && (
         <p className="w-full rounded-md bg-green-50 p-3 font-medium text-green-600">
-          Profile updated successfully!
+          Poster uploaded successfully!
         </p>
       )}
       {error && (
@@ -75,19 +75,23 @@ export default function PosterSessionForm(props: IPosterSessionForm) {
           formData.append('image', file);
           if (props.currentPoster) {
             updatePosterSessionImage(formData, props.accessToken)
-              .then(() => {
-                setSuccessful(true);
-                setError('');
+              .then((response) => {
+                if (!response.errors) {
+                  setSuccessful(true);
+                  setError('');
+                }
               })
               .catch((e) => {
                 setSuccessful(false);
+                setError('Not Successful');
               });
           } else {
             createPosterSessionImage(formData, props.accessToken)
-              .then(() => {
-                setError('Not Successful');
-                setSuccessful(true);
-                setError('');
+              .then((response) => {
+                if (!response.errors) {
+                  setSuccessful(true);
+                  setError('');
+                }
               })
               .catch(() => {
                 setError('Not Successful');
@@ -143,6 +147,13 @@ export default function PosterSessionForm(props: IPosterSessionForm) {
                 className="hidden"
               />
             </div>
+
+            {file && (
+              <p className="text-sm text-[#8A8998] ">
+                Current Selected File:{' '}
+                <span className={'underline'}>{file.name}</span>
+              </p>
+            )}
 
             {props.currentPoster && (
               <p className="text-sm text-[#8A8998] ">

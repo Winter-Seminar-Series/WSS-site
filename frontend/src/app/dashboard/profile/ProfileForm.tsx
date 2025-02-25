@@ -72,6 +72,16 @@ const jobOptions: OptionType[] = [
   { value: 'Other', label: 'Other (please specify)' },
 ];
 
+const majorOptions: OptionType[] = [
+  { value: 'computer-engineering', label: 'Computer Engineering' },
+  { value: 'computer-science', label: 'Computer Science' },
+  { value: 'electrical-engineering', label: 'Electrical Engineering' },
+  { value: 'mechanical-engineering', label: 'Mechanical Engineering' },
+  { value: 'mathematics', label: 'Mathematics' },
+  { value: 'physics', label: 'Physics' },
+  { value: 'other', label: 'Other...' },
+];
+
 export default function ProfileForm({
   email,
   profile,
@@ -83,11 +93,15 @@ export default function ProfileForm({
   const [successful, setSuccessful] = useState(false);
   const [selectedProvince, setSelectedProvince] = useState('');
   const [selectedJob, setSelectedJob] = useState('');
+  const [selectedMajor, setSelectedMajor] = useState('');
   const handleChangeProvince = (option: SetStateAction<string>) => {
     setSelectedProvince(option);
   };
   const handleChangeJob = (option: SetStateAction<string>) => {
     setSelectedJob(option);
+  };
+  const handleChangeMajor = (option: SetStateAction<string>) => {
+    setSelectedMajor(option);
   };
   return (
     <>
@@ -135,6 +149,9 @@ export default function ProfileForm({
             <div className="flex flex-[1_0_0] flex-col items-start gap-[9px] self-stretch">
               <label className="text-base font-medium uppercase not-italic leading-[normal] tracking-[0.64px] text-[#8A8998]">
                 Phone Number
+                <span className={'ml-1 text-xl font-bold text-secondary'}>
+                  *
+                </span>
               </label>
               <input
                 className="self-stretch rounded-lg border border-solid border-[rgba(138,137,152,0.30)] px-5 py-4 text-lg font-semibold not-italic leading-[normal] tracking-[-0.18px] text-[#1F2B3D]"
@@ -153,6 +170,7 @@ export default function ProfileForm({
           <div className="flex flex-[1_0_0] flex-col items-start gap-[9px] self-stretch">
             <label className="text-base font-medium uppercase not-italic leading-[normal] tracking-[0.64px] text-[#8A8998]">
               First name
+              <span className={'ml-1 text-xl font-bold text-secondary'}>*</span>
             </label>
             <input
               className="self-stretch rounded-lg border border-solid border-[rgba(138,137,152,0.30)] px-5 py-4 text-lg font-semibold not-italic leading-[normal] tracking-[-0.18px] text-[#1F2B3D]"
@@ -167,6 +185,7 @@ export default function ProfileForm({
           <div className="flex flex-[1_0_0] flex-col items-start gap-[9px] self-stretch">
             <label className="text-base font-medium uppercase not-italic leading-[normal] tracking-[0.64px] text-[#8A8998]">
               Last name
+              <span className={'ml-1 text-xl font-bold text-secondary'}>*</span>
             </label>
             <input
               className="self-stretch rounded-lg border border-solid border-[rgba(138,137,152,0.30)] px-5 py-4 text-lg font-semibold not-italic leading-[normal] tracking-[-0.18px] text-[#1F2B3D]"
@@ -276,6 +295,9 @@ export default function ProfileForm({
             <div className="flex flex-[1_0_0] flex-col items-start gap-[9px] self-stretch">
               <label className="text-base font-medium uppercase not-italic leading-[normal] tracking-[0.64px] text-[#8A8998]">
                 University
+                <span className={'ml-1 text-xl font-bold text-secondary'}>
+                  *
+                </span>
               </label>
               <input
                 className="min-w-full self-stretch rounded-lg border border-solid border-[rgba(138,137,152,0.30)] px-5 py-4 text-lg font-semibold not-italic leading-[normal] tracking-[-0.18px] text-[#1F2B3D]"
@@ -288,17 +310,48 @@ export default function ProfileForm({
               />
             </div>
             <div className="flex flex-[1_0_0] flex-col items-start gap-[9px] self-stretch">
-              <label className="text-base font-medium uppercase not-italic leading-[normal] tracking-[0.64px] text-[#8A8998]">
+              {/*<label*/}
+              {/*  className="text-base font-medium uppercase not-italic leading-[normal] tracking-[0.64px] text-[#8A8998]">*/}
+              {/*  Major<span className={'text-secondary font-bold text-xl ml-1'}>*</span>*/}
+              {/*</label>*/}
+              {/*<input*/}
+              {/*  className="min-w-full self-stretch rounded-lg border border-solid border-[rgba(138,137,152,0.30)] px-5 py-4 text-lg font-semibold not-italic leading-[normal] tracking-[-0.18px] text-[#1F2B3D]"*/}
+              {/*  type="text"*/}
+              {/*  id="Major"*/}
+              {/*  required*/}
+              {/*  minLength={5}*/}
+              {/*  defaultValue={profile.major}*/}
+              {/*  name="major"*/}
+              {/*/>*/}
+              <label className="text-base font-medium uppercase not-italic leading-normal tracking-[0.64px] text-[#8A8998]">
                 Major
               </label>
-              <input
-                className="min-w-full self-stretch rounded-lg border border-solid border-[rgba(138,137,152,0.30)] px-5 py-4 text-lg font-semibold not-italic leading-[normal] tracking-[-0.18px] text-[#1F2B3D]"
-                type="text"
-                id="Major"
-                required
-                minLength={5}
-                defaultValue={profile.major}
-                name="major"
+              <Select
+                // @ts-ignore
+                options={majorOptions}
+                name={'major'}
+                value={selectedMajor}
+                onChange={handleChangeMajor}
+                placeholder="Choose your Major"
+                isSearchable
+                className="h-full w-full"
+                styles={{
+                  control: (base) => ({
+                    ...base,
+                    borderColor: '#ebe2eb',
+                    '&:hover': { borderColor: '#9d6d9b' },
+                    boxShadow: '0 0 0 1px #ffffff',
+                  }),
+                  option: (base, { isFocused, isSelected }) => ({
+                    ...base,
+                    backgroundColor: isSelected
+                      ? ''
+                      : isFocused
+                        ? '#c4a7c3'
+                        : 'white',
+                    color: isSelected ? 'white' : 'black',
+                  }),
+                }}
               />
             </div>
           </div>
