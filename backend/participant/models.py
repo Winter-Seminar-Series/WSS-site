@@ -44,7 +44,10 @@ class Participant(models.Model):
     password_reset_code = models.CharField(max_length=5, blank=True)
 
     def __str__(self):
-        return f'{self.info.first_name} {self.info.last_name}'
+        if self.info:
+            return f'{self.info.first_name} {self.info.last_name}'
+        else:
+            return f'NO INFO - user: {self.user}'
 
 class ModeOfAttendance(models.Model):
     name = models.CharField(max_length=50)
