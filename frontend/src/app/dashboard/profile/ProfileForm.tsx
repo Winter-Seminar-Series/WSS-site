@@ -82,9 +82,9 @@ const majorOptions: OptionType[] = [
 ];
 
 export default function ProfileForm({
-                                      email,
-                                      profile,
-                                    }: {
+  email,
+  profile,
+}: {
   email: string;
   profile: Profile;
 }) {
@@ -140,8 +140,7 @@ export default function ProfileForm({
         <div className="flex flex-col items-start gap-8 self-stretch">
           <div className="flex items-start gap-6 self-stretch max-md:flex-col">
             <div className="flex flex-[1_0_0] flex-col items-start gap-[9px] self-stretch">
-              <label
-                className="text-base font-medium uppercase not-italic leading-[normal] tracking-[0.64px] text-[#8A8998]">
+              <label className="text-base font-medium uppercase not-italic leading-[normal] tracking-[0.64px] text-[#8A8998]">
                 EMAIL
               </label>
               <p className="flex items-center gap-2 self-stretch rounded-lg bg-[#8A89981A] px-5 py-4">
@@ -149,8 +148,7 @@ export default function ProfileForm({
               </p>
             </div>
             <div className="flex flex-[1_0_0] flex-col items-start gap-[9px] self-stretch">
-              <label
-                className="text-base font-medium uppercase not-italic leading-[normal] tracking-[0.64px] text-[#8A8998]">
+              <label className="text-base font-medium uppercase not-italic leading-[normal] tracking-[0.64px] text-[#8A8998]">
                 Phone Number
                 <span className={'ml-1 text-xl font-bold text-secondary'}>
                   *
@@ -171,8 +169,7 @@ export default function ProfileForm({
         </div>
         <div className="flex items-start gap-6 self-stretch max-md:flex-col">
           <div className="flex flex-[1_0_0] flex-col items-start gap-[9px] self-stretch">
-            <label
-              className="text-base font-medium uppercase not-italic leading-[normal] tracking-[0.64px] text-[#8A8998]">
+            <label className="text-base font-medium uppercase not-italic leading-[normal] tracking-[0.64px] text-[#8A8998]">
               First name
               <span className={'ml-1 text-xl font-bold text-secondary'}>*</span>
             </label>
@@ -187,8 +184,7 @@ export default function ProfileForm({
             />
           </div>
           <div className="flex flex-[1_0_0] flex-col items-start gap-[9px] self-stretch">
-            <label
-              className="text-base font-medium uppercase not-italic leading-[normal] tracking-[0.64px] text-[#8A8998]">
+            <label className="text-base font-medium uppercase not-italic leading-[normal] tracking-[0.64px] text-[#8A8998]">
               Last name
               <span className={'ml-1 text-xl font-bold text-secondary'}>*</span>
             </label>
@@ -206,8 +202,7 @@ export default function ProfileForm({
         <div className="flex items-start gap-6 self-stretch max-md:flex-col">
           <div className="flex flex-[1_0_0] flex-col items-start gap-[9px] self-stretch">
             <div className="flex flex-[1_0_0] flex-col items-start gap-[9px] self-stretch">
-              <label
-                className="text-base font-medium uppercase not-italic leading-normal tracking-[0.64px] text-[#8A8998]">
+              <label className="text-base font-medium uppercase not-italic leading-normal tracking-[0.64px] text-[#8A8998]">
                 Province
               </label>
               <Select
@@ -239,12 +234,10 @@ export default function ProfileForm({
             </div>
           </div>
           <div className="flex flex-[1_0_0] flex-col items-start gap-[9px] self-stretch">
-            <label
-              className="text-base font-medium uppercase not-italic leading-[normal] tracking-[0.64px] text-[#8A8998]">
+            <label className="text-base font-medium uppercase not-italic leading-[normal] tracking-[0.64px] text-[#8A8998]">
               Birthday
             </label>
-            <div
-              className="flex items-center gap-2 self-stretch rounded-lg border border-solid border-[rgba(138,137,152,0.30)] px-5 py-4">
+            <div className="flex items-center gap-2 self-stretch rounded-lg border border-solid border-[rgba(138,137,152,0.30)] px-5 py-4">
               <input
                 className="black-text min-w-full text-lg font-semibold not-italic leading-[normal] tracking-[-0.18px]"
                 type="date"
@@ -255,8 +248,7 @@ export default function ProfileForm({
             </div>
           </div>
           <div className="flex flex-[1_0_0] flex-col items-start gap-[9px] self-stretch">
-            <label
-              className="text-base font-medium uppercase not-italic leading-[normal] tracking-[0.64px] text-[#8A8998]">
+            <label className="text-base font-medium uppercase not-italic leading-[normal] tracking-[0.64px] text-[#8A8998]">
               Gender
             </label>
             <div className="flex items-center gap-5 px-0 py-1">
@@ -302,8 +294,7 @@ export default function ProfileForm({
         <div className="ma flex flex-col items-start gap-8 self-stretch">
           <div className="flex items-start gap-6 self-stretch max-md:flex-col">
             <div className="flex flex-[1_0_0] flex-col items-start gap-[9px] self-stretch">
-              <label
-                className="text-base font-medium uppercase not-italic leading-[normal] tracking-[0.64px] text-[#8A8998]">
+              <label className="text-base font-medium uppercase not-italic leading-[normal] tracking-[0.64px] text-[#8A8998]">
                 University
                 <span className={'ml-1 text-xl font-bold text-secondary'}>
                   *
@@ -333,8 +324,7 @@ export default function ProfileForm({
               {/*  defaultValue={profile.major}*/}
               {/*  name="major"*/}
               {/*/>*/}
-              <label
-                className="text-base font-medium uppercase not-italic leading-normal tracking-[0.64px] text-[#8A8998]">
+              <label className="text-base font-medium uppercase not-italic leading-normal tracking-[0.64px] text-[#8A8998]">
                 Major
               </label>
               <Select
@@ -369,8 +359,7 @@ export default function ProfileForm({
           <div className="flex items-start gap-8 self-stretch max-md:flex-col">
             <div className="flex h-[88px] w-full flex-[1_0_0] flex-col items-start gap-[9px]">
               <div className="flex flex-[1_0_0] flex-col items-start gap-[9px] self-stretch">
-                <label
-                  className="text-base font-medium uppercase not-italic leading-normal tracking-[0.64px] text-[#8A8998]">
+                <label className="text-base font-medium uppercase not-italic leading-normal tracking-[0.64px] text-[#8A8998]">
                   Job
                 </label>
                 <Select
@@ -402,12 +391,10 @@ export default function ProfileForm({
               </div>
             </div>
             <div className="flex flex-[1_0_0] flex-col items-start gap-[9px] self-stretch">
-              <label
-                className="text-base font-medium uppercase not-italic leading-[normal] tracking-[0.64px] text-[#8A8998]">
+              <label className="text-base font-medium uppercase not-italic leading-[normal] tracking-[0.64px] text-[#8A8998]">
                 Status
               </label>
-              <label
-                className="flex items-center gap-2 px-0 py-1 text-lg font-semibold not-italic leading-[normal] tracking-[-0.18px] text-[#1F2B3D]">
+              <label className="flex items-center gap-2 px-0 py-1 text-lg font-semibold not-italic leading-[normal] tracking-[-0.18px] text-[#1F2B3D]">
                 <input
                   defaultChecked={profile.isOpenToWork}
                   type="checkbox"
@@ -421,8 +408,7 @@ export default function ProfileForm({
             </div>
           </div>
           <div className="flex h-[88px] flex-col items-start gap-[9px] self-stretch">
-            <label
-              className="text-base font-medium uppercase not-italic leading-[normal] tracking-[0.64px] text-[#8A8998]">
+            <label className="text-base font-medium uppercase not-italic leading-[normal] tracking-[0.64px] text-[#8A8998]">
               Fields of interest
             </label>
             <input
@@ -435,13 +421,11 @@ export default function ProfileForm({
           </div>
           <div className="flex items-start gap-6 self-stretch max-md:flex-col">
             <div className="flex flex-[1_0_0] flex-col items-start gap-[9px] self-stretch">
-              <div
-                className="text-base font-medium uppercase not-italic leading-[normal] tracking-[0.64px] text-[#8A8998]">
+              <div className="text-base font-medium uppercase not-italic leading-[normal] tracking-[0.64px] text-[#8A8998]">
                 grade
               </div>
               <div className="flex items-center gap-x-5 gap-y-1 px-0 py-1 max-md:flex-col max-md:items-stretch">
-                <label
-                  className="flex items-center gap-x-5 text-lg font-semibold not-italic leading-[normal] tracking-[-0.18px] text-[#1F2B3D]">
+                <label className="flex items-center gap-x-5 text-lg font-semibold not-italic leading-[normal] tracking-[-0.18px] text-[#1F2B3D]">
                   <input
                     defaultChecked={profile.grade === Grade.BACHELOR}
                     type="radio"
@@ -452,8 +436,7 @@ export default function ProfileForm({
                   />
                   Bachelor
                 </label>
-                <label
-                  className="flex items-center gap-x-5 text-lg font-semibold not-italic leading-[normal] tracking-[-0.18px] text-[#1F2B3D]">
+                <label className="flex items-center gap-x-5 text-lg font-semibold not-italic leading-[normal] tracking-[-0.18px] text-[#1F2B3D]">
                   <input
                     defaultChecked={profile.grade === Grade.MASTER}
                     type="radio"
@@ -464,8 +447,7 @@ export default function ProfileForm({
                   />
                   Master
                 </label>
-                <label
-                  className="flex items-center gap-x-5 text-lg font-semibold not-italic leading-[normal] tracking-[-0.18px] text-[#1F2B3D]">
+                <label className="flex items-center gap-x-5 text-lg font-semibold not-italic leading-[normal] tracking-[-0.18px] text-[#1F2B3D]">
                   <input
                     defaultChecked={profile.grade === Grade.PHD}
                     type="radio"
@@ -479,12 +461,10 @@ export default function ProfileForm({
               </div>
             </div>
             <div className="flex flex-[1_0_0] flex-col items-start gap-[9px] self-stretch">
-              <label
-                className="text-base font-medium uppercase not-italic leading-[normal] tracking-[0.64px] text-[#8A8998]">
+              <label className="text-base font-medium uppercase not-italic leading-[normal] tracking-[0.64px] text-[#8A8998]">
                 Introduction Method
               </label>
-              <div
-                className="flex items-center justify-between self-stretch rounded-lg border border-solid border-[rgba(138,137,152,0.30)] px-5 py-4">
+              <div className="flex items-center justify-between self-stretch rounded-lg border border-solid border-[rgba(138,137,152,0.30)] px-5 py-4">
                 <select name="introductionMethod" id="field" className="w-full">
                   <option
                     selected={
@@ -564,8 +544,7 @@ export default function ProfileForm({
           </div>
           <div className="flex items-start gap-6 self-stretch max-md:flex-col">
             <div className="flex flex-[1_0_0] flex-col items-start gap-[9px] self-stretch">
-              <label
-                className="text-base font-medium uppercase not-italic leading-[normal] tracking-[0.64px] text-[#8A8998]">
+              <label className="text-base font-medium uppercase not-italic leading-[normal] tracking-[0.64px] text-[#8A8998]">
                 Linkedin
               </label>
               <input
@@ -577,8 +556,7 @@ export default function ProfileForm({
               />
             </div>
             <div className="flex flex-[1_0_0] flex-col items-start gap-[9px] self-stretch">
-              <label
-                className="text-base font-medium uppercase not-italic leading-[normal] tracking-[0.64px] text-[#8A8998]">
+              <label className="text-base font-medium uppercase not-italic leading-[normal] tracking-[0.64px] text-[#8A8998]">
                 github
               </label>
               <input
@@ -590,8 +568,7 @@ export default function ProfileForm({
               />
             </div>
           </div>
-          <button
-            className="mb-8 flex h-[72px] items-center justify-center gap-2.5 self-stretch rounded-lg bg-[#342B4C] px-8 py-0 text-xl font-bold not-italic leading-[normal] tracking-[-0.2px] text-white">
+          <button className="mb-8 flex h-[72px] items-center justify-center gap-2.5 self-stretch rounded-lg bg-[#342B4C] px-8 py-0 text-xl font-bold not-italic leading-[normal] tracking-[-0.2px] text-white">
             Update Profile
           </button>
           <div className="flex flex-col items-start gap-5 self-stretch">
@@ -600,12 +577,10 @@ export default function ProfileForm({
             </label>
             <div className="flex items-start gap-6 self-stretch max-md:flex-col">
               <div className="flex flex-[1_0_0] flex-col items-start gap-[9px] self-stretch">
-                <label
-                  className="text-base font-medium uppercase not-italic leading-[normal] tracking-[0.64px] text-[#8A8998]">
+                <label className="text-base font-medium uppercase not-italic leading-[normal] tracking-[0.64px] text-[#8A8998]">
                   Current Password
                 </label>
-                <div
-                  className="flex items-center gap-2 self-stretch rounded-lg border border-solid border-[rgba(138,137,152,0.30)] px-5 py-4">
+                <div className="flex items-center gap-2 self-stretch rounded-lg border border-solid border-[rgba(138,137,152,0.30)] px-5 py-4">
                   <input
                     className="w-full text-lg font-semibold not-italic leading-[normal] tracking-[-0.18px] text-[#1F2B3D]"
                     type="password"
@@ -616,12 +591,10 @@ export default function ProfileForm({
                 </div>
               </div>
               <div className="flex flex-[1_0_0] flex-col items-start gap-[9px] self-stretch">
-                <label
-                  className="text-base font-medium uppercase not-italic leading-[normal] tracking-[0.64px] text-[#8A8998]">
+                <label className="text-base font-medium uppercase not-italic leading-[normal] tracking-[0.64px] text-[#8A8998]">
                   New Password
                 </label>
-                <div
-                  className="flex items-center gap-2 self-stretch rounded-lg border border-solid border-[rgba(138,137,152,0.30)] px-5 py-4">
+                <div className="flex items-center gap-2 self-stretch rounded-lg border border-solid border-[rgba(138,137,152,0.30)] px-5 py-4">
                   <input
                     className="w-full text-lg font-semibold not-italic leading-[normal] tracking-[-0.18px] text-[#1F2B3D]"
                     type="password"
@@ -632,12 +605,10 @@ export default function ProfileForm({
                 </div>
               </div>
               <div className="flex flex-[1_0_0] flex-col items-start gap-[9px] self-stretch">
-                <label
-                  className="text-base font-medium uppercase not-italic leading-[normal] tracking-[0.64px] text-[#8A8998]">
+                <label className="text-base font-medium uppercase not-italic leading-[normal] tracking-[0.64px] text-[#8A8998]">
                   confirm new Password
                 </label>
-                <div
-                  className="flex items-center gap-2 self-stretch rounded-lg border border-solid border-[rgba(138,137,152,0.30)] px-5 py-4">
+                <div className="flex items-center gap-2 self-stretch rounded-lg border border-solid border-[rgba(138,137,152,0.30)] px-5 py-4">
                   <input
                     className="w-full text-lg font-semibold not-italic leading-[normal] tracking-[-0.18px] text-[#1F2B3D]"
                     type="password"
@@ -649,8 +620,7 @@ export default function ProfileForm({
               </div>
             </div>
           </div>
-          <button
-            className="mb-8 flex h-[72px] items-center justify-center gap-2.5 self-stretch rounded-lg bg-[#342B4C] px-8 py-0 text-xl font-bold not-italic leading-[normal] tracking-[-0.2px] text-white">
+          <button className="mb-8 flex h-[72px] items-center justify-center gap-2.5 self-stretch rounded-lg bg-[#342B4C] px-8 py-0 text-xl font-bold not-italic leading-[normal] tracking-[-0.2px] text-white">
             Update Password
           </button>
         </div>
