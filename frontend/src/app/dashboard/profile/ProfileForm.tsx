@@ -118,8 +118,11 @@ export default function ProfileForm({
         action={async (data) => {
           setError('');
           setSuccessful(false);
+          // @ts-ignore
           data.set('city', selectedProvince.value);
+          // @ts-ignore
           data.set('major', selectedMajor.value);
+          // @ts-ignore
           data.set('job', selectedJob.value);
           const response = await updateProfile(data);
           if (response.error) {

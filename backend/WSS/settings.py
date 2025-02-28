@@ -225,8 +225,9 @@ SKYROOM_API_ENDPOINT = f"https://www.skyroom.online/skyroom/api/{os.environ.get(
 
 SPOTPLAYER_API_KEY = os.environ.get('SPOTPLAYER_API_KEY')
 
-EMAIL_HOST = "smtp.elasticemail.com"
-EMAIL_PORT = 2525
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = os.getenv('EMAIL_HOST')
+EMAIL_PORT = os.getenv("EMAIL_PORT")
 EMAIL_HOST_USER = os.getenv("EMAIL_USER")
 EMAIL_HOST_PASSWORD = os.getenv("EMAIL_PASS")
 EMAIL_USE_TLS=True
