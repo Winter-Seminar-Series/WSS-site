@@ -54,7 +54,7 @@ class PasswordResetAPIView(views.APIView):
         participant.save()
         send_mail(
             'WSS Password Reset',
-            f'Your WSS password reset link is: https://wss-sharif.com/password-reset/{participant.password_reset_code}',
+            f'Your WSS password reset link is: https://wss-sharif.com/reset-password/{participant.password_reset_code}',
             settings.EMAIL_HOST_USER,
             [participant.user.email],
         )
