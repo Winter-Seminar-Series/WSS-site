@@ -17,7 +17,11 @@ export type FieldType = {
 
 export type FieldsType = FieldType[];
 
-export type FormType = 'signUp' | 'login' | 'resetPassword';
+export type FormType =
+  | 'signUp'
+  | 'login'
+  | 'requestResetPassword'
+  | 'confirmNewPassword';
 
 export default function Form({
   formType,
