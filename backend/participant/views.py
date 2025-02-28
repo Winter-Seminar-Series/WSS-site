@@ -40,12 +40,17 @@ class PasswordResetAPIView(views.APIView):
     permission_classes = [permissions.AllowAny, ]
 
     def post(self, request):
-        participant = Participant.objects.filter(
-            user__email=request.data['email']).last()
-        if not participant:
+        try:
+            participant = Participant.objects.get(user__email=request.data['email'])
+        except Participant.DoesNotExist:
             raise Http404
+        except Participant.MultipleObjectsReturned:
+            return Response(
+                'Mutiple Users found with this Email Address',
+                status=status.HTTP_400_BAD_REQUEST
+            )
         participant.password_reset_code = ''.join(
-            choices([str(i) for i in range(10)], k=5))
+            choices([str(i) for i in range(10)], k=10))
         participant.save()
         send_mail(
             'WSS Password Reset',
@@ -61,13 +66,25 @@ class PasswordResetAPIView(views.APIView):
 
     def put(self, request):
         try:
-            participant = Participant.objects.get(
-                user__email=request.data['email'])
+            participant = Participant.objects.get(user__email=request.data['email'])
         except Participant.DoesNotExist:
             raise Http404
-        if participant.password_reset_code == request.data['token']:
+        except Participant.MultipleObjectsReturned:
+            return Response(
+                'Mutiple Users found with this Email Address',
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        if not participant.password_reset_code:
+            return Response(
+                'Password reset code is not set for this user. '
+                'Or the password is already changed with that code.',
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        elif participant.password_reset_code == request.data['token']:
             participant.user.set_password(request.data['password'])
             participant.user.save()
+            participant.password_reset_code = None
+            participant.save()
             return Response(
                 'Password reset successfully',
                 status=status.HTTP_200_OK
