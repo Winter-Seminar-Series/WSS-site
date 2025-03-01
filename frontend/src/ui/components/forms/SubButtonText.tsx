@@ -6,7 +6,8 @@ export default function SubButtonText({ formType }: { formType: FormType }) {
   return (
     <div className={'mt-5 flex'}>
       <p className={'text-darkslategray/100 text-lg'}>
-        {formType !== 'resetPassword' &&
+        {formType !== 'requestResetPassword' &&
+          formType !== 'confirmNewPassword' &&
           (formType === 'signUp'
             ? 'Already have an account?'
             : "Don't have an account?")}
@@ -16,7 +17,8 @@ export default function SubButtonText({ formType }: { formType: FormType }) {
             'ml-1 cursor-pointer font-medium text-primary hover:underline focus:underline'
           }
         >
-          {formType !== 'resetPassword' &&
+          {formType !== 'requestResetPassword' &&
+            formType !== 'confirmNewPassword' &&
             (formType === 'signUp' ? 'Log in' : 'Sign up')}
         </Link>
       </p>

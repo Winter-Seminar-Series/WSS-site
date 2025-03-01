@@ -9,7 +9,7 @@ export default function PasswordResetForm() {
   return (
     <Form
       error={error}
-      formType={'resetPassword'}
+      formType={'requestResetPassword'}
       overline={'Secure Your Space!'}
       title={'Password Reset'}
       onSubmit={async (data) => {
