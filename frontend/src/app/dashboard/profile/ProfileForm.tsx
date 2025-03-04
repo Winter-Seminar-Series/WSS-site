@@ -90,18 +90,28 @@ export default function ProfileForm({
 }) {
   const [error, setError] = useState('');
   const [successful, setSuccessful] = useState(false);
-  const [selectedProvince, setSelectedProvince] = useState('');
-  const [selectedJob, setSelectedJob] = useState('');
-  const [selectedMajor, setSelectedMajor] = useState('');
-  const handleChangeProvince = (option: SetStateAction<string>) => {
+  const [selectedProvince, setSelectedProvince] = useState(
+    provinceOptions.find((option) => option.value === profile.city) || null,
+  );
+  const [selectedJob, setSelectedJob] = useState(
+    jobOptions.find((option) => option.value === profile.job) || null,
+  );
+  const [selectedMajor, setSelectedMajor] = useState(
+    majorOptions.find((option) => option.value === profile.major) || null,
+  );
+
+  const handleChangeProvince = (option: OptionType | null) => {
     setSelectedProvince(option);
   };
-  const handleChangeJob = (option: SetStateAction<string>) => {
+
+  const handleChangeJob = (option: OptionType | null) => {
     setSelectedJob(option);
   };
-  const handleChangeMajor = (option: SetStateAction<string>) => {
+
+  const handleChangeMajor = (option: OptionType | null) => {
     setSelectedMajor(option);
   };
+
   return (
     <>
       {!error && successful && (
@@ -118,11 +128,8 @@ export default function ProfileForm({
         action={async (data) => {
           setError('');
           setSuccessful(false);
-          // @ts-ignore
           data.set('city', selectedProvince.value);
-          // @ts-ignore
           data.set('major', selectedMajor.value);
-          // @ts-ignore
           data.set('job', selectedJob.value);
           const response = await updateProfile(data);
           if (response.error) {
