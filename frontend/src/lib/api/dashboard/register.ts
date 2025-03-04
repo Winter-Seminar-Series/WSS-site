@@ -65,7 +65,7 @@ export async function fetchPrice(plans: number[], discountCode?: string) {
       isDiscountCodeValid: true,
     };
   } catch (error) {
-    const isDiscountCodeValid = getIsDiscountCodeValidFromResponse(error);
+    const isDiscountCodeValid = !getIsDiscountCodeValidFromResponse(error);
 
     return {
       price: { totalPrice: 0, calculatedPrice: 0 },
