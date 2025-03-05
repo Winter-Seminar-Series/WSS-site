@@ -33,7 +33,7 @@ export default function Footer() {
               className="opacity-60 grayscale hover:opacity-100 hover:grayscale-0"
             />
           </a>
-          <a href="https://ramzines.com/" target="_blank">
+          <a href="https://ramzinex.com/" target="_blank">
             <Image
               src="/source/sponsors/ramzinex.png"
               alt="Ramzinex"
