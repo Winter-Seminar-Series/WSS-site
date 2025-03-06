@@ -1,6 +1,6 @@
-from django.shortcuts import render
+from django.core.mail import send_mail
 
-from rest_framework import generics
+from rest_framework import generics, status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework import serializers
@@ -8,9 +8,11 @@ from rest_framework import serializers
 from django.conf import settings
 import requests
 
-from payment.serializers import PaymentRequestCreateSerializer, PaymentRequestPriceSerializer, PaymentRequestVerifySerializer, calculate_price
+from payment.serializers import PaymentRequestCreateSerializer, PaymentRequestPriceSerializer, \
+    PaymentRequestVerifySerializer, calculate_price, GroupPaymentRequestCreateSerializer, \
+    GroupPaymentRequestPriceSerializer, calculate_group_price, GroupPaymentRequestVerifySerializer, create_discount_code
 
-from payment.models import PaymentRequest
+from payment.models import PaymentRequest, GroupPaymentRequest
 from participant.models import Participant, ParticipantInfo, Participation
 from spotplayer.models import SpotPlayerAPI
 
@@ -95,6 +97,92 @@ class PaymentRequestVerifyAPIView(generics.GenericAPIView):
                     spotplayer_license=license if plan.spotplayer_course is not None else None
                 )
                 logger.info(f'Participation for plan {plan.pk} created')
+        elif res['payment_status'] == 'failed':
+            logger.error('Payment request not paid')
+            instance.paid = False
+            instance.save()
+            if instance.discount is not None:
+                instance.discount.count += 1
+                instance.discount.save()
+        else:
+            logger.error('Payment service error')
+            raise serializers.ValidationError('Payment service error')
+        logger.info(f'Payment request {pk} updated')
+        serializer = self.get_serializer(instance)
+        return Response(serializer.data)
+
+
+class GroupPaymentRequestCreateAPIView(generics.CreateAPIView):
+    serializer_class = GroupPaymentRequestCreateSerializer
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, *args, **kwargs):
+        try:
+            participant = Participant.objects.get(user=self.request.user)
+        except:
+            raise serializers.ValidationError('Participant not found')
+        request.data['participant'] = participant.pk
+        return self.create(request, *args, **kwargs)
+
+
+class GroupPaymentRequestPriceAPIView(generics.GenericAPIView):
+    serializer_class = GroupPaymentRequestPriceSerializer
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        total_price, calculated_price = calculate_group_price(
+            serializer.validated_data['plan'],
+            serializer.validated_data.get('discount'),
+            serializer.validated_data.get('group_discount_percentage'),
+            len(serializer.validated_data.get('participants')))
+        return Response({
+            'total_price': total_price,
+            'calculated_price': calculated_price
+        })
+
+
+class GroupPaymentRequestVerifyAPIView(generics.GenericAPIView):
+    serializer_class = GroupPaymentRequestVerifySerializer
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, *args, **kwargs):
+        if 'pk' not in self.kwargs:
+            logger.error('Payment request not found')
+            raise serializers.ValidationError('Payment request not found')
+        pk = self.kwargs['pk']
+        try:
+            participant = Participant.objects.get(user=self.request.user)
+            instance = GroupPaymentRequest.objects.get(pk=pk)
+        except:
+            logger.error('Participant or request not found')
+            raise serializers.ValidationError('Participant or request not found')
+        if instance.participant != participant:
+            logger.error('Participant does not match')
+            raise serializers.ValidationError('Participant does not match')
+        if instance.paid:
+            logger.warning('Payment request already paid')
+            return instance
+        url = f'{settings.PAYMENT_SERVICE_URL}/transaction?order_id={instance.order_id}'
+        res = requests.get(url)
+        logger.debug(f'Payment service response: {res.status_code} {res.text}')
+        if res.status_code != 200:
+            raise serializers.ValidationError('Payment service error')
+        res = res.json()
+        if res['payment_status'] == 'success':
+            logger.info('Payment request paid')
+            instance.paid = True
+            instance.save()
+            created_discount_codes = create_discount_code(instance.all_participants)
+            for email, discount_code in created_discount_codes:
+                send_mail(
+                    'WSS Discount Code',
+                    f'Your discount code for registration is {discount_code}',
+                    settings.EMAIL_HOST_USER,
+                    [email],
+                )
+            return Response('Discount codes sent to all participants.', status=status.HTTP_200_OK)
         elif res['payment_status'] == 'failed':
             logger.error('Payment request not paid')
             instance.paid = False
