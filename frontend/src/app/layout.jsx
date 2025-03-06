@@ -57,19 +57,21 @@ export default function RootLayout({ children }) {
           content="https://wss-sharif.com/preview.png"
         />
         <meta name="twitter:url" content="https://wss-sharif.com/" />
-      </head>
-      <Script
-        src={`https://www.googletagmanager.com/gtag/js?id=${process.env.GA_TRACKING_ID}`}
-      />
-      <Script id="google-analytics">
-        {`
+        <Script
+          async={true}
+          src={`https://www.googletagmanager.com/gtag/js?id=${process.env.GA_TRACKING_ID}`}
+        />
+        <Script id="google-analytics">
+          {`
           window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments);}
           gtag('js', new Date());
  
           gtag('config', '${process.env.GA_TRACKING_ID}');
         `}
-      </Script>
+        </Script>
+      </head>
+
       <body className={manrope.className}>{children}</body>
     </html>
   );
