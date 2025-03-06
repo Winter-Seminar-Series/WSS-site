@@ -44,12 +44,8 @@ const UpdateProfileFormSchema = z.object({
   fieldsOfInterest: z.string().optional(),
   grade: z.nativeEnum(Grade).optional(),
   introductionMethod: z.nativeEnum(IntroductionMethod).optional(),
-  linkedin: z
-    .string()
-    .url('LinkedIn URL is invalid.')
-    .optional()
-    .or(z.literal('')),
-  github: z.string().url('GitHub URL is invalid.').optional().or(z.literal('')),
+  linkedin: z.string().optional().or(z.literal('')),
+  github: z.string().optional().or(z.literal('')),
 });
 
 type UpdateProfileFormInput = z.infer<typeof UpdateProfileFormSchema>;
