@@ -18,7 +18,7 @@ jobs:
               with:
                   host: ${{ secrets.TEST_SERVER_IP }}
                   username: ${{ secrets.SSH_USERNAME }}
-                  key: ${{ secrets.SSH_PRIVATE_KEY }}
+                  key: ${{ secrets.SSHT_PRIVATE_KEY }}
                   script: |
 
                       cd /path/to/your/project
