@@ -21,14 +21,14 @@ jobs:
                   key: ${{ secrets.SSHT_PRIVATE_KEY }}
                   script: |
 
-                      cd /tmp
+                      cd /tmp/WSS-site/
 
                       # Pull latest changes
                       git pull origin master
 
                       # Stop and remove old test containers
                       docker ps -a | grep -E "backend-test|frontend-test|postgres-test" | awk '{print $1}' | xargs -r docker rm -f
-                      cd WSS-site
+
                       # rm compose.yaml front-compose.yaml
                       # cp compose.yaml compose.yaml
                       # cp front-compose.yaml front-compose.yaml
