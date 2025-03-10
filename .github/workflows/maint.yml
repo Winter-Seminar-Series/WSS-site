@@ -1,0 +1,74 @@
+name: Create/Update Test Environment
+
+on:
+    push:
+        branches:
+            - master
+
+jobs:
+    deploy:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v3
+
+            - name: SSH and Deploy
+              uses: appleboy/ssh-action@v1.3.1
+              with:
+                  host: ${{ secrets.TEST_SERVER_IP }}
+                  username: ${{ secrets.SSH_USERNAME }}
+                  key: ${{ secrets.SSH_PRIVATE_KEY }}
+                  script: |
+
+                      cd /path/to/your/project
+
+                      # Pull latest changes
+                      git pull origin master
+
+                      # Stop and remove old test containers
+                      docker ps -a | grep -E "backend-test|frontend-test|postgres-test" | awk '{print $1}' | xargs -r docker rm -f
+
+                      rm docker-compose.backend.yml docker-compose.frontend.yml
+                      cp compose.yaml docker-compose.backend.yml
+                      cp front-compose.yaml docker-compose.frontend.yml
+
+                      # Remove old test network and volume
+                      docker network rm app-network-test || true
+                      docker volume rm postgres-data-test || true
+
+                      # Create a test network
+                      docker network create app-network-test
+
+                      # Create a test database volume from the production volume
+                      docker volume create postgres-data-test
+                      # cp -r /var/lib/docker/volumes/wss-site_postgres-data/_data /var/lib/docker/volumes/postgres-data-test/_data
+
+                      # Modify backend docker-compose.yml for test environment
+                      sed -i 's/container_name: backend/container_name: backend-test/' docker-compose.backend.yml
+                      sed -i 's/container_name: postgres/container_name: postgres-test/' docker-compose.backend.yml
+                      sed -i 's/8000:8000/18000:8000/' docker-compose.backend.yml
+                      sed -i 's/app-network/app-network-test/' docker-compose.backend.yml
+                      sed -i 's/postgres-data:/postgres-data-test:/' docker-compose.backend.yml
+                      sed -i '/postgres-data-test:/,/driver: local/ {s/driver: local/external: true/;}' docker-compose.backend.yml
+                      sed -i '/app-network-test:/,/driver: bridge/ {s/driver: bridge/external: true/;}' docker-compose.backend.yml
+
+                      # Remove all payment-related sections from the backend compose file
+                      sed -i '/payment/,+9d' docker-compose.backend.yml
+
+                      # Modify frontend docker-compose.yml for test environment
+                      sed -i 's/container_name: frontend/container_name: frontend-test/' docker-compose.frontend.yml
+                      sed -i 's/3000:3000/13000:3000/' docker-compose.frontend.yml
+                      sed -i 's/app-network/app-network-test/' docker-compose.frontend.yml
+                      sed -i '/app-network-test:/,/driver: bridge/ {s/driver: bridge/external: true/;}' docker-compose.frontend.yml
+
+                      # Update API_ORIGIN in .env.frontend for test environment
+                      sed -i 's|API_ORIGIN=http://91.107.181.116:8000|API_ORIGIN=http://91.107.181.116:18000|' .env.frontend
+                      sed -i 's|API_ORIGIN=http://91.107.181.116:8000|API_ORIGIN=http://91.107.181.116:18000|' ./frontend/.env
+
+                      # Build the backend and frontend images
+                      docker build -t wss:backend backend
+                      # docker build -t wss:frontend frontend
+
+                      # Start the test containers
+                      docker-compose -f docker-compose.backend.yml up -d
