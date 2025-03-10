@@ -66,10 +66,11 @@ jobs:
                       # Update API_ORIGIN in .env.frontend for test environment
                       sed -i 's|API_ORIGIN=http://91.107.181.116:8000|API_ORIGIN=http://91.107.181.116:18000|' .env.frontend
                       sed -i 's|API_ORIGIN=http://91.107.181.116:8000|API_ORIGIN=http://91.107.181.116:18000|' ./frontend/.env
-
+                      cd backend
+                      # docker build -t wss:back .
                       # Build the backend and frontend images
                       docker build -t wss:backend backend
                       # docker build -t wss:frontend frontend
-
+                      cd ..
                       # Start the test containers
-                      docker-compose -f compose.yaml up -d
+                      docker-compose up -d
