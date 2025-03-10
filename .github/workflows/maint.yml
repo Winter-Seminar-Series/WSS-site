@@ -43,7 +43,8 @@ jobs:
                       # Create a test database volume from the production volume
                       docker volume create postgres-data-test
                       # cp -r /var/lib/docker/volumes/wss-site_postgres-data/_data /var/lib/docker/volumes/postgres-data-test/_data
-
+                      echo $PWD
+                      ls
                       # Modify backend docker-compose.yml for test environment
                       sed -i 's/container_name: backend/container_name: backend-test/' compose.yaml
                       sed -i 's/container_name: postgres/container_name: postgres-test/' compose.yaml
