@@ -21,13 +21,13 @@ jobs:
                   key: ${{ secrets.SSHT_PRIVATE_KEY }}
                   script: |
 
-                      cd /tmp/WSS-site/
+                      cd /home/ubuntu/WSS-site/
 
                       # Pull latest changes
                       git pull origin master
 
                       # Stop and remove old test containers
-                      docker ps -a | grep -E "backend-test|frontend-test|postgres-test" | awk '{print $1}' | xargs -r docker rm -f
+                      docker ps -a | grep -E "backend-test|frontend-test" | awk '{print $1}' | xargs -r docker rm -f
 
                       # rm compose.yaml front-compose.yaml
                       # cp compose.yaml compose.yaml
@@ -35,23 +35,23 @@ jobs:
 
                       # Remove old test network and volume
                       docker network rm app-network-test || true
-                      docker volume rm postgres-data-test || true
+                      # docker volume rm postgres-data-test || true
 
                       # Create a test network
                       docker network create app-network-test
 
                       # Create a test database volume from the production volume
-                      docker volume create postgres-data-test
+                      #docker volume create postgres-data-test
                       # cp -r /var/lib/docker/volumes/wss-site_postgres-data/_data /var/lib/docker/volumes/postgres-data-test/_data
                       echo $PWD
                       ls
                       # Modify backend docker-compose.yml for test environment
                       sed -i 's/container_name: backend/container_name: backend-test/' compose.yaml
-                      sed -i 's/container_name: postgres/container_name: postgres-test/' compose.yaml
-                      sed -i 's/8000:8000/18000:8000/' compose.yaml
+                      #sed -i 's/container_name: postgres/container_name: postgres-test/' compose.yaml
+                      #sed -i 's/8000:8000/18000:8000/' compose.yaml
                       sed -i 's/app-network/app-network-test/' compose.yaml
-                      sed -i 's/postgres-data:/postgres-data-test:/' compose.yaml
-                      sed -i '/postgres-data-test:/,/driver: local/ {s/driver: local/external: true/;}' compose.yaml
+                      #sed -i 's/postgres-data:/postgres-data-test:/' compose.yaml
+                      #sed -i '/postgres-data-test:/,/driver: local/ {s/driver: local/external: true/;}' compose.yaml
                       sed -i '/app-network-test:/,/driver: bridge/ {s/driver: bridge/external: true/;}' compose.yaml
 
                       # Remove all payment-related sections from the backend compose file
@@ -64,9 +64,9 @@ jobs:
                       sed -i '/app-network-test:/,/driver: bridge/ {s/driver: bridge/external: true/;}' front-compose.yaml
 
                       # Update API_ORIGIN in .env.frontend for test environment
-                      sed -i 's|API_ORIGIN=http://91.107.181.116:8000|API_ORIGIN=http://91.107.181.116:18000|' .env.frontend
-                      sed -i 's|API_ORIGIN=http://91.107.181.116:8000|API_ORIGIN=http://91.107.181.116:18000|' ./frontend/.env
-                      cd backend
+                      sed -i 's|API_ORIGIN=http://185.204.169.247:8000|API_ORIGIN=http://185.204.169.247:18000|' .env.frontend
+                      sed -i 's|API_ORIGIN=http://185.204.169.247:8000|API_ORIGIN=http://185.204.169.247:18000|' ./frontend/.env
+                      #cd backend
                       # docker build -t wss:back .
                       # Build the backend and frontend images
                       docker build -t wss:backend backend
