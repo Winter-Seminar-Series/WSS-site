@@ -51,8 +51,8 @@ jobs:
                       sed -i 's/app-network/app-network-test/' front-compose.yaml
                       sed -i '/app-network-test:/,/driver: bridge/ {s/driver: bridge/external: true/;}' front-compose.yaml
                       # Update API_ORIGIN in .env.frontend for test environment
-                      sed -i 's|API_ORIGIN=http://185.204.169.247:8000|API_ORIGIN=http://185.204.169.247:18000|' .env.frontend
-                      sed -i 's|API_ORIGIN=http://185.204.169.247:8000|API_ORIGIN=http://185.204.169.247:18000|' ./frontend/.env
+                      #sed -i 's|API_ORIGIN=http://185.204.169.247:8000|API_ORIGIN=http://185.204.169.247:18000|' .env.frontend
+                      #sed -i 's|API_ORIGIN=http://185.204.169.247:8000|API_ORIGIN=http://185.204.169.247:18000|' ./frontend/.env
                       #cd backend
                       # docker build -t wss:back .
                       # Build the backend and frontend images
