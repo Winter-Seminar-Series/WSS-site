@@ -12,9 +12,6 @@ jobs:
         runs-on: ubuntu-latest
 
         steps:
-            - name: Checkout repository
-              uses: actions/checkout@v3
-
             - name: SSH and Deploy
               uses: appleboy/ssh-action@v1.2.2
               with:
@@ -25,8 +22,8 @@ jobs:
 
                       cd /home/ubuntu/WSS-site/
 
-                      # Pull latest changes
                       git pull origin master
+                      git reset --hard origin/master
 
                       # Stop and remove old test containers
                       docker ps -a | grep -E "backend-test|frontend-test" | awk '{print $1}' | xargs -r docker rm -f
@@ -45,10 +42,9 @@ jobs:
                       # Create a test database volume from the production volume
                       #docker volume create postgres-data-test
                       # cp -r /var/lib/docker/volumes/wss-site_postgres-data/_data /var/lib/docker/volumes/postgres-data-test/_data
-                      echo $PWD
-                      ls
+
                       # Modify backend docker-compose.yml for test environment
-                      #sed -i 's/container_name: backend/container_name: backend-test/' compose.yaml
+                      sed -i 's/container_name: backend/container_name: backend-test/' compose.yaml
                       #sed -i 's/container_name: postgres/container_name: postgres-test/' compose.yaml
                       #sed -i 's/8000:8000/18000:8000/' compose.yaml
                       sed -i -E 's/(\s+)(app-network)(\s*:\s*$|\s*$)/\1app-network-test\3/' compose.yaml
