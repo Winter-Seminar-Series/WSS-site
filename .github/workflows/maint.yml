@@ -51,7 +51,7 @@ jobs:
                       sed -i 's/container_name: backend/container_name: backend-test/' compose.yaml
                       #sed -i 's/container_name: postgres/container_name: postgres-test/' compose.yaml
                       #sed -i 's/8000:8000/18000:8000/' compose.yaml
-                      sed -i 's/app-network/app-network-test/' compose.yaml
+                      sed -i -E 's/(\s+)(app-network)(\s*:\s*$|\s*$)/\1app-network-test\3/' compose.yaml
                       #sed -i 's/postgres-data:/postgres-data-test:/' compose.yaml
                       #sed -i '/postgres-data-test:/,/driver: local/ {s/driver: local/external: true/;}' compose.yaml
                       sed -i '/app-network-test:/,/driver: bridge/ {s/driver: bridge/external: true/;}' compose.yaml
