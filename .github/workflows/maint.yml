@@ -75,4 +75,4 @@ jobs:
                       # docker build -t wss:frontend frontend
                       cd ..
                       # Start the test containers
-                      docker-compose up -d
+                      docker compose up -d
