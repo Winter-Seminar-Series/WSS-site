@@ -73,6 +73,6 @@ jobs:
                       # Build the backend and frontend images
                       docker build -t wss:backend backend
                       # docker build -t wss:frontend frontend
-                      cd ..
+                      # cd ..
                       # Start the test containers
                       docker compose up -d
