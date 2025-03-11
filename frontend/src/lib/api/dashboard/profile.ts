@@ -32,10 +32,17 @@ const UpdateProfileFormSchema = z.object({
       'Phone number must match +989123456789 or 09123456789 format.',
     ),
   city: z.string().optional(),
-  birthDate: z.coerce
-    .date({ invalid_type_error: 'Birth date is in invalid format.' })
-    .transform((date) => date.toISOString().split('T')[0])
-    .optional(),
+  birthDate: z
+    .union([
+      z.coerce.date({ invalid_type_error: 'Birth date is in invalid format.' }),
+      // Accept empty string as valid input
+      z.literal(''),
+      // Accept undefined (missing field)
+      z.undefined(),
+    ])
+    .transform((value) =>
+      value instanceof Date ? value.toISOString().split('T')[0] : null,
+    ),
   gender: z.nativeEnum(Gender).optional(),
   university: z.string().optional(),
   major: z.string().optional(),
