@@ -91,24 +91,24 @@ export default function ProfileForm({
   const [error, setError] = useState('');
   const [successful, setSuccessful] = useState(false);
   const [selectedProvince, setSelectedProvince] = useState(
-    provinceOptions.find((option) => option.value === profile.city) || null,
+    provinceOptions.find((option) => option.value === profile.city) || '',
   );
   const [selectedJob, setSelectedJob] = useState(
-    jobOptions.find((option) => option.value === profile.job) || null,
+    jobOptions.find((option) => option.value === profile.job) || '',
   );
   const [selectedMajor, setSelectedMajor] = useState(
-    majorOptions.find((option) => option.value === profile.major) || null,
+    majorOptions.find((option) => option.value === profile.major) || '',
   );
 
-  const handleChangeProvince = (option: OptionType | null) => {
+  const handleChangeProvince = (option: OptionType | '') => {
     setSelectedProvince(option);
   };
 
-  const handleChangeJob = (option: OptionType | null) => {
+  const handleChangeJob = (option: OptionType | '') => {
     setSelectedJob(option);
   };
 
-  const handleChangeMajor = (option: OptionType | null) => {
+  const handleChangeMajor = (option: OptionType | '') => {
     setSelectedMajor(option);
   };
 
@@ -128,9 +128,22 @@ export default function ProfileForm({
         action={async (data) => {
           setError('');
           setSuccessful(false);
-          data.set('city', selectedProvince.value);
-          data.set('major', selectedMajor.value);
-          data.set('job', selectedJob.value);
+          data.set(
+            'city',
+            typeof selectedProvince === 'string'
+              ? selectedProvince
+              : selectedProvince.value,
+          );
+          data.set(
+            'major',
+            typeof selectedMajor === 'string'
+              ? selectedMajor
+              : selectedMajor.value,
+          );
+          data.set(
+            'job',
+            typeof selectedJob === 'string' ? selectedJob : selectedJob.value,
+          );
           const response = await updateProfile(data);
           if (response.error) {
             setError(response.error);
