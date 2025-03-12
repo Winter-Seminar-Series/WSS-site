@@ -127,14 +127,21 @@ export default function AttendanceInfo({
               modeOfAttendance.id !== ID_OF_LAUNCH ? (
                 <label
                   key={modeOfAttendance.id}
-                  className={'flex items-center gap-x-2'}
+                  className={`flex items-center gap-x-2 ${
+                    modeOfAttendance.name.includes('Person')
+                      ? 'line-through opacity-60'
+                      : ''
+                  }`}
                 >
                   <input
                     type={'radio'}
                     id={modeOfAttendance.name}
                     name={'modeOfAttendance'}
                     value={modeOfAttendance.id}
-                    disabled={modesOfAttendance[selectedModeIndex]?.paid}
+                    disabled={
+                      modesOfAttendance[selectedModeIndex]?.paid ||
+                      modeOfAttendance.name.includes('Person')
+                    }
                     defaultChecked={
                       modesOfAttendance[selectedModeIndex]?.id ===
                       modeOfAttendance.id

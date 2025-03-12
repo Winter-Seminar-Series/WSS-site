@@ -51,8 +51,8 @@ const UpdateProfileFormSchema = z.object({
   fieldsOfInterest: z.string().optional(),
   grade: z.nativeEnum(Grade).optional(),
   introductionMethod: z.nativeEnum(IntroductionMethod).optional(),
-  linkedin: z.string().optional().or(z.literal('')),
-  github: z.string().optional().or(z.literal('')),
+  linkedin: z.string().optional(),
+  github: z.string().optional(),
 });
 
 type UpdateProfileFormInput = z.infer<typeof UpdateProfileFormSchema>;
@@ -74,6 +74,7 @@ export async function updateProfile(formData: FormData) {
     UpdateProfileFormSchema,
     formData,
   );
+  console.log(cleanedInput);
   if (errorMessage) {
     return { error: errorMessage };
   }

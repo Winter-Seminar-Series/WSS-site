@@ -258,8 +258,8 @@ export default function ProfileForm({
           </div>
           <div className="flex flex-[1_0_0] flex-col items-start gap-[9px] self-stretch">
             <label className="text-base font-medium uppercase not-italic leading-[normal] tracking-[0.64px] text-[#8A8998]">
-              Birthday{' '}
-              {/* <span className={'ml-1 text-xl font-bold text-secondary'}>*</span> */}
+              Birthday
+              <span className={'ml-1 text-xl font-bold text-secondary'}>*</span>
             </label>
             <div className="flex items-center gap-2 self-stretch rounded-lg border border-solid border-[rgba(138,137,152,0.30)] px-5 py-4">
               <input
@@ -589,6 +589,7 @@ export default function ProfileForm({
                 minLength={3}
                 defaultValue={profile.github}
                 name="github"
+                aria-autocomplete={'none'}
               />
             </div>
           </div>
