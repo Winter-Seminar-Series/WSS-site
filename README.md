@@ -1,7 +1,8 @@
 # WSS-site
-![Main Workflow Status](https://github.com/Winter-Seminar-Series/WSS-site/workflows/Main%20Workflow/badge.svg?branch=master)
-![Backend pipeline status](https://github.com/Winter-Seminar-Series/WSS-site/actions/workflows/backend.yml/badge.svg?branch=master)
-![Backend pipeline status](https://github.com/Winter-Seminar-Series/WSS-site/actions/workflows/frontend.yml/badge.svg?branch=master)  
+
+![Deploy front on test environment](https://github.com/Winter-Seminar-Series/WSS-site/actions/workflows/main.yml/badge.svg?branch=master)
+![Create/Update Test Environment](https://github.com/Winter-Seminar-Series/WSS-site/actions/workflows/maint.yml/badge.svg?branch=master)
+
 Source code of the official website of Winter Seminar Series.
 
 
@@ -11,4 +12,4 @@ Winter seminar in Advanced Topics in Computer Science and Engineering is a two-d
 The event is held by the [Student Scientific Chapter](http://ssc.ce.sharif.edu) of [Sharif University of Technology](http://sharif.edu)
 
 ## Official website
-[wss.ce.sharif.edu](http://wss.ce.sharif.edu)
+[wss.ce.sharif.edu](http://wss-sharif.com)
