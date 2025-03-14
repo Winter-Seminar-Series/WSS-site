@@ -57,7 +57,7 @@ jobs:
                       # docker build -t wss:back .
                       # Build the backend and frontend images
                       #docker build -t wss:backend backend
-echo -e "FROM node:18\nWORKDIR /app\nCOPY package*.json ./\nRUN npm install\nCOPY . .\nEXPOSE 3000\nCMD [\"npm\", \"run\", \"dev\"]" > frontend/Dockerfile                      docker build -t wss:frontend frontend
+                      echo -e "FROM node:18\nWORKDIR /app\nCOPY package*.json ./\nRUN npm install\nCOPY . .\nEXPOSE 3000\nCMD [\"npm\", \"run\", \"dev\"]" > frontend/Dockerfile                      docker build -t wss:frontend frontend
                       # cd ..
                       # Start the test containers
                       docker compose -f front-compose.yaml up -d
