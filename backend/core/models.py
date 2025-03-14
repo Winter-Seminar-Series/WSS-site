@@ -77,7 +77,7 @@ class Speaker(models.Model):
     image = models.ImageField(upload_to='speakers/', null=True, blank=True)
 
     def __str__(self) -> str:
-        return f'{self.name}'
+        return f'{self.name} - {self.designation}'
 
 
 class Seminar(models.Model):
@@ -93,12 +93,16 @@ class Workshop(models.Model):
     description = models.TextField(max_length=5000, blank=True)
     poster = models.ImageField(upload_to='posters/', null=True, blank=True)
     thumbnail = models.ImageField(upload_to='thumbnails/', null=True, blank=True)
+
     # event = models.ForeignKey(
     #     Event,
     #     on_delete=models.CASCADE,
     #     null=False,
     #     blank=False
     # )
+    def __str__(self):
+        return f'{self.name}'
+
 
 class WorkshopSession(models.Model):
     workshop = models.ForeignKey(Workshop, on_delete=models.CASCADE)
@@ -110,7 +114,7 @@ class WorkshopSession(models.Model):
     date = models.DateField()
 
     def __str__(self):
-        return f'{self.workshop} - {self.date}'
+        return f'{self.workshop} - {self.name} - {self.speaker}'
 
 
 class RoundTable(models.Model):
