@@ -36,7 +36,8 @@ class ParticipantInfo(models.Model):
     github = models.CharField(max_length=100, blank=True)
 
     def __str__(self):
-        return f'{self.first_name} {self.last_name}'
+        return f'{self.first_name} {self.last_name} - {self.national_code}'
+
 
 class Participant(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -45,9 +46,10 @@ class Participant(models.Model):
 
     def __str__(self):
         if self.info:
-            return f'{self.info.first_name} {self.info.last_name}'
+            return f'{self.info.first_name} {self.info.last_name} - {self.user.email}'
         else:
             return f'NO INFO - user: {self.user}'
+
 
 class ModeOfAttendance(models.Model):
     name = models.CharField(max_length=50)
@@ -56,8 +58,8 @@ class ModeOfAttendance(models.Model):
     def __str__(self):
         return f'{self.name}'
 
-class ParticipationPlan(models.Model):
 
+class ParticipationPlan(models.Model):
     KIND_CHOICES = (
         ('W', 'Workshop'),
         ('M', 'Mode of Attendance')
@@ -73,6 +75,7 @@ class ParticipationPlan(models.Model):
     def __str__(self):
         return f'{self.event} - {self.workshop if self.kind == "W" else self.mode_of_attendance}'
 
+
 class Participation(models.Model):
     participant = models.ForeignKey(Participant, on_delete=models.CASCADE)
     info = models.ForeignKey(ParticipantInfo, on_delete=models.SET_NULL, null=True, blank=True)
@@ -82,6 +85,7 @@ class Participation(models.Model):
 
     def __str__(self):
         return f'{self.participant} - {self.plan}'
+
 
 class ParticipationAttachment(models.Model):
     participation = models.ForeignKey(Participation, on_delete=models.CASCADE)
