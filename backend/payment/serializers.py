@@ -1,7 +1,13 @@
-from rest_framework import serializers
+import random
+import string
 
-from payment.models import PaymentRequest, PaymentDiscount
-from participant.models import Participation, ParticipationPlan
+from django.core.mail import send_mail
+from rest_framework import serializers, status
+from rest_framework.response import Response
+
+from core.models import Event
+from payment.models import PaymentRequest, PaymentDiscount, GroupPaymentRequest
+from participant.models import Participation, ParticipationPlan, Participant
 from spotplayer.models import SpotPlayerAPI
 
 from django.db.models import Q
@@ -86,6 +92,101 @@ def validate_discount(attrs):
     discount = discounts[0]
     attrs['discount'] = discount
     return attrs
+
+def validate_participants(attrs):
+    participant_emails = attrs.get('participant_emails', [])
+    if not participant_emails:
+        raise serializers.ValidationError('At least two participants are required for group payment.')
+
+    participants = [attrs.get('participant')]
+    for email in participant_emails:
+        try:
+            participant = Participant.objects.get(user__email=email)
+        except:
+            raise serializers.ValidationError(f'Participant {email} not found')
+        participants.append(participant)
+
+    attrs['participants'] = participants
+    return attrs
+
+def validate_group_plan(attrs, is_price=True):
+    plan = attrs.get('plan', None)
+    if plan is None:
+        raise serializers.ValidationError('Invalid plan')
+    # TODO: add closing date to plan
+    # for plan in plans:
+    #     if plan.kind == 'M':
+    #         raise serializers.ValidationError('This mode of attendance is not available right now')
+    event = plan.event or -1
+
+    # Limit for In Person registrations
+    if plan.kind == 'M' and plan.mode_of_attendance.name.startswith('In Person'):
+            raise serializers.ValidationError(
+                'This mode of attendance is not available right now due to Registration Limits'
+            )
+
+    if not is_price:
+        participants = attrs.get('participants', [])
+        for participant in participants:
+            registered_plans = ParticipationPlan.objects.filter(participation__participant=participant)
+
+            if plan in registered_plans:
+                raise serializers.ValidationError(f'Plan already registered for {participant.__str__()}')
+            registered_plans = list(registered_plans)
+            registered_plans.append(plan)
+            has_mode = False
+            for plan in registered_plans:
+                if plan.kind == 'M' and has_mode:
+                    raise serializers.ValidationError('Multiple mode of attendance selected')
+                elif plan.kind == 'M':
+                    has_mode = True
+            # if not has_mode:
+        #     raise serializers.ValidationError('No mode of attendance selected')
+    attrs['event'] = event
+    return attrs
+
+
+def calculate_group_price(plan, discount, group_discount_percentage, participant_numbers):
+    if plan.kind == 'W':
+        raise serializers.ValidationError('The group payment not available for workshop.')
+    total_price = plan.price
+    calculated_price = total_price
+
+    if group_discount_percentage > 0:
+        calculated_price -= calculated_price * group_discount_percentage / 100.
+
+    if discount is not None:
+        amount = int(discount.amount)
+        percentage = float(discount.percentage)
+        if amount != 0:
+            calculated_price = max(0, calculated_price - amount)
+        elif percentage > 0:
+            calculated_price -= calculated_price * percentage / 100.
+
+    calculated_price = int(calculated_price)
+
+    return participant_numbers * total_price, participant_numbers * calculated_price
+
+
+def create_discount_code(participants):
+    discount_codes = []
+    for i in range(len(participants)):
+        discount_code = ''.join(random.choices(string.ascii_uppercase, k=8)) + ''.join(
+            random.choices(string.digits, k=2))
+        discount_codes.append(discount_code)
+
+    payment_discounts = [PaymentDiscount(
+        event=Event.objects.last(),
+        code=discount_code,
+        percentage=100,
+        count=1,
+    ) for discount_code in discount_codes]
+
+    PaymentDiscount.objects.bulk_create(payment_discounts)
+
+    return [(participant.user.email, discount_code) for participant, discount_code in
+            zip(participants, discount_codes)]
+
 
 class PaymentRequestPriceSerializer(serializers.ModelSerializer):
     total_price = serializers.IntegerField(required=False)
@@ -177,4 +278,112 @@ class PaymentRequestCreateSerializer(serializers.ModelSerializer):
 class PaymentRequestVerifySerializer(serializers.ModelSerializer):
     class Meta:
         model = PaymentRequest
+        fields = ['id', 'order_id', 'paid']
+
+
+class GroupPaymentRequestPriceSerializer(serializers.ModelSerializer):
+    total_price = serializers.IntegerField(required=False)
+    calculated_price = serializers.IntegerField(required=False)
+    discount_code = serializers.CharField(required=False)
+    participant_emails = serializers.ListField(
+        child=serializers.EmailField(),
+        write_only=True
+    )
+
+    class Meta:
+        model = GroupPaymentRequest
+        fields = ['plan', 'discount_code', 'discount', 'total_price', 'calculated_price', 'participant_emails',
+                  'group_discount_percentage']
+
+    def validate(self, attrs):
+        validate_participants(attrs)
+        attrs['group_discount_percentage'] = GroupPaymentRequest.get_group_discount_percentage(
+            len(attrs['participants']))
+        validate_group_plan(attrs, is_price=True)
+        validate_discount(attrs)
+        return attrs
+
+
+class GroupPaymentRequestCreateSerializer(serializers.ModelSerializer):
+    discount_code = serializers.CharField(required=False)
+    participant_emails = serializers.ListField(
+        child=serializers.EmailField(),
+        write_only=True
+    )
+
+    class Meta:
+        model = GroupPaymentRequest
+        fields = ['plan', 'participant', 'discount_code', 'discount', 'participant_emails']
+
+    def validate(self, attrs):
+        validate_participants(attrs)
+        validate_group_plan(attrs, is_price=True)
+        validate_discount(attrs)
+        return attrs
+
+    def create(self, validated_data):
+        discount = validated_data.get('discount', None)
+        if discount is not None:
+            if discount.count != -1:
+                discount.count -= 1
+                discount.save()
+        model_dict = validated_data.copy()
+        model_dict.pop('discount_code', None)
+        model_dict.pop('event', None)
+        model_dict['participant_numbers'] = len(validated_data['participants'])
+        req = super().create(model_dict)
+        participant = req.participant
+        plan = validated_data['plan']
+        total_price, calculated_price = calculate_group_price(plan, validated_data.get('discount'),
+                                                              req.group_discount_percentage, req.participant_numbers)
+        if calculated_price == 0:
+            req.paid = True
+            req.save()
+            created_discount_codes = create_discount_code(req.all_participants)
+            for email, discount_code in created_discount_codes:
+                send_mail(
+                    'WSS Discount Code',
+                    f'Your discount code for registration is {discount_code}',
+                    settings.EMAIL_HOST_USER,
+                    [email],
+                )
+            return Response('Discount codes sent to all participants.', status=status.HTTP_200_OK)
+
+        url = settings.PAYMENT_SERVICE_URL + '/transaction'
+        logger.info('Group payment request for participant %d, total price: %d, calculated price: %d',
+                    participant.id, total_price, calculated_price)
+
+        logger.info(f'sending request to {url}')
+        data = {
+            "user_id": participant.id,
+            "to_pay_amount": calculated_price,
+            "discount_amount": total_price - calculated_price,
+            "buying_goods": [str(plan)],
+            "name": participant.user.first_name + ' ' + participant.user.last_name,
+            "phone": participant.info.phone_number,
+            "mail": participant.user.email,
+            "callback_url": settings.PAYMENT_CALLBACK_URL + '/' + str(req.id),
+        }
+        logger.info(f'sending data: {data}')
+
+        res = requests.post(url, json=data)
+        logger.info(f'response: {res.status_code} {res.text}')
+        logger.info(f'{res.request.body}')
+        if res.status_code != 201:
+            logger.error('Payment service error')
+            raise serializers.ValidationError('Payment service error')
+        res = res.json()
+        req.order_id = res['order_id']
+        req.save()
+        return res['redirect_url']
+
+    def to_representation(self, instance):
+        return {
+            'redirect_url': instance
+        }
+
+
+class GroupPaymentRequestVerifySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = GroupPaymentRequest
         fields = ['id', 'order_id', 'paid']
