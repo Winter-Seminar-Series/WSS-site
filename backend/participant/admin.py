@@ -18,7 +18,7 @@ class ParticipantAdmin(admin.ModelAdmin, ExportCSVMixin):
 @admin.register(Participation)
 class ParticipationAdmin(admin.ModelAdmin, ExportCSVMixin):
     list_display = ('participant', 'participant_email', 'plan')
-    list_filter = ('plan',)
+    list_filter = ('plan', 'plan__event__order',)
     autocomplete_fields = ('participant', 'info',)
     search_fields = ('participant__user__email', 'participant__info__national_code',)
     actions = ["export_as_csv"]
