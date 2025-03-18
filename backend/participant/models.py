@@ -1,4 +1,4 @@
-from core.models import Event, Workshop
+from core.models import Event, Workshop, UniqueUploadPath
 
 from spotplayer.models import SpotPlayerCourse, SpotPlayerLicense
 
@@ -89,6 +89,6 @@ class Participation(models.Model):
 
 class ParticipationAttachment(models.Model):
     participation = models.ForeignKey(Participation, on_delete=models.CASCADE)
-    attachment = models.FileField(upload_to='participation/', null=True, blank=True)
+    attachment = models.FileField(upload_to=UniqueUploadPath('participation'), null=True, blank=True)
     description = models.TextField(blank=True)
     date = models.DateTimeField(auto_now_add=True)
