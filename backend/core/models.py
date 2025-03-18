@@ -1,7 +1,20 @@
+import uuid
+
 from django.contrib.auth.models import User
 from django.db import models
 from django.contrib.auth import get_user_model
 from django.contrib.auth.backends import ModelBackend
+from django.utils.deconstruct import deconstructible
+
+
+@deconstructible
+class UniqueUploadPath:
+    def __init__(self, sub_path):
+        self.sub_path = sub_path
+
+    def __call__(self, instance, filename):
+        ext = filename.split('.')[-1]
+        return f"{self.sub_path}/{uuid.uuid4()}.{ext}"
 
 
 class EmailModelBackend(ModelBackend):
@@ -63,8 +76,8 @@ class SubEvent(models.Model):
     date = models.DateField()
     venue = models.CharField(max_length=1, choices=venue_choices, default='V')
     link = models.URLField(max_length=200, blank=True)
-    poster = models.ImageField(upload_to='posters/', null=True, blank=True)
-    thumbnail = models.ImageField(upload_to='thumbnails/', null=True, blank=True)
+    poster = models.ImageField(upload_to=UniqueUploadPath('posters'), null=True, blank=True)
+    thumbnail = models.ImageField(upload_to=UniqueUploadPath('thumbnails'), null=True, blank=True)
 
     def __str__(self) -> str:
         return f'{self.name}'
@@ -74,7 +87,7 @@ class Speaker(models.Model):
     name = models.TextField(max_length=50, blank=False)
     designation = models.TextField(max_length=150, blank=True)
     description = models.TextField(max_length=5000, blank=True)
-    image = models.ImageField(upload_to='speakers/', null=True, blank=True)
+    image = models.ImageField(upload_to=UniqueUploadPath('speakers'), null=True, blank=True)
 
     def __str__(self) -> str:
         return f'{self.name} - {self.designation}'
@@ -143,7 +156,7 @@ class PosterSession(models.Model):
 
 class PosterSessionImage(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    image = models.FileField(upload_to='poster-images/')
+    image = models.FileField(upload_to=UniqueUploadPath('poster-images'))
 
     def __str__(self):
         return f"Poster Image of {self.user.username}"

@@ -1,10 +1,11 @@
 from django.db import models
-from core.models import Event
+from core.models import Event, UniqueUploadPath
+
 
 class Sponsor(models.Model):
     name = models.TextField(max_length=50, blank=False)
     description = models.TextField(max_length=5000, blank=True)
-    thumbnail = models.ImageField(upload_to='sponsors/', blank=True)
+    thumbnail = models.ImageField(upload_to=UniqueUploadPath('sponsors'), blank=True)
     website = models.URLField(blank=True)
 
     def __str__(self) -> str:
@@ -12,7 +13,7 @@ class Sponsor(models.Model):
 
 class SponsorImage(models.Model):
     sponsor = models.ForeignKey(Sponsor, on_delete=models.CASCADE)
-    image = models.ImageField(upload_to='sponsors/', blank=False)
+    image = models.ImageField(upload_to=UniqueUploadPath('sponsors'), blank=False)
 
     def __str__(self) -> str:
         return f'{self.sponsor}'
