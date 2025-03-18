@@ -1,7 +1,9 @@
 import { convertTimeToDate } from '../../date';
 import { convertMarkdownToHTML } from '../../markdown';
-import { RoundTable } from '../../types';
+import { RoundTable, Speaker } from '../../types';
 import { fetchJson } from '../fetch';
+import { removeDuplicateID } from '../../collections';
+import { fetchSeminars } from './seminar';
 
 type RoundTableResponse = {
   subEvent: {
@@ -53,4 +55,12 @@ export async function fetchRoundTables() {
   );
 
   return roundTables;
+}
+
+export async function fetchRoundTableSpeakers() {
+  const roundTables = await fetchRoundTables();
+
+  const allSpeakers = roundTables.flatMap((table) => table.speakers);
+
+  return removeDuplicateID(allSpeakers);
 }

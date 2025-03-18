@@ -15,7 +15,7 @@ export default function SeminarHeader() {
           Unveiling the Frontiers of Knowledge
         </div>
         <div className={'font-manrope mt-2 text-5xl font-bold text-white'}>
-          Seminars
+          Speakers
         </div>
       </div>
       {/*<div className={'flex'}>*/}
