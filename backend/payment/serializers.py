@@ -39,9 +39,9 @@ def validate_plans(attrs, is_price=True):
     if plans is None:
         raise serializers.ValidationError('Invalid plans')
     # TODO: add closing date to plan
-    # for plan in plans:
-    #     if plan.kind == 'M':
-    #         raise serializers.ValidationError('This mode of attendance is not available right now')
+    for plan in plans:
+        if plan.kind == 'M' and plan.mode_of_attendance.name.startswith('In Person'):
+            raise serializers.ValidationError('This mode of attendance is not available right now')
     events = set([plan.event for plan in plans])
     if len(events) == 1:
         event = list(events)[0]
