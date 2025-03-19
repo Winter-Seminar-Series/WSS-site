@@ -34,12 +34,12 @@
 ## **3\. Submission Requirements**
 
 - **Deadline**
-  - **Poster Submission Deadline:** March 19, 2025 (Esfand 29, 1403)
-  - **Initial Review Results Announcement:** March 27, 2025 (Farvardin 7, 1403)
+  - **Poster Submission Deadline:** Farvardin 6, 1404
+  - **Initial Review Results Announcement:** Farvardin 9, 1404
 - **Submission Portal**
   - In Signup page on the WSS website, you are allowed to upload your poster (as a PDF) for the **initial filtering round.**
 - **Poster Specifications**
-  - **Size & Orientation**: **A1 vertical** (594 mm × 841 mm).
+  - **Size & Orientation**: **A1** (594 mm × 841 mm).
   - **Font Usage**: **Large, legible fonts** (minimum 28 pt for body text).
   - **Language**: Persian or English. If using Persian, consider **Nazanin** or **Lotus** for a formal, professional look.
   - **Sample guide for creating a good poster:**
