@@ -1,7 +1,9 @@
 from django.contrib import admin
 from django.http import HttpResponse
+from django.contrib.auth.admin import UserAdmin
 import csv
 
+from certificate.admin import generate_certificates_for_users
 from core.models import *
 
 
@@ -18,6 +20,10 @@ class ExportCSVMixin:
         return response
 
     export_as_csv.short_description = "Export Selected As CSV"
+
+
+class CustomUserAdmin(UserAdmin):
+    actions = [generate_certificates_for_users]
 
 
 @admin.register(Speaker)
@@ -75,7 +81,8 @@ class RoundTableAdmin(admin.ModelAdmin):
 
 # Register your models here.
 
-
+admin.site.unregister(User)
+admin.site.register(User, CustomUserAdmin)
 admin.site.register(Workshop)
 admin.site.register(WorkshopSession)
 admin.site.register(LabTalk)

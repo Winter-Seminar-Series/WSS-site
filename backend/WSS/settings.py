@@ -61,6 +61,7 @@ INSTALLED_APPS = [
     'payment',
     'skyroom',
     'spotplayer',
+    'certificate',
 ]
 
 REST_FRAMEWORK = {

@@ -29,12 +29,6 @@ class EventSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class SpeakerSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Speaker
-        fields = '__all__'
-
-
 class WorkshopSessionSerializer(serializers.ModelSerializer):
     class Meta:
         model = WorkshopSession
