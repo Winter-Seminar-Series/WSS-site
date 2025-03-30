@@ -111,16 +111,16 @@ export default function PosterSessionForm(props: IPosterSessionForm) {
         <div className="flex items-start gap-6 self-stretch max-md:flex-col">
           <div className="flex flex-[1_0_0] flex-col items-start gap-2 self-stretch">
             <label className="text-base font-medium uppercase not-italic leading-[normal] tracking-[.64px] text-[#8A8998]">
-              Upload File 
+              Upload File
             </label>
             <p className="text-sm tracking-[0.64px] text-[#8A8998]">
               Supported format: <strong>.pdf</strong> (Max: 10MB)
             </p>
             <div>
               <button
-              disabled = {true}
+                disabled={true}
                 onClick={handleClick}
-                className="flex items-center gap-2 rounded-md bg-primary px-4 py-2 text-white shadow-md transition opacity-70"
+                className="flex items-center gap-2 rounded-md bg-primary px-4 py-2 text-white opacity-70 shadow-md transition"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -140,7 +140,7 @@ export default function PosterSessionForm(props: IPosterSessionForm) {
               </button>
 
               <input
-                disabled = {true}
+                disabled={true}
                 type="file"
                 accept={'application/pdf'}
                 ref={fileInputRef}
@@ -174,7 +174,10 @@ export default function PosterSessionForm(props: IPosterSessionForm) {
           </div>
         </div>
 
-        <button disabled={true} className="mb-8 flex h-[72px] items-center justify-center gap-2.5 self-stretch rounded-lg bg-primary px-8 py-0 text-xl font-bold not-italic leading-[normal] tracking-[-0.2px] text-white opacity-70">
+        <button
+          disabled={true}
+          className="mb-8 flex h-[72px] items-center justify-center gap-2.5 self-stretch rounded-lg bg-primary px-8 py-0 text-xl font-bold not-italic leading-[normal] tracking-[-0.2px] text-white opacity-70"
+        >
           Update Poster File
         </button>
       </form>

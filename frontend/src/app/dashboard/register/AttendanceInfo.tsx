@@ -120,39 +120,46 @@ export default function AttendanceInfo({
           MODE OF ATTENDANCE
           <div
             className={
-              'mt-2 flex flex-row items-center gap-x-6 text-lg font-semibold text-darkslategray-100 max-md:flex-col max-md:items-start'
+              'mt-2 flex flex-row items-start gap-x-6 text-lg font-semibold text-darkslategray-100 max-md:flex-col max-md:items-start'
             }
           >
             {modesOfAttendance.map((modeOfAttendance) =>
               modeOfAttendance.id !== ID_OF_LAUNCH ? (
-                <label
+                <span
                   key={modeOfAttendance.id}
-                  className={`flex items-center gap-x-2 ${
-                    modeOfAttendance.name.includes('Person')
-                      ? 'line-through opacity-60'
-                      : ''
-                  }`}
+                  className={'flex flex-col items-center justify-center'}
                 >
-                  <input
-                    type={'radio'}
-                    id={modeOfAttendance.name}
-                    name={'modeOfAttendance'}
-                    value={modeOfAttendance.id}
-                    disabled={
-                      modesOfAttendance[selectedModeIndex]?.paid ||
+                  <label
+                    className={`flex items-center gap-x-2 ${
                       modeOfAttendance.name.includes('Person')
-                    }
-                    defaultChecked={
-                      modesOfAttendance[selectedModeIndex]?.id ===
-                      modeOfAttendance.id
-                    }
-                    onChange={onModeChange}
-                  />
-                  <span>
-                    {modeOfAttendance.name} -{' '}
-                    {(modeOfAttendance.price ?? 0).toLocaleString()} Tooman
-                  </span>
-                </label>
+                        ? 'line-through opacity-60'
+                        : ''
+                    }`}
+                  >
+                    <input
+                      type={'radio'}
+                      id={modeOfAttendance.name}
+                      name={'modeOfAttendance'}
+                      value={modeOfAttendance.id}
+                      disabled={
+                        modesOfAttendance[selectedModeIndex]?.paid ||
+                        modeOfAttendance.name.includes('Person')
+                      }
+                      defaultChecked={
+                        modesOfAttendance[selectedModeIndex]?.id ===
+                        modeOfAttendance.id
+                      }
+                      onChange={onModeChange}
+                    />
+                    <span>
+                      {modeOfAttendance.name} -{' '}
+                      {(modeOfAttendance.price ?? 0).toLocaleString()} Tooman
+                    </span>
+                  </label>
+                  {modeOfAttendance.name.includes('Person') && (
+                    <span>Capacity is full</span>
+                  )}
+                </span>
               ) : null,
             )}
           </div>
