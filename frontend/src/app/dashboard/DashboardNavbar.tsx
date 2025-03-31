@@ -6,8 +6,13 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import Image from 'next/image';
 import React from 'react';
+import { fetchModesOfAttendance } from '../../lib/api/events/modeOfAttendance';
 
-export default function DashboardNavbar() {
+export default function DashboardNavbar({
+  registered,
+}: {
+  registered: boolean;
+}) {
   const pathname = usePathname();
   const isProfile = pathname === '/dashboard/profile';
   const isRegister = pathname === '/dashboard/register';
@@ -72,53 +77,56 @@ export default function DashboardNavbar() {
             Optional
           </span>
         </div>
+        {!registered && (
+          <div
+            className={`flex items-center justify-center gap-2 border-b-2 border-solid px-6 py-5 max-md:gap-1 max-md:px-3 max-md:py-2 ${
+              isRegister ? 'border-b-primary' : undefined
+            }`}
+          >
+            <Image
+              width={24}
+              height={24}
+              className={`${
+                isRegister ? 'filter-primary' : undefined
+              } h-6 w-6 max-md:h-5 max-md:w-5`}
+              src="/source/TicketStar.svg"
+              alt=""
+            />
+            <Link
+              href="/dashboard/register"
+              className={`text-xl font-semibold not-italic leading-normal tracking-[-0.2px] max-md:text-base ${
+                isRegister ? 'text-primary' : 'text-darkslategray-100'
+              }`}
+            >
+              Registration
+            </Link>
+          </div>
+        )}
+
         <div
           className={`flex items-center justify-center gap-2 border-b-2 border-solid px-6 py-5 max-md:gap-1 max-md:px-3 max-md:py-2 ${
-            isRegister ? 'border-b-primary' : undefined
+            isStream ? 'border-b-primary' : undefined
           }`}
         >
           <Image
             width={24}
             height={24}
             className={`${
-              isRegister ? 'filter-primary' : undefined
+              isStream ? 'filter-primary' : undefined
             } h-6 w-6 max-md:h-5 max-md:w-5`}
-            src="/source/TicketStar.svg"
+            src="/source/stream.svg"
             alt=""
           />
           <Link
-            href="/dashboard/register"
+            href="/dashboard/stream"
             className={`text-xl font-semibold not-italic leading-normal tracking-[-0.2px] max-md:text-base ${
-              isRegister ? 'text-primary' : 'text-darkslategray-100'
+              isStream ? 'text-primary' : 'text-darkslategray-100'
             }`}
           >
-            Registration
+            Stream
           </Link>
         </div>
 
-        {/*<div*/}
-        {/*  className={`flex items-center justify-center gap-2 border-b-2 border-solid px-6 py-5 max-md:gap-1 max-md:px-3 max-md:py-2 ${*/}
-        {/*    isStream ? 'border-b-primary' : undefined*/}
-        {/*  }`}*/}
-        {/*>*/}
-        {/*  <Image*/}
-        {/*    width={24}*/}
-        {/*    height={24}*/}
-        {/*    className={`${*/}
-        {/*      isStream ? 'filter-primary' : undefined*/}
-        {/*    } h-6 w-6 max-md:h-5 max-md:w-5`}*/}
-        {/*    src="/source/stream.svg"*/}
-        {/*    alt=""*/}
-        {/*  />*/}
-        {/*  <Link*/}
-        {/*    href="/dashboard/stream"*/}
-        {/*    className={`text-xl font-semibold not-italic leading-normal tracking-[-0.2px] max-md:text-base ${*/}
-        {/*      isStream ? 'text-primary' : 'text-darkslategray-100'*/}
-        {/*    }`}*/}
-        {/*  >*/}
-        {/*    Stream*/}
-        {/*  </Link>*/}
-        {/*</div>*/}
         {/*<div*/}
         {/*  className={`flex items-center justify-center gap-2 border-b-2 border-solid px-6 py-5 max-md:gap-1 max-md:px-3 max-md:py-2 ${*/}
         {/*    isVideos ? 'border-b-primary' : undefined*/}
@@ -142,6 +150,7 @@ export default function DashboardNavbar() {
         {/*    Videos*/}
         {/*  </Link>*/}
         {/*</div>*/}
+
         {/*<div*/}
         {/*  className={`flex items-center justify-center gap-2 border-b-2 border-solid px-6 py-5 max-md:gap-1 max-md:px-3 max-md:py-2 ${*/}
         {/*    isCertificates ? 'border-b-primary' : undefined*/}

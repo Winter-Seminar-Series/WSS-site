@@ -53,7 +53,7 @@ export default async function DashboardLayout({ children }) {
                 : 'Not Registered Yet'}
             </p>
           </div>
-          <DashboardNavbar />
+          <DashboardNavbar registered={!!registeredModeOfAttendance} />
           {children}
         </div>
       </div>
