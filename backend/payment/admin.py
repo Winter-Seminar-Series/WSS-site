@@ -51,10 +51,14 @@ class PaymentDiscountAdmin(admin.ModelAdmin, ExportCSVMixin):
 
 admin.site.register(PaymentDiscount, PaymentDiscountAdmin)
 
+class DiscountCodesImportForm(forms.Form):
+    file = forms.FileField()
+
 class PaymentRequestAdmin(admin.ModelAdmin, ExportCSVMixin):
     list_display = ('participant', 'timestamp', 'paid', 'discount_code', 'order_id', 'base_price', 'paid_price')
     list_filter = ('paid', 'discount__code')
     actions = ["export_as_csv", "calculate_discount_usage"]
+    change_list_template = "payment_request_changelist.html"
 
     def base_price(self, obj):
         return obj.get_price()[0]
@@ -101,5 +105,58 @@ class PaymentRequestAdmin(admin.ModelAdmin, ExportCSVMixin):
         return response
 
     calculate_discount_usage.short_description = "Calculate Discount Code Usage"
+
+    def import_discount_codes(self, request):
+        if request.method == 'POST':
+            file = request.FILES["file"]
+            content = file.read().decode('utf-8')
+            discount_codes = [code.strip() for code in content.split('\n') if code.strip()]
+            
+            response = HttpResponse(content_type='text/csv')
+            response['Content-Disposition'] = 'attachment; filename=discount_usage_report.csv'
+            writer = csv.writer(response)
+
+            headers = [
+                'Discount Code',
+                'Event',
+                'Total Usage',
+                'Successful Payments'
+            ]
+            writer.writerow(headers)
+
+            for code in discount_codes:
+                try:
+                    discount = PaymentDiscount.objects.get(code=code)
+                    total_usage = PaymentRequest.objects.filter(discount=discount).count()
+                    successful_payments = PaymentRequest.objects.filter(
+                        discount=discount,
+                        paid=True
+                    ).count()
+
+                    row = [
+                        discount.code,
+                        str(discount.event) if discount.event else 'No Event',
+                        total_usage,
+                        successful_payments
+                    ]
+                    writer.writerow(row)
+                except PaymentDiscount.DoesNotExist:
+                    row = [code, 'Not Found', 0, 0]
+                    writer.writerow(row)
+
+            return response
+
+        form = DiscountCodesImportForm()
+        payload = {"form": form}
+        return render(
+            request, "csv_form.html", payload
+        )
+
+    def get_urls(self):
+        urls = super().get_urls()
+        my_urls = [
+            path('import-discount-codes/', self.import_discount_codes),
+        ]
+        return my_urls + urls
 
 admin.site.register(PaymentRequest, PaymentRequestAdmin)
