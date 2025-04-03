@@ -1,5 +1,7 @@
 from django.contrib import admin
 from core.admin import ExportCSVMixin
+import csv
+from django.http import HttpResponse
 
 from participant.models import *
 
@@ -16,17 +18,50 @@ class ParticipantAdmin(admin.ModelAdmin, ExportCSVMixin):
 
 
 @admin.register(Participation)
-class ParticipationAdmin(admin.ModelAdmin, ExportCSVMixin):
+class ParticipationAdmin(admin.ModelAdmin):
     list_display = ('participant', 'participant_email', 'plan')
     list_filter = ('plan', 'plan__event__order',)
     autocomplete_fields = ('participant', 'info',)
     search_fields = ('participant__user__email', 'participant__info__national_code',)
-    actions = ["export_as_csv"]
+    actions = ["export_data"]
 
     def participant_email(self, obj):
         return obj.participant.user.email if obj.participant and obj.participant.user else ""
 
     participant_email.short_description = "Email"
+
+    def export_data(self, request, queryset):
+        meta = self.model._meta
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename=participation_data.csv'
+        writer = csv.writer(response)
+
+        headers = [
+            'Participation Id',
+            'Email',
+            'First Name',
+            'Last Name',
+            'National Code',
+            'Phone Number',
+            'Plan'
+        ]
+        writer.writerow(headers)
+
+        for obj in queryset:
+            row = [
+                obj.id if obj.id else '',
+                obj.participant.user.email if obj.participant and obj.participant.user else '',
+                obj.participant.info.first_name if obj.participant and obj.participant.info else '',
+                obj.participant.info.last_name if obj.participant and obj.participant.info else '',
+                obj.participant.info.national_code if obj.participant and obj.participant.info else '',
+                obj.participant.info.phone_number if obj.participant and obj.participant.info else '',
+                str(obj.plan) if obj.plan else ''
+            ]
+            writer.writerow(row)
+
+        return response
+
+    export_data.short_description = "Export Registration Data As CSV"
 
 
 @admin.register(ParticipantInfo)

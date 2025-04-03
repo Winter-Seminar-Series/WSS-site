@@ -5,6 +5,7 @@ import csv
 from django.shortcuts import redirect, render
 from django.urls import path
 from core.admin import ExportCSVMixin
+from django.http import HttpResponse
 
 from payment.models import PaymentDiscount, PaymentRequest
 from core.models import Event
@@ -53,7 +54,7 @@ admin.site.register(PaymentDiscount, PaymentDiscountAdmin)
 class PaymentRequestAdmin(admin.ModelAdmin, ExportCSVMixin):
     list_display = ('participant', 'timestamp', 'paid', 'discount_code', 'order_id', 'base_price', 'paid_price')
     list_filter = ('paid', 'discount__code')
-    actions = ["export_as_csv"]
+    actions = ["export_as_csv", "calculate_discount_usage"]
 
     def base_price(self, obj):
         return obj.get_price()[0]
@@ -63,5 +64,42 @@ class PaymentRequestAdmin(admin.ModelAdmin, ExportCSVMixin):
     
     def discount_code(self, obj):
         return obj.discount.code if obj.discount is not None else None
+
+    def calculate_discount_usage(self, request, queryset):
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename=discount_usage.csv'
+        writer = csv.writer(response)
+
+        headers = [
+            'Discount Code',
+            'Event',
+            'Total Usage',
+            'Successful Payments'
+        ]
+        writer.writerow(headers)
+
+        discount_codes = PaymentDiscount.objects.filter(
+            paymentrequest__in=queryset
+        ).distinct()
+
+        for discount in discount_codes:
+            total_usage = queryset.filter(discount=discount).count()
+            
+            successful_payments = queryset.filter(
+                discount=discount,
+                paid=True
+            ).count()
+
+            row = [
+                discount.code,
+                str(discount.event) if discount.event else 'No Event',
+                total_usage,
+                successful_payments
+            ]
+            writer.writerow(row)
+
+        return response
+
+    calculate_discount_usage.short_description = "Calculate Discount Code Usage"
 
 admin.site.register(PaymentRequest, PaymentRequestAdmin)
