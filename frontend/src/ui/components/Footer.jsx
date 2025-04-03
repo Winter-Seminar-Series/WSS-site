@@ -42,6 +42,15 @@ export default function Footer() {
               className="opacity-60 grayscale hover:opacity-100 hover:grayscale-0"
             />
           </a>
+          <a href="https://goldika.ir/" target="_blank">
+            <Image
+              src="/source/sponsors/goldika.png"
+              alt="Goldika"
+              width="130"
+              height="40"
+              className="opacity-60 grayscale hover:opacity-100 hover:grayscale-0"
+            />
+          </a>
           <a href="https://yektanet.com/" target="_blank">
             <Image
               src="/source/sponsors/yekta.svg"
