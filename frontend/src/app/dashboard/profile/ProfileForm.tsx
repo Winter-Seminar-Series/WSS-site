@@ -48,6 +48,7 @@ const jobOptions: OptionType[] = [
   { value: 'Software Engineer', label: 'Software Engineer' },
   { value: 'Backend Developer', label: 'Backend Developer' },
   { value: 'Frontend Developer', label: 'Frontend Developer' },
+  { value: 'Mobile Developer', label: 'Mobile Developer' },
   { value: 'Full Stack Developer', label: 'Full Stack Developer' },
   { value: 'DevOps Engineer', label: 'DevOps Engineer' },
   { value: 'Machine Learning Engineer', label: 'Machine Learning Engineer' },
