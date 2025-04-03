@@ -6,7 +6,11 @@ import ViewAllButton from './ViewAllButton';
 
 export default function SeminarHeader() {
   return (
-    <div className={'flex items-center justify-between px-32 pt-6 '}>
+    <div
+      className={
+        'flex items-center justify-between gap-y-6 px-32 pb-10 pt-20 max-md:flex-col'
+      }
+    >
       <div className={''}>
         <div
           className={
