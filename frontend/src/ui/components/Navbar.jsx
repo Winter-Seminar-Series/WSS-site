@@ -9,6 +9,8 @@ const links = [
   { href: '/', label: 'Home' },
   { href: '/seminars', label: 'Seminars' },
   { href: '/round-tables', label: 'Round Tables' },
+  { href: '/poster-session', label: 'Poster Session' },
+  { href: '/timeline', label: 'TimeLine' },
   { href: '/about', label: 'About Us' },
 ];
 
@@ -51,23 +53,29 @@ export default function Navbar({ fixed = true, isAuthenticated = false }) {
             </Link>
           </div>
           <div className="hidden items-center justify-center gap-8 max-lg:gap-4 md:flex">
-            <Link href="/" className="block px-4 py-3">
-              Home
-            </Link>
+            {/*<Link href="/" className="block px-4 py-3">*/}
+            {/*  Home*/}
+            {/*</Link>*/}
             <Link href="/seminars" className="block px-4 py-3">
               Seminars
             </Link>
             <Link href="/round-tables" className="block px-4 py-3">
               Round Tables
             </Link>
-            <Link href="/about" className="block px-4 py-3">
-              About Us
-            </Link>
             <Link href="/poster-session" className="relative block px-4 py-3">
               Poster Session
-              <span className="absolute -right-2 -top-1 animate-pulse rounded-full border-2 bg-secondary px-1.5 py-0.5 text-[10px] font-bold text-white">
-                NEW
-              </span>
+              {/*<span className="absolute -right-2 -top-1 animate-pulse rounded-full border-2 bg-secondary px-1.5 py-0.5 text-[10px] font-bold text-white">*/}
+              {/*  NEW*/}
+              {/*</span>*/}
+            </Link>
+            <Link href="/timeline" className="relative block px-4 py-3">
+              TimeLine
+              {/*<span className="absolute -right-2 -top-1 animate-pulse rounded-full border-2 bg-secondary px-1.5 py-0.5 text-[10px] font-bold text-white">*/}
+              {/*  NEW*/}
+              {/*</span>*/}
+            </Link>
+            <Link href="/about" className="block px-4 py-3">
+              About Us
             </Link>
           </div>
           {isAuthenticated ? (
