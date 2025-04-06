@@ -40,7 +40,7 @@ export default async function TimeLine() {
             </span>
             <hr className="ml-6 flex-grow border-neutral-300 " />
           </div>
-          <img src={'timeline1.webp'} className={' mt-4'} />
+          <img src={'https://s3.ir-thr-at1.arvanstorage.ir/wss/10th-WSS-timeline1'} className={' mt-4'} />
 
           <div className="mt-8 flex w-full items-center justify-center">
             <hr className="mr-6 flex-grow border-neutral-300" />
@@ -49,7 +49,7 @@ export default async function TimeLine() {
             </span>
             <hr className="ml-6 flex-grow border-neutral-300 " />
           </div>
-          <img src={'timeline2.webp'} className={' mt-4'} />
+          <img src={'https://s3.ir-thr-at1.arvanstorage.ir/wss/10th-WSS-timeline2'} className={' mt-4'} />
         </div>
       </div>
       <Timer />
