@@ -41,7 +41,9 @@ export default async function TimeLine() {
             <hr className="ml-6 flex-grow border-neutral-300 " />
           </div>
           <img
-            src={'https://s3.ir-thr-at1.arvanstorage.ir/wss/10th-WSS-timeline1'}
+            src={
+              'https://s3.ir-thr-at1.arvanstorage.ir/wss/10th-WSS-timeline1-v2'
+            }
             className={' mt-4'}
           />
 
@@ -53,7 +55,9 @@ export default async function TimeLine() {
             <hr className="ml-6 flex-grow border-neutral-300 " />
           </div>
           <img
-            src={'https://s3.ir-thr-at1.arvanstorage.ir/wss/10th-WSS-timeline2'}
+            src={
+              'https://s3.ir-thr-at1.arvanstorage.ir/wss/10th-WSS-timeline2-v2'
+            }
             className={' mt-4'}
           />
         </div>
