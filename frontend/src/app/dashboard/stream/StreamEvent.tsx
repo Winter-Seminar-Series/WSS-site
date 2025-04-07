@@ -9,6 +9,9 @@ import { attendStream } from '../../../lib/api/dashboard/stream';
 
 const formatTime = (time: Date) => {
   const options: Intl.DateTimeFormatOptions = {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
     hour: 'numeric',
     minute: 'numeric',
     hour12: true,
@@ -65,7 +68,9 @@ export default function StreamEvent({
                   </div>
                 )}
                 <div className="min-w-0 flex-shrink flex-grow overflow-hidden overflow-ellipsis whitespace-nowrap p-3">
-                  {streamEvent.title}
+                  {streamEvent.title.length > 70
+                    ? streamEvent.title.slice(0, 70) + '...'
+                    : streamEvent.title}
                 </div>
               </div>
               <div className="flex w-fit flex-shrink-0 flex-grow-0 justify-between">
@@ -74,7 +79,10 @@ export default function StreamEvent({
                 </Disclosure.Button>
                 <button
                   onClick={onAttendClick}
-                  className="ml-4 flex w-28 justify-around rounded-md bg-secondary p-3 text-center text-white transition-colors hover:bg-secondary-400"
+                  disabled={!hasStarted}
+                  className={`ml-4 flex w-28 justify-around rounded-md bg-secondary p-3 text-center text-white transition-colors hover:bg-secondary-400 ${
+                    !hasStarted ? 'opacity-50' : ''
+                  }`}
                 >
                   <Image src={play} height={22} width={22} alt="" />
                   Attend

@@ -10,6 +10,7 @@ from django.utils import timezone
 from django.db.models import F
 from rest_framework.response import Response
 
+
 # Create your views here.
 class SkyroomEventsView(ListAPIView):
     queryset = SkyroomEvent.objects.all()
@@ -35,7 +36,7 @@ class SkyroomEventLinkView(GenericAPIView):
     serializer_class = SkyroomEventWithLinkSerializer
     permission_classes = [IsAuthenticated]
     skyroom = SkyroomAPI()
-    
+
     def get(self, request, *args, **kwargs):
         try:
             participant = Participant.objects.get(user=self.request.user)
