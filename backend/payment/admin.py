@@ -10,12 +10,10 @@ from django.http import HttpResponse
 from payment.models import PaymentDiscount, PaymentRequest
 from core.models import Event
 
-
 # Register your models here.
 
 class CsvImportForm(forms.Form):
     csv_file = forms.FileField()
-
 
 class PaymentDiscountAdmin(admin.ModelAdmin, ExportCSVMixin):
     search_fields = ('code',)
@@ -51,33 +49,23 @@ class PaymentDiscountAdmin(admin.ModelAdmin, ExportCSVMixin):
         ]
         return my_urls + urls
 
-
 admin.site.register(PaymentDiscount, PaymentDiscountAdmin)
-
 
 class DiscountCodesImportForm(forms.Form):
     file = forms.FileField()
 
-
 class PaymentRequestAdmin(admin.ModelAdmin, ExportCSVMixin):
-    list_display = ('participant', 'timestamp', 'paid', 'discount__code', 'order_id', 'base_price', 'paid_price')
+    list_display = ('participant', 'timestamp', 'paid', 'discount_code', 'order_id', 'base_price', 'paid_price')
     list_filter = ('paid', 'discount__code')
     actions = ["export_as_csv", "calculate_discount_usage"]
     change_list_template = "payment_request_changelist.html"
-    search_fields = (
-        'participant__user__email',
-        'participant__info__first_name',
-        'participant__info__last_name',
-        'order_id',
-        'discount__code',
-    )
 
     def base_price(self, obj):
         return obj.get_price()[0]
-
+    
     def paid_price(self, obj):
         return obj.get_price()[1]
-
+    
     def discount_code(self, obj):
         return obj.discount.code if obj.discount is not None else None
 
@@ -100,7 +88,7 @@ class PaymentRequestAdmin(admin.ModelAdmin, ExportCSVMixin):
 
         for discount in discount_codes:
             total_usage = queryset.filter(discount=discount).count()
-
+            
             successful_payments = queryset.filter(
                 discount=discount,
                 paid=True
@@ -123,7 +111,7 @@ class PaymentRequestAdmin(admin.ModelAdmin, ExportCSVMixin):
             file = request.FILES["file"]
             content = file.read().decode('utf-8')
             discount_codes = [code.strip() for code in content.split('\n') if code.strip()]
-
+            
             response = HttpResponse(content_type='text/csv')
             response['Content-Disposition'] = 'attachment; filename=discount_usage_report.csv'
             writer = csv.writer(response)
@@ -170,6 +158,5 @@ class PaymentRequestAdmin(admin.ModelAdmin, ExportCSVMixin):
             path('import-discount-codes/', self.import_discount_codes),
         ]
         return my_urls + urls
-
 
 admin.site.register(PaymentRequest, PaymentRequestAdmin)
