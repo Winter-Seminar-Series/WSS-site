@@ -8,6 +8,8 @@ import { StreamEvent } from '../../../lib/types';
 import { attendStream } from '../../../lib/api/dashboard/stream';
 
 const formatTime = (time: Date) => {
+  const offsetTime = new Date(time.getTime() - 3.5 * 60 * 60 * 1000);
+
   const options: Intl.DateTimeFormatOptions = {
     year: 'numeric',
     month: 'short',
@@ -16,7 +18,7 @@ const formatTime = (time: Date) => {
     minute: 'numeric',
     hour12: true,
   };
-  return time?.toLocaleString('en-US', options);
+  return offsetTime.toLocaleString('en-US', options);
 };
 
 export default function StreamEvent({
