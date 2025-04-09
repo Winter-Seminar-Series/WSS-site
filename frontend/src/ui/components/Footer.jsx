@@ -60,7 +60,7 @@ export default function Footer() {
               className="opacity-60 grayscale hover:opacity-100 hover:grayscale-0"
             />
           </a>
-          {/*<a href="https://wss-sharif.com/" target="_blank">*/}
+          <a href="https://aipardis.ir/" target="_blank">
           <Image
             src="/source/sponsors/paid.png"
             alt=""
@@ -68,7 +68,7 @@ export default function Footer() {
             height="40"
             className="opacity-60 grayscale hover:opacity-100 hover:grayscale-0"
           />
-          {/*</a>*/}
+          </a>
           <a href="https://quera.org/" target="_blank">
             <Image
               src="/source/sponsors/quera.svg"
