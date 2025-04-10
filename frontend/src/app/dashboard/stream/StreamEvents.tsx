@@ -6,7 +6,7 @@ export default function StreamEvents({
 }: {
   events: StreamEventType[];
 }) {
-  console.log(events)
+  console.log(events);
   return (
     <div className="w-full">
       {events && events.length ? (

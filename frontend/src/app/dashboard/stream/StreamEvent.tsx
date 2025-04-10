@@ -8,7 +8,7 @@ import { StreamEvent } from '../../../lib/types';
 import { attendStream } from '../../../lib/api/dashboard/stream';
 
 const formatTime = (time: Date) => {
-  const offsetTime = new Date(time.getTime() - 3.5 * 60 * 60 * 1000);
+  const offsetTime = new Date(time.getTime());
 
   const options: Intl.DateTimeFormatOptions = {
     year: 'numeric',
@@ -81,7 +81,6 @@ export default function StreamEvent({
                 </Disclosure.Button>
                 <button
                   onClick={onAttendClick}
-                  disabled={!hasStarted}
                   className={`ml-4 flex w-28 justify-around rounded-md bg-secondary p-3 text-center text-white transition-colors hover:bg-secondary-400 ${
                     !hasStarted ? 'opacity-50' : ''
                   }`}
