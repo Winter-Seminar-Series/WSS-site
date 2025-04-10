@@ -11,7 +11,7 @@ export default function useTimer() {
   useEffect(() => {
     const utcDate = new Date();
     const tzDate = new Date(
-        utcDate.toLocaleString('en-US', { timeZone: 'Asia/Tehran' }),
+      utcDate.toLocaleString('en-US', { timeZone: 'Asia/Tehran' }),
     );
     const offset = utcDate.getTime() - tzDate.getTime();
 
