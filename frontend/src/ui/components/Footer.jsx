@@ -61,13 +61,13 @@ export default function Footer() {
             />
           </a>
           <a href="https://aipardis.ir/" target="_blank">
-          <Image
-            src="/source/sponsors/paid.png"
-            alt=""
-            width="80"
-            height="40"
-            className="opacity-60 grayscale hover:opacity-100 hover:grayscale-0"
-          />
+            <Image
+              src="/source/sponsors/paid.png"
+              alt=""
+              width="80"
+              height="40"
+              className="opacity-60 grayscale hover:opacity-100 hover:grayscale-0"
+            />
           </a>
           <a href="https://quera.org/" target="_blank">
             <Image
