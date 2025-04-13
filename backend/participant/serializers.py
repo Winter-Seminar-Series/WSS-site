@@ -99,7 +99,7 @@ class ParticipationPlanSerializer(serializers.ModelSerializer):
 
 class ParticipationAttachmentSerializer(serializers.ModelSerializer):
     UUID = serializers.CharField(source='attachment', read_only=True)
-    plan = serializers.CharField(source='participation.plan.workshop.name', read_only=True)
+    plan = serializers.CharField(source='participation.plan', read_only=True)
 
     def to_representation(self, instance):
         ret = super().to_representation(instance)
