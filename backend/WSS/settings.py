@@ -227,9 +227,13 @@ SPOTPLAYER_API_KEY = os.environ.get('SPOTPLAYER_API_KEY')
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = os.getenv('EMAIL_HOST')
-EMAIL_PORT = os.getenv("EMAIL_PORT")
+EMAIL_PORT = int(os.getenv('EMAIL_PORT', 465))
 EMAIL_HOST_USER = os.getenv("EMAIL_USER")
 EMAIL_HOST_PASSWORD = os.getenv("EMAIL_PASS")
-EMAIL_USE_TLS=True
+EMAIL_USE_TLS = False
+EMAIL_USE_SSL = True
+
+DEFAULT_FROM_EMAIL = os.getenv('EMAIL_FROM_ADDRESS', 'info@wss-sharif.com')
+SERVER_EMAIL = f"{os.getenv('EMAIL_FROM_NAME', 'WSS')} <{DEFAULT_FROM_EMAIL}>"
 
 IN_PERSON_LIMIT = os.getenv('IN_PERSON_LIMIT', 0)
