@@ -2,7 +2,7 @@ import base64
 from random import choices
 
 from django.conf import settings
-from django.core.mail import send_mail
+from django.core.mail import send_mail, EmailMessage
 from django.http import Http404
 from django.core.files import storage
 from rest_framework import generics, permissions, status, views
@@ -46,21 +46,28 @@ class PasswordResetAPIView(views.APIView):
             raise Http404
         except Participant.MultipleObjectsReturned:
             return Response(
-                'Mutiple Users found with this Email Address',
+                'Multiple users found with this email address',
                 status=status.HTTP_400_BAD_REQUEST
             )
         participant.password_reset_code = ''.join(
             choices([str(i) for i in range(10)], k=10))
         participant.save()
-        send_mail(
-            'WSS Password Reset',
-            f'Your WSS password reset link is: https://wss-sharif.com/reset-password/{participant.password_reset_code}',
-            settings.EMAIL_HOST_USER,
-            [participant.user.email],
+
+        reset_link = f"https://wss-sharif.com/reset-password/{participant.password_reset_code}"
+        message = f"Your WSS password reset link is: {reset_link}"
+
+        email = EmailMessage(
+            subject='WSS Password Reset',
+            body=message,
+            from_email=settings.SERVER_EMAIL,
+            to=[participant.user.email],
+            headers={'x-liara-tag': 'password-reset'}
         )
+
+        email.send(fail_silently=False)
+
         return Response(
-            'Password reset code sent to the email address ({0})'.format(
-                participant.user.email),
+            f'Password reset code sent to the email address ({participant.user.email})',
             status=status.HTTP_200_OK
         )
 
