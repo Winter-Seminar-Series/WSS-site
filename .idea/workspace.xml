@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5dd4af7b-773f-4aad-be42-c7e64ab99492" name="Changes" comment="fix: add WSS_ORDER to Dockerfile">
+    <list default="true" id="5dd4af7b-773f-4aad-be42-c7e64ab99492" name="Changes" comment="fix: add local port to postgres">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
