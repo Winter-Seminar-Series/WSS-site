@@ -1,8 +1,9 @@
 version: '3'
 
 networks:
-  app-network:
-    driver: bridge
+  app-net:
+    external: true
+    name: app
 
 services:
   postgresql:
@@ -11,17 +12,17 @@ services:
       - "127.0.0.1:5432:5432"
     container_name: postgres
     networks:
-      - app-network
+      - app-net
     env_file:
       - .env.postgres
     volumes:
       - postgres-data:/var/lib/postgresql/data
 
   payment:
-    image: wss:payment
+    image: wss:pay
     container_name: payment
     networks:
-      - app-network
+      - app-net
     restart: on-failure
     env_file:
       - .env.payment
@@ -29,10 +30,10 @@ services:
       - postgresql
 
   backend:
-    image: wss:backend
+    image: back:TEST
     container_name: backend
     networks:
-      - app-network
+      - app-net
     depends_on:
       - postgresql
     ports:
