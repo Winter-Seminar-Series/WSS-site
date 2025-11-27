@@ -15,6 +15,7 @@ jobs:
     env:
       SSH_HOST: ${{ secrets.SSH_HOST }}
       SSH_USER: ${{ secrets.SSH_USER }}
+      SSH_PORT:  ${{ secrets.SSH_PORT }}
       SSH_KEY:  ${{ secrets.SSH_KEY }}
 
     steps:
@@ -29,5 +30,5 @@ jobs:
       - name: SSH → Run remote script
         run: |
           ssh -o StrictHostKeyChecking=no \
-            "$SSH_USER@$SSH_HOST" \
+            "$SSH_USER@$SSH_HOST" -p $SSH_PORT \
             "bash ~/cd.sh"
