@@ -16,17 +16,18 @@ jobs:
       SSH_HOST: ${{ secrets.SSH_HOST }}
       SSH_USER: ${{ secrets.SSH_USER }}
       SSH_PORT: ${{ secrets.SSH_PORT }}
-      SSH_KEY:  ${{ secrets.SSH_KEY }}
-
+      
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Start ssh-agent and add key
+      - name: Add SSH key
         run: |
-          eval "$(ssh-agent -s)"
-          echo "$SSH_KEY" | tr -d '\r' | ssh-add -
-
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          chmod 700 ~/.ssh
+          
       - name: SSH → Run remote script
         run: |
           ssh -o StrictHostKeyChecking=no \
