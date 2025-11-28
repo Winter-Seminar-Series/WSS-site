@@ -1,7 +1,6 @@
 # WSS-site
 
-![Deploy front on test environment](https://github.com/Winter-Seminar-Series/WSS-site/actions/workflows/main.yml/badge.svg?branch=master)
-![Create/Update Test Environment](https://github.com/Winter-Seminar-Series/WSS-site/actions/workflows/maint.yml/badge.svg?branch=master)
+[![Deploy via SSH (master)](https://github.com/Winter-Seminar-Series/WSS-site/actions/workflows/deploy.yml/badge.svg)](https://github.com/Winter-Seminar-Series/WSS-site/actions/workflows/deploy.yml)
 
 Source code of the official website of Winter Seminar Series.
 
