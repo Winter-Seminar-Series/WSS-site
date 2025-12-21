@@ -19,7 +19,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 load_dotenv(f"{BASE_DIR}/.env")
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
@@ -32,14 +31,13 @@ DEBUG = True
 ALLOWED_HOSTS = ['*']
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOWED_ORIGINS = [
-    'http://localhost:3000',
+    'http://localhost:8000',
+    'http://localhost:5000',
     'http://localhost',
-    'http://wss-sharif.com:3000',
-    'http://wss-sharif.com',
-    'http://91.107.181.116:5000'
+    'https://api.wss-sharif.com'
+    'https://wss-sharif.com'
 ]
 CSRF_TRUSTED_ORIGINS = CORS_ALLOWED_ORIGINS
-
 
 # Application definition
 
@@ -140,7 +138,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'WSS.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
@@ -154,7 +151,6 @@ DATABASES = {
         'PASSWORD': os.environ['DB_PASS'],
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -174,7 +170,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
@@ -185,7 +180,6 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
