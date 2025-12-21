@@ -34,10 +34,18 @@ CORS_ALLOWED_ORIGINS = [
     'http://localhost:8000',
     'http://localhost:5000',
     'http://localhost',
-    'https://api.wss-sharif.com'
-    'https://wss-sharif.com'
+    'https://api.wss-sharif.com',
+    'https://wss-sharif.com',
 ]
-CSRF_TRUSTED_ORIGINS = CORS_ALLOWED_ORIGINS
+
+CSRF_TRUSTED_ORIGINS = [
+    'https://api.wss-sharif.com',
+    'https://wss-sharif.com',
+]
+
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
 
 # Application definition
 
@@ -109,13 +117,13 @@ SIMPLE_JWT = {
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = 'WSS.urls'
