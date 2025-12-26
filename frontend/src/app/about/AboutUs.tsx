@@ -42,7 +42,7 @@ export default async function AboutUs() {
               </p>
               <p className="flex items-center justify-center gap-[13px] py-4 text-lg leading-relaxed text-neutral-400">
                 WSS was initiated {new Date().getFullYear() - 2015} years ago by
-                the Student's Scientific Chapter (SSC) within the Computer
+                the Students Scientific Chapter (SSC) within the Computer
                 Engineering Department at Sharif University of Technology as a
                 global effort to connect visionaries and researchers. Currently,
                 WSS is held as a two-day event where distinguished speakers
