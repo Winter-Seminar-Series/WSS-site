@@ -30,29 +30,36 @@ export default async function AboutUs() {
                 About Us
               </p>
               <p className="flex items-center justify-center gap-[13px] pb-4 pt-10 text-lg leading-relaxed text-neutral-400">
-                The Winter Seminar Series (WSS) has been established to bring
-                together successful Iranians from around the world and build a
-                professional community focused on computer science and
-                engineering topics. Over the years, this seminar has grown to
-                become one of the premier events at the Sharif University of
-                Technology. WSS is open to anyone who works in or is interested
-                in computer science topics and seeks to share and express their
-                ideas and research.
+                The Winter Seminar Series (WSS) has been established to bridge
+                the gap between leading experts and the global academic
+                community, fostering a professional environment focused on the
+                latest advancements in computer science and engineering. Over
+                the past decade, this event has evolved into one of the premier
+                events at Sharif University of Technology. WSS is an inclusive
+                platform open to students, researchers, and professionals
+                worldwide who are interested in sharing their research and
+                exploring the future of technology.
               </p>
               <p className="flex items-center justify-center gap-[13px] py-4 text-lg leading-relaxed text-neutral-400">
                 WSS was initiated {new Date().getFullYear() - 2015} years ago by
-                the Student Scientific Chapter at Sharif University of
-                Technology as a global effort to connect expert researchers.
-                Currently, WSS is held as a two-day event where speakers present
-                their research and ideas each day, while also sharing their
-                findings and teaching related topics.
+                the Student's Scientific Chapter (SSC) within the Computer
+                Engineering Department at Sharif University of Technology as a
+                global effort to connect visionaries and researchers. Currently,
+                WSS is held as a two-day event where distinguished speakers
+                present their cutting-edge findings, while also conducting
+                deep-dives into emerging technical topics and teaching
+                fundamental concepts to a diverse audience.
               </p>
               <p className="flex items-center justify-center gap-[13px] py-4 text-lg leading-relaxed text-neutral-400">
-                This event comprises presentations and roundtable discussions
-                covering various science and engineering topics. It provides a
-                platform for networking and exchange of knowledge among
-                participants with a shared interest in computer science and
-                engineering.
+                The event comprises high-level presentations and interactive
+                roundtable discussions covering a broad spectrum of science and
+                engineering fields. Beyond knowledge sharing, WSS is dedicated
+                to empowering the next generation; we aim to guide participants
+                in navigating their academic paths and choosing their
+                specialized research fields. It provides a unique space for
+                researchers to discover new horizons, exchange innovative ideas,
+                and build lasting professional networks in the global computer
+                science and engineering landscape.
               </p>
             </div>
           </div>
