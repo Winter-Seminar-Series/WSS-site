@@ -29,7 +29,7 @@ export default async function AboutUs() {
               <p className="text-[76px] font-bold not-italic leading-[76px] tracking-[-1.52px] text-[#1F2B3D]">
                 About Us
               </p>
-              <p className="flex items-center justify-center gap-[13px] pb-4 pt-10 text-lg leading-relaxed text-neutral-400 text-justify">
+              <p className="flex items-center justify-center gap-[13px] pb-4 pt-10 text-justify text-lg leading-relaxed text-neutral-400">
                 The Winter Seminar Series (WSS) has been established to bridge
                 the gap between leading experts and the global academic
                 community, fostering a professional environment focused on the
@@ -40,7 +40,7 @@ export default async function AboutUs() {
                 worldwide who are interested in sharing their research and
                 exploring the future of technology.
               </p>
-              <p className="flex items-center justify-center gap-[13px] py-4 text-lg leading-relaxed text-neutral-400 text-justify">
+              <p className="flex items-center justify-center gap-[13px] py-4 text-justify text-lg leading-relaxed text-neutral-400">
                 WSS was initiated {new Date().getFullYear() - 2015} years ago by
                 the Students Scientific Chapter (SSC) within the Computer
                 Engineering Department at Sharif University of Technology as a
@@ -50,7 +50,7 @@ export default async function AboutUs() {
                 deep-dives into emerging technical topics and teaching
                 fundamental concepts to a diverse audience.
               </p>
-              <p className="flex items-center justify-center gap-[13px] py-4 text-lg leading-relaxed text-neutral-400 text-justify">
+              <p className="flex items-center justify-center gap-[13px] py-4 text-justify text-lg leading-relaxed text-neutral-400">
                 The event comprises high-level presentations and interactive
                 roundtable discussions covering a broad spectrum of science and
                 engineering fields. Beyond knowledge sharing, WSS is dedicated
