@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { Disclosure } from '@headlessui/react';
 import clock from './assets/clock.svg';
 import play from './assets/play.svg';
-import { StreamEvent } from '../../../lib/types';
+import { StreamEvent as StreamEventType } from '../../../lib/types';
 import { attendStream } from '../../../lib/api/dashboard/stream';
 
 const formatTime = (time: Date) => {
@@ -24,7 +24,7 @@ const formatTime = (time: Date) => {
 export default function StreamEvent({
   streamEvent,
 }: {
-  streamEvent: StreamEvent;
+  streamEvent: StreamEventType;
 }) {
   // @ts-ignore
   const hasStarted = new Date() > streamEvent.startingTime;

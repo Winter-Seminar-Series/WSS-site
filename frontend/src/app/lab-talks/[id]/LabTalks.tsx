@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import { getTimeSpanInMinutes } from '../../../lib/date';
-import { LabTalk, Seminar } from '../../../lib/types';
+import { LabTalk as LabTalkType } from '../../../lib/types';
 import calender from '../assets/Calendar.svg';
 import clock from '../assets/Clock.svg';
 
@@ -22,7 +22,7 @@ const formatTime = (time: Date) => {
   return time?.toLocaleString('en-US', options);
 };
 
-export default function LabTalk({ labTalk }: { labTalk: LabTalk }) {
+export default function LabTalk({ labTalk }: { labTalk: LabTalkType }) {
   return (
     <div>
       <div

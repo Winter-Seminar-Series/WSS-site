@@ -4,7 +4,8 @@ import Footer from '../../../ui/components/Footer';
 import Navbar, { NavbarPlaceholder } from '../../../ui/components/Navbar';
 import Workshop from './Workshop';
 
-export default async function WorkshopPage({ params: { id } }) {
+export default async function WorkshopPage({ params }) {
+  const { id } = await params;
   const authenticated = await isAuthenticated();
   const workshops = await fetchWorkshops();
   const workshop = workshops.find((workshop) => workshop.id === parseInt(id));

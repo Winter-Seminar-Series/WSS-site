@@ -183,10 +183,10 @@ export default function AttendanceInfo({
                   onChange={onModeChange}
                 />
                 <span>
-                  {'lunch'} - {''}
+                  lunch -{' '}
                   {(
-                    modesOfAttendance[lunchIndex].price -
-                      modesOfAttendance[inPersonIndex].price ?? 0
+                    (modesOfAttendance[lunchIndex]?.price ?? 0) -
+                    (modesOfAttendance[inPersonIndex]?.price ?? 0)
                   ).toLocaleString()}{' '}
                   Tooman
                 </span>

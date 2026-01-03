@@ -2,9 +2,10 @@ version: '3'
 
 services:
   frontend:
-    image: wss:front10
+    build: .
     container_name: frontend
     ports:
       - 3020:3000
     env_file:
       - .env.frontend
+    command: ['npm', 'run', 'start']
