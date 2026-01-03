@@ -11,15 +11,15 @@
     "prepare": "cd .. && husky install frontend/.husky"
   },
   "dependencies": {
-    "@headlessui/react": "^1.7.17",
+    "@headlessui/react": "^2.2.9",
     "camelcase-keys": "^9.1.2",
     "classnames": "^2.3.2",
     "components": "^0.1.0",
     "decamelize-keys": "^2.0.1",
     "iron-session": "^8.0.1",
-    "next": "^14.1.0",
-    "react": "^18",
-    "react-dom": "^18",
+    "next": "16.1.1",
+    "react": "19.2.3",
+    "react-dom": "19.2.3",
     "react-fast-marquee": "^1.6.2",
     "react-markdown": "^10.0.0",
     "react-select": "^5.10.0",
@@ -31,14 +31,17 @@
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.16",
     "@types/node": "20.10.4",
-    "@types/react": "18.2.45",
+    "@types/react": "19.2.7",
     "autoprefixer": "^10.0.1",
-    "eslint": "^8",
-    "eslint-config-next": "14.0.3",
+    "eslint": "^9.39.2",
+    "eslint-config-next": "16.1.1",
     "husky": "^8.0.3",
     "postcss": "^8",
     "prettier": "^3.1.0",
     "prettier-plugin-tailwindcss": "^0.5.7",
     "tailwindcss": "^3.3.6"
+  },
+  "overrides": {
+    "@types/react": "19.2.7"
   }
 }

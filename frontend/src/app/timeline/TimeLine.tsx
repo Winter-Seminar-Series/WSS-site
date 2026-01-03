@@ -1,18 +1,10 @@
-import React from 'react';
 import Footer from '../../ui/components/Footer';
 import Navbar, { NavbarPlaceholder } from '../../ui/components/Navbar';
 import Timer from '../../ui/components/Timer';
 import { isAuthenticated } from '../../lib/auth';
-import path from 'path';
-import fs from 'fs';
 
 export default async function TimeLine() {
   const authenticated = await isAuthenticated();
-
-  const markdownContent = fs.readFileSync(
-    path.join(process.cwd(), 'public', 'posterSessionDescription.md'),
-    'utf-8',
-  );
 
   return (
     <>
@@ -58,7 +50,7 @@ export default async function TimeLine() {
             src={
               'https://s3.ir-thr-at1.arvanstorage.ir/wss/10th-WSS-timeline2-v2'
             }
-            className={' mt-4'}
+            className={'mt-4'}
           />
         </div>
       </div>

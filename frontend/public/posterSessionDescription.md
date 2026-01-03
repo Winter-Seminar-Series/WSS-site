@@ -28,7 +28,6 @@
   🥉3rd Place: **5 million Tomans**
 
   🏅Best presentation as voted by participants: **10 million Tomans**
-
   - Certificates will be awarded to all presenters.
 
 ## **3\. Submission Requirements**

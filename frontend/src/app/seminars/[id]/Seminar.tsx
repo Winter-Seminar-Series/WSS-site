@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import { getTimeSpanInMinutes } from '../../../lib/date';
-import { Seminar } from '../../../lib/types';
+import { Seminar as SeminarType } from '../../../lib/types';
 import calender from '../assets/Calendar.svg';
 import clock from '../assets/Clock.svg';
 
@@ -22,7 +22,7 @@ const formatTime = (time: Date) => {
   return time?.toLocaleString('en-US', options);
 };
 
-export default function Seminar({ seminar }: { seminar: Seminar }) {
+export default function Seminar({ seminar }: { seminar: SeminarType }) {
   return (
     <div>
       <div

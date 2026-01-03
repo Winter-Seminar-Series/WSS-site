@@ -16,7 +16,7 @@ export default function useTimer() {
     const offset = utcDate.getTime() - tzDate.getTime();
 
     const startDate = new Date(2025, 3, 10, 9);
-    startDate.setTime(startDate.getTime() + offset); 
+    startDate.setTime(startDate.getTime() + offset);
 
     const interval = setInterval(() => {
       const diff = startDate.getTime() - Date.now();

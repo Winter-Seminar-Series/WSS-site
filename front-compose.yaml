@@ -14,6 +14,7 @@ services:
       - app-net
     env_file:
       - .env.frontend
+    command: ['npm', 'run', 'start']
 
   #networks:
   #  app-network:

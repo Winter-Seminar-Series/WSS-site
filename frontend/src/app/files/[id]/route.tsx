@@ -1,30 +1,37 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { fetchFileInfo } from '../../../lib/api/files/files';
 
 export async function GET(
-  request: Request,
-  { params }: { params: { id: string } },
+  request: NextRequest,
+  context: { params: Promise<{ id: string }> },
 ) {
-  const { id } = params;
-  const { attachment } = await fetchFileInfo(id);
+  const { id } = await context.params;
 
   try {
+    const { attachment } = await fetchFileInfo(id);
+
     const response = await fetch(attachment);
-    if (!response.ok) {
-      return NextResponse.json({ status: response.status });
+
+    if (!response.ok || !response.body) {
+      return NextResponse.json(
+        { status: response.status },
+        { status: response.status },
+      );
     }
 
-    const contentType = response.headers.get('Content-Type');
-    const contentDisposition = response.headers.get('Content-Disposition');
-    const fileStream = response.body;
+    const contentType =
+      response.headers.get('Content-Type') ?? 'application/octet-stream';
+    const contentDisposition =
+      response.headers.get('Content-Disposition') ??
+      `attachment; filename="${id}"`;
 
-    return new NextResponse(fileStream, {
+    return new NextResponse(response.body, {
       headers: {
         'Content-Type': contentType,
         'Content-Disposition': contentDisposition,
       },
     });
   } catch (error) {
-    return NextResponse.json({ status: 500 });
+    return NextResponse.json({ status: 500 }, { status: 500 });
   }
 }

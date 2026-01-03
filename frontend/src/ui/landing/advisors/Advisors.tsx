@@ -1,9 +1,5 @@
-import React from 'react';
 import Background from './assets/background.svg';
-import Link from 'next/link';
-import Image from 'next/image';
 import AdvisorCard from './AdvisorCard';
-import Marquee from 'react-fast-marquee';
 
 export const advisorsData = [
   {
