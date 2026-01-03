@@ -17,19 +17,18 @@ const sessionOptions: SessionOptions = {
   },
 };
 
-
 export async function getSession() {
-  const cookieStore = await cookies()
+  const cookieStore = await cookies();
 
   const session = await getIronSession<SessionData>(
     cookieStore,
-    sessionOptions
-  )
+    sessionOptions,
+  );
 
-  return session
+  return session;
 }
 
 export async function getAccessToken() {
-  const session = await getSession()
-  return session.accessToken
+  const session = await getSession();
+  return session.accessToken;
 }
