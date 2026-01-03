@@ -6,7 +6,7 @@ networks:
 
 services:
   frontend:
-    image: wss:frontend
+    build: frontend
     container_name: frontend
     ports:
       - 3020:3000
