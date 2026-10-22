@@ -1,5 +1,3 @@
-version: '3'
-
 networks:
   app-net:
     external: true
@@ -19,7 +17,8 @@ services:
       - postgres-data:/var/lib/postgresql/data
 
   payment:
-    image: wss:pay
+    # CI publishes <IMAGE_PREFIX>/wss-payment:sha-<short> and :latest — see .github/workflows/images.yml.
+    image: ${PAYMENT_IMAGE:-wss:pay}
     container_name: payment
     networks:
       - app-net
@@ -30,7 +29,7 @@ services:
       - postgresql
 
   backend:
-    image: back:TEST
+    image: ${BACKEND_IMAGE:-back:TEST}
     container_name: backend
     networks:
       - app-net

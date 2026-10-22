@@ -5,6 +5,9 @@ networks:
 
 services:
   frontend:
+    # Set FRONTEND_IMAGE to the CI image (<IMAGE_PREFIX>/wss-frontend:<tag>) and run `pull` + `up --no-build`
+    # to deploy it; without it, `up --build` builds on the server as before.
+    image: ${FRONTEND_IMAGE:-wss-frontend}
     build:
       context: frontend
       # Build-time values: public pages are prerendered, so these end up in the static HTML.

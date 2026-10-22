@@ -1,0 +1,165 @@
+name: Images
+
+# Builds one image per module (frontend, backend, payment) and pushes it only when that module changed.
+# - push to master: rebuild modules changed by the push, tag them sha-<short> and latest
+# - pull request:   build modules changed by the PR to prove their Dockerfiles still build; nothing is pushed
+# - manual run:     rebuild the chosen modules from the chosen ref
+#
+# Registry: GHCR under the repository owner by default, no secrets required. To push elsewhere (for example a
+# registry reachable from the production server), set the repository variable IMAGE_PREFIX
+# including the registry host (e.g. docker.io/wss or registry.example.ir/wss) and the secrets REGISTRY_USERNAME / REGISTRY_PASSWORD.
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+  workflow_dispatch:
+    inputs:
+      modules:
+        description: 'Modules to build: "all", or a comma-separated list such as "frontend,payment"'
+        required: true
+        default: all
+
+permissions:
+  contents: read
+
+concurrency:
+  group: images-${{ github.event.pull_request.number || github.ref }}
+  # Superseded PR builds are worthless; a master build that is cut off would leave `latest` behind.
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  changes:
+    name: Detect changed modules
+    runs-on: ubuntu-latest
+    outputs:
+      modules: ${{ steps.detect.outputs.modules }}
+      image-prefix: ${{ steps.detect.outputs.image-prefix }}
+      registry: ${{ steps.detect.outputs.registry }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - id: detect
+        env:
+          EVENT: ${{ github.event_name }}
+          PUSH_BEFORE: ${{ github.event.before }}
+          PR_BASE: ${{ github.event.pull_request.base.sha }}
+          REQUESTED: ${{ inputs.modules }}
+          IMAGE_PREFIX: ${{ vars.IMAGE_PREFIX }}
+        run: |
+          case "$EVENT" in
+            push)         modules="$(.github/scripts/changed-modules.sh "$PUSH_BEFORE")" ;;
+            pull_request) modules="$(.github/scripts/changed-modules.sh "$PR_BASE")" ;;
+            *)
+              all="$(.github/scripts/changed-modules.sh all)"
+              if [[ "$REQUESTED" == all ]]; then
+                modules="$all"
+              else
+                modules="$(jq -cn --arg s "$REQUESTED" '$s | split(",") | map(gsub("\\s"; "")) | map(select(. != "")) | unique')"
+                unknown="$(jq -cn --argjson want "$modules" --argjson all "$all" '$want - $all')"
+                if [[ "$unknown" != '[]' ]]; then
+                  echo "::error::Unknown modules $unknown. Valid modules: $all"
+                  exit 1
+                fi
+              fi
+              ;;
+          esac
+
+          # Registry paths must be lowercase; the GitHub owner is not.
+          prefix="${IMAGE_PREFIX:-ghcr.io/${GITHUB_REPOSITORY_OWNER}}"
+          prefix="${prefix,,}"
+
+          {
+            echo "modules=$modules"
+            echo "image-prefix=$prefix"
+            echo "registry=${prefix%%/*}"
+          } >> "$GITHUB_OUTPUT"
+          echo "Modules to build: $modules"
+
+  build:
+    name: Build ${{ matrix.module }}
+    needs: changes
+    if: needs.changes.outputs.modules != '[]'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    strategy:
+      fail-fast: false
+      matrix:
+        module: ${{ fromJSON(needs.changes.outputs.modules) }}
+    env:
+      IMAGE: ${{ needs.changes.outputs.image-prefix }}/wss-${{ matrix.module }}
+      # Pull requests from forks get a read-only token, so only master pushes and manual runs publish.
+      PUSH: ${{ github.event_name != 'pull_request' }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: docker/setup-buildx-action@v3
+
+      - name: Log in to the registry
+        if: env.PUSH == 'true'
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ needs.changes.outputs.registry }}
+          username: ${{ secrets.REGISTRY_USERNAME || github.actor }}
+          password: ${{ secrets.REGISTRY_PASSWORD || secrets.GITHUB_TOKEN }}
+
+      - id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.IMAGE }}
+          tags: |
+            type=sha,format=short
+            type=raw,value=latest,enable={{is_default_branch}}
+            type=ref,event=pr
+          labels: |
+            org.opencontainers.image.title=wss-${{ matrix.module }}
+
+      # Only the frontend takes build arguments: its public pages are prerendered against the API at build time.
+      - id: args
+        env:
+          MODULE: ${{ matrix.module }}
+          API_ORIGIN: ${{ vars.FRONTEND_BUILD_API_ORIGIN || 'https://api.wss-sharif.com' }}
+          PUBLIC_ORIGIN: ${{ vars.FRONTEND_PUBLIC_ORIGIN || 'https://wss-sharif.com' }}
+          WSS_ORDER: ${{ vars.WSS_ORDER || '10' }}
+          GA_TRACKING_ID: ${{ vars.GA_TRACKING_ID }}
+        run: |
+          {
+            echo 'build-args<<EOF'
+            if [[ "$MODULE" == frontend ]]; then
+              echo "API_ORIGIN=$API_ORIGIN"
+              echo "NEXT_PUBLIC_ORIGIN=$PUBLIC_ORIGIN"
+              echo "WSS_ORDER=$WSS_ORDER"
+              echo "GA_TRACKING_ID=$GA_TRACKING_ID"
+            fi
+            echo 'EOF'
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Build${{ env.PUSH == 'true' && ' and push' || '' }}
+        uses: docker/build-push-action@v6
+        with:
+          context: ${{ matrix.module }}
+          platforms: ${{ vars.IMAGE_PLATFORMS || 'linux/amd64' }}
+          push: ${{ env.PUSH == 'true' }}
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          build-args: ${{ steps.args.outputs.build-args }}
+          cache-from: type=gha,scope=${{ matrix.module }}
+          cache-to: type=gha,scope=${{ matrix.module }},mode=max
+
+      - name: Summary
+        env:
+          TAGS: ${{ steps.meta.outputs.tags }}
+          MODULE: ${{ matrix.module }}
+        run: |
+          {
+            echo "### wss-$MODULE"
+            if [[ "$PUSH" == true ]]; then echo "Pushed:"; else echo "Built (not pushed):"; fi
+            echo '```'
+            echo "$TAGS"
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
