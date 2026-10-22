@@ -65,7 +65,7 @@ export default async function AboutPage({ params }: PageProps<'/[edition]/about'
       </div>
 
       {teams.length > 0 && (
-        <section aria-labelledby="staff" className="scroll-mt-(--navbar-height)">
+        <section aria-labelledby="staff">
           <div className="px-6 pt-16 pb-14">
             <SectionHeading id="staff" overline="The heartbeat of the event" title="Staff Members" align="center" />
           </div>

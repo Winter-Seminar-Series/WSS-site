@@ -53,7 +53,16 @@
 @layer base {
   html {
     scroll-behavior: smooth;
-    scroll-padding-top: var(--navbar-height);
+  }
+
+  /*
+   * Anchor targets (`/about#staff`) stop below the fixed navbar. This is a margin on the targets, not
+   * `scroll-padding-top` on <html>: Next treats anything above the root's scroll padding as off-screen, so every
+   * page (which starts under the navbar at y=0) would be scrolled after each navigation that swaps it, such as
+   * switching editions.
+   */
+  [id] {
+    scroll-margin-top: var(--navbar-height);
   }
 
   body {
