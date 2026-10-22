@@ -3,6 +3,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 import type { ReactNode } from 'react';
 
+import { PendingHint } from '@/components/navigation/PendingHint';
+
 interface Props {
   href: string;
   title: string;
@@ -39,6 +41,7 @@ export function EventCard({ href, title, thumbnail, meta, footer, priority }: Pr
           {/* The stretched link makes the whole card clickable while keeping one accessible link name. */}
           <Link href={href} className="after:absolute after:inset-0">
             {title}
+            <PendingHint variant="bar" />
           </Link>
         </h2>
         <div className="mt-auto pt-2">{footer}</div>

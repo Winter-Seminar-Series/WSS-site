@@ -12,8 +12,10 @@ import { organizationJsonLd, websiteJsonLd } from '@/lib/structured-data';
 
 import './globals.css';
 
+// Latin only: one preloaded font file on the critical path. The site is English; the rare latin-ext glyph in a
+// speaker's name falls back to the system font for that character.
 const manrope = Manrope({
-  subsets: ['latin', 'latin-ext'],
+  subsets: ['latin'],
   display: 'swap',
   variable: '--font-manrope',
 });
@@ -75,8 +77,9 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <JsonLd data={[websiteJsonLd, organizationJsonLd]} />
         {GA_TRACKING_ID && (
           <>
-            <Script src={`https://www.googletagmanager.com/gtag/js?id=${GA_TRACKING_ID}`} strategy="afterInteractive" />
-            <Script id="google-analytics" strategy="afterInteractive">
+            {/* Idle-time: analytics must never compete with the page for the network or the main thread. */}
+            <Script src={`https://www.googletagmanager.com/gtag/js?id=${GA_TRACKING_ID}`} strategy="lazyOnload" />
+            <Script id="google-analytics" strategy="lazyOnload">
               {`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${GA_TRACKING_ID}');`}
             </Script>
           </>

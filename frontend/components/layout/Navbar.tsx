@@ -7,6 +7,7 @@ import { usePathname } from 'next/navigation';
 import { useEffect, useRef, useState, useSyncExternalStore } from 'react';
 
 import { Logo } from '@/components/brand/Logo';
+import { PendingHint } from '@/components/navigation/PendingHint';
 import { useIsSignedIn } from '@/hooks/useIsSignedIn';
 import { switchEditionHref } from '@/lib/edition-switch';
 import type { EditionLink, EditionNav } from '@/lib/edition-switch';
@@ -103,6 +104,7 @@ export function Navbar({ variant = 'overlay', nav }: Props) {
                   className="relative block px-3 py-3 font-medium after:absolute after:inset-x-3 after:bottom-2 after:h-0.5 after:origin-left after:scale-x-0 after:bg-current after:transition-transform hover:after:scale-x-100 aria-[current=page]:after:scale-x-100"
                 >
                   {label}
+                  <PendingHint />
                 </Link>
               </li>
             ))}
@@ -154,6 +156,10 @@ function EditionsMenu({ label, editions, transparent }: EditionsMenuProps) {
   const [requested, setRequested] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
+  // Load the panel's code on intent (hover or focus), so it opens without a delay. Its links then prefetch their
+  // pages themselves as they appear, which is in time: prefetching every edition on hover measured no faster.
+  const warmUp = () => setRequested(true);
+
   // Outside clicks and Escape are document-level events — an external system.
   useEffect(() => {
     if (!open) return;
@@ -178,6 +184,8 @@ function EditionsMenu({ label, editions, transparent }: EditionsMenuProps) {
         aria-expanded={open}
         aria-haspopup="true"
         aria-label={`Edition: ${label}. Switch edition`}
+        onPointerEnter={warmUp}
+        onFocus={warmUp}
         onClick={() => {
           setRequested(true);
           setOpen((value) => !value);
