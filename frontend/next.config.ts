@@ -1,5 +1,7 @@
 import type { NextConfig } from 'next';
 
+import { CURRENT_EDITION, editionPages } from './lib/editions';
+
 const isDev = process.env.NODE_ENV === 'development';
 
 const nextConfig: NextConfig = {
@@ -17,7 +19,32 @@ const nextConfig: NextConfig = {
   },
 
   async redirects() {
-    return [{ source: '/dashboard/posterSession', destination: '/dashboard/poster-session', permanent: true }];
+    return [
+      { source: '/dashboard/posterSession', destination: '/dashboard/poster-session', permanent: true },
+      // The current edition has one URL: the unprefixed one. Temporary, because the prefixed URL becomes the
+      // canonical one the day the next edition launches.
+      { source: `/${CURRENT_EDITION.slug}/:path*`, destination: '/:path*', permanent: false },
+    ];
+  },
+
+  /*
+   * Editions (lib/editions.ts): the routes are `app/[edition]/…`. The current edition's pages are served at the
+   * root by rewriting them onto its slug; archived editions are reached by their prefix directly. Only the current
+   * edition's own pages are rewritten, so `/login`, `/dashboard`, files and metadata routes are untouched.
+   */
+  async rewrites() {
+    const slug = CURRENT_EDITION.slug;
+    return {
+      beforeFiles: [
+        { source: '/', destination: `/${slug}` },
+        ...editionPages(CURRENT_EDITION).map((page) => ({
+          source: `/${page}/:path*`,
+          destination: `/${slug}/${page}/:path*`,
+        })),
+      ],
+      afterFiles: [],
+      fallback: [],
+    };
   },
 
   async headers() {

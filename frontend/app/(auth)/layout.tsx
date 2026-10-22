@@ -3,11 +3,12 @@ import type { ReactNode } from 'react';
 
 import { Footer } from '@/components/layout/Footer';
 import { Navbar } from '@/components/layout/Navbar';
+import { editionNav } from '@/lib/edition-nav';
 
 export default function AuthLayout({ children }: { children: ReactNode }) {
   return (
     <>
-      <Navbar variant="solid" />
+      <Navbar variant="solid" nav={editionNav()} />
       <main id="main" className="flex min-h-dvh pt-(--navbar-height)">
         <div className="w-full px-6 py-16 md:w-1/2 md:px-10 lg:px-20">
           <div className="mx-auto max-w-lg">{children}</div>

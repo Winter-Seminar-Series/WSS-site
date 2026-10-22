@@ -4,22 +4,6 @@ export const SITE_SHORT_NAME = 'WSS';
 export const SITE_DESCRIPTION =
   'The Winter Seminar Series (WSS) brings together leading Iranian researchers from around the world for two days of seminars, round tables and poster sessions on computer science and engineering at Sharif University of Technology.';
 
-/** The edition the site currently promotes. Change these together when a new edition launches. */
-export const CURRENT_EDITION = {
-  ordinal: '10th',
-  title: '10th Winter Seminar Series',
-  tagline: 'Building Bridges at the Edge of Knowledge',
-  dateRange: 'April 10th, 2025 - April 11th, 2025',
-  startDate: '2025-04-10',
-  endDate: '2025-04-11',
-  // Doors open at 09:00 Tehran time (UTC+03:30).
-  startsAt: '2025-04-10T09:00:00+03:30',
-  timelineImages: [
-    { day: 'First Day', src: 'https://s3.ir-thr-at1.arvanstorage.ir/wss/10th-WSS-timeline1-v2' },
-    { day: 'Second Day', src: 'https://s3.ir-thr-at1.arvanstorage.ir/wss/10th-WSS-timeline2-v2' },
-  ],
-} as const;
-
 export const VENUE = {
   name: 'Sharif University of Technology',
   city: 'Tehran',
@@ -44,24 +28,6 @@ export interface NavLink {
   label: string;
 }
 
-export const NAV_LINKS: NavLink[] = [
-  { href: '/seminars', label: 'Seminars' },
-  { href: '/round-tables', label: 'Round Tables' },
-  { href: '/poster-session', label: 'Poster Session' },
-  { href: '/timeline', label: 'Timeline' },
-  { href: '/about', label: 'About Us' },
-];
-
-export const PAST_EDITIONS: NavLink[] = [
-  { label: '9th WSS', href: 'https://9th.wss-sharif.com' },
-  { label: '8th WSS', href: 'https://8th.wss-sharif.com' },
-  { label: '7th WSS', href: 'https://7th.wss-sharif.com' },
-  { label: '6th WSS', href: 'https://6th.wss-sharif.com' },
-  { label: '5th WSS', href: 'https://5th.wss-sharif.com' },
-  { label: '4th WSS', href: 'https://4th.wss-sharif.com' },
-  { label: '3rd WSS', href: 'https://3rd.wss-sharif.com' },
-];
-
 export interface SocialLink {
   label: string;
   href: string;
@@ -84,7 +50,8 @@ export interface LogoLink {
   height: number;
 }
 
-export const PARTNERS: LogoLink[] = [
+/** The organisers, shown before every edition's sponsors. */
+export const HOSTS: LogoLink[] = [
   {
     name: 'Sharif University of Technology',
     href: 'https://www.sharif.edu/',
@@ -99,11 +66,6 @@ export const PARTNERS: LogoLink[] = [
     width: 190,
     height: 92,
   },
-  { name: 'Ramzinex', href: 'https://ramzinex.com/', src: '/images/partners/ramzinex.webp', width: 400, height: 214 },
-  { name: 'Goldika', href: 'https://goldika.ir/', src: '/images/partners/goldika.webp', width: 400, height: 111 },
-  { name: 'Yektanet', href: 'https://yektanet.com/', src: '/images/partners/yektanet.svg', width: 276, height: 101 },
-  { name: 'Pardis AI', href: 'https://aipardis.ir/', src: '/images/partners/pardis.webp', width: 300, height: 229 },
-  { name: 'Quera', href: 'https://quera.org/', src: '/images/partners/quera.svg', width: 109, height: 20 },
 ];
 
 /** Where past speakers come from — shown as a trust strip under the hero. */
@@ -191,12 +153,3 @@ export const SPEAKER_INSTITUTIONS: LogoLink[] = [
     height: 206,
   },
 ];
-
-export const STATS = [
-  { value: '46+', label: 'Workshops in all series' },
-  { value: '4500+', label: 'Participants in all series' },
-  { value: '38+', label: 'Poster sessions in all series' },
-  { value: '250+', label: 'Presentations in all series' },
-  { value: '8+', label: 'Lab talks in all series' },
-  { value: '19+', label: 'Round tables in all series' },
-] as const;

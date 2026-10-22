@@ -1,18 +1,25 @@
 'use client';
 
-import { X } from 'lucide-react';
+import { Check, X } from 'lucide-react';
 import { AnimatePresence, LazyMotion, domAnimation, m } from 'motion/react';
 import Link from 'next/link';
 
 import { Logo } from '@/components/brand/Logo';
-import { NAV_LINKS, PAST_EDITIONS } from '@/lib/site';
+import type { EditionLink } from '@/lib/edition-switch';
+import type { NavLink } from '@/lib/site';
 
 /*
  * The navbar's animated overlays. Loaded with next/dynamic on first open, so `motion` never ships with the
  * initial page JS — most visitors never open either of them.
  */
 
-export function PastEditionsPanel({ open }: { open: boolean }) {
+interface EditionsPanelProps {
+  open: boolean;
+  editions: EditionLink[];
+  onSelect: () => void;
+}
+
+export function EditionsPanel({ open, editions, onSelect }: EditionsPanelProps) {
   return (
     <LazyMotion features={domAnimation} strict>
       <AnimatePresence>
@@ -24,16 +31,17 @@ export function PastEditionsPanel({ open }: { open: boolean }) {
             transition={{ duration: 0.15 }}
             className="absolute end-0 mt-2 w-48 overflow-hidden rounded-md bg-surface py-1 text-ink shadow-lg ring-1 ring-line-soft"
           >
-            {PAST_EDITIONS.map(({ href, label }) => (
-              <li key={href}>
-                <a
+            {editions.map(({ href, label, current }) => (
+              <li key={label}>
+                <Link
                   href={href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="block px-4 py-2.5 text-sm font-medium hover:bg-brand-soft"
+                  onClick={onSelect}
+                  aria-current={current ? 'true' : undefined}
+                  className="flex items-center justify-between px-4 py-2.5 text-sm font-medium hover:bg-brand-soft aria-[current=true]:text-brand"
                 >
                   {label}
-                </a>
+                  {current && <Check className="size-4" aria-hidden />}
+                </Link>
               </li>
             ))}
           </m.ul>
@@ -46,10 +54,13 @@ export function PastEditionsPanel({ open }: { open: boolean }) {
 interface MobileDrawerProps {
   open: boolean;
   pathname: string;
+  home: NavLink;
+  links: NavLink[];
+  editions: EditionLink[];
   onClose: () => void;
 }
 
-export function MobileDrawer({ open, pathname, onClose }: MobileDrawerProps) {
+export function MobileDrawer({ open, pathname, home, links, editions, onClose }: MobileDrawerProps) {
   return (
     <LazyMotion features={domAnimation} strict>
       <AnimatePresence>
@@ -81,7 +92,7 @@ export function MobileDrawer({ open, pathname, onClose }: MobileDrawerProps) {
                 </button>
               </div>
               <ul className="divide-y divide-line-soft border-y border-line-soft font-medium">
-                {[{ href: '/', label: 'Home' }, ...NAV_LINKS].map(({ href, label }) => (
+                {[home, ...links].map(({ href, label }) => (
                   <li key={href}>
                     <Link
                       href={href}
@@ -94,13 +105,18 @@ export function MobileDrawer({ open, pathname, onClose }: MobileDrawerProps) {
                   </li>
                 ))}
               </ul>
-              <p className="px-5 pt-6 pb-2 text-xs font-semibold tracking-wide text-muted uppercase">Past editions</p>
+              <p className="px-5 pt-6 pb-2 text-xs font-semibold tracking-wide text-muted uppercase">Editions</p>
               <ul className="pb-6">
-                {PAST_EDITIONS.map(({ href, label }) => (
-                  <li key={href}>
-                    <a href={href} target="_blank" rel="noopener noreferrer" className="block px-5 py-2.5 text-sm">
+                {editions.map(({ href, label, current }) => (
+                  <li key={label}>
+                    <Link
+                      href={href}
+                      onClick={onClose}
+                      aria-current={current ? 'true' : undefined}
+                      className="block px-5 py-2.5 text-sm aria-[current=true]:font-semibold aria-[current=true]:text-brand"
+                    >
                       {label}
-                    </a>
+                    </Link>
                   </li>
                 ))}
               </ul>

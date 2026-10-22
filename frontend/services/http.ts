@@ -8,9 +8,6 @@ import { getAccessToken } from '@/services/session';
 const API_ORIGIN = process.env.API_ORIGIN ?? 'http://localhost:8000';
 export const API_BASE_URL = `${API_ORIGIN}/api`;
 
-/** Edition-scoped endpoints take the `core_event.id` of the current edition. */
-export const EVENT_ID = process.env.WSS_ORDER ?? '10';
-
 /** Public content changes a few times a day at most; 15 minutes keeps pages static without going stale for long. */
 export const PUBLIC_REVALIDATE_SECONDS = 900;
 

@@ -8,20 +8,22 @@ import { useEffect, useRef, useState, useSyncExternalStore } from 'react';
 
 import { Logo } from '@/components/brand/Logo';
 import { useIsSignedIn } from '@/hooks/useIsSignedIn';
-import { NAV_LINKS, SITE_NAME } from '@/lib/site';
+import { switchEditionHref } from '@/lib/edition-switch';
+import type { EditionLink, EditionNav } from '@/lib/edition-switch';
 import { LinkButton } from '@/ui/Button';
 
 const MobileDrawer = dynamic(() => import('@/components/layout/NavbarOverlays').then((mod) => mod.MobileDrawer), {
   ssr: false,
 });
-const PastEditionsPanel = dynamic(
-  () => import('@/components/layout/NavbarOverlays').then((mod) => mod.PastEditionsPanel),
-  { ssr: false },
-);
+const EditionsPanel = dynamic(() => import('@/components/layout/NavbarOverlays').then((mod) => mod.EditionsPanel), {
+  ssr: false,
+});
 
 interface Props {
   /** `overlay` starts transparent over a dark hero and turns solid on scroll. */
   variant?: 'overlay' | 'solid';
+  /** The edition being browsed: its menu, and the editions to switch to (lib/edition-nav.ts). */
+  nav: EditionNav;
 }
 
 function subscribeToScroll(onChange: () => void): () => void {
@@ -33,7 +35,7 @@ function isActive(pathname: string, href: string): boolean {
   return pathname === href || pathname.startsWith(`${href}/`);
 }
 
-export function Navbar({ variant = 'overlay' }: Props) {
+export function Navbar({ variant = 'overlay', nav }: Props) {
   const pathname = usePathname();
   const isSignedIn = useIsSignedIn();
   const scrolled = useSyncExternalStore(
@@ -51,6 +53,12 @@ export function Navbar({ variant = 'overlay' }: Props) {
 
   const transparent = variant === 'overlay' && !scrolled && !drawerOpen;
   const tone = transparent ? 'text-white' : 'text-ink';
+  // The same section in every other edition, so switching keeps the visitor where they are.
+  const editions: EditionLink[] = nav.editions.map((target) => ({
+    label: target.label,
+    href: switchEditionHref(pathname, nav.edition, target),
+    current: target.slug === nav.edition.slug,
+  }));
 
   return (
     <>
@@ -77,13 +85,17 @@ export function Navbar({ variant = 'overlay' }: Props) {
             >
               <Menu className="size-6" aria-hidden />
             </button>
-            <Link href="/" className="flex min-h-11 items-center" aria-label={`${SITE_NAME} — home`}>
+            <Link
+              href={nav.edition.homeHref}
+              className="flex min-h-11 items-center"
+              aria-label={`${nav.edition.label} — home`}
+            >
               <Logo className="w-10 lg:w-14" />
             </Link>
           </div>
 
           <ul className="hidden items-center gap-1 md:flex lg:gap-4">
-            {NAV_LINKS.map(({ href, label }) => (
+            {nav.links.map(({ href, label }) => (
               <li key={href}>
                 <Link
                   href={href}
@@ -97,7 +109,8 @@ export function Navbar({ variant = 'overlay' }: Props) {
           </ul>
 
           <div className="flex items-center gap-2">
-            {isSignedIn ? (
+            {/* Accounts belong to the current edition; archives are read-only, like the old edition sites. */}
+            {!nav.isCurrent ? null : isSignedIn ? (
               <LinkButton href="/dashboard/profile" variant={transparent ? 'light' : 'primary'} size="sm">
                 Dashboard
               </LinkButton>
@@ -111,17 +124,32 @@ export function Navbar({ variant = 'overlay' }: Props) {
                 </LinkButton>
               </>
             )}
-            <PastEditionsMenu transparent={transparent} />
+            <EditionsMenu label={nav.edition.label} editions={editions} transparent={transparent} />
           </div>
         </nav>
       </header>
 
-      {drawerRequested && <MobileDrawer open={drawerOpen} pathname={pathname} onClose={() => setDrawerOpen(false)} />}
+      {drawerRequested && (
+        <MobileDrawer
+          open={drawerOpen}
+          pathname={pathname}
+          home={{ href: nav.edition.homeHref, label: 'Home' }}
+          links={nav.links}
+          editions={editions}
+          onClose={() => setDrawerOpen(false)}
+        />
+      )}
     </>
   );
 }
 
-function PastEditionsMenu({ transparent }: { transparent: boolean }) {
+interface EditionsMenuProps {
+  label: string;
+  editions: EditionLink[];
+  transparent: boolean;
+}
+
+function EditionsMenu({ label, editions, transparent }: EditionsMenuProps) {
   const [open, setOpen] = useState(false);
   const [requested, setRequested] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -149,6 +177,7 @@ function PastEditionsMenu({ transparent }: { transparent: boolean }) {
         type="button"
         aria-expanded={open}
         aria-haspopup="true"
+        aria-label={`Edition: ${label}. Switch edition`}
         onClick={() => {
           setRequested(true);
           setOpen((value) => !value);
@@ -157,10 +186,10 @@ function PastEditionsMenu({ transparent }: { transparent: boolean }) {
           transparent ? 'hover:bg-white/10' : 'hover:bg-brand-soft'
         }`}
       >
-        History
+        {label}
         <ChevronDown className={`size-4 transition-transform ${open ? 'rotate-180' : ''}`} aria-hidden />
       </button>
-      {requested && <PastEditionsPanel open={open} />}
+      {requested && <EditionsPanel open={open} editions={editions} onSelect={() => setOpen(false)} />}
     </div>
   );
 }

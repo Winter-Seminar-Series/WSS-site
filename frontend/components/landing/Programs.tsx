@@ -28,7 +28,13 @@ const PROGRAMS = [
   },
 ];
 
-export function Programs({ showMoreLink = true }: { showMoreLink?: boolean }) {
+interface Props {
+  /** The edition's About page, where "More About WSS" leads. */
+  aboutHref: string;
+  showMoreLink?: boolean;
+}
+
+export function Programs({ aboutHref, showMoreLink = true }: Props) {
   return (
     <section aria-labelledby="programs" className="relative overflow-hidden px-6 py-16">
       <div className="mx-auto max-w-250">
@@ -62,7 +68,7 @@ export function Programs({ showMoreLink = true }: { showMoreLink?: boolean }) {
         </div>
         {showMoreLink && (
           <div className="mt-20 flex justify-center">
-            <LinkButton href="/about" size="lg">
+            <LinkButton href={aboutHref} size="lg">
               More About WSS
               <ArrowRight className="size-5" aria-hidden />
             </LinkButton>

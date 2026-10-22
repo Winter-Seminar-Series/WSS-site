@@ -6,14 +6,21 @@ import { EventDetail } from '@/components/events/EventDetail';
 import { SessionMeta } from '@/components/events/EventMeta';
 import { PageHero } from '@/components/layout/PageHero';
 import { JsonLd } from '@/components/seo/JsonLd';
+import { editionHref, isCurrentEdition } from '@/lib/editions';
+import type { Edition } from '@/lib/editions';
 import { SITE_URL } from '@/lib/site';
 import { breadcrumbJsonLd, subEventJsonLd } from '@/lib/structured-data';
 import { SUB_EVENT_SECTIONS } from '@/lib/sub-events';
 import type { SubEventKind } from '@/types/event.type';
 
-export async function SubEventList({ kind }: { kind: SubEventKind }) {
+interface ListProps {
+  edition: Edition;
+  kind: SubEventKind;
+}
+
+export async function SubEventList({ edition, kind }: ListProps) {
   const section = SUB_EVENT_SECTIONS[kind];
-  const subEvents = await getSubEvents(kind);
+  const subEvents = await getSubEvents(edition.eventId, kind);
 
   return (
     <>
@@ -21,13 +28,15 @@ export async function SubEventList({ kind }: { kind: SubEventKind }) {
         <p className="mt-6 max-w-3xl text-lg text-muted">{section.description}</p>
       </PageHero>
       {subEvents.length === 0 ? (
-        <EmptyState>{section.empty}</EmptyState>
+        <EmptyState>
+          {isCurrentEdition(edition) ? section.empty : `The ${edition.label} had no ${section.title.toLowerCase()}.`}
+        </EmptyState>
       ) : (
         <EventGrid>
           {subEvents.map((subEvent, index) => (
             <li key={subEvent.id}>
               <EventCard
-                href={`${section.path}/${subEvent.id}`}
+                href={editionHref(edition, `${section.path}/${subEvent.id}`)}
                 title={subEvent.name}
                 thumbnail={subEvent.thumbnail}
                 priority={index < 3}
@@ -49,20 +58,24 @@ export async function SubEventList({ kind }: { kind: SubEventKind }) {
   );
 }
 
-export async function SubEventPage({ kind, id }: { kind: SubEventKind; id: number }) {
+interface DetailProps extends ListProps {
+  id: number;
+}
+
+export async function SubEventPage({ edition, kind, id }: DetailProps) {
   const section = SUB_EVENT_SECTIONS[kind];
-  const subEvent = await getSubEvent(kind, id);
+  const subEvent = await getSubEvent(edition.eventId, kind, id);
   if (!subEvent) notFound();
 
-  const path = `${section.path}/${subEvent.id}`;
+  const path = editionHref(edition, `${section.path}/${subEvent.id}`);
   return (
     <>
       <JsonLd
         data={[
-          subEventJsonLd(subEvent, `${SITE_URL}${path}`),
+          subEventJsonLd(edition, subEvent, `${SITE_URL}${path}`),
           breadcrumbJsonLd([
-            { name: 'Home', path: '/' },
-            { name: section.title, path: section.path },
+            { name: edition.label, path: editionHref(edition) },
+            { name: section.title, path: editionHref(edition, section.path) },
             { name: subEvent.name, path },
           ]),
         ]}

@@ -5,12 +5,19 @@ import { getParticipations } from '@/api/participation.api';
 import { getProfile, isProfileComplete } from '@/api/profile.api';
 import { RegisterForm } from '@/app/dashboard/register/_components/RegisterForm';
 import { withAuth } from '@/lib/auth-guard';
+import { CURRENT_EDITION } from '@/lib/editions';
 
 export const metadata: Metadata = { title: 'Registration' };
 
 export default async function RegisterPage() {
   const [participations, workshops, modes, profile] = await withAuth(
-    () => Promise.all([getParticipations(), getWorkshops(), getAttendanceModes(), getProfile()]),
+    () =>
+      Promise.all([
+        getParticipations(),
+        getWorkshops(CURRENT_EDITION.eventId),
+        getAttendanceModes(CURRENT_EDITION.eventId),
+        getProfile(),
+      ]),
     '/dashboard/register',
   );
 

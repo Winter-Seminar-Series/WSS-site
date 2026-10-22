@@ -1,46 +1,83 @@
 import type { MetadataRoute } from 'next';
 
 import { getSubEvents, getWorkshops } from '@/api/events.api';
+import { EDITIONS, editionHref, editionPages, hasPage, isCurrentEdition } from '@/lib/editions';
+import type { Edition, EditionPage } from '@/lib/editions';
 import { SITE_URL } from '@/lib/site';
 import { SUB_EVENT_SECTIONS } from '@/lib/sub-events';
 import type { SubEventKind } from '@/types/event.type';
 
 export const revalidate = 3600;
 
-const STATIC_ROUTES: { path: string; priority: number }[] = [
-  { path: '', priority: 1 },
-  { path: '/seminars', priority: 0.9 },
-  { path: '/round-tables', priority: 0.8 },
-  { path: '/workshops', priority: 0.7 },
-  { path: '/lab-talks', priority: 0.6 },
-  { path: '/poster-session', priority: 0.7 },
-  { path: '/timeline', priority: 0.7 },
-  { path: '/about', priority: 0.6 },
-  { path: '/advisors', priority: 0.4 },
-  { path: '/signup', priority: 0.5 },
+const PAGE_PRIORITY: Record<EditionPage, number> = {
+  seminars: 0.9,
+  'round-tables': 0.8,
+  workshops: 0.7,
+  'poster-session': 0.7,
+  timeline: 0.7,
+  'lab-talks': 0.6,
+  about: 0.6,
+  advisors: 0.4,
+};
+
+type ChangeFrequency = MetadataRoute.Sitemap[number]['changeFrequency'];
+
+const SUB_EVENT_PAGES: [SubEventKind, EditionPage][] = [
+  ['seminar', 'seminars'],
+  ['round-table', 'round-tables'],
+  ['lab-talk', 'lab-talks'],
 ];
 
-const SUB_EVENT_KINDS: SubEventKind[] = ['seminar', 'round-table', 'lab-talk'];
+/** Archived editions no longer change, and rank below the current one. */
+const ARCHIVE_PRIORITY_FACTOR = 0.5;
+
+/** Detail paths of each listing page of an edition (`/seminars/12`, …); `null` when the API could not be reached. */
+async function listedPaths(edition: Edition): Promise<Map<EditionPage, string[] | null>> {
+  const listings: [EditionPage, () => Promise<string[]>][] = [
+    ...SUB_EVENT_PAGES.map(([kind, page]): [EditionPage, () => Promise<string[]>] => [
+      page,
+      async () =>
+        (await getSubEvents(edition.eventId, kind)).map(
+          (subEvent) => `${SUB_EVENT_SECTIONS[kind].path}/${subEvent.id}`,
+        ),
+    ]),
+    ['workshops', async () => (await getWorkshops(edition.eventId)).map((workshop) => `/workshops/${workshop.id}`)],
+  ];
+  const available = listings.filter(([page]) => hasPage(edition, page));
+  // The sitemap must never fail because one section is unavailable: list what we can.
+  const results = await Promise.allSettled(available.map(([, load]) => load()));
+  return new Map(
+    available.map(([page], index) => {
+      const result = results[index];
+      return [page, result?.status === 'fulfilled' ? result.value : null];
+    }),
+  );
+}
+
+async function editionEntries(edition: Edition): Promise<MetadataRoute.Sitemap> {
+  const current = isCurrentEdition(edition);
+  const factor = current ? 1 : ARCHIVE_PRIORITY_FACTOR;
+  const changeFrequency: ChangeFrequency = current ? 'weekly' : 'yearly';
+  const detailFrequency: ChangeFrequency = current ? 'monthly' : 'yearly';
+  const url = (path: string) => `${SITE_URL}${editionHref(edition, path)}`;
+  const listed = await listedPaths(edition);
+
+  // An archived edition's empty listing is noindex (lib/metadata.ts emptySectionRobots), so it stays out too.
+  const pages = editionPages(edition).filter((page) => current || listed.get(page)?.length !== 0);
+  return [
+    { url: url('/'), changeFrequency, priority: factor },
+    ...pages.map((page) => ({ url: url(`/${page}`), changeFrequency, priority: PAGE_PRIORITY[page] * factor })),
+    ...[...listed.values()].flatMap((paths) =>
+      (paths ?? []).map((path) => ({
+        url: url(path),
+        changeFrequency: detailFrequency,
+        priority: 0.6 * factor,
+      })),
+    ),
+  ];
+}
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const entries: MetadataRoute.Sitemap = STATIC_ROUTES.map(({ path, priority }) => ({
-    url: `${SITE_URL}${path}`,
-    changeFrequency: 'weekly',
-    priority,
-  }));
-
-  // The sitemap must never fail because one section is unavailable: list what we can.
-  const sections = await Promise.allSettled([
-    ...SUB_EVENT_KINDS.map(async (kind) =>
-      (await getSubEvents(kind)).map((subEvent) => `${SUB_EVENT_SECTIONS[kind].path}/${subEvent.id}`),
-    ),
-    getWorkshops().then((workshops) => workshops.map((workshop) => `/workshops/${workshop.id}`)),
-  ]);
-  for (const section of sections) {
-    if (section.status !== 'fulfilled') continue;
-    for (const path of section.value) {
-      entries.push({ url: `${SITE_URL}${path}`, changeFrequency: 'monthly', priority: 0.6 });
-    }
-  }
-  return entries;
+  const editions = await Promise.all(EDITIONS.map(editionEntries));
+  return [...editions.flat(), { url: `${SITE_URL}/signup`, changeFrequency: 'monthly', priority: 0.5 }];
 }

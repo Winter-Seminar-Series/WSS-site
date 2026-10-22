@@ -1,5 +1,7 @@
 import { toIsoDateTime } from '@/lib/dates';
-import { CURRENT_EDITION, SITE_NAME, SITE_URL, SOCIAL_LINKS, VENUE } from '@/lib/site';
+import { editionHref } from '@/lib/editions';
+import type { Edition } from '@/lib/editions';
+import { SITE_NAME, SITE_URL, SOCIAL_LINKS, VENUE } from '@/lib/site';
 import type { SubEvent } from '@/types/event.type';
 
 /* schema.org JSON-LD builders — rich results for the event and its sessions. */
@@ -26,22 +28,33 @@ export const organizationJsonLd = {
   parentOrganization: { '@type': 'CollegeOrUniversity', name: VENUE.name, url: 'https://www.sharif.edu' },
 };
 
-export const editionJsonLd = {
-  '@context': 'https://schema.org',
-  '@type': 'EducationEvent',
-  name: CURRENT_EDITION.title,
-  description: CURRENT_EDITION.tagline,
-  startDate: CURRENT_EDITION.startsAt,
-  endDate: `${CURRENT_EDITION.endDate}T18:00:00+03:30`,
-  eventAttendanceMode: 'https://schema.org/MixedEventAttendanceMode',
-  eventStatus: 'https://schema.org/EventScheduled',
-  location: place,
-  image: [`${SITE_URL}/og.png`],
-  url: SITE_URL,
-  organizer: { '@type': 'Organization', name: SITE_NAME, url: SITE_URL },
-};
+/** Doors open at 09:00 and close at 18:00 Tehran time unless an edition says otherwise. */
+function editionStart(edition: Edition): string {
+  return edition.startsAt ?? `${edition.startDate}T09:00:00+03:30`;
+}
 
-export function subEventJsonLd(subEvent: SubEvent, url: string) {
+function editionUrl(edition: Edition): string {
+  return `${SITE_URL}${editionHref(edition)}`;
+}
+
+export function editionJsonLd(edition: Edition) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'EducationEvent',
+    name: edition.title,
+    description: edition.tagline,
+    startDate: editionStart(edition),
+    endDate: `${edition.endDate}T18:00:00+03:30`,
+    eventAttendanceMode: 'https://schema.org/MixedEventAttendanceMode',
+    eventStatus: 'https://schema.org/EventScheduled',
+    location: place,
+    image: [`${SITE_URL}/og.png`],
+    url: editionUrl(edition),
+    organizer: { '@type': 'Organization', name: SITE_NAME, url: SITE_URL },
+  };
+}
+
+export function subEventJsonLd(edition: Edition, subEvent: SubEvent, url: string) {
   return {
     '@context': 'https://schema.org',
     '@type': 'EducationEvent',
@@ -58,7 +71,7 @@ export function subEventJsonLd(subEvent: SubEvent, url: string) {
       name: speaker.name,
       jobTitle: speaker.designation || undefined,
     })),
-    superEvent: { '@type': 'EducationEvent', name: CURRENT_EDITION.title, url: SITE_URL },
+    superEvent: { '@type': 'EducationEvent', name: edition.title, url: editionUrl(edition) },
     organizer: { '@type': 'Organization', name: SITE_NAME, url: SITE_URL },
   };
 }

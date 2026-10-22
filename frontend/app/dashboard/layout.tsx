@@ -9,6 +9,8 @@ import { Footer } from '@/components/layout/Footer';
 import { Navbar } from '@/components/layout/Navbar';
 import { PageHero } from '@/components/layout/PageHero';
 import { withAuth } from '@/lib/auth-guard';
+import { editionNav } from '@/lib/edition-nav';
+import { CURRENT_EDITION } from '@/lib/editions';
 import { PRIVATE_PAGE } from '@/lib/metadata';
 import { DashboardProviders } from '@/providers/DashboardProviders';
 
@@ -19,7 +21,7 @@ export const metadata: Metadata = {
 
 export default async function DashboardLayout({ children }: { children: ReactNode }) {
   const [participations, modes] = await withAuth(
-    () => Promise.all([getParticipations(), getAttendanceModes()]),
+    () => Promise.all([getParticipations(), getAttendanceModes(CURRENT_EDITION.eventId)]),
     '/dashboard/profile',
   );
   const paidPlanIds = new Set(participations.map((participation) => participation.planId));
@@ -27,7 +29,7 @@ export default async function DashboardLayout({ children }: { children: ReactNod
 
   return (
     <DashboardProviders>
-      <Navbar variant="overlay" />
+      <Navbar variant="overlay" nav={editionNav()} />
       <main id="main" className="pb-16">
         <PageHero
           overline="Welcome back"

@@ -2,7 +2,9 @@ import { Mail, Map, MapPin, Phone } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 
-import { CONTACT, FOUNDED_YEAR, PARTNERS, SITE_NAME, SOCIAL_LINKS, VENUE } from '@/lib/site';
+import { CURRENT_EDITION, editionHref } from '@/lib/editions';
+import type { Edition } from '@/lib/editions';
+import { CONTACT, FOUNDED_YEAR, HOSTS, SITE_NAME, SOCIAL_LINKS, VENUE } from '@/lib/site';
 
 // The copyright year is fixed at build/revalidate time; computing it per request would make every page dynamic.
 const CURRENT_YEAR = new Date().getFullYear();
@@ -14,13 +16,18 @@ const CONTACT_ITEMS = [
   { Icon: Phone, label: 'Tel', value: CONTACT.phoneLabel, href: `tel:${CONTACT.phone}` },
 ];
 
-export function Footer() {
+interface Props {
+  /** Whose sponsors to show. */
+  edition?: Edition;
+}
+
+export function Footer({ edition = CURRENT_EDITION }: Props) {
   return (
     <footer className="border-t border-line-soft bg-surface pt-14 pb-8 text-ink">
       <div className="mx-auto max-w-300 px-6">
         <ul className="flex flex-wrap items-center justify-center gap-x-10 gap-y-6 md:justify-between">
           <li>
-            <Link href="/" aria-label={SITE_NAME}>
+            <Link href={editionHref(edition)} aria-label={`${edition.label} — home`}>
               <Image
                 src="/images/partners/wss.svg"
                 alt={SITE_NAME}
@@ -30,7 +37,7 @@ export function Footer() {
               />
             </Link>
           </li>
-          {PARTNERS.map((partner) => (
+          {[...HOSTS, ...edition.sponsors].map((partner) => (
             <li key={partner.name}>
               <a href={partner.href} target="_blank" rel="noopener noreferrer" aria-label={partner.name}>
                 <Image

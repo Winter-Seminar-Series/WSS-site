@@ -20,6 +20,6 @@ services:
       - 3020:3000
     networks:
       - app-net
-    # Runtime: API_ORIGIN (http://backend:8000), SECRET_COOKIE_PASSWORD, WSS_ORDER — see frontend/.env.example.
+    # Runtime: API_ORIGIN (http://backend:8000), SECRET_COOKIE_PASSWORD — see frontend/.env.example.
     env_file:
       - .env.frontend

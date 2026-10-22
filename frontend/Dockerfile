@@ -17,7 +17,7 @@ FROM base AS build
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 # The build never calls the API (services/http.ts): public pages are generated on their first request and kept
-# fresh by ISR, so API_ORIGIN and WSS_ORDER are runtime-only. These two are baked into the client bundle and the
+# fresh by ISR, so API_ORIGIN is runtime-only. These two are baked into the client bundle and the
 # pages that need no API data.
 ARG NEXT_PUBLIC_ORIGIN=https://wss-sharif.com
 ARG GA_TRACKING_ID=

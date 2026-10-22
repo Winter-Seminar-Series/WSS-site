@@ -1,6 +1,6 @@
 import { uniqueById } from '@/lib/collections';
 import { markdownToHtml } from '@/lib/markdown';
-import { EVENT_ID, httpGet } from '@/services/http';
+import { httpGet } from '@/services/http';
 import type { AttendanceMode, Speaker, SubEvent, SubEventKind, Workshop } from '@/types/event.type';
 import type {
   ParticipationPlanResponse,
@@ -50,8 +50,9 @@ async function toSubEvent(
   };
 }
 
-export async function getSubEvents(kind: SubEventKind): Promise<SubEvent[]> {
-  const path = `/${SUB_EVENT_ENDPOINTS[kind]}/${EVENT_ID}/`;
+/** Edition-scoped endpoints take the edition's `core_event.id` (`Edition.eventId`). */
+export async function getSubEvents(eventId: number, kind: SubEventKind): Promise<SubEvent[]> {
+  const path = `/${SUB_EVENT_ENDPOINTS[kind]}/${eventId}/`;
   if (kind === 'round-table') {
     const response = await httpGet<RoundTableResponse[]>(path, { tags: [EVENTS_TAG] });
     return Promise.all(response.map((item) => toSubEvent(kind, item.sub_event, item.speakers)));
@@ -60,14 +61,17 @@ export async function getSubEvents(kind: SubEventKind): Promise<SubEvent[]> {
   return Promise.all(response.map((item) => toSubEvent(kind, item.sub_event, [item.speaker])));
 }
 
-export async function getSubEvent(kind: SubEventKind, id: number): Promise<SubEvent | null> {
-  const subEvents = await getSubEvents(kind);
+export async function getSubEvent(eventId: number, kind: SubEventKind, id: number): Promise<SubEvent | null> {
+  const subEvents = await getSubEvents(eventId, kind);
   return subEvents.find((subEvent) => subEvent.id === id) ?? null;
 }
 
-/** Everyone presenting at a seminar or round table this edition — the landing page's speaker strip. */
-export async function getEditionSpeakers(): Promise<Speaker[]> {
-  const [seminars, roundTables] = await Promise.all([getSubEvents('seminar'), getSubEvents('round-table')]);
+/** Everyone presenting at a seminar or round table of an edition — the landing page's speaker strip. */
+export async function getEditionSpeakers(eventId: number): Promise<Speaker[]> {
+  const [seminars, roundTables] = await Promise.all([
+    getSubEvents(eventId, 'seminar'),
+    getSubEvents(eventId, 'round-table'),
+  ]);
   return uniqueById([...seminars, ...roundTables].flatMap((subEvent) => subEvent.speakers));
 }
 
@@ -75,8 +79,8 @@ export async function getSpeaker(id: number): Promise<Speaker> {
   return toSpeaker(await httpGet<SpeakerResponse>(`/speaker/${id}/`, { tags: [EVENTS_TAG] }));
 }
 
-export async function getWorkshops(): Promise<Workshop[]> {
-  const plans = await httpGet<ParticipationPlanResponse[]>(`/workshop/${EVENT_ID}/`, { tags: [EVENTS_TAG] });
+export async function getWorkshops(eventId: number): Promise<Workshop[]> {
+  const plans = await httpGet<ParticipationPlanResponse[]>(`/workshop/${eventId}/`, { tags: [EVENTS_TAG] });
 
   // Sessions only carry a speaker id: fetch each distinct speaker once, in parallel.
   const speakerIds = [...new Set(plans.flatMap((plan) => plan.workshop?.sessions.map((s) => s.speaker) ?? []))];
@@ -117,12 +121,12 @@ export async function getWorkshops(): Promise<Workshop[]> {
   return workshops.filter((workshop): workshop is Workshop => workshop !== null);
 }
 
-export async function getWorkshop(id: number): Promise<Workshop | null> {
-  return (await getWorkshops()).find((workshop) => workshop.id === id) ?? null;
+export async function getWorkshop(eventId: number, id: number): Promise<Workshop | null> {
+  return (await getWorkshops(eventId)).find((workshop) => workshop.id === id) ?? null;
 }
 
-export async function getAttendanceModes(): Promise<AttendanceMode[]> {
-  const plans = await httpGet<ParticipationPlanResponse[]>(`/mode/${EVENT_ID}/`, { tags: [EVENTS_TAG] });
+export async function getAttendanceModes(eventId: number): Promise<AttendanceMode[]> {
+  const plans = await httpGet<ParticipationPlanResponse[]>(`/mode/${eventId}/`, { tags: [EVENTS_TAG] });
   return plans.flatMap((plan) =>
     plan.mode_of_attendance
       ? [
