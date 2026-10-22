@@ -1,7 +1,11 @@
 # syntax=docker/dockerfile:1
 
-FROM node:22-alpine AS base
-RUN apk add --no-cache libc6-compat && corepack enable
+ARG NODE_VERSION=22
+
+FROM node:${NODE_VERSION}-alpine AS base
+# pnpm comes from the `packageManager` field in package.json, so the version is pinned by the repo.
+ENV COREPACK_ENABLE_DOWNLOAD_PROMPT=0 NEXT_TELEMETRY_DISABLED=1
+RUN corepack enable
 WORKDIR /app
 
 FROM base AS deps
@@ -19,17 +23,19 @@ ARG NEXT_PUBLIC_ORIGIN=https://wss-sharif.com
 ARG WSS_ORDER=10
 # Rendered into the prerendered HTML, so it is a build-time value.
 ARG GA_TRACKING_ID=
-ENV API_ORIGIN=$API_ORIGIN NEXT_PUBLIC_ORIGIN=$NEXT_PUBLIC_ORIGIN WSS_ORDER=$WSS_ORDER GA_TRACKING_ID=$GA_TRACKING_ID \
-    NEXT_TELEMETRY_DISABLED=1
+ENV API_ORIGIN=$API_ORIGIN NEXT_PUBLIC_ORIGIN=$NEXT_PUBLIC_ORIGIN WSS_ORDER=$WSS_ORDER GA_TRACKING_ID=$GA_TRACKING_ID
 RUN pnpm build
 
-FROM node:22-alpine AS runner
+# The standalone output carries its own pruned node_modules, so the runtime needs neither pnpm nor the store.
+FROM node:${NODE_VERSION}-alpine AS runtime
 WORKDIR /app
 ENV NODE_ENV=production NEXT_TELEMETRY_DISABLED=1 PORT=3000 HOSTNAME=0.0.0.0
-RUN addgroup -S nodejs -g 1001 && adduser -S nextjs -u 1001 -G nodejs
+RUN addgroup -S -g 1001 nodejs && adduser -S -u 1001 -G nodejs nextjs
 COPY --from=build --chown=nextjs:nodejs /app/public ./public
 COPY --from=build --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=build --chown=nextjs:nodejs /app/.next/static ./.next/static
 USER nextjs
 EXPOSE 3000
+HEALTHCHECK --interval=30s --timeout=5s --start-period=20s --retries=3 \
+    CMD ["node", "-e", "fetch('http://127.0.0.1:3000/robots.txt').then((r) => process.exit(r.ok ? 0 : 1), () => process.exit(1))"]
 CMD ["node", "server.js"]
