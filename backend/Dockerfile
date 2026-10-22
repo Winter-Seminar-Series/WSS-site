@@ -37,6 +37,7 @@ USER app
 EXPOSE 8000
 # Tunable per deployment without rebuilding, e.g. GUNICORN_CMD_ARGS="--workers=8".
 ENV GUNICORN_CMD_ARGS="--bind=0.0.0.0:8000 --workers=4 --access-logfile=- --graceful-timeout=30"
+# /api/health/ answers 200 only when the process is up and Postgres is reachable.
 HEALTHCHECK --interval=30s --timeout=5s --start-period=20s --retries=3 \
-    CMD ["python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/admin/login/', timeout=4)"]
+    CMD ["python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/api/health/', timeout=4)"]
 CMD ["gunicorn", "WSS.wsgi:application"]

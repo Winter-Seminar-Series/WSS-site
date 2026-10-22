@@ -28,13 +28,24 @@ services:
     depends_on:
       - postgresql
 
+  # Rate-limit counters for the backend (backend/common/throttling.py). Ephemeral by design: no persistence.
+  redis:
+    image: redis:7.4-alpine
+    container_name: redis
+    command: ['redis-server', '--save', '', '--appendonly', 'no', '--maxmemory', '64mb', '--maxmemory-policy', 'volatile-ttl']
+    networks:
+      - app-net
+    restart: unless-stopped
+
   backend:
     image: ${BACKEND_IMAGE:-back:TEST}
     container_name: backend
     networks:
       - app-net
+    restart: unless-stopped
     depends_on:
       - postgresql
+      - redis
     ports:
       - 8000:8000
     env_file:

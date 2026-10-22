@@ -1,4 +1,4 @@
-# Local development stack: Postgres + Django API + payment service.
+# Local development stack: Postgres + Redis + Django API + payment service.
 # Unlike compose.yaml (production) it needs no external `app` network or `staticfiles` volume.
 #
 #   docker compose -f compose.dev.yaml up -d --build
@@ -23,15 +23,27 @@ services:
       timeout: 3s
       retries: 10
 
+  redis:
+    image: redis:7.4-alpine
+    command: ['redis-server', '--save', '', '--appendonly', 'no']
+    healthcheck:
+      test: ['CMD', 'redis-cli', 'ping']
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
   backend:
     build: ./backend
     env_file: .env.backend
     environment:
       DB_HOST: postgres
+      REDIS_URL: redis://redis:6379/0
     ports:
       - '127.0.0.1:8000:8000'
     depends_on:
       postgres:
+        condition: service_healthy
+      redis:
         condition: service_healthy
 
   payment:
