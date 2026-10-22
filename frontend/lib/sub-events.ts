@@ -33,3 +33,6 @@ export const SUB_EVENT_SECTIONS: Record<SubEventKind, SubEventSection> = {
     empty: 'Lab talks for this edition will be announced soon.',
   },
 };
+
+/** Workshops are participation plans, not sub-events, but share the section shape for breadcrumbs. */
+export const WORKSHOPS_SECTION = { title: 'Workshops', path: '/workshops' } as const;

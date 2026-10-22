@@ -8,8 +8,9 @@ import { PageHero } from '@/components/layout/PageHero';
 import { JsonLd } from '@/components/seo/JsonLd';
 import { editionHref, isCurrentEdition } from '@/lib/editions';
 import type { Edition } from '@/lib/editions';
+import { summarize } from '@/lib/metadata';
 import { SITE_URL } from '@/lib/site';
-import { breadcrumbJsonLd, subEventJsonLd } from '@/lib/structured-data';
+import { editionBreadcrumbs, subEventJsonLd } from '@/lib/structured-data';
 import { SUB_EVENT_SECTIONS } from '@/lib/sub-events';
 import type { SubEventKind } from '@/types/event.type';
 
@@ -24,6 +25,7 @@ export async function SubEventList({ edition, kind }: ListProps) {
 
   return (
     <>
+      <JsonLd data={editionBreadcrumbs(edition, section)} />
       <PageHero image={edition.heroImage} overline={section.overline} title={section.title}>
         <p className="mt-6 max-w-3xl text-lg text-muted">{section.description}</p>
       </PageHero>
@@ -72,12 +74,13 @@ export async function SubEventPage({ edition, kind, id }: DetailProps) {
     <>
       <JsonLd
         data={[
-          subEventJsonLd(edition, subEvent, `${SITE_URL}${path}`),
-          breadcrumbJsonLd([
-            { name: edition.label, path: editionHref(edition) },
-            { name: section.title, path: editionHref(edition, section.path) },
-            { name: subEvent.name, path },
-          ]),
+          subEventJsonLd(
+            edition,
+            subEvent,
+            `${SITE_URL}${path}`,
+            summarize(subEvent.descriptionHtml, section.description),
+          ),
+          editionBreadcrumbs(edition, section, { name: subEvent.name, id: subEvent.id }),
         ]}
       />
       <EventDetail

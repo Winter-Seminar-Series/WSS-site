@@ -4,8 +4,11 @@ import Script from 'next/script';
 import type { ReactNode } from 'react';
 
 import { JsonLd } from '@/components/seo/JsonLd';
-import { SITE_DESCRIPTION, SITE_NAME, SITE_SHORT_NAME, SITE_URL } from '@/lib/site';
-import { organizationJsonLd } from '@/lib/structured-data';
+import { editionThemeColor } from '@/lib/edition-theme';
+import { CURRENT_EDITION } from '@/lib/editions';
+import { SITE_DESCRIPTION, SITE_NAME, SITE_SHORT_NAME, SITE_URL, TWITTER_HANDLE } from '@/lib/site';
+import { SOCIAL_IMAGE_SIZE, socialImagePath } from '@/lib/social-image';
+import { organizationJsonLd, websiteJsonLd } from '@/lib/structured-data';
 
 import './globals.css';
 
@@ -16,6 +19,8 @@ const manrope = Manrope({
 });
 
 const GA_TRACKING_ID = process.env.GA_TRACKING_ID;
+
+const SOCIAL_IMAGE = { url: socialImagePath(CURRENT_EDITION), ...SOCIAL_IMAGE_SIZE, alt: CURRENT_EDITION.title };
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -43,21 +48,21 @@ export const metadata: Metadata = {
     url: '/',
     title: SITE_NAME,
     description: SITE_DESCRIPTION,
-    images: [{ url: '/og.png', width: 428, height: 428, alt: SITE_NAME }],
+    images: [SOCIAL_IMAGE],
   },
   twitter: {
-    card: 'summary',
-    site: '@wss_sut',
+    card: 'summary_large_image',
+    site: TWITTER_HANDLE,
     title: SITE_NAME,
     description: SITE_DESCRIPTION,
-    images: ['/og.png'],
+    images: [{ url: SOCIAL_IMAGE.url, alt: SOCIAL_IMAGE.alt }],
   },
   robots: { index: true, follow: true, googleBot: { index: true, follow: true, 'max-image-preview': 'large' } },
   formatDetection: { telephone: false },
 };
 
 export const viewport: Viewport = {
-  themeColor: '#a45e9f',
+  themeColor: editionThemeColor(CURRENT_EDITION),
   width: 'device-width',
   initialScale: 1,
 };
@@ -67,7 +72,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     <html lang="en" className={manrope.variable}>
       <body className="font-sans">
         {children}
-        <JsonLd data={organizationJsonLd} />
+        <JsonLd data={[websiteJsonLd, organizationJsonLd]} />
         {GA_TRACKING_ID && (
           <>
             <Script src={`https://www.googletagmanager.com/gtag/js?id=${GA_TRACKING_ID}`} strategy="afterInteractive" />

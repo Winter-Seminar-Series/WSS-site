@@ -66,6 +66,9 @@ const nextConfig: NextConfig = {
     ];
   },
 
+  // The social cards read the edition heroes and fonts from disk (app/og/[edition]/route.tsx).
+  outputFileTracingIncludes: { '/og/[edition]': ['./assets/fonts/**/*', './public/images/**/*hero.jpg'] },
+
   // Caps ISR stale-while-revalidate. Must stay above the largest `revalidate` in the app (currently 900).
   expireTime: 3600,
 

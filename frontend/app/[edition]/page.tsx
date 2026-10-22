@@ -8,7 +8,7 @@ import { Programs } from '@/components/landing/Programs';
 import { JsonLd } from '@/components/seo/JsonLd';
 import { editionStaticParams, resolveEdition } from '@/lib/edition-route';
 import { editionHref, isCurrentEdition } from '@/lib/editions';
-import { pageMetadata } from '@/lib/metadata';
+import { pageMetadata, summarize } from '@/lib/metadata';
 import { SITE_DESCRIPTION } from '@/lib/site';
 import { editionJsonLd } from '@/lib/structured-data';
 
@@ -20,10 +20,12 @@ export async function generateMetadata({ params }: PageProps<'/[edition]'>): Pro
   const edition = await resolveEdition(params);
   // The current edition's home is the site's home: it keeps the root layout's title and description.
   if (isCurrentEdition(edition)) return { alternates: { canonical: '/' } };
-  return {
-    ...pageMetadata(edition.title, `${edition.title}, ${edition.dateRange}. ${SITE_DESCRIPTION}`, editionHref(edition)),
-    title: { absolute: `${edition.title} (${edition.label}) — Sharif University of Technology` },
-  };
+  return pageMetadata(
+    edition.title,
+    summarize(`${edition.title}, ${edition.dateRange}. ${SITE_DESCRIPTION}`, SITE_DESCRIPTION),
+    editionHref(edition),
+    { edition, fullTitle: `${edition.title} (${edition.label}) — Sharif University of Technology` },
+  );
 }
 
 export default async function HomePage({ params }: PageProps<'/[edition]'>) {

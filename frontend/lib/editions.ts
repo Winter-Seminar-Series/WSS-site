@@ -47,6 +47,7 @@ export interface Edition {
   sponsors: LogoLink[];
   /** `undefined` keeps the default tokens of app/globals.css. */
   theme?: EditionTheme;
+  /** A JPEG in public/: next/image serves it as AVIF/WebP, and the social card (app/og) draws it as is. */
   heroImage: string;
   /** Background of the speakers band and the closing call to action. */
   bandImage: string;
@@ -58,7 +59,7 @@ const ARCHIVE_NAV: EditionPage[] = ['seminars', 'round-tables', 'lab-talks', 'wo
 const ARCHIVE_NAV_WITHOUT_LAB_TALKS: EditionPage[] = ['seminars', 'round-tables', 'workshops', 'about'];
 
 function archiveImages(slug: string): Pick<Edition, 'heroImage' | 'bandImage'> {
-  const image = `/images/editions/${slug}-hero.webp`;
+  const image = `/images/editions/${slug}-hero.jpg`;
   return { heroImage: image, bandImage: image };
 }
 
@@ -117,7 +118,7 @@ export const EDITIONS: readonly [Edition, ...Edition[]] = [
       { name: 'Pardis AI', href: 'https://aipardis.ir/', src: '/images/partners/pardis.webp', width: 300, height: 229 },
       SPONSORS.quera,
     ],
-    heroImage: '/images/hero.webp',
+    heroImage: '/images/hero.jpg',
     bandImage: '/images/speakers-bg.webp',
     timelineImages: [
       { day: 'First Day', src: 'https://s3.ir-thr-at1.arvanstorage.ir/wss/10th-WSS-timeline1-v2' },

@@ -22,9 +22,15 @@ export function editionThemeStyle({ theme }: Edition): CSSProperties | undefined
   };
 }
 
-/** The browser UI colour (`<meta name="theme-color">`) of an edition. */
-export const DEFAULT_THEME_COLOR = '#a45e9f';
+/** The defaults of app/globals.css, for editions without a `theme`. */
+const DEFAULT_THEME = { brand: '#a45e9f', inkDeep: '#342b4c' } as const;
 
-export function editionThemeColor({ theme }: Edition): string {
-  return theme?.brand ?? DEFAULT_THEME_COLOR;
+/** The two colours that identify an edition outside the page (theme-color, social images). */
+export function editionColors({ theme }: Edition): { brand: string; inkDeep: string } {
+  return { brand: theme?.brand ?? DEFAULT_THEME.brand, inkDeep: theme?.inkDeep ?? DEFAULT_THEME.inkDeep };
+}
+
+/** The browser UI colour (`<meta name="theme-color">`) of an edition. */
+export function editionThemeColor(edition: Edition): string {
+  return editionColors(edition).brand;
 }

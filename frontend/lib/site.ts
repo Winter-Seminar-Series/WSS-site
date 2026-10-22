@@ -1,6 +1,7 @@
 export const SITE_URL = process.env.NEXT_PUBLIC_ORIGIN ?? 'https://wss-sharif.com';
 export const SITE_NAME = 'Winter Seminar Series';
 export const SITE_SHORT_NAME = 'WSS';
+export const TWITTER_HANDLE = '@wss_sut';
 export const SITE_DESCRIPTION =
   'The Winter Seminar Series (WSS) brings together leading Iranian researchers from around the world for two days of seminars, round tables and poster sessions on computer science and engineering at Sharif University of Technology.';
 

@@ -4,10 +4,13 @@ import { getWorkshops } from '@/api/events.api';
 import { EmptyState, EventCard, EventGrid } from '@/components/events/EventCard';
 import { WorkshopMeta } from '@/components/events/EventMeta';
 import { PageHero } from '@/components/layout/PageHero';
+import { JsonLd } from '@/components/seo/JsonLd';
 import { formatToman } from '@/lib/digits';
 import { editionStaticParams, resolveEdition } from '@/lib/edition-route';
 import { editionHref, isCurrentEdition } from '@/lib/editions';
 import { editionPageMetadata, emptySectionRobots } from '@/lib/metadata';
+import { editionBreadcrumbs } from '@/lib/structured-data';
+import { WORKSHOPS_SECTION } from '@/lib/sub-events';
 
 export const revalidate = 900;
 
@@ -30,6 +33,7 @@ export default async function WorkshopsPage({ params }: PageProps<'/[edition]/wo
 
   return (
     <>
+      <JsonLd data={editionBreadcrumbs(edition, WORKSHOPS_SECTION)} />
       <PageHero image={edition.heroImage} overline="Engage in Transformative Workshops" title="Workshops">
         <p className="mt-6 max-w-3xl text-lg text-muted">{DESCRIPTION}</p>
       </PageHero>
