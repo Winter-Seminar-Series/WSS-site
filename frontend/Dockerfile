@@ -16,14 +16,12 @@ RUN --mount=type=cache,id=pnpm,target=/root/.local/share/pnpm/store \
 FROM base AS build
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
-# Public pages are prerendered at build time, so the build must reach the API. The container's runtime
-# API_ORIGIN (an internal compose hostname) is not resolvable inside `docker build`, so default to the public one.
-ARG API_ORIGIN=https://api.wss-sharif.com
+# The build never calls the API (services/http.ts): public pages are generated on their first request and kept
+# fresh by ISR, so API_ORIGIN and WSS_ORDER are runtime-only. These two are baked into the client bundle and the
+# pages that need no API data.
 ARG NEXT_PUBLIC_ORIGIN=https://wss-sharif.com
-ARG WSS_ORDER=10
-# Rendered into the prerendered HTML, so it is a build-time value.
 ARG GA_TRACKING_ID=
-ENV API_ORIGIN=$API_ORIGIN NEXT_PUBLIC_ORIGIN=$NEXT_PUBLIC_ORIGIN WSS_ORDER=$WSS_ORDER GA_TRACKING_ID=$GA_TRACKING_ID
+ENV NEXT_PUBLIC_ORIGIN=$NEXT_PUBLIC_ORIGIN GA_TRACKING_ID=$GA_TRACKING_ID
 RUN pnpm build
 
 # The standalone output carries its own pruned node_modules, so the runtime needs neither pnpm nor the store.

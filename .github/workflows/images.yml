@@ -119,21 +119,18 @@ jobs:
           labels: |
             org.opencontainers.image.title=wss-${{ matrix.module }}
 
-      # Only the frontend takes build arguments: its public pages are prerendered against the API at build time.
+      # Only the frontend takes build arguments, and only ones baked into its client bundle. The build never calls
+      # the API: public pages are generated on first request and kept fresh by ISR.
       - id: args
         env:
           MODULE: ${{ matrix.module }}
-          API_ORIGIN: ${{ vars.FRONTEND_BUILD_API_ORIGIN || 'https://api.wss-sharif.com' }}
           PUBLIC_ORIGIN: ${{ vars.FRONTEND_PUBLIC_ORIGIN || 'https://wss-sharif.com' }}
-          WSS_ORDER: ${{ vars.WSS_ORDER || '10' }}
           GA_TRACKING_ID: ${{ vars.GA_TRACKING_ID }}
         run: |
           {
             echo 'build-args<<EOF'
             if [[ "$MODULE" == frontend ]]; then
-              echo "API_ORIGIN=$API_ORIGIN"
               echo "NEXT_PUBLIC_ORIGIN=$PUBLIC_ORIGIN"
-              echo "WSS_ORDER=$WSS_ORDER"
               echo "GA_TRACKING_ID=$GA_TRACKING_ID"
             fi
             echo 'EOF'

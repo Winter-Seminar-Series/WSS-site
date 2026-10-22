@@ -82,7 +82,7 @@ against its merge-base, and maps each changed path to its top-level module direc
 Registry: GHCR (`ghcr.io/<owner>`) by default, authenticated with `GITHUB_TOKEN`. To push somewhere else,
 set the repository variable `IMAGE_PREFIX` (including the registry host) and the secrets
 `REGISTRY_USERNAME` and `REGISTRY_PASSWORD`. The frontend build arguments come from the repository
-variables `FRONTEND_BUILD_API_ORIGIN`, `FRONTEND_PUBLIC_ORIGIN`, `WSS_ORDER` and `GA_TRACKING_ID`.
+variables `FRONTEND_PUBLIC_ORIGIN` and `GA_TRACKING_ID`. No image build needs the API to be up.
 
 **Adding a module:** create `<module>/Dockerfile`, add the name to `MODULES` in `changed-modules.sh`, and
 document it in the table above.
@@ -99,8 +99,9 @@ document it in the table above.
   only for build steps that don't use them, such as Django's `collectstatic`.
 - **Base images.** Use Docker Hub or official images only. `gcr.io`, and therefore distroless, is
   unreachable from Iran, and the server and local builds must keep working there.
-- **Build-time values.** Only the frontend has them: its public pages are prerendered, so `API_ORIGIN`,
-  `NEXT_PUBLIC_ORIGIN`, `WSS_ORDER` and `GA_TRACKING_ID` are baked into the HTML.
+- **Build-time values.** Only the frontend has them: `NEXT_PUBLIC_ORIGIN` and `GA_TRACKING_ID`. Its build
+  never calls the API; public pages are generated on first request and cached with ISR, so `API_ORIGIN`
+  and `WSS_ORDER` are runtime env.
 
 ---
 
