@@ -20,7 +20,8 @@ export function EventCard({ href, title, thumbnail, meta, footer, priority }: Pr
         {thumbnail ? (
           <Image
             src={thumbnail}
-            alt=""
+            // The thumbnail is the session's poster (title and speaker): worth describing, also for image search.
+            alt={title}
             fill
             priority={priority}
             sizes="(min-width: 1024px) 380px, (min-width: 640px) 50vw, 100vw"
@@ -34,12 +35,12 @@ export function EventCard({ href, title, thumbnail, meta, footer, priority }: Pr
       </div>
       <div className="flex grow flex-col gap-3 p-5">
         <div className="text-sm">{meta}</div>
-        <h3 className="line-clamp-2 text-xl font-semibold text-ink">
+        <h2 className="line-clamp-2 text-xl font-semibold text-ink">
           {/* The stretched link makes the whole card clickable while keeping one accessible link name. */}
-          <Link href={href} className="debug after:absolute after:inset-0">
+          <Link href={href} className="after:absolute after:inset-0">
             {title}
           </Link>
-        </h3>
+        </h2>
         <div className="mt-auto pt-2">{footer}</div>
       </div>
     </article>

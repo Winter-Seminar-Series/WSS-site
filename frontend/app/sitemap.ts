@@ -31,17 +31,33 @@ const SUB_EVENT_PAGES: [SubEventKind, EditionPage][] = [
 /** Archived editions no longer change, and rank below the current one. */
 const ARCHIVE_PRIORITY_FACTOR = 0.5;
 
-/** Detail paths of each listing page of an edition (`/seminars/12`, …); `null` when the API could not be reached. */
-async function listedPaths(edition: Edition): Promise<Map<EditionPage, string[] | null>> {
-  const listings: [EditionPage, () => Promise<string[]>][] = [
-    ...SUB_EVENT_PAGES.map(([kind, page]): [EditionPage, () => Promise<string[]>] => [
+/** A detail page of a listing: its edition-relative path and its poster, for the image sitemap. */
+interface ListedPage {
+  path: string;
+  image: string | null;
+}
+
+type Listing = [EditionPage, () => Promise<ListedPage[]>];
+
+/** Detail pages of each listing of an edition (`/seminars/12`, …); `null` when the API could not be reached. */
+async function listedPages(edition: Edition): Promise<Map<EditionPage, ListedPage[] | null>> {
+  const listings: Listing[] = [
+    ...SUB_EVENT_PAGES.map(([kind, page]): Listing => [
       page,
       async () =>
-        (await getSubEvents(edition.eventId, kind)).map(
-          (subEvent) => `${SUB_EVENT_SECTIONS[kind].path}/${subEvent.id}`,
-        ),
+        (await getSubEvents(edition.eventId, kind)).map((subEvent) => ({
+          path: `${SUB_EVENT_SECTIONS[kind].path}/${subEvent.id}`,
+          image: subEvent.poster ?? subEvent.thumbnail,
+        })),
     ]),
-    ['workshops', async () => (await getWorkshops(edition.eventId)).map((workshop) => `/workshops/${workshop.id}`)],
+    [
+      'workshops',
+      async () =>
+        (await getWorkshops(edition.eventId)).map((workshop) => ({
+          path: `/workshops/${workshop.id}`,
+          image: workshop.poster ?? workshop.thumbnail,
+        })),
+    ],
   ];
   const available = listings.filter(([page]) => hasPage(edition, page));
   // The sitemap must never fail because one section is unavailable: list what we can.
@@ -60,18 +76,19 @@ async function editionEntries(edition: Edition): Promise<MetadataRoute.Sitemap> 
   const changeFrequency: ChangeFrequency = current ? 'weekly' : 'yearly';
   const detailFrequency: ChangeFrequency = current ? 'monthly' : 'yearly';
   const url = (path: string) => `${SITE_URL}${editionHref(edition, path)}`;
-  const listed = await listedPaths(edition);
+  const listed = await listedPages(edition);
 
   // An archived edition's empty listing is noindex (lib/metadata.ts emptySectionRobots), so it stays out too.
   const pages = editionPages(edition).filter((page) => current || listed.get(page)?.length !== 0);
   return [
     { url: url('/'), changeFrequency, priority: factor },
     ...pages.map((page) => ({ url: url(`/${page}`), changeFrequency, priority: PAGE_PRIORITY[page] * factor })),
-    ...[...listed.values()].flatMap((paths) =>
-      (paths ?? []).map((path) => ({
+    ...[...listed.values()].flatMap((details) =>
+      (details ?? []).map(({ path, image }) => ({
         url: url(path),
         changeFrequency: detailFrequency,
         priority: 0.6 * factor,
+        ...(image ? { images: [image] } : {}),
       })),
     ),
   ];

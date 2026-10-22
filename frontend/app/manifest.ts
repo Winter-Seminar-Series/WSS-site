@@ -1,5 +1,7 @@
 import type { MetadataRoute } from 'next';
 
+import { editionThemeColor } from '@/lib/edition-theme';
+import { CURRENT_EDITION } from '@/lib/editions';
 import { SITE_DESCRIPTION, SITE_NAME, SITE_SHORT_NAME } from '@/lib/site';
 
 export default function manifest(): MetadataRoute.Manifest {
@@ -10,10 +12,11 @@ export default function manifest(): MetadataRoute.Manifest {
     start_url: '/',
     display: 'standalone',
     background_color: '#ffffff',
-    theme_color: '#a45e9f',
+    theme_color: editionThemeColor(CURRENT_EDITION),
     icons: [
       { src: '/favicon.ico', sizes: 'any', type: 'image/x-icon' },
-      { src: '/og.png', sizes: '428x428', type: 'image/png' },
+      { src: '/apple-icon.png', sizes: '180x180', type: 'image/png' },
+      { src: '/og.png', sizes: '428x428', type: 'image/png', purpose: 'any' },
     ],
   };
 }
