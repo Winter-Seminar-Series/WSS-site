@@ -179,15 +179,25 @@ proxy.ts                 # Next 16 proxy (formerly middleware): refreshes the ac
 
 ## SEO rules
 
-- **Metadata:** every page exports `metadata` or `generateMetadata`. Use `pageMetadata(title, description,
-path)` from `lib/metadata.ts`, which sets the canonical URL, Open Graph and Twitter tags. The root layout
-  provides the title template and `metadataBase`.
+- **Metadata:** every page exports `metadata` or `generateMetadata`, built with `editionPageMetadata` (pages in
+  `app/[edition]`) or `pageMetadata` (others) from `lib/metadata.ts`. Never hand-write `openGraph` or `twitter`:
+  Next replaces the root layout's object as a whole, so a partial one drops the image, type and site name. The
+  helpers always set the canonical URL, the title (`<page> | WSS`, or `<page> | 8th WSS` for an archive, shared
+  by the social tags), Open Graph and a `summary_large_image` card.
+- **Social images:** `app/og/[edition]/route.tsx` renders each edition's 1200×630 card at build, using its hero
+  (`Edition.heroImage`, a JPEG, because Satori cannot decode WebP) and the Manrope TTFs in `assets/fonts`. Session
+  pages put their poster first and keep the edition card as a fallback (`posterImages`).
 - **Private pages** (auth and dashboard) spread `PRIVATE_PAGE`, which sets `noindex`.
-- **Structured data:** JSON-LD comes from `lib/structured-data.ts` (Organization, EducationEvent,
-  BreadcrumbList) and is rendered with `components/seo/JsonLd`.
-- **New public routes** must be added to `app/sitemap.ts`.
-- **Heading structure:** exactly one `<h1>` per page, then section `<h2>`s via `ui/SectionHeading`.
-  Navigation uses real `<a>`/`<Link>`, never a clickable `div`.
+- **Structured data:** JSON-LD comes from `lib/structured-data.ts` and is rendered with `components/seo/JsonLd`.
+  The root layout has WebSite and Organization (referenced by `@id`). Each edition's home and each seminar, round
+  table, lab talk and workshop has an EducationEvent (mixed attendance: a Place plus a VirtualLocation), and every
+  listing and detail page has breadcrumbs.
+- **Sitemap:** `app/sitemap.ts` lists every edition's pages and detail pages, each with its poster as an image
+  entry. A new public route must be added there and to `EditionPage`.
+- **Images:** content images get a real `alt` (card thumbnails use the session title); purely decorative ones,
+  such as backdrops, get `alt=""`.
+- **Heading structure:** exactly one `<h1>` per page, then `<h2>`s (section headings via `ui/SectionHeading`, and
+  card titles in listings). Navigation uses real `<a>`/`<Link>`, never a clickable `div`.
 
 ---
 
