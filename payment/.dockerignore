@@ -1,0 +1,9 @@
+.git
+.idea/
+*.md
+*.MD
+*.postman_collection.json
+Dockerfile
+.dockerignore
+.env
+*.env
