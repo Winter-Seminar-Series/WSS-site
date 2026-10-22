@@ -1,0 +1,81 @@
+@import 'tailwindcss';
+@plugin '@tailwindcss/typography';
+
+@theme {
+  --font-sans:
+    var(--font-manrope), ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
+    sans-serif;
+
+  --color-brand: #a45e9f;
+  --color-brand-strong: #864a82;
+  --color-brand-soft: #ebe8f2;
+  --color-brand-muted: #c4a7c3;
+  --color-accent: #9d6d9b;
+  --color-ink: #1f2b3d;
+  --color-ink-deep: #342b4c;
+  --color-muted: #8a8998;
+  --color-line: rgb(138 137 152 / 0.3);
+  --color-line-soft: rgb(201 201 207 / 0.4);
+  --color-canvas: #f7f7fa;
+  --color-surface: #ffffff;
+  --color-surface-hover: #e8eaee;
+  --color-danger: #e04545;
+  --color-danger-soft: #fdecec;
+  --color-success: #15803d;
+  --color-success-soft: #e7f6ec;
+  --color-warning-soft: #fbe1e6;
+
+  --shadow-card: 0 30px 60px 0 rgb(189 192 199 / 0.1);
+
+  --animate-marquee: marquee var(--marquee-duration, 60s) linear infinite;
+
+  @keyframes marquee {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+}
+
+:root {
+  --navbar-height: 78px;
+  color-scheme: light;
+}
+
+@media (width >= 64rem) {
+  :root {
+    --navbar-height: 94px;
+  }
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: var(--navbar-height);
+  }
+
+  body {
+    @apply bg-surface text-ink antialiased;
+  }
+
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-brand;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .animate-marquee {
+    animation: none;
+  }
+}
+
+.debug *,
+.debu {
+  border: 1px solid red !important;
+}
