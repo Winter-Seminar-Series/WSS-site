@@ -7,3 +7,5 @@ media/
 .venv/
 venv/
 .idea/
+Dockerfile
+.dockerignore
