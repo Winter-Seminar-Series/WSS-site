@@ -21,9 +21,10 @@ Prefer small, reviewable changes. Do not refactor things you were not asked to t
 Request flow in production:
 
 ```
-browser ─▶ nginx ─▶ frontend:3000 ─(server-side fetch)─▶ backend:8000 ─▶ payment:8080 ─▶ gateway
-                 └▶ backend:8000 (api.wss-sharif.com)        │
-                                                             └▶ postgres (DBs: backend, payment)
+browser ─▶ Cloudflare ─▶ nginx ─▶ frontend:3000 ─(server-side fetch)─▶ backend:8000 ─▶ payment:8080 ─▶ gateway
+                              └▶ backend:8000 (api.wss-sharif.com)        │
+                                                                          ├▶ postgres (DBs: backend, payment)
+                                                                          └▶ redis (rate-limit counters)
 ```
 
 The browser never calls the API directly for authenticated data. The frontend proxies it through
@@ -37,10 +38,10 @@ The registry is `frontend/lib/editions.ts`, which maps each edition to its `core
 
 ```
 frontend/  backend/  payment/        # one directory per module = one Docker image
-compose.yaml                         # production: postgres, backend, payment, metabase (external `app` network)
+compose.yaml                         # production: postgres, redis, backend, payment, metabase (external `app` network)
 front-compose.yaml                   # production: frontend
 nginx-compose.yaml, nginx.conf       # production: reverse proxy; old edition subdomains 301 to /<edition>/…
-compose.dev.yaml                     # local: postgres + backend + payment, self-contained
+compose.dev.yaml                     # local: postgres + redis + backend + payment, self-contained
 .env.*.example                       # documented env templates (committed); real .env.* are git-ignored
 .github/workflows/images.yml         # build + push an image per changed module
 .github/scripts/changed-modules.sh   # change detection used by images.yml
@@ -56,7 +57,7 @@ cp .env.backend.example  .env.backend
 cp .env.payment.example  .env.payment
 cp frontend/.env.example frontend/.env.local
 
-docker compose -f compose.dev.yaml up -d --build      # postgres :5432, backend :8000, payment :8080
+docker compose -f compose.dev.yaml up -d --build      # postgres :5432, redis, backend :8000, payment :8080
 cd frontend && pnpm install && pnpm dev               # http://localhost:3000
 
 # Restore a pg_dumpall backup into the fresh database:
