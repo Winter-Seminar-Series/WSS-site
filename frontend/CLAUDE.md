@@ -164,10 +164,26 @@ proxy.ts                 # Next 16 proxy (formerly middleware): refreshes the ac
 - **Public pages stay static or ISR.** Never read `cookies()`, `headers()` or `searchParams` in a
   `[edition]` page or layout: one call makes the route dynamic and the page stops loading instantly. Check the
   `○`/`●` markers in the `pnpm build` output after touching a public route.
+- **No Suspense or `loading.tsx` in public (ISR) routes.** An ISR render flushes its shell before the API answers,
+  so every boundary is cached as "skeleton now, content in a hidden div, swapped by script": crawlers and link
+  previews get hidden content, and browsers can paint the skeleton first. Public pages are static and every
+  visible `<Link>` prefetches them in full, so they never need a loading state. For the rare click that beats the
+  prefetch, links show `components/navigation/PendingHint` (`useLinkStatus`).
+- **Dynamic routes stream.** The dashboard layout awaits nothing; slow parts sit behind `<Suspense>` with a skeleton
+  (the registration badge), and every tab has a `loading.tsx` shaped like its content
+  (`components/skeletons/DashboardSkeletons.tsx`, built from `ui/Skeleton`). A `loading.tsx` is also what lets a
+  `<Link>` prefetch a dynamic route at all. Skeletons mirror the real layout box for box (no layout shift) and render
+  inside `LoadingRegion`, which announces them once to screen readers.
+- **Keep pages static where you can.** Read `searchParams` in a small client component behind `<Suspense>` instead
+  of in the page (see `app/(auth)/login`), so the page itself is prerendered and prefetchable.
+- **Client router cache:** `experimental.staleTimes.dynamic` is 30s, so returning to a dashboard tab is instant.
+  Every mutation must stay a Server Action that revalidates or sets cookies, which clears that cache.
 - **Server Components by default.** Push `'use client'` to the smallest leaf that needs it.
 - **No heavy library in the initial bundle.** `motion` is used only in `components/layout/NavbarOverlays.tsx`,
   which is loaded with `next/dynamic` on first open. Follow that pattern for anything new and heavy.
-- **Animations:** prefer CSS for decorative motion (the marquee is pure CSS).
+- **Animations:** prefer CSS for decorative motion (the marquee is pure CSS), and gate looping ones with
+  `motion-safe:`.
+- **Third parties** (analytics) load with `strategy="lazyOnload"`: never on the critical path.
 - **Images:** always `next/image` with real `width`/`height`. Mark only the hero `priority`.
   - **Fixed-size images:** omit `sizes`, so Next emits a small 1x/2x srcset. A `sizes` value on a
     fixed-size logo bloated the home HTML by 2×.
