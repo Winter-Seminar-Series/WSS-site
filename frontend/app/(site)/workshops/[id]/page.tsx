@@ -1,24 +1,18 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
-import { getWorkshop, getWorkshops } from '@/api/events.api';
+import { getWorkshop } from '@/api/events.api';
 import { EventDetail } from '@/components/events/EventDetail';
 import { WorkshopMeta } from '@/components/events/EventMeta';
 import { uniqueById } from '@/lib/collections';
 import { formatClock, formatShortDate } from '@/lib/dates';
-import { PRIVATE_PAGE, pageMetadata, parseId, summarize } from '@/lib/metadata';
+import { PRIVATE_PAGE, noStaticParams, pageMetadata, parseId, summarize } from '@/lib/metadata';
 import { Disclosure } from '@/ui/Disclosure';
 import { RichText } from '@/ui/RichText';
 
 export const revalidate = 900;
 
-export async function generateStaticParams(): Promise<{ id: string }[]> {
-  try {
-    return (await getWorkshops()).map((workshop) => ({ id: String(workshop.id) }));
-  } catch {
-    return [];
-  }
-}
+export const generateStaticParams = noStaticParams;
 
 export async function generateMetadata({ params }: PageProps<'/workshops/[id]'>): Promise<Metadata> {
   const id = parseId((await params).id);

@@ -15,14 +15,14 @@ must rank well. Every change has to keep both.
 This is the public website and participant dashboard of the **Winter Seminar Series**. The site is English
 and LTR, light theme, using the Manrope font.
 
-| Area           | Routes                                                                           | Rendering                                                       |
-| -------------- | -------------------------------------------------------------------------------- | --------------------------------------------------------------- |
-| Landing        | `/`                                                                              | static + ISR (900s)                                             |
-| Programs       | `/seminars`, `/round-tables`, `/lab-talks`, `/workshops` and their `/[id]` pages | static + ISR; `[id]` pages prebuilt with `generateStaticParams` |
-| Info           | `/about`, `/advisors`, `/timeline`, `/poster-session`                            | static                                                          |
-| Auth           | `/login`, `/signup`, `/reset-password`, `/reset-password/[token]`                | dynamic, `noindex`                                              |
-| Dashboard      | `/dashboard/{profile,register,stream,certificates,videos,poster-session}`        | dynamic, `noindex`, behind `withAuth`                           |
-| Route handlers | `/callback/[id]` (payment return), `/files/[id]` (signed file redirect)          | dynamic                                                         |
+| Area           | Routes                                                                           | Rendering                                                     |
+| -------------- | -------------------------------------------------------------------------------- | ------------------------------------------------------------- |
+| Landing        | `/`                                                                              | ISR (900s), generated on first request                        |
+| Programs       | `/seminars`, `/round-tables`, `/lab-talks`, `/workshops` and their `/[id]` pages | ISR; `[id]` pages use `generateStaticParams = noStaticParams` |
+| Info           | `/about`, `/advisors`, `/timeline`, `/poster-session`                            | static                                                        |
+| Auth           | `/login`, `/signup`, `/reset-password`, `/reset-password/[token]`                | dynamic, `noindex`                                            |
+| Dashboard      | `/dashboard/{profile,register,stream,certificates,videos,poster-session}`        | dynamic, `noindex`, behind `withAuth`                         |
+| Route handlers | `/callback/[id]` (payment return), `/files/[id]` (signed file redirect)          | dynamic                                                       |
 
 Which dashboard tabs are visible, and whether registration and poster submission are open, is controlled by
 flags in `lib/dashboard.ts` (`DASHBOARD_TABS[].visible`, `REGISTRATION`). Edition-specific content lives in
@@ -203,8 +203,10 @@ version: `node_modules/next/dist/docs/01-app/`.
 - **Route props:** type them with the generated `PageProps<'/route'>` / `RouteContext<'/route'>` helpers.
 - **`serverActions.allowedOrigins`** lists the production host and the `frontend:3000` service that nginx
   proxies to. Add any new public hostname there.
-- **Builds need the API:** `pnpm build` prerenders public pages against `API_ORIGIN`.
-  `generateStaticParams` and the sitemap tolerate API failures; the pages themselves do not.
+- **Builds never call the API** (no SSG). During `next build`, public GETs in `services/http.ts` answer an
+  empty list with a 1s revalidate, so the build emits shells. The first request after deploy serves the shell
+  and regenerates the page, and ISR keeps it at 900s from then on. `[id]` pages prerender nothing
+  (`noStaticParams`). Don't add build-time fetches to the API, and keep every public GET reachable at build a list.
 
 ---
 

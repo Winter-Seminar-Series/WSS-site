@@ -14,6 +14,14 @@ export const EVENT_ID = process.env.WSS_ORDER ?? '10';
 /** Public content changes a few times a day at most; 15 minutes keeps pages static without going stale for long. */
 export const PUBLIC_REVALIDATE_SECONDS = 900;
 
+/*
+ * `next build` never calls the API, so an image builds even while the API is down. During the build every public
+ * GET answers an empty list (all of them are lists) with a 1s revalidate, which Next adopts for the page: the
+ * build only emits a shell, and the first request after deploy regenerates it with real data (ISR).
+ */
+const IS_BUILD = process.env.NEXT_PHASE === 'phase-production-build';
+const BUILD_PLACEHOLDER = 'data:application/json,[]';
+
 export class HttpError extends Error {
   readonly status: number;
   readonly code: string | null;
@@ -67,6 +75,8 @@ async function request<T>(path: string, { method = 'GET', body, auth = false, ta
   }
 
   const cacheable = method === 'GET' && !auth;
+  if (cacheable && IS_BUILD) return (await (await fetch(BUILD_PLACEHOLDER, { next: { revalidate: 1 } })).json()) as T;
+
   const response = await fetch(`${API_BASE_URL}${path}`, {
     method,
     headers,

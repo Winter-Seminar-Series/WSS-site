@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 
-import { getSubEvent, getSubEvents } from '@/api/events.api';
+import { getSubEvent } from '@/api/events.api';
 import { SUB_EVENT_SECTIONS } from '@/lib/sub-events';
 import type { SubEventKind } from '@/types/event.type';
 
@@ -62,12 +62,7 @@ export async function subEventMetadata(kind: SubEventKind, rawId: string): Promi
   };
 }
 
-/** Prerender every session at build time; new ones render on first request and are then cached. */
-export async function subEventStaticParams(kind: SubEventKind): Promise<{ id: string }[]> {
-  try {
-    return (await getSubEvents(kind)).map((subEvent) => ({ id: String(subEvent.id) }));
-  } catch {
-    // An unreachable API must not fail the build: pages then render on demand.
-    return [];
-  }
+/** Nothing is prerendered at build: each detail page renders on its first request, then ISR keeps it cached. */
+export function noStaticParams(): { id: string }[] {
+  return [];
 }
