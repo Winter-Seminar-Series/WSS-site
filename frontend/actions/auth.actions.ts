@@ -6,12 +6,15 @@ import { z } from 'zod';
 import { changePassword, confirmPasswordReset, requestPasswordReset, signIn, signUp } from '@/api/auth.api';
 import { errorMessage, firstIssue, formValues, safeRedirectPath } from '@/lib/form';
 import type { FormState } from '@/lib/form';
+import { isHttpError } from '@/services/http';
 import { clearSession, saveTokens } from '@/services/session';
 
 const email = z.string().trim().toLowerCase().email('Please enter a valid email address.');
-const password = z.string().min(6, 'Password must be at least 6 characters long.');
+// Mirrors the API's Django password validators; it also rejects common and all-numeric passwords.
+const password = z.string().min(8, 'Password must be at least 8 characters long.');
 
-const loginSchema = z.object({ email, password });
+// Not `password`: accounts created before the 8-character minimum must still be able to sign in.
+const loginSchema = z.object({ email, password: z.string().min(1, 'Enter your password.') });
 
 const newPasswordSchema = z
   .object({ email, password, confirmPassword: z.string() })
@@ -24,7 +27,9 @@ export async function loginAction(_state: FormState, formData: FormData): Promis
   try {
     await saveTokens(await signIn(parsed.data.email, parsed.data.password));
   } catch (error) {
-    return { error: errorMessage(error), values: formValues(formData) };
+    // A 401 here means wrong credentials, not an expired session (errorMessage's reading of 401).
+    const message = isHttpError(error, 401) ? 'Incorrect email or password.' : errorMessage(error);
+    return { error: message, values: formValues(formData) };
   }
   redirect(safeRedirectPath(formData.get('next'), '/dashboard/profile'));
 }

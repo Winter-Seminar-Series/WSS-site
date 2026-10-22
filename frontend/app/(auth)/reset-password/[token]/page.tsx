@@ -29,7 +29,7 @@ export default async function ConfirmPasswordResetPage({ params }: PageProps<'/r
           name: 'password',
           label: 'New Password',
           type: 'password',
-          placeholder: 'At least 6 characters',
+          placeholder: 'At least 8 characters',
           autoComplete: 'new-password',
         },
         {

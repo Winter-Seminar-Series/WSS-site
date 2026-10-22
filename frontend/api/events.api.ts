@@ -82,9 +82,16 @@ export async function getSpeaker(id: number): Promise<Speaker> {
 export async function getWorkshops(eventId: number): Promise<Workshop[]> {
   const plans = await httpGet<ParticipationPlanResponse[]>(`/workshop/${eventId}/`, { tags: [EVENTS_TAG] });
 
-  // Sessions only carry a speaker id: fetch each distinct speaker once, in parallel.
-  const speakerIds = [...new Set(plans.flatMap((plan) => plan.workshop?.sessions.map((s) => s.speaker) ?? []))];
-  const speakers = new Map((await Promise.all(speakerIds.map(getSpeaker))).map((speaker) => [speaker.id, speaker]));
+  // Sessions embed their speaker (`speaker_details`); an older API sends only the id, so fetch just those.
+  const sessions = plans.flatMap((plan) => plan.workshop?.sessions ?? []);
+  const embedded = uniqueById(sessions.flatMap((session) => session.speaker_details ?? []));
+  const missing = [...new Set(sessions.filter((s) => !s.speaker_details).map((s) => s.speaker))];
+  const speakers = new Map(
+    (await Promise.all([...embedded.map(toSpeaker), ...missing.map(getSpeaker)])).map((speaker) => [
+      speaker.id,
+      speaker,
+    ]),
+  );
 
   const workshops = await Promise.all(
     plans.map(async (plan): Promise<Workshop | null> => {

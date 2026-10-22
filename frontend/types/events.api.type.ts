@@ -39,6 +39,8 @@ export interface WorkshopSessionResponse {
   id: number;
   workshop: number;
   speaker: number;
+  /** Sent by the API since it embeds speakers; absent from older backends. */
+  speaker_details?: SpeakerResponse;
   name: string;
   description: string;
   starting_time: string;

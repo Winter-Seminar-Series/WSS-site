@@ -30,7 +30,7 @@ export default function SignUpPage() {
           name: 'password',
           label: 'Password',
           type: 'password',
-          placeholder: 'At least 6 characters',
+          placeholder: 'At least 8 characters',
           autoComplete: 'new-password',
         },
         {
