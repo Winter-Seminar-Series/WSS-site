@@ -1,47 +1,47 @@
 {
   "name": "wss",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
+  "packageManager": "pnpm@11.3.0",
+  "engines": {
+    "node": ">=22"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
+    "lint": "eslint",
+    "typecheck": "tsc --noEmit",
     "format": "prettier --write .",
-    "prepare": "cd .. && husky install frontend/.husky"
+    "format:check": "prettier --check .",
+    "prepare": "cd .. && husky frontend/.husky"
   },
   "dependencies": {
-    "@headlessui/react": "^2.2.9",
-    "camelcase-keys": "^9.1.2",
-    "classnames": "^2.3.2",
-    "components": "^0.1.0",
-    "decamelize-keys": "^2.0.1",
-    "iron-session": "^8.0.1",
-    "next": "16.1.1",
-    "react": "19.2.3",
-    "react-dom": "19.2.3",
-    "react-fast-marquee": "^1.6.2",
-    "react-markdown": "^10.0.0",
-    "react-select": "^5.10.0",
+    "@tailwindcss/postcss": "^4.1.18",
+    "@tanstack/react-query": "^5.95.2",
+    "iron-session": "^8.0.4",
+    "lucide-react": "^0.562.0",
+    "motion": "^13.1.1",
+    "next": "16.4.2",
+    "react": "19.2.9",
+    "react-dom": "19.2.9",
     "remark": "^15.0.1",
     "remark-html": "^16.0.1",
-    "sharp": "^0.33.1",
-    "zod": "^3.22.4"
+    "sonner": "^2.0.7",
+    "tailwindcss": "^4.1.18",
+    "zod": "^3.25.0"
   },
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.16",
-    "@types/node": "20.10.4",
-    "@types/react": "19.2.7",
-    "autoprefixer": "^10.0.1",
-    "eslint": "^9.39.2",
-    "eslint-config-next": "16.1.1",
-    "husky": "^8.0.3",
-    "postcss": "^8",
-    "prettier": "^3.1.0",
-    "prettier-plugin-tailwindcss": "^0.5.7",
-    "tailwindcss": "^3.3.6"
-  },
-  "overrides": {
-    "@types/react": "19.2.7"
+    "@trivago/prettier-plugin-sort-imports": "^6.0.2",
+    "@types/node": "^22",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "16.4.2",
+    "husky": "^9.1.7",
+    "prettier": "^3.8.1",
+    "prettier-plugin-tailwindcss": "^0.7.2",
+    "typescript": "^5"
   }
 }
