@@ -1,0 +1,9 @@
+node_modules
+.next
+.git
+.husky
+.env*
+!.env.example
+Dockerfile
+.dockerignore
+*.tsbuildinfo
