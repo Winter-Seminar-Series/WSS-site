@@ -17,7 +17,7 @@ and LTR, light theme, using the Manrope font.
 
 | Area           | Routes                                                                           | Rendering                                                     |
 | -------------- | -------------------------------------------------------------------------------- | ------------------------------------------------------------- |
-| Landing        | `/`                                                                              | ISR (900s), generated on first request                        |
+| Landing        | `/` (and `/8th`, … for archived editions, see Editions)                          | ISR (900s), generated on first request                        |
 | Programs       | `/seminars`, `/round-tables`, `/lab-talks`, `/workshops` and their `/[id]` pages | ISR; `[id]` pages use `generateStaticParams = noStaticParams` |
 | Info           | `/about`, `/advisors`, `/timeline`, `/poster-session`                            | static                                                        |
 | Auth           | `/login`, `/signup`, `/reset-password`, `/reset-password/[token]`                | dynamic, `noindex`                                            |
@@ -25,9 +25,31 @@ and LTR, light theme, using the Manrope font.
 | Route handlers | `/callback/[id]` (payment return), `/files/[id]` (signed file redirect)          | dynamic                                                       |
 
 Which dashboard tabs are visible, and whether registration and poster submission are open, is controlled by
-flags in `lib/dashboard.ts` (`DASHBOARD_TABS[].visible`, `REGISTRATION`). Edition-specific content lives in
-`lib/site.ts`: `CURRENT_EDITION`, the venue, partners, stats and past editions. Updating the site for a new
-edition is mostly edits to that file plus `WSS_ORDER`.
+flags in `lib/dashboard.ts` (`DASHBOARD_TABS[].visible`, `REGISTRATION`). Site-wide content (venue, contact,
+hosts, socials) lives in `lib/site.ts`.
+
+### Editions
+
+One app serves every edition. Each has its own indexable URLs, theme, menu, data and sponsors:
+
+- **Registry:** `lib/editions.ts` (`EDITIONS`, newest first). The first entry is the current edition. Each entry
+  has the `core_event.id` (`eventId`), hero text, stats, sponsors, menu (`nav`), extra pages (`hiddenPages`),
+  colours (`theme`) and images. Launching an edition means adding an entry at the top, and nothing else.
+- **URLs:** the routes are `app/[edition]/…`. `next.config.ts` rewrites the current edition's pages from the root
+  onto its slug (`/seminars` → `/10th/seminars`), and redirects `/10th/…` back to the root (307, because the prefix
+  becomes canonical once the next edition launches). Archived editions live at `/8th/…`. nginx 301s the old
+  `8th.wss-sharif.com` subdomains there.
+- **Pages** resolve their edition with `resolveEdition(params, page)` (`lib/edition-route.ts`), which 404s unknown
+  slugs and pages the edition lacks, and prerender with `editionStaticParams(page)`. Every internal link goes
+  through `editionHref(edition, path)`, and metadata through `editionPageMetadata`, which sets the prefixed
+  canonical URL and puts the edition in archive titles. An archive's empty listing is `noindex` and stays out of
+  the sitemap.
+- **Theme:** `app/[edition]/layout.tsx` sets the `@theme` colour tokens as CSS variables on a wrapper
+  (`lib/edition-theme.ts`). Keep using tokens and never hard-code a colour, or that colour stops following the edition.
+- **Navbar:** the client navbar gets serialisable props from `editionNav(edition)` and never imports the registry
+  (`lib/edition-switch.ts` is its client-safe half). The switcher keeps the visitor in the same section.
+- **Accounts and the dashboard** belong to the current edition (`CURRENT_EDITION.eventId`). Archives show no
+  sign-up or login buttons.
 
 ---
 
@@ -58,7 +80,7 @@ Adding a dependency is a reviewed decision. Ask first, including for small ones 
 
 ```
 app/                     # routes only: pages, layouts, metadata, route handlers, robots/sitemap/manifest
-  (site)/                # public pages, overlay navbar + footer
+  [edition]/              # public pages of every edition (see Editions), overlay navbar + footer
   (auth)/                # login/signup/reset, solid navbar + side image
   dashboard/             # authenticated area
   <route>/_components/   # components used ONLY by that route
@@ -140,7 +162,7 @@ proxy.ts                 # Next 16 proxy (formerly middleware): refreshes the ac
 ## Performance rules (non-negotiable)
 
 - **Public pages stay static or ISR.** Never read `cookies()`, `headers()` or `searchParams` in a
-  `(site)` page or layout: one call makes the route dynamic and the page stops loading instantly. Check the
+  `[edition]` page or layout: one call makes the route dynamic and the page stops loading instantly. Check the
   `○`/`●` markers in the `pnpm build` output after touching a public route.
 - **Server Components by default.** Push `'use client'` to the smallest leaf that needs it.
 - **No heavy library in the initial bundle.** `motion` is used only in `components/layout/NavbarOverlays.tsx`,

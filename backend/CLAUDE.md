@@ -18,7 +18,7 @@ WhiteNoise for static files, and gunicorn.
 
 | App | Responsibility |
 | --- | --- |
-| `core` | Editions (`Event`, selected by id = the frontend's `WSS_ORDER`), seminars, workshops, round tables, lab talks, speakers, modes of attendance |
+| `core` | Editions (`Event`, selected by id = `eventId` in `frontend/lib/editions.ts`), seminars, workshops, round tables, lab talks, speakers, modes of attendance |
 | `participant` | Sign-up, profile, password reset/change, participation per event, plans, attachments, files |
 | `staff` | Organising team and roles per edition |
 | `payment` | Pricing, discount codes, checkout. It calls the `payment` Go service at `PAYMENT_SERVICE_URL` |

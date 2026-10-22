@@ -28,7 +28,8 @@ browser ─▶ nginx ─▶ frontend:3000 ─(server-side fetch)─▶ backend:8
 
 The browser never calls the API directly for authenticated data. The frontend proxies it through
 Server Components, Server Actions and route handlers. Each yearly edition is one `core_event` row.
-The frontend selects it with `WSS_ORDER`, which is currently `10`.
+One frontend serves every edition: the current one at `/`, the others under their slug (`/8th/…`).
+The registry is `frontend/lib/editions.ts`, which maps each edition to its `core_event.id`.
 
 ---
 
@@ -38,7 +39,7 @@ The frontend selects it with `WSS_ORDER`, which is currently `10`.
 frontend/  backend/  payment/        # one directory per module = one Docker image
 compose.yaml                         # production: postgres, backend, payment, metabase (external `app` network)
 front-compose.yaml                   # production: frontend
-nginx-compose.yaml, nginx.conf       # production: reverse proxy for every edition's subdomain
+nginx-compose.yaml, nginx.conf       # production: reverse proxy; old edition subdomains 301 to /<edition>/…
 compose.dev.yaml                     # local: postgres + backend + payment, self-contained
 .env.*.example                       # documented env templates (committed); real .env.* are git-ignored
 .github/workflows/images.yml         # build + push an image per changed module
@@ -101,7 +102,7 @@ document it in the table above.
   unreachable from Iran, and the server and local builds must keep working there.
 - **Build-time values.** Only the frontend has them: `NEXT_PUBLIC_ORIGIN` and `GA_TRACKING_ID`. Its build
   never calls the API; public pages are generated on first request and cached with ISR, so `API_ORIGIN`
-  and `WSS_ORDER` are runtime env.
+  is runtime env.
 
 ---
 
