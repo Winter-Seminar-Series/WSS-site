@@ -1,176 +1,165 @@
 import base64
-from random import choices
+import binascii
 
-from django.conf import settings
-from django.core.mail import send_mail, EmailMessage
+from django.core.files.storage import default_storage
+from django.db.models import Prefetch, QuerySet
 from django.http import Http404
-from django.core.files import storage
-from rest_framework import generics, permissions, status, views
+from rest_framework import generics, status
+from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
+from rest_framework.views import APIView
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
-from participant.models import Participant, Participation, ParticipationPlan, ParticipationAttachment
-from participant.serializers import ParticipantInfoSerializer, ParticipantSerializer, ParticipationPlanSerializer, ParticipationSerializer, ParticipationAttachmentSerializer, FileSerializer
+from common.throttling import EmailRateThrottle, ScopedRateThrottle
+from core.models import WorkshopSession
+from participant import services
+from participant.models import ParticipantInfo, Participation, ParticipationAttachment, ParticipationPlan
+from participant.serializers import (
+    EmailTokenObtainPairSerializer,
+    FileSerializer,
+    ParticipationAttachmentSerializer,
+    ParticipationPlanSerializer,
+    ParticipationSerializer,
+    PasswordChangeSerializer,
+    PasswordResetConfirmSerializer,
+    PasswordResetRequestSerializer,
+    ProfileSerializer,
+    SignUpSerializer,
+)
 
-
-class ParticipantCreateAPIView(generics.CreateAPIView):
-    queryset = Participant.objects.all()
-    serializer_class = ParticipantSerializer
-    permission_classes = [permissions.AllowAny, ]
-
-    def post(self, request, *args, **kwargs):
-        response = super().post(request, *args, **kwargs)
-        response.data['user'].pop('password')
-        return response
-
-class ParticipantInfoRetrieveUpdateAPIView(generics.RetrieveUpdateAPIView):
-    queryset = Participant.objects.all()
-    serializer_class = ParticipantInfoSerializer
-    permission_classes = [permissions.IsAuthenticated]
-
-    def get_object(self):
-        try:
-            participant = Participant.objects.get(user=self.request.user)
-        except Participant.DoesNotExist:
-            raise Http404
-        self.check_object_permissions(self.request, participant)
-        return participant.info
+# --- Accounts ------------------------------------------------------------------------------------------------------
 
 
-class PasswordResetAPIView(views.APIView):
-    permission_classes = [permissions.AllowAny, ]
+class SignInView(TokenObtainPairView):
+    serializer_class = EmailTokenObtainPairSerializer
+    throttle_classes = [ScopedRateThrottle, EmailRateThrottle]
+    throttle_scope = 'sign_in'
+
+
+class SignInRefreshView(TokenRefreshView):
+    """Called by the frontend's proxy.ts, server to server, for every signed-in visitor: not rate limited."""
+
+
+class SignUpView(generics.CreateAPIView):
+    permission_classes = [AllowAny]
+    serializer_class = SignUpSerializer
+    throttle_classes = [ScopedRateThrottle]
+    throttle_scope = 'sign_up'
+
+
+class PasswordResetView(APIView):
+    """POST `{email}` sends a reset link; PUT `{email, token, password}` uses it."""
+
+    permission_classes = [AllowAny]
+
+    def get_throttles(self):
+        if self.request.method == 'POST':
+            self.throttle_scope = 'password_reset'
+            return [ScopedRateThrottle(), EmailRateThrottle()]
+        self.throttle_scope = 'password_reset_confirm'
+        return [ScopedRateThrottle()]
 
     def post(self, request):
-        try:
-            participant = Participant.objects.get(user__email=request.data['email'])
-        except Participant.DoesNotExist:
-            raise Http404
-        except Participant.MultipleObjectsReturned:
-            return Response(
-                'Multiple users found with this email address',
-                status=status.HTTP_400_BAD_REQUEST
-            )
-        participant.password_reset_code = ''.join(
-            choices([str(i) for i in range(10)], k=10))
-        participant.save()
-
-        reset_link = f"https://wss-sharif.com/reset-password/{participant.password_reset_code}"
-        message = f"Your WSS password reset link is: {reset_link}"
-
-        email = EmailMessage(
-            subject='WSS Password Reset',
-            body=message,
-            from_email=settings.SERVER_EMAIL,
-            to=[participant.user.email],
-            headers={'x-liara-tag': 'password-reset'}
-        )
-
-        email.send(fail_silently=False)
-
-        return Response(
-            f'Password reset code sent to the email address ({participant.user.email})',
-            status=status.HTTP_200_OK
-        )
+        serializer = PasswordResetRequestSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        services.send_password_reset(serializer.validated_data['email'])
+        # The same answer whether or not the address has an account.
+        return Response({'detail': 'If an account uses this email, a reset link is on its way.'})
 
     def put(self, request):
-        try:
-            participant = Participant.objects.get(user__email=request.data['email'])
-        except Participant.DoesNotExist:
-            raise Http404
-        except Participant.MultipleObjectsReturned:
-            return Response(
-                'Mutiple Users found with this Email Address',
-                status=status.HTTP_400_BAD_REQUEST
-            )
-        if not participant.password_reset_code:
-            return Response(
-                'Password reset code is not set for this user. '
-                'Or the password is already changed with that code.',
-                status=status.HTTP_400_BAD_REQUEST
-            )
-        elif participant.password_reset_code == request.data['token']:
-            participant.user.set_password(request.data['password'])
-            participant.user.save()
-            participant.password_reset_code = None
-            participant.save()
-            return Response(
-                'Password reset successfully',
-                status=status.HTTP_200_OK
-            )
-        else:
-            return Response(
-                'Password reset code is not correct',
-                status=status.HTTP_406_NOT_ACCEPTABLE
-            )
+        serializer = PasswordResetConfirmSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        services.reset_password(**serializer.validated_data)
+        return Response({'detail': 'Your password has been reset.'})
 
-class ParticipantPasswordChangeAPIView(views.APIView):
-    permission_classes = [permissions.IsAuthenticated]
+
+class PasswordChangeView(APIView):
+    throttle_classes = [ScopedRateThrottle]
+    throttle_scope = 'password_change'
 
     def put(self, request):
-        participant = Participant.objects.get(user=request.user)
-        if not participant.user.check_password(request.data['old_password']):
-            return Response(
-                'Old password is not correct',
-                status=status.HTTP_406_NOT_ACCEPTABLE
-            )
-        participant.user.set_password(request.data['new_password'])
-        participant.user.save()
-        return Response(
-            'Password changed successfully',
-            status=status.HTTP_200_OK
-        )
+        serializer = PasswordChangeSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        services.change_password(request.user, **serializer.validated_data)
+        return Response({'detail': 'Your password has been changed.'})
 
-class ParticipationByEventAPIView(generics.ListAPIView):
+
+class ProfileView(generics.RetrieveUpdateAPIView):
+    serializer_class = ProfileSerializer
+
+    def get_object(self) -> ParticipantInfo:
+        return services.get_or_create_profile(services.get_participant(self.request.user))
+
+    def get_serializer_context(self):
+        return {**super().get_serializer_context(), 'email': self.request.user.email}
+
+
+# --- Plans (public) ------------------------------------------------------------------------------------------------
+
+
+def plans_of_edition(event_id: int) -> QuerySet[ParticipationPlan]:
+    sessions = WorkshopSession.objects.select_related('speaker').order_by('date', 'starting_time', 'id')
+    return (
+        ParticipationPlan.objects.filter(event_id=event_id)
+        .select_related('event', 'workshop', 'mode_of_attendance')
+        .prefetch_related(Prefetch('workshop__workshopsession_set', queryset=sessions))
+        .order_by('id')
+    )
+
+
+class PlanListView(generics.ListAPIView):
+    permission_classes = [AllowAny]
+    serializer_class = ParticipationPlanSerializer
+    kind: str | None = None
+
+    def get_queryset(self):
+        plans = plans_of_edition(self.kwargs['event_id'])
+        return plans.filter(kind=self.kind) if self.kind else plans
+
+
+class WorkshopPlanListView(PlanListView):
+    kind = ParticipationPlan.KIND_WORKSHOP
+
+
+class ModeOfAttendancePlanListView(PlanListView):
+    kind = ParticipationPlan.KIND_MODE
+
+
+# --- The participant's registrations -------------------------------------------------------------------------------
+
+
+class ParticipationListView(generics.ListAPIView):
     serializer_class = ParticipationSerializer
-    permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
-        return Participation.objects.filter(plan__event=self.kwargs['event_id'], participant=self.kwargs['participant'])
+        return Participation.objects.filter(
+            plan__event_id=self.kwargs['event_id'], participant__user=self.request.user
+        ).select_related('spotplayer_license')
 
-    def get(self, request, *args, **kwargs):
-        try:
-            self.kwargs['participant'] = Participant.objects.get(user=self.request.user)
-        except Participant.DoesNotExist:
-            raise Http404
-        return self.list(request, *args, **kwargs)
 
-class ParticipationPlanByEventAPIView(generics.ListAPIView):
-    queryset = ParticipationPlan.objects.all()
-    serializer_class = ParticipationPlanSerializer
-
-    def get_queryset(self):
-        return ParticipationPlan.objects.filter(event=self.kwargs['event_id'])
-
-class WorkshopByEventAPIView(generics.ListAPIView):
-    queryset = ParticipationPlan.objects.all()
-    serializer_class = ParticipationPlanSerializer
-
-    def get_queryset(self):
-        return ParticipationPlan.objects.filter(event=self.kwargs['event_id'], kind='W')
-
-class ModeOfAttendanceByEventAPIView(generics.ListAPIView):
-    queryset = ParticipationPlan.objects.all()
-    serializer_class = ParticipationPlanSerializer
-
-    def get_queryset(self):
-        return ParticipationPlan.objects.filter(event=self.kwargs['event_id'], kind='M')
-
-class ParticipationAttachmentByEventAPIView(generics.ListAPIView):
+class AttachmentListView(generics.ListAPIView):
     serializer_class = ParticipationAttachmentSerializer
-    permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
-        return ParticipationAttachment.objects.filter(participation__plan__event=self.kwargs['event_id'], participation__participant=self.kwargs['participant'])
+        return ParticipationAttachment.objects.filter(
+            participation__plan__event_id=self.kwargs['event_id'],
+            participation__participant__user=self.request.user,
+        ).select_related(
+            'participation__plan__event', 'participation__plan__workshop', 'participation__plan__mode_of_attendance'
+        )
 
-    def get(self, request, *args, **kwargs):
+
+class FileView(APIView):
+    """Resolves a certificate id (see ParticipationAttachmentSerializer) to its URL. Public: certificates are shared
+    by link. Only ids of existing certificates resolve; anything else is a 404."""
+
+    permission_classes = [AllowAny]
+
+    def get(self, request, file_id: str):
         try:
-            self.kwargs['participant'] = Participant.objects.get(user=self.request.user)
-        except Participant.DoesNotExist:
+            name = base64.b64decode(file_id, validate=True).decode()
+        except (binascii.Error, UnicodeDecodeError):
             raise Http404
-        return self.list(request, *args, **kwargs)
-
-class FileByIDAPIView(views.APIView):
-    serializer_class = FileSerializer
-
-    def get(self, request, *args, **kwargs):
-        url = base64.b64decode(self.kwargs['file_id']).decode()
-        return Response(FileSerializer({'attachment': storage.default_storage.url(url)}).data)
+        if not ParticipationAttachment.objects.filter(attachment=name).exists():
+            raise Http404
+        return Response(FileSerializer({'attachment': default_storage.url(name)}).data, status=status.HTTP_200_OK)

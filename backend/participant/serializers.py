@@ -1,114 +1,143 @@
 import base64
-import re
-from django.contrib.auth.hashers import make_password
-from django.contrib.auth.models import User
+
+from django.contrib.auth import get_user_model
 from rest_framework import serializers
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
 from core.serializers import WorkshopSerializer
+from participant import services
+from participant.models import ModeOfAttendance, Participant, ParticipantInfo, Participation, ParticipationAttachment
+from participant.models import ParticipationPlan
+from participant.validators import normalize_national_code, validate_phone_number
 
-from participant.models import ModeOfAttendance, Participant, ParticipantInfo, Participation, ParticipationPlan, ParticipationAttachment
+User = get_user_model()
 
-
-class UserSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = User
-        fields = ('id', 'email', 'password')
-
-    def validate_password(self, value: str) -> str:
-        return make_password(value)
-
-class ParticipantSerializer(serializers.ModelSerializer):
-    user = UserSerializer()
-
-    class Meta:
-        model = Participant
-        fields = ('user', )
-
-    def create(self, validated_data):
-        user_data = validated_data.pop('user')
-        if User.objects.filter(email=user_data['email']).exists():
-            raise serializers.ValidationError('User with this email already exists.')
-        user_data['username'] = user_data['email'].replace('@', '_').replace('.', '_')
-        user = User.objects.create(**user_data)
-        participant = Participant.objects.create(user=user, **validated_data)
-        participant.info = ParticipantInfo.objects.create()
-        participant.save()
-        participant.info.is_open_to_work = True
-        participant.info.save()
-        return participant
+# The response shapes are mirrored by the frontend (frontend/types/participant.api.type.ts): add, never rename.
 
 
-class ParticipantInfoSerializer(serializers.ModelSerializer):
-    email = serializers.CharField(source='participant_set.first.user.email', read_only=True)
+class EmailTokenObtainPairSerializer(TokenObtainPairSerializer):
+    """`{email, password}` → `{access, refresh}` (participant.backends.EmailBackend checks the credentials)."""
+
+    username_field = User.EMAIL_FIELD
+
+
+# --- Sign-up -------------------------------------------------------------------------------------------------------
+
+
+class SignUpUserSerializer(serializers.Serializer):
+    id = serializers.IntegerField(read_only=True)
+    # The email doubles as the username, which Django caps at 150 characters.
+    email = serializers.EmailField(max_length=150)
+    password = serializers.CharField(write_only=True, trim_whitespace=False)
+
+    def validate_email(self, value: str) -> str:
+        value = services.normalize_email(value)
+        if services.email_is_taken(value):
+            raise serializers.ValidationError('An account with this email already exists.', code='email_taken')
+        return value
+
+    def validate(self, attrs):
+        services.check_password_strength(attrs['password'], User(username=attrs['email'], email=attrs['email']))
+        return attrs
+
+
+class SignUpSerializer(serializers.Serializer):
+    """`{user: {email, password}}` → `{user: {id, email}}`."""
+
+    user = SignUpUserSerializer()
+
+    def create(self, validated_data) -> Participant:
+        return services.register_participant(**validated_data['user'])
+
+    def to_representation(self, participant: Participant):
+        return {'user': {'id': participant.user.id, 'email': participant.user.email}}
+
+
+# --- Passwords -----------------------------------------------------------------------------------------------------
+
+
+class PasswordResetRequestSerializer(serializers.Serializer):
+    email = serializers.EmailField()
+
+
+class PasswordResetConfirmSerializer(serializers.Serializer):
+    email = serializers.EmailField()
+    token = serializers.CharField(max_length=100)
+    password = serializers.CharField(trim_whitespace=False)
+
+
+class PasswordChangeSerializer(serializers.Serializer):
+    old_password = serializers.CharField(trim_whitespace=False)
+    new_password = serializers.CharField(trim_whitespace=False)
+
+
+# --- Profile -------------------------------------------------------------------------------------------------------
+
+
+class ProfileSerializer(serializers.ModelSerializer):
+    """The participant's ParticipantInfo plus their (read-only) account email, passed in the context."""
+
+    email = serializers.SerializerMethodField()
 
     class Meta:
         model = ParticipantInfo
-        fields = ('__all__')
+        fields = '__all__'
+
+    def get_email(self, info: ParticipantInfo) -> str:
+        return self.context['email']
 
     def validate_national_code(self, value: str) -> str:
-        if value == '':
-            return value
-        if re.match(r'^\d{8,10}$', value):
-            if len(value) < 10:
-                value = '0' * (10 - len(value)) + value
-            temp = 0
-            for i in range(9):
-                temp += int(value[i]) * (10 - i)
-            rem = temp % 11
-            if (rem < 2 and int(value[9]) == rem) or (rem >= 2 and int(value[9]) == (11 - rem)):
-                return value
-            raise serializers.ValidationError("National Code is not valid.")
-        raise serializers.ValidationError("National Code is not valid.")
-    
+        return normalize_national_code(value)
+
     def validate_phone_number(self, value: str) -> str:
-        if re.match(r'^(\+\d{1,3}|0)\d{10}$', value):
-            return value
-        raise serializers.ValidationError("Phone number is not valid.")
-    
-    def validate_gender(self, value: str) -> str:
-        if value in ['M', 'F', 'O']:
-            return value
-        raise serializers.ValidationError("Gender is not valid.")
-    
-    def validate_grade(self, value: str) -> str:
-        if value in ['B', 'M', 'P']:
-            return value
-        raise serializers.ValidationError("Grade is not valid.")
+        return validate_phone_number(value)
+
+
+# --- Plans and registrations ---------------------------------------------------------------------------------------
+
 
 class ModeOfAttendanceSerializer(serializers.ModelSerializer):
     class Meta:
         model = ModeOfAttendance
         fields = '__all__'
 
-class ParticipationSerializer(serializers.ModelSerializer):
-    plan = serializers.IntegerField(source='plan.id', read_only=True)
-    license_key = serializers.CharField(source='spotplayer_license.license_key', read_only=True)
-    
-    class Meta:
-        model = Participation
-        fields = ('plan', 'license_key')
 
 class ParticipationPlanSerializer(serializers.ModelSerializer):
     event = serializers.CharField(source='event.name', read_only=True)
     workshop = WorkshopSerializer()
     mode_of_attendance = ModeOfAttendanceSerializer()
-    
+
     class Meta:
         model = ParticipationPlan
-        fields = ('id', 'price', 'event', 'kind', 'workshop', 'mode_of_attendance')
+        fields = ('id', 'price', 'event', 'kind', 'workshop', 'mode_of_attendance', 'is_open')
+
+
+class ParticipationSerializer(serializers.ModelSerializer):
+    plan = serializers.IntegerField(source='plan_id', read_only=True)
+    license_key = serializers.CharField(source='spotplayer_license.license_key', read_only=True, default=None)
+
+    class Meta:
+        model = Participation
+        fields = ('plan', 'license_key')
+
+
+def encode_file_id(name: str) -> str:
+    return base64.b64encode(name.encode()).decode()
+
 
 class ParticipationAttachmentSerializer(serializers.ModelSerializer):
-    UUID = serializers.CharField(source='attachment', read_only=True)
-    plan = serializers.CharField(source='participation.plan', read_only=True)
+    """A certificate. `UUID` is the opaque id the public `/file/<id>/` endpoint resolves to the file's URL."""
 
-    def to_representation(self, instance):
-        ret = super().to_representation(instance)
-        ret['UUID'] = base64.b64encode(ret['UUID'].encode('utf-8'))
-        return ret
+    UUID = serializers.SerializerMethodField()
+    plan = serializers.CharField(source='participation.plan', read_only=True)
 
     class Meta:
         model = ParticipationAttachment
-        fields = ['id', 'plan', 'description', 'date', 'UUID']
+        fields = ('id', 'plan', 'description', 'date', 'UUID')
+
+    def get_UUID(self, attachment: ParticipationAttachment) -> str:
+        return encode_file_id(attachment.attachment.name)
+
 
 class FileSerializer(serializers.Serializer):
     attachment = serializers.CharField()
