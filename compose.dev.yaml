@@ -1,4 +1,4 @@
-# Local development stack: Postgres + Django API.
+# Local development stack: Postgres + Django API + payment service.
 # Unlike compose.yaml (production) it needs no external `app` network or `staticfiles` volume.
 #
 #   docker compose -f compose.dev.yaml up -d --build
@@ -30,6 +30,15 @@ services:
       DB_HOST: postgres
     ports:
       - '127.0.0.1:8000:8000'
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  payment:
+    build: ./payment
+    env_file: .env.payment
+    ports:
+      - '127.0.0.1:8080:8080'
     depends_on:
       postgres:
         condition: service_healthy
