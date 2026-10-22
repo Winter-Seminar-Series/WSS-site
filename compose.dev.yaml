@@ -1,0 +1,38 @@
+# Local development stack: Postgres + Django API.
+# Unlike compose.yaml (production) it needs no external `app` network or `staticfiles` volume.
+#
+#   docker compose -f compose.dev.yaml up -d --build
+#   cd frontend && pnpm dev
+#
+# Restore a dump (pg_dumpall) into the fresh database:
+#   docker compose -f compose.dev.yaml exec -T postgres psql -U postgres -d postgres < ../full_backup.sql
+
+name: wss-dev
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    env_file: .env.postgres
+    ports:
+      - '127.0.0.1:5432:5432'
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U postgres']
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  backend:
+    build: ./backend
+    env_file: .env.backend
+    environment:
+      DB_HOST: postgres
+    ports:
+      - '127.0.0.1:8000:8000'
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+volumes:
+  postgres-data:
