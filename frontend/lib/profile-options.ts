@@ -1,0 +1,98 @@
+export const PROVINCES = [
+  'Outside of Iran',
+  'Alborz',
+  'Ardabil',
+  'Bushehr',
+  'Chaharmahal and Bakhtiari',
+  'East Azerbaijan',
+  'Fars',
+  'Gilan',
+  'Golestan',
+  'Hamedan',
+  'Hormozgan',
+  'Ilam',
+  'Isfahan',
+  'Kerman',
+  'Kermanshah',
+  'Khuzestan',
+  'Kohgiluyeh and Boyer-Ahmad',
+  'Kurdistan',
+  'Lorestan',
+  'Markazi',
+  'Mazandaran',
+  'North Khorasan',
+  'Qazvin',
+  'Qom',
+  'Razavi Khorasan',
+  'Semnan',
+  'Sistan and Baluchestan',
+  'South Khorasan',
+  'Tehran',
+  'West Azerbaijan',
+  'Yazd',
+  'Zanjan',
+] as const;
+
+export const JOBS = [
+  'Software Engineer',
+  'Backend Developer',
+  'Frontend Developer',
+  'Mobile Developer',
+  'Full Stack Developer',
+  'DevOps Engineer',
+  'Machine Learning Engineer',
+  'Data Scientist',
+  'Data Engineer',
+  'AI Researcher',
+  'Computer Vision Engineer',
+  'NLP Engineer',
+  'Cybersecurity Engineer',
+  'Cloud Engineer',
+  'Embedded Systems Engineer',
+  'Blockchain Developer',
+  'Game Developer',
+  'Research Scientist',
+  'PhD Student',
+  'Master’s Student',
+  'Undergraduate Student',
+  'University Professor',
+  'Researcher',
+  'Research Assistant',
+  'Technical Product Manager',
+  'Other',
+] as const;
+
+/** Values are what the API already stores; labels are display-only. */
+export const MAJORS = [
+  { value: 'computer-engineering', label: 'Computer Engineering' },
+  { value: 'computer-science', label: 'Computer Science' },
+  { value: 'electrical-engineering', label: 'Electrical Engineering' },
+  { value: 'mechanical-engineering', label: 'Mechanical Engineering' },
+  { value: 'mathematics', label: 'Mathematics' },
+  { value: 'other', label: 'Other' },
+] as const;
+
+export const INTRODUCTION_METHODS = [
+  'Telegram',
+  'Instagram',
+  'LinkedIn',
+  'YouTube',
+  'Quera',
+  'Email',
+  'SMS',
+  'Friends',
+  'Professors',
+  'Forums',
+  'Others',
+] as const;
+
+export const GRADES = [
+  { value: 'B', label: 'Bachelor' },
+  { value: 'M', label: 'Master' },
+  { value: 'P', label: 'PhD or Higher' },
+] as const;
+
+export const GENDERS = [
+  { value: 'M', label: 'Male' },
+  { value: 'F', label: 'Female' },
+] as const;
