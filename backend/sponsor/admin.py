@@ -1,3 +1,1 @@
-from django.contrib import admin
-
-# Register your models here.
+# Sponsors are not managed in the admin; the site lists them statically (frontend/lib/editions.ts).

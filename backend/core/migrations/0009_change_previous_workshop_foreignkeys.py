@@ -7,9 +7,10 @@ def set_default_event_for_workshops(apps, schema_editor):
     Workshop = apps.get_model('core', 'Workshop')
     Event = apps.get_model('core', 'Event')
     
-    # Get the default event. You can choose the first one or use another criterion.
-    default_event = Event.objects.get(id=1)  # Replace with your default event if needed.
-    
+    # Existing databases ran this with event 1 present. A fresh database (tests, a new environment) has no
+    # events and no workshops yet, so there is nothing to backfill.
+    default_event = Event.objects.filter(id=1).first()
+
     if default_event:
         # Update past workshops that do not have an associated event
         workshops_without_event = Workshop.objects.filter(event__isnull=True)

@@ -1,20 +1,18 @@
 from django.urls import path
-from rest_framework_simplejwt.views import (
-    TokenRefreshView,
-)
 
-from core.views import EmailTokenObtainPairView, EventAPIView, LabTalkAPIView, SeminarAPIView, SpeakerAPIView, \
-    RoundTableAPIView, PosterSessionImageCreateAPIView, PosterSessionImageAPIView
+from core import views
 
 urlpatterns = [
-    path('sign-in/', EmailTokenObtainPairView.as_view(), name='token_obtain_pair'),
-    path('sign-in/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
-    path('event/', EventAPIView.as_view(), name='events'),
-    path('seminar/<int:event_id>/', SeminarAPIView.as_view(), name='seminars'),
-    path('lab-talk/<int:event_id>/', LabTalkAPIView.as_view(), name='lab-talks'),
-    path('poster-session/<int:event_id>/', LabTalkAPIView.as_view(), name='lab-talks'),
-    path('round-table/<int:event_id>/', RoundTableAPIView.as_view(), name='round-tables'),
-    path('speaker/<pk>/', SpeakerAPIView.as_view(), name='speaker'),
-    path('poster-session/image/', PosterSessionImageAPIView.as_view(), name='poster-session-image'),
-    path('poster-session/image/create/', PosterSessionImageCreateAPIView.as_view(), name='create-poster-session-image'),
+    path('event/', views.EventListView.as_view(), name='events'),
+    path('speaker/<int:pk>/', views.SpeakerDetailView.as_view(), name='speaker'),
+    path('seminar/<int:event_id>/', views.SeminarListView.as_view(), name='seminars'),
+    path('lab-talk/<int:event_id>/', views.LabTalkListView.as_view(), name='lab-talks'),
+    path('round-table/<int:event_id>/', views.RoundTableListView.as_view(), name='round-tables'),
+    path('poster-session/image/', views.PosterSessionImageView.as_view(), name='poster-session-image'),
+    path(
+        'poster-session/image/create/',
+        views.PosterSessionImageCreateView.as_view(),
+        name='poster-session-image-create',
+    ),
+    path('poster-session/<int:event_id>/', views.PosterSessionListView.as_view(), name='poster-sessions'),
 ]

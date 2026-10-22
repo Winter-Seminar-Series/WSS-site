@@ -2,13 +2,16 @@ import uuid
 
 from django.contrib.auth.models import User
 from django.db import models
-from django.contrib.auth import get_user_model
-from django.contrib.auth.backends import ModelBackend
 from django.utils.deconstruct import deconstructible
 
 
 @deconstructible
 class UniqueUploadPath:
+    """`upload_to` that stores every file under a random name, so URLs cannot be guessed or collide.
+
+    Migrations reference it as `core.models.UniqueUploadPath`: keep it here.
+    """
+
     def __init__(self, sub_path):
         self.sub_path = sub_path
 
@@ -17,20 +20,18 @@ class UniqueUploadPath:
         return f"{self.sub_path}/{uuid.uuid4()}.{ext}"
 
 
-class EmailModelBackend(ModelBackend):
-    def authenticate(self, request, email=None, password=None, **kwargs):
-        user_model = get_user_model()
-        try:
-            user = user_model.objects.get(email=email)
-        except user_model.DoesNotExist:
-            return None
-        else:
-            if user.check_password(password):
-                return user
-        return None
+def ordinal(number: int) -> str:
+    if 10 <= number % 100 <= 20:
+        suffix = 'th'
+    else:
+        suffix = {1: 'st', 2: 'nd', 3: 'rd'}.get(number % 10, 'th')
+    return f'{number}{suffix}'
 
 
 class Event(models.Model):
+    """One edition of the series. Its id (not its order) is what the API's `<event_id>` and the frontend's edition
+    registry (frontend/lib/editions.ts, `eventId`) refer to."""
+
     class Meta:
         unique_together = ['name', 'order']
 
@@ -41,20 +42,11 @@ class Event(models.Model):
     ending_date = models.DateField()
 
     def __str__(self) -> str:
-        end = str(self.order)[-1]
-        if end == '1':
-            end = 'st'
-        elif end == '2':
-            end = 'nd'
-        elif end == '3':
-            end = 'rd'
-        else:
-            end = 'th'
-        return f'{self.order}{end} {self.name}'
+        return f'{ordinal(self.order)} {self.name}'
 
 
 class SubEvent(models.Model):
-    kind = (
+    KIND_CHOICES = (
         ('S', 'Seminar'),
         ('W', 'Workshop'),
         ('R', 'Round Table'),
@@ -62,19 +54,19 @@ class SubEvent(models.Model):
         ('P', 'Poster Session')
     )
 
-    venue_choices = (
+    VENUE_CHOICES = (
         ('V', 'Virtual'),
         ('P', 'Physical'),
     )
 
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
-    kind = models.CharField(max_length=1, choices=kind, default='S')
+    kind = models.CharField(max_length=1, choices=KIND_CHOICES, default='S')
     name = models.TextField(max_length=200)
     description = models.TextField(max_length=5000, blank=True)
     starting_time = models.TimeField()
     ending_time = models.TimeField()
     date = models.DateField()
-    venue = models.CharField(max_length=1, choices=venue_choices, default='V')
+    venue = models.CharField(max_length=1, choices=VENUE_CHOICES, default='V')
     link = models.URLField(max_length=200, blank=True)
     poster = models.ImageField(upload_to=UniqueUploadPath('posters'), null=True, blank=True)
     thumbnail = models.ImageField(upload_to=UniqueUploadPath('thumbnails'), null=True, blank=True)
@@ -107,12 +99,6 @@ class Workshop(models.Model):
     poster = models.ImageField(upload_to='posters/', null=True, blank=True)
     thumbnail = models.ImageField(upload_to='thumbnails/', null=True, blank=True)
 
-    # event = models.ForeignKey(
-    #     Event,
-    #     on_delete=models.CASCADE,
-    #     null=False,
-    #     blank=False
-    # )
     def __str__(self):
         return f'{self.name}'
 
@@ -155,6 +141,8 @@ class PosterSession(models.Model):
 
 
 class PosterSessionImage(models.Model):
+    """A participant's poster-session submission (one per account)."""
+
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     image = models.FileField(upload_to=UniqueUploadPath('poster-images'))
 
