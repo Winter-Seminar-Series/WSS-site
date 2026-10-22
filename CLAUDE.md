@@ -42,7 +42,6 @@ nginx-compose.yaml, nginx.conf       # production: reverse proxy for every editi
 compose.dev.yaml                     # local: postgres + backend + payment, self-contained
 .env.*.example                       # documented env templates (committed); real .env.* are git-ignored
 .github/workflows/images.yml         # build + push an image per changed module
-.github/workflows/deploy.yml         # SSH deploy on push to master (runs ~/cd.sh on the server)
 .github/scripts/changed-modules.sh   # change detection used by images.yml
 ```
 
@@ -68,7 +67,7 @@ with `ALTER ROLE postgres PASSWORD '…'` so it matches `.env.postgres`.
 
 ---
 
-## CI/CD
+## CI
 
 `images.yml` rebuilds **only the modules that changed**. `changed-modules.sh` diffs the push, or the PR
 against its merge-base, and maps each changed path to its top-level module directory:
