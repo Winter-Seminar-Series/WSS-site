@@ -1,50 +1,10 @@
 from django.db import models
-from django.conf import settings
+from django.db.models import F
+from django.utils import timezone
 
-from participant.models import ParticipationPlan, Participant
-
-import requests
-
-class SkyroomAPI:
-    def __init__(self):
-        self.API_URL = settings.SKYROOM_API_ENDPOINT
-        self.HEADERS = {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-            'charset': 'utf-8'
-        }
-
-    def __get_link(self, room_id, user_id, nickname, access, concurrent=1, language="fa", ttl=10800):
-        data = {
-            "action": "createLoginUrl",
-            "params": {
-                "room_id": room_id,
-                "user_id": user_id,
-                "nickname": nickname,
-                "access": access,
-                "concurrent": concurrent,
-                "language": language,
-                "ttl": ttl,
-            }
-        }
-        response = requests.post(self.API_URL, json=data, headers=self.HEADERS)
-        response_data = response.json()
-        if response_data['ok']:
-            return response_data['result']
-        return ''
-
-    def get_user_link(self, room_id, participant_id, ttl=10800):
-        participant = Participant.objects.get(pk=participant_id)
-        return self.__get_link(
-            room_id, participant_id, 
-            f'{participant.info.first_name} {participant.info.last_name}', 
-            1, 1, "fa", ttl)
-    
-    def get_admin_link(self, room_id):
-        return self.__get_link(room_id, 0, "WSS", 3, 10, "fa", 10800)
+from participant.models import ParticipationPlan
 
 
-# Create your models here.
 class SkyroomRoom(models.Model):
     room_id = models.IntegerField(unique=True)
     name = models.CharField(max_length=100)
@@ -52,6 +12,21 @@ class SkyroomRoom(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class SkyroomEventQuerySet(models.QuerySet):
+    def for_user(self, user) -> 'SkyroomEventQuerySet':
+        """Sessions the account has a paid plan for."""
+        return self.filter(plans__participation__participant__user=user).distinct()
+
+    def open_now(self) -> 'SkyroomEventQuerySet':
+        """Sessions whose room can be entered now: from `tolerance` before the start to `tolerance` after the end."""
+        now = timezone.now()
+        return self.filter(
+            starting_time__lte=now + F('tolerance'),
+            starting_time__gte=now - F('duration') - F('tolerance'),
+        )
+
 
 class SkyroomEvent(models.Model):
     room = models.ForeignKey(SkyroomRoom, on_delete=models.CASCADE)
@@ -61,6 +36,8 @@ class SkyroomEvent(models.Model):
     starting_time = models.DateTimeField()
     duration = models.DurationField()
     tolerance = models.DurationField(default=600)
+
+    objects = SkyroomEventQuerySet.as_manager()
 
     def __str__(self):
         return f'{self.title} - {self.starting_time}'

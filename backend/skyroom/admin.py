@@ -1,12 +1,13 @@
-from django.contrib import admin
 from datetime import datetime, timedelta
+from itertools import chain
 
+from django.contrib import admin
 from django.db.models import Max
 
-from skyroom.models import *
-from core.models import Seminar, Event, RoundTable
+from core.models import Event, RoundTable, Seminar
+from participant.models import ParticipationPlan
+from skyroom.models import SkyroomEvent, SkyroomRoom
 
-# Register your models here.
 admin.site.register(SkyroomRoom)
 
 
@@ -14,9 +15,8 @@ class SkyroomEventAdmin(admin.ModelAdmin):
     list_display = ('title', 'room', 'starting_time', 'duration', 'tolerance')
     actions = ['create_events']
 
+    @admin.action(description='Create a stream for every seminar and round table of the latest edition')
     def create_events(self, request, queryset):
-        from itertools import chain
-
         rooms = list(SkyroomRoom.objects.all())
         latest_order = Event.objects.aggregate(Max('order'))['order__max']
 
@@ -33,11 +33,11 @@ class SkyroomEventAdmin(admin.ModelAdmin):
             return
 
         event_seminars = Seminar.objects.filter(
-            sub_event__event=Event.objects.last()
+            sub_event__event__order=latest_order
         ).order_by('sub_event__date', 'sub_event__starting_time')
 
         event_roundTables = RoundTable.objects.filter(
-            sub_event__event=Event.objects.last()
+            sub_event__event__order=latest_order
         ).order_by('sub_event', 'sub_event__starting_time')
 
         room_count = len(rooms)

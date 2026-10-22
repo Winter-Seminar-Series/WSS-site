@@ -1,21 +1,25 @@
 import codecs
+import csv
+
 from django import forms
 from django.contrib import admin
-import csv
+from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.urls import path
+
 from core.admin import ExportCSVMixin
-from django.http import HttpResponse
-
-from payment.models import PaymentDiscount, PaymentRequest
 from core.models import Event
+from payment.models import PaymentDiscount, PaymentRequest
 
-# Register your models here.
+
+def latest_edition() -> Event | None:
+    return Event.objects.order_by('-order').first()
+
 
 class CsvImportForm(forms.Form):
     csv_file = forms.FileField()
 
-class PaymentDiscountAdmin(admin.ModelAdmin, ExportCSVMixin):
+class PaymentDiscountAdmin(ExportCSVMixin, admin.ModelAdmin):
     search_fields = ('code',)
     list_display = ('code', 'percentage', 'amount', 'count')
     actions = ["export_as_csv"]
@@ -28,7 +32,7 @@ class PaymentDiscountAdmin(admin.ModelAdmin, ExportCSVMixin):
             reader = csv.reader(codecs.iterdecode(csv_file, 'UTF-8'))
             for row in reader:
                 _, created = PaymentDiscount.objects.get_or_create(
-                    event=Event.objects.last(),
+                    event=latest_edition(),
                     code=row[0],
                     percentage=row[1],
                     amount=row[2],
@@ -54,9 +58,13 @@ admin.site.register(PaymentDiscount, PaymentDiscountAdmin)
 class DiscountCodesImportForm(forms.Form):
     file = forms.FileField()
 
-class PaymentRequestAdmin(admin.ModelAdmin, ExportCSVMixin):
-    list_display = ('participant', 'timestamp', 'paid', 'discount_code', 'order_id', 'base_price', 'paid_price')
-    list_filter = ('paid', 'discount__code')
+class PaymentRequestAdmin(ExportCSVMixin, admin.ModelAdmin):
+    list_display = ('participant', 'timestamp', 'status', 'discount_code', 'order_id', 'base_price', 'paid_price')
+    list_select_related = ('participant__user', 'participant__info', 'discount')
+    list_filter = ('status', 'discount__code')
+
+    def get_queryset(self, request):
+        return super().get_queryset(request).prefetch_related('plans')
     actions = ["export_as_csv", "calculate_discount_usage"]
     change_list_template = "payment_request_changelist.html"
 

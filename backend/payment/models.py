@@ -1,93 +1,94 @@
 from django.contrib.postgres.fields import ArrayField
 from django.db import models
+
 from core.models import Event
 from participant.models import Participant, ParticipationPlan
+from payment import pricing
+
 
 class PaymentDiscount(models.Model):
+    """A discount code for one edition. `count` is the number of uses left; -1 means unlimited."""
+
+    UNLIMITED = -1
+
     event = models.ForeignKey(Event, on_delete=models.CASCADE, blank=True)
     code = models.CharField(max_length=50, blank=False, unique=True)
     percentage = models.DecimalField(max_digits=5, decimal_places=2, default=0.0)
     amount = models.IntegerField(default=0)
-    count = models.IntegerField(default=-1)
+    count = models.IntegerField(default=UNLIMITED)
 
     def __str__(self) -> str:
         return f'{self.code}'
 
-class PaymentRequest(models.Model):
-    plans = models.ManyToManyField(ParticipationPlan)
-    participant = models.ForeignKey(Participant, on_delete=models.CASCADE)
-    timestamp = models.DateTimeField(auto_now_add=True)
+    @property
+    def is_available(self) -> bool:
+        return self.count == self.UNLIMITED or self.count > 0
+
+
+class PaymentStatus(models.TextChoices):
+    PENDING = 'pending', 'Pending'
+    PAID = 'paid', 'Paid'
+    FAILED = 'failed', 'Failed'
+
+
+class PaymentRecord(models.Model):
+    """
+    State shared by single and group payments. `status` is the source of truth; `paid` mirrors it for the
+    existing reports (Metabase) and is only written through `set_status`.
+    """
+
+    status = models.CharField(max_length=10, choices=PaymentStatus.choices, default=PaymentStatus.PENDING)
     paid = models.BooleanField(default=False)
-    discount = models.ForeignKey(PaymentDiscount, on_delete=models.CASCADE, null=True, blank=True)
+    timestamp = models.DateTimeField(auto_now_add=True)
     order_id = models.CharField(max_length=100, blank=True)
 
-    def get_price(self):
-        plans = self.plans.all()
-        total_price = sum(plan.price for plan in plans if plan.kind == 'M')
-        calculated_price = total_price
-        if self.discount is not None:
-            amount = int(self.discount.amount)
-            percentage = float(self.discount.percentage)
-            if amount != 0:
-                calculated_price -= amount
-            elif percentage > 0:
-                calculated_price -= calculated_price * percentage / 100.
-        calculated_price = int(calculated_price)
-        total_price += sum(plan.price for plan in plans if plan.kind == 'W')
-        calculated_price += sum(plan.price for plan in plans if plan.kind == 'W')
-        return total_price, calculated_price
-    
+    class Meta:
+        abstract = True
+
+    def set_status(self, status: PaymentStatus) -> None:
+        self.status = status
+        self.paid = status == PaymentStatus.PAID
+        self.save(update_fields=['status', 'paid'])
+
+
+class PaymentRequest(PaymentRecord):
+    plans = models.ManyToManyField(ParticipationPlan)
+    participant = models.ForeignKey(Participant, on_delete=models.CASCADE)
+    discount = models.ForeignKey(PaymentDiscount, on_delete=models.CASCADE, null=True, blank=True)
+
     def __str__(self) -> str:
         return f'{self.participant} - {self.timestamp}'
 
+    def get_price(self) -> tuple[int, int]:
+        """(total, payable) in Rial."""
+        price = pricing.quote(self.plans.all(), self.discount)
+        return price.total, price.payable
 
-class GroupPaymentRequest(models.Model):
+
+class GroupPaymentRequest(PaymentRecord):
+    """One participant pays a mode of attendance for a group; everyone in it then gets a free registration code."""
+
     plan = models.ForeignKey(ParticipationPlan, on_delete=models.CASCADE)
     participant = models.ForeignKey(Participant, on_delete=models.CASCADE)
     participant_numbers = models.IntegerField(default=1)
-    timestamp = models.DateTimeField(auto_now_add=True)
-    paid = models.BooleanField(default=False)
     discount = models.ForeignKey(PaymentDiscount, on_delete=models.CASCADE, null=True, blank=True)
-    order_id = models.CharField(max_length=100, blank=True)
     group_discount_percentage = models.DecimalField(max_digits=5, decimal_places=2, default=0.0)
     participant_emails = ArrayField(models.EmailField(), blank=True, default=list)
 
+    def __str__(self) -> str:
+        return f'{self.participant} + {len(self.participant_emails)} - {self.timestamp}'
+
     def save(self, *args, **kwargs):
-        self.group_discount_percentage = self.get_group_discount_percentage(self.participant_numbers)
+        self.group_discount_percentage = pricing.group_discount_percentage(self.participant_numbers)
         super().save(*args, **kwargs)
 
-    @staticmethod
-    def get_group_discount_percentage(participant_numbers):
-        discount_mapping = {
-            3: 15,
-            4: 20,
-        }
-        return discount_mapping.get(participant_numbers, 25 if participant_numbers >= 5 else 0)
-
     @property
-    def all_participants(self):
-        all_participants = [self.participant]
-        other_participants = Participant.objects.filter(user__email__in=self.participant_emails)
-        return all_participants.extend(other_participants)
+    def all_participants(self) -> list[Participant]:
+        """The payer first, then everyone they paid for."""
+        others = Participant.objects.filter(user__email__in=self.participant_emails).select_related('user')
+        return [self.participant, *others]
 
-    def get_price(self):
-        plan = self.plan
-        if plan.kind == 'W':
-            return 0, 0
-        total_price = plan.price
-        calculated_price = total_price
-
-        if self.group_discount_percentage > 0:
-            calculated_price -= calculated_price * self.group_discount_percentage / 100.
-
-        if self.discount is not None:
-            amount = int(self.discount.amount)
-            percentage = float(self.discount.percentage)
-            if amount != 0:
-                calculated_price = max(0, calculated_price - amount)
-            elif percentage > 0:
-                calculated_price -= calculated_price * percentage / 100.
-
-        calculated_price = int(calculated_price)
-
-        return self.participant_numbers * total_price, self.participant_numbers * calculated_price
+    def get_price(self) -> tuple[int, int]:
+        """(total, payable) in Rial."""
+        price = pricing.group_quote(self.plan, self.participant_numbers, self.discount)
+        return price.total, price.payable

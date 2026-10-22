@@ -1,50 +1,42 @@
-from skyroom.models import SkyroomEvent, SkyroomAPI
-from skyroom.serializers import SkyroomEventSerializer, SkyroomEventWithLinkSerializer
-from participant.models import Participant, Participation, ParticipationPlan
-
-from rest_framework.permissions import IsAuthenticated
-from rest_framework.generics import ListAPIView, GenericAPIView
-from rest_framework import serializers
-
-from django.utils import timezone
-from django.db.models import F
+from rest_framework import generics
 from rest_framework.response import Response
 
+from participant.services import get_participant
+from skyroom.client import SkyroomClient
+from skyroom.models import SkyroomEvent
+from skyroom.serializers import SkyroomEventSerializer, SkyroomEventWithLinkSerializer
 
-# Create your views here.
-class SkyroomEventsView(ListAPIView):
-    queryset = SkyroomEvent.objects.all()
+
+class SkyroomEventsView(generics.ListAPIView):
+    """The signed-in participant's sessions that are open right now."""
+
     serializer_class = SkyroomEventSerializer
-    permission_classes = [IsAuthenticated]
 
-    def get(self, request, *args, **kwargs):
-        try:
-            participant = Participant.objects.get(user=self.request.user)
-        except:
-            raise serializers.ValidationError('Participant not found')
-        participant_plans = Participation.objects.filter(participant=participant).values_list('plan', flat=True)
-        events = SkyroomEvent.objects.filter(plans__in=participant_plans)
-        events = events.filter(starting_time__lte=timezone.now() + F('tolerance'))
-        events = events.filter(starting_time__gte=timezone.now() - F('duration') - F('tolerance'))
-        events = events.order_by('starting_time')
-        serializer = self.get_serializer(events, many=True)
-        return Response(serializer.data)
+    def get_queryset(self):
+        return (
+            SkyroomEvent.objects.for_user(self.request.user)
+            .open_now()
+            .select_related('room')
+            .prefetch_related('plans')
+            .order_by('starting_time')
+        )
 
 
-class SkyroomEventLinkView(GenericAPIView):
-    queryset = SkyroomEvent.objects.all()
+class SkyroomEventLinkView(generics.GenericAPIView):
+    """A personal login link to one of those sessions; 404 for sessions the participant has not paid for or that
+    are not open."""
+
     serializer_class = SkyroomEventWithLinkSerializer
-    permission_classes = [IsAuthenticated]
-    skyroom = SkyroomAPI()
+
+    def get_queryset(self):
+        return SkyroomEvent.objects.for_user(self.request.user).open_now().select_related('room')
 
     def get(self, request, *args, **kwargs):
-        try:
-            participant = Participant.objects.get(user=self.request.user)
-        except:
-            raise serializers.ValidationError('Participant not found')
         event = self.get_object()
-        link = self.skyroom.get_user_link(event.room.room_id, participant.id)
-        return Response(self.get_serializer({
-            'id': event.id,
-            'link': link
-        }).data)
+        participant = get_participant(request.user)
+        info = participant.info
+        nickname = f'{info.first_name} {info.last_name}'.strip() if info else ''
+        link = SkyroomClient().login_url(
+            event.room.room_id, user_id=participant.pk, nickname=nickname or participant.user.email
+        )
+        return Response(self.get_serializer({'id': event.id, 'link': link}).data)
