@@ -23,7 +23,7 @@ export default async function TimelinePage({ params }: PageProps<'/[edition]/tim
 
   return (
     <>
-      <PageHero overline={edition.dateRange} title="Timeline">
+      <PageHero image={edition.heroImage} overline={edition.dateRange} title="Timeline">
         {(edition.timelineImages ?? []).map(({ day, src }, index) => (
           <section key={day} aria-labelledby={`day-${index}`} className="mt-10">
             <div className="flex items-center gap-6">

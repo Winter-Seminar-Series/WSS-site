@@ -36,6 +36,7 @@ export default async function WorkshopPage({ params }: PageProps<'/[edition]/wor
 
   return (
     <EventDetail
+      image={edition.heroImage}
       title={workshop.name}
       meta={
         <WorkshopMeta startDate={workshop.startDate} endDate={workshop.endDate} modules={workshop.sessions.length} />

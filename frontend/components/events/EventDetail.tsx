@@ -14,12 +14,14 @@ interface Props {
   speakers: Speaker[];
   /** Extra sections between the abstract and the presenters (workshop modules). */
   children?: ReactNode;
+  /** Background of the band behind the navbar, see HeroBand. */
+  image?: string;
 }
 
-export function EventDetail({ title, meta, poster, descriptionHtml, speakers, children }: Props) {
+export function EventDetail({ title, meta, poster, descriptionHtml, speakers, children, image }: Props) {
   return (
     <>
-      <HeroBand />
+      <HeroBand image={image} />
       <article className="relative mx-auto -mt-48 max-w-300 px-4 pb-16 md:-mt-64 md:px-6">
         <div className="flex flex-col gap-10 rounded-2xl bg-surface px-6 py-10 shadow-card md:px-20 md:py-14">
           <header className="flex flex-col gap-3">

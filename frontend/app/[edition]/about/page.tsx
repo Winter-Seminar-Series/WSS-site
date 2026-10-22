@@ -33,7 +33,7 @@ export default async function AboutPage({ params }: PageProps<'/[edition]/about'
 
   return (
     <>
-      <PageHero overline="Discover Our Story" title="About Us">
+      <PageHero image={edition.heroImage} overline="Discover Our Story" title="About Us">
         <div className="mt-8 flex flex-col gap-6 text-lg leading-relaxed text-muted">
           <p>
             The Winter Seminar Series (WSS) has been established to bridge the gap between leading experts and the

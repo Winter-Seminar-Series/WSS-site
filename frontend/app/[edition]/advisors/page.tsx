@@ -45,7 +45,7 @@ export default async function AdvisorsPage({ params }: PageProps<'/[edition]/adv
 
   return (
     <>
-      <PageHero overline="Our Guides" title="Scientific Advisors" />
+      <PageHero image={edition.heroImage} overline="Our Guides" title="Scientific Advisors" />
       <div className="pt-16">
         <TeamSection name="Scientific Advisors" members={ADVISORS} preserveOrder />
       </div>

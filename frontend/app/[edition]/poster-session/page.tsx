@@ -28,7 +28,7 @@ export default async function PosterSessionPage({ params }: PageProps<'/[edition
 
   return (
     <>
-      <PageHero overline="Join our competition" title="Poster Session">
+      <PageHero image={edition.heroImage} overline="Join our competition" title="Poster Session">
         <hr className="my-8 border-line-soft" />
         <RichText html={html} className="prose-lg" />
       </PageHero>

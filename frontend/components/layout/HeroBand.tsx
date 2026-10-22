@@ -1,10 +1,17 @@
 import Image from 'next/image';
 
+import { CURRENT_EDITION } from '@/lib/editions';
+
+interface Props {
+  /** The edition's hero image (`Edition.heroImage`); pages outside an edition use the current one. */
+  image?: string;
+}
+
 /** The brand photo strip behind the navbar on inner pages; content cards overlap it from below. */
-export function HeroBand() {
+export function HeroBand({ image = CURRENT_EDITION.heroImage }: Props) {
   return (
     <div className="relative h-72 bg-ink-deep md:h-96" aria-hidden>
-      <Image src="/images/hero.webp" alt="" fill priority sizes="100vw" className="object-cover" />
+      <Image src={image} alt="" fill priority sizes="100vw" className="object-cover" />
     </div>
   );
 }

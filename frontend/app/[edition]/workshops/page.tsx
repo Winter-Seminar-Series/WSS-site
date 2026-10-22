@@ -30,7 +30,7 @@ export default async function WorkshopsPage({ params }: PageProps<'/[edition]/wo
 
   return (
     <>
-      <PageHero overline="Engage in Transformative Workshops" title="Workshops">
+      <PageHero image={edition.heroImage} overline="Engage in Transformative Workshops" title="Workshops">
         <p className="mt-6 max-w-3xl text-lg text-muted">{DESCRIPTION}</p>
       </PageHero>
       {workshops.length === 0 ? (

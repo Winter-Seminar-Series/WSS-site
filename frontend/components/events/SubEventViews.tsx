@@ -24,7 +24,7 @@ export async function SubEventList({ edition, kind }: ListProps) {
 
   return (
     <>
-      <PageHero overline={section.overline} title={section.title}>
+      <PageHero image={edition.heroImage} overline={section.overline} title={section.title}>
         <p className="mt-6 max-w-3xl text-lg text-muted">{section.description}</p>
       </PageHero>
       {subEvents.length === 0 ? (
@@ -81,6 +81,7 @@ export async function SubEventPage({ edition, kind, id }: DetailProps) {
         ]}
       />
       <EventDetail
+        image={edition.heroImage}
         title={subEvent.name}
         meta={<SessionMeta date={subEvent.date} startTime={subEvent.startTime} endTime={subEvent.endTime} />}
         poster={subEvent.poster}
