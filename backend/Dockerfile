@@ -19,6 +19,10 @@ WORKDIR /app
 EXPOSE 8000
 ENV PYTHONUNBUFFERED 1
 
-RUN python manage.py collectstatic --noinput
+# collectstatic touches neither the database nor S3, but settings.py requires these at import time.
+# Real values come from the runtime env_file, so no secret is ever baked into the image.
+RUN SECRET_KEY=collectstatic DB_HOST=- DB_PORT=5432 DB_NAME=- DB_USER=- DB_PASS=- \
+    AWS_ACCESS_KEY=- AWS_SECRET_KEY=- AWS_STORAGE_BUCKET_NAME=- \
+    python manage.py collectstatic --noinput
 
 CMD ["gunicorn", "--bind", ":8000", "--workers", "4", "WSS.wsgi:application"]

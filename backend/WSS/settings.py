@@ -212,6 +212,8 @@ STORAGES = {
             "secret_key": os.environ['AWS_SECRET_KEY'],
             "bucket_name": os.environ['AWS_STORAGE_BUCKET_NAME'],
             "endpoint_url": "https://s3.ir-thr-at1.arvanstorage.ir",
+            # The bucket is public-read; local setups without real keys must serve unsigned URLs.
+            "querystring_auth": os.getenv('AWS_QUERYSTRING_AUTH', 'true').lower() == 'true',
         },
     },
     "staticfiles": {
