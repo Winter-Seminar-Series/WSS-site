@@ -43,13 +43,17 @@ class SkyroomClient:
                 'ttl': ttl,
             },
         }
+        # Skyroom takes the API key in the URL path, and `requests` errors quote the URL: never log them as is.
         try:
             response = requests.post(f'{API_BASE}/{self.api_key}', json=payload, timeout=self.timeout)
             data = response.json()
-        except (requests.RequestException, ValueError):
-            logger.exception('Skyroom unreachable')
-            raise UpstreamError()
+        except (requests.RequestException, ValueError) as error:
+            logger.error('Skyroom unreachable: %s', type(error).__name__)
+            raise UpstreamError() from None
         if not data.get('ok'):
-            logger.error('Skyroom refused a login link for room %s: %s', room_id, data.get('error_message'))
+            message = str(data.get('error_message', ''))
+            if self.api_key:
+                message = message.replace(self.api_key, '***')
+            logger.error('Skyroom refused a login link for room %s: %s', room_id, message)
             raise UpstreamError()
         return data['result']
