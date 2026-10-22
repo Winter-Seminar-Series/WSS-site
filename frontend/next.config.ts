@@ -74,6 +74,9 @@ const nextConfig: NextConfig = {
 
   experimental: {
     optimizePackageImports: ['lucide-react', '@tanstack/react-query', 'motion'],
+    // Keep dynamic pages (the dashboard tabs) in the client router cache for 30s, so going back to a tab is
+    // instant. Safe: every mutation is a Server Action that revalidates or sets cookies, which clears that cache.
+    staleTimes: { dynamic: 30 },
     serverActions: {
       // nginx proxies to the container by its compose service name.
       allowedOrigins: ['wss-sharif.com', 'frontend:3000'],
