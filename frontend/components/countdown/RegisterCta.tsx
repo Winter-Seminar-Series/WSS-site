@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { Countdown } from '@/components/countdown/Countdown';
 import { CURRENT_EDITION, isCurrentEdition } from '@/lib/editions';
 import type { Edition } from '@/lib/editions';
+import { BACKDROP_QUALITY } from '@/lib/images';
 import { LinkButton } from '@/ui/Button';
 
 interface Props {
@@ -15,7 +16,14 @@ export function RegisterCta({ edition }: Props) {
   if (!isCurrentEdition(edition)) {
     return (
       <section aria-labelledby="register-cta" className="relative overflow-hidden bg-ink-deep py-16 text-white">
-        <Image src={edition.bandImage} alt="" fill sizes="100vw" className="object-cover opacity-40" />
+        <Image
+          src={edition.bandImage}
+          alt=""
+          fill
+          sizes="100vw"
+          quality={BACKDROP_QUALITY}
+          className="object-cover opacity-40"
+        />
         <div className="relative mx-auto flex max-w-300 flex-col items-center justify-between gap-8 px-6 lg:flex-row">
           <div className="text-center lg:text-start">
             <p className="text-lg font-medium text-white/60 uppercase">You are browsing the {edition.label} archive</p>
@@ -34,7 +42,7 @@ export function RegisterCta({ edition }: Props) {
 
   return (
     <section aria-labelledby="register-cta" className="relative overflow-hidden bg-ink-deep py-16 text-white">
-      <Image src="/images/cta.webp" alt="" fill sizes="100vw" className="object-cover" />
+      <Image src="/images/cta.webp" alt="" fill sizes="100vw" quality={BACKDROP_QUALITY} className="object-cover" />
       <div className="relative mx-auto flex max-w-300 flex-col items-center justify-between gap-8 px-6 lg:flex-row">
         <div className="text-center lg:text-start">
           <p className="text-lg font-medium text-white/60 uppercase">Unlock the gateway to revelation</p>

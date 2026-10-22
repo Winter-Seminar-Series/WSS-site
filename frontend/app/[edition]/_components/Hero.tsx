@@ -3,6 +3,7 @@ import Image from 'next/image';
 
 import { Countdown } from '@/components/countdown/Countdown';
 import type { Edition } from '@/lib/editions';
+import { BACKDROP_QUALITY } from '@/lib/images';
 import { SPEAKER_INSTITUTIONS, VENUE } from '@/lib/site';
 
 export function Hero({ edition }: { edition: Edition }) {
@@ -16,6 +17,7 @@ export function Hero({ edition }: { edition: Edition }) {
           priority
           fetchPriority="high"
           sizes="100vw"
+          quality={BACKDROP_QUALITY}
           className="object-cover"
         />
         <div className="relative mx-auto flex max-w-300 flex-col gap-12 px-6 pt-8 lg:flex-row lg:items-start lg:justify-between lg:pt-16">

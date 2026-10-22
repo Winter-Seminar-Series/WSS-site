@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { getEditionSpeakers } from '@/api/events.api';
 import { editionHref } from '@/lib/editions';
 import type { Edition } from '@/lib/editions';
+import { BACKDROP_QUALITY } from '@/lib/images';
 import { LinkButton } from '@/ui/Button';
 import { Marquee } from '@/ui/Marquee';
 import { PersonPhoto } from '@/ui/PersonPhoto';
@@ -15,7 +16,7 @@ export async function SpeakersSection({ edition }: { edition: Edition }) {
 
   return (
     <section aria-labelledby="speakers" className="relative overflow-hidden bg-ink-deep pb-4">
-      <Image src={edition.bandImage} alt="" fill sizes="100vw" className="object-cover" />
+      <Image src={edition.bandImage} alt="" fill sizes="100vw" quality={BACKDROP_QUALITY} className="object-cover" />
       <div className="relative mx-auto max-w-300 px-6 pt-20 pb-10">
         <SectionHeading
           id="speakers"
