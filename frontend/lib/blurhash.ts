@@ -10,7 +10,7 @@ import { deflateSync } from 'node:zlib';
 const SIZE = 16;
 const CACHE_LIMIT = 1000;
 
-const cache = new Map<string, string | null>();
+const cache = new Map<string, string>();
 
 const CRC_TABLE = Uint32Array.from({ length: 256 }, (_, n) => {
   let c = n;
@@ -50,22 +50,29 @@ function encodePng(rgba: Uint8ClampedArray): Buffer {
   ]);
 }
 
+/** Flat light grey (a 1×1 hash, so it decodes to exactly one colour). Used when an image has no usable hash. */
+export const FALLBACK_BLUR_HASH = '00QTAg';
+
+function toDataUrl(hash: string): string {
+  return `data:image/png;base64,${encodePng(decode(hash, SIZE, SIZE)).toString('base64')}`;
+}
+
 /**
- * `data:image/png;base64,…` for a BlurHash, or `null` when there is none (old API, image without a hash) or it is
- * malformed: a bad placeholder must never break the page, the image just loads without one.
+ * `data:image/png;base64,…` for a BlurHash. An image without a hash (not backfilled yet, older API) or with a
+ * malformed one gets the grey fallback: a bad placeholder must never break the page.
  */
-export function blurDataUrl(hash: string | null | undefined): string | null {
-  if (!hash) return null;
-  const cached = cache.get(hash);
+export function blurDataUrl(hash: string | null | undefined): string {
+  const key = hash || FALLBACK_BLUR_HASH;
+  const cached = cache.get(key);
   if (cached !== undefined) return cached;
 
-  let url: string | null;
+  let url: string;
   try {
-    url = `data:image/png;base64,${encodePng(decode(hash, SIZE, SIZE)).toString('base64')}`;
+    url = toDataUrl(key);
   } catch {
-    url = null;
+    url = cache.get(FALLBACK_BLUR_HASH) ?? toDataUrl(FALLBACK_BLUR_HASH);
   }
   if (cache.size >= CACHE_LIMIT) cache.clear();
-  cache.set(hash, url);
+  cache.set(key, url);
   return url;
 }

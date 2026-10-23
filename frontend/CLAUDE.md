@@ -195,7 +195,7 @@ proxy.ts                 # Next 16 proxy (formerly middleware): refreshes the ac
 - **Placeholders:** the API sends a BlurHash next to each image (`*_blurhash`, empty until backfilled, absent from
   older backends). `api/` decodes it with `blurDataUrl` (`lib/blurhash.ts`, server-only: the `blurhash` package plus a PNG wrapper) into the
   `…Blur` field of the app type, and components spread `blurProps(blur)` (`lib/images.ts`) onto `<Image>`. A missing or
-  malformed hash simply means no placeholder. Never decode in a client component: pass the data URL down.
+  malformed hash falls back to a flat grey placeholder (`FALLBACK_BLUR_HASH`). Never decode in a client component: pass the data URL down.
 - **Remote images:** only the ArvanCloud bucket is allowed (`images.remotePatterns`). Don't widen it,
   because `/_next/image` would become an open proxy.
 - **Memoisation and effects:** no memoisation by default, and no `useEffect` to sync state. Derive the
