@@ -30,7 +30,13 @@ export async function StaffSection({ edition }: { edition: Edition }) {
       <Marquee label="Staff members" durationSeconds={staff.length * 3}>
         {staff.map((member) => (
           <li key={member.id} className="flex w-52 shrink-0 flex-col items-center px-4 text-center">
-            <PersonPhoto src={member.image} name={member.name} size={160} className="rounded-full" />
+            <PersonPhoto
+              src={member.image}
+              blur={member.imageBlur}
+              name={member.name}
+              size={160}
+              className="rounded-full"
+            />
             <p className="mt-3 font-semibold text-ink">{member.name}</p>
             <p className="text-xs text-muted">{member.team}</p>
           </li>

@@ -62,6 +62,7 @@ export default async function WorkshopPage({ params }: PageProps<'/[edition]/wor
           <WorkshopMeta startDate={workshop.startDate} endDate={workshop.endDate} modules={workshop.sessions.length} />
         }
         poster={workshop.poster}
+        posterBlur={workshop.posterBlur}
         descriptionHtml={workshop.descriptionHtml}
         speakers={uniqueById(workshop.sessions.map((session) => session.speaker))}
       >

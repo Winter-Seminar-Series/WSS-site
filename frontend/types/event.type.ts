@@ -6,6 +6,8 @@ export interface Speaker {
   designation: string;
   bioHtml: string;
   image: string | null;
+  /** `blurDataURL` for the image, decoded on the server from the API's BlurHash. */
+  imageBlur: string | null;
 }
 
 export type SubEventKind = 'seminar' | 'round-table' | 'lab-talk';
@@ -22,7 +24,9 @@ export interface SubEvent {
   startTime: string;
   endTime: string;
   poster: string | null;
+  posterBlur: string | null;
   thumbnail: string | null;
+  thumbnailBlur: string | null;
   speakers: Speaker[];
 }
 
@@ -41,7 +45,9 @@ export interface Workshop {
   name: string;
   descriptionHtml: string;
   poster: string | null;
+  posterBlur: string | null;
   thumbnail: string | null;
+  thumbnailBlur: string | null;
   /** Toman. */
   price: number;
   sessions: WorkshopSession[];
@@ -62,6 +68,8 @@ export interface StaffMember {
   name: string;
   designation: string;
   image: string | null;
+  /** Missing for the hand-written advisors. */
+  imageBlur?: string | null;
 }
 
 export interface StaffTeam {

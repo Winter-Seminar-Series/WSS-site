@@ -41,6 +41,7 @@ export async function SubEventList({ edition, kind }: ListProps) {
                 href={editionHref(edition, `${section.path}/${subEvent.id}`)}
                 title={subEvent.name}
                 thumbnail={subEvent.thumbnail}
+                thumbnailBlur={subEvent.thumbnailBlur}
                 priority={index < 3}
                 meta={<SessionMeta date={subEvent.date} startTime={subEvent.startTime} endTime={subEvent.endTime} />}
                 footer={
@@ -88,6 +89,7 @@ export async function SubEventPage({ edition, kind, id }: DetailProps) {
         title={subEvent.name}
         meta={<SessionMeta date={subEvent.date} startTime={subEvent.startTime} endTime={subEvent.endTime} />}
         poster={subEvent.poster}
+        posterBlur={subEvent.posterBlur}
         descriptionHtml={subEvent.descriptionHtml}
         speakers={subEvent.speakers}
       />

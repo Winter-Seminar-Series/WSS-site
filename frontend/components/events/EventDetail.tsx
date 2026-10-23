@@ -3,6 +3,7 @@ import type { ReactNode } from 'react';
 
 import { SpeakerProfile } from '@/components/events/SpeakerProfile';
 import { HeroBand } from '@/components/layout/HeroBand';
+import { blurProps } from '@/lib/images';
 import type { Speaker } from '@/types/event.type';
 import { RichText } from '@/ui/RichText';
 
@@ -10,6 +11,7 @@ interface Props {
   title: string;
   meta: ReactNode;
   poster: string | null;
+  posterBlur?: string | null;
   descriptionHtml: string;
   speakers: Speaker[];
   /** Extra sections between the abstract and the presenters (workshop modules). */
@@ -18,7 +20,7 @@ interface Props {
   image?: string;
 }
 
-export function EventDetail({ title, meta, poster, descriptionHtml, speakers, children, image }: Props) {
+export function EventDetail({ title, meta, poster, posterBlur, descriptionHtml, speakers, children, image }: Props) {
   return (
     <>
       <HeroBand image={image} />
@@ -36,6 +38,7 @@ export function EventDetail({ title, meta, poster, descriptionHtml, speakers, ch
               width={1200}
               height={675}
               priority
+              {...blurProps(posterBlur)}
               sizes="(min-width: 1200px) 1040px, 100vw"
               className="h-auto w-full rounded-2xl object-cover"
             />

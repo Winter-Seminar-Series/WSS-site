@@ -4,18 +4,20 @@ import Link from 'next/link';
 import type { ReactNode } from 'react';
 
 import { PendingHint } from '@/components/navigation/PendingHint';
+import { blurProps } from '@/lib/images';
 
 interface Props {
   href: string;
   title: string;
   thumbnail: string | null;
+  thumbnailBlur?: string | null;
   meta: ReactNode;
   footer: ReactNode;
   /** Above-the-fold cards load eagerly. */
   priority?: boolean;
 }
 
-export function EventCard({ href, title, thumbnail, meta, footer, priority }: Props) {
+export function EventCard({ href, title, thumbnail, thumbnailBlur, meta, footer, priority }: Props) {
   return (
     <article className="group relative flex h-full flex-col overflow-hidden rounded-xl border border-line-soft bg-surface transition-shadow hover:shadow-card">
       <div className="relative aspect-3/2 overflow-hidden bg-brand-soft">
@@ -26,6 +28,7 @@ export function EventCard({ href, title, thumbnail, meta, footer, priority }: Pr
             alt={title}
             fill
             priority={priority}
+            {...blurProps(thumbnailBlur)}
             sizes="(min-width: 1024px) 380px, (min-width: 640px) 50vw, 100vw"
             className="object-cover transition-transform duration-300 group-hover:scale-105"
           />

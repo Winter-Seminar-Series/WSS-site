@@ -1,15 +1,19 @@
 import { UserRound } from 'lucide-react';
 import Image from 'next/image';
 
+import { blurProps } from '@/lib/images';
+
 interface Props {
   src: string | null;
+  /** Placeholder shown until the photo has loaded. */
+  blur?: string | null;
   name: string;
   size: number;
   className?: string;
   priority?: boolean;
 }
 
-export function PersonPhoto({ src, name, size, className = '', priority }: Props) {
+export function PersonPhoto({ src, blur, name, size, className = '', priority }: Props) {
   if (!src) {
     return (
       <div
@@ -29,6 +33,7 @@ export function PersonPhoto({ src, name, size, className = '', priority }: Props
       width={size}
       height={size}
       priority={priority}
+      {...blurProps(blur)}
       className={`object-cover ${className}`}
       style={{ width: size, height: size }}
     />

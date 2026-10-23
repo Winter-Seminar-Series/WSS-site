@@ -37,7 +37,13 @@ export function TeamSection({ name, members, preserveOrder = false }: Props) {
       <ul className="mx-auto flex max-w-300 flex-wrap justify-center gap-x-8 gap-y-10 px-6">
         {ordered.map((member) => (
           <li key={member.id} className="flex w-52 flex-col items-center text-center">
-            <PersonPhoto src={member.image} name={member.name} size={200} className="rounded-full" />
+            <PersonPhoto
+              src={member.image}
+              blur={member.imageBlur}
+              name={member.name}
+              size={200}
+              className="rounded-full"
+            />
             <p className="mt-3 font-semibold text-ink">{member.name}</p>
             {member.designation && <p className="text-sm text-muted">{member.designation}</p>}
           </li>

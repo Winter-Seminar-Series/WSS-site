@@ -13,6 +13,9 @@ importers:
       '@tanstack/react-query':
         specifier: ^5.95.2
         version: 5.104.5(@types/react@19.3.0)(react@19.2.9)
+      blurhash:
+        specifier: ^2.0.5
+        version: 2.0.5
       iron-session:
         specifier: ^8.0.4
         version: 8.0.4
@@ -1103,6 +1106,10 @@ packages:
       { integrity: sha512-YJs6Pz17RMNv8HoyKREtCY38E3BV1nPkWVmIb+XN1uHC1Vqt3KZCH/uJH9ZKRoiKb/icZ6tvehyee6RZNbFfRA== }
     engines: { node: '>=6.0.0' }
     hasBin: true
+
+  blurhash@2.0.5:
+    resolution:
+      { integrity: sha512-cRygWd7kGBQO3VEhPiTgq4Wc43ctsM+o46urrmPOiuAe+07fzlSB9OJVdpgDL0jPqXUVQ9ht7aq7kxOeJHRK+w== }
 
   brace-expansion@1.1.21:
     resolution:
@@ -3745,6 +3752,8 @@ snapshots:
   balanced-match@4.0.4: {}
 
   baseline-browser-mapping@2.11.30: {}
+
+  blurhash@2.0.5: {}
 
   brace-expansion@1.1.21:
     dependencies:

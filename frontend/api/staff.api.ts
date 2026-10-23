@@ -1,3 +1,4 @@
+import { blurDataUrl } from '@/lib/blurhash';
 import { httpGet } from '@/services/http';
 import type { StaffMember, StaffTeam } from '@/types/event.type';
 import type { StaffTeamResponse } from '@/types/staff.api.type';
@@ -14,6 +15,7 @@ export async function getStaffTeams(eventId: number): Promise<StaffTeam[]> {
       name: staff.name,
       designation: staff.designation,
       image: staff.image,
+      imageBlur: blurDataUrl(staff.image_blurhash),
     })),
   }));
 }

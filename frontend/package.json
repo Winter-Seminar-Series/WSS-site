@@ -19,6 +19,7 @@
   "dependencies": {
     "@tailwindcss/postcss": "^4.1.18",
     "@tanstack/react-query": "^5.95.2",
+    "blurhash": "^2.0.5",
     "iron-session": "^8.0.4",
     "lucide-react": "^0.562.0",
     "motion": "^13.1.1",

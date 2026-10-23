@@ -1,3 +1,4 @@
+import { blurDataUrl } from '@/lib/blurhash';
 import { uniqueById } from '@/lib/collections';
 import { markdownToHtml } from '@/lib/markdown';
 import { httpGet } from '@/services/http';
@@ -28,6 +29,7 @@ async function toSpeaker(speaker: SpeakerResponse): Promise<Speaker> {
     designation: speaker.designation,
     bioHtml: await markdownToHtml(speaker.description),
     image: speaker.image,
+    imageBlur: blurDataUrl(speaker.image_blurhash),
   };
 }
 
@@ -45,7 +47,9 @@ async function toSubEvent(
     startTime: subEvent.starting_time,
     endTime: subEvent.ending_time,
     poster: subEvent.poster,
+    posterBlur: blurDataUrl(subEvent.poster_blurhash),
     thumbnail: subEvent.thumbnail,
+    thumbnailBlur: blurDataUrl(subEvent.thumbnail_blurhash),
     speakers: await Promise.all(speakers.map(toSpeaker)),
   };
 }
@@ -117,7 +121,9 @@ export async function getWorkshops(eventId: number): Promise<Workshop[]> {
         name: plan.workshop.name,
         descriptionHtml: await markdownToHtml(plan.workshop.description),
         poster: plan.workshop.poster,
+        posterBlur: blurDataUrl(plan.workshop.poster_blurhash),
         thumbnail: plan.workshop.thumbnail,
+        thumbnailBlur: blurDataUrl(plan.workshop.thumbnail_blurhash),
         price: plan.price / RIAL_PER_TOMAN,
         sessions,
         startDate: sessions.at(0)?.date ?? null,

@@ -6,6 +6,8 @@ export interface SpeakerResponse {
   designation: string;
   description: string;
   image: string | null;
+  /** BlurHash of the image. Absent from older backends, and empty until it has been computed. */
+  image_blurhash?: string;
 }
 
 export interface SubEventResponse {
@@ -20,6 +22,8 @@ export interface SubEventResponse {
   link: string;
   poster: string | null;
   thumbnail: string | null;
+  poster_blurhash?: string;
+  thumbnail_blurhash?: string;
   event: number;
 }
 
@@ -66,6 +70,8 @@ export interface ParticipationPlanResponse {
     description: string;
     poster: string | null;
     thumbnail: string | null;
+    poster_blurhash?: string;
+    thumbnail_blurhash?: string;
     sessions: WorkshopSessionResponse[];
   } | null;
   mode_of_attendance: ModeOfAttendanceResponse | null;

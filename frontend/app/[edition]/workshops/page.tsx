@@ -51,6 +51,7 @@ export default async function WorkshopsPage({ params }: PageProps<'/[edition]/wo
                 href={editionHref(edition, `/workshops/${workshop.id}`)}
                 title={workshop.name}
                 thumbnail={workshop.thumbnail}
+                thumbnailBlur={workshop.thumbnailBlur}
                 priority={index < 3}
                 meta={
                   <WorkshopMeta

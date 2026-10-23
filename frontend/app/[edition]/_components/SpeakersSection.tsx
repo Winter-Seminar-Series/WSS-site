@@ -36,7 +36,13 @@ export async function SpeakersSection({ edition }: { edition: Edition }) {
           {speakers.map((speaker) => (
             <li key={speaker.id} className="w-60 shrink-0 px-3 pt-4 pb-12">
               <div className="flex h-full flex-col items-center rounded-xl bg-surface p-5 text-center">
-                <PersonPhoto src={speaker.image} name={speaker.name} size={160} className="rounded-full" />
+                <PersonPhoto
+                  src={speaker.image}
+                  blur={speaker.imageBlur}
+                  name={speaker.name}
+                  size={160}
+                  className="rounded-full"
+                />
                 <p className="mt-4 text-lg font-semibold text-ink">{speaker.name}</p>
                 <p className="mt-1 line-clamp-3 text-sm text-muted">{speaker.designation}</p>
               </div>
