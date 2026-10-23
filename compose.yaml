@@ -8,7 +8,7 @@ services:
     image: postgres
     ports:
       - "127.0.0.1:5432:5432"
-    container_name: postgres
+    container_name: wss-postgres
     networks:
       - app-net
     env_file:
@@ -19,7 +19,7 @@ services:
   payment:
     # CI publishes <IMAGE_PREFIX>/wss-payment:sha-<short> and :latest — see .github/workflows/images.yml.
     image: ${PAYMENT_IMAGE:-wss:pay}
-    container_name: payment
+    container_name: wss-payment
     networks:
       - app-net
     restart: on-failure
@@ -31,7 +31,7 @@ services:
   # Rate-limit counters for the backend (backend/common/throttling.py). Ephemeral by design: no persistence.
   redis:
     image: redis:7.4-alpine
-    container_name: redis
+    container_name: wss-redis
     command: ['redis-server', '--save', '', '--appendonly', 'no', '--maxmemory', '64mb', '--maxmemory-policy', 'volatile-ttl']
     networks:
       - app-net
@@ -39,7 +39,7 @@ services:
 
   backend:
     image: ${BACKEND_IMAGE:-back:TEST}
-    container_name: backend
+    container_name: wss-backend
     networks:
       - app-net
     restart: unless-stopped
@@ -54,7 +54,7 @@ services:
       - staticfiles:/var/www/static
   metabase:
       image: metabase/metabase:v0.56.19.x
-      container_name: metabase
+      container_name: wss-metabase
       networks:
         - app-net
       ports:

@@ -14,7 +14,7 @@ services:
       args:
         NEXT_PUBLIC_ORIGIN: ${NEXT_PUBLIC_ORIGIN:-https://wss-sharif.com}
         GA_TRACKING_ID: ${GA_TRACKING_ID:-}
-    container_name: frontend
+    container_name: wss-frontend
     restart: unless-stopped
     ports:
       - 3020:3000
