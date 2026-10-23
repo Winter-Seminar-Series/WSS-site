@@ -4,6 +4,8 @@ from django.contrib.auth.models import User
 from django.db import models
 from django.utils.deconstruct import deconstructible
 
+from common.models import BlurHashMixin, blurhash_field
+
 
 @deconstructible
 class UniqueUploadPath:
@@ -45,7 +47,7 @@ class Event(models.Model):
         return f'{ordinal(self.order)} {self.name}'
 
 
-class SubEvent(models.Model):
+class SubEvent(BlurHashMixin, models.Model):
     KIND_CHOICES = (
         ('S', 'Seminar'),
         ('W', 'Workshop'),
@@ -71,15 +73,22 @@ class SubEvent(models.Model):
     poster = models.ImageField(upload_to=UniqueUploadPath('posters'), null=True, blank=True)
     thumbnail = models.ImageField(upload_to=UniqueUploadPath('thumbnails'), null=True, blank=True)
 
+    BLURHASH_FIELDS = {'poster': 'poster_blurhash', 'thumbnail': 'thumbnail_blurhash'}
+    poster_blurhash = blurhash_field()
+    thumbnail_blurhash = blurhash_field()
+
     def __str__(self) -> str:
         return f'{self.name}'
 
 
-class Speaker(models.Model):
+class Speaker(BlurHashMixin, models.Model):
     name = models.TextField(max_length=50, blank=False)
     designation = models.TextField(max_length=150, blank=True)
     description = models.TextField(max_length=5000, blank=True)
     image = models.ImageField(upload_to=UniqueUploadPath('speakers'), null=True, blank=True)
+
+    BLURHASH_FIELDS = {'image': 'image_blurhash'}
+    image_blurhash = blurhash_field()
 
     def __str__(self) -> str:
         return f'{self.name} - {self.designation}'
@@ -93,11 +102,15 @@ class Seminar(models.Model):
         return f'{self.sub_event}'
 
 
-class Workshop(models.Model):
+class Workshop(BlurHashMixin, models.Model):
     name = models.TextField(max_length=100)
     description = models.TextField(max_length=5000, blank=True)
     poster = models.ImageField(upload_to='posters/', null=True, blank=True)
     thumbnail = models.ImageField(upload_to='thumbnails/', null=True, blank=True)
+
+    BLURHASH_FIELDS = {'poster': 'poster_blurhash', 'thumbnail': 'thumbnail_blurhash'}
+    poster_blurhash = blurhash_field()
+    thumbnail_blurhash = blurhash_field()
 
     def __str__(self):
         return f'{self.name}'

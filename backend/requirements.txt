@@ -12,3 +12,4 @@ drf-standardized-errors
 s3transfer==0.10.4
 whitenoise==6.4.0
 redis==5.2.1
+blurhash-python==1.2.2

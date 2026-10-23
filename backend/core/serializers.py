@@ -54,7 +54,7 @@ class WorkshopSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Workshop
-        fields = ('name', 'description', 'sessions', 'poster', 'thumbnail')
+        fields = ('name', 'description', 'sessions', 'poster', 'thumbnail', 'poster_blurhash', 'thumbnail_blurhash')
 
 
 class PosterSessionImageSerializer(serializers.ModelSerializer):

@@ -4,7 +4,7 @@ from staff.models import Staff, StaffTeam, StaffTeamMember
 class StaffSerializer(serializers.ModelSerializer):
     class Meta:
         model = Staff
-        fields = ('id', 'name', 'designation', 'description', 'image')
+        fields = ('id', 'name', 'designation', 'description', 'image', 'image_blurhash')
 
 class StaffTeamMemberSerializer(serializers.ModelSerializer):
     staff = StaffSerializer()

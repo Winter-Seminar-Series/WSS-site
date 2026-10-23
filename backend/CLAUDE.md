@@ -77,6 +77,13 @@ tests/                    one module per area, built on common.testing
   every new variable in `../.env.backend.example`.
 - **Media:** media is stored on S3. `AWS_QUERYSTRING_AUTH=false` gives unsigned public URLs, which the
   bucket allows; the frontend's `next/image` allow-list and its `/files/[id]` route expect this host.
+- **Image placeholders (BlurHash):** a model with image fields that the API serves inherits `common.models.BlurHashMixin`
+  and declares `BLURHASH_FIELDS = {'image': 'image_blurhash'}` plus a `blurhash_field()` column per image. `save()`
+  recomputes the hash from the upload in memory whenever the image changes, and a bad image never blocks the save (the
+  hash stays empty). Serializers list the hash fields next to the image; the frontend turns them into `next/image`
+  placeholders. Rows written without `save()` (`update`, `bulk_create`, loaddata) and rows that predate the feature are
+  filled by `python manage.py backfill_blurhash [app.Model …] [--force] [--dry-run] [--workers N]`: idempotent, safe on a
+  live site, exits non-zero if an image could not be read. Run it once after deploying the migration.
 - **Migrations:** every model change ships with its migration in the same commit. Never edit an applied
   migration (the one exception so far makes `core/0009` tolerate an empty database, without changing its effect
   where it already ran). Data migrations must be reversible or explicitly documented as one-way.
