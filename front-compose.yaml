@@ -5,9 +5,9 @@ networks:
 
 services:
   frontend:
-    # Set FRONTEND_IMAGE to the CI image (<IMAGE_PREFIX>/wss-frontend:<tag>) and run `pull` + `up --no-build`
-    # to deploy it; without it, `up --build` builds on the server as before.
-    image: ${FRONTEND_IMAGE:-wss-frontend}
+    # Defaults to the image CI publishes on GHCR. Set FRONTEND_IMAGE (e.g. <IMAGE_PREFIX>/wss-frontend:sha-<short>)
+    # to pin a tag or use another registry, then `pull` + `up --no-build`; `up --build` builds on the server instead.
+    image: ${FRONTEND_IMAGE:-ghcr.io/winter-seminar-series/wss-frontend:latest}
     build:
       context: frontend
       # Build-time values baked into the client bundle; the API is only called at runtime.

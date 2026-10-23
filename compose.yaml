@@ -5,7 +5,7 @@ networks:
 
 services:
   postgresql:
-    image: postgres
+    image: docker.arvancloud.ir/postgres:16
     container_name: wss-postgres
     networks:
       - app-net
@@ -15,8 +15,9 @@ services:
       - postgres-data:/var/lib/postgresql/data
 
   payment:
-    # CI publishes <IMAGE_PREFIX>/wss-payment:sha-<short> and :latest — see .github/workflows/images.yml.
-    image: ${PAYMENT_IMAGE:-wss:pay}
+    # CI publishes <IMAGE_PREFIX>/wss-payment:sha-<short> and :latest (GHCR by default) — see .github/workflows/images.yml.
+    # PAYMENT_IMAGE / BACKEND_IMAGE pin a tag or point at another registry.
+    image: ${PAYMENT_IMAGE:-ghcr.io/winter-seminar-series/wss-payment:latest}
     container_name: wss-payment
     networks:
       - app-net
@@ -28,7 +29,7 @@ services:
 
   # Rate-limit counters for the backend (backend/common/throttling.py). Ephemeral by design: no persistence.
   redis:
-    image: redis:7.4-alpine
+    image: docker.arvancloud.ir/redis:7.4-alpine
     container_name: wss-redis
     command: ['redis-server', '--save', '', '--appendonly', 'no', '--maxmemory', '64mb', '--maxmemory-policy', 'volatile-ttl']
     networks:
@@ -36,7 +37,7 @@ services:
     restart: unless-stopped
 
   backend:
-    image: ${BACKEND_IMAGE:-back:TEST}
+    image: ${BACKEND_IMAGE:-ghcr.io/winter-seminar-series/wss-backend:latest}
     container_name: wss-backend
     networks:
       - app-net
