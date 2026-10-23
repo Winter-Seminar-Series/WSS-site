@@ -1,28 +1,12 @@
 import type { StaffMember } from '@/types/event.type';
 import { PersonPhoto } from '@/ui/PersonPhoto';
 
-// Leads first, in this order; everyone else alphabetically by role, people without a role last.
-const ROLE_PRIORITY = ['President', 'Vice President', 'Head', 'Sub-Head', 'Senior'];
-
-function rolePriority(designation: string): number {
-  const index = ROLE_PRIORITY.findIndex((role) => designation.startsWith(role));
-  if (index !== -1) return index;
-  return designation ? ROLE_PRIORITY.length : ROLE_PRIORITY.length + 1;
-}
-
-function byRole(a: StaffMember, b: StaffMember): number {
-  return rolePriority(a.designation) - rolePriority(b.designation) || a.designation.localeCompare(b.designation);
-}
-
 interface Props {
   name: string;
   members: StaffMember[];
-  /** Keep the given order instead of sorting leads first. */
-  preserveOrder?: boolean;
 }
 
-export function TeamSection({ name, members, preserveOrder = false }: Props) {
-  const ordered = preserveOrder ? members : [...members].sort(byRole);
+export function TeamSection({ name, members }: Props) {
   const headingId = `team-${name.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`;
 
   return (
@@ -35,7 +19,7 @@ export function TeamSection({ name, members, preserveOrder = false }: Props) {
         <hr className="grow border-line-soft" />
       </div>
       <ul className="mx-auto flex max-w-300 flex-wrap justify-center gap-x-8 gap-y-10 px-6">
-        {ordered.map((member) => (
+        {members.map((member) => (
           <li key={member.id} className="flex w-52 flex-col items-center text-center">
             <PersonPhoto
               src={member.image}
