@@ -6,8 +6,6 @@ networks:
 services:
   postgresql:
     image: postgres
-    ports:
-      - "127.0.0.1:5432:5432"
     container_name: wss-postgres
     networks:
       - app-net
