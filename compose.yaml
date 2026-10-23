@@ -52,17 +52,6 @@ services:
       - .env.backend
     volumes:
       - staticfiles:/var/www/static
-  metabase:
-      image: metabase/metabase:v0.56.19.x
-      container_name: wss-metabase
-      networks:
-        - app-net
-      ports:
-        - "3000:3000"
-      env_file:
-        - .env.metabase
-      depends_on:
-        - postgresql
 
 volumes:
   postgres-data:

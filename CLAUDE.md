@@ -38,7 +38,7 @@ The registry is `frontend/lib/editions.ts`, which maps each edition to its `core
 
 ```
 frontend/  backend/  payment/        # one directory per module = one Docker image
-compose.yaml                         # production: postgres, redis, backend, payment, metabase (external `app` network)
+compose.yaml                         # production: postgres, redis, backend, payment (external `app` network)
 front-compose.yaml                   # production: frontend
 nginx-compose.yaml, nginx.conf       # production: reverse proxy; old edition subdomains 301 to /<edition>/…
 compose.dev.yaml                     # local: postgres + redis + backend + payment, self-contained
