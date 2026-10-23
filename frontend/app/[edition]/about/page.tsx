@@ -13,7 +13,7 @@ import { SectionHeading } from '@/ui/SectionHeading';
 
 export const revalidate = 900;
 
-export const generateStaticParams = editionStaticParams('about');
+export const generateStaticParams = editionStaticParams();
 
 export async function generateMetadata({ params }: PageProps<'/[edition]/about'>): Promise<Metadata> {
   return editionPageMetadata(

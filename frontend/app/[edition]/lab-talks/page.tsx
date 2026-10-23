@@ -6,7 +6,7 @@ import { subEventListMetadata } from '@/lib/metadata';
 
 export const revalidate = 900;
 
-export const generateStaticParams = editionStaticParams('lab-talks');
+export const generateStaticParams = editionStaticParams();
 
 export async function generateMetadata({ params }: PageProps<'/[edition]/lab-talks'>): Promise<Metadata> {
   return subEventListMetadata(await resolveEdition(params, 'lab-talks'), 'lab-talk');

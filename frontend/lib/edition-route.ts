@@ -4,12 +4,12 @@ import { EDITIONS, findEdition, hasPage } from '@/lib/editions';
 import type { Edition, EditionPage } from '@/lib/editions';
 
 /**
- * The editions a page is prerendered for (as a shell, see services/http.ts): all of them for the home page, else
- * only those that have the page. Anything else renders on demand and 404s in `resolveEdition`.
+ * Pages are not prerendered. `next build` never calls the API, so a prerendered page would be an empty shell that
+ * the first visitor gets (stale-while-revalidate) and only the second sees filled in. With no params at build, the
+ * first request renders with real data and ISR caches it for `revalidate` seconds; `resolveEdition` 404s the rest.
  */
-export function editionStaticParams(page?: EditionPage): () => { edition: string }[] {
-  return () =>
-    EDITIONS.filter((edition) => !page || hasPage(edition, page)).map((edition) => ({ edition: edition.slug }));
+export function editionStaticParams(): () => { edition: string }[] {
+  return () => [];
 }
 
 /** The edition of a route, or a 404 when the slug is unknown or the edition has no such page. */

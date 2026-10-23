@@ -40,7 +40,7 @@ One app serves every edition. Each has its own indexable URLs, theme, menu, data
   becomes canonical once the next edition launches). Archived editions live at `/8th/…`. nginx 301s the old
   `8th.wss-sharif.com` subdomains there.
 - **Pages** resolve their edition with `resolveEdition(params, page)` (`lib/edition-route.ts`), which 404s unknown
-  slugs and pages the edition lacks, and prerender with `editionStaticParams(page)`. Every internal link goes
+  slugs and pages the edition lacks, and export `generateStaticParams = editionStaticParams()`. Every internal link goes
   through `editionHref(edition, path)`, and metadata through `editionPageMetadata`, which sets the prefixed
   canonical URL and puts the edition in archive titles. An archive's empty listing is `noindex` and stays out of
   the sitemap.
@@ -251,10 +251,11 @@ version: `node_modules/next/dist/docs/01-app/`.
 - **Route props:** type them with the generated `PageProps<'/route'>` / `RouteContext<'/route'>` helpers.
 - **`serverActions.allowedOrigins`** lists the production host and the `frontend:3000` service that nginx
   proxies to. Add any new public hostname there.
-- **Builds never call the API** (no SSG). During `next build`, public GETs in `services/http.ts` answer an
-  empty list with a 1s revalidate, so the build emits shells. The first request after deploy serves the shell
-  and regenerates the page, and ISR keeps it at 900s from then on. `[id]` pages prerender nothing
-  (`noStaticParams`). Don't add build-time fetches to the API, and keep every public GET reachable at build a list.
+- **Builds never call the API**, and public pages are not prerendered either: every `generateStaticParams`
+  returns nothing (`editionStaticParams()`, `noStaticParams`). A prerendered page would be an empty shell that
+  the first visitor receives (stale-while-revalidate) and only the next one sees filled in. The first request
+  renders with real data, and ISR keeps the page for 900s from then on. `sitemap.xml` is `force-dynamic` for the
+  same reason (its fetches are cached). Don't add build-time fetches to the API.
 
 ---
 

@@ -13,14 +13,6 @@ export const API_BASE_URL = `${API_ORIGIN}/api`;
 /** Public content changes a few times a day at most; 15 minutes keeps pages static without going stale for long. */
 export const PUBLIC_REVALIDATE_SECONDS = 900;
 
-/*
- * `next build` never calls the API, so an image builds even while the API is down. During the build every public
- * GET answers an empty list (all of them are lists) with a 1s revalidate, which Next adopts for the page: the
- * build only emits a shell, and the first request after deploy regenerates it with real data (ISR).
- */
-const IS_BUILD = process.env.NEXT_PHASE === 'phase-production-build';
-const BUILD_PLACEHOLDER = 'data:application/json,[]';
-
 /**
  * The visitor's X-Forwarded-For, as nginx set it (it appends the client address, resolved from Cloudflare's
  * CF-Connecting-IP), forwarded unchanged: the API trusts exactly this one hop (NUM_PROXIES=1).
@@ -88,7 +80,6 @@ async function request<T>(path: string, { method = 'GET', body, auth = false, ta
   }
 
   const cacheable = method === 'GET' && !auth;
-  if (cacheable && IS_BUILD) return (await (await fetch(BUILD_PLACEHOLDER, { next: { revalidate: 1 } })).json()) as T;
   // The API rate-limits sign-in, sign-up, password and payment calls per visitor. They all reach it from this server,
   // so pass on the visitor's address. Cacheable GETs never read headers: that would make public pages dynamic.
   if (!cacheable) Object.assign(headers, await forwardedFor());

@@ -14,7 +14,7 @@ import { WORKSHOPS_SECTION } from '@/lib/sub-events';
 
 export const revalidate = 900;
 
-export const generateStaticParams = editionStaticParams('workshops');
+export const generateStaticParams = editionStaticParams();
 
 const DESCRIPTION = 'Hands-on, multi-session workshops held alongside the Winter Seminar Series.';
 

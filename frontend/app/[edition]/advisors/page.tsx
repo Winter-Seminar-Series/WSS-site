@@ -7,7 +7,7 @@ import { editionStaticParams, resolveEdition } from '@/lib/edition-route';
 import { editionPageMetadata } from '@/lib/metadata';
 import type { StaffMember } from '@/types/event.type';
 
-export const generateStaticParams = editionStaticParams('advisors');
+export const generateStaticParams = editionStaticParams();
 
 export async function generateMetadata({ params }: PageProps<'/[edition]/advisors'>): Promise<Metadata> {
   return editionPageMetadata(

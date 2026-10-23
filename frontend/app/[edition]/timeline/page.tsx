@@ -6,7 +6,7 @@ import { PageHero } from '@/components/layout/PageHero';
 import { editionStaticParams, resolveEdition } from '@/lib/edition-route';
 import { editionPageMetadata } from '@/lib/metadata';
 
-export const generateStaticParams = editionStaticParams('timeline');
+export const generateStaticParams = editionStaticParams();
 
 export async function generateMetadata({ params }: PageProps<'/[edition]/timeline'>): Promise<Metadata> {
   const edition = await resolveEdition(params, 'timeline');

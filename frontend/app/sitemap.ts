@@ -7,7 +7,7 @@ import { SITE_URL } from '@/lib/site';
 import { SUB_EVENT_SECTIONS } from '@/lib/sub-events';
 import type { SubEventKind } from '@/types/event.type';
 
-export const revalidate = 3600;
+export const dynamic = 'force-dynamic';
 
 const PAGE_PRIORITY: Record<EditionPage, number> = {
   seminars: 0.9,

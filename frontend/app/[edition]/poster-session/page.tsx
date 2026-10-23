@@ -9,7 +9,7 @@ import { markdownToHtml } from '@/lib/markdown';
 import { editionPageMetadata } from '@/lib/metadata';
 import { RichText } from '@/ui/RichText';
 
-export const generateStaticParams = editionStaticParams('poster-session');
+export const generateStaticParams = editionStaticParams();
 
 export async function generateMetadata({ params }: PageProps<'/[edition]/poster-session'>): Promise<Metadata> {
   return editionPageMetadata(
