@@ -14,7 +14,7 @@ export function Hero({ edition }: { edition: Edition }) {
           src={edition.heroImage}
           alt=""
           fill
-          priority
+          preload
           fetchPriority="high"
           sizes="100vw"
           quality={BACKDROP_QUALITY}

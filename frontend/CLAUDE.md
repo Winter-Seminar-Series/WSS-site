@@ -184,7 +184,11 @@ proxy.ts                 # Next 16 proxy (formerly middleware): refreshes the ac
 - **Animations:** prefer CSS for decorative motion (the marquee is pure CSS), and gate looping ones with
   `motion-safe:`.
 - **Third parties** (analytics) load with `strategy="lazyOnload"`: never on the critical path.
-- **Images:** always `next/image` with real `width`/`height`. Mark only the hero `priority`.
+- **Images:** always `next/image` with real `width`/`height`. `priority` is deprecated in Next 16; use `preload` only
+  for the hero/LCP image of a page (it also gets `fetchPriority="high"`).
+  - **Loading order in lists:** the first row (`EAGER_LIST_ITEMS`, `lib/images.ts`) is `loading="eager"` and every
+    other item is `lazy`. Never preload list items: React already hoists a preload for each non-lazy `<img>`, so
+    eager items are fetched right after the hero and the lazy ones only near the viewport.
   - **Fixed-size images:** omit `sizes`, so Next emits a small 1x/2x srcset. A `sizes` value on a
     fixed-size logo bloated the home HTML by 2×.
   - **New assets:** add them as WebP under `public/images/<group>/`. Never commit multi-megabyte PNGs.

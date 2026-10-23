@@ -8,6 +8,7 @@ import { JsonLd } from '@/components/seo/JsonLd';
 import { formatToman } from '@/lib/digits';
 import { editionStaticParams, resolveEdition } from '@/lib/edition-route';
 import { editionHref, isCurrentEdition } from '@/lib/editions';
+import { EAGER_LIST_ITEMS } from '@/lib/images';
 import { editionPageMetadata, emptySectionRobots } from '@/lib/metadata';
 import { editionBreadcrumbs } from '@/lib/structured-data';
 import { WORKSHOPS_SECTION } from '@/lib/sub-events';
@@ -52,7 +53,7 @@ export default async function WorkshopsPage({ params }: PageProps<'/[edition]/wo
                 title={workshop.name}
                 thumbnail={workshop.thumbnail}
                 thumbnailBlur={workshop.thumbnailBlur}
-                priority={index < 3}
+                eager={index < EAGER_LIST_ITEMS}
                 meta={
                   <WorkshopMeta
                     startDate={workshop.startDate}

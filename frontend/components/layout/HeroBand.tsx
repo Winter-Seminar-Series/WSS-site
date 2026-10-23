@@ -12,7 +12,7 @@ interface Props {
 export function HeroBand({ image = CURRENT_EDITION.heroImage }: Props) {
   return (
     <div className="relative h-72 bg-ink-deep md:h-96" aria-hidden>
-      <Image src={image} alt="" fill priority sizes="100vw" quality={BACKDROP_QUALITY} className="object-cover" />
+      <Image src={image} alt="" fill preload sizes="100vw" quality={BACKDROP_QUALITY} className="object-cover" />
     </div>
   );
 }

@@ -13,11 +13,11 @@ interface Props {
   thumbnailBlur?: string | null;
   meta: ReactNode;
   footer: ReactNode;
-  /** Above-the-fold cards load eagerly. */
-  priority?: boolean;
+  /** The first row of a list loads eagerly; every other card is lazy (see `EAGER_LIST_ITEMS`). */
+  eager?: boolean;
 }
 
-export function EventCard({ href, title, thumbnail, thumbnailBlur, meta, footer, priority }: Props) {
+export function EventCard({ href, title, thumbnail, thumbnailBlur, meta, footer, eager }: Props) {
   return (
     <article className="group relative flex h-full flex-col overflow-hidden rounded-xl border border-line-soft bg-surface transition-shadow hover:shadow-card">
       <div className="relative aspect-3/2 overflow-hidden bg-brand-soft">
@@ -27,7 +27,7 @@ export function EventCard({ href, title, thumbnail, thumbnailBlur, meta, footer,
             // The thumbnail is the session's poster (title and speaker): worth describing, also for image search.
             alt={title}
             fill
-            priority={priority}
+            loading={eager ? 'eager' : 'lazy'}
             {...blurProps(thumbnailBlur)}
             sizes="(min-width: 1024px) 380px, (min-width: 640px) 50vw, 100vw"
             className="object-cover transition-transform duration-300 group-hover:scale-105"

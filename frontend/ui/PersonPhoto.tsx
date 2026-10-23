@@ -10,10 +10,11 @@ interface Props {
   name: string;
   size: number;
   className?: string;
-  priority?: boolean;
+  /** Skip lazy loading, for a photo that is on screen at first paint. */
+  eager?: boolean;
 }
 
-export function PersonPhoto({ src, blur, name, size, className = '', priority }: Props) {
+export function PersonPhoto({ src, blur, name, size, className = '', eager }: Props) {
   if (!src) {
     return (
       <div
@@ -32,7 +33,7 @@ export function PersonPhoto({ src, blur, name, size, className = '', priority }:
       alt={name}
       width={size}
       height={size}
-      priority={priority}
+      loading={eager ? 'eager' : 'lazy'}
       {...blurProps(blur)}
       className={`object-cover ${className}`}
       style={{ width: size, height: size }}

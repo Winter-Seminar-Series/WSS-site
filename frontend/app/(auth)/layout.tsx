@@ -14,7 +14,7 @@ export default function AuthLayout({ children }: { children: ReactNode }) {
           <div className="mx-auto max-w-lg">{children}</div>
         </div>
         <div className="relative hidden md:block md:w-1/2" aria-hidden>
-          <Image src="/images/auth.webp" alt="" fill priority sizes="50vw" className="object-cover" />
+          <Image src="/images/auth.webp" alt="" fill preload sizes="50vw" className="object-cover" />
         </div>
       </main>
       <Footer />

@@ -37,7 +37,7 @@ export function EventDetail({ title, meta, poster, posterBlur, descriptionHtml, 
               alt={title}
               width={1200}
               height={675}
-              priority
+              preload
               {...blurProps(posterBlur)}
               sizes="(min-width: 1200px) 1040px, 100vw"
               className="h-auto w-full rounded-2xl object-cover"

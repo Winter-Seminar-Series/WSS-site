@@ -39,7 +39,7 @@ export default async function TimelinePage({ params }: PageProps<'/[edition]/tim
               width={1200}
               height={1600}
               sizes="(min-width: 1200px) 1070px, 100vw"
-              priority={index === 0}
+              loading={index === 0 ? 'eager' : 'lazy'}
               className="mt-6 h-auto w-full rounded-lg"
             />
           </section>

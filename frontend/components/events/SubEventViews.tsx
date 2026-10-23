@@ -8,6 +8,7 @@ import { PageHero } from '@/components/layout/PageHero';
 import { JsonLd } from '@/components/seo/JsonLd';
 import { editionHref, isCurrentEdition } from '@/lib/editions';
 import type { Edition } from '@/lib/editions';
+import { EAGER_LIST_ITEMS } from '@/lib/images';
 import { summarize } from '@/lib/metadata';
 import { SITE_URL } from '@/lib/site';
 import { editionBreadcrumbs, subEventJsonLd } from '@/lib/structured-data';
@@ -42,7 +43,7 @@ export async function SubEventList({ edition, kind }: ListProps) {
                 title={subEvent.name}
                 thumbnail={subEvent.thumbnail}
                 thumbnailBlur={subEvent.thumbnailBlur}
-                priority={index < 3}
+                eager={index < EAGER_LIST_ITEMS}
                 meta={<SessionMeta date={subEvent.date} startTime={subEvent.startTime} endTime={subEvent.endTime} />}
                 footer={
                   <>
