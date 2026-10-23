@@ -23,3 +23,9 @@ services:
     # Runtime: API_ORIGIN (http://backend:8000), SECRET_COOKIE_PASSWORD — see .env.frontend.example.
     env_file:
       - .env.frontend
+    # The optimizer's resized images survive redeploys: otherwise every deploy re-encodes every image on first request.
+    volumes:
+      - next-image-cache:/app/.next/cache
+
+volumes:
+  next-image-cache:
