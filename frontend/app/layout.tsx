@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from 'next';
 import { Manrope } from 'next/font/google';
+import NextTopLoader from 'nextjs-toploader';
 import type { ReactNode } from 'react';
 
 import { GoogleAnalytics } from '@/components/analytics/GoogleAnalytics';
@@ -71,6 +72,8 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en" className={manrope.variable}>
       <body className="font-sans">
+        {/* The bar sits in <body>, outside the edition wrapper, so it uses the default brand token. */}
+        <NextTopLoader color="var(--color-brand)" height={3} showSpinner={false} shadow={false} />
         {children}
         <JsonLd data={[websiteJsonLd, organizationJsonLd]} />
         <GoogleAnalytics />
