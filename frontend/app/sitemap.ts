@@ -14,10 +14,10 @@ const PAGE_PRIORITY: Record<EditionPage, number> = {
   'round-tables': 0.8,
   workshops: 0.7,
   'poster-session': 0.7,
-  timeline: 0.7,
-  'lab-talks': 0.6,
-  about: 0.6,
-  advisors: 0.4,
+  timeline: 0.6,
+  'lab-talks': 0.8,
+  about: 0.9,
+  advisors: 0.85,
 };
 
 type ChangeFrequency = MetadataRoute.Sitemap[number]['changeFrequency'];
@@ -30,6 +30,18 @@ const SUB_EVENT_PAGES: [SubEventKind, EditionPage][] = [
 
 /** Archived editions no longer change, and rank below the current one. */
 const ARCHIVE_PRIORITY_FACTOR = 0.5;
+
+/**
+ * The API signs bucket URLs (`?AWSAccessKeyId=…&Signature=…&Expires=…`). In the sitemap that breaks the XML (Next does
+ * not escape the `&` in `<image:loc>`), exposes the key id, and goes stale when `Expires` passes. The bucket serves
+ * the same object publicly without the query.
+ */
+function publicImageUrl(image: string): string {
+  const url = new URL(image);
+  url.search = '';
+  url.hash = '';
+  return url.href;
+}
 
 /** A detail page of a listing: its edition-relative path and its poster, for the image sitemap. */
 interface ListedPage {
@@ -88,7 +100,7 @@ async function editionEntries(edition: Edition): Promise<MetadataRoute.Sitemap> 
         url: url(path),
         changeFrequency: detailFrequency,
         priority: 0.6 * factor,
-        ...(image ? { images: [image] } : {}),
+        ...(image ? { images: [publicImageUrl(image)] } : {}),
       })),
     ),
   ];
