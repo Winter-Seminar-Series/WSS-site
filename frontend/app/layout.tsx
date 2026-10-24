@@ -1,8 +1,8 @@
 import type { Metadata, Viewport } from 'next';
 import { Manrope } from 'next/font/google';
-import Script from 'next/script';
 import type { ReactNode } from 'react';
 
+import { GoogleAnalytics } from '@/components/analytics/GoogleAnalytics';
 import { JsonLd } from '@/components/seo/JsonLd';
 import { editionThemeColor } from '@/lib/edition-theme';
 import { CURRENT_EDITION } from '@/lib/editions';
@@ -19,8 +19,6 @@ const manrope = Manrope({
   display: 'swap',
   variable: '--font-manrope',
 });
-
-const GA_TRACKING_ID = process.env.GA_TRACKING_ID;
 
 const SOCIAL_IMAGE = { url: socialImagePath(CURRENT_EDITION), ...SOCIAL_IMAGE_SIZE, alt: CURRENT_EDITION.title };
 
@@ -75,15 +73,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       <body className="font-sans">
         {children}
         <JsonLd data={[websiteJsonLd, organizationJsonLd]} />
-        {GA_TRACKING_ID && (
-          <>
-            {/* Idle-time: analytics must never compete with the page for the network or the main thread. */}
-            <Script src={`https://www.googletagmanager.com/gtag/js?id=${GA_TRACKING_ID}`} strategy="lazyOnload" />
-            <Script id="google-analytics" strategy="lazyOnload">
-              {`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${GA_TRACKING_ID}');`}
-            </Script>
-          </>
-        )}
+        <GoogleAnalytics />
       </body>
     </html>
   );
