@@ -60,6 +60,7 @@ export const metadata: Metadata = {
   },
   robots: { index: true, follow: true, googleBot: { index: true, follow: true, 'max-image-preview': 'large' } },
   formatDetection: { telephone: false },
+  verification: { google: 'g_eIz7L9m4UwuKt54QHvgIOweN0bGxix0WDFMoP92H4' },
 };
 
 export const viewport: Viewport = {
