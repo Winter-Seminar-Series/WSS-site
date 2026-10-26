@@ -7,7 +7,7 @@ from .models import Staff, StaffTeam, StaffTeamMember
 @admin.register(Staff)
 class StaffAdmin(admin.ModelAdmin):
     list_display = ('name', 'designation', 'get_teams', 'get_events')
-    search_fields = ('name', 'designation')
+    search_fields = ('name', 'designation', 'email')
     list_filter = ('events__staff_team__event', 'events__staff_team')
 
     def get_teams(self, obj):
