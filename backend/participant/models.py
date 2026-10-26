@@ -1,4 +1,5 @@
 from django.contrib.auth.models import User
+from django.core.validators import MinValueValidator
 from django.db import models
 
 from core.models import Event, UniqueUploadPath, Workshop
@@ -89,6 +90,57 @@ class ParticipationPlan(models.Model):
 
     def __str__(self):
         return f'{self.event} - {self.workshop if self.kind == self.KIND_WORKSHOP else self.mode_of_attendance}'
+
+
+class PlanAddon(models.Model):
+    """An optional extra sold with a plan, such as lunch or a parking spot, in quantities. It is bought with its plan
+    or later by someone who already holds the plan. Prices are in Rial."""
+
+    plan = models.ForeignKey(ParticipationPlan, on_delete=models.CASCADE, related_name='addons')
+    name = models.CharField(max_length=100)
+    description = models.TextField(blank=True)
+    price = models.PositiveIntegerField(help_text='Rial, per unit.')
+    discountable = models.BooleanField(
+        default=False,
+        help_text='Whether discount codes apply to it. Off: it is always paid in full, like a workshop.',
+    )
+    is_open = models.BooleanField(
+        default=True,
+        help_text='Whether it can be bought right now. Close an add-on instead of deleting it.',
+    )
+    capacity = models.PositiveIntegerField(
+        null=True,
+        blank=True,
+        help_text='Units that can be sold in total; empty for no limit. Checked at checkout.',
+    )
+    max_per_participant = models.PositiveIntegerField(
+        default=1,
+        validators=[MinValueValidator(1)],
+        help_text='Most units one participant can hold, across all their purchases.',
+    )
+
+    class Meta:
+        ordering = ('plan_id', 'id')
+
+    def __str__(self):
+        return f'{self.plan} - {self.name}'
+
+
+class AddonPurchase(models.Model):
+    """Units of an add-on that a participant has paid for: one row per add-on in a fulfilled payment."""
+
+    participant = models.ForeignKey(Participant, on_delete=models.CASCADE, related_name='addon_purchases')
+    # PROTECT: an add-on that has been sold is closed, never deleted, so what was paid for stays on record.
+    addon = models.ForeignKey(PlanAddon, on_delete=models.PROTECT, related_name='purchases')
+    quantity = models.PositiveIntegerField(validators=[MinValueValidator(1)])
+    # Empty for units an organiser added by hand in the admin.
+    payment = models.ForeignKey(
+        'payment.PaymentRequest', on_delete=models.SET_NULL, null=True, blank=True, related_name='addon_purchases'
+    )
+    date = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'{self.participant} - {self.addon} × {self.quantity}'
 
 
 class Participation(models.Model):

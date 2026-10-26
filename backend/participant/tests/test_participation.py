@@ -1,5 +1,13 @@
 from participant.serializers import encode_file_id
-from common.testing import APITest, make_event, make_mode_plan, make_participant, make_workshop_plan, register
+from common.testing import (
+    APITest,
+    make_addon,
+    make_event,
+    make_mode_plan,
+    make_participant,
+    make_workshop_plan,
+    register,
+)
 from participant.models import ParticipationAttachment
 
 
@@ -26,13 +34,13 @@ class ProfileTests(APITest):
 
 
 class PlanListTests(APITest):
-    def test_workshops_come_with_their_sessions_and_speakers_in_two_queries(self):
+    def test_workshops_come_with_their_sessions_speakers_and_addons_in_three_queries(self):
         event = make_event()
         for _ in range(3):
-            make_workshop_plan(event, sessions=2)
+            make_addon(make_workshop_plan(event, sessions=2))
         make_mode_plan(event)
 
-        with self.assertNumQueries(2):
+        with self.assertNumQueries(3):
             response = self.client.get(f'/api/workshop/{event.pk}/')
 
         plans = response.json()

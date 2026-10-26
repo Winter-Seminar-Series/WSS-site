@@ -1,27 +1,29 @@
 """
 Checkout and payment verification.
 
-Flow: `quote_order` prices a basket for the registration page; `create_payment` validates it, claims the discount,
-records a PaymentRequest and starts a bank payment (or fulfils a free one at once); the bank sends the payer back to
-the frontend's /callback/<id>, which calls `verify_payment`. Verification is idempotent and serialised per payment
-with a row lock, so a double callback can never register twice or release a discount twice.
+Flow: `quote_order` prices a basket (plans, add-ons of plans, or both) for the registration page; `create_payment`
+validates it, claims the discount, records a PaymentRequest and starts a bank payment (or fulfils a free one at once);
+the bank sends the payer back to the frontend's /callback/<id>, which calls `verify_payment`. Verification is
+idempotent and serialised per payment with a row lock, so a double callback can never register twice or release a
+discount twice.
 """
 
 import logging
 import secrets
 import string
+from collections.abc import Sequence
 
 from django.conf import settings
 from django.core.mail import send_mail
 from django.db import transaction
-from django.db.models import Count, F
+from django.db.models import Count, F, Sum
 from rest_framework import serializers, status
 from rest_framework.exceptions import APIException, NotFound
 
-from participant.models import Participant, ParticipantInfo, Participation, ParticipationPlan
+from participant.models import AddonPurchase, Participant, ParticipantInfo, Participation, ParticipationPlan
 from payment import pricing
 from payment.gateway import PaymentGateway, TransactionStatus
-from payment.models import GroupPaymentRequest, PaymentDiscount, PaymentRequest, PaymentStatus
+from payment.models import GroupPaymentRequest, PaymentDiscount, PaymentRequest, PaymentRequestAddon, PaymentStatus
 from spotplayer.client import SpotPlayerClient
 
 logger = logging.getLogger(__name__)
@@ -43,11 +45,11 @@ def _error(message: str, code: str) -> serializers.ValidationError:
 # --- Validation ----------------------------------------------------------------------------------------------------
 
 
-def validate_plans(plans: list[ParticipationPlan]) -> int:
+def validate_plans(plans: list[ParticipationPlan], addons: Sequence[pricing.AddonLine] = ()) -> int:
     """Checks a basket on its own and returns its edition's event id."""
-    if not plans:
-        raise _error('Choose at least one plan.', 'no_plans')
-    events = {plan.event_id for plan in plans}
+    if not plans and not addons:
+        raise _error('Choose a plan or an add-on.', 'no_plans')
+    events = {plan.event_id for plan in plans} | {line.addon.plan.event_id for line in addons}
     if len(events) > 1:
         raise _error('Plans from different editions cannot be bought together.', 'mixed_events')
 
@@ -66,7 +68,60 @@ def validate_plans(plans: list[ParticipationPlan]) -> int:
         for plan in plans:
             if plan.capacity is not None and taken.get(plan.pk, 0) >= plan.capacity:
                 raise _error(f'{plan} is full.', 'plan_full')
+    _validate_addons(addons)
     return events.pop()
+
+
+def _validate_addons(addons: Sequence[pricing.AddonLine]) -> None:
+    for line in addons:
+        addon = line.addon
+        if not addon.is_open:
+            raise _error(f'{addon} is not available right now.', 'addon_closed')
+        if line.quantity > addon.max_per_participant:
+            raise _error(f'You can buy at most {addon.max_per_participant} of {addon}.', 'addon_limit')
+
+    # Like plan capacity, only paid units count, so two payers racing for the last unit can both get it.
+    limited = [line.addon.pk for line in addons if line.addon.capacity is not None]
+    if limited:
+        sold = _units_by_addon(AddonPurchase.objects.filter(addon_id__in=limited))
+        for line in addons:
+            addon = line.addon
+            if addon.capacity is None:
+                continue
+            left = max(0, addon.capacity - sold.get(addon.pk, 0))
+            if line.quantity > left:
+                raise _error(f'Only {left} of {addon} left.' if left else f'{addon} is sold out.', 'addon_full')
+
+
+def _units_by_addon(purchases) -> dict[int, int]:
+    return dict(purchases.values('addon_id').annotate(units=Sum('quantity')).values_list('addon_id', 'units'))
+
+
+def validate_addons_for_participant(
+    participant: Participant, plans: list[ParticipationPlan], addons: Sequence[pricing.AddonLine]
+) -> None:
+    """An add-on comes with its plan, bought now or before, and within its per-participant limit."""
+    if not addons:
+        return
+    held_plans = set(
+        Participation.objects.filter(
+            participant=participant, plan_id__in={line.addon.plan_id for line in addons}
+        ).values_list('plan_id', flat=True)
+    )
+    held_plans |= {plan.pk for plan in plans}
+    held = _units_by_addon(
+        AddonPurchase.objects.filter(participant=participant, addon_id__in=[line.addon.pk for line in addons])
+    )
+    for line in addons:
+        addon = line.addon
+        if addon.plan_id not in held_plans:
+            raise _error(f'{addon} can only be bought with {addon.plan}.', 'addon_without_plan')
+        already = held.get(addon.pk, 0)
+        if already + line.quantity > addon.max_per_participant:
+            raise _error(
+                f'You can hold at most {addon.max_per_participant} of {addon}; you already have {already}.',
+                'addon_limit',
+            )
 
 
 def validate_for_participant(participant: Participant, plans: list[ParticipationPlan], event_id: int) -> None:
@@ -113,24 +168,48 @@ def release_discount(discount: PaymentDiscount | None) -> None:
 # --- Single checkout -----------------------------------------------------------------------------------------------
 
 
-def quote_order(plans: list[ParticipationPlan], discount_code: str | None) -> pricing.Quote:
-    event_id = validate_plans(plans)
-    return pricing.quote(plans, find_discount(discount_code, event_id))
+def _discountable(plans: list[ParticipationPlan], addons: Sequence[pricing.AddonLine]) -> bool:
+    """Whether a discount code could change the price. When it cannot, the code is ignored rather than spent, so a
+    single-use code is not lost on, say, parking alone."""
+    return any(plan.kind == ParticipationPlan.KIND_MODE for plan in plans) or any(
+        line.addon.discountable for line in addons
+    )
+
+
+def quote_order(
+    participant: Participant,
+    plans: list[ParticipationPlan],
+    discount_code: str | None,
+    addons: Sequence[pricing.AddonLine] = (),
+) -> pricing.Quote:
+    event_id = validate_plans(plans, addons)
+    validate_addons_for_participant(participant, plans, addons)
+    discount = find_discount(discount_code, event_id) if _discountable(plans, addons) else None
+    return pricing.quote(plans, discount, addons)
 
 
 @transaction.atomic
-def create_payment(participant: Participant, plans: list[ParticipationPlan], discount_code: str | None) -> str:
+def create_payment(
+    participant: Participant,
+    plans: list[ParticipationPlan],
+    discount_code: str | None,
+    addons: Sequence[pricing.AddonLine] = (),
+) -> str:
     """Records the order and returns where to send the payer: the bank, or the dashboard when nothing is due.
 
     Everything runs in one transaction: if the payment service fails, the discount use is not lost.
     """
-    event_id = validate_plans(plans)
+    event_id = validate_plans(plans, addons)
     validate_for_participant(participant, plans, event_id)
-    discount = claim_discount(discount_code, event_id)
+    validate_addons_for_participant(participant, plans, addons)
+    discount = claim_discount(discount_code, event_id) if _discountable(plans, addons) else None
 
     payment = PaymentRequest.objects.create(participant=participant, discount=discount)
     payment.plans.set(plans)
-    price = pricing.quote(plans, discount)
+    PaymentRequestAddon.objects.bulk_create(
+        PaymentRequestAddon(payment=payment, addon=line.addon, quantity=line.quantity) for line in addons
+    )
+    price = pricing.quote(plans, discount, addons)
 
     if price.payable == 0:
         fulfil_payment(payment)
@@ -141,7 +220,7 @@ def create_payment(participant: Participant, plans: list[ParticipationPlan], dis
         user_id=participant.pk,
         amount=price.payable,
         discount=price.discount,
-        goods=[str(plan) for plan in plans],
+        goods=[str(plan) for plan in plans] + [f'{line.addon} × {line.quantity}' for line in addons],
         callback_url=f'{settings.PAYMENT_CALLBACK_URL}/{payment.pk}',
         name=f'{info.first_name} {info.last_name}'.strip() if info else '',
         phone=info.phone_number if info else '',
@@ -188,27 +267,39 @@ def _fail(payment: PaymentRequest | GroupPaymentRequest) -> None:
 
 
 def fulfil_payment(payment: PaymentRequest) -> None:
-    """Marks the payment paid and registers the participant for its plans (with a SpotPlayer licence when a plan
-    has a recorded course). A licence failure is logged, not fatal: the registration stands and the licence can be
-    issued from the admin."""
+    """Marks the payment paid, registers the participant for its plans (with a SpotPlayer licence when a plan has a
+    recorded course) and records its add-ons. A licence failure is logged, not fatal: the registration stands and the
+    licence can be issued from the admin. Add-ons are recorded even past their capacity: the money is already in."""
     payment.set_status(PaymentStatus.PAID)
     participant = Participant.objects.select_related('user', 'info').get(pk=payment.participant_id)
     plans = list(payment.plans.select_related('spotplayer_course'))
 
-    snapshot = _snapshot_profile(participant.info)
-    courses = [plan.spotplayer_course for plan in plans if plan.spotplayer_course is not None]
-    license = _issue_license(participant, courses) if courses else None
-
-    Participation.objects.bulk_create(
-        Participation(
-            participant=participant,
-            plan=plan,
-            info=snapshot,
-            spotplayer_license=license if plan.spotplayer_course is not None else None,
-        )
-        for plan in plans
+    addons = AddonPurchase.objects.bulk_create(
+        AddonPurchase(participant=participant, addon_id=line.addon_id, quantity=line.quantity, payment=payment)
+        for line in payment.addon_lines.all()
     )
-    logger.info('Payment %s fulfilled: %s plan(s) for participant %s', payment.pk, len(plans), participant.pk)
+
+    # An add-ons-only payment registers nothing new: the participant already holds the plans.
+    if plans:
+        snapshot = _snapshot_profile(participant.info)
+        courses = [plan.spotplayer_course for plan in plans if plan.spotplayer_course is not None]
+        license = _issue_license(participant, courses) if courses else None
+        Participation.objects.bulk_create(
+            Participation(
+                participant=participant,
+                plan=plan,
+                info=snapshot,
+                spotplayer_license=license if plan.spotplayer_course is not None else None,
+            )
+            for plan in plans
+        )
+    logger.info(
+        'Payment %s fulfilled: %s plan(s), %s add-on(s) for participant %s',
+        payment.pk,
+        len(plans),
+        len(addons),
+        participant.pk,
+    )
 
 
 def _snapshot_profile(info: ParticipantInfo | None) -> ParticipantInfo | None:

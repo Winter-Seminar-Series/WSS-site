@@ -9,7 +9,7 @@ from django.urls import path
 
 from core.admin import ExportCSVMixin
 from core.models import Event
-from payment.models import PaymentDiscount, PaymentRequest
+from payment.models import PaymentDiscount, PaymentRequest, PaymentRequestAddon
 
 
 def latest_edition() -> Event | None:
@@ -58,13 +58,26 @@ admin.site.register(PaymentDiscount, PaymentDiscountAdmin)
 class DiscountCodesImportForm(forms.Form):
     file = forms.FileField()
 
+class PaymentRequestAddonInline(admin.TabularInline):
+    """Read-only: what was ordered is part of the payment's record."""
+
+    model = PaymentRequestAddon
+    extra = 0
+    can_delete = False
+    readonly_fields = ('addon', 'quantity')
+
+    def has_add_permission(self, request, obj=None):
+        return False
+
+
 class PaymentRequestAdmin(ExportCSVMixin, admin.ModelAdmin):
     list_display = ('participant', 'timestamp', 'status', 'discount_code', 'order_id', 'base_price', 'paid_price')
     list_select_related = ('participant__user', 'participant__info', 'discount')
     list_filter = ('status', 'discount__code')
+    inlines = (PaymentRequestAddonInline,)
 
     def get_queryset(self, request):
-        return super().get_queryset(request).prefetch_related('plans')
+        return super().get_queryset(request).prefetch_related('plans', 'addon_lines__addon')
     actions = ["export_as_csv", "calculate_discount_usage"]
     change_list_template = "payment_request_changelist.html"
 

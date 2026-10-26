@@ -21,23 +21,28 @@ class CheckoutView(APIView):
 
 
 class PriceView(CheckoutView):
-    """`{plans, discount_code?}` → `{total_price, calculated_price}` (Rial)."""
+    """`{plans?, addons?: [{addon, quantity}], discount_code?}` → `{total_price, calculated_price}` (Rial)."""
 
     def post(self, request):
         order = OrderSerializer(data=request.data)
         order.is_valid(raise_exception=True)
-        quote = services.quote_order(order.validated_data['plans'], order.validated_data.get('discount_code'))
+        data = order.validated_data
+        quote = services.quote_order(
+            get_participant(request.user), data['plans'], data.get('discount_code'), data['addons']
+        )
         return Response(price_response(quote))
 
 
 class CreatePaymentView(CheckoutView):
-    """`{plans, discount_code?}` → `{redirect_url}`: the bank, or the dashboard when nothing is due."""
+    """`{plans?, addons?: [{addon, quantity}], discount_code?}` → `{redirect_url}`: the bank, or the dashboard when
+    nothing is due."""
 
     def post(self, request):
         order = OrderSerializer(data=request.data)
         order.is_valid(raise_exception=True)
+        data = order.validated_data
         redirect_url = services.create_payment(
-            get_participant(request.user), order.validated_data['plans'], order.validated_data.get('discount_code')
+            get_participant(request.user), data['plans'], data.get('discount_code'), data['addons']
         )
         return Response({'redirect_url': redirect_url}, status=201)
 
