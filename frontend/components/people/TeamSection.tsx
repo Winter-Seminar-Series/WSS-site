@@ -1,3 +1,4 @@
+import { StaffLinks } from '@/components/people/StaffLinks';
 import type { StaffMember } from '@/types/event.type';
 import { PersonPhoto } from '@/ui/PersonPhoto';
 
@@ -30,6 +31,7 @@ export function TeamSection({ name, members }: Props) {
             />
             <p className="mt-3 font-semibold text-ink">{member.name}</p>
             {member.designation && <p className="text-sm text-muted">{member.designation}</p>}
+            {member.links && <StaffLinks name={member.name} links={member.links} />}
           </li>
         ))}
       </ul>

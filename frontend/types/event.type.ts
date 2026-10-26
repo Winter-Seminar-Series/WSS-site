@@ -70,6 +70,15 @@ export interface StaffMember {
   image: string | null;
   /** Missing for the hand-written advisors. */
   imageBlur?: string;
+  /** Optional contact links; missing for the hand-written advisors. */
+  links?: StaffLinks;
+}
+
+export interface StaffLinks {
+  website?: string;
+  linkedin?: string;
+  github?: string;
+  email?: string;
 }
 
 export interface StaffTeam {

@@ -19,6 +19,12 @@ export async function getStaffTeams(eventId: number): Promise<StaffTeam[]> {
           designation: staff.designation,
           image: staff.image,
           imageBlur: blurDataUrl(staff.image_blurhash),
+          links: {
+            website: staff.website || undefined,
+            linkedin: staff.linkedin || undefined,
+            github: staff.github || undefined,
+            email: staff.email || undefined,
+          },
         })),
       ),
     })),

@@ -6,6 +6,11 @@ export interface StaffResponse {
   image: string | null;
   /** BlurHash of the image. Absent from older backends, and empty until it has been computed. */
   image_blurhash?: string;
+  /** Optional contact links. Absent from older backends, and empty when not set. */
+  website?: string;
+  linkedin?: string;
+  github?: string;
+  email?: string;
 }
 
 export interface StaffTeamResponse {
