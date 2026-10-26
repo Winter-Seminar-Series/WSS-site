@@ -75,4 +75,20 @@ export interface ParticipationPlanResponse {
     sessions: WorkshopSessionResponse[];
   } | null;
   mode_of_attendance: ModeOfAttendanceResponse | null;
+  /** Absent from older backends. */
+  addons?: PlanAddonResponse[];
+}
+
+/** An optional extra sold with a plan (lunch, parking…). */
+export interface PlanAddonResponse {
+  id: number;
+  name: string;
+  description: string;
+  /** Rial, per unit. */
+  price: number;
+  discountable: boolean;
+  is_open: boolean;
+  max_per_participant: number;
+  /** Units left to sell, or null for no limit. May be cached; checkout counts again. */
+  remaining: number | null;
 }
