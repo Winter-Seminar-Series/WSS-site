@@ -19,6 +19,30 @@ MODE = ParticipationPlan.KIND_MODE
 WORKSHOP = ParticipationPlan.KIND_WORKSHOP
 
 
+def line(price: int, quantity: int = 1, discountable: bool = False):
+    return pricing.OrderLine(addon=SimpleNamespace(price=price, discountable=discountable), quantity=quantity)
+
+
+class AddonQuoteTests(SimpleTestCase):
+    def test_addons_are_priced_per_unit(self):
+        quote = pricing.quote([plan(MODE, 1000)], addons=[line(200, quantity=3)])
+        self.assertEqual(quote, pricing.Quote(1600, 1600))
+
+    def test_discount_skips_addons_that_are_not_discountable(self):
+        quote = pricing.quote([plan(MODE, 1000)], discount(percentage='50'), [line(200, quantity=2)])
+        self.assertEqual(quote, pricing.Quote(1400, 900))
+
+    def test_discount_covers_discountable_addons(self):
+        quote = pricing.quote(
+            [plan(MODE, 1000)], discount(percentage='50'), [line(200, quantity=2, discountable=True), line(100)]
+        )
+        self.assertEqual(quote, pricing.Quote(1500, 800))
+
+    def test_a_fixed_discount_never_goes_below_zero_on_addons_alone(self):
+        quote = pricing.quote([], discount(amount=1000), [line(300, discountable=True), line(100)])
+        self.assertEqual(quote, pricing.Quote(400, 100))
+
+
 class QuoteTests(SimpleTestCase):
     def test_no_discount(self):
         self.assertEqual(pricing.quote([plan(MODE, 1000), plan(WORKSHOP, 500)]), pricing.Quote(1500, 1500))

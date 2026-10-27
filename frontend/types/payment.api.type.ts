@@ -1,5 +1,12 @@
+export interface AddonLineRequest {
+  addon: number;
+  quantity: number;
+}
+
 export interface PriceRequest {
   plans: number[];
+  /** Omitted when empty, so older backends keep accepting the body. */
+  addons?: AddonLineRequest[];
   discount_code?: string;
 }
 

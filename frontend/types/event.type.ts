@@ -53,6 +53,7 @@ export interface Workshop {
   sessions: WorkshopSession[];
   startDate: string | null;
   endDate: string | null;
+  addons: PlanAddon[];
 }
 
 export interface AttendanceMode {
@@ -61,6 +62,22 @@ export interface AttendanceMode {
   /** Toman. */
   price: number;
   isNationalCodeRequired: boolean;
+  addons: PlanAddon[];
+}
+
+/** An optional extra sold with a plan (lunch, parking…), bought in units with the plan or later. */
+export interface PlanAddon {
+  id: number;
+  planId: number;
+  name: string;
+  description: string;
+  /** Toman, per unit. */
+  price: number;
+  discountable: boolean;
+  isOpen: boolean;
+  maxPerParticipant: number;
+  /** Units left to sell, or null for no limit. */
+  remaining: number | null;
 }
 
 export interface StaffMember {

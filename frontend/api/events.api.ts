@@ -2,7 +2,7 @@ import { blurDataUrl } from '@/lib/blurhash';
 import { uniqueById } from '@/lib/collections';
 import { markdownToHtml } from '@/lib/markdown';
 import { httpGet } from '@/services/http';
-import type { AttendanceMode, Speaker, SubEvent, SubEventKind, Workshop } from '@/types/event.type';
+import type { AttendanceMode, PlanAddon, Speaker, SubEvent, SubEventKind, Workshop } from '@/types/event.type';
 import type {
   ParticipationPlanResponse,
   RoundTableResponse,
@@ -15,6 +15,20 @@ export const EVENTS_TAG = 'events';
 
 /** The API prices in Rial; the site shows Toman. */
 const RIAL_PER_TOMAN = 10;
+
+function toAddons(plan: ParticipationPlanResponse): PlanAddon[] {
+  return (plan.addons ?? []).map((addon) => ({
+    id: addon.id,
+    planId: plan.id,
+    name: addon.name,
+    description: addon.description,
+    price: addon.price / RIAL_PER_TOMAN,
+    discountable: addon.discountable,
+    isOpen: addon.is_open,
+    maxPerParticipant: addon.max_per_participant,
+    remaining: addon.remaining,
+  }));
+}
 
 const SUB_EVENT_ENDPOINTS: Record<SubEventKind, string> = {
   seminar: 'seminar',
@@ -128,6 +142,7 @@ export async function getWorkshops(eventId: number): Promise<Workshop[]> {
         sessions,
         startDate: sessions.at(0)?.date ?? null,
         endDate: sessions.at(-1)?.date ?? null,
+        addons: toAddons(plan),
       };
     }),
   );
@@ -148,6 +163,7 @@ export async function getAttendanceModes(eventId: number): Promise<AttendanceMod
             name: plan.mode_of_attendance.name,
             price: plan.price / RIAL_PER_TOMAN,
             isNationalCodeRequired: plan.mode_of_attendance.is_national_code_required,
+            addons: toAddons(plan),
           },
         ]
       : [],

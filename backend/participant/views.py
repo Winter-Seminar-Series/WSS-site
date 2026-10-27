@@ -2,7 +2,8 @@ import base64
 import binascii
 
 from django.core.files.storage import default_storage
-from django.db.models import Prefetch, QuerySet
+from django.db.models import Prefetch, QuerySet, Sum
+from django.db.models.functions import Coalesce
 from django.http import Http404
 from rest_framework import generics, status
 from rest_framework.permissions import AllowAny
@@ -13,8 +14,16 @@ from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from common.throttling import EmailRateThrottle, ScopedRateThrottle
 from core.models import WorkshopSession
 from participant import services
-from participant.models import ParticipantInfo, Participation, ParticipationAttachment, ParticipationPlan
+from participant.models import (
+    AddonPurchase,
+    ParticipantInfo,
+    Participation,
+    ParticipationAttachment,
+    ParticipationPlan,
+    PlanAddon,
+)
 from participant.serializers import (
+    AddonHoldingSerializer,
     EmailTokenObtainPairSerializer,
     FileSerializer,
     ParticipationAttachmentSerializer,
@@ -99,10 +108,13 @@ class ProfileView(generics.RetrieveUpdateAPIView):
 
 def plans_of_edition(event_id: int) -> QuerySet[ParticipationPlan]:
     sessions = WorkshopSession.objects.select_related('speaker').order_by('date', 'starting_time', 'id')
+    addons = PlanAddon.objects.annotate(sold=Coalesce(Sum('purchases__quantity'), 0)).order_by('id')
     return (
         ParticipationPlan.objects.filter(event_id=event_id)
         .select_related('event', 'workshop', 'mode_of_attendance')
-        .prefetch_related(Prefetch('workshop__workshopsession_set', queryset=sessions))
+        .prefetch_related(
+            Prefetch('workshop__workshopsession_set', queryset=sessions), Prefetch('addons', queryset=addons)
+        )
         .order_by('id')
     )
 
@@ -135,6 +147,22 @@ class ParticipationListView(generics.ListAPIView):
         return Participation.objects.filter(
             plan__event_id=self.kwargs['event_id'], participant__user=self.request.user
         ).select_related('spotplayer_license')
+
+
+class AddonHoldingListView(generics.ListAPIView):
+    """`[{addon, quantity}]`: the add-ons of an edition the participant has paid for, summed over purchases."""
+
+    serializer_class = AddonHoldingSerializer
+
+    def get_queryset(self):
+        return (
+            AddonPurchase.objects.filter(
+                addon__plan__event_id=self.kwargs['event_id'], participant__user=self.request.user
+            )
+            .values('addon_id')
+            .annotate(quantity=Sum('quantity'))
+            .order_by('addon_id')
+        )
 
 
 class AttachmentListView(generics.ListAPIView):
