@@ -36,6 +36,12 @@ export interface ParticipationResponse {
   license_key: string | null;
 }
 
+/** `/addon/:event/` — units of each add-on the participant holds, summed over their purchases. */
+export interface AddonHoldingResponse {
+  addon: number;
+  quantity: number;
+}
+
 /** `/attachment/:event/` */
 export interface AttachmentResponse {
   id: number;

@@ -11,7 +11,14 @@ from rest_framework.throttling import SimpleRateThrottle
 from rest_framework_simplejwt.tokens import RefreshToken
 
 from core.models import Event, Seminar, Speaker, SubEvent, Workshop, WorkshopSession
-from participant.models import ModeOfAttendance, Participant, ParticipantInfo, Participation, ParticipationPlan
+from participant.models import (
+    ModeOfAttendance,
+    Participant,
+    ParticipantInfo,
+    Participation,
+    ParticipationPlan,
+    PlanAddon,
+)
 from payment.models import PaymentDiscount
 
 User = get_user_model()
@@ -53,6 +60,10 @@ def make_workshop_plan(event: Event, price: int = 500_000, sessions: int = 1, **
     return ParticipationPlan.objects.create(
         event=event, kind=ParticipationPlan.KIND_WORKSHOP, workshop=workshop, price=price, **fields
     )
+
+
+def make_addon(plan: ParticipationPlan, price: int = 300_000, name: str = 'Lunch', **fields) -> PlanAddon:
+    return PlanAddon.objects.create(plan=plan, name=name, price=price, **fields)
 
 
 def make_discount(event: Event, code: str = 'SAVE20', **fields) -> PaymentDiscount:

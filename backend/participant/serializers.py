@@ -7,7 +7,7 @@ from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from core.serializers import WorkshopSerializer
 from participant import services
 from participant.models import ModeOfAttendance, Participant, ParticipantInfo, Participation, ParticipationAttachment
-from participant.models import ParticipationPlan
+from participant.models import ParticipationPlan, PlanAddon
 from participant.validators import normalize_national_code, validate_phone_number
 
 User = get_user_model()
@@ -102,14 +102,31 @@ class ModeOfAttendanceSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+class PlanAddonSerializer(serializers.ModelSerializer):
+    """`remaining` is the number of units left, or null for no limit. It is a hint for the page, which may cache it;
+    checkout counts again."""
+
+    remaining = serializers.SerializerMethodField()
+
+    class Meta:
+        model = PlanAddon
+        fields = ('id', 'name', 'description', 'price', 'discountable', 'is_open', 'max_per_participant', 'remaining')
+
+    def get_remaining(self, addon: PlanAddon) -> int | None:
+        if addon.capacity is None:
+            return None
+        return max(0, addon.capacity - addon.sold)
+
+
 class ParticipationPlanSerializer(serializers.ModelSerializer):
     event = serializers.CharField(source='event.name', read_only=True)
     workshop = WorkshopSerializer()
     mode_of_attendance = ModeOfAttendanceSerializer()
+    addons = PlanAddonSerializer(many=True, read_only=True)
 
     class Meta:
         model = ParticipationPlan
-        fields = ('id', 'price', 'event', 'kind', 'workshop', 'mode_of_attendance', 'is_open')
+        fields = ('id', 'price', 'event', 'kind', 'workshop', 'mode_of_attendance', 'is_open', 'addons')
 
 
 class ParticipationSerializer(serializers.ModelSerializer):
@@ -119,6 +136,13 @@ class ParticipationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Participation
         fields = ('plan', 'license_key')
+
+
+class AddonHoldingSerializer(serializers.Serializer):
+    """How many units of an add-on the participant holds, across all their purchases."""
+
+    addon = serializers.IntegerField(source='addon_id')
+    quantity = serializers.IntegerField()
 
 
 def encode_file_id(name: str) -> str:

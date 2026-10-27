@@ -1,8 +1,9 @@
 from django.contrib.postgres.fields import ArrayField
+from django.core.validators import MinValueValidator
 from django.db import models
 
 from core.models import Event
-from participant.models import Participant, ParticipationPlan
+from participant.models import Participant, ParticipationPlan, PlanAddon
 from payment import pricing
 
 
@@ -61,8 +62,22 @@ class PaymentRequest(PaymentRecord):
 
     def get_price(self) -> tuple[int, int]:
         """(total, payable) in Rial."""
-        price = pricing.quote(self.plans.all(), self.discount)
+        price = pricing.quote(self.plans.all(), self.discount, self.addon_lines.all())
         return price.total, price.payable
+
+
+class PaymentRequestAddon(models.Model):
+    """Units of an add-on in a payment. They become an AddonPurchase once the payment is fulfilled."""
+
+    payment = models.ForeignKey(PaymentRequest, on_delete=models.CASCADE, related_name='addon_lines')
+    addon = models.ForeignKey(PlanAddon, on_delete=models.PROTECT, related_name='payment_lines')
+    quantity = models.PositiveIntegerField(validators=[MinValueValidator(1)])
+
+    class Meta:
+        constraints = [models.UniqueConstraint(fields=('payment', 'addon'), name='unique_addon_per_payment')]
+
+    def __str__(self) -> str:
+        return f'{self.addon} × {self.quantity}'
 
 
 class GroupPaymentRequest(PaymentRecord):

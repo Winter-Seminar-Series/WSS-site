@@ -5,6 +5,9 @@ import Link from 'next/link';
 import { useActionState, useState } from 'react';
 
 import { updateNationalCodeAction } from '@/actions/profile.actions';
+import type { AddonLine } from '@/api/payment.api';
+import { AddonPicker, addonUnitsLeft } from '@/app/dashboard/register/_components/AddonPicker';
+import type { OfferedAddon } from '@/app/dashboard/register/_components/AddonPicker';
 import { WorkshopPicker } from '@/app/dashboard/register/_components/WorkshopPicker';
 import { REGISTRATION, isInPersonMode, isLunchAddOn } from '@/lib/dashboard';
 import { formatToman, toLatinDigits } from '@/lib/digits';
@@ -20,13 +23,15 @@ interface Props {
   modes: AttendanceMode[];
   workshops: Workshop[];
   paidPlanIds: number[];
+  /** Units of each add-on the participant already holds, by add-on id. */
+  heldAddons: Record<number, number>;
   nationalCode: string;
   isProfileComplete: boolean;
 }
 
 const INITIAL_STATE: FormState = {};
 
-export function RegisterForm({ modes, workshops, paidPlanIds, nationalCode, isProfileComplete }: Props) {
+export function RegisterForm({ modes, workshops, paidPlanIds, heldAddons, nationalCode, isProfileComplete }: Props) {
   const paid = new Set(paidPlanIds);
   const lunchMode = modes.find((mode) => isLunchAddOn(mode.name));
   const baseModes = modes.filter((mode) => mode !== lunchMode);
@@ -39,6 +44,7 @@ export function RegisterForm({ modes, workshops, paidPlanIds, nationalCode, isPr
   );
   const [withLunch, setWithLunch] = useState(paidMode === lunchMode && Boolean(paidMode));
   const [workshopIds, setWorkshopIds] = useState<number[]>([]);
+  const [addonQuantities, setAddonQuantities] = useState<Record<number, number>>({});
   const [discountInput, setDiscountInput] = useState('');
   const [discountCode, setDiscountCode] = useState('');
   const [clientError, setClientError] = useState('');
@@ -51,18 +57,32 @@ export function RegisterForm({ modes, workshops, paidPlanIds, nationalCode, isPr
     ...(effectiveMode && !paid.has(effectiveMode.id) ? [effectiveMode.id] : []),
     ...workshopIds.filter((id) => !paid.has(id)),
   ];
+  // Add-ons of every plan the participant holds or is buying now; quantities picked for a plan that was then
+  // deselected stay in state but drop out of the order.
+  const plansInHand = new Set([...paid, ...plans]);
+  const offeredAddons: OfferedAddon[] = [...modes, ...workshops]
+    .filter((plan) => plansInHand.has(plan.id))
+    .flatMap((plan) => plan.addons.map((addon) => ({ ...addon, planName: plan.name })));
+  const addons: AddonLine[] = offeredAddons.flatMap((addon) => {
+    const quantity = Math.min(
+      addonQuantities[addon.id] ?? 0,
+      addon.isOpen ? addonUnitsLeft(addon, heldAddons[addon.id] ?? 0) : 0,
+    );
+    return quantity > 0 ? [{ addonId: addon.id, quantity }] : [];
+  });
+  const hasOrder = plans.length > 0 || addons.length > 0;
   const savedNationalCode = nationalCodeState.success ? (nationalCodeState.values?.nationalCode ?? '') : nationalCode;
   const needsNationalCode = Boolean(effectiveMode?.isNationalCodeRequired);
 
-  const quote = useQuote(plans, discountCode);
+  const quote = useQuote({ plans, addons, discountCode });
   const checkout = useCheckout();
 
   const onCheckout = () => {
     setClientError('');
     if (!isProfileComplete) return setClientError('Please complete your profile before checking out.');
-    if (plans.length === 0) return setClientError('Choose a mode of attendance first.');
+    if (!hasOrder) return setClientError('Choose a mode of attendance first.');
     if (needsNationalCode && !savedNationalCode) return setClientError('Please save your national code first.');
-    checkout.mutate({ plans, discountCode });
+    checkout.mutate({ plans, addons, discountCode });
   };
 
   return (
@@ -151,11 +171,20 @@ export function RegisterForm({ modes, workshops, paidPlanIds, nationalCode, isPr
         <WorkshopPicker workshops={workshops} paid={paid} selected={workshopIds} onChange={setWorkshopIds} />
       )}
 
+      {offeredAddons.length > 0 && (
+        <AddonPicker
+          addons={offeredAddons}
+          held={heldAddons}
+          quantities={addonQuantities}
+          onChange={setAddonQuantities}
+        />
+      )}
+
       <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
         <div>
           <p className="text-sm font-medium tracking-wide text-muted uppercase">Price</p>
           <p className="flex items-center gap-3 text-4xl font-semibold text-ink" aria-live="polite">
-            {formatToman(plans.length > 0 ? (quote.data?.price.payable ?? 0) : 0)}
+            {formatToman(hasOrder ? (quote.data?.price.payable ?? 0) : 0)}
             {quote.isFetching && (
               <LoaderCircle className="size-6 animate-spin text-muted" aria-label="Updating price" />
             )}
@@ -196,7 +225,7 @@ export function RegisterForm({ modes, workshops, paidPlanIds, nationalCode, isPr
         <Alert tone="error">{clientError || checkout.error?.message || quote.error?.message}</Alert>
       )}
 
-      <Button size="lg" className="w-full" onClick={onCheckout} disabled={checkout.isPending || plans.length === 0}>
+      <Button size="lg" className="w-full" onClick={onCheckout} disabled={checkout.isPending || !hasOrder}>
         {checkout.isPending && <LoaderCircle className="size-5 animate-spin" aria-hidden />}
         Checkout
       </Button>

@@ -1,5 +1,6 @@
 import { httpGet, httpPost } from '@/services/http';
 import type {
+  AddonLineRequest,
   CreatePaymentResponse,
   PriceRequest,
   PriceResponse,
@@ -15,19 +16,36 @@ export interface Price {
   payable: number;
 }
 
-function paymentBody(plans: number[], discountCode: string): PriceRequest {
-  return discountCode ? { plans, discount_code: discountCode } : { plans };
+/** Units of one add-on in an order. */
+export interface AddonLine {
+  addonId: number;
+  quantity: number;
 }
 
-export async function getPrice(plans: number[], discountCode: string): Promise<Price> {
-  const body = { ...paymentBody(plans, discountCode), total_price: 0, calculated_price: 0 };
+export interface Order {
+  plans: number[];
+  addons: AddonLine[];
+  discountCode: string;
+}
+
+function paymentBody({ plans, addons, discountCode }: Order): PriceRequest {
+  const body: PriceRequest = { plans };
+  if (addons.length > 0) {
+    body.addons = addons.map((line): AddonLineRequest => ({ addon: line.addonId, quantity: line.quantity }));
+  }
+  if (discountCode) body.discount_code = discountCode;
+  return body;
+}
+
+export async function getPrice(order: Order): Promise<Price> {
+  const body = { ...paymentBody(order), total_price: 0, calculated_price: 0 };
   const price = await httpPost<PriceResponse>('/payment/price/', body, { auth: true });
   return { total: price.total_price / RIAL_PER_TOMAN, payable: price.calculated_price / RIAL_PER_TOMAN };
 }
 
 /** Returns the payment gateway URL (or the dashboard, when the order is free). */
-export async function createPayment(plans: number[], discountCode: string): Promise<string> {
-  const { redirect_url } = await httpPost<CreatePaymentResponse>('/payment/create/', paymentBody(plans, discountCode), {
+export async function createPayment(order: Order): Promise<string> {
+  const { redirect_url } = await httpPost<CreatePaymentResponse>('/payment/create/', paymentBody(order), {
     auth: true,
   });
   return redirect_url;
