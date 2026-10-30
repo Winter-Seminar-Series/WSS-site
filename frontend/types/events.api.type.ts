@@ -19,7 +19,7 @@ export interface SubEventResponse {
   ending_time: string;
   date: string;
   venue: 'V' | 'P';
-  link: string;
+  link?: string;
   poster: string | null;
   thumbnail: string | null;
   poster_blurhash?: string;

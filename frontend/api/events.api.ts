@@ -1,6 +1,7 @@
 import { blurDataUrl } from '@/lib/blurhash';
 import { uniqueById } from '@/lib/collections';
 import { markdownToHtml } from '@/lib/markdown';
+import { parseHttpUrl } from '@/lib/session-link';
 import { httpGet } from '@/services/http';
 import type { AttendanceMode, PlanAddon, Speaker, SubEvent, SubEventKind, Workshop } from '@/types/event.type';
 import type {
@@ -60,6 +61,7 @@ async function toSubEvent(
     date: subEvent.date,
     startTime: subEvent.starting_time,
     endTime: subEvent.ending_time,
+    link: parseHttpUrl(subEvent.link)?.href ?? null,
     poster: subEvent.poster,
     posterBlur: blurDataUrl(subEvent.poster_blurhash),
     thumbnail: subEvent.thumbnail,
