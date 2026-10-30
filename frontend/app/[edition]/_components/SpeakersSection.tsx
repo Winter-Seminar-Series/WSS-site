@@ -1,10 +1,12 @@
 import { ArrowRight } from 'lucide-react';
 import Image from 'next/image';
+import Link from 'next/link';
 
 import { getEditionSpeakers } from '@/api/events.api';
 import { editionHref } from '@/lib/editions';
 import type { Edition } from '@/lib/editions';
 import { BACKDROP_QUALITY } from '@/lib/images';
+import { SUB_EVENT_SECTIONS } from '@/lib/sub-events';
 import { LinkButton } from '@/ui/Button';
 import { Marquee } from '@/ui/Marquee';
 import { PersonPhoto } from '@/ui/PersonPhoto';
@@ -35,7 +37,10 @@ export async function SpeakersSection({ edition }: { edition: Edition }) {
         <Marquee label={`Speakers of the ${edition.label}`} durationSeconds={speakers.length * 4}>
           {speakers.map((speaker) => (
             <li key={speaker.id} className="w-60 shrink-0 px-3 pt-4 pb-12">
-              <div className="flex h-full flex-col items-center rounded-xl bg-surface p-5 text-center">
+              <Link
+                href={editionHref(edition, `${SUB_EVENT_SECTIONS[speaker.session.kind].path}/${speaker.session.id}`)}
+                className="group/card flex h-full flex-col items-center rounded-xl bg-surface p-5 text-center transition-shadow hover:shadow-card focus-visible:shadow-card"
+              >
                 <PersonPhoto
                   src={speaker.image}
                   blur={speaker.imageBlur}
@@ -43,9 +48,11 @@ export async function SpeakersSection({ edition }: { edition: Edition }) {
                   size={160}
                   className="rounded-full"
                 />
-                <p className="mt-4 text-lg font-semibold text-ink">{speaker.name}</p>
+                <p className="mt-4 text-lg font-semibold text-ink transition-colors group-hover/card:text-brand group-focus-visible/card:text-brand">
+                  {speaker.name}
+                </p>
                 <p className="mt-1 line-clamp-3 text-sm text-muted">{speaker.designation}</p>
-              </div>
+              </Link>
             </li>
           ))}
         </Marquee>

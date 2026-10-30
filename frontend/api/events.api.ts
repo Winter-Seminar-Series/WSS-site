@@ -3,7 +3,15 @@ import { uniqueById } from '@/lib/collections';
 import { parseHttpUrl } from '@/lib/http-url';
 import { markdownToHtml } from '@/lib/markdown';
 import { httpGet } from '@/services/http';
-import type { AttendanceMode, PlanAddon, Speaker, SubEvent, SubEventKind, Workshop } from '@/types/event.type';
+import type {
+  AttendanceMode,
+  EditionSpeaker,
+  PlanAddon,
+  Speaker,
+  SubEvent,
+  SubEventKind,
+  Workshop,
+} from '@/types/event.type';
 import type {
   ParticipationPlanResponse,
   RoundTableResponse,
@@ -88,13 +96,20 @@ export async function getSubEvent(eventId: number, kind: SubEventKind, id: numbe
   return subEvents.find((subEvent) => subEvent.id === id) ?? null;
 }
 
-/** Everyone presenting at a seminar or round table of an edition — the landing page's speaker strip. */
-export async function getEditionSpeakers(eventId: number): Promise<Speaker[]> {
+/**
+ * Everyone presenting at a seminar or round table of an edition — the landing page's speaker strip — each with the
+ * first session they present (seminars first), so the strip can link to it.
+ */
+export async function getEditionSpeakers(eventId: number): Promise<EditionSpeaker[]> {
   const [seminars, roundTables] = await Promise.all([
     getSubEvents(eventId, 'seminar'),
     getSubEvents(eventId, 'round-table'),
   ]);
-  return uniqueById([...seminars, ...roundTables].flatMap((subEvent) => subEvent.speakers));
+  return uniqueById(
+    [...seminars, ...roundTables].flatMap((subEvent) =>
+      subEvent.speakers.map((speaker) => ({ ...speaker, session: { id: subEvent.id, kind: subEvent.kind } })),
+    ),
+  );
 }
 
 export async function getSpeaker(id: number): Promise<Speaker> {
