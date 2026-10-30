@@ -1,6 +1,7 @@
 import { ExternalLink, Play, Video } from 'lucide-react';
 
-import { describeSessionLink, parseHttpUrl } from '@/lib/session-link';
+import { parseHttpUrl } from '@/lib/http-url';
+import { describeSessionLink } from '@/lib/session-link';
 import type { SessionLinkKind } from '@/lib/session-link';
 import { buttonClasses } from '@/ui/Button';
 

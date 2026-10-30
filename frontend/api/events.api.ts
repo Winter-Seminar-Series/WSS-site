@@ -1,7 +1,7 @@
 import { blurDataUrl } from '@/lib/blurhash';
 import { uniqueById } from '@/lib/collections';
+import { parseHttpUrl } from '@/lib/http-url';
 import { markdownToHtml } from '@/lib/markdown';
-import { parseHttpUrl } from '@/lib/session-link';
 import { httpGet } from '@/services/http';
 import type { AttendanceMode, PlanAddon, Speaker, SubEvent, SubEventKind, Workshop } from '@/types/event.type';
 import type {
@@ -45,6 +45,8 @@ async function toSpeaker(speaker: SpeakerResponse): Promise<Speaker> {
     bioHtml: await markdownToHtml(speaker.description),
     image: speaker.image,
     imageBlur: blurDataUrl(speaker.image_blurhash),
+    linkedin: parseHttpUrl(speaker.linkedin)?.href ?? null,
+    googleScholar: parseHttpUrl(speaker.google_scholar)?.href ?? null,
   };
 }
 

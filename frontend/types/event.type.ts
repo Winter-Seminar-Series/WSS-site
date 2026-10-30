@@ -8,6 +8,9 @@ export interface Speaker {
   image: string | null;
   /** `blurDataURL` for the image, decoded on the server from the API's BlurHash (grey when it has none). */
   imageBlur: string;
+  /** Absolute http(s) profile URLs; `null` when unset or not a web link. */
+  linkedin: string | null;
+  googleScholar: string | null;
 }
 
 export type SubEventKind = 'seminar' | 'round-table' | 'lab-talk';

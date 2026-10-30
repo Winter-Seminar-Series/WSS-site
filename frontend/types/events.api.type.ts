@@ -8,6 +8,9 @@ export interface SpeakerResponse {
   image: string | null;
   /** BlurHash of the image. Absent from older backends, and empty until it has been computed. */
   image_blurhash?: string;
+  /** Profile links, empty when unset. Absent from older backends. */
+  linkedin?: string;
+  google_scholar?: string;
 }
 
 export interface SubEventResponse {
