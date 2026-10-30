@@ -49,6 +49,20 @@ class SessionListTests(APITest):
 
         self.assertEqual([item['sub_event']['link'] for item in body], [linked.sub_event.link, ''])
 
+    def test_speaker_profile_links_are_optional_and_public(self):
+        speaker = make_speaker()
+        speaker.linkedin = 'https://www.linkedin.com/in/ada'
+        speaker.google_scholar = 'https://scholar.google.com/citations?user=abc'
+        speaker.save()
+        make_seminar(self.event, speaker=speaker, starting_time=datetime.time(9))
+        make_seminar(self.event, starting_time=datetime.time(14))
+
+        body = self.client.get(f'/api/seminar/{self.event.pk}/').json()
+
+        self.assertEqual(body[0]['speaker']['linkedin'], 'https://www.linkedin.com/in/ada')
+        self.assertEqual(body[0]['speaker']['google_scholar'], 'https://scholar.google.com/citations?user=abc')
+        self.assertEqual((body[1]['speaker']['linkedin'], body[1]['speaker']['google_scholar']), ('', ''))
+
     def test_seminar_list_is_one_query_however_long(self):
         for _ in range(5):
             make_seminar(self.event)
