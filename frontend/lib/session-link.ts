@@ -15,16 +15,6 @@ const KNOWN_HOSTS: [suffix: string, info: SessionLinkInfo][] = [
   ['meet.google.com', { label: 'Join on Google Meet', kind: 'meeting' }],
 ];
 
-/** The URL when it is an absolute http(s) one, else `null`: the only schemes allowed into an `href`. */
-export function parseHttpUrl(value: string | null | undefined): URL | null {
-  try {
-    const url = new URL((value ?? '').trim());
-    return url.protocol === 'https:' || url.protocol === 'http:' ? url : null;
-  } catch {
-    return null;
-  }
-}
-
 /** What the button should say, from where the link points: "Open link" is the fallback for an unknown host. */
 export function describeSessionLink(url: URL): SessionLinkInfo {
   const host = url.hostname.toLowerCase();
