@@ -41,6 +41,14 @@ class SessionListTests(APITest):
         self.assertEqual([item['sub_event']['id'] for item in body], [early.sub_event_id, late.sub_event_id])
         self.assertEqual(body[0]['speaker']['name'], early.speaker.name)
 
+    def test_sessions_expose_their_link(self):
+        linked = make_seminar(self.event, link='https://www.skyroom.online/ch/wss/seminar', starting_time=datetime.time(9))
+        make_seminar(self.event, starting_time=datetime.time(14))
+
+        body = self.client.get(f'/api/seminar/{self.event.pk}/').json()
+
+        self.assertEqual([item['sub_event']['link'] for item in body], [linked.sub_event.link, ''])
+
     def test_seminar_list_is_one_query_however_long(self):
         for _ in range(5):
             make_seminar(self.event)
