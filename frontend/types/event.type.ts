@@ -23,6 +23,8 @@ export interface SubEvent {
   /** `HH:MM:SS`, Tehran. */
   startTime: string;
   endTime: string;
+  /** Where to join or follow the session; `null` when none is set or it is not an http(s) URL. */
+  link: string | null;
   poster: string | null;
   posterBlur: string;
   thumbnail: string | null;

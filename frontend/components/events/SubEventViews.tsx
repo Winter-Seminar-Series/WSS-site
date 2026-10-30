@@ -4,6 +4,7 @@ import { getSubEvent, getSubEvents } from '@/api/events.api';
 import { EmptyState, EventCard, EventGrid } from '@/components/events/EventCard';
 import { EventDetail } from '@/components/events/EventDetail';
 import { SessionMeta } from '@/components/events/EventMeta';
+import { SessionLink } from '@/components/events/SessionLink';
 import { PageHero } from '@/components/layout/PageHero';
 import { JsonLd } from '@/components/seo/JsonLd';
 import { editionHref, isCurrentEdition } from '@/lib/editions';
@@ -89,6 +90,7 @@ export async function SubEventPage({ edition, kind, id }: DetailProps) {
         image={edition.heroImage}
         title={subEvent.name}
         meta={<SessionMeta date={subEvent.date} startTime={subEvent.startTime} endTime={subEvent.endTime} />}
+        action={subEvent.link && <SessionLink href={subEvent.link} />}
         poster={subEvent.poster}
         posterBlur={subEvent.posterBlur}
         descriptionHtml={subEvent.descriptionHtml}

@@ -12,6 +12,8 @@ interface Props {
   meta: ReactNode;
   poster: string | null;
   posterBlur?: string | null;
+  /** Call to action under the title, e.g. the session link. */
+  action?: ReactNode;
   descriptionHtml: string;
   speakers: Speaker[];
   /** Extra sections between the abstract and the presenters (workshop modules). */
@@ -20,7 +22,17 @@ interface Props {
   image?: string;
 }
 
-export function EventDetail({ title, meta, poster, posterBlur, descriptionHtml, speakers, children, image }: Props) {
+export function EventDetail({
+  title,
+  meta,
+  poster,
+  posterBlur,
+  action,
+  descriptionHtml,
+  speakers,
+  children,
+  image,
+}: Props) {
   return (
     <>
       <HeroBand image={image} />
@@ -29,6 +41,7 @@ export function EventDetail({ title, meta, poster, posterBlur, descriptionHtml, 
           <header className="flex flex-col gap-3">
             <div className="text-base md:text-lg">{meta}</div>
             <h1 className="text-3xl leading-tight font-semibold text-ink md:text-5xl">{title}</h1>
+            {action && <div className="mt-2 flex">{action}</div>}
           </header>
 
           {poster && (
