@@ -13,6 +13,11 @@ export interface Speaker {
   googleScholar: string | null;
 }
 
+/** A speaker of an edition with the first session they present in, for linking to its page. */
+export interface EditionSpeaker extends Speaker {
+  session: { id: number; kind: SubEventKind };
+}
+
 export type SubEventKind = 'seminar' | 'round-table' | 'lab-talk';
 
 /** A seminar, round table or lab talk — they differ only in how many speakers they have. */
