@@ -86,6 +86,8 @@ class Speaker(BlurHashMixin, models.Model):
     designation = models.TextField(max_length=150, blank=True)
     description = models.TextField(max_length=5000, blank=True)
     image = models.ImageField(upload_to=UniqueUploadPath('speakers'), null=True, blank=True)
+    linkedin = models.URLField(max_length=200, blank=True)
+    google_scholar = models.URLField(max_length=200, blank=True)
 
     BLURHASH_FIELDS = {'image': 'image_blurhash'}
     image_blurhash = blurhash_field()
