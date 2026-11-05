@@ -99,6 +99,11 @@ docker compose -f ../compose.dev.yaml exec backend python manage.py createsuperu
 To run it natively, create a venv, run `pip install -r requirements.txt`, set `DB_HOST=localhost` and
 `REDIS_URL=redis://localhost:6379/0`, then run `python manage.py runserver`.
 
+Organizations, speakers' current organizations and careers are content, edited in the admin (Core → Organizations,
+and the Career table on each speaker; logos are uploaded there too). To fill them in bulk, copy a JSON file into the
+container and run `python manage.py load_careers <file> [--dry-run] [--replace]` (format in the command's docstring).
+The file is not kept in the repository. It never overwrites what the admin set unless `--replace`.
+
 ## Tests
 
 ```bash

@@ -4,8 +4,10 @@ from django.contrib import admin
 from django.http import HttpResponse
 
 from core.models import (
+    CareerStep,
     Event,
     LabTalk,
+    Organization,
     PosterSession,
     PosterSessionImage,
     RoundTable,
@@ -33,12 +35,29 @@ class ExportCSVMixin:
         return response
 
 
+@admin.register(Organization)
+class OrganizationAdmin(admin.ModelAdmin):
+    list_display = ('name', 'website')
+    search_fields = ('name',)
+    ordering = ('name',)
+
+
+class CareerStepInline(admin.TabularInline):
+    model = CareerStep
+    autocomplete_fields = ('organization',)
+    extra = 0
+    verbose_name = 'career step'
+    verbose_name_plural = 'Career (shown as a row of logos, lowest order first)'
+
+
 @admin.register(Speaker)
 class SpeakerAdmin(admin.ModelAdmin):
     list_display = ('id', 'name', 'designation')
     search_fields = ('name', 'designation')
     list_filter = ('name',)
     ordering = ('name', 'id')
+    autocomplete_fields = ('current_organization',)
+    inlines = (CareerStepInline,)
 
 
 @admin.register(Event)
