@@ -11,13 +11,13 @@ import type { Edition } from '@/lib/editions';
 import { SUB_EVENT_SECTIONS } from '@/lib/sub-events';
 import type { EditionSpeaker } from '@/types/event.type';
 import { LinkButton } from '@/ui/Button';
-import { Marquee } from '@/ui/Marquee';
+import { MARQUEE_REM_PER_SECOND, Marquee } from '@/ui/Marquee';
 import { SectionHeading } from '@/ui/SectionHeading';
 
 /** Below this many speakers one row is enough; above it, two rows drift past each other. */
 const TWO_ROWS_FROM = 10;
-/** Seconds each card takes to cross, so every row moves at the same reading speed. */
-const SECONDS_PER_CARD = 5;
+/** A card's width from md, padding included (`w-[22rem]` plus `px-3`): with the shared pace, sets each row's duration. */
+const CARD_REM = 23.5;
 /** Cards per loop a row needs to span a wide screen; shorter rows repeat, or the loop would show a gap. */
 const MIN_CARDS_PER_LOOP = 8;
 
@@ -111,7 +111,11 @@ export async function SpeakersSection({ edition }: { edition: Edition }) {
         className="mt-12 flex flex-col gap-4 md:mt-14 md:gap-5"
       >
         {rows.map((row, index) => (
-          <Marquee key={index} reverse={index % 2 === 1} durationSeconds={row.length * SECONDS_PER_CARD}>
+          <Marquee
+            key={index}
+            reverse={index % 2 === 1}
+            durationSeconds={(row.length * CARD_REM) / MARQUEE_REM_PER_SECOND}
+          >
             {row.map((slot, position) => (
               <SpeakerCard key={`${slot.speaker.id}-${position}`} slot={slot} edition={edition} />
             ))}

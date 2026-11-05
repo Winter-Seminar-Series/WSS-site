@@ -41,7 +41,7 @@ export function Highlights({ edition }: { edition: Edition }) {
         <p className="mt-14 text-center text-[0.9375rem] font-semibold text-muted">Speakers have joined us from</p>
       </div>
       <div className="mt-6">
-        <Marquee label="Institutions our speakers come from" durationSeconds={SPEAKER_INSTITUTIONS.length * 3}>
+        <Marquee label="Institutions our speakers come from" durationSeconds={SPEAKER_INSTITUTIONS.length * 3.75}>
           {SPEAKER_INSTITUTIONS.map((institution) => {
             const size = fitWithin(institution, INSTITUTION_BOX);
             return (

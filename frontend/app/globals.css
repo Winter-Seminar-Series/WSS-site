@@ -32,7 +32,8 @@
 
   --ease-snap: cubic-bezier(0.2, 0.8, 0.2, 1);
 
-  --animate-marquee: marquee var(--marquee-duration, 60s) linear infinite;
+  /* Each row sets its own `animation-duration` inline (ui/Marquee): a var() here would resolve once, on :root. */
+  --animate-marquee: marquee 60s linear infinite;
   --animate-rise: rise 0.9s var(--ease-snap) both;
   --animate-settle: settle 1.8s var(--ease-snap) both;
   --animate-live: live 1.6s ease-out infinite;
