@@ -18,7 +18,8 @@ export interface AuthField {
 }
 
 interface Props {
-  overline: string;
+  /** One sentence under the title: what the form is for. */
+  lead: string;
   title: string;
   fields: AuthField[];
   submitLabel: string;
@@ -29,14 +30,14 @@ interface Props {
   footer?: ReactNode;
 }
 
-export function AuthForm({ overline, title, fields, submitLabel, action, hidden = {}, notice, footer }: Props) {
+export function AuthForm({ lead, title, fields, submitLabel, action, hidden = {}, notice, footer }: Props) {
   const [state, formAction] = useActionState(action, {});
 
   return (
     <form action={formAction} className="flex flex-col gap-6" noValidate>
       <header>
-        <p className="font-medium tracking-wide text-muted uppercase">{overline}</p>
-        <h1 className="text-5xl font-bold text-ink md:text-7xl">{title}</h1>
+        <h1 className="text-4xl font-extrabold tracking-[-0.04em] text-ink md:text-5xl">{title}</h1>
+        <p className="mt-3 text-lg text-muted">{lead}</p>
       </header>
 
       {notice && !state.error && !state.success && <Alert tone="success">{notice}</Alert>}
@@ -47,7 +48,7 @@ export function AuthForm({ overline, title, fields, submitLabel, action, hidden 
         <input key={name} type="hidden" name={name} value={value} />
       ))}
 
-      <div className="mt-4 flex flex-col gap-6">
+      <div className="flex flex-col gap-5">
         {fields.map((field) => (
           <TextField
             key={field.name}
@@ -63,8 +64,8 @@ export function AuthForm({ overline, title, fields, submitLabel, action, hidden 
         ))}
       </div>
 
-      <SubmitButton className="mt-2 w-full">{submitLabel}</SubmitButton>
-      {footer && <div className="text-lg text-ink">{footer}</div>}
+      <SubmitButton className="mt-1 w-full">{submitLabel}</SubmitButton>
+      {footer && <div className="text-center text-[0.9375rem] text-muted">{footer}</div>}
     </form>
   );
 }

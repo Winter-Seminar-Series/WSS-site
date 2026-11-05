@@ -4,24 +4,27 @@ interface Props {
   children: ReactNode;
   /** Seconds per full loop; scale with the number of items so speed stays constant. */
   durationSeconds?: number;
-  label: string;
+  /** Makes the row a labelled region. Omit it when an ancestor already labels a group of rows. */
+  label?: string;
+  /** Drift left to right instead, so stacked rows pass each other in opposite directions. */
+  reverse?: boolean;
 }
 
 /**
  * Pure-CSS infinite scroller: the track holds the items twice and slides by half its width. No JS, no layout reads,
- * pauses on hover/focus, and stops entirely for users who prefer reduced motion. The second copy is `inert`, so
- * links inside it never take keyboard focus.
+ * pauses on hover/focus (and with a section's pause switch, see app/globals.css), and stops entirely for users who
+ * prefer reduced motion. The second copy is `inert`, so links inside it never take keyboard focus.
  */
-export function Marquee({ children, durationSeconds = 60, label }: Props) {
+export function Marquee({ children, durationSeconds = 60, label, reverse = false }: Props) {
   const style = { '--marquee-duration': `${durationSeconds}s` } as CSSProperties;
   return (
     <div
-      role="region"
+      role={label ? 'region' : undefined}
       aria-label={label}
       className="group overflow-hidden mask-x-from-90% mask-x-to-100% motion-reduce:overflow-x-auto"
     >
       <div
-        className="flex w-max animate-marquee group-focus-within:[animation-play-state:paused] group-hover:[animation-play-state:paused]"
+        className={`flex w-max animate-marquee group-focus-within:[animation-play-state:paused] group-hover:[animation-play-state:paused] ${reverse ? '[animation-direction:reverse]' : ''}`}
         style={style}
       >
         <ul className="flex shrink-0">{children}</ul>

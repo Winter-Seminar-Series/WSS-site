@@ -2,9 +2,11 @@ import { blurDataUrl } from '@/lib/blurhash';
 import { uniqueById } from '@/lib/collections';
 import { parseHttpUrl } from '@/lib/http-url';
 import { markdownToHtml } from '@/lib/markdown';
+import { splitDesignation, withCurrentOrganization } from '@/lib/speakers';
 import { httpGet } from '@/services/http';
 import type {
   AttendanceMode,
+  CareerStep,
   EditionSpeaker,
   PlanAddon,
   Speaker,
@@ -13,6 +15,7 @@ import type {
   Workshop,
 } from '@/types/event.type';
 import type {
+  OrganizationResponse,
   ParticipationPlanResponse,
   RoundTableResponse,
   SingleSpeakerSubEventResponse,
@@ -50,12 +53,19 @@ async function toSpeaker(speaker: SpeakerResponse): Promise<Speaker> {
     id: speaker.id,
     name: speaker.name,
     designation: speaker.designation,
+    ...withCurrentOrganization(splitDesignation(speaker.designation), speaker.current_organization?.name),
     bioHtml: await markdownToHtml(speaker.description),
     image: speaker.image,
     imageBlur: blurDataUrl(speaker.image_blurhash),
     linkedin: parseHttpUrl(speaker.linkedin)?.href ?? null,
     googleScholar: parseHttpUrl(speaker.google_scholar)?.href ?? null,
+    career: (speaker.career ?? []).map(toOrganization),
+    currentOrganization: speaker.current_organization ? toOrganization(speaker.current_organization) : null,
   };
+}
+
+function toOrganization(organization: OrganizationResponse): CareerStep {
+  return { name: organization.name, logo: organization.logo, href: parseHttpUrl(organization.website)?.href ?? null };
 }
 
 async function toSubEvent(
@@ -71,6 +81,7 @@ async function toSubEvent(
     date: subEvent.date,
     startTime: subEvent.starting_time,
     endTime: subEvent.ending_time,
+    venue: subEvent.venue === 'P' ? 'in-person' : 'online',
     link: parseHttpUrl(subEvent.link)?.href ?? null,
     poster: subEvent.poster,
     posterBlur: blurDataUrl(subEvent.poster_blurhash),

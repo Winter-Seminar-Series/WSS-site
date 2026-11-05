@@ -58,6 +58,7 @@ export default async function WorkshopPage({ params }: PageProps<'/[edition]/wor
       <EventDetail
         image={edition.heroImage}
         title={workshop.name}
+        back={{ href: editionHref(edition, WORKSHOPS_SECTION.path), label: WORKSHOPS_SECTION.title }}
         meta={
           <WorkshopMeta startDate={workshop.startDate} endDate={workshop.endDate} modules={workshop.sessions.length} />
         }
@@ -68,7 +69,7 @@ export default async function WorkshopPage({ params }: PageProps<'/[edition]/wor
       >
         {workshop.sessions.length > 0 && (
           <section aria-labelledby="modules" className="flex flex-col gap-3">
-            <h2 id="modules" className="text-3xl font-semibold text-ink">
+            <h2 id="modules" className="text-3xl font-extrabold tracking-[-0.03em] text-ink">
               Modules
             </h2>
             {workshop.sessions.map((session, index) => (
@@ -77,9 +78,10 @@ export default async function WorkshopPage({ params }: PageProps<'/[edition]/wor
                 summary={
                   <div className="flex flex-col gap-1 md:flex-row md:items-center md:justify-between md:gap-4">
                     <span className="font-medium text-ink">
-                      Module {index + 1}: {session.name} ({session.speaker.name})
+                      <span className="me-2 text-brand">Module {index + 1}</span>
+                      {session.name} ({session.speaker.name})
                     </span>
-                    <span className="shrink-0 text-sm font-medium tracking-wide text-muted uppercase">
+                    <span className="shrink-0 text-sm font-semibold text-muted">
                       {formatShortDate(session.date)}, {formatClock(session.startTime)} – {formatClock(session.endTime)}
                     </span>
                   </div>

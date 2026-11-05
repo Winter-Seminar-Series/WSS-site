@@ -1,15 +1,38 @@
-import { CalendarDays, MapPin } from 'lucide-react';
+import { ArrowRight, CalendarDays, MapPin } from 'lucide-react';
 import Image from 'next/image';
 
+import { EdgeLines } from '@/components/brand/EdgeLines';
 import { Countdown } from '@/components/countdown/Countdown';
+import { AccountLink } from '@/components/navigation/AccountLink';
+import { CURRENT_EDITION, editionHref, hasPage, isCurrentEdition } from '@/lib/editions';
 import type { Edition } from '@/lib/editions';
 import { BACKDROP_QUALITY } from '@/lib/images';
-import { SPEAKER_INSTITUTIONS, VENUE } from '@/lib/site';
+import { VENUE } from '@/lib/site';
+import { LinkButton } from '@/ui/Button';
 
-export function Hero({ edition }: { edition: Edition }) {
+interface Props {
+  edition: Edition;
+  /** Doors not open yet: show the countdown and send visitors to registration. */
+  upcoming: boolean;
+}
+
+/** "10th Winter Seminar Series" → ["10th", "Winter Seminar Series"]: two lines that rise one after the other. */
+function titleLines(title: string): string[] {
+  const [ordinal = '', ...rest] = title.split(' ');
+  return rest.length > 0 ? [ordinal, rest.join(' ')] : [title];
+}
+
+export function Hero({ edition, upcoming }: Props) {
+  const current = isCurrentEdition(edition);
+  const lines = titleLines(edition.title);
+  const explore = hasPage(edition, 'seminars') ? editionHref(edition, '/seminars') : editionHref(edition, '/about');
+
   return (
-    <section aria-labelledby="hero-title">
-      <div className="relative bg-ink-deep pt-(--navbar-height) pb-56 text-white">
+    <section
+      aria-labelledby="hero-title"
+      className="relative isolate flex min-h-[80svh] flex-col overflow-hidden bg-ink-deep edge-bottom [&_:focus-visible]:outline-white"
+    >
+      <div className="parallax absolute inset-0 -z-10">
         <Image
           src={edition.heroImage}
           alt=""
@@ -18,66 +41,88 @@ export function Hero({ edition }: { edition: Edition }) {
           fetchPriority="high"
           sizes="100vw"
           quality={BACKDROP_QUALITY}
-          className="object-cover"
+          className="object-cover motion-safe:animate-settle"
         />
-        <div className="relative mx-auto flex max-w-300 flex-col gap-12 px-6 pt-8 lg:flex-row lg:items-start lg:justify-between lg:pt-16">
-          <div className="max-w-2xl">
-            <h1
-              id="hero-title"
-              className="text-5xl leading-tight font-bold tracking-tight md:text-7xl lg:text-[96px]/[1]"
+      </div>
+      <div className="absolute inset-0 -z-10 bg-linear-to-t from-ink-deep via-ink-deep/45 to-ink-deep/25" />
+
+      {/* A size container: from sm the title is sized to its width (in `cqi`), so its long line always fits. */}
+      <div className="@container mx-auto flex w-full max-w-300 grow flex-col justify-end px-4 pt-[calc(var(--navbar-height)+3rem)] pb-28 text-white md:px-6 md:pb-40">
+        <ul className="flex flex-wrap gap-2 text-sm font-semibold motion-safe:animate-rise">
+          <li className="flex min-h-9 items-center gap-2 rounded-full bg-white/12 px-3.5 ring-1 ring-white/20 backdrop-blur-md">
+            <CalendarDays className="size-4 shrink-0" aria-hidden />
+            <time dateTime={edition.startDate}>{edition.dateRange}</time>
+          </li>
+          <li className="flex min-h-9 items-center gap-2 rounded-full bg-white/12 px-3.5 ring-1 ring-white/20 backdrop-blur-md">
+            <MapPin className="size-4 shrink-0" aria-hidden />
+            {VENUE.name}, {VENUE.city}
+          </li>
+        </ul>
+
+        {/* Phones let the title wrap at a headline size. From sm, 9.7cqi: "Winter Seminar Series" is 10em wide, so it fills the line. */}
+        <h1
+          id="hero-title"
+          className="mt-6 text-[clamp(3rem,13vw,4.5rem)] leading-[0.92] font-extrabold tracking-[-0.045em] sm:text-[min(7.5rem,9.7cqi)] sm:whitespace-nowrap"
+        >
+          {lines.map((line, index) => (
+            <span
+              key={line}
+              className="block motion-safe:animate-rise"
+              style={{ animationDelay: `${120 + index * 110}ms` }}
             >
-              {edition.title}
-            </h1>
-            <p className="mt-6 text-xl font-semibold md:text-2xl">{edition.tagline}</p>
-            <ul className="mt-5 flex flex-col gap-3 text-white/80 sm:flex-row sm:gap-8 lg:flex-col lg:gap-2 lg:text-xl">
-              <li className="flex items-center gap-2">
-                <MapPin className="size-6 shrink-0" aria-hidden />
-                {VENUE.name} - {VENUE.city}, {VENUE.country}
-              </li>
-              <li className="flex items-center gap-2">
-                <CalendarDays className="size-6 shrink-0" aria-hidden />
-                <time dateTime={edition.startDate}>{edition.dateRange}</time>
-              </li>
-            </ul>
-            {edition.startsAt && (
-              <div className="mt-10">
-                <Countdown targetIso={edition.startsAt} size="lg" />
-              </div>
-            )}
+              {line}
+            </span>
+          ))}
+        </h1>
+
+        <div className="mt-6 flex flex-col gap-10 lg:flex-row lg:items-end lg:justify-between">
+          <div className="max-w-xl">
+            <p className="text-lg font-medium text-white/85 motion-safe:animate-rise motion-safe:[animation-delay:360ms] md:text-2xl">
+              {edition.tagline}
+            </p>
+
+            <div className="mt-9 flex flex-col gap-3 motion-safe:animate-rise motion-safe:[animation-delay:460ms] sm:flex-row">
+              {current && upcoming ? (
+                <LinkButton href="/dashboard/register" variant="light" size="lg">
+                  Register now
+                  <ArrowRight className="size-5" aria-hidden />
+                </LinkButton>
+              ) : (
+                <LinkButton href={explore} variant="light" size="lg">
+                  Explore the talks
+                  <ArrowRight className="size-5" aria-hidden />
+                </LinkButton>
+              )}
+              {current ? (
+                upcoming ? (
+                  <LinkButton href={explore} variant="outline-light" size="lg">
+                    Explore the talks
+                  </LinkButton>
+                ) : (
+                  <AccountLink
+                    signedOut={{ href: '/signup', label: 'Create an account' }}
+                    variant="outline-light"
+                    size="lg"
+                  />
+                )
+              ) : (
+                <LinkButton href="/" variant="outline-light" size="lg">
+                  Visit the {CURRENT_EDITION.label}
+                </LinkButton>
+              )}
+            </div>
           </div>
 
-          <dl className="grid shrink-0 grid-cols-2 gap-x-12 gap-y-6 lg:text-end">
-            {edition.stats.map((stat) => (
-              <div key={stat.label} className="flex flex-col-reverse">
-                <dt className="text-sm text-white/80 lg:text-base">{stat.label}.</dt>
-                <dd className="text-4xl font-bold tracking-tight lg:text-6xl">{stat.value}</dd>
-              </div>
-            ))}
-          </dl>
+          {upcoming && edition.startsAt && (
+            <div className="motion-safe:animate-rise motion-safe:[animation-delay:560ms]">
+              <p className="mb-3 text-sm font-semibold text-white/75">Doors open in</p>
+              <Countdown targetIso={edition.startsAt} size="lg" />
+            </div>
+          )}
         </div>
       </div>
 
-      <div className="relative mx-4 -mt-36 mb-24 rounded-2xl bg-surface px-6 py-10 text-center shadow-card md:mx-auto md:w-4/5 md:max-w-300 md:px-12">
-        <h2 className="text-lg font-medium tracking-wide text-ink uppercase md:text-xl">
-          Presentations from 15+ top level companies and universities
-        </h2>
-        <ul className="mt-8 grid grid-cols-4 items-center gap-6 md:grid-cols-8 md:gap-x-12">
-          {SPEAKER_INSTITUTIONS.map((institution) => (
-            <li key={institution.name} className="flex justify-center">
-              <a href={institution.href} target="_blank" rel="noopener noreferrer" aria-label={institution.name}>
-                <Image
-                  src={institution.src}
-                  alt={institution.name}
-                  // Rendered within 64×56; size the request to that box so 1x/2x stay small.
-                  width={Math.round(Math.min(64, (56 * institution.width) / institution.height))}
-                  height={Math.round(Math.min(56, (64 * institution.height) / institution.width))}
-                  className="h-auto max-h-14 w-full max-w-16 object-contain opacity-60 grayscale transition hover:opacity-100 hover:grayscale-0"
-                />
-              </a>
-            </li>
-          ))}
-        </ul>
-      </div>
+      <EdgeLines />
     </section>
   );
 }

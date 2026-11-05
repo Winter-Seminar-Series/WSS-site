@@ -19,7 +19,7 @@ and LTR, light theme, using the Manrope font.
 | -------------- | -------------------------------------------------------------------------------- | ------------------------------------------------------------- |
 | Landing        | `/` (and `/8th`, … for archived editions, see Editions)                          | ISR (900s), generated on first request                        |
 | Programs       | `/seminars`, `/round-tables`, `/lab-talks`, `/workshops` and their `/[id]` pages | ISR; `[id]` pages use `generateStaticParams = noStaticParams` |
-| Info           | `/about`, `/advisors`, `/timeline`, `/poster-session`                            | static                                                        |
+| Info           | `/about`, `/advisors`, `/timeline`, `/poster-session`                            | static; `/timeline` is ISR (built from the sessions)          |
 | Auth           | `/login`, `/signup`, `/reset-password`, `/reset-password/[token]`                | dynamic, `noindex`                                            |
 | Dashboard      | `/dashboard/{profile,register,stream,certificates,videos,poster-session}`        | dynamic, `noindex`, behind `withAuth`                         |
 | Route handlers | `/callback/[id]` (payment return), `/files/[id]` (signed file redirect)          | dynamic                                                       |
@@ -182,7 +182,13 @@ proxy.ts                 # Next 16 proxy (formerly middleware): refreshes the ac
 - **No heavy library in the initial bundle.** `motion` is used only in `components/layout/NavbarOverlays.tsx`,
   which is loaded with `next/dynamic` on first open. Follow that pattern for anything new and heavy.
 - **Animations:** prefer CSS for decorative motion (the marquee is pure CSS), and gate looping ones with
-  `motion-safe:`.
+  `motion-safe:`. Scroll-driven effects are classes in `app/globals.css` (`reveal`, `reveal-image`, `parallax`): they
+  run on CSS scroll timelines, cost no JS, and leave content in place where unsupported or with reduced motion.
+- **Brand edge:** photo and dark bands end in the logo's woven W and V: the band itself is cut to the pattern's silhouette
+  (`edge-bottom`, `edge-top`, `edge-y`, `edge-start` utilities in `app/globals.css`), so it stays filled into the points
+  and the page behind shows between them; `components/brand/EdgeLines` adds the weave's hairlines inside. Leave
+  `--edge-size` of padding on that side. Never put a separate strip under a photo. The timeline's spine (`.spine`) is
+  the pattern twice, back to back, mirrored about the line its nodes sit on.
 - **Third parties** (analytics) load with `strategy="lazyOnload"`: never on the critical path.
 - **Images:** always `next/image` with real `width`/`height`. `priority` is deprecated in Next 16; use `preload` only
   for the hero/LCP image of a page (it also gets `fetchPriority="high"`).

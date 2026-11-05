@@ -5,6 +5,7 @@ import { EmptyState, EventCard, EventGrid } from '@/components/events/EventCard'
 import { EventDetail } from '@/components/events/EventDetail';
 import { SessionMeta } from '@/components/events/EventMeta';
 import { SessionLink } from '@/components/events/SessionLink';
+import { SpeakerLine } from '@/components/events/SpeakerLine';
 import { PageHero } from '@/components/layout/PageHero';
 import { JsonLd } from '@/components/seo/JsonLd';
 import { editionHref, isCurrentEdition } from '@/lib/editions';
@@ -28,9 +29,7 @@ export async function SubEventList({ edition, kind }: ListProps) {
   return (
     <>
       <JsonLd data={editionBreadcrumbs(edition, section)} />
-      <PageHero image={edition.heroImage} overline={section.overline} title={section.title}>
-        <p className="mt-6 max-w-3xl text-lg text-muted">{section.description}</p>
-      </PageHero>
+      <PageHero image={edition.heroImage} context={edition.title} title={section.title} lead={section.description} />
       {subEvents.length === 0 ? (
         <EmptyState>
           {isCurrentEdition(edition) ? section.empty : `The ${edition.label} had no ${section.title.toLowerCase()}.`}
@@ -46,14 +45,7 @@ export async function SubEventList({ edition, kind }: ListProps) {
                 thumbnailBlur={subEvent.thumbnailBlur}
                 eager={index < EAGER_LIST_ITEMS}
                 meta={<SessionMeta date={subEvent.date} startTime={subEvent.startTime} endTime={subEvent.endTime} />}
-                footer={
-                  <>
-                    <p className="font-semibold text-ink">{subEvent.speakers.map((s) => s.name).join(', ')}</p>
-                    {subEvent.speakers.length === 1 && subEvent.speakers[0]?.designation && (
-                      <p className="mt-1 line-clamp-2 text-sm text-muted">{subEvent.speakers[0].designation}</p>
-                    )}
-                  </>
-                }
+                footer={<SpeakerLine speakers={subEvent.speakers} />}
               />
             </li>
           ))}
@@ -89,6 +81,7 @@ export async function SubEventPage({ edition, kind, id }: DetailProps) {
       <EventDetail
         image={edition.heroImage}
         title={subEvent.name}
+        back={{ href: editionHref(edition, section.path), label: section.title }}
         meta={<SessionMeta date={subEvent.date} startTime={subEvent.startTime} endTime={subEvent.endTime} />}
         action={subEvent.link && <SessionLink href={subEvent.link} />}
         poster={subEvent.poster}

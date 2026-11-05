@@ -14,9 +14,9 @@ export const metadata: Metadata = pageMetadata(
 export default function SignUpPage() {
   return (
     <AuthForm
-      overline="Your Key to Numerous Talks"
-      title="Sign Up"
-      submitLabel="Create Account"
+      title="Create your account"
+      lead="One account for registration, the live stream and your certificates."
+      submitLabel="Create account"
       action={signUpAction}
       fields={[
         {
@@ -35,7 +35,7 @@ export default function SignUpPage() {
         },
         {
           name: 'confirmPassword',
-          label: 'Confirm Password',
+          label: 'Confirm password',
           type: 'password',
           placeholder: 'Repeat your password',
           autoComplete: 'new-password',
@@ -44,7 +44,7 @@ export default function SignUpPage() {
       footer={
         <>
           Already have an account?{' '}
-          <Link href="/login" className="font-medium text-accent hover:underline">
+          <Link href="/login" className="font-semibold text-brand-strong underline-offset-4 hover:underline">
             Log in
           </Link>
         </>

@@ -3,7 +3,11 @@
 export interface Speaker {
   id: number;
   name: string;
+  /** As entered, e.g. `Assistant Professor @ University of Tehran`. */
   designation: string;
+  /** The designation split into its two halves (`lib/speakers.ts`); `organization` is `null` when it names none. */
+  role: string;
+  organization: string | null;
   bioHtml: string;
   image: string | null;
   /** `blurDataURL` for the image, decoded on the server from the API's BlurHash (grey when it has none). */
@@ -11,6 +15,17 @@ export interface Speaker {
   /** Absolute http(s) profile URLs; `null` when unset or not a web link. */
   linkedin: string | null;
   googleScholar: string | null;
+  career: CareerStep[];
+  /** Where the speaker is now, with its logo: the badge on their photo. */
+  currentOrganization: CareerStep | null;
+}
+
+/** A university, lab or company on a speaker's path, shown as a logo. */
+export interface CareerStep {
+  name: string;
+  logo: string | null;
+  /** Absolute http(s) URL, or `null`. */
+  href: string | null;
 }
 
 /** A speaker of an edition with the first session they present in, for linking to its page. */
@@ -31,6 +46,7 @@ export interface SubEvent {
   /** `HH:MM:SS`, Tehran. */
   startTime: string;
   endTime: string;
+  venue: 'in-person' | 'online';
   /** Where to join or follow the session; `null` when none is set or it is not an http(s) URL. */
   link: string | null;
   poster: string | null;

@@ -17,6 +17,8 @@ import type { AttendanceMode, Workshop } from '@/types/event.type';
 import { Alert } from '@/ui/Alert';
 import { Button } from '@/ui/Button';
 import { Field, inputClasses } from '@/ui/FormField';
+import { Panel } from '@/ui/Panel';
+import { StickyActionBar } from '@/ui/StickyActionBar';
 import { SubmitButton } from '@/ui/SubmitButton';
 
 interface Props {
@@ -86,85 +88,106 @@ export function RegisterForm({ modes, workshops, paidPlanIds, heldAddons, nation
   };
 
   return (
-    <div className="flex flex-col gap-8">
-      <h2 className="text-3xl font-bold text-ink">Registration</h2>
-
+    <div className="flex flex-col gap-5 md:gap-6">
       {!isProfileComplete && (
         <Alert tone="warning">
           Please{' '}
-          <Link href="/dashboard/profile" className="underline">
+          <Link href="/dashboard/profile" className="font-bold underline underline-offset-4">
             complete your profile
           </Link>{' '}
           (name and phone number) before registering.
         </Alert>
       )}
 
-      <div className="text-lg leading-relaxed text-muted">
-        <p>
-          The main event spans two days: the first day is held in person and the second day is entirely virtual. You can
-          take part in person or online.
-        </p>
-      </div>
-
-      <fieldset className="flex flex-col gap-3" disabled={Boolean(paidMode)}>
-        <legend className="mb-3 text-sm font-medium tracking-wide text-muted uppercase">Mode of attendance</legend>
-        {baseModes.map((mode) => {
-          const closed = isInPersonMode(mode.name) && !REGISTRATION.inPersonOpen && !paid.has(mode.id);
-          return (
-            <label
-              key={mode.id}
-              className={`flex min-h-11 items-center gap-3 text-lg font-semibold ${closed ? 'text-muted' : 'text-ink'}`}
-            >
-              <input
-                type="radio"
-                name="mode"
-                value={mode.id}
-                checked={modeId === mode.id}
-                disabled={closed}
-                onChange={() => setModeId(mode.id)}
-                className="size-4 accent-brand"
-              />
-              <span className={closed ? 'line-through' : undefined}>
-                {mode.name} — {formatToman(mode.price)}
-              </span>
-              {closed && <span className="text-sm font-medium no-underline">Capacity is full</span>}
-              {paid.has(mode.id) && <Check className="size-5 text-success" aria-label="Paid" />}
-            </label>
-          );
-        })}
+      <Panel
+        id="attendance"
+        title="How you attend"
+        description="The first day is held in person and the second is entirely online. Take part in person or online."
+      >
+        <fieldset className="grid gap-3 sm:grid-cols-2" disabled={Boolean(paidMode)}>
+          <legend className="sr-only">Mode of attendance</legend>
+          {baseModes.map((mode) => {
+            const closed = isInPersonMode(mode.name) && !REGISTRATION.inPersonOpen && !paid.has(mode.id);
+            return (
+              <label
+                key={mode.id}
+                className={`group relative flex min-h-24 flex-col justify-between gap-3 rounded-2xl border p-4 transition-[border-color,background-color,box-shadow] duration-200 has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-brand ${
+                  closed
+                    ? 'cursor-not-allowed border-line-soft bg-canvas text-muted'
+                    : 'cursor-pointer border-line hover:border-brand-muted has-checked:border-brand has-checked:bg-brand-soft has-checked:shadow-[0_0_0_1px] has-checked:shadow-brand'
+                }`}
+              >
+                <input
+                  type="radio"
+                  name="mode"
+                  value={mode.id}
+                  checked={modeId === mode.id}
+                  disabled={closed}
+                  onChange={() => setModeId(mode.id)}
+                  className="sr-only"
+                />
+                <span className="flex items-start justify-between gap-3">
+                  <span className={`text-lg font-bold ${closed ? 'line-through' : 'text-ink'}`}>{mode.name}</span>
+                  {paid.has(mode.id) ? (
+                    <span className="flex items-center gap-1 rounded-full bg-success-soft px-2.5 py-1 text-xs font-bold text-success">
+                      <Check className="size-3.5" aria-hidden />
+                      Paid
+                    </span>
+                  ) : (
+                    <span
+                      className="flex size-5 shrink-0 items-center justify-center rounded-full border-2 border-line transition-colors group-has-checked:border-brand group-has-checked:bg-brand"
+                      aria-hidden
+                    >
+                      <span className="size-2 rounded-full bg-white" />
+                    </span>
+                  )}
+                </span>
+                <span className="flex items-baseline justify-between gap-2">
+                  <span className="text-xl font-extrabold tracking-tight tabular-nums">{formatToman(mode.price)}</span>
+                  {closed && <span className="text-sm font-semibold">Capacity is full</span>}
+                </span>
+              </label>
+            );
+          })}
+        </fieldset>
         {lunchAvailable && lunchMode && selectedMode && (
-          <label className="ms-7 flex min-h-11 items-center gap-3 text-lg font-semibold text-ink">
-            <input
-              type="checkbox"
-              checked={withLunch}
-              onChange={(event) => setWithLunch(event.target.checked)}
-              className="size-4 accent-brand"
-            />
-            Add lunch — {formatToman(lunchMode.price - selectedMode.price)}
+          <label className="mt-3 flex min-h-14 cursor-pointer items-center justify-between gap-3 rounded-2xl border border-line px-4 font-semibold text-ink transition-colors hover:border-brand-muted has-checked:border-brand has-checked:bg-brand-soft">
+            <span className="flex items-center gap-3">
+              <input
+                type="checkbox"
+                checked={withLunch}
+                onChange={(event) => setWithLunch(event.target.checked)}
+                className="size-5 accent-brand"
+              />
+              Add lunch
+            </span>
+            <span className="tabular-nums">{formatToman(lunchMode.price - selectedMode.price)}</span>
           </label>
         )}
-      </fieldset>
+      </Panel>
 
       {needsNationalCode && (
-        <form action={nationalCodeAction} className="flex flex-col gap-3 md:max-w-md">
-          <Field label="National code (needed for entrance)" htmlFor="nationalCode" required>
-            <div className="flex gap-2">
-              <input
-                id="nationalCode"
-                name="nationalCode"
-                inputMode="numeric"
-                maxLength={10}
-                required
-                defaultValue={nationalCodeState.values?.nationalCode ?? savedNationalCode}
-                className={inputClasses}
-              />
-              <SubmitButton size="md" variant={nationalCodeState.success ? 'soft' : 'primary'}>
-                {nationalCodeState.success ? 'Saved' : 'Save'}
-              </SubmitButton>
-            </div>
-          </Field>
-          {nationalCodeState.error && <Alert tone="error">{nationalCodeState.error}</Alert>}
-        </form>
+        <Panel id="entrance" title="Entrance" description="In-person attendees are checked in by national code.">
+          <form action={nationalCodeAction} className="flex flex-col gap-3 md:max-w-md">
+            <Field label="National code" htmlFor="nationalCode" required>
+              <div className="flex gap-2">
+                <input
+                  id="nationalCode"
+                  name="nationalCode"
+                  inputMode="numeric"
+                  maxLength={10}
+                  required
+                  defaultValue={nationalCodeState.values?.nationalCode ?? savedNationalCode}
+                  className={inputClasses}
+                />
+                <SubmitButton size="md" variant={nationalCodeState.success ? 'soft' : 'primary'}>
+                  {nationalCodeState.success ? 'Saved' : 'Save'}
+                </SubmitButton>
+              </div>
+            </Field>
+            {nationalCodeState.error && <Alert tone="error">{nationalCodeState.error}</Alert>}
+          </form>
+        </Panel>
       )}
 
       {workshops.length > 0 && (
@@ -180,28 +203,19 @@ export function RegisterForm({ modes, workshops, paidPlanIds, heldAddons, nation
         />
       )}
 
-      <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
-        <div>
-          <p className="text-sm font-medium tracking-wide text-muted uppercase">Price</p>
-          <p className="flex items-center gap-3 text-4xl font-semibold text-ink" aria-live="polite">
-            {formatToman(hasOrder ? (quote.data?.price.payable ?? 0) : 0)}
-            {quote.isFetching && (
-              <LoaderCircle className="size-6 animate-spin text-muted" aria-label="Updating price" />
-            )}
-          </p>
-          {quote.data && quote.data.discountApplied && quote.data.price.payable < quote.data.price.total && (
-            <p className="text-muted line-through">{formatToman(quote.data.price.total)}</p>
-          )}
-        </div>
-
+      <Panel
+        id="discount"
+        title="Discount code"
+        description="Have a code from a sponsor or the organisers? Apply it here."
+      >
         <form
-          className="flex flex-col gap-2 md:w-1/2"
+          className="flex flex-col gap-3 md:max-w-md"
           onSubmit={(event) => {
             event.preventDefault();
             setDiscountCode(toLatinDigits(discountInput.trim()));
           }}
         >
-          <Field label="Discount code" htmlFor="discountCode">
+          <Field label="Code" htmlFor="discountCode">
             <div className="flex gap-2">
               <input
                 id="discountCode"
@@ -219,16 +233,33 @@ export function RegisterForm({ modes, workshops, paidPlanIds, heldAddons, nation
           </Field>
           {quote.data?.discountInvalid && <Alert tone="error">This discount code is not valid.</Alert>}
         </form>
-      </div>
+      </Panel>
 
       {(clientError || checkout.error || quote.error) && (
         <Alert tone="error">{clientError || checkout.error?.message || quote.error?.message}</Alert>
       )}
 
-      <Button size="lg" className="w-full" onClick={onCheckout} disabled={checkout.isPending || !hasOrder}>
-        {checkout.isPending && <LoaderCircle className="size-5 animate-spin" aria-hidden />}
-        Checkout
-      </Button>
+      <StickyActionBar>
+        <div className="min-w-0 grow ps-3">
+          <p className="text-xs font-semibold text-muted">Total</p>
+          <p
+            className="flex items-center gap-2 text-xl font-extrabold tracking-tight text-ink tabular-nums"
+            aria-live="polite"
+          >
+            {formatToman(hasOrder ? (quote.data?.price.payable ?? 0) : 0)}
+            {quote.isFetching && (
+              <LoaderCircle className="size-4 animate-spin text-muted" aria-label="Updating price" />
+            )}
+            {quote.data && quote.data.discountApplied && quote.data.price.payable < quote.data.price.total && (
+              <span className="text-sm font-medium text-muted line-through">{formatToman(quote.data.price.total)}</span>
+            )}
+          </p>
+        </div>
+        <Button size="lg" className="shrink-0" onClick={onCheckout} disabled={checkout.isPending || !hasOrder}>
+          {checkout.isPending && <LoaderCircle className="size-5 animate-spin" aria-hidden />}
+          Check out
+        </Button>
+      </StickyActionBar>
     </div>
   );
 }

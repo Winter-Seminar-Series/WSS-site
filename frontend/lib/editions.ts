@@ -51,7 +51,24 @@ export interface Edition {
   heroImage: string;
   /** Background of the speakers band and the closing call to action. */
   bandImage: string;
-  timelineImages?: { day: string; src: string }[];
+  /** Parts of the day that are not sessions (registration, breaks, ceremonies), placed on the timeline among them. */
+  agenda?: AgendaItem[];
+  /** In-person sessions are also streamed, so the timeline calls them hybrid. */
+  streamsInPerson?: boolean;
+}
+
+export interface AgendaItem {
+  /** `YYYY-MM-DD`, Tehran. */
+  date: string;
+  /** `HH:MM`, Tehran. */
+  start: string;
+  end: string;
+  title: string;
+  /** Sets its icon and weight on the timeline: a break is quieter than the programme's milestones. */
+  kind: 'registration' | 'break' | 'competition' | 'ceremony';
+  venue: 'in-person' | 'online' | 'hybrid';
+  /** A page of the edition with more about it. */
+  page?: EditionPage;
 }
 
 const ARCHIVE_TAGLINE = 'Advanced Topics in Computer Science and Engineering';
@@ -120,9 +137,34 @@ export const EDITIONS: readonly [Edition, ...Edition[]] = [
     ],
     heroImage: '/images/hero.jpg',
     bandImage: '/images/speakers-bg.webp',
-    timelineImages: [
-      { day: 'First Day', src: 'https://s3.ir-thr-at1.arvanstorage.ir/wss/10th-WSS-timeline1-v2' },
-      { day: 'Second Day', src: 'https://s3.ir-thr-at1.arvanstorage.ir/wss/10th-WSS-timeline2-v2' },
+    streamsInPerson: true,
+    agenda: [
+      {
+        date: '2025-04-10',
+        start: '08:00',
+        end: '09:00',
+        title: 'Registration',
+        kind: 'registration',
+        venue: 'in-person',
+      },
+      { date: '2025-04-10', start: '12:30', end: '13:30', title: 'Rest and lunch', kind: 'break', venue: 'in-person' },
+      {
+        date: '2025-04-10',
+        start: '13:30',
+        end: '15:00',
+        title: 'Poster session competition',
+        kind: 'competition',
+        venue: 'in-person',
+        page: 'poster-session',
+      },
+      {
+        date: '2025-04-10',
+        start: '20:00',
+        end: '21:00',
+        title: 'Closing ceremony',
+        kind: 'ceremony',
+        venue: 'hybrid',
+      },
     ],
   },
   {
@@ -298,6 +340,14 @@ export function findEdition(slug: string): Edition | undefined {
 
 export function isCurrentEdition(edition: Edition): boolean {
   return edition.slug === CURRENT_EDITION.slug;
+}
+
+/**
+ * Whether the edition's doors have yet to open, as of `now`. Public pages evaluate it when they render (ISR), so
+ * the countdown and "Register" calls to action drop off within a revalidation window of the start.
+ */
+export function isUpcoming(edition: Edition, now: number = Date.now()): boolean {
+  return edition.startsAt !== undefined && Date.parse(edition.startsAt) > now;
 }
 
 export function hasPage(edition: Edition, page: EditionPage): boolean {

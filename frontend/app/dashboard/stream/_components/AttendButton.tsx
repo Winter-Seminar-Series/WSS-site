@@ -31,9 +31,14 @@ export function AttendButton({ eventId, live }: Props) {
   };
 
   return (
-    <Button onClick={attend} disabled={pending} variant={live ? 'primary' : 'soft'} className="min-w-28">
+    <Button
+      onClick={attend}
+      disabled={pending}
+      variant={live ? 'primary' : 'soft'}
+      className="w-full sm:w-auto sm:min-w-28"
+    >
       {pending ? <LoaderCircle className="size-5 animate-spin" aria-hidden /> : <Play className="size-5" aria-hidden />}
-      Attend
+      Join
     </Button>
   );
 }

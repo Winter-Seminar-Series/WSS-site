@@ -11,6 +11,17 @@ export interface SpeakerResponse {
   /** Profile links, empty when unset. Absent from older backends. */
   linkedin?: string;
   google_scholar?: string;
+  /** Places the speaker studied or worked at, in display order. Absent from older backends. */
+  career?: OrganizationResponse[];
+  /** Where the speaker is now. `null` when unset; absent from older backends. */
+  current_organization?: OrganizationResponse | null;
+}
+
+export interface OrganizationResponse {
+  name: string;
+  logo: string | null;
+  /** Empty when unset. */
+  website: string;
 }
 
 export interface SubEventResponse {
