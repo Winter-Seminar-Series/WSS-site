@@ -1,7 +1,8 @@
 import type { InputHTMLAttributes, ReactNode, SelectHTMLAttributes } from 'react';
 
+// 16px text on phones: anything smaller makes iOS Safari zoom into the field on focus.
 export const inputClasses =
-  'min-h-12 w-full rounded-lg border border-line bg-surface px-4 py-3 text-base font-semibold text-ink placeholder:font-normal placeholder:text-muted focus:border-brand focus:outline-none disabled:bg-canvas';
+  'min-h-12 w-full rounded-xl border border-line bg-surface px-4 py-3 text-base font-medium text-ink transition-[border-color,box-shadow] duration-200 placeholder:font-normal placeholder:text-muted/80 hover:border-brand-muted focus:border-brand focus:shadow-[0_0_0_4px] focus:shadow-brand/15 focus:outline-none disabled:cursor-not-allowed disabled:bg-canvas disabled:text-muted';
 
 interface FieldProps {
   label: string;
@@ -18,10 +19,10 @@ export function Field({ label, htmlFor, required, action, hint, children, classN
   return (
     <div className={`flex flex-col gap-2 ${className}`}>
       <div className="flex items-center justify-between gap-2">
-        <label htmlFor={htmlFor} className="text-sm font-medium tracking-wide text-muted uppercase">
+        <label htmlFor={htmlFor} className="text-sm font-semibold text-ink">
           {label}
           {required && (
-            <span className="ms-1 text-brand" aria-hidden>
+            <span className="ms-0.5 text-brand" aria-hidden>
               *
             </span>
           )}

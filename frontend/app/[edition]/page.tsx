@@ -1,13 +1,14 @@
 import type { Metadata } from 'next';
 
 import { Hero } from '@/app/[edition]/_components/Hero';
+import { Highlights } from '@/app/[edition]/_components/Highlights';
 import { SpeakersSection } from '@/app/[edition]/_components/SpeakersSection';
 import { StaffSection } from '@/app/[edition]/_components/StaffSection';
 import { RegisterCta } from '@/components/countdown/RegisterCta';
 import { Programs } from '@/components/landing/Programs';
 import { JsonLd } from '@/components/seo/JsonLd';
 import { editionStaticParams, resolveEdition } from '@/lib/edition-route';
-import { editionHref, isCurrentEdition } from '@/lib/editions';
+import { editionHref, isCurrentEdition, isUpcoming } from '@/lib/editions';
 import { pageMetadata, summarize } from '@/lib/metadata';
 import { SITE_DESCRIPTION } from '@/lib/site';
 import { editionJsonLd } from '@/lib/structured-data';
@@ -34,8 +35,9 @@ export default async function HomePage({ params }: PageProps<'/[edition]'>) {
   return (
     <>
       <JsonLd data={editionJsonLd(edition)} />
-      <Hero edition={edition} />
-      <Programs aboutHref={editionHref(edition, '/about')} />
+      <Hero edition={edition} upcoming={isCurrentEdition(edition) && isUpcoming(edition)} />
+      <Highlights edition={edition} />
+      <Programs edition={edition} />
       <SpeakersSection edition={edition} />
       <StaffSection edition={edition} />
       <RegisterCta edition={edition} />

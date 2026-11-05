@@ -14,9 +14,9 @@ export const metadata: Metadata = {
 };
 
 const FORM: ComponentProps<typeof LoginForm> = {
-  overline: 'Unlock Your World',
-  title: 'Log In',
-  submitLabel: 'Log In',
+  title: 'Log in',
+  lead: 'Welcome back. Log in to register, join the live stream and get your certificates.',
+  submitLabel: 'Log in',
   action: loginAction,
   fields: [
     {
@@ -33,7 +33,7 @@ const FORM: ComponentProps<typeof LoginForm> = {
       placeholder: 'Enter your password',
       autoComplete: 'current-password',
       action: (
-        <Link href="/reset-password" className="font-medium text-accent hover:underline">
+        <Link href="/reset-password" className="font-semibold text-brand-strong underline-offset-4 hover:underline">
           Forgot password?
         </Link>
       ),
@@ -42,7 +42,7 @@ const FORM: ComponentProps<typeof LoginForm> = {
   footer: (
     <>
       Don&apos;t have an account?{' '}
-      <Link href="/signup" className="font-medium text-accent hover:underline">
+      <Link href="/signup" className="font-semibold text-brand-strong underline-offset-4 hover:underline">
         Sign up
       </Link>
     </>

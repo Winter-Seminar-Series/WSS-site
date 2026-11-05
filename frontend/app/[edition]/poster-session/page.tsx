@@ -3,7 +3,7 @@ import { readFile } from 'node:fs/promises';
 import path from 'node:path';
 
 import { RegisterCta } from '@/components/countdown/RegisterCta';
-import { PageHero } from '@/components/layout/PageHero';
+import { PageBody, PageHero } from '@/components/layout/PageHero';
 import { editionStaticParams, resolveEdition } from '@/lib/edition-route';
 import { markdownToHtml } from '@/lib/markdown';
 import { editionPageMetadata } from '@/lib/metadata';
@@ -28,11 +28,18 @@ export default async function PosterSessionPage({ params }: PageProps<'/[edition
 
   return (
     <>
-      <PageHero image={edition.heroImage} overline="Join our competition" title="Poster Session">
-        <hr className="my-8 border-line-soft" />
-        <RichText html={html} className="prose-lg" />
-      </PageHero>
-      <div className="h-16" />
+      <PageHero
+        image={edition.heroImage}
+        context={edition.title}
+        title="Poster session"
+        lead="Present your research, get feedback from the judges and compete for the awards."
+      />
+      <PageBody>
+        <RichText
+          html={html}
+          className="prose-lg max-w-3xl prose-headings:font-extrabold prose-headings:tracking-tight prose-headings:text-ink"
+        />
+      </PageBody>
       <RegisterCta edition={edition} />
     </>
   );

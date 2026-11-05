@@ -4,6 +4,7 @@ import { Minus, Plus } from 'lucide-react';
 
 import { formatToman } from '@/lib/digits';
 import type { PlanAddon } from '@/types/event.type';
+import { Panel } from '@/ui/Panel';
 
 export interface OfferedAddon extends PlanAddon {
   planName: string;
@@ -36,12 +37,8 @@ export function AddonPicker({ addons, held, quantities, onChange }: Props) {
   const setQuantity = (id: number, quantity: number) => onChange({ ...quantities, [id]: quantity });
 
   return (
-    <section aria-labelledby="addons" className="flex flex-col gap-4">
-      <h3 id="addons" className="text-2xl font-bold text-ink">
-        Extras
-      </h3>
-      <p className="text-muted">Optional extras for your registration. You can also come back and add them later.</p>
-      <ul className="flex flex-col divide-y divide-line-soft rounded-lg border border-line-soft">
+    <Panel id="addons" title="Extras" description="Optional. You can also come back and add them later.">
+      <ul className="flex flex-col divide-y divide-line-soft rounded-2xl border border-line-soft">
         {addons.map((addon) => {
           const owned = held[addon.id] ?? 0;
           const left = addon.isOpen ? addonUnitsLeft(addon, owned) : 0;
@@ -50,9 +47,9 @@ export function AddonPicker({ addons, held, quantities, onChange }: Props) {
           const nameId = `addon-${addon.id}`;
 
           return (
-            <li key={addon.id} className="flex flex-col gap-3 p-4 md:flex-row md:items-center md:justify-between">
+            <li key={addon.id} className="flex items-center justify-between gap-4 p-4">
               <div className="flex flex-col gap-1">
-                <p id={nameId} className="text-lg font-semibold text-ink">
+                <p id={nameId} className="font-bold text-ink">
                   {addon.name}
                   {showPlan && <span className="text-sm font-medium text-muted"> · {addon.planName}</span>}
                 </p>
@@ -66,19 +63,23 @@ export function AddonPicker({ addons, held, quantities, onChange }: Props) {
               </div>
 
               {status ? (
-                <p className="text-sm font-medium text-muted">{status}</p>
+                <p className="shrink-0 rounded-full bg-canvas px-3 py-1.5 text-xs font-semibold text-muted">{status}</p>
               ) : (
-                <div className="flex items-center gap-2" role="group" aria-labelledby={nameId}>
+                <div
+                  className="flex shrink-0 items-center gap-1 rounded-full bg-canvas p-1"
+                  role="group"
+                  aria-labelledby={nameId}
+                >
                   <button
                     type="button"
                     onClick={() => setQuantity(addon.id, quantity - 1)}
                     disabled={quantity === 0}
                     aria-label={`One fewer ${addon.name}`}
-                    className="flex size-11 items-center justify-center rounded-md bg-brand-soft text-brand disabled:cursor-not-allowed disabled:opacity-60"
+                    className="flex size-11 items-center justify-center rounded-full bg-surface text-brand shadow-sm transition-transform active:scale-90 disabled:pointer-events-none disabled:opacity-40"
                   >
                     <Minus className="size-4" aria-hidden />
                   </button>
-                  <output className="w-8 text-center text-lg font-semibold text-ink" aria-live="polite">
+                  <output className="w-7 text-center text-lg font-bold text-ink tabular-nums" aria-live="polite">
                     {quantity}
                   </output>
                   <button
@@ -86,7 +87,7 @@ export function AddonPicker({ addons, held, quantities, onChange }: Props) {
                     onClick={() => setQuantity(addon.id, quantity + 1)}
                     disabled={quantity >= left}
                     aria-label={`One more ${addon.name}`}
-                    className="flex size-11 items-center justify-center rounded-md bg-brand-soft text-brand disabled:cursor-not-allowed disabled:opacity-60"
+                    className="flex size-11 items-center justify-center rounded-full bg-surface text-brand shadow-sm transition-transform active:scale-90 disabled:pointer-events-none disabled:opacity-40"
                   >
                     <Plus className="size-4" aria-hidden />
                   </button>
@@ -96,6 +97,6 @@ export function AddonPicker({ addons, held, quantities, onChange }: Props) {
           );
         })}
       </ul>
-    </section>
+    </Panel>
   );
 }

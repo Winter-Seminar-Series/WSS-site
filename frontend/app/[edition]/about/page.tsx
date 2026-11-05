@@ -3,10 +3,9 @@ import type { Metadata } from 'next';
 import { getStaffTeams } from '@/api/staff.api';
 import { RegisterCta } from '@/components/countdown/RegisterCta';
 import { Programs } from '@/components/landing/Programs';
-import { PageHero } from '@/components/layout/PageHero';
+import { PageBody, PageHero } from '@/components/layout/PageHero';
 import { TeamSection } from '@/components/people/TeamSection';
 import { editionStaticParams, resolveEdition } from '@/lib/edition-route';
-import { editionHref } from '@/lib/editions';
 import { editionPageMetadata } from '@/lib/metadata';
 import { FOUNDED_YEAR } from '@/lib/site';
 import { SectionHeading } from '@/ui/SectionHeading';
@@ -33,8 +32,14 @@ export default async function AboutPage({ params }: PageProps<'/[edition]/about'
 
   return (
     <>
-      <PageHero image={edition.heroImage} overline="Discover Our Story" title="About Us">
-        <div className="mt-8 flex flex-col gap-6 text-lg leading-relaxed text-muted">
+      <PageHero
+        image={edition.heroImage}
+        context={`Since ${FOUNDED_YEAR}`}
+        title="About the series"
+        lead="Leading researchers, a room full of curious students, and a decade of winters at Sharif."
+      />
+      <PageBody>
+        <div className="reveal flex max-w-3xl flex-col gap-6 text-lg leading-relaxed text-ink/80">
           <p>
             The Winter Seminar Series (WSS) has been established to bridge the gap between leading experts and the
             global academic community, fostering a professional environment focused on the latest advancements in
@@ -58,16 +63,20 @@ export default async function AboutPage({ params }: PageProps<'/[edition]/about'
             landscape.
           </p>
         </div>
-      </PageHero>
+      </PageBody>
 
-      <div className="pt-12">
-        <Programs aboutHref={editionHref(edition, '/about')} showMoreLink={false} />
+      <div className="bg-canvas">
+        <Programs edition={edition} showMoreLink={false} />
       </div>
 
       {teams.length > 0 && (
         <section aria-labelledby="staff">
-          <div className="px-6 pt-16 pb-14">
-            <SectionHeading id="staff" overline="The heartbeat of the event" title="Staff Members" align="center" />
+          <div className="mx-auto max-w-300 px-4 pt-16 pb-12 md:px-6 md:pt-24">
+            <SectionHeading
+              id="staff"
+              title="The team"
+              lead={`The students who organise the ${edition.label}, team by team.`}
+            />
           </div>
           {teams.map((team) => (
             <TeamSection key={team.id} name={team.name} members={team.members} />

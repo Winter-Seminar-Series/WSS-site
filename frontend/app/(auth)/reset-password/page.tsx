@@ -10,9 +10,9 @@ export const metadata: Metadata = { title: 'Reset Password', ...PRIVATE_PAGE };
 export default function ResetPasswordPage() {
   return (
     <AuthForm
-      overline="Secure Your Space!"
-      title="Password Reset"
-      submitLabel="Send Reset Link"
+      title="Reset your password"
+      lead="Enter the email you signed up with and we will send you a link to choose a new password."
+      submitLabel="Send reset link"
       action={requestPasswordResetAction}
       fields={[
         {
@@ -24,7 +24,7 @@ export default function ResetPasswordPage() {
         },
       ]}
       footer={
-        <Link href="/login" className="font-medium text-accent hover:underline">
+        <Link href="/login" className="font-semibold text-brand-strong underline-offset-4 hover:underline">
           Back to log in
         </Link>
       }

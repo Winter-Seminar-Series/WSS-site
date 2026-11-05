@@ -1,4 +1,4 @@
-import { Download, Linkedin } from 'lucide-react';
+import { Award, Download, Linkedin } from 'lucide-react';
 import type { Metadata } from 'next';
 
 import { getCertificates } from '@/api/participation.api';
@@ -7,6 +7,7 @@ import { withAuth } from '@/lib/auth-guard';
 import { linkedInAddCertificationUrl } from '@/lib/linkedin';
 import { SITE_URL } from '@/lib/site';
 import { buttonClasses } from '@/ui/Button';
+import { EmptyPanel } from '@/ui/Panel';
 
 export const metadata: Metadata = { title: 'Certificates' };
 
@@ -15,23 +16,37 @@ export default async function CertificatesPage() {
 
   if (certificates.length === 0) {
     return (
-      <p className="py-20 text-center text-2xl font-semibold text-muted">
-        Your certificates will appear here after the event.
-      </p>
+      <EmptyPanel Icon={Award} title="No certificates yet">
+        Your certificates appear here after the event, for every programme you attended.
+      </EmptyPanel>
     );
   }
 
   return (
-    <ul className="flex flex-col gap-4">
+    <ul className="grid gap-4 lg:grid-cols-2">
       {certificates.map((certificate) => {
         const url = `${SITE_URL}/files/${encodeURIComponent(certificate.fileId)}`;
         return (
           <li
             key={certificate.id}
-            className="flex flex-col gap-3 rounded-md border border-line-soft p-4 md:flex-row md:items-center"
+            className="flex flex-col gap-5 rounded-3xl bg-surface p-5 ring-1 ring-line-soft md:p-6"
           >
-            <p className="grow font-medium text-ink">{certificate.plan}</p>
-            <div className="flex flex-wrap gap-2">
+            <div className="flex items-start gap-4">
+              <span className="flex size-12 shrink-0 items-center justify-center rounded-2xl bg-brand-soft text-brand">
+                <Award className="size-6" aria-hidden />
+              </span>
+              <h2 className="pt-2.5 text-lg leading-snug font-bold text-ink">{certificate.plan}</h2>
+            </div>
+            <div className="mt-auto grid grid-cols-2 gap-2 sm:flex sm:flex-wrap">
+              <a
+                href={url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`${buttonClasses('primary', 'sm')} col-span-2`}
+              >
+                <Download className="size-4" aria-hidden />
+                Download
+              </a>
               <a
                 href={linkedInAddCertificationUrl({
                   name: certificate.plan,
@@ -41,16 +56,12 @@ export default async function CertificatesPage() {
                 })}
                 target="_blank"
                 rel="noopener noreferrer"
-                className={buttonClasses('primary', 'sm')}
+                className={buttonClasses('outline', 'sm')}
               >
                 <Linkedin className="size-4" aria-hidden />
                 Add to LinkedIn
               </a>
-              <CopyButton value={url} label="Copy URL" />
-              <a href={url} target="_blank" rel="noopener noreferrer" className={buttonClasses('primary', 'sm')}>
-                <Download className="size-4" aria-hidden />
-                Download
-              </a>
+              <CopyButton value={url} label="Copy link" />
             </div>
           </li>
         );

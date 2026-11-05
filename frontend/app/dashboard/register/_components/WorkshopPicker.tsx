@@ -8,7 +8,8 @@ import { WorkshopMeta } from '@/components/events/EventMeta';
 import { formatToman } from '@/lib/digits';
 import { blurProps } from '@/lib/images';
 import type { Workshop } from '@/types/event.type';
-import { Button } from '@/ui/Button';
+import { Button, buttonClasses } from '@/ui/Button';
+import { Panel } from '@/ui/Panel';
 
 interface Props {
   workshops: Workshop[];
@@ -22,30 +23,28 @@ export function WorkshopPicker({ workshops, paid, selected, onChange }: Props) {
     onChange(selected.includes(id) ? selected.filter((selectedId) => selectedId !== id) : [...selected, id]);
 
   return (
-    <section aria-labelledby="workshops" className="flex flex-col gap-4">
-      <h3 id="workshops" className="text-2xl font-bold text-ink">
-        Workshops
-      </h3>
-      <p className="text-muted">
-        Workshops are extra sessions held outside the main schedule, and require registration for the main event.
-      </p>
-      <ul className="grid gap-5 md:grid-cols-3">
+    <Panel
+      id="workshops"
+      title="Workshops"
+      description="Extra sessions outside the main schedule. They need a registration for the main event."
+    >
+      <ul className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
         {workshops.map((workshop) => {
           const isPaid = paid.has(workshop.id);
           const isSelected = isPaid || selected.includes(workshop.id);
           return (
             <li
               key={workshop.id}
-              className={`flex flex-col overflow-hidden rounded-lg border ${isSelected ? 'border-brand' : 'border-line-soft'}`}
+              className={`flex flex-col overflow-hidden rounded-2xl border transition-[border-color,box-shadow] duration-200 ${isSelected ? 'border-brand shadow-[0_0_0_1px] shadow-brand' : 'border-line-soft'}`}
             >
               {workshop.thumbnail && (
                 <Image
                   src={workshop.thumbnail}
                   alt=""
                   {...blurProps(workshop.thumbnailBlur)}
-                  width={298}
-                  height={199}
-                  sizes="(min-width: 768px) 298px, 100vw"
+                  width={360}
+                  height={240}
+                  sizes="(min-width: 640px) 360px, 100vw"
                   className="aspect-3/2 w-full object-cover"
                 />
               )}
@@ -56,13 +55,15 @@ export function WorkshopPicker({ workshops, paid, selected, onChange }: Props) {
                   modules={workshop.sessions.length}
                   className="text-xs"
                 />
-                <p className="line-clamp-2 font-semibold text-ink">{workshop.name}</p>
-                <p className="text-xl font-semibold text-ink">{formatToman(workshop.price)}</p>
+                <p className="line-clamp-2 font-bold text-ink">{workshop.name}</p>
+                <p className="text-lg font-extrabold tracking-tight text-ink tabular-nums">
+                  {formatToman(workshop.price)}
+                </p>
                 <div className="mt-auto flex gap-2">
                   <Link
                     href={`/workshops/${workshop.id}`}
                     target="_blank"
-                    className="flex min-h-11 grow items-center justify-center rounded-md bg-brand-soft text-sm font-bold text-brand"
+                    className={`${buttonClasses('soft', 'sm')} grow`}
                   >
                     Details
                   </Link>
@@ -90,6 +91,6 @@ export function WorkshopPicker({ workshops, paid, selected, onChange }: Props) {
           );
         })}
       </ul>
-    </section>
+    </Panel>
   );
 }
