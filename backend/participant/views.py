@@ -13,6 +13,7 @@ from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 from common.throttling import EmailRateThrottle, ScopedRateThrottle
 from core.models import WorkshopSession
+from core.serializers import career_prefetch
 from participant import services
 from participant.models import (
     AddonPurchase,
@@ -107,13 +108,17 @@ class ProfileView(generics.RetrieveUpdateAPIView):
 
 
 def plans_of_edition(event_id: int) -> QuerySet[ParticipationPlan]:
-    sessions = WorkshopSession.objects.select_related('speaker').order_by('date', 'starting_time', 'id')
+    sessions = WorkshopSession.objects.select_related('speaker__current_organization').order_by(
+        'date', 'starting_time', 'id'
+    )
     addons = PlanAddon.objects.annotate(sold=Coalesce(Sum('purchases__quantity'), 0)).order_by('id')
     return (
         ParticipationPlan.objects.filter(event_id=event_id)
         .select_related('event', 'workshop', 'mode_of_attendance')
         .prefetch_related(
-            Prefetch('workshop__workshopsession_set', queryset=sessions), Prefetch('addons', queryset=addons)
+            Prefetch('workshop__workshopsession_set', queryset=sessions),
+            career_prefetch('workshop__workshopsession_set__speaker'),
+            Prefetch('addons', queryset=addons),
         )
         .order_by('id')
     )

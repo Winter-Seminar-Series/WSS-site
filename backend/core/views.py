@@ -1,4 +1,4 @@
-from django.db.models import QuerySet
+from django.db.models import Prefetch, QuerySet
 from django.http import Http404
 from rest_framework import generics, status
 from rest_framework.permissions import AllowAny
@@ -11,6 +11,7 @@ from core.serializers import (
     RoundTableSerializer,
     SingleSpeakerSessionSerializer,
     SpeakerSerializer,
+    career_prefetch,
 )
 
 # --- Public content (read by the frontend at build/ISR time; one query per list) -----------------------------------
@@ -24,7 +25,7 @@ class EventListView(generics.ListAPIView):
 
 class SpeakerDetailView(generics.RetrieveAPIView):
     permission_classes = [AllowAny]
-    queryset = Speaker.objects.all()
+    queryset = Speaker.objects.select_related('current_organization').prefetch_related(career_prefetch())
     serializer_class = SpeakerSerializer
 
 
@@ -46,7 +47,12 @@ class SingleSpeakerSessionListView(EditionSessionListView):
     serializer_class = SingleSpeakerSessionSerializer
 
     def get_queryset(self) -> QuerySet:
-        return super().get_queryset().select_related('speaker')
+        return (
+            super()
+            .get_queryset()
+            .select_related('speaker__current_organization')
+            .prefetch_related(career_prefetch('speaker'))
+        )
 
 
 class SeminarListView(SingleSpeakerSessionListView):
@@ -66,7 +72,12 @@ class RoundTableListView(EditionSessionListView):
     serializer_class = RoundTableSerializer
 
     def get_queryset(self) -> QuerySet:
-        return super().get_queryset().prefetch_related('speakers')
+        speakers = Speaker.objects.select_related('current_organization')
+        return (
+            super()
+            .get_queryset()
+            .prefetch_related(Prefetch('speakers', queryset=speakers), career_prefetch('speakers'))
+        )
 
 
 # --- The signed-in participant's poster submission -----------------------------------------------------------------

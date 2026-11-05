@@ -88,12 +88,49 @@ class Speaker(BlurHashMixin, models.Model):
     image = models.ImageField(upload_to=UniqueUploadPath('speakers'), null=True, blank=True)
     linkedin = models.URLField(max_length=200, blank=True)
     google_scholar = models.URLField(max_length=200, blank=True)
+    current_organization = models.ForeignKey(
+        'Organization',
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name='current_speakers',
+        help_text='Where the speaker is now. Its logo badges their photo on the site.',
+    )
 
     BLURHASH_FIELDS = {'image': 'image_blurhash'}
     image_blurhash = blurhash_field()
 
     def __str__(self) -> str:
         return f'{self.name} - {self.designation}'
+
+
+class Organization(models.Model):
+    """A university, lab or company. Shared by every speaker who studied or worked there, so each logo is uploaded
+    once."""
+
+    name = models.CharField(max_length=100, unique=True)
+    logo = models.ImageField(upload_to=UniqueUploadPath('organizations'), null=True, blank=True)
+    website = models.URLField(max_length=200, blank=True)
+
+    def __str__(self) -> str:
+        return self.name
+
+
+class CareerStep(models.Model):
+    """One place on a speaker's path. The site shows a speaker's steps as a row of logos, in `order`."""
+
+    class Meta:
+        ordering = ('order', 'id')
+        constraints = [
+            models.UniqueConstraint(fields=('speaker', 'organization'), name='core_careerstep_unique_organization'),
+        ]
+
+    speaker = models.ForeignKey(Speaker, on_delete=models.CASCADE, related_name='career')
+    organization = models.ForeignKey(Organization, on_delete=models.CASCADE, related_name='career_steps')
+    order = models.PositiveSmallIntegerField(default=0)
+
+    def __str__(self) -> str:
+        return f'{self.speaker.name} - {self.organization.name}'
 
 
 class Seminar(models.Model):

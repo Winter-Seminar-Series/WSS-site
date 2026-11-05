@@ -34,13 +34,13 @@ class ProfileTests(APITest):
 
 
 class PlanListTests(APITest):
-    def test_workshops_come_with_their_sessions_speakers_and_addons_in_three_queries(self):
+    def test_workshops_come_with_their_sessions_speakers_careers_and_addons_in_four_queries(self):
         event = make_event()
         for _ in range(3):
             make_addon(make_workshop_plan(event, sessions=2))
         make_mode_plan(event)
 
-        with self.assertNumQueries(3):
+        with self.assertNumQueries(4):
             response = self.client.get(f'/api/workshop/{event.pk}/')
 
         plans = response.json()

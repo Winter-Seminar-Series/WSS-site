@@ -1,7 +1,18 @@
 from django.core.validators import FileExtensionValidator
+from django.db.models import Prefetch
 from rest_framework import serializers
 
-from core.models import Event, PosterSessionImage, RoundTable, Speaker, SubEvent, Workshop, WorkshopSession
+from core.models import (
+    CareerStep,
+    Event,
+    Organization,
+    PosterSessionImage,
+    RoundTable,
+    Speaker,
+    SubEvent,
+    Workshop,
+    WorkshopSession,
+)
 
 # The response shapes are mirrored by the frontend (frontend/types/events.api.type.ts): add fields, never rename.
 
@@ -12,7 +23,35 @@ class EventSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+def career_prefetch(speaker_path: str = '') -> Prefetch:
+    """Loads, in one query, the career that `SpeakerSerializer` renders for the speaker(s) at `speaker_path` (empty
+    when the queryset is of speakers)."""
+    lookup = f'{speaker_path}__career' if speaker_path else 'career'
+    return Prefetch(lookup, queryset=CareerStep.objects.select_related('organization'))
+
+
+class OrganizationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Organization
+        fields = ('name', 'logo', 'website')
+
+
+class CareerStepSerializer(serializers.ModelSerializer):
+    name = serializers.CharField(source='organization.name')
+    logo = serializers.ImageField(source='organization.logo')
+    website = serializers.URLField(source='organization.website')
+
+    class Meta:
+        model = CareerStep
+        fields = ('name', 'logo', 'website')
+
+
 class SpeakerSerializer(serializers.ModelSerializer):
+    # Querysets that render speakers load this with `career_prefetch`, or each speaker costs a query.
+    career = CareerStepSerializer(many=True, read_only=True)
+    # Querysets that render speakers `select_related` it, as they do the speaker.
+    current_organization = OrganizationSerializer(read_only=True)
+
     class Meta:
         model = Speaker
         fields = '__all__'
