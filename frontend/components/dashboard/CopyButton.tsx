@@ -21,7 +21,7 @@ export function CopyButton({ value, label }: Props) {
   };
 
   return (
-    <Button size="sm" onClick={copy}>
+    <Button size="sm" variant="outline" onClick={copy}>
       <Copy className="size-4" aria-hidden />
       {label}
     </Button>

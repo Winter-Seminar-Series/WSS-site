@@ -14,7 +14,7 @@ function safeHttpUrl(value: string | undefined): string | null {
   }
 }
 
-const iconClass = 'size-5';
+const iconClass = 'size-4';
 
 interface Props {
   name: string;
@@ -47,7 +47,7 @@ export function StaffLinks({ name, links }: Props) {
   if (items.length === 0) return null;
 
   return (
-    <ul className="mt-3 flex items-center justify-center gap-3">
+    <ul className="mt-2 flex items-center justify-center gap-1">
       {items.map((item) => (
         <li key={item.label}>
           <a
@@ -55,7 +55,7 @@ export function StaffLinks({ name, links }: Props) {
             aria-label={`${name}'s ${item.label}`}
             title={item.label}
             {...(item.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-            className="text-muted transition-colors hover:text-brand focus-visible:text-brand"
+            className="flex size-11 items-center justify-center rounded-full text-muted transition-colors hover:bg-brand-soft hover:text-brand focus-visible:text-brand"
           >
             {item.icon}
           </a>

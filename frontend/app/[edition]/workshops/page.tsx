@@ -35,9 +35,7 @@ export default async function WorkshopsPage({ params }: PageProps<'/[edition]/wo
   return (
     <>
       <JsonLd data={editionBreadcrumbs(edition, WORKSHOPS_SECTION)} />
-      <PageHero image={edition.heroImage} overline="Engage in Transformative Workshops" title="Workshops">
-        <p className="mt-6 max-w-3xl text-lg text-muted">{DESCRIPTION}</p>
-      </PageHero>
+      <PageHero image={edition.heroImage} context={edition.title} title="Workshops" lead={DESCRIPTION} />
       {workshops.length === 0 ? (
         <EmptyState>
           {isCurrentEdition(edition)
@@ -61,7 +59,7 @@ export default async function WorkshopsPage({ params }: PageProps<'/[edition]/wo
                     modules={workshop.sessions.length}
                   />
                 }
-                footer={<p className="text-xl font-semibold text-ink">{formatToman(workshop.price)}</p>}
+                footer={<p className="text-lg font-extrabold text-ink tabular-nums">{formatToman(workshop.price)}</p>}
               />
             </li>
           ))}

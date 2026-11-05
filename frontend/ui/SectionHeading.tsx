@@ -1,8 +1,9 @@
 import type { ReactNode } from 'react';
 
 interface Props {
-  overline: string;
   title: string;
+  /** One sentence under the title saying what the section holds. */
+  lead?: string;
   /** `dark` sits on a photo/brand background. */
   tone?: 'light' | 'dark';
   align?: 'start' | 'center';
@@ -10,26 +11,23 @@ interface Props {
   id?: string;
 }
 
-export function SectionHeading({ overline, title, tone = 'light', align = 'start', action, id }: Props) {
+export function SectionHeading({ title, lead, tone = 'light', align = 'start', action, id }: Props) {
   const centered = align === 'center';
+  const dark = tone === 'dark';
   return (
     <div
-      className={`flex flex-col gap-6 md:flex-row md:items-end ${centered ? 'items-center text-center md:justify-center' : 'md:justify-between'}`}
+      className={`reveal flex flex-col gap-6 sm:flex-row sm:items-end ${centered ? 'items-center text-center sm:justify-center' : 'sm:justify-between'}`}
     >
-      <div>
-        <p
-          className={`text-base font-medium tracking-wide uppercase md:text-lg ${tone === 'dark' ? 'text-white/60' : 'text-muted'}`}
-        >
-          {overline}
-        </p>
+      <div className={`max-w-2xl ${centered ? 'mx-auto' : ''}`}>
         <h2
           id={id}
-          className={`mt-1 text-4xl font-bold tracking-tight md:text-5xl ${tone === 'dark' ? 'text-white' : 'text-ink'}`}
+          className={`text-4xl font-extrabold tracking-[-0.035em] md:text-5xl ${dark ? 'text-white' : 'text-ink'}`}
         >
           {title}
         </h2>
+        {lead && <p className={`mt-3 text-lg ${dark ? 'text-white/75' : 'text-muted'}`}>{lead}</p>}
       </div>
-      {action}
+      {action && <div className="shrink-0">{action}</div>}
     </div>
   );
 }

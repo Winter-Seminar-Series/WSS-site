@@ -6,7 +6,7 @@ import { useActionState } from 'react';
 import { uploadPosterAction } from '@/actions/dashboard.actions';
 import type { FormState } from '@/lib/form';
 import { Alert } from '@/ui/Alert';
-import { Field, inputClasses } from '@/ui/FormField';
+import { Panel } from '@/ui/Panel';
 import { SubmitButton } from '@/ui/SubmitButton';
 
 interface Props {
@@ -20,41 +20,54 @@ export function PosterUploadForm({ currentPosterUrl, open }: Props) {
   const [state, formAction] = useActionState(uploadPosterAction, INITIAL_STATE);
 
   return (
-    <form action={formAction} className="flex flex-col gap-6">
-      <h2 className="text-3xl font-bold text-ink">
-        Poster Session Competition{!open && <span className="text-muted"> (deadline passed)</span>}
-      </h2>
-      <input type="hidden" name="replace" value={String(Boolean(currentPosterUrl))} />
-      <Field label="Upload file" htmlFor="poster" hint="PDF only, up to 10MB.">
-        <input
-          id="poster"
-          name="poster"
-          type="file"
-          accept="application/pdf"
-          disabled={!open}
-          required
-          className={`${inputClasses} file:me-4 file:rounded-md file:border-0 file:bg-brand-soft file:px-4 file:py-2 file:font-semibold file:text-brand`}
-        />
-      </Field>
-      {currentPosterUrl && (
-        <p className="text-muted">
-          Current file:{' '}
-          <a
-            href={currentPosterUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="font-bold text-brand underline"
-          >
-            View your uploaded poster
-          </a>
-        </p>
-      )}
-      {state.error && <Alert tone="error">{state.error}</Alert>}
-      {state.success && <Alert tone="success">{state.success}</Alert>}
-      <SubmitButton className="w-full" disabled={!open}>
-        <FileUp className="size-5" aria-hidden />
-        {currentPosterUrl ? 'Replace Poster' : 'Upload Poster'}
-      </SubmitButton>
-    </form>
+    <Panel
+      id="poster"
+      title="Poster session competition"
+      description={open ? 'Upload your poster as a PDF of up to 10 MB.' : 'The submission deadline has passed.'}
+    >
+      <form action={formAction} className="flex flex-col gap-5">
+        <input type="hidden" name="replace" value={String(Boolean(currentPosterUrl))} />
+        <label
+          htmlFor="poster-file"
+          className={`flex flex-col items-center gap-3 rounded-2xl border-2 border-dashed border-line px-6 py-10 text-center transition-colors ${
+            open
+              ? 'cursor-pointer hover:border-brand-muted hover:bg-brand-soft/40 has-focus-visible:border-brand'
+              : 'cursor-not-allowed bg-canvas'
+          }`}
+        >
+          <span className="flex size-14 items-center justify-center rounded-full bg-brand-soft text-brand">
+            <FileUp className="size-6" aria-hidden />
+          </span>
+          <span className="font-bold text-ink">{currentPosterUrl ? 'Choose a new PDF' : 'Choose your poster PDF'}</span>
+          <input
+            id="poster-file"
+            name="poster"
+            type="file"
+            accept="application/pdf"
+            disabled={!open}
+            required
+            className="w-full max-w-xs text-sm text-muted file:me-3 file:min-h-10 file:rounded-full file:border-0 file:bg-surface file:px-4 file:font-semibold file:text-ink file:ring-1 file:ring-line"
+          />
+        </label>
+        {currentPosterUrl && (
+          <p className="text-[0.9375rem] text-muted">
+            You have submitted a poster.{' '}
+            <a
+              href={currentPosterUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-bold text-brand-strong underline underline-offset-4"
+            >
+              View it
+            </a>
+          </p>
+        )}
+        {state.error && <Alert tone="error">{state.error}</Alert>}
+        {state.success && <Alert tone="success">{state.success}</Alert>}
+        <SubmitButton size="md" className="w-full sm:w-auto sm:self-start" disabled={!open}>
+          {currentPosterUrl ? 'Replace poster' : 'Upload poster'}
+        </SubmitButton>
+      </form>
+    </Panel>
   );
 }

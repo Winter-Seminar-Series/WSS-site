@@ -13,21 +13,29 @@
   --color-accent: #9d6d9b;
   --color-ink: #1f2b3d;
   --color-ink-deep: #342b4c;
-  --color-muted: #8a8998;
+  /* 5.3:1 on white, so secondary text passes WCAG AA at body size. */
+  --color-muted: #696879;
   --color-line: rgb(138 137 152 / 0.3);
   --color-line-soft: rgb(201 201 207 / 0.4);
-  --color-canvas: #f7f7fa;
+  --color-canvas: #f6f6f9;
   --color-surface: #ffffff;
-  --color-surface-hover: #e8eaee;
-  --color-danger: #e04545;
+  --color-surface-hover: #ececf1;
+  --color-danger: #d23c3c;
   --color-danger-soft: #fdecec;
   --color-success: #15803d;
   --color-success-soft: #e7f6ec;
-  --color-warning-soft: #fbe1e6;
+  --color-warning: #9a5b00;
+  --color-warning-soft: #fdf1dc;
 
-  --shadow-card: 0 30px 60px 0 rgb(189 192 199 / 0.1);
+  --shadow-card: 0 1px 2px rgb(31 43 61 / 0.04), 0 12px 32px -12px rgb(31 43 61 / 0.12);
+  --shadow-lift: 0 2px 4px rgb(31 43 61 / 0.04), 0 24px 48px -16px rgb(31 43 61 / 0.22);
+
+  --ease-snap: cubic-bezier(0.2, 0.8, 0.2, 1);
 
   --animate-marquee: marquee var(--marquee-duration, 60s) linear infinite;
+  --animate-rise: rise 0.9s var(--ease-snap) both;
+  --animate-settle: settle 1.8s var(--ease-snap) both;
+  --animate-live: live 1.6s ease-out infinite;
 
   @keyframes marquee {
     from {
@@ -37,22 +45,55 @@
       transform: translateX(-50%);
     }
   }
+
+  @keyframes rise {
+    from {
+      opacity: 0;
+      transform: translateY(1.5rem);
+    }
+  }
+
+  @keyframes settle {
+    from {
+      transform: scale(1.08);
+    }
+  }
+
+  @keyframes live {
+    from {
+      box-shadow: 0 0 0 0 currentColor;
+    }
+    to {
+      box-shadow: 0 0 0 0.5rem transparent;
+    }
+  }
 }
 
 :root {
-  --navbar-height: 78px;
+  --navbar-height: 72px;
+  /* Depth of a band's patterned edge (the `edge-*` utilities). */
+  --edge-size: 2.5rem;
+  /* Height of the dashboard's bottom tab bar on phones; content and sticky bars sit above it. */
+  --tabbar-height: calc(4rem + env(safe-area-inset-bottom));
   color-scheme: light;
+}
+
+@media (width >= 48rem) {
+  :root {
+    --edge-size: 4rem;
+  }
 }
 
 @media (width >= 64rem) {
   :root {
-    --navbar-height: 94px;
+    --navbar-height: 84px;
   }
 }
 
 @layer base {
   html {
     scroll-behavior: smooth;
+    -webkit-tap-highlight-color: transparent;
   }
 
   /*
@@ -69,8 +110,183 @@
     @apply bg-surface text-ink antialiased;
   }
 
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  ::selection {
+    @apply bg-brand text-white;
+  }
+
   :focus-visible {
     @apply outline-2 outline-offset-2 outline-brand;
+  }
+}
+
+/*
+ * A band's patterned edge: the band itself is cut to the silhouette of the logo's woven W and V, so it stays filled down
+ * into the pattern's points and the page behind shows between them. Each is a mask (the band's straight part plus the
+ * silhouette repeated along the edge), so it works on photos and solid colours alike; `edge-lines` draws the weave's inner
+ * hairlines inside the points. The tile keeps the pattern's own 2.4:1 proportions at any `--edge-size`. Leave
+ * `--edge-size` of padding on that side: content in the points would be cut.
+ */
+@utility edge-bottom {
+  --edge-w: calc(var(--edge-size) * 2.4018);
+  mask:
+    linear-gradient(#000 0 0) top / 100% calc(100% - var(--edge-size) + 1px) no-repeat,
+    var(--edge-shape-bottom) bottom center / var(--edge-w) var(--edge-size) repeat-x;
+}
+
+@utility edge-top {
+  --edge-w: calc(var(--edge-size) * 2.4018);
+  mask:
+    linear-gradient(#000 0 0) bottom / 100% calc(100% - var(--edge-size) + 1px) no-repeat,
+    var(--edge-shape-top) top center / var(--edge-w) var(--edge-size) repeat-x;
+}
+
+@utility edge-y {
+  --edge-w: calc(var(--edge-size) * 2.4018);
+  mask:
+    linear-gradient(#000 0 0) center / 100% calc(100% - 2 * var(--edge-size) + 2px) no-repeat,
+    var(--edge-shape-top) top center / var(--edge-w) var(--edge-size) repeat-x,
+    var(--edge-shape-bottom) bottom center / var(--edge-w) var(--edge-size) repeat-x;
+}
+
+@utility edge-start {
+  --edge-w: calc(var(--edge-size) * 2.4018);
+  mask:
+    linear-gradient(#000 0 0) right / calc(100% - var(--edge-size) + 1px) 100% no-repeat,
+    var(--edge-shape-start) left center / var(--edge-size) var(--edge-w) repeat-y;
+}
+
+:root {
+  --edge-shape-bottom: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1121.5 466.9' preserveAspectRatio='none'%3E%3Cpath d='M0 0L275.7 325.2L360.4 225.2L563.9 466.9L758.6 231.8L839.5 325.2L1121.5 0Z' fill='%23000'/%3E%3C/svg%3E");
+  --edge-shape-top: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1121.5 466.9' preserveAspectRatio='none'%3E%3Cpath d='M0 466.9L275.7 141.8L360.4 241.7L563.9 0L758.6 235.1L839.5 141.8L1121.5 466.9Z' fill='%23000'/%3E%3C/svg%3E");
+  --edge-shape-start: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 466.9 1121.5' preserveAspectRatio='none'%3E%3Cpath d='M466.9 0L141.8 275.7L241.7 360.4L0 563.9L235.1 758.6L141.8 839.5L466.9 1121.5Z' fill='%23000'/%3E%3C/svg%3E");
+}
+
+@layer components {
+  /* The weave's hairlines, laid inside a patterned edge (components/brand/EdgeLines.tsx). */
+  .edge-lines {
+    --edge-w: calc(var(--edge-size) * 2.4018);
+    background-color: currentColor;
+  }
+
+  .edge-lines-bottom {
+    height: var(--edge-size);
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1121.5 466.9' preserveAspectRatio='none'%3E%3Cpath d='M0 0L275.7 325.2L440 131.3L557.6 0L674.1 134.3L839.5 325.2L1121.5 0M170.9 0L563.9 466.9L950.6 0M440 131.3L557.6 268.9L674.1 134.3' fill='none' stroke='%23000' stroke-width='14.45'/%3E%3C/svg%3E")
+      bottom center / var(--edge-w) 100% repeat-x;
+  }
+
+  .edge-lines-top {
+    height: var(--edge-size);
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1121.5 466.9' preserveAspectRatio='none'%3E%3Cpath d='M0 466.9L275.7 141.8L440 335.6L557.6 466.9L674.1 332.6L839.5 141.8L1121.5 466.9M170.9 466.9L563.9 0L950.6 466.9M440 335.6L557.6 198L674.1 332.6' fill='none' stroke='%23000' stroke-width='14.45'/%3E%3C/svg%3E")
+      top center / var(--edge-w) 100% repeat-x;
+  }
+
+  .edge-lines-start {
+    width: var(--edge-size);
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 466.9 1121.5' preserveAspectRatio='none'%3E%3Cpath d='M466.9 0L141.8 275.7L335.6 440L466.9 557.6L332.6 674.1L141.8 839.5L466.9 1121.5M466.9 170.9L0 563.9L466.9 950.6M335.6 440L198 557.6L332.6 674.1' fill='none' stroke='%23000' stroke-width='14.45'/%3E%3C/svg%3E")
+      left center / 100% var(--edge-w) repeat-y;
+  }
+}
+
+/*
+ * The timeline's spine: the logo's woven W and V twice, back to back, mirrored about one centre line that the timeline's
+ * nodes sit on. A mask over `currentColor`; `--spine-width` sets its width, and the tile keeps its proportions.
+ */
+@layer components {
+  .spine {
+    --spine-width: 2rem;
+    width: var(--spine-width);
+    background-color: currentColor;
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 961.9 1121.5' preserveAspectRatio='none'%3E%3Cpath d='M480.9 0L806.1 275.7L612.3 440L480.9 557.6L615.3 674.1L806.1 839.5L480.9 1121.5M480.9 170.9L947.9 563.9L480.9 950.6M612.3 440L749.8 557.6L615.3 674.1M480.9 0L155.8 275.7L349.6 440L480.9 557.6L346.6 674.1L155.8 839.5L480.9 1121.5M480.9 170.9L14 563.9L480.9 950.6M349.6 440L212 557.6L346.6 674.1M480.9 0V1121.5' fill='none' stroke='%23000' stroke-width='28'/%3E%3C/svg%3E")
+      top center / 100% calc(var(--spine-width) * 1.1659) repeat-y;
+  }
+
+  @media (width >= 48rem) {
+    .spine {
+      --spine-width: 3rem;
+    }
+  }
+}
+
+/*
+ * Scroll-driven motion: pure CSS, no JS and no layout reads. Browsers without scroll timelines, and visitors who
+ * prefer reduced motion, simply get the content in place.
+ */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    /* Rises into place as it enters the viewport. */
+    .reveal {
+      animation: reveal linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 60%;
+    }
+
+    /* A photo opens from a smaller window as it enters the viewport. */
+    .reveal-image {
+      animation: reveal-image linear both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 40%;
+    }
+
+    /* The hero photo drifts slower than the page as it scrolls away. */
+    .parallax {
+      animation: parallax linear both;
+      animation-timeline: scroll(root);
+      animation-range: 0 100svh;
+    }
+  }
+}
+
+@keyframes reveal {
+  from {
+    opacity: 0;
+    transform: translateY(2.5rem);
+  }
+}
+
+@keyframes reveal-image {
+  from {
+    clip-path: inset(8% 6% round 1.5rem);
+    transform: scale(1.04);
+  }
+  to {
+    clip-path: inset(0 round 1.5rem);
+  }
+}
+
+@keyframes parallax {
+  to {
+    transform: translateY(20%);
+  }
+}
+
+/* Disclosures open and close with a height transition where the browser can animate to `auto`. */
+@supports (interpolate-size: allow-keywords) {
+  @media (prefers-reduced-motion: no-preference) {
+    :root {
+      interpolate-size: allow-keywords;
+    }
+
+    details::details-content {
+      block-size: 0;
+      overflow: clip;
+      transition:
+        block-size 0.3s var(--ease-snap),
+        content-visibility 0.3s allow-discrete;
+    }
+
+    details[open]::details-content {
+      block-size: auto;
+    }
   }
 }
 
@@ -84,7 +300,10 @@
   }
 }
 
-.debug *,
-.debu {
-  border: 1px solid red !important;
+/*
+ * A section's pause switch (a checkbox marked `data-marquee-pause`) stops every marquee in that section: WCAG 2.2.2 asks
+ * that motion lasting more than five seconds can be paused. Unlayered, so it wins over the `animate-marquee` utility.
+ */
+section:has([data-marquee-pause]:checked) .animate-marquee {
+  animation-play-state: paused;
 }

@@ -9,6 +9,8 @@ import type { Profile } from '@/types/participant.type';
 import { Alert } from '@/ui/Alert';
 import { ChoiceGroup } from '@/ui/ChoiceGroup';
 import { Field, SelectField, TextField } from '@/ui/FormField';
+import { Panel } from '@/ui/Panel';
+import { StickyActionBar } from '@/ui/StickyActionBar';
 import { SubmitButton } from '@/ui/SubmitButton';
 
 interface Props {
@@ -23,14 +25,18 @@ export function ProfileForm({ profile }: Props) {
   const value = (name: keyof Profile): string => state.values?.[name] ?? String(profile[name] ?? '');
 
   return (
-    <form action={formAction} className="flex flex-col gap-10">
-      <section aria-labelledby="personal" className="flex flex-col gap-6">
-        <h2 id="personal" className="text-3xl font-bold text-ink">
-          Personal Info
-        </h2>
-        <div className="grid gap-6 md:grid-cols-2">
+    <form action={formAction} className="flex flex-col gap-5 md:gap-6">
+      <Panel
+        id="personal"
+        title="Personal info"
+        description="Your name is printed on your certificate as written here."
+      >
+        <div className="grid gap-5 lg:grid-cols-2">
           <Field label="Email" htmlFor="email">
-            <p id="email" className="rounded-lg bg-canvas px-4 py-3 font-semibold text-ink">
+            <p
+              id="email"
+              className="flex min-h-12 items-center truncate rounded-xl bg-canvas px-4 font-medium text-muted"
+            >
               {profile.email}
             </p>
           </Field>
@@ -76,15 +82,10 @@ export function ProfileForm({ profile }: Props) {
           />
           <ChoiceGroup legend="Gender" name="gender" options={GENDERS} defaultValue={value('gender')} />
         </div>
-      </section>
+      </Panel>
 
-      <hr className="border-line" />
-
-      <section aria-labelledby="professional" className="flex flex-col gap-6">
-        <h2 id="professional" className="text-3xl font-bold text-ink">
-          Professional Info
-        </h2>
-        <div className="grid gap-6 md:grid-cols-2">
+      <Panel id="professional" title="Studies and work" description="Helps us match talks and sponsors to who attends.">
+        <div className="grid gap-5 lg:grid-cols-2">
           <TextField
             label="University"
             name="university"
@@ -107,7 +108,7 @@ export function ProfileForm({ profile }: Props) {
             defaultValue={value('job')}
           />
           <Field label="Status" htmlFor="isOpenToWork">
-            <label className="flex min-h-12 items-center gap-3 text-lg font-semibold text-ink">
+            <label className="flex min-h-12 cursor-pointer items-center gap-3 rounded-xl border border-line px-4 font-medium text-ink transition-colors hover:border-brand-muted has-checked:border-brand has-checked:bg-brand-soft">
               <input
                 id="isOpenToWork"
                 name="isOpenToWork"
@@ -123,7 +124,7 @@ export function ProfileForm({ profile }: Props) {
             name="fieldsOfInterest"
             placeholder="e.g. Machine learning, Systems"
             defaultValue={value('fieldsOfInterest')}
-            className="md:col-span-2"
+            className="lg:col-span-2"
           />
           <ChoiceGroup legend="Grade" name="grade" options={GRADES} defaultValue={value('grade')} />
           <SelectField
@@ -141,11 +142,16 @@ export function ProfileForm({ profile }: Props) {
           />
           <TextField label="GitHub" name="github" placeholder="github.com/…" defaultValue={value('github')} />
         </div>
-      </section>
+      </Panel>
 
       {state.error && <Alert tone="error">{state.error}</Alert>}
       {state.success && <Alert tone="success">{state.success}</Alert>}
-      <SubmitButton className="w-full">Update Profile</SubmitButton>
+      <StickyActionBar>
+        <p className="hidden grow ps-3 text-sm text-muted sm:block">Changes are saved when you press the button.</p>
+        <SubmitButton size="md" className="w-full sm:w-auto">
+          Save profile
+        </SubmitButton>
+      </StickyActionBar>
     </form>
   );
 }

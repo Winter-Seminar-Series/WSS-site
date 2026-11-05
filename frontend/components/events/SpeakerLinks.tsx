@@ -7,7 +7,7 @@ interface Props {
 }
 
 const LINK_CLASSES =
-  'inline-flex min-h-11 items-center gap-2 rounded-md px-3 text-sm font-semibold text-brand-strong transition-colors hover:bg-brand-soft focus-visible:bg-brand-soft';
+  'inline-flex min-h-11 items-center gap-2 rounded-full px-3 text-sm font-semibold text-brand-strong transition-colors hover:bg-brand-soft focus-visible:bg-brand-soft';
 
 /** Footer of a speaker's profile. Renders nothing for a speaker without links (both are optional). */
 export function SpeakerLinks({ name, linkedin, googleScholar }: Props) {

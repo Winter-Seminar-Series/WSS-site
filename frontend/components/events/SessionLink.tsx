@@ -20,12 +20,7 @@ export function SessionLink({ href }: Props) {
   const Icon = ICONS[kind];
 
   return (
-    <a
-      href={url.href}
-      target="_blank"
-      rel="noopener noreferrer"
-      className={`${buttonClasses('primary', 'md')} w-full sm:w-auto`}
-    >
+    <a href={url.href} target="_blank" rel="noopener noreferrer" className={`${buttonClasses('primary', 'lg')} w-full`}>
       <Icon className="size-5 shrink-0" aria-hidden />
       {label}
       <span className="sr-only">(opens in a new tab)</span>

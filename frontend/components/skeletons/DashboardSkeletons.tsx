@@ -1,42 +1,56 @@
 import { LoadingRegion, Skeleton } from '@/ui/Skeleton';
 
 /*
- * Loading states of the dashboard tabs. The dashboard layout (hero, tabs) is already on screen; these fill only the
- * tab's content area, shaped like what it will show.
+ * Loading states of the dashboard tabs. The dashboard shell (navbar, sidebar or tab bar, title) is already on screen;
+ * these fill only the tab's content area, shaped like the cards it will show.
  */
 
-/** Labelled fields in a two-column form, then the submit button (profile). */
+const CARD = 'rounded-3xl bg-surface p-5 ring-1 ring-line-soft md:p-8';
+
+function CardHeading() {
+  return (
+    <div className="mb-6 flex flex-col gap-2">
+      <Skeleton className="h-7 w-48" />
+      <Skeleton className="h-4 w-full max-w-sm" />
+    </div>
+  );
+}
+
+/** Cards of labelled fields, then the sticky save bar (profile). */
 export function FormSkeleton({ label, fields = 8 }: { label: string; fields?: number }) {
   return (
-    <LoadingRegion label={label} className="flex flex-col gap-8">
-      <div className="grid gap-6 md:grid-cols-2">
-        {Array.from({ length: fields }, (_, index) => (
-          <div key={index} className="flex flex-col gap-2">
-            <Skeleton className="h-4 w-28" />
-            <Skeleton className="h-12 w-full" />
-          </div>
-        ))}
+    <LoadingRegion label={label} className="flex flex-col gap-5 md:gap-6">
+      <div aria-hidden className={CARD}>
+        <CardHeading />
+        <div className="grid gap-5 lg:grid-cols-2">
+          {Array.from({ length: fields }, (_, index) => (
+            <div key={index} className="flex flex-col gap-2">
+              <Skeleton className="h-4 w-28" />
+              <Skeleton className="h-12 w-full rounded-xl" />
+            </div>
+          ))}
+        </div>
       </div>
-      <Skeleton className="h-11 w-40 self-end" />
+      <Skeleton className="h-16 w-full rounded-3xl" />
     </LoadingRegion>
   );
 }
 
-/** Rows with a title and actions on the right (stream sessions, certificates, video licences). */
-export function RowListSkeleton({ label, rows = 4 }: { label: string; rows?: number }) {
+/** Cards with a title and actions (stream sessions, certificates, video licences). */
+export function RowListSkeleton({ label, rows = 3 }: { label: string; rows?: number }) {
   return (
     <LoadingRegion label={label}>
       <ul aria-hidden className="flex flex-col gap-3">
         {Array.from({ length: rows }, (_, index) => (
           <li
             key={index}
-            className="flex flex-col gap-3 rounded-md border border-line-soft p-4 md:flex-row md:items-center"
+            className="flex flex-col gap-4 rounded-3xl bg-surface p-5 ring-1 ring-line-soft sm:flex-row sm:items-center"
           >
-            <Skeleton className="h-5 grow md:max-w-md" />
-            <div className="flex gap-2">
-              <Skeleton className="h-11 w-32" />
-              <Skeleton className="h-11 w-11" />
+            <div className="flex grow flex-col gap-2">
+              <Skeleton className="h-4 w-32" />
+              <Skeleton className="h-5 w-full max-w-md" />
             </div>
+            <Skeleton className="h-11 w-full rounded-full sm:w-28" />
           </li>
         ))}
       </ul>
@@ -44,52 +58,49 @@ export function RowListSkeleton({ label, rows = 4 }: { label: string; rows?: num
   );
 }
 
-/** Selectable plan cards, then the price summary (registration). */
+/** Attendance cards, workshops, then the total bar (registration). */
 export function PlanPickerSkeleton() {
   return (
-    <LoadingRegion label="Loading the registration options" className="flex flex-col gap-8">
-      <Skeleton className="h-7 w-56" />
-      <div className="grid gap-4 md:grid-cols-3">
-        {Array.from({ length: 3 }, (_, index) => (
-          <Skeleton key={index} className="h-28 w-full rounded-lg" />
-        ))}
+    <LoadingRegion label="Loading the registration options" className="flex flex-col gap-5 md:gap-6">
+      <div aria-hidden className={CARD}>
+        <CardHeading />
+        <div className="grid gap-3 sm:grid-cols-2">
+          {Array.from({ length: 2 }, (_, index) => (
+            <Skeleton key={index} className="h-24 w-full rounded-2xl" />
+          ))}
+        </div>
       </div>
-      <Skeleton className="h-7 w-48" />
-      <div className="grid gap-4 md:grid-cols-2">
-        {Array.from({ length: 4 }, (_, index) => (
-          <Skeleton key={index} className="h-20 w-full rounded-lg" />
-        ))}
+      <div aria-hidden className={CARD}>
+        <CardHeading />
+        <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+          {Array.from({ length: 3 }, (_, index) => (
+            <Skeleton key={index} className="h-72 w-full rounded-2xl" />
+          ))}
+        </div>
       </div>
-      <Skeleton className="h-24 w-full rounded-lg" />
+      <Skeleton className="h-18 w-full rounded-3xl" />
     </LoadingRegion>
   );
 }
 
-/** The poster upload box. */
+/** The poster upload card. */
 export function UploadSkeleton() {
   return (
-    <LoadingRegion label="Loading your poster submission" className="flex flex-col gap-4">
-      <SkeletonLines />
-      <Skeleton className="h-40 w-full rounded-lg" />
-      <Skeleton className="h-11 w-40" />
+    <LoadingRegion label="Loading your poster submission">
+      <div aria-hidden className={CARD}>
+        <CardHeading />
+        <Skeleton className="h-52 w-full rounded-2xl" />
+        <Skeleton className="mt-5 h-11 w-36 rounded-full" />
+      </div>
     </LoadingRegion>
   );
 }
 
-function SkeletonLines() {
-  return (
-    <div aria-hidden className="flex flex-col gap-3">
-      <Skeleton className="h-4 w-full max-w-xl" />
-      <Skeleton className="h-4 w-2/3 max-w-md" />
-    </div>
-  );
-}
-
-/** The "Registered: …" badge in the dashboard hero. */
+/** The registration pill in the dashboard header. */
 export function RegistrationBadgeSkeleton() {
   return (
     <LoadingRegion label="Loading your registration">
-      <Skeleton className="h-10 w-44 md:h-14 md:w-56" />
+      <Skeleton className="h-10 w-52 rounded-full" />
     </LoadingRegion>
   );
 }

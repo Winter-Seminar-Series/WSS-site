@@ -70,7 +70,11 @@ function performer(speaker: Speaker) {
   return {
     '@type': 'Person',
     name: speaker.name,
-    jobTitle: speaker.designation || undefined,
+    jobTitle: speaker.role === '' ? undefined : speaker.role,
+    worksFor: speaker.organization ? { '@type': 'Organization', name: speaker.organization } : undefined,
+    affiliation: speaker.career.length
+      ? speaker.career.map((step) => ({ '@type': 'Organization', name: step.name, url: step.href ?? undefined }))
+      : undefined,
     image: speaker.image ?? undefined,
   };
 }

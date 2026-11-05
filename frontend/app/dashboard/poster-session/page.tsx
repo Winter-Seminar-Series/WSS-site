@@ -16,7 +16,7 @@ export default async function PosterSessionDashboardPage() {
   );
 
   return (
-    <div className="flex flex-col gap-6">
+    <div className="flex flex-col gap-5 md:gap-6">
       {!isProfileComplete(profile) && <Alert tone="warning">Please complete your profile information first.</Alert>}
       <PosterUploadForm currentPosterUrl={posterUrl} open={REGISTRATION.posterSubmissionOpen} />
     </div>

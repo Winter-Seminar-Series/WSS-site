@@ -45,9 +45,14 @@ export default async function AdvisorsPage({ params }: PageProps<'/[edition]/adv
 
   return (
     <>
-      <PageHero image={edition.heroImage} overline="Our Guides" title="Scientific Advisors" />
-      <div className="pt-16">
-        <TeamSection name="Scientific Advisors" members={ADVISORS} />
+      <PageHero
+        image={edition.heroImage}
+        context={edition.title}
+        title="Scientific advisors"
+        lead="The researchers who guide the programme and help us reach speakers."
+      />
+      <div className="pt-12 md:pt-16">
+        <TeamSection name="Scientific advisors" members={ADVISORS} />
       </div>
       <RegisterCta edition={edition} />
     </>

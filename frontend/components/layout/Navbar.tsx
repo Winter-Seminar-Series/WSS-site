@@ -41,7 +41,7 @@ export function Navbar({ variant = 'overlay', nav }: Props) {
   const isSignedIn = useIsSignedIn();
   const scrolled = useSyncExternalStore(
     subscribeToScroll,
-    () => window.scrollY > 10,
+    () => window.scrollY > 24,
     () => false,
   );
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -52,8 +52,7 @@ export function Navbar({ variant = 'overlay', nav }: Props) {
   // Close the drawer on navigation without an effect: compare against the path it was opened on.
   if (drawerOpen && openedAt !== pathname) setDrawerOpen(false);
 
-  const transparent = variant === 'overlay' && !scrolled && !drawerOpen;
-  const tone = transparent ? 'text-white' : 'text-ink';
+  const transparent = variant === 'overlay' && !scrolled;
   // The same section in every other edition, so switching keeps the visitor where they are.
   const editions: EditionLink[] = nav.editions.map((target) => ({
     label: target.label,
@@ -64,18 +63,78 @@ export function Navbar({ variant = 'overlay', nav }: Props) {
   return (
     <>
       <header
-        className={`fixed inset-x-0 top-0 z-50 transition-colors duration-200 ${
-          transparent ? 'bg-transparent' : 'border-b border-line-soft bg-surface/95 backdrop-blur'
+        className={`fixed inset-x-0 top-0 z-50 transition-[background-color,box-shadow,color] duration-300 ${
+          transparent
+            ? 'bg-linear-to-b from-black/35 to-transparent text-white'
+            : 'bg-surface/85 text-ink shadow-[0_1px_0] shadow-line-soft backdrop-blur-xl backdrop-saturate-150'
         }`}
       >
         <nav
           aria-label="Main"
-          className={`mx-auto flex h-(--navbar-height) max-w-300 items-center justify-between gap-4 px-4 md:px-6 ${tone}`}
+          className="mx-auto flex h-(--navbar-height) max-w-300 items-center justify-between gap-4 px-4 md:px-6"
         >
-          <div className="flex shrink-0 items-center gap-1">
+          <Link
+            href={nav.edition.homeHref}
+            className="flex min-h-11 shrink-0 items-center gap-3"
+            aria-label={`${nav.edition.label} — home`}
+          >
+            <Logo className="w-10 lg:w-12" />
+            {/* One line wherever it fits: beside the menu button below lg, and beside the full menu from xl. */}
+            <span className="hidden text-sm font-bold whitespace-nowrap sm:block lg:hidden xl:block">
+              Winter Seminar Series
+            </span>
+          </Link>
+
+          <ul className="hidden items-center gap-0.5 lg:flex">
+            {nav.links.map(({ href, label }) => (
+              <li key={href}>
+                <Link
+                  href={href}
+                  aria-current={isActive(pathname, href) ? 'page' : undefined}
+                  className={`relative flex min-h-10 items-center rounded-full px-3.5 text-[0.9375rem] font-semibold whitespace-nowrap transition-colors lg:px-4 ${
+                    transparent
+                      ? 'text-white/85 hover:bg-white/12 hover:text-white aria-[current=page]:bg-white/18 aria-[current=page]:text-white'
+                      : 'text-ink/75 hover:bg-canvas hover:text-ink aria-[current=page]:bg-brand-soft aria-[current=page]:text-brand-strong'
+                  }`}
+                >
+                  {label}
+                  <PendingHint />
+                </Link>
+              </li>
+            ))}
+          </ul>
+
+          <div className="flex items-center gap-1.5 sm:gap-2">
+            {/* Accounts belong to the current edition; archives are read-only, like the old edition sites. */}
+            {nav.isCurrent &&
+              (isSignedIn ? (
+                // Inside the dashboard the sidebar or tab bar already is the way around.
+                !pathname.startsWith('/dashboard') && (
+                  <LinkButton href="/dashboard/profile" variant={transparent ? 'light' : 'primary'} size="sm">
+                    Dashboard
+                  </LinkButton>
+                )
+              ) : (
+                <>
+                  <LinkButton
+                    href="/login"
+                    variant={transparent ? 'outline-light' : 'ghost'}
+                    size="sm"
+                    className="max-sm:hidden"
+                  >
+                    Log in
+                  </LinkButton>
+                  <LinkButton href="/signup" variant={transparent ? 'light' : 'primary'} size="sm">
+                    Sign up
+                  </LinkButton>
+                </>
+              ))}
+            <EditionsMenu label={nav.edition.label} editions={editions} transparent={transparent} />
             <button
               type="button"
-              className="-ms-2 flex min-h-11 min-w-11 items-center justify-center md:hidden"
+              className={`-me-2 flex size-11 items-center justify-center rounded-full transition-colors lg:hidden ${
+                transparent ? 'hover:bg-white/12' : 'hover:bg-canvas'
+              }`}
               aria-label="Open menu"
               aria-expanded={drawerOpen}
               onClick={() => {
@@ -86,47 +145,6 @@ export function Navbar({ variant = 'overlay', nav }: Props) {
             >
               <Menu className="size-6" aria-hidden />
             </button>
-            <Link
-              href={nav.edition.homeHref}
-              className="flex min-h-11 items-center"
-              aria-label={`${nav.edition.label} — home`}
-            >
-              <Logo className="w-10 lg:w-14" />
-            </Link>
-          </div>
-
-          <ul className="hidden items-center gap-1 md:flex lg:gap-4">
-            {nav.links.map(({ href, label }) => (
-              <li key={href}>
-                <Link
-                  href={href}
-                  aria-current={isActive(pathname, href) ? 'page' : undefined}
-                  className="relative block px-3 py-3 font-medium after:absolute after:inset-x-3 after:bottom-2 after:h-0.5 after:origin-left after:scale-x-0 after:bg-current after:transition-transform hover:after:scale-x-100 aria-[current=page]:after:scale-x-100"
-                >
-                  {label}
-                  <PendingHint />
-                </Link>
-              </li>
-            ))}
-          </ul>
-
-          <div className="flex items-center gap-2">
-            {/* Accounts belong to the current edition; archives are read-only, like the old edition sites. */}
-            {!nav.isCurrent ? null : isSignedIn ? (
-              <LinkButton href="/dashboard/profile" variant={transparent ? 'light' : 'primary'} size="sm">
-                Dashboard
-              </LinkButton>
-            ) : (
-              <>
-                <LinkButton href="/signup" variant={transparent ? 'light' : 'primary'} size="sm">
-                  Sign Up
-                </LinkButton>
-                <LinkButton href="/login" variant={transparent ? 'outline-light' : 'ghost'} size="sm">
-                  Login
-                </LinkButton>
-              </>
-            )}
-            <EditionsMenu label={nav.edition.label} editions={editions} transparent={transparent} />
           </div>
         </nav>
       </header>
@@ -138,6 +156,7 @@ export function Navbar({ variant = 'overlay', nav }: Props) {
           home={{ href: nav.edition.homeHref, label: 'Home' }}
           links={nav.links}
           editions={editions}
+          account={nav.isCurrent ? (isSignedIn ? 'signed-in' : 'signed-out') : null}
           onClose={() => setDrawerOpen(false)}
         />
       )}
@@ -178,7 +197,7 @@ function EditionsMenu({ label, editions, transparent }: EditionsMenuProps) {
   }, [open]);
 
   return (
-    <div ref={containerRef} className="relative hidden sm:block">
+    <div ref={containerRef} className="relative hidden md:block">
       <button
         type="button"
         aria-expanded={open}
@@ -190,12 +209,15 @@ function EditionsMenu({ label, editions, transparent }: EditionsMenuProps) {
           setRequested(true);
           setOpen((value) => !value);
         }}
-        className={`flex min-h-9 items-center gap-1 rounded-md px-3 text-sm font-semibold transition-colors ${
-          transparent ? 'hover:bg-white/10' : 'hover:bg-brand-soft'
+        className={`flex min-h-10 items-center gap-1 rounded-full px-3 text-sm font-semibold transition-colors ${
+          transparent ? 'hover:bg-white/12' : 'hover:bg-canvas'
         }`}
       >
         {label}
-        <ChevronDown className={`size-4 transition-transform ${open ? 'rotate-180' : ''}`} aria-hidden />
+        <ChevronDown
+          className={`size-4 transition-transform duration-300 ease-snap ${open ? 'rotate-180' : ''}`}
+          aria-hidden
+        />
       </button>
       {requested && <EditionsPanel open={open} editions={editions} onSelect={() => setOpen(false)} />}
     </div>

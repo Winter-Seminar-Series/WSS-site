@@ -12,9 +12,9 @@ export default async function ConfirmPasswordResetPage({ params }: PageProps<'/r
 
   return (
     <AuthForm
-      overline="Secure Your Space!"
-      title="New Password"
-      submitLabel="Reset Password"
+      title="Choose a new password"
+      lead="Use at least 8 characters. You will log in with it from now on."
+      submitLabel="Save new password"
       action={confirmPasswordResetAction}
       hidden={{ token }}
       fields={[
@@ -27,14 +27,14 @@ export default async function ConfirmPasswordResetPage({ params }: PageProps<'/r
         },
         {
           name: 'password',
-          label: 'New Password',
+          label: 'New password',
           type: 'password',
           placeholder: 'At least 8 characters',
           autoComplete: 'new-password',
         },
         {
           name: 'confirmPassword',
-          label: 'Confirm New Password',
+          label: 'Confirm new password',
           type: 'password',
           placeholder: 'Repeat your new password',
           autoComplete: 'new-password',

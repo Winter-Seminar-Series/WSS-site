@@ -12,16 +12,22 @@ export default function NotFound() {
   return (
     <>
       <Navbar variant="overlay" nav={editionNav()} />
-      <main id="main" className="pb-16">
-        <PageHero overline="404" title="Page not found">
-          <p className="mt-6 text-lg text-muted">The page you are looking for does not exist or has been moved.</p>
-          <div className="mt-8 flex flex-wrap gap-3">
-            <LinkButton href="/">Back to home</LinkButton>
-            <LinkButton href="/seminars" variant="soft">
+      <main id="main">
+        <PageHero
+          context="Error 404"
+          title="This page is not here"
+          lead="It may have moved, or the link has a typo. The talks and the home page are a click away."
+        >
+          <div className="flex flex-col gap-3 sm:flex-row">
+            <LinkButton href="/" variant="light" size="lg">
+              Back to home
+            </LinkButton>
+            <LinkButton href="/seminars" variant="outline-light" size="lg">
               Browse seminars
             </LinkButton>
           </div>
         </PageHero>
+        <div className="h-16" />
       </main>
       <Footer />
     </>

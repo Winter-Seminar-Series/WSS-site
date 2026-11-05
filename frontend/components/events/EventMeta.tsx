@@ -9,20 +9,21 @@ interface SessionMetaProps {
   className?: string;
 }
 
-/** "Thu, April 10, 9:00 AM · 90 minutes" */
+const ROW = 'flex flex-wrap items-center gap-x-4 gap-y-1.5 font-semibold text-muted';
+const ITEM = 'flex items-center gap-1.5';
+
+/** "Thu, April 10, 9:00 AM" and "90 minutes" */
 export function SessionMeta({ date, startTime, endTime, className = '' }: SessionMetaProps) {
   return (
-    <div
-      className={`flex flex-wrap items-center gap-x-4 gap-y-1 font-medium tracking-wide text-muted uppercase ${className}`}
-    >
-      <span className="flex items-center gap-1.5">
-        <CalendarDays className="size-5 shrink-0" aria-hidden />
+    <div className={`${ROW} ${className}`}>
+      <span className={ITEM}>
+        <CalendarDays className="size-4 shrink-0 text-brand" aria-hidden />
         <time dateTime={toIsoDateTime(date, startTime)}>
           {formatEventDate(date)}, {formatClock(startTime)}
         </time>
       </span>
-      <span className="flex items-center gap-1.5">
-        <Clock className="size-5 shrink-0" aria-hidden />
+      <span className={ITEM}>
+        <Clock className="size-4 shrink-0 text-brand" aria-hidden />
         {durationInMinutes(startTime, endTime)} minutes
       </span>
     </div>
@@ -36,21 +37,19 @@ interface WorkshopMetaProps {
   className?: string;
 }
 
-/** "April 10th – April 11th · 3 modules" */
+/** "April 10th – April 11th" and "3 modules" */
 export function WorkshopMeta({ startDate, endDate, modules, className = '' }: WorkshopMetaProps) {
   return (
-    <div
-      className={`flex flex-wrap items-center gap-x-4 gap-y-1 font-medium tracking-wide text-muted uppercase ${className}`}
-    >
+    <div className={`${ROW} ${className}`}>
       {startDate && (
-        <span className="flex items-center gap-1.5">
-          <CalendarDays className="size-5 shrink-0" aria-hidden />
+        <span className={ITEM}>
+          <CalendarDays className="size-4 shrink-0 text-brand" aria-hidden />
           {formatMonthDay(startDate)}
           {endDate && endDate !== startDate && ` – ${formatMonthDay(endDate)}`}
         </span>
       )}
-      <span className="flex items-center gap-1.5">
-        <LayoutGrid className="size-5 shrink-0" aria-hidden />
+      <span className={ITEM}>
+        <LayoutGrid className="size-4 shrink-0 text-brand" aria-hidden />
         {modules} {modules === 1 ? 'module' : 'modules'}
       </span>
     </div>
