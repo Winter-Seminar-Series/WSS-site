@@ -1,4 +1,10 @@
-import type { CSSProperties, ReactNode } from 'react';
+import type { ReactNode } from 'react';
+
+/**
+ * Shared pace of the rows that list people (speakers, staff), in rem per second: a row's duration is its width at this
+ * pace, so both drift at the same speed whatever their item widths and counts.
+ */
+export const MARQUEE_REM_PER_SECOND = 4.25;
 
 interface Props {
   children: ReactNode;
@@ -16,7 +22,6 @@ interface Props {
  * prefer reduced motion. The second copy is `inert`, so links inside it never take keyboard focus.
  */
 export function Marquee({ children, durationSeconds = 60, label, reverse = false }: Props) {
-  const style = { '--marquee-duration': `${durationSeconds}s` } as CSSProperties;
   return (
     <div
       role={label ? 'region' : undefined}
@@ -25,7 +30,7 @@ export function Marquee({ children, durationSeconds = 60, label, reverse = false
     >
       <div
         className={`flex w-max animate-marquee group-focus-within:[animation-play-state:paused] group-hover:[animation-play-state:paused] ${reverse ? '[animation-direction:reverse]' : ''}`}
-        style={style}
+        style={{ animationDuration: `${durationSeconds}s` }}
       >
         <ul className="flex shrink-0">{children}</ul>
         <ul className="flex shrink-0 motion-reduce:hidden" aria-hidden inert>

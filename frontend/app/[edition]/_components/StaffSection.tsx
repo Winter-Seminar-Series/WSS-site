@@ -4,9 +4,12 @@ import { getStaffWithPhotos } from '@/api/staff.api';
 import { editionHref } from '@/lib/editions';
 import type { Edition } from '@/lib/editions';
 import { LinkButton } from '@/ui/Button';
-import { Marquee } from '@/ui/Marquee';
+import { MARQUEE_REM_PER_SECOND, Marquee } from '@/ui/Marquee';
 import { PersonPhoto } from '@/ui/PersonPhoto';
 import { SectionHeading } from '@/ui/SectionHeading';
+
+/** A member's width from md (`md:w-40`): with the shared pace, sets the row's duration. */
+const MEMBER_REM = 10;
 
 export async function StaffSection({ edition }: { edition: Edition }) {
   const staff = await getStaffWithPhotos(edition.eventId);
@@ -28,7 +31,7 @@ export async function StaffSection({ edition }: { edition: Edition }) {
         />
       </div>
       <div className="mt-10">
-        <Marquee label="Staff members" durationSeconds={staff.length * 2.5}>
+        <Marquee label="Staff members" durationSeconds={(staff.length * MEMBER_REM) / MARQUEE_REM_PER_SECOND}>
           {staff.map((member) => (
             <li key={member.id} className="flex w-36 shrink-0 flex-col items-center px-2 text-center md:w-40">
               <PersonPhoto
