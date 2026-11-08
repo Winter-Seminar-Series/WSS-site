@@ -27,15 +27,23 @@ async function forwardedFor(): Promise<Record<string, string>> {
   }
 }
 
+export interface ApiErrorDetail {
+  attr: string | null;
+  detail: string;
+  code: string | null;
+}
+
 export class HttpError extends Error {
   readonly status: number;
   readonly code: string | null;
+  readonly errors: ApiErrorDetail[];
 
-  constructor(status: number, message: string, code: string | null = null) {
+  constructor(status: number, message: string, code: string | null = null, errors: ApiErrorDetail[] = []) {
     super(message);
     this.name = 'HttpError';
     this.status = status;
     this.code = code;
+    this.errors = errors;
   }
 }
 
@@ -55,12 +63,16 @@ async function readError(response: Response): Promise<HttpError> {
     const body: unknown = await response.json();
     if (typeof body === 'string') return new HttpError(response.status, body);
     if (body && typeof body === 'object' && 'errors' in body && Array.isArray(body.errors)) {
-      const [first] = body.errors as unknown[];
-      if (first && typeof first === 'object') {
-        const detail = 'detail' in first && typeof first.detail === 'string' ? first.detail : fallback;
-        const code = 'code' in first && typeof first.code === 'string' ? first.code : null;
-        return new HttpError(response.status, detail, code);
+      const errors: ApiErrorDetail[] = [];
+      for (const item of body.errors) {
+        if (!item || typeof item !== 'object' || !('detail' in item) || typeof item.detail !== 'string') continue;
+        errors.push({
+          detail: item.detail,
+          code: 'code' in item && typeof item.code === 'string' ? item.code : null,
+          attr: 'attr' in item && typeof item.attr === 'string' ? item.attr : null,
+        });
       }
+      return new HttpError(response.status, errors[0]?.detail ?? fallback, errors[0]?.code ?? null, errors);
     }
   } catch {
     // Non-JSON body (HTML error page from a proxy, empty 404…).

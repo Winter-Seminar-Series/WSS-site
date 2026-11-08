@@ -12,6 +12,7 @@ import { Field, SelectField, TextField } from '@/ui/FormField';
 import { Panel } from '@/ui/Panel';
 import { StickyActionBar } from '@/ui/StickyActionBar';
 import { SubmitButton } from '@/ui/SubmitButton';
+import { ValidatedForm } from '@/ui/ValidatedForm';
 
 interface Props {
   profile: Profile;
@@ -25,7 +26,7 @@ export function ProfileForm({ profile }: Props) {
   const value = (name: keyof Profile): string => state.values?.[name] ?? String(profile[name] ?? '');
 
   return (
-    <form action={formAction} className="flex flex-col gap-5 md:gap-6">
+    <ValidatedForm state={state} action={formAction} className="flex flex-col gap-5 md:gap-6">
       <Panel
         id="personal"
         title="Personal info"
@@ -84,7 +85,6 @@ export function ProfileForm({ profile }: Props) {
             name="university"
             autoComplete="organization"
             defaultValue={value('university')}
-            required
           />
           <SelectField
             label="Major"
@@ -145,6 +145,6 @@ export function ProfileForm({ profile }: Props) {
           Save profile
         </SubmitButton>
       </StickyActionBar>
-    </form>
+    </ValidatedForm>
   );
 }

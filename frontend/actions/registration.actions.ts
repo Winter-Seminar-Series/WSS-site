@@ -14,7 +14,7 @@ const orderSchema = z
   .object({
     plans: z.array(z.number().int().positive()),
     addons: z.array(z.object({ addonId: z.number().int().positive(), quantity: z.number().int().positive() })),
-    discountCode: z.string().trim().transform(toLatinDigits),
+    discountCode: z.string().trim().max(50, 'Discount codes must be 50 characters or fewer.').transform(toLatinDigits),
   })
   .refine((order) => order.plans.length > 0 || order.addons.length > 0, { message: 'Choose a plan first.' });
 
@@ -35,8 +35,12 @@ export async function quoteAction(order: Order): Promise<ActionResult<Quote>> {
   } catch (error) {
     // An unknown code is a validation error on `discount_code`: price the order without it and say so.
     if (parsed.data.discountCode && isHttpError(error, 400) && error.code === 'invalid') {
-      const price = await getPrice({ ...parsed.data, discountCode: '' });
-      return { ok: true, data: { price, discountApplied: false, discountInvalid: true } };
+      try {
+        const price = await getPrice({ ...parsed.data, discountCode: '' });
+        return { ok: true, data: { price, discountApplied: false, discountInvalid: true } };
+      } catch (fallbackError) {
+        return { ok: false, error: errorMessage(fallbackError) };
+      }
     }
     return { ok: false, error: errorMessage(error) };
   }

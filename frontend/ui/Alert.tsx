@@ -20,6 +20,7 @@ export function Alert({ tone, children, className = '' }: Props) {
   return (
     <div
       role={tone === 'error' ? 'alert' : 'status'}
+      tabIndex={tone === 'error' ? -1 : undefined}
       className={`flex items-start gap-3 rounded-xl border px-4 py-3.5 text-[0.9375rem] font-medium motion-safe:animate-[rise_0.4s_var(--ease-snap)_both] ${toneClassName} ${className}`}
     >
       <Icon className="mt-0.5 size-5 shrink-0" aria-hidden />
