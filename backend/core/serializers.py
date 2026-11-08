@@ -108,4 +108,9 @@ class PosterSessionImageSerializer(serializers.ModelSerializer):
     def validate_image(self, file):
         if file.size > self.MAX_SIZE:
             raise serializers.ValidationError('The poster must be 10 MB or smaller.', code='file_too_large')
+        position = file.tell()
+        signature = file.read(4)
+        file.seek(position)
+        if signature != b'%PDF':
+            raise serializers.ValidationError('Choose a valid PDF file.', code='invalid_pdf')
         return file
