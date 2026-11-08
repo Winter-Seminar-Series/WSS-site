@@ -91,7 +91,7 @@ export function Navbar({ variant = 'overlay', nav }: Props) {
                 <Link
                   href={href}
                   aria-current={isActive(pathname, href) ? 'page' : undefined}
-                  className={`relative flex min-h-10 items-center rounded-full px-3.5 text-[0.9375rem] font-semibold whitespace-nowrap transition-colors lg:px-4 ${
+                  className={`relative flex min-h-11 items-center rounded-full px-3.5 text-[0.9375rem] font-semibold whitespace-nowrap transition-colors lg:px-4 ${
                     transparent
                       ? 'text-white/85 hover:bg-white/12 hover:text-white aria-[current=page]:bg-white/18 aria-[current=page]:text-white'
                       : 'text-ink/75 hover:bg-canvas hover:text-ink aria-[current=page]:bg-brand-soft aria-[current=page]:text-brand-strong'
@@ -186,7 +186,10 @@ function EditionsMenu({ label, editions, transparent }: EditionsMenuProps) {
       if (event.target instanceof Node && !containerRef.current?.contains(event.target)) setOpen(false);
     };
     const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') setOpen(false);
+      if (event.key === 'Escape') {
+        setOpen(false);
+        containerRef.current?.querySelector('button')?.focus();
+      }
     };
     document.addEventListener('pointerdown', onPointerDown);
     document.addEventListener('keydown', onKeyDown);
@@ -209,7 +212,7 @@ function EditionsMenu({ label, editions, transparent }: EditionsMenuProps) {
           setRequested(true);
           setOpen((value) => !value);
         }}
-        className={`flex min-h-10 items-center gap-1 rounded-full px-3 text-sm font-semibold transition-colors ${
+        className={`flex min-h-11 items-center gap-1 rounded-full px-3 text-sm font-semibold transition-colors ${
           transparent ? 'hover:bg-white/12' : 'hover:bg-canvas'
         }`}
       >

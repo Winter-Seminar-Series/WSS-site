@@ -17,8 +17,8 @@ interface FieldProps {
 
 export function Field({ label, htmlFor, required, action, hint, children, className = '' }: FieldProps) {
   return (
-    <div className={`flex flex-col gap-2 ${className}`}>
-      <div className="flex items-center justify-between gap-2">
+    <div className={`grid grid-cols-[1fr_auto] items-start gap-x-2 gap-y-2 ${className}`}>
+      <div className="col-start-1 row-start-1 flex min-h-6 items-center">
         <label htmlFor={htmlFor} className="text-sm font-semibold text-ink">
           {label}
           {required && (
@@ -27,10 +27,14 @@ export function Field({ label, htmlFor, required, action, hint, children, classN
             </span>
           )}
         </label>
-        {action}
       </div>
-      {children}
-      {hint && <p className="text-sm text-muted">{hint}</p>}
+      <div className="col-span-2 min-w-0">{children}</div>
+      {action && <div className="col-start-2 row-start-1 flex min-h-6 items-center">{action}</div>}
+      {hint && (
+        <p id={`${htmlFor}-hint`} className="col-span-2 text-sm text-muted">
+          {hint}
+        </p>
+      )}
     </div>
   );
 }
@@ -45,7 +49,14 @@ interface TextFieldProps extends InputHTMLAttributes<HTMLInputElement> {
 export function TextField({ label, name, id = name, required, action, hint, className, ...props }: TextFieldProps) {
   return (
     <Field label={label} htmlFor={id} required={required} action={action} hint={hint} className={className}>
-      <input id={id} name={name} required={required} className={inputClasses} {...props} />
+      <input
+        id={id}
+        name={name}
+        required={required}
+        className={inputClasses}
+        aria-describedby={hint ? `${id}-hint` : undefined}
+        {...props}
+      />
     </Field>
   );
 }
