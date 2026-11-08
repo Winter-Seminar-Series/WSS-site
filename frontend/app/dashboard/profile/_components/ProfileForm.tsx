@@ -32,14 +32,7 @@ export function ProfileForm({ profile }: Props) {
         description="Your name is printed on your certificate as written here."
       >
         <div className="grid gap-5 lg:grid-cols-2">
-          <Field label="Email" htmlFor="email">
-            <p
-              id="email"
-              className="flex min-h-12 items-center truncate rounded-xl bg-canvas px-4 font-medium text-muted"
-            >
-              {profile.email}
-            </p>
-          </Field>
+          <TextField label="Email" name="email" type="email" value={profile.email} readOnly autoComplete="email" />
           <TextField
             label="Phone number"
             name="phoneNumber"
