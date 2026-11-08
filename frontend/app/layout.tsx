@@ -5,8 +5,8 @@ import type { ReactNode } from 'react';
 
 import { GoogleAnalytics } from '@/components/analytics/GoogleAnalytics';
 import { JsonLd } from '@/components/seo/JsonLd';
-import { editionThemeColor } from '@/lib/edition-theme';
-import { CURRENT_EDITION } from '@/lib/editions';
+import { editionColors, editionThemeColor } from '@/lib/edition-theme';
+import { CURRENT_EDITION, EDITIONS } from '@/lib/editions';
 import { SITE_DESCRIPTION, SITE_NAME, SITE_SHORT_NAME, SITE_URL, TWITTER_HANDLE } from '@/lib/site';
 import { SOCIAL_IMAGE_SIZE, socialImagePath } from '@/lib/social-image';
 import { organizationJsonLd, websiteJsonLd } from '@/lib/structured-data';
@@ -73,8 +73,14 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en" className={manrope.variable}>
       <body className="font-sans">
-        {/* The bar sits in <body>, outside the edition wrapper, so it uses the default brand token. */}
-        <NextTopLoader color="var(--color-brand)" height={3} showSpinner={false} shadow={false} />
+        {/* NProgress mounts under body, so wrapper variables cannot reach it. Match the visible edition in CSS. */}
+        <style>
+          {EDITIONS.map(
+            (edition) =>
+              `body:has([data-edition="${edition.slug}"]) #nprogress .bar { background: ${editionColors(edition).brand}; }`,
+          ).join('\n')}
+        </style>
+        <NextTopLoader color={editionColors(CURRENT_EDITION).brand} height={3} showSpinner={false} shadow={false} />
         {children}
         <JsonLd data={[websiteJsonLd, organizationJsonLd]} />
         <GoogleAnalytics />
