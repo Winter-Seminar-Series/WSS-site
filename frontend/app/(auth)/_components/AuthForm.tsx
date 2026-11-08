@@ -7,6 +7,7 @@ import type { FormState } from '@/lib/form';
 import { Alert } from '@/ui/Alert';
 import { TextField } from '@/ui/FormField';
 import { SubmitButton } from '@/ui/SubmitButton';
+import { ValidatedForm } from '@/ui/ValidatedForm';
 
 export interface AuthField {
   name: string;
@@ -34,7 +35,7 @@ export function AuthForm({ lead, title, fields, submitLabel, action, hidden = {}
   const [state, formAction] = useActionState(action, {});
 
   return (
-    <form action={formAction} className="flex flex-col gap-6" noValidate>
+    <ValidatedForm state={state} action={formAction} className="flex flex-col gap-6">
       <header>
         <h1 className="text-4xl font-extrabold tracking-[-0.04em] text-ink md:text-5xl">{title}</h1>
         <p className="mt-3 text-lg text-muted">{lead}</p>
@@ -66,6 +67,6 @@ export function AuthForm({ lead, title, fields, submitLabel, action, hidden = {}
 
       <SubmitButton className="mt-1 w-full">{submitLabel}</SubmitButton>
       {footer && <div className="text-center text-[0.9375rem] text-muted">{footer}</div>}
-    </form>
+    </ValidatedForm>
   );
 }

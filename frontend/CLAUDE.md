@@ -116,7 +116,7 @@ proxy.ts                 # Next 16 proxy (formerly middleware): refreshes the ac
 
 - **Public GETs** use `next: { revalidate: PUBLIC_REVALIDATE_SECONDS, tags }`. Authenticated calls
   (`{ auth: true }`) attach the session's bearer token and are `cache: 'no-store'`.
-- **Errors:** a non-2xx response throws `HttpError { status, code }`. The code is parsed from
+- **Errors:** a non-2xx response throws `HttpError { status, code, errors }`. The code is parsed from
   drf-standardized-errors bodies. Check it with `isHttpError(error, status)`.
 - **No other path out:** never call `fetch` for our API anywhere else, and never import `services/` from a
   client component.
@@ -132,8 +132,10 @@ proxy.ts                 # Next 16 proxy (formerly middleware): refreshes the ac
 
 - **Signature:** `'use server'`. Forms use `(prev: FormState, formData: FormData) => Promise<FormState>`
   with `useActionState` on the client.
-- **Validation:** validate with Zod, report the first issue via `firstIssue`, and echo values back via
-  `formValues` (which never echoes passwords).
+- **Validation:** validate with Zod and return `validationState` to preserve all field errors. Use `formError` for
+  API errors, retaining field paths. Echo non-sensitive values via `formValues` (never passwords or reset tokens).
+  Render action forms with `ui/ValidatedForm` so fields show linked errors and the first invalid control receives focus.
+  `firstIssue` is for non-form results such as checkout.
 - **Errors:** return them as values. Only `redirect()` throws, and only for success paths such as login or
   checkout.
 - **Redirect targets:** sanitise any user-supplied redirect with `safeRedirectPath`.
