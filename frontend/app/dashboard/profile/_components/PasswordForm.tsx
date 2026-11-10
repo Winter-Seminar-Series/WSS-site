@@ -25,7 +25,14 @@ export function PasswordForm() {
             autoComplete="current-password"
             required
           />
-          <TextField label="New password" name="password" type="password" autoComplete="new-password" required />
+          <TextField
+            label="New password"
+            name="password"
+            id="newPassword"
+            type="password"
+            autoComplete="new-password"
+            required
+          />
           <TextField
             label="Confirm new password"
             name="confirmPassword"

@@ -1,8 +1,9 @@
 import type { InputHTMLAttributes, ReactNode, SelectHTMLAttributes } from 'react';
 
 // 16px text on phones: anything smaller makes iOS Safari zoom into the field on focus.
+// Read-only styles key on the attribute because the `:read-only` pseudo-class also matches every <select>.
 export const inputClasses =
-  'min-h-12 w-full rounded-xl border border-line bg-surface px-4 py-3 text-base font-medium text-ink transition-[border-color,box-shadow] duration-200 placeholder:font-normal placeholder:text-muted/80 hover:border-brand-muted focus:border-brand focus:shadow-[0_0_0_4px] focus:shadow-brand/15 focus:outline-none disabled:cursor-not-allowed disabled:bg-canvas disabled:text-muted';
+  'min-h-12 w-full rounded-xl border border-line bg-surface px-4 py-3 text-base font-medium text-ink transition-[border-color,box-shadow] duration-200 placeholder:font-normal placeholder:text-muted/80 hover:border-brand-muted focus:border-brand focus:shadow-[0_0_0_4px] focus:shadow-brand/15 focus:outline-none disabled:cursor-not-allowed disabled:bg-canvas disabled:text-muted [&[readonly]]:cursor-default [&[readonly]]:bg-canvas [&[readonly]]:text-muted';
 
 interface FieldProps {
   label: string;
@@ -17,8 +18,8 @@ interface FieldProps {
 
 export function Field({ label, htmlFor, required, action, hint, children, className = '' }: FieldProps) {
   return (
-    <div className={`flex flex-col gap-2 ${className}`}>
-      <div className="flex items-center justify-between gap-2">
+    <div className={`grid grid-cols-[1fr_auto] items-start gap-x-2 gap-y-2 ${className}`}>
+      <div className="col-start-1 row-start-1 flex min-h-6 items-center">
         <label htmlFor={htmlFor} className="text-sm font-semibold text-ink">
           {label}
           {required && (
@@ -27,10 +28,14 @@ export function Field({ label, htmlFor, required, action, hint, children, classN
             </span>
           )}
         </label>
-        {action}
       </div>
-      {children}
-      {hint && <p className="text-sm text-muted">{hint}</p>}
+      <div className="col-span-2 min-w-0">{children}</div>
+      {action && <div className="col-start-2 row-start-1 flex min-h-6 items-center">{action}</div>}
+      {hint && (
+        <p id={`${htmlFor}-hint`} className="col-span-2 text-sm text-muted">
+          {hint}
+        </p>
+      )}
     </div>
   );
 }
@@ -45,7 +50,14 @@ interface TextFieldProps extends InputHTMLAttributes<HTMLInputElement> {
 export function TextField({ label, name, id = name, required, action, hint, className, ...props }: TextFieldProps) {
   return (
     <Field label={label} htmlFor={id} required={required} action={action} hint={hint} className={className}>
-      <input id={id} name={name} required={required} className={inputClasses} {...props} />
+      <input
+        id={id}
+        name={name}
+        required={required}
+        className={inputClasses}
+        aria-describedby={hint ? `${id}-hint` : undefined}
+        {...props}
+      />
     </Field>
   );
 }
