@@ -4,7 +4,7 @@ import { ArrowUpRight, Check, X } from 'lucide-react';
 import { AnimatePresence, LazyMotion, domAnimation, m } from 'motion/react';
 import type { Variants } from 'motion/react';
 import Link from 'next/link';
-import { useEffect } from 'react';
+import { useEffect, useEffectEvent, useRef } from 'react';
 
 import { Logo } from '@/components/brand/Logo';
 import type { EditionLink } from '@/lib/edition-switch';
@@ -42,7 +42,7 @@ export function EditionsPanel({ open, editions, onSelect }: EditionsPanelProps) 
                   href={href}
                   onClick={onSelect}
                   aria-current={current ? 'true' : undefined}
-                  className="flex min-h-10 items-center justify-between rounded-xl px-3 text-sm font-semibold transition-colors hover:bg-canvas aria-[current=true]:bg-brand-soft aria-[current=true]:text-brand-strong"
+                  className="flex min-h-11 items-center justify-between rounded-xl px-3 text-sm font-semibold transition-colors hover:bg-canvas aria-[current=true]:bg-brand-soft aria-[current=true]:text-brand-strong"
                 >
                   {label}
                   {current && <Check className="size-4" aria-hidden />}
@@ -78,26 +78,68 @@ interface MobileDrawerProps {
 }
 
 export function MobileDrawer({ open, pathname, home, links, editions, account, onClose }: MobileDrawerProps) {
-  // Escape closes it and the page behind stops scrolling while it is open: document-level side effects.
+  const dialogRef = useRef<HTMLDivElement>(null);
+  const close = useEffectEvent(onClose);
+
+  // A modal keeps keyboard focus inside it and returns focus to its trigger when dismissed.
   useEffect(() => {
     if (!open) return;
+    const trigger = document.querySelector<HTMLElement>('[aria-label="Open menu"]');
+    const dialog = dialogRef.current;
+    if (dialog) {
+      dialog.inert = false;
+      dialog.querySelector('button')?.focus();
+    }
     const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') onClose();
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        close();
+      }
+      if (event.key !== 'Tab') return;
+      const controls = [
+        ...(dialogRef.current?.querySelectorAll<HTMLElement>('a[href], button:not(:disabled)') ?? []),
+      ].filter((element) => element.getClientRects().length > 0);
+      const first = controls[0];
+      const last = controls.at(-1);
+      if (!dialog?.contains(document.activeElement)) {
+        event.preventDefault();
+        (event.shiftKey ? last : first)?.focus();
+      } else if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last?.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first?.focus();
+      }
+    };
+    const desktop = window.matchMedia('(min-width: 1024px)');
+    const onDesktop = () => {
+      if (desktop.matches) close();
     };
     const { overflow } = document.body.style;
     document.body.style.overflow = 'hidden';
     document.addEventListener('keydown', onKeyDown);
+    desktop.addEventListener('change', onDesktop);
     return () => {
+      if (dialog) dialog.inert = true;
       document.body.style.overflow = overflow;
       document.removeEventListener('keydown', onKeyDown);
+      desktop.removeEventListener('change', onDesktop);
+      if (trigger instanceof HTMLElement && trigger.isConnected) trigger.focus();
     };
-  }, [open, onClose]);
+  }, [open]);
 
   return (
     <LazyMotion features={domAnimation} strict>
       <AnimatePresence>
         {open && (
-          <div className="fixed inset-0 z-60 lg:hidden" role="dialog" aria-modal="true" aria-label="Menu">
+          <div
+            ref={dialogRef}
+            className="fixed inset-0 z-60 lg:hidden"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Menu"
+          >
             <m.div
               className="absolute inset-0 bg-ink-deep/40 backdrop-blur-sm"
               initial={{ opacity: 0 }}
@@ -151,7 +193,7 @@ export function MobileDrawer({ open, pathname, home, links, editions, account, o
                           href={href}
                           onClick={onClose}
                           aria-current={current ? 'true' : undefined}
-                          className="flex min-h-10 items-center gap-1 rounded-full border border-line px-3.5 text-sm font-semibold transition-colors hover:bg-canvas aria-[current=true]:border-brand aria-[current=true]:bg-brand-soft aria-[current=true]:text-brand-strong"
+                          className="flex min-h-11 items-center gap-1 rounded-full border border-line px-3.5 text-sm font-semibold transition-colors hover:bg-canvas aria-[current=true]:border-brand aria-[current=true]:bg-brand-soft aria-[current=true]:text-brand-strong"
                         >
                           {label}
                         </Link>
