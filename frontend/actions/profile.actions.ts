@@ -15,11 +15,13 @@ const optionalText = z
   .optional()
   .transform((value) => value ?? '');
 
+const NATIONAL_CODE_FORMAT = 'Enter an 8–10 digit national code.';
+
 const nationalCode = z
   .string()
   .trim()
   .transform(toLatinDigits)
-  .pipe(z.string().regex(/^[0-9]{8,10}$/, 'Enter an 8–10 digit national code.'))
+  .pipe(z.string().regex(/^[0-9]{8,10}$/, NATIONAL_CODE_FORMAT))
   .transform((value) => value.padStart(10, '0'))
   .refine((value) => {
     if (/^([0-9])\1{9}$/.test(value)) return false;
@@ -41,7 +43,8 @@ const profileSchema = z.object({
         .regex(/^(\+[0-9]{1,3}|0)[0-9]{10}$/, 'Phone number must look like 09123456789 or +989123456789.'),
     ),
   nationalCode: z
-    .union([nationalCode, z.literal('')])
+    // A union reports only "Invalid input" when every option fails.
+    .union([nationalCode, z.literal('')], { errorMap: () => ({ message: NATIONAL_CODE_FORMAT }) })
     .optional()
     .transform((value) => value ?? ''),
   city: optionalText,

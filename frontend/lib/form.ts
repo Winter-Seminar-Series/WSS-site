@@ -22,12 +22,12 @@ export function firstIssue(error: ZodError): string {
   return error.issues[0]?.message ?? 'Please check the form and try again.';
 }
 
-/** Keep all field errors; an object-level issue stays visible in the form summary. */
+/** One message per field (its first failed check); an object-level issue stays visible in the form summary. */
 export function validationState(error: ZodError, formData?: FormData): FormState {
   const fieldErrors: Record<string, string[]> = {};
   for (const issue of error.issues) {
     const field = issue.path[0];
-    if (typeof field === 'string' && field !== 'token') (fieldErrors[field] ??= []).push(issue.message);
+    if (typeof field === 'string' && field !== 'token') fieldErrors[field] ??= [issue.message];
   }
   return {
     error:
