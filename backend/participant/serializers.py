@@ -1,6 +1,7 @@
 import base64
 
 from django.contrib.auth import get_user_model
+from django.utils import timezone
 from rest_framework import serializers
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
@@ -78,6 +79,9 @@ class ProfileSerializer(serializers.ModelSerializer):
     """The participant's ParticipantInfo plus their (read-only) account email, passed in the context."""
 
     email = serializers.SerializerMethodField()
+    first_name = serializers.CharField(max_length=100)
+    last_name = serializers.CharField(max_length=100)
+    phone_number = serializers.CharField(max_length=15)
 
     class Meta:
         model = ParticipantInfo
@@ -85,6 +89,11 @@ class ProfileSerializer(serializers.ModelSerializer):
 
     def get_email(self, info: ParticipantInfo) -> str:
         return self.context['email']
+
+    def validate_birth_date(self, value):
+        if value is not None and value > timezone.localdate():
+            raise serializers.ValidationError('Birth date cannot be in the future.', code='future_date')
+        return value
 
     def validate_national_code(self, value: str) -> str:
         return normalize_national_code(value)

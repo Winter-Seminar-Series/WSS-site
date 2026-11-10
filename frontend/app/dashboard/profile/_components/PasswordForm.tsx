@@ -8,6 +8,7 @@ import { Alert } from '@/ui/Alert';
 import { TextField } from '@/ui/FormField';
 import { Panel } from '@/ui/Panel';
 import { SubmitButton } from '@/ui/SubmitButton';
+import { ValidatedForm } from '@/ui/ValidatedForm';
 
 const INITIAL_STATE: FormState = {};
 
@@ -16,7 +17,7 @@ export function PasswordForm() {
 
   return (
     <Panel id="password" title="Password" description="Use at least 8 characters.">
-      <form action={formAction} className="flex flex-col gap-5">
+      <ValidatedForm state={state} action={formAction} className="flex flex-col gap-5">
         <div className="grid gap-5 lg:grid-cols-3">
           <TextField
             label="Current password"
@@ -46,7 +47,7 @@ export function PasswordForm() {
         <SubmitButton size="md" variant="outline" className="self-start">
           Change password
         </SubmitButton>
-      </form>
+      </ValidatedForm>
     </Panel>
   );
 }

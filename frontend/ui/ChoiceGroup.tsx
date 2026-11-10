@@ -1,3 +1,7 @@
+'use client';
+
+import { useFieldErrors } from '@/ui/ValidatedForm';
+
 interface Props {
   legend: string;
   name: string;
@@ -7,8 +11,13 @@ interface Props {
 
 /** Radio buttons drawn as chips: one tap target per option, wide enough for a thumb. */
 export function ChoiceGroup({ legend, name, options, defaultValue }: Props) {
+  const error = useFieldErrors(name);
   return (
-    <fieldset className="flex flex-col gap-2">
+    <fieldset
+      className="flex flex-col gap-2"
+      aria-invalid={error ? true : undefined}
+      aria-describedby={error ? `${name}-error` : undefined}
+    >
       <legend className="mb-2 text-sm font-semibold text-ink">{legend}</legend>
       <div className="flex flex-wrap gap-2">
         {options.map((option) => (
@@ -27,6 +36,11 @@ export function ChoiceGroup({ legend, name, options, defaultValue }: Props) {
           </label>
         ))}
       </div>
+      {error && (
+        <p id={`${name}-error`} className="text-sm font-medium text-danger">
+          {error.join(' ')}
+        </p>
+      )}
     </fieldset>
   );
 }
