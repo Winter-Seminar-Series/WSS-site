@@ -1,4 +1,8 @@
+'use client';
+
 import type { InputHTMLAttributes, ReactNode, SelectHTMLAttributes } from 'react';
+
+import { useFieldErrors } from '@/ui/ValidatedForm';
 
 // 16px text on phones: anything smaller makes iOS Safari zoom into the field on focus.
 // Read-only styles key on the attribute because the `:read-only` pseudo-class also matches every <select>.
@@ -13,10 +17,11 @@ interface FieldProps {
   action?: ReactNode;
   hint?: string;
   children: ReactNode;
+  error?: string[];
   className?: string;
 }
 
-export function Field({ label, htmlFor, required, action, hint, children, className = '' }: FieldProps) {
+export function Field({ label, htmlFor, required, action, hint, children, error, className = '' }: FieldProps) {
   return (
     <div className={`grid grid-cols-[1fr_auto] items-start gap-x-2 gap-y-2 ${className}`}>
       <div className="col-start-1 row-start-1 flex min-h-6 items-center">
@@ -36,6 +41,11 @@ export function Field({ label, htmlFor, required, action, hint, children, classN
           {hint}
         </p>
       )}
+      {error && (
+        <p id={`${htmlFor}-error`} className="col-span-2 text-sm font-medium text-danger">
+          {error.join(' ')}
+        </p>
+      )}
     </div>
   );
 }
@@ -48,15 +58,27 @@ interface TextFieldProps extends InputHTMLAttributes<HTMLInputElement> {
 }
 
 export function TextField({ label, name, id = name, required, action, hint, className, ...props }: TextFieldProps) {
+  const error = useFieldErrors(name);
+  const describedBy =
+    [props['aria-describedby'], hint && `${id}-hint`, error && `${id}-error`].filter(Boolean).join(' ') || undefined;
   return (
-    <Field label={label} htmlFor={id} required={required} action={action} hint={hint} className={className}>
+    <Field
+      label={label}
+      htmlFor={id}
+      required={required}
+      action={action}
+      hint={hint}
+      error={error}
+      className={className}
+    >
       <input
+        {...props}
         id={id}
         name={name}
         required={required}
-        className={inputClasses}
-        aria-describedby={hint ? `${id}-hint` : undefined}
-        {...props}
+        className={`${inputClasses} aria-invalid:border-danger aria-invalid:focus:shadow-danger/15`}
+        aria-invalid={error ? true : undefined}
+        aria-describedby={describedBy}
       />
     </Field>
   );
@@ -70,9 +92,18 @@ interface SelectFieldProps extends SelectHTMLAttributes<HTMLSelectElement> {
 }
 
 export function SelectField({ label, name, id = name, options, placeholder, required, ...props }: SelectFieldProps) {
+  const error = useFieldErrors(name);
   return (
-    <Field label={label} htmlFor={id} required={required}>
-      <select id={id} name={name} required={required} className={inputClasses} {...props}>
+    <Field label={label} htmlFor={id} required={required} error={error}>
+      <select
+        {...props}
+        id={id}
+        name={name}
+        required={required}
+        className={`${inputClasses} aria-invalid:border-danger`}
+        aria-invalid={error ? true : undefined}
+        aria-describedby={error ? `${id}-error` : undefined}
+      >
         {placeholder && <option value="">{placeholder}</option>}
         {options.map((option) => {
           const { value, label: optionLabel } = typeof option === 'string' ? { value: option, label: option } : option;

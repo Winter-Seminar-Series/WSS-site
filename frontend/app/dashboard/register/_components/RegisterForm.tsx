@@ -16,10 +16,11 @@ import { useCheckout, useQuote } from '@/queries/registration.queries';
 import type { AttendanceMode, Workshop } from '@/types/event.type';
 import { Alert } from '@/ui/Alert';
 import { Button } from '@/ui/Button';
-import { Field, inputClasses } from '@/ui/FormField';
+import { Field, TextField, inputClasses } from '@/ui/FormField';
 import { Panel } from '@/ui/Panel';
 import { StickyActionBar } from '@/ui/StickyActionBar';
 import { SubmitButton } from '@/ui/SubmitButton';
+import { ValidatedForm } from '@/ui/ValidatedForm';
 
 interface Props {
   modes: AttendanceMode[];
@@ -168,25 +169,26 @@ export function RegisterForm({ modes, workshops, paidPlanIds, heldAddons, nation
 
       {needsNationalCode && (
         <Panel id="entrance" title="Entrance" description="In-person attendees are checked in by national code.">
-          <form action={nationalCodeAction} className="flex flex-col gap-3 md:max-w-md">
-            <Field label="National code" htmlFor="nationalCode" required>
-              <div className="flex gap-2">
-                <input
-                  id="nationalCode"
-                  name="nationalCode"
-                  inputMode="numeric"
-                  maxLength={10}
-                  required
-                  defaultValue={nationalCodeState.values?.nationalCode ?? savedNationalCode}
-                  className={inputClasses}
-                />
-                <SubmitButton size="md" variant={nationalCodeState.success ? 'soft' : 'primary'}>
-                  {nationalCodeState.success ? 'Saved' : 'Save'}
-                </SubmitButton>
-              </div>
-            </Field>
+          <ValidatedForm
+            state={nationalCodeState}
+            action={nationalCodeAction}
+            className="flex flex-col gap-3 md:max-w-md"
+          >
+            <div className="grid grid-cols-[1fr_auto] items-start gap-2">
+              <TextField
+                label="National code"
+                name="nationalCode"
+                inputMode="numeric"
+                maxLength={10}
+                required
+                defaultValue={nationalCodeState.values?.nationalCode ?? savedNationalCode}
+              />
+              <SubmitButton className="mt-8" size="md" variant={nationalCodeState.success ? 'soft' : 'primary'}>
+                {nationalCodeState.success ? 'Saved' : 'Save'}
+              </SubmitButton>
+            </div>
             {nationalCodeState.error && <Alert tone="error">{nationalCodeState.error}</Alert>}
-          </form>
+          </ValidatedForm>
         </Panel>
       )}
 
@@ -219,6 +221,10 @@ export function RegisterForm({ modes, workshops, paidPlanIds, heldAddons, nation
             <div className="flex gap-2">
               <input
                 id="discountCode"
+                name="discountCode"
+                maxLength={50}
+                aria-invalid={quote.data?.discountInvalid ? true : undefined}
+                aria-describedby={quote.data?.discountInvalid ? 'discountCode-error' : undefined}
                 value={discountInput}
                 onChange={(event) => setDiscountInput(event.target.value)}
                 autoComplete="off"
@@ -231,7 +237,11 @@ export function RegisterForm({ modes, workshops, paidPlanIds, heldAddons, nation
               </Button>
             </div>
           </Field>
-          {quote.data?.discountInvalid && <Alert tone="error">This discount code is not valid.</Alert>}
+          {quote.data?.discountInvalid && (
+            <p id="discountCode-error" role="alert" className="text-sm font-medium text-danger">
+              This discount code is not valid.
+            </p>
+          )}
         </form>
       </Panel>
 
