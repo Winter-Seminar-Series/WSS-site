@@ -78,9 +78,9 @@ export function Navbar({ variant = 'overlay', nav }: Props) {
             className="flex min-h-11 shrink-0 items-center gap-3"
             aria-label={`${nav.edition.label} — home`}
           >
-            <Logo className="w-10 lg:w-12" />
+            <Logo className="block h-auto w-10 shrink-0 -translate-y-px lg:w-12" />
             {/* One line wherever it fits: beside the menu button below lg, and beside the full menu from xl. */}
-            <span className="hidden text-sm font-bold whitespace-nowrap sm:block lg:hidden xl:block">
+            <span className="hidden text-sm leading-none font-bold whitespace-nowrap sm:block lg:hidden xl:block">
               Winter Seminar Series
             </span>
           </Link>
