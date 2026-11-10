@@ -5,8 +5,9 @@ import type { InputHTMLAttributes, ReactNode, SelectHTMLAttributes } from 'react
 import { useFieldErrors } from '@/ui/ValidatedForm';
 
 // 16px text on phones: anything smaller makes iOS Safari zoom into the field on focus.
+// Read-only styles key on the attribute because the `:read-only` pseudo-class also matches every <select>.
 export const inputClasses =
-  'min-h-12 w-full rounded-xl border border-line bg-surface px-4 py-3 text-base font-medium text-ink transition-[border-color,box-shadow] duration-200 placeholder:font-normal placeholder:text-muted/80 hover:border-brand-muted focus:border-brand focus:shadow-[0_0_0_4px] focus:shadow-brand/15 focus:outline-none disabled:cursor-not-allowed disabled:bg-canvas disabled:text-muted';
+  'min-h-12 w-full rounded-xl border border-line bg-surface px-4 py-3 text-base font-medium text-ink transition-[border-color,box-shadow] duration-200 placeholder:font-normal placeholder:text-muted/80 hover:border-brand-muted focus:border-brand focus:shadow-[0_0_0_4px] focus:shadow-brand/15 focus:outline-none disabled:cursor-not-allowed disabled:bg-canvas disabled:text-muted [&[readonly]]:cursor-default [&[readonly]]:bg-canvas [&[readonly]]:text-muted';
 
 interface FieldProps {
   label: string;
