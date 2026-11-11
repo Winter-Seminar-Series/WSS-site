@@ -72,8 +72,26 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en" className={manrope.variable}>
+      <head>
+        <script
+          id="yektanet-analytics"
+          dangerouslySetInnerHTML={{
+            __html: `
+              !function (t, e, n) {
+                  t.yektanetAnalyticsObject = n, t[n] = t[n] || function () {
+                      t[n].q.push(arguments)
+                  }, t[n].q = t[n].q || [];
+                  var a = new Date, r = a.getFullYear().toString() + "0" + a.getMonth() + "0" + a.getDate() + "0" + a.getHours(),
+                      c = e.getElementsByTagName("script")[0], s = e.createElement("script");
+                  s.id = "ua-script-zZ58dS2Q"; s.dataset.analyticsobject = n;
+                  s.async = 1; s.type = "text/javascript";
+                  s.src = "https://cdn.yektanet.ir/rg_woebegone/scripts_v3/zZ58dS2Q/rg.complete.js?v=" + r, c.parentNode.insertBefore(s, c)
+              }(window, document, "yektanet");
+            `,
+          }}
+        />
+      </head>
       <body className="font-sans">
-        {/* NProgress mounts under body, so wrapper variables cannot reach it. Match the visible edition in CSS. */}
         <style>
           {EDITIONS.map(
             (edition) =>
