@@ -5,6 +5,7 @@ import { getEditionSpeakers } from '@/api/events.api';
 import { Affiliation } from '@/components/events/Affiliation';
 import { CareerLogos } from '@/components/events/CareerLogos';
 import { SpeakerPhoto } from '@/components/events/SpeakerPhoto';
+import { shuffled } from '@/lib/collections';
 import { editionHref } from '@/lib/editions';
 import type { Edition } from '@/lib/editions';
 import { SUB_EVENT_SECTIONS } from '@/lib/sub-events';
@@ -64,7 +65,8 @@ function SpeakerCard({ slot: { speaker, repeat }, edition }: { slot: Slot; editi
  * holds it; the switch holds them all.
  */
 export async function SpeakersSection({ edition }: { edition: Edition }) {
-  const speakers = await getEditionSpeakers(edition.eventId);
+  // Shuffled on each ISR render, so the order changes every revalidation instead of always opening on the same faces.
+  const speakers = shuffled(await getEditionSpeakers(edition.eventId));
   if (speakers.length === 0) return null;
 
   const rows = (
