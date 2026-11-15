@@ -188,7 +188,7 @@ proxy.ts                 # Next 16 proxy (formerly middleware): refreshes the ac
   run on CSS scroll timelines, cost no JS, and leave content in place where unsupported or with reduced motion.
 - **Brand edge:** photo and dark bands end in the logo's woven W and V: the band itself is cut to the pattern's silhouette
   (`edge-bottom`, `edge-top`, `edge-y`, `edge-start` utilities in `app/globals.css`), so it stays filled into the points
-  and the page behind shows between them; `components/brand/EdgeLines` adds the weave's hairlines inside. Leave
+  and the page behind shows between them; the weave's hairlines are drawn in those gaps, not inside the band. Leave
   `--edge-size` of padding on that side. Never put a separate strip under a photo. The timeline's spine (`.spine`) is
   the pattern twice, back to back, mirrored about the line its nodes sit on.
 - **Third parties** (analytics) load with `strategy="lazyOnload"`: never on the critical path.

@@ -1,7 +1,6 @@
 import Image from 'next/image';
 import type { ReactNode } from 'react';
 
-import { EdgeLines } from '@/components/brand/EdgeLines';
 import { Logo } from '@/components/brand/Logo';
 import { Navbar } from '@/components/layout/Navbar';
 import { editionNav } from '@/lib/edition-nav';
@@ -34,8 +33,6 @@ export default function AuthLayout({ children }: { children: ReactNode }) {
             <p className="mt-2 font-medium text-white/75">{CURRENT_EDITION.tagline}</p>
           </div>
           {/* The photo's edge facing the form is cut to the brand pattern: below it on phones, beside it from md. */}
-          <EdgeLines className="text-white/30 md:hidden" />
-          <EdgeLines side="start" className="hidden text-white/30 md:block" />
         </div>
         <div className="flex w-full items-start justify-center px-4 pt-6 pb-16 sm:px-6 md:w-1/2 md:items-center md:px-10 md:py-16 lg:px-20">
           <div className="w-full max-w-md motion-safe:animate-rise">{children}</div>

@@ -1,7 +1,6 @@
 import { ArrowRight, CalendarDays, MapPin } from 'lucide-react';
 import Image from 'next/image';
 
-import { EdgeLines } from '@/components/brand/EdgeLines';
 import { Countdown } from '@/components/countdown/Countdown';
 import { AccountLink } from '@/components/navigation/AccountLink';
 import { CURRENT_EDITION, editionHref, hasPage, isCurrentEdition } from '@/lib/editions';
@@ -121,8 +120,6 @@ export function Hero({ edition, upcoming }: Props) {
           )}
         </div>
       </div>
-
-      <EdgeLines />
     </section>
   );
 }

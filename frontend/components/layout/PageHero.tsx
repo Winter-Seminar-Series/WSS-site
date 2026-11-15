@@ -1,7 +1,6 @@
 import Image from 'next/image';
 import type { ReactNode } from 'react';
 
-import { EdgeLines } from '@/components/brand/EdgeLines';
 import { CURRENT_EDITION } from '@/lib/editions';
 import { BACKDROP_QUALITY } from '@/lib/images';
 
@@ -49,7 +48,6 @@ export function PageHero({ context, title, lead, children, image = CURRENT_EDITI
           <div className="mt-8 motion-safe:animate-rise motion-safe:[animation-delay:240ms]">{children}</div>
         )}
       </div>
-      <EdgeLines />
     </header>
   );
 }

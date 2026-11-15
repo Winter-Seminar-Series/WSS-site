@@ -1,7 +1,6 @@
 import { ArrowRight } from 'lucide-react';
 import Image from 'next/image';
 
-import { EdgeLines } from '@/components/brand/EdgeLines';
 import { Countdown } from '@/components/countdown/Countdown';
 import { AccountLink } from '@/components/navigation/AccountLink';
 import { CURRENT_EDITION, isCurrentEdition, isUpcoming } from '@/lib/editions';
@@ -58,7 +57,6 @@ export function RegisterCta({ edition }: Props) {
           className="-z-10 object-cover opacity-60"
         />
         <div className="absolute inset-0 -z-10 bg-linear-to-r from-ink-deep via-ink-deep/80 to-ink-deep/30" />
-        <EdgeLines side="top" />
 
         <div className="reveal mx-auto flex max-w-300 flex-col gap-8 px-4 pt-24 pb-24 md:px-6 md:pt-36 md:pb-36 lg:flex-row lg:items-end lg:justify-between">
           <div className="max-w-xl">
@@ -82,7 +80,6 @@ export function RegisterCta({ edition }: Props) {
           </div>
           {upcoming && edition.startsAt && <Countdown targetIso={edition.startsAt} />}
         </div>
-        <EdgeLines />
       </section>
     </div>
   );

@@ -133,22 +133,25 @@
 /*
  * A band's patterned edge: the band itself is cut to the silhouette of the logo's woven W and V, so it stays filled down
  * into the pattern's points and the page behind shows between them. Each is a mask (the band's straight part plus the
- * silhouette repeated along the edge), so it works on photos and solid colours alike; `edge-lines` draws the weave's inner
- * hairlines inside the points. The tile keeps the pattern's own 2.4:1 proportions at any `--edge-size`. Leave
+ * silhouette repeated along the edge), so it works on photos and solid colours alike. The `--edge-weave-*` strokes add
+ * the weave's strands to the mask in the gaps between the points, never inside them: the band shows through those
+ * strokes, so they take its colour. The tile keeps the pattern's own 2.4:1 proportions at any `--edge-size`. Leave
  * `--edge-size` of padding on that side: content in the points would be cut.
  */
 @utility edge-bottom {
   --edge-w: calc(var(--edge-size) * 2.4018);
   mask:
     linear-gradient(#000 0 0) top / 100% calc(100% - var(--edge-size) + 1px) no-repeat,
-    var(--edge-shape-bottom) bottom center / var(--edge-w) var(--edge-size) repeat-x;
+    var(--edge-shape-bottom) bottom center / var(--edge-w) var(--edge-size) repeat-x,
+    var(--edge-weave-bottom) bottom center / var(--edge-w) var(--edge-size) repeat-x;
 }
 
 @utility edge-top {
   --edge-w: calc(var(--edge-size) * 2.4018);
   mask:
     linear-gradient(#000 0 0) bottom / 100% calc(100% - var(--edge-size) + 1px) no-repeat,
-    var(--edge-shape-top) top center / var(--edge-w) var(--edge-size) repeat-x;
+    var(--edge-shape-top) top center / var(--edge-w) var(--edge-size) repeat-x,
+    var(--edge-weave-top) top center / var(--edge-w) var(--edge-size) repeat-x;
 }
 
 @utility edge-y {
@@ -156,46 +159,26 @@
   mask:
     linear-gradient(#000 0 0) center / 100% calc(100% - 2 * var(--edge-size) + 2px) no-repeat,
     var(--edge-shape-top) top center / var(--edge-w) var(--edge-size) repeat-x,
-    var(--edge-shape-bottom) bottom center / var(--edge-w) var(--edge-size) repeat-x;
+    var(--edge-weave-top) top center / var(--edge-w) var(--edge-size) repeat-x,
+    var(--edge-shape-bottom) bottom center / var(--edge-w) var(--edge-size) repeat-x,
+    var(--edge-weave-bottom) bottom center / var(--edge-w) var(--edge-size) repeat-x;
 }
 
 @utility edge-start {
   --edge-w: calc(var(--edge-size) * 2.4018);
   mask:
     linear-gradient(#000 0 0) right / calc(100% - var(--edge-size) + 1px) 100% no-repeat,
-    var(--edge-shape-start) left center / var(--edge-size) var(--edge-w) repeat-y;
+    var(--edge-shape-start) left center / var(--edge-size) var(--edge-w) repeat-y,
+    var(--edge-weave-start) left center / var(--edge-size) var(--edge-w) repeat-y;
 }
 
 :root {
   --edge-shape-bottom: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1121.5 466.9' preserveAspectRatio='none'%3E%3Cpath d='M0 0L275.7 325.2L360.4 225.2L563.9 466.9L758.6 231.8L839.5 325.2L1121.5 0Z' fill='%23000'/%3E%3C/svg%3E");
   --edge-shape-top: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1121.5 466.9' preserveAspectRatio='none'%3E%3Cpath d='M0 466.9L275.7 141.8L360.4 241.7L563.9 0L758.6 235.1L839.5 141.8L1121.5 466.9Z' fill='%23000'/%3E%3C/svg%3E");
+  --edge-weave-bottom: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1121.5 466.9' preserveAspectRatio='none'%3E%3Cpath d='M-557.6 466.9L-281.9 141.7L-117.6 335.6L0 466.9L116.5 332.6L281.9 141.7L563.9 466.9M-386.7 466.9L6.3 0L393 466.9M-117.6 335.6L0 198L116.5 332.6M563.9 466.9L839.6 141.7L1003.9 335.6L1121.5 466.9L1238 332.6L1403.4 141.7L1685.4 466.9M734.8 466.9L1127.8 0L1514.5 466.9M1003.9 335.6L1121.5 198L1238 332.6' fill='none' stroke='%23000' stroke-width='14.45' stroke-opacity='0.45'/%3E%3C/svg%3E");
+  --edge-weave-top: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1121.5 466.9' preserveAspectRatio='none'%3E%3Cpath d='M-557.6 0L-281.9 325.2L-117.6 131.3L0 0L116.5 134.3L281.9 325.2L563.9 0M-386.7 0L6.3 466.9L393 0M-117.6 131.3L0 268.9L116.5 134.3M563.9 0L839.6 325.2L1003.9 131.3L1121.5 0L1238 134.3L1403.4 325.2L1685.4 0M734.8 0L1127.8 466.9L1514.5 0M1003.9 131.3L1121.5 268.9L1238 134.3' fill='none' stroke='%23000' stroke-width='14.45' stroke-opacity='0.45'/%3E%3C/svg%3E");
+  --edge-weave-start: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 466.9 1121.5' preserveAspectRatio='none'%3E%3Cpath d='M0 -557.6L325.2 -281.9L131.3 -117.6L0 0L134.3 116.5L325.2 281.9L0 563.9M0 -386.7L466.9 6.3L0 393M131.3 -117.6L268.9 0L134.3 116.5M0 563.9L325.2 839.6L131.3 1003.9L0 1121.5L134.3 1238L325.2 1403.4L0 1685.4M0 734.8L466.9 1127.8L0 1514.5M131.3 1003.9L268.9 1121.5L134.3 1238' fill='none' stroke='%23000' stroke-width='14.45' stroke-opacity='0.45'/%3E%3C/svg%3E");
   --edge-shape-start: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 466.9 1121.5' preserveAspectRatio='none'%3E%3Cpath d='M466.9 0L141.8 275.7L241.7 360.4L0 563.9L235.1 758.6L141.8 839.5L466.9 1121.5Z' fill='%23000'/%3E%3C/svg%3E");
-}
-
-@layer components {
-  /* The weave's hairlines, laid inside a patterned edge (components/brand/EdgeLines.tsx). */
-  .edge-lines {
-    --edge-w: calc(var(--edge-size) * 2.4018);
-    background-color: currentColor;
-  }
-
-  .edge-lines-bottom {
-    height: var(--edge-size);
-    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1121.5 466.9' preserveAspectRatio='none'%3E%3Cpath d='M0 0L275.7 325.2L440 131.3L557.6 0L674.1 134.3L839.5 325.2L1121.5 0M170.9 0L563.9 466.9L950.6 0M440 131.3L557.6 268.9L674.1 134.3' fill='none' stroke='%23000' stroke-width='14.45'/%3E%3C/svg%3E")
-      bottom center / var(--edge-w) 100% repeat-x;
-  }
-
-  .edge-lines-top {
-    height: var(--edge-size);
-    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1121.5 466.9' preserveAspectRatio='none'%3E%3Cpath d='M0 466.9L275.7 141.8L440 335.6L557.6 466.9L674.1 332.6L839.5 141.8L1121.5 466.9M170.9 466.9L563.9 0L950.6 466.9M440 335.6L557.6 198L674.1 332.6' fill='none' stroke='%23000' stroke-width='14.45'/%3E%3C/svg%3E")
-      top center / var(--edge-w) 100% repeat-x;
-  }
-
-  .edge-lines-start {
-    width: var(--edge-size);
-    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 466.9 1121.5' preserveAspectRatio='none'%3E%3Cpath d='M466.9 0L141.8 275.7L335.6 440L466.9 557.6L332.6 674.1L141.8 839.5L466.9 1121.5M466.9 170.9L0 563.9L466.9 950.6M335.6 440L198 557.6L332.6 674.1' fill='none' stroke='%23000' stroke-width='14.45'/%3E%3C/svg%3E")
-      left center / 100% var(--edge-w) repeat-y;
-  }
 }
 
 /*

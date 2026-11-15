@@ -2,7 +2,6 @@ import { ArrowRight, Pause, Play } from 'lucide-react';
 import Link from 'next/link';
 
 import { getEditionSpeakers } from '@/api/events.api';
-import { EdgeLines } from '@/components/brand/EdgeLines';
 import { Affiliation } from '@/components/events/Affiliation';
 import { CareerLogos } from '@/components/events/CareerLogos';
 import { SpeakerPhoto } from '@/components/events/SpeakerPhoto';
@@ -80,7 +79,6 @@ export async function SpeakersSection({ edition }: { edition: Edition }) {
       className="relative isolate overflow-hidden bg-ink-deep pb-24 text-white edge-y md:pb-36 [&_:focus-visible]:outline-white"
     >
       <div className="absolute inset-0 -z-10 bg-[radial-gradient(60%_70%_at_90%_10%,color-mix(in_oklab,var(--color-brand)_40%,transparent),transparent)]" />
-      <EdgeLines side="top" />
 
       <div className="mx-auto max-w-300 px-4 pt-24 md:px-6 md:pt-36">
         <SectionHeading
@@ -122,8 +120,6 @@ export async function SpeakersSection({ edition }: { edition: Edition }) {
           </Marquee>
         ))}
       </div>
-
-      <EdgeLines />
     </section>
   );
 }
