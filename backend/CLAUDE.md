@@ -75,8 +75,11 @@ tests/                    one module per area, built on common.testing
 - **Settings:** settings come from the environment (`WSS/settings.py`). A required variable uses
   `os.environ[...]`, which fails fast at import; an optional one uses `os.getenv(..., default)`. Document
   every new variable in `../.env.backend.example`.
-- **Media:** media is stored on S3. `AWS_QUERYSTRING_AUTH=false` gives unsigned public URLs, which the
-  bucket allows; the frontend's `next/image` allow-list and its `/files/[id]` route expect this host.
+- **Media:** media is stored on S3 through `common.storage.MediaStorage`. Files under `PUBLIC_PREFIXES` get
+  unsigned URLs, which the bucket policy allows. Everything else (certificates, poster-session submissions, CVs) is
+  private and gets a signed URL that expires. A new public upload folder goes into `PUBLIC_PREFIXES`; after that, run
+  `python manage.py apply_bucket_policy [--dry-run]`. The bucket cannot be listed anonymously. The frontend's
+  `next/image` allow-list and its `/files/[id]` route expect this host.
 - **Image placeholders (BlurHash):** a model with image fields that the API serves inherits `common.models.BlurHashMixin`
   and declares `BLURHASH_FIELDS = {'image': 'image_blurhash'}` plus a `blurhash_field()` column per image. `save()`
   recomputes the hash from the upload in memory whenever the image changes, and a bad image never blocks the save (the

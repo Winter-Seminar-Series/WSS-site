@@ -133,14 +133,13 @@ CACHES = {
 
 STORAGES = {
     'default': {
-        'BACKEND': 'storages.backends.s3.S3Storage',
+        # Unsigned URLs for public media, signed ones for private files (common/storage.py).
+        'BACKEND': 'common.storage.MediaStorage',
         'OPTIONS': {
             'access_key': os.environ['AWS_ACCESS_KEY'],
             'secret_key': os.environ['AWS_SECRET_KEY'],
             'bucket_name': os.environ['AWS_STORAGE_BUCKET_NAME'],
             'endpoint_url': 'https://s3.ir-thr-at1.arvanstorage.ir',
-            # The bucket is public-read; local setups without real keys must serve unsigned URLs.
-            'querystring_auth': env_bool('AWS_QUERYSTRING_AUTH', True),
         },
     },
     'staticfiles': {
