@@ -1,4 +1,5 @@
 from django.db import models
+from common.fields import WebPImageField
 from common.models import BlurHashMixin, blurhash_field
 from core.models import Event, UniqueUploadPath
 
@@ -7,7 +8,7 @@ class Staff(BlurHashMixin, models.Model):
     name = models.TextField(max_length=50, blank=False)
     designation = models.TextField(max_length=150, blank=True)
     description = models.TextField(max_length=5000, blank=True)
-    image = models.ImageField(upload_to=UniqueUploadPath('staff'), blank=True)
+    image = WebPImageField(upload_to=UniqueUploadPath('staff'), blank=True)
     website = models.URLField(max_length=200, blank=True)
     linkedin = models.URLField(max_length=200, blank=True)
     github = models.URLField(max_length=200, blank=True)

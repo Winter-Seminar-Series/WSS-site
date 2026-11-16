@@ -90,8 +90,9 @@ class ModelHashTests(TestCase):
     def test_the_upload_is_stored_whole_after_hashing(self):
         speaker = Speaker.objects.create(name='Ada', image=upload())
 
-        with speaker.image.storage.open(speaker.image.name, 'rb') as stored:
-            self.assertEqual(stored.read(), image_bytes())
+        # Stored as WebP (common.fields.WebPImageField), but whole: hashing must leave the upload readable from the start.
+        with speaker.image.storage.open(speaker.image.name, 'rb') as stored, Image.open(stored) as image:
+            self.assertEqual((image.format, image.size), ('WEBP', (40, 30)))
 
     def test_each_image_field_gets_its_own_hash(self):
         workshop = Workshop.objects.create(name='W', poster=upload(color=(255, 0, 0)), thumbnail=upload(color=(0, 0, 255)))
