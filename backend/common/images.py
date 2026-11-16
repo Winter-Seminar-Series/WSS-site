@@ -22,12 +22,14 @@ def _encode(image: Image.Image, quality: int) -> bytes:
 
 
 def to_webp(data: bytes) -> bytes | None:
-    """WebP of an image at the best quality in QUALITIES that fits MAX_BYTES (shrinking it if even the lowest does
-    not). None means keep the original: not a still raster image (SVG, animated GIF, broken file), or no smaller as
-    WebP."""
+    """WebP of an image at the best quality in QUALITIES that is within MAX_BYTES and smaller than the original. An
+    original over MAX_BYTES that no quality brings under it is shrunk until it fits at the lowest quality. None means
+    keep the original: not a still raster image (SVG, animated GIF, broken file), or already smaller than WebP at
+    QUALITIES can make it."""
     try:
         with Image.open(io.BytesIO(data)) as source:
-            if getattr(source, 'is_animated', False):
+            # An MPO (phone camera JPEG) counts as animated for its extra depth/preview frames: only the first is the photo.
+            if getattr(source, 'is_animated', False) and source.format != 'MPO':
                 return None
             image = ImageOps.exif_transpose(source)
             image = image.convert('RGBA' if 'A' in image.getbands() or 'transparency' in image.info else 'RGB')
@@ -37,12 +39,11 @@ def to_webp(data: bytes) -> bytes | None:
     image.thumbnail((MAX_SIDE, MAX_SIDE), Image.Resampling.LANCZOS)
     for quality in QUALITIES:
         webp = _encode(image, quality)
-        if len(webp) <= MAX_BYTES:
-            break
+        if len(webp) <= MAX_BYTES and len(webp) < len(data):
+            return webp
+    if len(data) <= MAX_BYTES:
+        return None
     while len(webp) > MAX_BYTES and min(image.size) > 64:
         image = image.resize((round(image.width * SHRINK), round(image.height * SHRINK)), Image.Resampling.LANCZOS)
         webp = _encode(image, QUALITIES[-1])
-
-    if len(webp) >= len(data) and len(data) <= MAX_BYTES:
-        return None
     return webp

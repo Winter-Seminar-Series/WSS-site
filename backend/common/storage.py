@@ -2,8 +2,9 @@ import mimetypes
 
 from storages.backends.s3 import S3Storage
 
-# The slim image has no /etc/mime.types, which is where Python learns this type; S3 would store WebP as octet-stream.
+# The slim image has no /etc/mime.types, which is where Python learns these; S3 would store them as octet-stream.
 mimetypes.add_type('image/webp', '.webp')
+mimetypes.add_type('image/jpeg', '.jfif')
 
 # Upload folders of public media (site images). The bucket policy (`manage.py apply_bucket_policy`) lets anyone read
 # exactly these; everything else in the bucket (certificates, poster-session submissions, CVs, ...) stays private.

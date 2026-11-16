@@ -6,10 +6,12 @@
 Every `WebPImageField` is covered. Each file is uploaded again under a new name (converted, or as it was when WebP
 would not help, e.g. SVG) and its rows are pointed at it with a conditional UPDATE, so a row whose image was replaced
 meanwhile is left alone. The old object stays in the bucket: pages cached before the run still link to it.
-Re-runnable: a file that already has the header is skipped. Exits non-zero if a file could not be processed.
+Re-runnable: a WebP that already has the header is skipped, and a file kept as it was is only uploaded again when its
+headers are wrong. Exits non-zero if a file could not be processed.
 """
 
 import logging
+import mimetypes
 import os
 from collections import defaultdict
 from concurrent.futures import ThreadPoolExecutor
@@ -53,11 +55,18 @@ class Command(BaseCommand):
 
         def work(name):
             try:
-                if storage.bucket.Object(name).cache_control == PUBLIC_CACHE_CONTROL:
+                stored = storage.bucket.Object(name)
+                headers_ok = (stored.cache_control, stored.content_type) == (
+                    PUBLIC_CACHE_CONTROL,
+                    mimetypes.guess_type(name)[0],
+                )
+                if headers_ok and name.endswith('.webp'):
                     return name, 'done', 0, 0
                 with storage.open(name, 'rb') as handle:
                     data = handle.read()
                 webp = to_webp(data)
+                if not webp and headers_ok:
+                    return name, 'done', 0, 0
                 outcome, sizes = ('converted' if webp else 'kept'), (len(data), len(webp or data))
                 if dry_run:
                     return name, outcome, *sizes

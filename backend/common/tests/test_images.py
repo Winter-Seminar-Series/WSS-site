@@ -70,6 +70,24 @@ class ToWebpTests(SimpleTestCase):
 
         self.assertEqual(decoded(webp).size, (100, 200))
 
+    def test_a_small_jpeg_becomes_a_smaller_webp_at_a_lower_quality(self):
+        jpeg = encoded(noise((400, 300)).resize((40, 30)).resize((400, 300)), 'JPEG', quality=92)
+
+        webp = to_webp(jpeg)
+
+        self.assertLess(len(webp), len(jpeg))
+        self.assertEqual(decoded(webp).size, (400, 300))
+
+    def test_a_phone_photo_with_extra_frames_is_converted(self):
+        photo = noise((1500, 1000))
+        mpo = encoded(photo, 'MPO', save_all=True, append_images=[photo.resize((160, 120))], quality=95)
+        self.assertGreater(len(mpo), MAX_BYTES)
+
+        webp = to_webp(mpo)
+
+        self.assertEqual(decoded(webp).format, 'WEBP')
+        self.assertLessEqual(len(webp), MAX_BYTES)
+
     def test_files_that_webp_would_not_help_are_kept(self):
         # Already compressed harder than WebP at quality 90-100 can go.
         low_quality_jpeg = encoded(noise((64, 64)), 'JPEG', quality=30)
