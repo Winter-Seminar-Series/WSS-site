@@ -4,7 +4,7 @@ import Link from 'next/link';
 import type { ReactNode } from 'react';
 
 import { PendingHint } from '@/components/navigation/PendingHint';
-import { blurProps } from '@/lib/images';
+import { blurProps, bucketImageProps } from '@/lib/images';
 
 interface Props {
   href: string;
@@ -28,6 +28,7 @@ export function EventCard({ href, title, thumbnail, thumbnailBlur, meta, footer,
             alt={title}
             fill
             loading={eager ? 'eager' : 'lazy'}
+            {...bucketImageProps(thumbnail)}
             {...blurProps(thumbnailBlur)}
             sizes="(min-width: 1024px) 380px, (min-width: 640px) 50vw, 100vw"
             className="object-cover transition-transform duration-700 ease-snap group-hover:scale-105"

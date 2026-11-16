@@ -1,5 +1,6 @@
 import Image from 'next/image';
 
+import { bucketImageProps } from '@/lib/images';
 import { organizationInitials } from '@/lib/speakers';
 import type { Speaker } from '@/types/event.type';
 import { PersonPhoto } from '@/ui/PersonPhoto';
@@ -36,6 +37,7 @@ export function SpeakerPhoto({ speaker, size, className = '', ringClassName = 'r
               alt={organization.name}
               width={badge}
               height={badge}
+              {...bucketImageProps(organization.logo)}
               className="size-full object-contain"
             />
           ) : (

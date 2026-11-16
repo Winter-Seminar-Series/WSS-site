@@ -1,5 +1,6 @@
 import Image from 'next/image';
 
+import { bucketImageProps } from '@/lib/images';
 import { organizationInitials } from '@/lib/speakers';
 import type { CareerStep } from '@/types/event.type';
 
@@ -27,7 +28,14 @@ export function CareerLogos({ career, max = 5, size = 'sm', linked = false, clas
     <ul className={`flex flex-wrap items-center gap-1.5 ${className}`} aria-label="Career">
       {shown.map((step) => {
         const mark = step.logo ? (
-          <Image src={step.logo} alt={step.name} width={px} height={px} className="size-full object-contain" />
+          <Image
+            src={step.logo}
+            alt={step.name}
+            width={px}
+            height={px}
+            {...bucketImageProps(step.logo)}
+            className="size-full object-contain"
+          />
         ) : (
           <span className="text-[0.5625rem] leading-none font-extrabold text-ink" role="img" aria-label={step.name}>
             {organizationInitials(step.name)}

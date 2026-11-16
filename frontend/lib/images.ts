@@ -4,6 +4,15 @@
  */
 export const BACKDROP_QUALITY = 90;
 
+/**
+ * Spread onto `<Image>` for an image that may come from the API. Bucket images load straight from S3, where the backend
+ * stores them already compressed: going through `/_next/image` would only download and re-encode each one on the
+ * frontend server. Local assets (`/images/…`) still go through the optimizer.
+ */
+export function bucketImageProps(src: string) {
+  return { unoptimized: !src.startsWith('/') };
+}
+
 /** Spread onto `<Image>`: the blur placeholder (from `blurDataUrl` in `lib/blurhash.ts`) when there is one. */
 export function blurProps(blurDataURL: string | null | undefined) {
   return blurDataURL ? ({ placeholder: 'blur', blurDataURL } as const) : {};

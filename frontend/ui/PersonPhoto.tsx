@@ -1,7 +1,7 @@
 import { UserRound } from 'lucide-react';
 import Image from 'next/image';
 
-import { blurProps } from '@/lib/images';
+import { blurProps, bucketImageProps } from '@/lib/images';
 
 interface Props {
   src: string | null;
@@ -34,6 +34,7 @@ export function PersonPhoto({ src, blur, name, size, className = '', eager }: Pr
       width={size}
       height={size}
       loading={eager ? 'eager' : 'lazy'}
+      {...bucketImageProps(src)}
       {...blurProps(blur)}
       className={`object-cover ${className}`}
       style={{ width: size, height: size }}

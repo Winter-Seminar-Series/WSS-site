@@ -205,7 +205,9 @@ proxy.ts                 # Next 16 proxy (formerly middleware): refreshes the ac
   `…Blur` field of the app type, and components spread `blurProps(blur)` (`lib/images.ts`) onto `<Image>`. A missing or
   malformed hash falls back to a flat grey placeholder (`FALLBACK_BLUR_HASH`). Never decode in a client component: pass the data URL down.
 - **Remote images:** only the ArvanCloud bucket is allowed (`images.remotePatterns`). Don't widen it,
-  because `/_next/image` would become an open proxy.
+  because `/_next/image` would become an open proxy. Bucket images skip the optimizer and load straight from S3:
+  spread `bucketImageProps(src)` (`lib/images.ts`) onto every `<Image>` whose `src` may come from the API. The backend
+  stores them compressed, and the blur placeholder works the same.
 - **Memoisation and effects:** no memoisation by default, and no `useEffect` to sync state. Derive the
   value, or do the work in the event handler. For external stores, use `useSyncExternalStore`.
 

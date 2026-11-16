@@ -6,7 +6,7 @@ import type { ReactNode } from 'react';
 import { SpeakerPhoto } from '@/components/events/SpeakerPhoto';
 import { SpeakerProfile } from '@/components/events/SpeakerProfile';
 import { PageHero } from '@/components/layout/PageHero';
-import { blurProps } from '@/lib/images';
+import { blurProps, bucketImageProps } from '@/lib/images';
 import type { Speaker } from '@/types/event.type';
 import { RichText } from '@/ui/RichText';
 
@@ -90,6 +90,7 @@ export function EventDetail({
               width={1200}
               height={675}
               preload
+              {...bucketImageProps(poster)}
               {...blurProps(posterBlur)}
               sizes="(min-width: 1200px) 816px, 100vw"
               className="h-auto w-full rounded-3xl object-cover ring-1 ring-line-soft"

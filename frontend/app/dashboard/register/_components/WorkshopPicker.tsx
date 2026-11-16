@@ -6,7 +6,7 @@ import Link from 'next/link';
 
 import { WorkshopMeta } from '@/components/events/EventMeta';
 import { formatToman } from '@/lib/digits';
-import { blurProps } from '@/lib/images';
+import { blurProps, bucketImageProps } from '@/lib/images';
 import type { Workshop } from '@/types/event.type';
 import { Button, buttonClasses } from '@/ui/Button';
 import { Panel } from '@/ui/Panel';
@@ -41,6 +41,7 @@ export function WorkshopPicker({ workshops, paid, selected, onChange }: Props) {
                 <Image
                   src={workshop.thumbnail}
                   alt=""
+                  {...bucketImageProps(workshop.thumbnail)}
                   {...blurProps(workshop.thumbnailBlur)}
                   width={360}
                   height={240}
