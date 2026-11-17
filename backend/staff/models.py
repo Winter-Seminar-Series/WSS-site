@@ -24,6 +24,10 @@ class Staff(BlurHashMixin, models.Model):
 class StaffTeam(models.Model):
     name = models.TextField(max_length=50, blank=False)
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
+    display_order = models.PositiveIntegerField(default=0, help_text='Lower numbers appear first within an edition.')
+
+    class Meta:
+        ordering = ('display_order', 'id')
 
     def __str__(self) -> str:
         return f'{self.event} - {self.name}'

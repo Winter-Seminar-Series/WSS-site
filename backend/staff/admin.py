@@ -26,7 +26,9 @@ class StaffAdmin(admin.ModelAdmin):
 
 @admin.register(StaffTeam)
 class StaffTeamAdmin(admin.ModelAdmin):
-    list_display = ('get_name',)
+    list_display = ('get_name', 'display_order')
+    list_editable = ('display_order',)
+    ordering = ('event', 'display_order', 'id')
     list_filter = ('event', 'name',)
     search_fields = ('name', 'event__order')
 

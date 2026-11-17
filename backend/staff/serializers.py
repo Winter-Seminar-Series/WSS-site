@@ -19,4 +19,4 @@ class StaffTeamSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = StaffTeam
-        fields = ('id', 'name', 'members')
+        fields = ('id', 'name', 'display_order', 'members')

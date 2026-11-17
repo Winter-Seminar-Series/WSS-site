@@ -16,5 +16,7 @@ export interface StaffResponse {
 export interface StaffTeamResponse {
   id: number;
   name: string;
+  /** Teams arrive sorted by this value. Absent from older backends. */
+  display_order?: number;
   members: { id: number; staff: StaffResponse }[];
 }

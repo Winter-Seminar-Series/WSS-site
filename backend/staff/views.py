@@ -15,5 +15,5 @@ class StaffTeamByEventAPIView(generics.ListAPIView):
         return (
             StaffTeam.objects.filter(event_id=self.kwargs['event_id'])
             .prefetch_related('members__staff')
-            .order_by('id')
+            .order_by('display_order', 'id')
         )

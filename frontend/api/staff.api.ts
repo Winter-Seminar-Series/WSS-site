@@ -1,5 +1,5 @@
 import { blurDataUrl } from '@/lib/blurhash';
-import { roleRank, sortStaffMembers, sortStaffTeams } from '@/lib/staff-order';
+import { roleRank, sortStaffMembers } from '@/lib/staff-order';
 import { httpGet } from '@/services/http';
 import type { StaffMember, StaffTeam } from '@/types/event.type';
 import type { StaffTeamResponse } from '@/types/staff.api.type';
@@ -8,27 +8,25 @@ export const STAFF_TAG = 'staff';
 
 export async function getStaffTeams(eventId: number): Promise<StaffTeam[]> {
   const teams = await httpGet<StaffTeamResponse[]>(`/staff/${eventId}/`, { tags: [STAFF_TAG] });
-  return sortStaffTeams(
-    teams.map((team) => ({
-      id: team.id,
-      name: team.name,
-      members: sortStaffMembers(
-        team.members.map(({ staff }) => ({
-          id: staff.id,
-          name: staff.name,
-          designation: staff.designation,
-          image: staff.image,
-          imageBlur: blurDataUrl(staff.image_blurhash),
-          links: {
-            website: staff.website || undefined,
-            linkedin: staff.linkedin || undefined,
-            github: staff.github || undefined,
-            email: staff.email || undefined,
-          },
-        })),
-      ),
-    })),
-  );
+  return teams.map((team) => ({
+    id: team.id,
+    name: team.name,
+    members: sortStaffMembers(
+      team.members.map(({ staff }) => ({
+        id: staff.id,
+        name: staff.name,
+        designation: staff.designation,
+        image: staff.image,
+        imageBlur: blurDataUrl(staff.image_blurhash),
+        links: {
+          website: staff.website || undefined,
+          linkedin: staff.linkedin || undefined,
+          github: staff.github || undefined,
+          email: staff.email || undefined,
+        },
+      })),
+    ),
+  }));
 }
 
 /**
