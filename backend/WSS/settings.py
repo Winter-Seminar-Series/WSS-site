@@ -33,11 +33,13 @@ SECRET_KEY = os.environ['SECRET_KEY']
 DEBUG = env_bool('DJANGO_DEBUG')
 
 # `backend` is the compose service name the frontend and nginx call; `127.0.0.1` is the container health check.
-ALLOWED_HOSTS = env_list('ALLOWED_HOSTS', ['api.wss-sharif.com', 'backend', 'localhost', '127.0.0.1'])
+ALLOWED_HOSTS = env_list('ALLOWED_HOSTS', ['api.wss-sharif.com', 'api.wss-sharif.ir', 'backend', 'localhost', '127.0.0.1'])
 
 # The browser never calls the API itself (the frontend proxies it), so CORS only has to allow the site.
-CORS_ALLOWED_ORIGINS = env_list('CORS_ALLOWED_ORIGINS', ['https://wss-sharif.com'])
-CSRF_TRUSTED_ORIGINS = env_list('CSRF_TRUSTED_ORIGINS', ['https://api.wss-sharif.com', 'https://wss-sharif.com'])
+CORS_ALLOWED_ORIGINS = env_list('CORS_ALLOWED_ORIGINS', ['https://wss-sharif.com', 'https://wss-sharif.ir'])
+CSRF_TRUSTED_ORIGINS = env_list('CSRF_TRUSTED_ORIGINS', [
+    'https://api.wss-sharif.com', 'https://wss-sharif.com', 'https://api.wss-sharif.ir', 'https://wss-sharif.ir',
+])
 
 # The public site, for links in emails and redirects after a free checkout.
 FRONTEND_ORIGIN = os.getenv('FRONTEND_ORIGIN', 'https://wss-sharif.com').rstrip('/')
