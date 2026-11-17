@@ -33,7 +33,7 @@ export const DASHBOARD_TABS: DashboardTab[] = [
     shortLabel: 'Register',
     description: 'Choose how you attend, add workshops and extras, then check out.',
     Icon: Ticket,
-    visible: false,
+    visible: true,
     phone: 'bar',
   },
   {
@@ -65,15 +65,15 @@ export const DASHBOARD_TABS: DashboardTab[] = [
     label: 'Posters',
     description: 'Submit your poster for the poster session competition.',
     Icon: FileImage,
-    visible: false,
+    visible: true,
     phone: 'more',
   },
 ];
 
 /** Registration switches for the current edition. */
 export const REGISTRATION = {
-  inPersonOpen: false,
-  posterSubmissionOpen: false,
+  inPersonOpen: true,
+  posterSubmissionOpen: true,
 } as const;
 
 export const isInPersonMode = (name: string): boolean => name.toLowerCase().startsWith('in person');
