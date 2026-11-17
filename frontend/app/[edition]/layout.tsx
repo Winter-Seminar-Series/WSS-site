@@ -19,7 +19,7 @@ export default async function EditionLayout({ children, params }: LayoutProps<'/
   const edition = await resolveEdition(params);
 
   return (
-    <div data-edition={edition.slug} style={editionThemeStyle(edition)}>
+    <div data-edition={edition.slug} style={editionThemeStyle(edition)} className="min-h-dvh bg-surface text-ink">
       <Navbar variant="overlay" nav={editionNav(edition)} />
       <main id="main">{children}</main>
       <Footer edition={edition} />

@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 
 const FORM: ComponentProps<typeof LoginForm> = {
   title: 'Log in',
-  lead: 'Welcome back. Log in to register, join the live stream and get your certificates.',
+  lead: 'Welcome back.',
   submitLabel: 'Log in',
   action: loginAction,
   fields: [

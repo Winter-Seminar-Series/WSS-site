@@ -46,7 +46,7 @@ export function Hero({ edition, upcoming }: Props) {
       <div className="absolute inset-0 -z-10 bg-linear-to-t from-ink-deep via-ink-deep/45 to-ink-deep/25" />
 
       {/* A size container: from sm the title is sized to its width (in `cqi`), so its long line always fits. */}
-      <div className="@container mx-auto flex w-full max-w-300 grow flex-col justify-end px-4 pt-[calc(var(--navbar-height)+3rem)] pb-28 text-white md:px-6 md:pb-40">
+      <div className="@container mx-auto flex w-full max-w-300 grow flex-col justify-end px-4 pt-[calc(var(--navbar-height)+2rem)] pb-24 text-white md:px-6 md:pb-32">
         <ul className="flex flex-wrap gap-2 text-sm font-semibold motion-safe:animate-rise">
           <li className="flex min-h-9 items-center gap-2 rounded-full bg-white/12 px-3.5 ring-1 ring-white/20 backdrop-blur-md">
             <CalendarDays className="size-4 shrink-0" aria-hidden />
@@ -74,42 +74,40 @@ export function Hero({ edition, upcoming }: Props) {
           ))}
         </h1>
 
-        <div className="mt-6 flex flex-col gap-10 lg:flex-row lg:items-end lg:justify-between">
-          <div className="max-w-xl">
-            <p className="text-lg font-medium text-white/85 motion-safe:animate-rise motion-safe:[animation-delay:360ms] md:text-2xl">
-              {edition.tagline}
-            </p>
+        <p className="mt-6 max-w-xl text-lg font-medium text-white/85 motion-safe:animate-rise motion-safe:[animation-delay:360ms] md:text-2xl lg:max-w-none lg:whitespace-nowrap">
+          {edition.tagline}
+        </p>
 
-            <div className="mt-9 flex flex-col gap-3 motion-safe:animate-rise motion-safe:[animation-delay:460ms] sm:flex-row">
-              {current && upcoming ? (
-                <LinkButton href="/dashboard/register" variant="light" size="lg">
-                  Register now
-                  <ArrowRight className="size-5" aria-hidden />
-                </LinkButton>
-              ) : (
-                <LinkButton href={explore} variant="light" size="lg">
+        <div className="mt-9 flex flex-col gap-10 lg:flex-row lg:items-end lg:justify-between">
+          <div className="flex flex-col gap-3 motion-safe:animate-rise motion-safe:[animation-delay:460ms] sm:flex-row">
+            {current && upcoming ? (
+              <LinkButton href="/dashboard/register" variant="light" size="lg">
+                Register now
+                <ArrowRight className="size-5" aria-hidden />
+              </LinkButton>
+            ) : (
+              <LinkButton href={explore} variant="light" size="lg">
+                Explore the talks
+                <ArrowRight className="size-5" aria-hidden />
+              </LinkButton>
+            )}
+            {current ? (
+              upcoming ? (
+                <LinkButton href={explore} variant="outline-light" size="lg">
                   Explore the talks
-                  <ArrowRight className="size-5" aria-hidden />
                 </LinkButton>
-              )}
-              {current ? (
-                upcoming ? (
-                  <LinkButton href={explore} variant="outline-light" size="lg">
-                    Explore the talks
-                  </LinkButton>
-                ) : (
-                  <AccountLink
-                    signedOut={{ href: '/signup', label: 'Create an account' }}
-                    variant="outline-light"
-                    size="lg"
-                  />
-                )
               ) : (
-                <LinkButton href="/" variant="outline-light" size="lg">
-                  Visit the {CURRENT_EDITION.label}
-                </LinkButton>
-              )}
-            </div>
+                <AccountLink
+                  signedOut={{ href: '/signup', label: 'Create an account' }}
+                  variant="outline-light"
+                  size="lg"
+                />
+              )
+            ) : (
+              <LinkButton href="/" variant="outline-light" size="lg">
+                Visit the {CURRENT_EDITION.label}
+              </LinkButton>
+            )}
           </div>
 
           {upcoming && edition.startsAt && (

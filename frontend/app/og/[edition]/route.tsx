@@ -35,7 +35,7 @@ export async function GET(_request: Request, { params }: RouteContext<'/og/[edit
 
   const { brand, inkDeep } = editionColors(edition);
   const [background, semibold, extrabold] = await Promise.all([
-    jpegDataUrl(edition.heroImage),
+    jpegDataUrl(edition.socialImage ?? edition.heroImage),
     readFile(path.join(ROOT, 'assets/fonts/manrope-600.ttf')),
     readFile(path.join(ROOT, 'assets/fonts/manrope-800.ttf')),
   ]);
@@ -47,7 +47,10 @@ export async function GET(_request: Request, { params }: RouteContext<'/og/[edit
       <div
         style={{
           position: 'absolute',
-          inset: 0,
+          top: 0,
+          left: 0,
+          width: '100%',
+          height: '100%',
           display: 'flex',
           backgroundImage: `linear-gradient(90deg, ${inkDeep}f2 0%, ${inkDeep}cc 55%, ${inkDeep}33 100%)`,
         }}

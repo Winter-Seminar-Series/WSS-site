@@ -24,6 +24,13 @@ export interface EditionTheme {
   brandSoft?: string;
   brandMuted?: string;
   accent?: string;
+  ink?: string;
+  muted?: string;
+  line?: string;
+  lineSoft?: string;
+  canvas?: string;
+  surface?: string;
+  surfaceHover?: string;
 }
 
 export interface Edition {
@@ -47,10 +54,14 @@ export interface Edition {
   sponsors: LogoLink[];
   /** `undefined` keeps the default tokens of app/globals.css. */
   theme?: EditionTheme;
-  /** A JPEG in public/: next/image serves it as AVIF/WebP, and the social card (app/og) draws it as is. */
+  /** Optimised background in public/: next/image serves responsive AVIF/WebP. */
   heroImage: string;
+  /** JPEG for Satori, which cannot decode WebP. Defaults to heroImage for older editions. */
+  socialImage?: string;
   /** Background of the speakers band and the closing call to action. */
   bandImage: string;
+  ctaImage?: string;
+  authImage?: string;
   /** Parts of the day that are not sessions (registration, breaks, ceremonies), placed on the timeline among them. */
   agenda?: AgendaItem[];
   /** In-person sessions are also streamed, so the timeline calls them hybrid. */
@@ -102,6 +113,48 @@ const SPONSORS = {
 /** Newest first. The first entry is the current edition. */
 export const EDITIONS: readonly [Edition, ...Edition[]] = [
   {
+    slug: '11th',
+    eventId: 11,
+    label: '11th WSS',
+    title: '11th Winter Seminar Series',
+    tagline: ARCHIVE_TAGLINE,
+    dateRange: 'December 17th, 2026 - December 18th, 2026',
+    startDate: '2026-12-17',
+    endDate: '2026-12-18',
+    startsAt: '2026-12-17T09:00:00+03:30',
+    nav: ['seminars', 'round-tables', 'poster-session', 'timeline', 'about'],
+    hiddenPages: ['lab-talks', 'workshops', 'advisors'],
+    stats: [
+      { value: '46+', label: 'Workshops in all series' },
+      { value: '5700+', label: 'Participants in all series' },
+      { value: '53+', label: 'Poster sessions in all series' },
+      { value: '268+', label: 'Presentations in all series' },
+      { value: '8+', label: 'Lab talks in all series' },
+      { value: '21+', label: 'Round tables in all series' },
+    ],
+    sponsors: [],
+    theme: {
+      brand: '#a2614a',
+      brandStrong: '#62281e',
+      brandSoft: '#f9efd1',
+      brandMuted: '#d8b598',
+      accent: '#a2614a',
+      inkDeep: '#3b201a',
+      ink: '#382b25',
+      muted: '#756052',
+      line: 'rgb(98 40 30 / 0.24)',
+      lineSoft: 'rgb(162 97 74 / 0.16)',
+      canvas: '#f8f6f2',
+      surface: '#fffdfa',
+      surfaceHover: '#f0ece5',
+    },
+    heroImage: '/images/editions/11th-hero.webp',
+    socialImage: '/images/editions/11th-social-hero.jpg',
+    bandImage: '/images/editions/11th-band.webp',
+    ctaImage: '/images/editions/11th-band.webp',
+    authImage: '/images/editions/11th-band.webp',
+  },
+  {
     slug: '10th',
     eventId: 10,
     label: '10th WSS',
@@ -115,12 +168,10 @@ export const EDITIONS: readonly [Edition, ...Edition[]] = [
     nav: ['seminars', 'round-tables', 'poster-session', 'timeline', 'about'],
     hiddenPages: ['lab-talks', 'workshops', 'advisors'],
     stats: [
-      { value: '46+', label: 'Workshops in all series' },
-      { value: '4500+', label: 'Participants in all series' },
-      { value: '38+', label: 'Poster sessions in all series' },
-      { value: '250+', label: 'Presentations in all series' },
-      { value: '8+', label: 'Lab talks in all series' },
-      { value: '19+', label: 'Round tables in all series' },
+      { value: '1200+', label: 'Participants' },
+      { value: '15', label: 'Poster sessions' },
+      { value: '18', label: 'Presentations' },
+      { value: '2', label: 'Round tables' },
     ],
     sponsors: [
       SPONSORS.ramzinex,

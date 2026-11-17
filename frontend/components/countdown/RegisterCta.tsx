@@ -35,7 +35,7 @@ export function RegisterCta({ edition }: Props) {
           label: 'Register now',
         }
       : {
-          title: 'See you next winter',
+          title: `Get ready for the ${edition.label}`,
           lead: 'Create an account now and you are ready to register the day the next edition opens.',
           href: '/signup',
           label: 'Create an account',
@@ -49,7 +49,7 @@ export function RegisterCta({ edition }: Props) {
         className="relative isolate overflow-hidden bg-ink-deep text-white edge-y [&_:focus-visible]:outline-white"
       >
         <Image
-          src={current ? '/images/cta.webp' : edition.bandImage}
+          src={edition.ctaImage ?? (current ? '/images/cta.webp' : edition.bandImage)}
           alt=""
           fill
           sizes="100vw"

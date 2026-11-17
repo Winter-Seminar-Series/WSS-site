@@ -17,7 +17,7 @@ export default function AuthLayout({ children }: { children: ReactNode }) {
           aria-hidden
         >
           <Image
-            src="/images/auth.webp"
+            src={CURRENT_EDITION.authImage ?? '/images/auth.webp'}
             alt=""
             fill
             preload

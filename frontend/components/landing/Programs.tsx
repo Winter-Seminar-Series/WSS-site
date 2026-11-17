@@ -20,7 +20,7 @@ interface Program {
 const PROGRAMS: Program[] = [
   {
     title: 'Seminars',
-    overline: 'A two-day journey of discovery and learning',
+    overline: 'Research and ideas from leading speakers',
     page: 'seminars',
     image: '/images/programs/seminars.jpg',
     description:
@@ -29,7 +29,7 @@ const PROGRAMS: Program[] = [
   },
   {
     title: 'Round Tables',
-    overline: 'A deep dive into expert-led discussions',
+    overline: 'Perspectives from experts, questions from you',
     page: 'round-tables',
     image: '/images/programs/round-tables.jpg',
     description:
@@ -38,7 +38,7 @@ const PROGRAMS: Program[] = [
   },
   {
     title: 'Poster Sessions',
-    overline: 'Exploring education at the core',
+    overline: 'Share your research. Exchange ideas.',
     page: 'poster-session',
     image: '/images/programs/poster-session.jpg',
     description:

@@ -5,7 +5,7 @@ import type { ReactNode } from 'react';
 
 import { GoogleAnalytics } from '@/components/analytics/GoogleAnalytics';
 import { JsonLd } from '@/components/seo/JsonLd';
-import { editionColors, editionThemeColor } from '@/lib/edition-theme';
+import { editionColors, editionThemeColor, editionThemeStyle } from '@/lib/edition-theme';
 import { CURRENT_EDITION, EDITIONS } from '@/lib/editions';
 import { SITE_DESCRIPTION, SITE_NAME, SITE_SHORT_NAME, SITE_URL, TWITTER_HANDLE } from '@/lib/site';
 import { SOCIAL_IMAGE_SIZE, socialImagePath } from '@/lib/social-image';
@@ -91,7 +91,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           }}
         />
       </head>
-      <body className="font-sans">
+      <body className="font-sans" style={editionThemeStyle(CURRENT_EDITION)}>
         <style>
           {EDITIONS.map(
             (edition) =>
