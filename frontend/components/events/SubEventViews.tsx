@@ -33,15 +33,17 @@ const DAY_KINDS: [SubEventKind, EditionPage][] = [
 
 /**
  * The edition's days, in the order the timeline numbers them, so "Day 2" here is "Day 2" there even when this kind
- * only runs on that day. The fetches are the ones the timeline makes, so they come from the cache.
+ * only runs on that day. `own` are the sessions already loaded for `kind`: only the other kinds are fetched.
  */
-async function getDayDates(edition: Edition): Promise<string[]> {
-  const sessions = (
-    await Promise.all(
-      DAY_KINDS.filter(([, page]) => hasPage(edition, page)).map(([kind]) => getSubEvents(edition.eventId, kind)),
-    )
-  ).flat();
-  return buildTimeline(sessions, edition.agenda ?? [], edition.streamsInPerson).map((day) => day.date);
+async function getDayDates(edition: Edition, kind: SubEventKind, own: SubEvent[]): Promise<string[]> {
+  const others = await Promise.all(
+    DAY_KINDS.filter(([other, page]) => other !== kind && hasPage(edition, page)).map(([other]) =>
+      getSubEvents(edition.eventId, other),
+    ),
+  );
+  return buildTimeline([...own, ...others.flat()], edition.agenda ?? [], edition.streamsInPerson).map(
+    (day) => day.date,
+  );
 }
 
 function byStart(a: SubEvent, b: SubEvent): number {
@@ -50,8 +52,8 @@ function byStart(a: SubEvent, b: SubEvent): number {
 
 export async function SubEventList({ edition, kind }: ListProps) {
   const section = SUB_EVENT_SECTIONS[kind];
-  const [subEvents, dayDates] = await Promise.all([getSubEvents(edition.eventId, kind), getDayDates(edition)]);
-  const days = dayDates
+  const subEvents = await getSubEvents(edition.eventId, kind);
+  const days = (await getDayDates(edition, kind, subEvents))
     .map((date, index) => ({
       date,
       number: index + 1,

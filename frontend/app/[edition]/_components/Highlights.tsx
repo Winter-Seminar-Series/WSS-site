@@ -4,6 +4,7 @@ import { isCurrentEdition } from '@/lib/editions';
 import type { Edition } from '@/lib/editions';
 import { fitWithin } from '@/lib/images';
 import { SPEAKER_INSTITUTIONS } from '@/lib/site';
+import { CountUp } from '@/ui/CountUp';
 import { Marquee } from '@/ui/Marquee';
 
 // Columns per number of stats, so every row is full (the grid's gaps are its dividers; an empty cell would show).
@@ -29,10 +30,10 @@ export function Highlights({ edition }: { edition: Edition }) {
         </h2>
         <dl className={`reveal grid gap-px overflow-hidden rounded-3xl bg-line-soft ring-1 ring-line-soft ${columns}`}>
           {edition.stats.map((stat) => (
-            <div key={stat.label} className="flex flex-col-reverse gap-1 bg-surface p-5 md:p-6">
+            <div key={stat.label} className="flex flex-col-reverse justify-end gap-1 bg-surface p-5 md:p-6">
               <dt className="text-sm font-medium text-muted">{stat.label}</dt>
               <dd className="text-3xl font-extrabold tracking-[-0.04em] text-ink tabular-nums md:text-4xl">
-                {stat.value}
+                <CountUp value={stat.value} />
               </dd>
             </div>
           ))}
