@@ -1,6 +1,6 @@
 'use client';
 
-import { keepPreviousData, useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 
 import { checkoutAction, quoteAction } from '@/actions/registration.actions';
 import type { Quote } from '@/actions/registration.actions';
@@ -16,9 +16,9 @@ export function useQuote(order: Order) {
       return result.data;
     },
     enabled: order.plans.length > 0 || order.addons.length > 0,
-    // Prices only change when an admin edits a plan; keep the last quote on screen while the next one loads.
-    staleTime: 5 * 60_000,
-    placeholderData: keepPreviousData,
+    staleTime: 0,
+    gcTime: 0,
+    refetchOnWindowFocus: true,
   });
 }
 

@@ -1,3 +1,5 @@
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import never_cache
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -13,6 +15,7 @@ from payment.serializers import (
 )
 
 
+@method_decorator(never_cache, name='dispatch')
 class CheckoutView(APIView):
     """Signed-in participants only; limited per user so discount codes cannot be enumerated."""
 

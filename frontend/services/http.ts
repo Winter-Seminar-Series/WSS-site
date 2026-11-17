@@ -52,6 +52,8 @@ interface RequestOptions {
   body?: unknown;
   /** Attach the signed-in participant's access token. Authenticated requests are never cached. */
   auth?: boolean;
+  /** Bypass the public-content cache for live data such as registration prices and capacity. */
+  cache?: 'no-store';
   /** Cache tags for public GETs, so a Server Action or webhook can `revalidateTag` them. */
   tags?: string[];
 }
@@ -80,7 +82,10 @@ async function readError(response: Response): Promise<HttpError> {
   return new HttpError(response.status, fallback);
 }
 
-async function request<T>(path: string, { method = 'GET', body, auth = false, tags }: RequestOptions): Promise<T> {
+async function request<T>(
+  path: string,
+  { method = 'GET', body, auth = false, cache, tags }: RequestOptions,
+): Promise<T> {
   const isForm = body instanceof FormData;
   const headers: Record<string, string> = { Accept: 'application/json' };
   // fetch sets the multipart boundary itself for FormData.
@@ -91,7 +96,8 @@ async function request<T>(path: string, { method = 'GET', body, auth = false, ta
     headers.Authorization = `Bearer ${token}`;
   }
 
-  const cacheable = method === 'GET' && !auth;
+  const cacheable = method === 'GET' && !auth && cache !== 'no-store';
+  if (cache === 'no-store') headers['Cache-Control'] = 'no-cache, no-store';
   // The API rate-limits sign-in, sign-up, password and payment calls per visitor. They all reach it from this server,
   // so pass on the visitor's address. Cacheable GETs never read headers: that would make public pages dynamic.
   if (!cacheable) Object.assign(headers, await forwardedFor());
@@ -108,7 +114,7 @@ async function request<T>(path: string, { method = 'GET', body, auth = false, ta
   return (await response.json()) as T;
 }
 
-export function httpGet<T>(path: string, options: Pick<RequestOptions, 'auth' | 'tags'> = {}): Promise<T> {
+export function httpGet<T>(path: string, options: Pick<RequestOptions, 'auth' | 'cache' | 'tags'> = {}): Promise<T> {
   return request<T>(path, { ...options, method: 'GET' });
 }
 

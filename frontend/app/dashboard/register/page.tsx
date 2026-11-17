@@ -15,7 +15,7 @@ export default async function RegisterPage() {
       Promise.all([
         getParticipations(),
         getAddonHoldings(),
-        getWorkshops(CURRENT_EDITION.eventId),
+        getWorkshops(CURRENT_EDITION.eventId, { cache: 'no-store' }),
         getAttendanceModes(CURRENT_EDITION.eventId),
         getProfile(),
       ]),

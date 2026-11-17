@@ -116,6 +116,9 @@ proxy.ts                 # Next 16 proxy (formerly middleware): refreshes the ac
 
 - **Public GETs** use `next: { revalidate: PUBLIC_REVALIDATE_SECONDS, tags }`. Authenticated calls
   (`{ auth: true }`) attach the session's bearer token and are `cache: 'no-store'`.
+- **Registration data** bypasses caching: attendance modes always use `{ cache: 'no-store' }`, and the registration
+  page passes the same option for workshops. Public workshop listings keep ISR. Quotes are stale immediately and
+  discarded when unused; dynamic dashboard pages use Next's default zero stale time.
 - **Errors:** a non-2xx response throws `HttpError { status, code, errors }`. The code is parsed from
   drf-standardized-errors bodies. Check it with `isHttpError(error, status)`.
 - **No other path out:** never call `fetch` for our API anywhere else, and never import `services/` from a

@@ -5,6 +5,8 @@ from django.core.files.storage import default_storage
 from django.db.models import Prefetch, QuerySet, Sum
 from django.db.models.functions import Coalesce
 from django.http import Http404
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import never_cache
 from rest_framework import generics, status
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
@@ -124,6 +126,7 @@ def plans_of_edition(event_id: int) -> QuerySet[ParticipationPlan]:
     )
 
 
+@method_decorator(never_cache, name='dispatch')
 class PlanListView(generics.ListAPIView):
     permission_classes = [AllowAny]
     serializer_class = ParticipationPlanSerializer

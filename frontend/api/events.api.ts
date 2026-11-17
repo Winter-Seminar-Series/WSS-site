@@ -127,8 +127,8 @@ export async function getSpeaker(id: number): Promise<Speaker> {
   return toSpeaker(await httpGet<SpeakerResponse>(`/speaker/${id}/`, { tags: [EVENTS_TAG] }));
 }
 
-export async function getWorkshops(eventId: number): Promise<Workshop[]> {
-  const plans = await httpGet<ParticipationPlanResponse[]>(`/workshop/${eventId}/`, { tags: [EVENTS_TAG] });
+export async function getWorkshops(eventId: number, options: { cache?: 'no-store' } = {}): Promise<Workshop[]> {
+  const plans = await httpGet<ParticipationPlanResponse[]>(`/workshop/${eventId}/`, { tags: [EVENTS_TAG], ...options });
 
   // Sessions embed their speaker (`speaker_details`); an older API sends only the id, so fetch just those.
   const sessions = plans.flatMap((plan) => plan.workshop?.sessions ?? []);
@@ -184,7 +184,7 @@ export async function getWorkshop(eventId: number, id: number): Promise<Workshop
 }
 
 export async function getAttendanceModes(eventId: number): Promise<AttendanceMode[]> {
-  const plans = await httpGet<ParticipationPlanResponse[]>(`/mode/${eventId}/`, { tags: [EVENTS_TAG] });
+  const plans = await httpGet<ParticipationPlanResponse[]>(`/mode/${eventId}/`, { cache: 'no-store' });
   return plans.flatMap((plan) =>
     plan.mode_of_attendance
       ? [
