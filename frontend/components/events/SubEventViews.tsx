@@ -1,30 +1,63 @@
 import { notFound } from 'next/navigation';
 
 import { getSubEvent, getSubEvents } from '@/api/events.api';
-import { EmptyState, EventCard, EventGrid } from '@/components/events/EventCard';
+import { DayGrid, EmptyState, EventCard } from '@/components/events/EventCard';
 import { EventDetail } from '@/components/events/EventDetail';
 import { SessionMeta } from '@/components/events/EventMeta';
 import { SessionLink } from '@/components/events/SessionLink';
 import { SpeakerLine } from '@/components/events/SpeakerLine';
 import { PageHero } from '@/components/layout/PageHero';
 import { JsonLd } from '@/components/seo/JsonLd';
-import { editionHref, isCurrentEdition } from '@/lib/editions';
-import type { Edition } from '@/lib/editions';
+import { formatEventDate } from '@/lib/dates';
+import { editionHref, hasPage, isCurrentEdition } from '@/lib/editions';
+import type { Edition, EditionPage } from '@/lib/editions';
 import { EAGER_LIST_ITEMS } from '@/lib/images';
 import { summarize } from '@/lib/metadata';
 import { SITE_URL } from '@/lib/site';
 import { editionBreadcrumbs, subEventJsonLd } from '@/lib/structured-data';
 import { SUB_EVENT_SECTIONS } from '@/lib/sub-events';
-import type { SubEventKind } from '@/types/event.type';
+import { buildTimeline } from '@/lib/timeline';
+import type { SubEvent, SubEventKind } from '@/types/event.type';
 
 interface ListProps {
   edition: Edition;
   kind: SubEventKind;
 }
 
+/** The kinds that make up an edition's days, as on the timeline, each fetched only where the edition has its page. */
+const DAY_KINDS: [SubEventKind, EditionPage][] = [
+  ['seminar', 'seminars'],
+  ['round-table', 'round-tables'],
+  ['lab-talk', 'lab-talks'],
+];
+
+/**
+ * The edition's days, in the order the timeline numbers them, so "Day 2" here is "Day 2" there even when this kind
+ * only runs on that day. The fetches are the ones the timeline makes, so they come from the cache.
+ */
+async function getDayDates(edition: Edition): Promise<string[]> {
+  const sessions = (
+    await Promise.all(
+      DAY_KINDS.filter(([, page]) => hasPage(edition, page)).map(([kind]) => getSubEvents(edition.eventId, kind)),
+    )
+  ).flat();
+  return buildTimeline(sessions, edition.agenda ?? [], edition.streamsInPerson).map((day) => day.date);
+}
+
+function byStart(a: SubEvent, b: SubEvent): number {
+  return a.startTime.localeCompare(b.startTime);
+}
+
 export async function SubEventList({ edition, kind }: ListProps) {
   const section = SUB_EVENT_SECTIONS[kind];
-  const subEvents = await getSubEvents(edition.eventId, kind);
+  const [subEvents, dayDates] = await Promise.all([getSubEvents(edition.eventId, kind), getDayDates(edition)]);
+  const days = dayDates
+    .map((date, index) => ({
+      date,
+      number: index + 1,
+      subEvents: subEvents.filter((subEvent) => subEvent.date === date).sort(byStart),
+    }))
+    .filter((day) => day.subEvents.length > 0);
 
   return (
     <>
@@ -35,21 +68,46 @@ export async function SubEventList({ edition, kind }: ListProps) {
           {isCurrentEdition(edition) ? section.empty : `The ${edition.label} had no ${section.title.toLowerCase()}.`}
         </EmptyState>
       ) : (
-        <EventGrid>
-          {subEvents.map((subEvent, index) => (
-            <li key={subEvent.id}>
-              <EventCard
-                href={editionHref(edition, `${section.path}/${subEvent.id}`)}
-                title={subEvent.name}
-                thumbnail={subEvent.thumbnail}
-                thumbnailBlur={subEvent.thumbnailBlur}
-                eager={index < EAGER_LIST_ITEMS}
-                meta={<SessionMeta date={subEvent.date} startTime={subEvent.startTime} endTime={subEvent.endTime} />}
-                footer={<SpeakerLine speakers={subEvent.speakers} />}
-              />
-            </li>
+        <div className="mx-auto flex max-w-300 flex-col gap-14 px-4 py-12 md:gap-20 md:px-6 md:py-16">
+          {days.map((day, dayIndex) => (
+            <section key={day.date} aria-labelledby={`day-${day.number}`}>
+              <div className="reveal flex flex-wrap items-end justify-between gap-x-6 gap-y-2 border-b border-line-soft pb-5">
+                <div>
+                  <h2
+                    id={`day-${day.number}`}
+                    className="text-4xl font-extrabold tracking-[-0.035em] text-ink md:text-5xl"
+                  >
+                    Day {day.number}
+                  </h2>
+                  <p className="mt-1 text-lg font-semibold text-muted">
+                    <time dateTime={day.date}>{formatEventDate(day.date)}</time>
+                  </p>
+                </div>
+                <p className="text-sm font-semibold text-muted">
+                  {day.subEvents.length} {day.subEvents.length === 1 ? 'session' : 'sessions'}
+                </p>
+              </div>
+              <DayGrid>
+                {day.subEvents.map((subEvent, index) => (
+                  <li key={subEvent.id}>
+                    <EventCard
+                      href={editionHref(edition, `${section.path}/${subEvent.id}`)}
+                      title={subEvent.name}
+                      thumbnail={subEvent.thumbnail}
+                      thumbnailBlur={subEvent.thumbnailBlur}
+                      eager={dayIndex === 0 && index < EAGER_LIST_ITEMS}
+                      headingLevel="h3"
+                      meta={
+                        <SessionMeta date={subEvent.date} startTime={subEvent.startTime} endTime={subEvent.endTime} />
+                      }
+                      footer={<SpeakerLine speakers={subEvent.speakers} />}
+                    />
+                  </li>
+                ))}
+              </DayGrid>
+            </section>
           ))}
-        </EventGrid>
+        </div>
       )}
     </>
   );
