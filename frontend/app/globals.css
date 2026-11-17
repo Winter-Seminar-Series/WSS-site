@@ -283,11 +283,3 @@
     animation: none;
   }
 }
-
-/*
- * A section's pause switch (a checkbox marked `data-marquee-pause`) stops every marquee in that section: WCAG 2.2.2 asks
- * that motion lasting more than five seconds can be paused. Unlayered, so it wins over the `animate-marquee` utility.
- */
-section:has([data-marquee-pause]:checked) .animate-marquee {
-  animation-play-state: paused;
-}

@@ -1,4 +1,4 @@
-import { ArrowRight, Pause, Play } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 
 import { getEditionSpeakers } from '@/api/events.api';
@@ -62,7 +62,7 @@ function SpeakerCard({ slot: { speaker, repeat }, edition }: { slot: Slot; editi
 
 /**
  * Every speaker of the edition, drifting past in one or two rows (pure CSS, see ui/Marquee). Hovering or focusing a row
- * holds it; the switch holds them all.
+ * holds it.
  */
 export async function SpeakersSection({ edition }: { edition: Edition }) {
   // Shuffled on each ISR render, so the order changes every revalidation instead of always opening on the same faces.
@@ -89,18 +89,10 @@ export async function SpeakersSection({ edition }: { edition: Edition }) {
           title="Speakers"
           lead={lead(speakers)}
           action={
-            <div className="flex flex-wrap gap-2">
-              <LinkButton href={editionHref(edition, '/seminars')} variant="light">
-                All talks
-                <ArrowRight className="size-4" aria-hidden />
-              </LinkButton>
-              <label className="group/pause inline-flex min-h-11 cursor-pointer items-center gap-2 rounded-full px-4 text-sm font-semibold ring-1 ring-white/30 transition-colors select-none hover:bg-white/10 has-checked:bg-white has-checked:text-ink has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-white motion-reduce:hidden pointer-fine:min-h-9">
-                <input type="checkbox" data-marquee-pause className="sr-only" />
-                <Pause className="size-4 group-has-checked/pause:hidden" aria-hidden />
-                <Play className="hidden size-4 group-has-checked/pause:block" aria-hidden />
-                Pause
-              </label>
-            </div>
+            <LinkButton href={editionHref(edition, '/seminars')} variant="light">
+              All talks
+              <ArrowRight className="size-4" aria-hidden />
+            </LinkButton>
           }
         />
       </div>

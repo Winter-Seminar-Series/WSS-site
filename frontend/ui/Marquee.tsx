@@ -18,7 +18,7 @@ interface Props {
 
 /**
  * Pure-CSS infinite scroller: the track holds the items twice and slides by half its width. No JS, no layout reads,
- * pauses on hover/focus (and with a section's pause switch, see app/globals.css), and stops entirely for users who
+ * pauses on hover/focus, and stops entirely for users who
  * prefer reduced motion. The second copy is `inert`, so links inside it never take keyboard focus.
  */
 export function Marquee({ children, durationSeconds = 60, label, reverse = false }: Props) {
