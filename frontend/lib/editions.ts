@@ -118,7 +118,7 @@ export const EDITIONS: readonly [Edition, ...Edition[]] = [
     label: '11th WSS',
     title: '11th Winter Seminar Series',
     tagline: ARCHIVE_TAGLINE,
-    dateRange: 'December 17th, 2026 - December 18th, 2026',
+    dateRange: 'December 17–18, 2026',
     startDate: '2026-12-17',
     endDate: '2026-12-18',
     startsAt: '2026-12-17T09:00:00+03:30',

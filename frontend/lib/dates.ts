@@ -38,6 +38,12 @@ const shortDateFormatter = new Intl.DateTimeFormat('en-US', {
   day: 'numeric',
   timeZone: 'UTC',
 });
+const dateRangeFormatter = new Intl.DateTimeFormat('en-US', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+  timeZone: 'UTC',
+});
 
 function calendarDate(date: string): Date {
   return new Date(`${date}T00:00:00Z`);
@@ -66,6 +72,11 @@ export function formatMonthDay(date: string): string {
 /** `2025-04-10` → `Apr 10, 2025` */
 export function formatShortDate(date: string): string {
   return shortDateFormatter.format(calendarDate(date));
+}
+
+/** Calendar range with shared month/year shown once, e.g. `December 17–18, 2026`. */
+export function formatDateRange(start: string, end: string): string {
+  return dateRangeFormatter.formatRange(calendarDate(start), calendarDate(end)).replace(/\s*–\s*/g, '–');
 }
 
 /** `14:30:00` → `2:30 PM` */

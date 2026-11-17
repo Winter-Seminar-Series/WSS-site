@@ -3,9 +3,10 @@ import { readFile } from 'node:fs/promises';
 import path from 'node:path';
 
 import { Logo } from '@/components/brand/Logo';
+import { formatDateRange } from '@/lib/dates';
 import { editionColors } from '@/lib/edition-theme';
 import { EDITIONS, findEdition } from '@/lib/editions';
-import { SITE_NAME, VENUE } from '@/lib/site';
+import { VENUE } from '@/lib/site';
 import { SOCIAL_IMAGE_SIZE } from '@/lib/social-image';
 
 /*
@@ -33,6 +34,7 @@ export async function GET(_request: Request, { params }: RouteContext<'/og/[edit
   const edition = findEdition((await params).edition);
   if (!edition) return new Response('Not found', { status: 404 });
 
+  const [ordinal, ...title] = edition.title.split(' ');
   const { brand, inkDeep } = editionColors(edition);
   const [background, semibold, extrabold] = await Promise.all([
     jpegDataUrl(edition.socialImage ?? edition.heroImage),
@@ -62,31 +64,59 @@ export async function GET(_request: Request, { params }: RouteContext<'/og/[edit
           flexDirection: 'column',
           justifyContent: 'space-between',
           width: '100%',
-          padding: '64px 72px 72px',
+          padding: '64px 72px 68px',
           color: 'white',
         }}
       >
-        <div style={{ display: 'flex', alignItems: 'center', gap: 20 }}>
-          <Logo width={84} height={56} style={{ color: 'white' }} />
-          <div style={{ display: 'flex', fontSize: 26, fontWeight: 600, letterSpacing: 1, opacity: 0.85 }}>
-            {SITE_NAME.toUpperCase()}
+        <div style={{ display: 'flex', flexDirection: 'column', width: '100%', flexShrink: 0 }}>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+            <div style={{ display: 'flex', fontSize: 92, fontWeight: 800, lineHeight: 1, letterSpacing: -3 }}>
+              {ordinal}
+            </div>
+            <Logo width={84} height={56} style={{ color: 'white' }} />
           </div>
-        </div>
-
-        <div style={{ display: 'flex', flexDirection: 'column', maxWidth: 820 }}>
-          <div style={{ display: 'flex', fontSize: 78, fontWeight: 800, lineHeight: 1.05, letterSpacing: -2 }}>
-            {edition.title}
+          <div
+            style={{
+              display: 'flex',
+              marginTop: 8,
+              fontSize: 78,
+              fontWeight: 800,
+              lineHeight: 1.1,
+              letterSpacing: -2,
+              whiteSpace: 'nowrap',
+            }}
+          >
+            {title.join(' ')}
           </div>
-          <div style={{ display: 'flex', marginTop: 20, fontSize: 32, fontWeight: 600, opacity: 0.9 }}>
+          <div
+            style={{
+              display: 'flex',
+              marginTop: 22,
+              fontSize: 28,
+              fontWeight: 600,
+              lineHeight: 1.35,
+              whiteSpace: 'nowrap',
+              opacity: 0.9,
+            }}
+          >
             {edition.tagline}
           </div>
         </div>
 
-        <div style={{ display: 'flex', alignItems: 'center', gap: 20, fontSize: 26, fontWeight: 600 }}>
-          <div style={{ display: 'flex', padding: '10px 22px', borderRadius: 999, backgroundColor: brand }}>
-            {edition.dateRange}
-          </div>
-          <div style={{ display: 'flex', opacity: 0.85 }}>{`${VENUE.name}, ${VENUE.city}`}</div>
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'flex-start',
+            gap: 14,
+            fontSize: 26,
+            fontWeight: 600,
+            lineHeight: 1.3,
+            whiteSpace: 'nowrap',
+          }}
+        >
+          <div style={{ display: 'flex', color: 'white' }}>{formatDateRange(edition.startDate, edition.endDate)}</div>
+          <div style={{ display: 'flex', opacity: 0.85 }}>{VENUE.name}</div>
         </div>
       </div>
       <div
