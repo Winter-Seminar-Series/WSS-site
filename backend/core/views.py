@@ -1,8 +1,7 @@
 from django.db.models import Prefetch, QuerySet
 from django.http import Http404
-from rest_framework import generics, status
+from rest_framework import generics
 from rest_framework.permissions import AllowAny
-from rest_framework.response import Response
 
 from core.models import Event, LabTalk, PosterSession, PosterSessionImage, RoundTable, Seminar, Speaker
 from core.serializers import (
@@ -13,6 +12,7 @@ from core.serializers import (
     SpeakerSerializer,
     career_prefetch,
 )
+from core.services import create_poster_submission, poster_submission_event
 
 # --- Public content (read by the frontend at build/ISR time; one query per list) -----------------------------------
 
@@ -84,27 +84,26 @@ class RoundTableListView(EditionSessionListView):
 
 
 class PosterSessionImageView(generics.RetrieveUpdateDestroyAPIView):
-    """GET (404 when nothing is submitted yet), PUT/PATCH to replace the file, DELETE to withdraw."""
+    """The signed-in user's poster for one edition: GET, PUT/PATCH to replace, DELETE to withdraw."""
 
     serializer_class = PosterSessionImageSerializer
 
     def get_object(self) -> PosterSessionImage:
+        event = poster_submission_event(self.kwargs.get('event_id'))
         try:
-            return PosterSessionImage.objects.get(user=self.request.user)
+            submission = PosterSessionImage.objects.get(user=self.request.user, event=event)
         except PosterSessionImage.DoesNotExist:
             raise Http404('No poster has been submitted yet.')
+        self.check_object_permissions(self.request, submission)
+        return submission
 
 
 class PosterSessionImageCreateView(generics.CreateAPIView):
     serializer_class = PosterSessionImageSerializer
 
-    def create(self, request, *args, **kwargs):
-        if PosterSessionImage.objects.filter(user=request.user).exists():
-            return Response(
-                {'detail': 'A poster has already been submitted; replace it instead.'},
-                status=status.HTTP_409_CONFLICT,
-            )
-        return super().create(request, *args, **kwargs)
-
     def perform_create(self, serializer):
-        serializer.save(user=self.request.user)
+        serializer.instance = create_poster_submission(
+            user=self.request.user,
+            event=poster_submission_event(self.kwargs.get('event_id')),
+            image=serializer.validated_data['image'],
+        )

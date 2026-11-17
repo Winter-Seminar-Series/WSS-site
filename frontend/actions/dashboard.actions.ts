@@ -4,6 +4,7 @@ import { revalidatePath } from 'next/cache';
 
 import { uploadPoster } from '@/api/poster-session.api';
 import { getStreamLink } from '@/api/stream.api';
+import { CURRENT_EDITION } from '@/lib/editions';
 import { errorMessage, formError } from '@/lib/form';
 import type { FormState } from '@/lib/form';
 import type { ActionResult } from '@/types/participant.type';
@@ -30,7 +31,7 @@ export async function uploadPosterAction(_state: FormState, formData: FormData):
     return invalidPoster('Choose a valid PDF file.');
 
   try {
-    await uploadPoster(file, formData.get('replace') === 'true');
+    await uploadPoster(CURRENT_EDITION.eventId, file, formData.get('replace') === 'true');
   } catch (error) {
     return formError(error);
   }

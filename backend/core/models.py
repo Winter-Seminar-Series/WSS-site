@@ -194,10 +194,16 @@ class PosterSession(models.Model):
 
 
 class PosterSessionImage(models.Model):
-    """A participant's poster-session submission (one per account)."""
+    """A participant's poster-session submission, unique within one edition."""
 
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    event = models.ForeignKey(Event, on_delete=models.PROTECT)
     image = models.FileField(upload_to=UniqueUploadPath('poster-images'))
 
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=('user', 'event'), name='unique_poster_submission_per_user_event'),
+        ]
+
     def __str__(self):
-        return f"Poster Image of {self.user.username}"
+        return f"Poster Image of {self.user.username} - {self.event}"

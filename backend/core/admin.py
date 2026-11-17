@@ -113,4 +113,11 @@ admin.site.register(Workshop)
 admin.site.register(WorkshopSession)
 admin.site.register(LabTalk)
 admin.site.register(PosterSession)
-admin.site.register(PosterSessionImage)
+
+@admin.register(PosterSessionImage)
+class PosterSessionImageAdmin(admin.ModelAdmin):
+    list_display = ('user', 'event', 'image')
+    list_filter = ('event',)
+    list_select_related = ('user', 'event')
+    search_fields = ('user__username', 'user__email')
+    raw_id_fields = ('user',)

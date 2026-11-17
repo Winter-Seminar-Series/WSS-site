@@ -14,5 +14,15 @@ urlpatterns = [
         views.PosterSessionImageCreateView.as_view(),
         name='poster-session-image-create',
     ),
+    path(
+        'poster-session/<int:event_id>/image/',
+        views.PosterSessionImageView.as_view(),
+        name='edition-poster-session-image',
+    ),
+    path(
+        'poster-session/<int:event_id>/image/create/',
+        views.PosterSessionImageCreateView.as_view(),
+        name='edition-poster-session-image-create',
+    ),
     path('poster-session/<int:event_id>/', views.PosterSessionListView.as_view(), name='poster-sessions'),
 ]

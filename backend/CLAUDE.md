@@ -30,6 +30,12 @@ ArvanCloud for media, WhiteNoise for static files, and gunicorn.
 
 All API routes live under `/api/` (see `WSS/urls.py`); `/admin/` is the Django admin used by the organisers.
 
+Poster submissions are unique per user and event. Use `/api/poster-session/<event_id>/image/` to retrieve,
+replace or delete a submission, and its `create/` child to upload one. The old unscoped URLs remain pinned to
+WSS 10. Migration `core/0020` assigns the 39 legacy submissions to WSS 10 without changing their files; it refuses
+rollback once submissions from another edition exist. Deploy the backend and run migrations before deploying
+the frontend that uses the event-scoped URLs.
+
 ## Layout of an app
 
 ```
