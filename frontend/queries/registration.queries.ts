@@ -25,9 +25,10 @@ export function useQuote(order: Order) {
 export function useCheckout() {
   return useMutation({
     mutationFn: async (order: Order) => {
-      // On success the action redirects to the payment gateway and never resolves here.
       const result = await checkoutAction(order);
       if (!result.ok) throw new Error(result.error);
+      // A full navigation also handles external gateways and refreshes free-order registrations.
+      window.location.assign(result.data.redirectUrl);
     },
   });
 }

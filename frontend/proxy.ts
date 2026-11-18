@@ -4,6 +4,7 @@ import type { NextRequest } from 'next/server';
 
 import { AUTH_HINT_COOKIE } from '@/lib/auth-hint';
 import { jwtExpiresAt } from '@/lib/jwt';
+import { SITE_URL } from '@/lib/site';
 import { API_BASE_URL } from '@/services/http';
 import { SESSION_COOKIE, sessionPassword } from '@/services/session';
 import type { SessionData } from '@/services/session';
@@ -47,7 +48,7 @@ async function refreshTokens(refresh: string): Promise<Partial<TokenPairResponse
 function signedOut(request: NextRequest): NextResponse {
   const isPageView = request.method === 'GET' && request.nextUrl.pathname.startsWith('/dashboard');
   const response = isPageView
-    ? NextResponse.redirect(new URL(`/login?next=${encodeURIComponent(request.nextUrl.pathname)}`, request.url))
+    ? NextResponse.redirect(new URL(`/login?next=${encodeURIComponent(request.nextUrl.pathname)}`, SITE_URL))
     : NextResponse.next();
   response.cookies.delete(SESSION_COOKIE);
   response.cookies.delete(AUTH_HINT_COOKIE);

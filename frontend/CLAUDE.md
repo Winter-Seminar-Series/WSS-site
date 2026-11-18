@@ -139,8 +139,11 @@ proxy.ts                 # Next 16 proxy (formerly middleware): refreshes the ac
   API errors, retaining field paths. Echo non-sensitive values via `formValues` (never passwords or reset tokens).
   Render action forms with `ui/ValidatedForm` so fields show linked errors and the first invalid control receives focus.
   `firstIssue` is for non-form results such as checkout.
-- **Errors:** return them as values. Only `redirect()` throws, and only for success paths such as login or
-  checkout.
+- **Errors:** return them as values. Only `redirect()` throws, and only for success paths such as login.
+  Checkout returns its destination as data; its React Query mutation navigates with `window.location.assign`
+  so Next's redirect signal is not displayed as a mutation error.
+- **Payment returns:** callback and signed-out redirects use `SITE_URL`, the configured public origin. Behind
+  the reverse proxy, `request.url` may contain the container's bind address.
 - **Redirect targets:** sanitise any user-supplied redirect with `safeRedirectPath`.
 
 ### `queries/`: TanStack Query (dashboard only)

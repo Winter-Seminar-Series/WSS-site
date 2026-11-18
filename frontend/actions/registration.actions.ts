@@ -1,6 +1,5 @@
 'use server';
 
-import { redirect } from 'next/navigation';
 import { z } from 'zod';
 
 import { createPayment, getPrice } from '@/api/payment.api';
@@ -46,15 +45,14 @@ export async function quoteAction(order: Order): Promise<ActionResult<Quote>> {
   }
 }
 
-export async function checkoutAction(order: Order): Promise<ActionResult> {
+export async function checkoutAction(order: Order): Promise<ActionResult<{ redirectUrl: string }>> {
   const parsed = orderSchema.safeParse(order);
   if (!parsed.success) return { ok: false, error: firstIssue(parsed.error) };
 
-  let redirectUrl: string;
   try {
-    redirectUrl = await createPayment(parsed.data);
+    const redirectUrl = await createPayment(parsed.data);
+    return { ok: true, data: { redirectUrl } };
   } catch (error) {
     return { ok: false, error: errorMessage(error) };
   }
-  redirect(redirectUrl);
 }
