@@ -1,5 +1,5 @@
 Django==4.2.8
-gunicorn
+gunicorn==27.0.0
 djangorestframework
 djangorestframework-simplejwt
 django-storages[s3]
