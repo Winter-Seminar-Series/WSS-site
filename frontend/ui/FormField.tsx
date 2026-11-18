@@ -1,7 +1,11 @@
 'use client';
 
-import type { InputHTMLAttributes, ReactNode, SelectHTMLAttributes } from 'react';
+import { ChevronDown } from 'lucide-react';
+import { useEffect, useRef, useState } from 'react';
+import type { InputHTMLAttributes, ReactNode } from 'react';
 
+import { filterSelectOptions, findSelectOption } from '@/lib/select-search';
+import type { SelectOption } from '@/lib/select-search';
 import { useFieldErrors } from '@/ui/ValidatedForm';
 
 // 16px text on phones: anything smaller makes iOS Safari zoom into the field on focus.
@@ -84,36 +88,180 @@ export function TextField({ label, name, id = name, required, action, hint, clas
   );
 }
 
-interface SelectFieldProps extends SelectHTMLAttributes<HTMLSelectElement> {
+interface SelectFieldProps {
   label: string;
   name: string;
-  options: readonly string[] | readonly { value: string; label: string }[];
+  options: readonly string[] | readonly SelectOption[];
   placeholder?: string;
+  defaultValue?: string;
+  allowCustom?: boolean;
 }
 
-export function SelectField({ label, name, id = name, options, placeholder, required, ...props }: SelectFieldProps) {
+export function SelectField({
+  label,
+  name,
+  options,
+  placeholder,
+  defaultValue = '',
+  allowCustom = false,
+}: SelectFieldProps) {
   const error = useFieldErrors(name);
+  const selectRef = useRef<HTMLSelectElement>(null);
+  const listRef = useRef<HTMLUListElement>(null);
+  const [selected, setSelected] = useState(defaultValue);
+  const [query, setQuery] = useState<string | null>(null);
+  const [open, setOpen] = useState(false);
+  const [active, setActive] = useState(-1);
+  const choices = options.map((option) => (typeof option === 'string' ? { value: option, label: option } : option));
+  // Keep older saved values selectable even when they are absent from the current suggestions.
+  for (const value of [defaultValue, selected]) {
+    if (value && !choices.some((option) => option.value === value)) choices.push({ value, label: value });
+  }
+  const search = query?.trim() ?? '';
+  const filtered = filterSelectOptions(choices, search);
+  if (allowCustom && search && !findSelectOption(choices, search)) {
+    filtered.push({ value: search, label: `Use “${search}”` });
+    choices.push({ value: search, label: search });
+  }
+  const visible = [...filtered, { value: '', label: 'None' }];
+  const display = choices.find((option) => option.value === selected)?.label ?? selected;
+
+  useEffect(() => {
+    const reset = () => {
+      setSelected(defaultValue);
+      setQuery(null);
+      setOpen(false);
+      setActive(-1);
+    };
+    const form = selectRef.current?.form;
+    form?.addEventListener('reset', reset);
+    return () => form?.removeEventListener('reset', reset);
+  }, [defaultValue]);
+
+  useEffect(() => {
+    if (open && active >= 0) listRef.current?.children[active]?.scrollIntoView({ block: 'nearest' });
+  }, [active, open]);
+
+  function choose(value: string) {
+    value = findSelectOption(choices, value)?.value ?? value;
+    const select = selectRef.current;
+    if (select) {
+      select.value = value;
+      select.dispatchEvent(new Event('change', { bubbles: true }));
+    }
+    setSelected(value);
+    setQuery(null);
+    setOpen(false);
+    setActive(-1);
+  }
+
   return (
-    <Field label={label} htmlFor={id} required={required} error={error}>
-      <select
-        {...props}
-        id={id}
-        name={name}
-        required={required}
-        className={`${inputClasses} aria-invalid:border-danger`}
-        aria-invalid={error ? true : undefined}
-        aria-describedby={error ? `${id}-error` : undefined}
-      >
-        {placeholder && <option value="">{placeholder}</option>}
-        {options.map((option) => {
-          const { value, label: optionLabel } = typeof option === 'string' ? { value: option, label: option } : option;
-          return (
-            <option key={value} value={value}>
-              {optionLabel}
+    <Field label={label} htmlFor={name} error={error}>
+      <div className="relative">
+        <input
+          id={name}
+          role="combobox"
+          autoComplete="off"
+          aria-autocomplete="list"
+          aria-expanded={open}
+          aria-controls={`${name}-options`}
+          aria-activedescendant={open && active >= 0 ? `${name}-option-${active}` : undefined}
+          aria-invalid={error ? true : undefined}
+          aria-describedby={error ? `${name}-error` : undefined}
+          placeholder={placeholder ?? 'Search…'}
+          value={query ?? display}
+          maxLength={allowCustom ? 100 : undefined}
+          className={`${inputClasses} pe-10 aria-invalid:border-danger`}
+          onFocus={() => {
+            setOpen(true);
+            setActive(-1);
+          }}
+          onClick={() => setOpen(true)}
+          onChange={(event) => {
+            setQuery(event.target.value);
+            setOpen(true);
+            setActive(-1);
+          }}
+          onBlur={() => {
+            if (allowCustom && query !== null) choose(query.trim());
+            else {
+              setQuery(null);
+              setOpen(false);
+              setActive(-1);
+            }
+          }}
+          onKeyDown={(event) => {
+            if (event.nativeEvent.isComposing) return;
+            if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
+              event.preventDefault();
+              setOpen(true);
+              setActive((index) =>
+                event.key === 'ArrowDown'
+                  ? Math.min(index + 1, visible.length - 1)
+                  : index < 0
+                    ? visible.length - 1
+                    : Math.max(index - 1, 0),
+              );
+            } else if (open && (event.key === 'Home' || event.key === 'End')) {
+              event.preventDefault();
+              setActive(event.key === 'Home' ? 0 : visible.length - 1);
+            } else if (event.key === 'Enter' && open) {
+              event.preventDefault();
+              if (active >= 0) choose(visible[active].value);
+              else if (allowCustom && query !== null) choose(query.trim());
+            } else if (event.key === 'Escape') {
+              event.preventDefault();
+              setQuery(null);
+              setOpen(false);
+              setActive(-1);
+            }
+          }}
+        />
+        <ChevronDown className="pointer-events-none absolute end-4 top-4 size-4 text-muted" aria-hidden="true" />
+        <select
+          ref={selectRef}
+          name={name}
+          defaultValue={defaultValue}
+          onChange={(event) => setSelected(event.target.value)}
+          hidden
+          aria-hidden="true"
+        >
+          <option value="" />
+          {choices.map((option) => (
+            <option key={option.value} value={option.value}>
+              {option.label}
             </option>
-          );
-        })}
-      </select>
+          ))}
+        </select>
+        {open && (
+          <ul
+            ref={listRef}
+            id={`${name}-options`}
+            role="listbox"
+            aria-label={label}
+            className="absolute z-30 mt-2 max-h-64 w-full overflow-y-auto rounded-xl border border-line bg-surface p-1 shadow-lg"
+          >
+            {visible.map((option, index) => (
+              <li
+                key={option.value}
+                id={`${name}-option-${index}`}
+                role="option"
+                aria-selected={option.value === selected}
+                className={`flex min-h-11 cursor-pointer items-center rounded-lg px-3 py-2.5 text-sm ${active === index ? 'bg-brand-soft text-brand' : 'text-ink hover:bg-brand-soft'} ${option.value === selected ? 'font-semibold' : ''}`}
+                onPointerDown={(event) => event.preventDefault()}
+                onClick={() => choose(option.value)}
+              >
+                {option.label}
+              </li>
+            ))}
+            {!filtered.length && (
+              <li role="presentation" className="px-3 py-2.5 text-sm text-muted">
+                No matches found
+              </li>
+            )}
+          </ul>
+        )}
+      </div>
     </Field>
   );
 }

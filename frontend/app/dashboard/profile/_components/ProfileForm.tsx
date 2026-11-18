@@ -4,7 +4,7 @@ import { useActionState } from 'react';
 
 import { updateProfileAction } from '@/actions/profile.actions';
 import type { FormState } from '@/lib/form';
-import { GENDERS, GRADES, INTRODUCTION_METHODS, JOBS, MAJORS, PROVINCES } from '@/lib/profile-options';
+import { GENDERS, GRADES, INTRODUCTION_METHODS, JOBS, MAJORS, PROVINCES, UNIVERSITIES } from '@/lib/profile-options';
 import type { Profile } from '@/types/participant.type';
 import { Alert } from '@/ui/Alert';
 import { ChoiceGroup } from '@/ui/ChoiceGroup';
@@ -61,6 +61,7 @@ export function ProfileForm({ profile }: Props) {
           <SelectField
             label="Province"
             name="city"
+            key={`city:${value('city')}`}
             options={PROVINCES}
             placeholder="Choose your province"
             defaultValue={value('city')}
@@ -80,15 +81,19 @@ export function ProfileForm({ profile }: Props) {
 
       <Panel id="professional" title="Studies and work" description="Helps us match talks and sponsors to who attends.">
         <div className="grid gap-5 lg:grid-cols-2">
-          <TextField
+          <SelectField
             label="University"
             name="university"
-            autoComplete="organization"
+            key={`university:${value('university')}`}
+            options={UNIVERSITIES}
+            placeholder="Search or enter your university"
+            allowCustom
             defaultValue={value('university')}
           />
           <SelectField
             label="Major"
             name="major"
+            key={`major:${value('major')}`}
             options={MAJORS}
             placeholder="Choose your major"
             defaultValue={value('major')}
@@ -96,6 +101,7 @@ export function ProfileForm({ profile }: Props) {
           <SelectField
             label="Job"
             name="job"
+            key={`job:${value('job')}`}
             options={JOBS}
             placeholder="Choose your job"
             defaultValue={value('job')}
@@ -123,6 +129,7 @@ export function ProfileForm({ profile }: Props) {
           <SelectField
             label="How did you hear about us?"
             name="introductionMethod"
+            key={`introductionMethod:${value('introductionMethod')}`}
             options={INTRODUCTION_METHODS}
             placeholder="Choose one"
             defaultValue={value('introductionMethod')}
