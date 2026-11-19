@@ -13,7 +13,7 @@ must rank well. Every change has to keep both.
 ## Product
 
 This is the public website and participant dashboard of the **Winter Seminar Series**. The site is English
-and LTR, light theme, using the Manrope font.
+and LTR, light theme, using Raleway from `public/fonts`.
 
 | Area           | Routes                                                                           | Rendering                                                     |
 | -------------- | -------------------------------------------------------------------------------- | ------------------------------------------------------------- |

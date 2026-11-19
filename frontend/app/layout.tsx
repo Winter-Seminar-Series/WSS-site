@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from 'next';
-import { Manrope } from 'next/font/google';
+import localFont from 'next/font/local';
 import NextTopLoader from 'nextjs-toploader';
 import type { ReactNode } from 'react';
 
@@ -15,10 +15,11 @@ import './globals.css';
 
 // Latin only: one preloaded font file on the critical path. The site is English; the rare latin-ext glyph in a
 // speaker's name falls back to the system font for that character.
-const manrope = Manrope({
-  subsets: ['latin'],
+const raleway = localFont({
+  src: '../public/fonts/raleway-latin.woff2',
+  weight: '400 800',
   display: 'swap',
-  variable: '--font-manrope',
+  variable: '--font-raleway',
 });
 
 const SOCIAL_IMAGE = { url: socialImagePath(CURRENT_EDITION), ...SOCIAL_IMAGE_SIZE, alt: CURRENT_EDITION.title };
@@ -71,7 +72,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en" className={manrope.variable}>
+    <html lang="en" className={raleway.variable}>
       <head>
         <script
           id="yektanet-analytics"

@@ -61,7 +61,6 @@ export interface Edition {
   /** Background of the speakers band and the closing call to action. */
   bandImage: string;
   ctaImage?: string;
-  authImage?: string;
   /** Parts of the day that are not sessions (registration, breaks, ceremonies), placed on the timeline among them. */
   agenda?: AgendaItem[];
   /** In-person sessions are also streamed, so the timeline calls them hybrid. */
@@ -152,7 +151,6 @@ export const EDITIONS: readonly [Edition, ...Edition[]] = [
     socialImage: '/images/editions/11th-social-hero.jpg',
     bandImage: '/images/editions/11th-band.webp',
     ctaImage: '/images/editions/11th-band.webp',
-    authImage: '/images/editions/11th-band.webp',
   },
   {
     slug: '10th',

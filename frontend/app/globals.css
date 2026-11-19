@@ -3,7 +3,7 @@
 
 @theme {
   --font-sans:
-    var(--font-manrope), ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
+    var(--font-raleway), ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
     sans-serif;
 
   --color-brand: #a45e9f;
@@ -109,6 +109,7 @@
 
   body {
     @apply bg-surface text-ink antialiased;
+    font-variant-numeric: lining-nums proportional-nums;
   }
 
   h1,

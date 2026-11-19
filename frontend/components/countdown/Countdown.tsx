@@ -30,7 +30,7 @@ export function Countdown({ targetIso, size = 'md' }: Props) {
           }`}
         >
           <span
-            className={`font-extrabold tracking-tight tabular-nums ${large ? 'text-3xl sm:text-5xl' : 'text-2xl'}`}
+            className={`font-extrabold tracking-tight ${large ? 'text-3xl sm:text-5xl' : 'text-2xl'}`}
             suppressHydrationWarning
           >
             {String(time[unit]).padStart(2, '0')}

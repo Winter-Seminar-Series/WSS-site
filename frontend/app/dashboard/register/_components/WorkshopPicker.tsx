@@ -57,9 +57,7 @@ export function WorkshopPicker({ workshops, paid, selected, onChange }: Props) {
                   className="text-xs"
                 />
                 <p className="line-clamp-2 font-bold text-ink">{workshop.name}</p>
-                <p className="text-lg font-extrabold tracking-tight text-ink tabular-nums">
-                  {formatToman(workshop.price)}
-                </p>
+                <p className="text-lg font-extrabold tracking-tight text-ink">{formatToman(workshop.price)}</p>
                 <div className="mt-auto flex gap-2">
                   <Link
                     href={`/workshops/${workshop.id}`}

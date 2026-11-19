@@ -32,7 +32,7 @@ export function Highlights({ edition }: { edition: Edition }) {
           {edition.stats.map((stat) => (
             <div key={stat.label} className="flex flex-col-reverse justify-end gap-1 bg-surface p-5 md:p-6">
               <dt className="text-sm font-medium text-muted">{stat.label}</dt>
-              <dd className="text-3xl font-extrabold tracking-[-0.04em] text-ink tabular-nums md:text-4xl">
+              <dd className="text-3xl font-extrabold tracking-[-0.04em] text-ink md:text-4xl">
                 <CountUp value={stat.value} />
               </dd>
             </div>

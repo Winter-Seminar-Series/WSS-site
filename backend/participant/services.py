@@ -4,11 +4,15 @@ from django.conf import settings
 from django.contrib.auth import get_user_model, password_validation
 from django.contrib.auth.tokens import default_token_generator
 from django.core.exceptions import ValidationError as DjangoValidationError
-from django.core.mail import EmailMessage
+from django.core.mail import EmailMultiAlternatives
 from django.db import IntegrityError, transaction
+from django.template.loader import render_to_string
 from rest_framework import serializers
 from rest_framework.exceptions import NotFound
-from rest_framework_simplejwt.token_blacklist.models import BlacklistedToken, OutstandingToken
+from rest_framework_simplejwt.token_blacklist.models import (
+    BlacklistedToken,
+    OutstandingToken,
+)
 
 from participant.models import Participant, ParticipantInfo
 
@@ -71,6 +75,13 @@ def _participant_accounts(email: str):
     return User.objects.filter(email__iexact=normalize_email(email), is_active=True, participant__isnull=False)
 
 
+def _reset_link_lifetime(seconds: int) -> str:
+    for unit, scale in (('hour', 3600), ('minute', 60), ('second', 1)):
+        if seconds % scale == 0:
+            count = seconds // scale
+            return f'{count} {unit}{"s" if count != 1 else ""}'
+
+
 def send_password_reset(email: str) -> None:
     """
     Emails a reset link to every participant account with this address. Says nothing about whether one exists:
@@ -78,20 +89,22 @@ def send_password_reset(email: str) -> None:
     """
     for user in _participant_accounts(email):
         token = default_token_generator.make_token(user)
-        link = f'{settings.FRONTEND_ORIGIN}/reset-password/{token}'
-        hours = settings.PASSWORD_RESET_TIMEOUT // 3600
-        message = EmailMessage(
-            subject='WSS password reset',
-            body=(
-                f'Use this link to choose a new password for your WSS account:\n\n{link}\n\n'
-                f'It works once and expires in {hours} hour{"s" if hours != 1 else ""}. '
-                'If you did not ask for it, ignore this email: your password stays the same.'
-            ),
-            from_email=settings.SERVER_EMAIL,
-            to=[user.email],
-            headers={'x-liara-tag': 'password-reset'},
-        )
+        context = {
+            'site_url': settings.FRONTEND_ORIGIN,
+            'reset_url': f'{settings.FRONTEND_ORIGIN}/reset-password/{token}',
+            'lifetime': _reset_link_lifetime(settings.PASSWORD_RESET_TIMEOUT),
+        }
         try:
+            message = EmailMultiAlternatives(
+                subject='Reset your WSS password',
+                body=render_to_string('participant/email/password_reset.txt', context),
+                from_email=settings.SERVER_EMAIL,
+                to=[user.email],
+                headers={'x-liara-tag': 'password-reset'},
+            )
+            message.attach_alternative(
+                render_to_string('participant/email/password_reset.html', context), 'text/html'
+            )
             message.send(fail_silently=False)
         except Exception:
             logger.exception('Could not send the password reset email to user %s', user.pk)

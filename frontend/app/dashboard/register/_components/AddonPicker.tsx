@@ -79,7 +79,7 @@ export function AddonPicker({ addons, held, quantities, onChange }: Props) {
                   >
                     <Minus className="size-4" aria-hidden />
                   </button>
-                  <output className="w-7 text-center text-lg font-bold text-ink tabular-nums" aria-live="polite">
+                  <output className="w-7 text-center text-lg font-bold text-ink" aria-live="polite">
                     {quantity}
                   </output>
                   <button

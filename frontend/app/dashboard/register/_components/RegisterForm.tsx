@@ -144,7 +144,7 @@ export function RegisterForm({ modes, workshops, paidPlanIds, heldAddons, nation
                   )}
                 </span>
                 <span className="flex items-baseline justify-between gap-2">
-                  <span className="text-xl font-extrabold tracking-tight tabular-nums">{formatToman(mode.price)}</span>
+                  <span className="text-xl font-extrabold tracking-tight">{formatToman(mode.price)}</span>
                   {closed && <span className="text-sm font-semibold">Capacity is full</span>}
                 </span>
               </label>
@@ -162,7 +162,7 @@ export function RegisterForm({ modes, workshops, paidPlanIds, heldAddons, nation
               />
               Add lunch
             </span>
-            <span className="tabular-nums">{formatToman(lunchMode.price - selectedMode.price)}</span>
+            <span>{formatToman(lunchMode.price - selectedMode.price)}</span>
           </label>
         )}
       </Panel>
@@ -252,10 +252,7 @@ export function RegisterForm({ modes, workshops, paidPlanIds, heldAddons, nation
       <StickyActionBar>
         <div className="min-w-0 grow ps-3">
           <p className="text-xs font-semibold text-muted">Total</p>
-          <p
-            className="flex items-center gap-2 text-xl font-extrabold tracking-tight text-ink tabular-nums"
-            aria-live="polite"
-          >
+          <p className="flex items-center gap-2 text-xl font-extrabold tracking-tight text-ink" aria-live="polite">
             {formatToman(hasOrder ? (quote.data?.price.payable ?? 0) : 0)}
             {quote.isFetching && (
               <LoaderCircle className="size-4 animate-spin text-muted" aria-label="Updating price" />

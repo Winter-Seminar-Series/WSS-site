@@ -191,10 +191,10 @@ export function TimelineDay({ day, number, edition }: Props) {
                 className="reveal relative grid grid-cols-1 gap-3 py-5 pl-12 md:grid-cols-[7rem_minmax(0,1fr)] md:gap-x-20 md:py-7 md:pl-0"
               >
                 <div className="flex flex-wrap items-center gap-x-2 gap-y-1 md:block md:pt-1 md:text-right">
-                  <p className="text-lg font-extrabold tracking-tight text-ink tabular-nums md:text-xl">
+                  <p className="text-lg font-extrabold tracking-tight text-ink md:text-xl">
                     <time dateTime={entry.start}>{formatClock(entry.start)}</time>
                   </p>
-                  <p className="text-sm font-medium text-muted tabular-nums">
+                  <p className="text-sm font-medium text-muted">
                     to <time dateTime={entry.end}>{formatClock(entry.end)}</time>
                   </p>
                   <p className="inline-flex items-center gap-1 rounded-full bg-canvas px-2 py-0.5 text-xs font-bold text-ink/70 ring-1 ring-line-soft md:mt-2">

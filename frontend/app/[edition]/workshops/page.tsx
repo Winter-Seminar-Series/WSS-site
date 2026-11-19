@@ -59,7 +59,7 @@ export default async function WorkshopsPage({ params }: PageProps<'/[edition]/wo
                     modules={workshop.sessions.length}
                   />
                 }
-                footer={<p className="text-lg font-extrabold text-ink tabular-nums">{formatToman(workshop.price)}</p>}
+                footer={<p className="text-lg font-extrabold text-ink">{formatToman(workshop.price)}</p>}
               />
             </li>
           ))}

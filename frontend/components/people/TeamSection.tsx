@@ -16,7 +16,7 @@ export function TeamSection({ name, members }: Props) {
         <h3 id={headingId} className="text-2xl font-extrabold tracking-[-0.03em] text-ink md:text-3xl">
           {name}
         </h3>
-        <span className="text-sm font-semibold text-muted tabular-nums">{members.length}</span>
+        <span className="text-sm font-semibold text-muted">{members.length}</span>
       </div>
       <ul className="reveal grid grid-cols-2 gap-x-4 gap-y-10 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
         {members.map((member) => (
