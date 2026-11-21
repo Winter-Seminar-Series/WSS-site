@@ -9,20 +9,26 @@ import { markdownToHtml } from '@/lib/markdown';
 import { editionPageMetadata } from '@/lib/metadata';
 import { RichText } from '@/ui/RichText';
 
+import { PosterSessionDetails } from './_components/PosterSessionDetails';
+
 export const generateStaticParams = editionStaticParams();
 
 export async function generateMetadata({ params }: PageProps<'/[edition]/poster-session'>): Promise<Metadata> {
+  const edition = await resolveEdition(params, 'poster-session');
   return editionPageMetadata(
-    await resolveEdition(params, 'poster-session'),
+    edition,
     'Poster Session',
-    'Present your research at the Winter Seminar Series poster session: format, judging, awards and submission requirements.',
+    edition.slug === '11th'
+      ? 'Present your research at Sharif University of Technology on December 17, 2026. Submit by December 4 to compete for 100 million Tomans in prizes.'
+      : 'Present your research at the Winter Seminar Series poster session: format, judging, awards and submission requirements.',
     '/poster-session',
   );
 }
 
 export default async function PosterSessionPage({ params }: PageProps<'/[edition]/poster-session'>) {
   const edition = await resolveEdition(params, 'poster-session');
-  // Read at build time: this page is fully static.
+  if (edition.slug === '11th') return <PosterSessionDetails />;
+
   const markdown = await readFile(path.join(process.cwd(), 'content', 'poster-session.md'), 'utf8');
   const html = await markdownToHtml(markdown);
 
