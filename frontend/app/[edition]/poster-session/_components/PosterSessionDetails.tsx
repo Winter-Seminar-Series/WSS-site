@@ -1,13 +1,12 @@
 import { Award, CalendarDays, Clock3, Download, MapPin, Medal, Send, Trophy, Upload, UsersRound } from 'lucide-react';
 import Image from 'next/image';
 
-import photoOne from '@/public/images/programs/11th-poster-session-1.webp';
-import photoTwo from '@/public/images/programs/11th-poster-session-2.webp';
 import { LinkButton, buttonClasses } from '@/ui/Button';
 import { SectionHeading } from '@/ui/SectionHeading';
 
 const SUBMISSION_HREF = '/dashboard/poster-session';
 const VENUE_HREF = 'https://maps.app.goo.gl/A24SRLUYxWioobQw6';
+const SESSION_HOURS = '14:00–15:30';
 
 const AWARDS = [
   { name: 'First place', amount: 40, Icon: Trophy },
@@ -54,11 +53,12 @@ export function PosterSessionDetails() {
           </div>
           <figure>
             <Image
-              src={photoOne}
+              src="/images/programs/11th-poster-session-1.webp"
               alt="A presenter explains his research poster to a group of visitors"
+              width={1280}
+              height={853}
               preload
               sizes="(min-width: 1200px) 552px, (min-width: 1024px) 46vw, 94vw"
-              placeholder="blur"
               className="w-full rounded-2xl border border-white/15"
             />
             <figcaption className="mt-2 text-sm text-white/75">Poster Session at the 10th WSS</figcaption>
@@ -80,7 +80,7 @@ export function PosterSessionDetails() {
             <Clock3 aria-hidden className="row-span-2 size-5 text-brand-strong" />
             <dt className="text-sm font-bold text-muted">Time</dt>
             <dd className="mt-1 font-bold">
-              13:30–15:00
+              {SESSION_HOURS}
               <span className="block text-sm font-medium text-muted">Iran Standard Time (UTC+3:30)</span>
             </dd>
           </div>
@@ -151,18 +151,19 @@ export function PosterSessionDetails() {
               </p>
               <h3 className="mt-2 text-xl font-extrabold">3. Present your work</h3>
               <p className="mt-3 leading-relaxed text-muted">
-                Join us in person from <strong className="text-ink">13:30 to 15:00</strong>. Stand beside your poster to
-                explain your work, answer questions, and discuss it with reviewers and attendees.
+                Join us in person for the <strong className="text-ink">{SESSION_HOURS}</strong> session. Stand beside
+                your poster to explain your work, answer questions, and discuss it with reviewers and attendees.
               </p>
             </li>
           </ol>
 
           <figure className="mt-8">
             <Image
-              src={photoTwo}
+              src="/images/programs/11th-poster-session-2.webp"
               alt="A poster presenter points to part of his poster while attendees listen"
+              width={1280}
+              height={853}
               sizes="(min-width: 1200px) 1152px, 94vw"
-              placeholder="blur"
               className="w-full rounded-2xl object-cover md:aspect-[5/2] md:object-[center_40%]"
             />
             <figcaption className="mt-2 text-sm text-muted">Poster Session at the 10th WSS</figcaption>
