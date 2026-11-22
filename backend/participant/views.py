@@ -174,15 +174,20 @@ class AddonHoldingListView(generics.ListAPIView):
 
 
 class AttachmentListView(generics.ListAPIView):
+    """The user's certificates: one edition (`attachment/<event_id>/`) or, without an id, every edition, ordered by
+    event id and then newest first. Event ids are not chronological, so the client orders the editions itself."""
+
     serializer_class = ParticipationAttachmentSerializer
 
     def get_queryset(self):
-        return ParticipationAttachment.objects.filter(
-            participation__plan__event_id=self.kwargs['event_id'],
+        attachments = ParticipationAttachment.objects.filter(
             participation__participant__user=self.request.user,
         ).select_related(
             'participation__plan__event', 'participation__plan__workshop', 'participation__plan__mode_of_attendance'
         )
+        if 'event_id' in self.kwargs:
+            return attachments.filter(participation__plan__event_id=self.kwargs['event_id'])
+        return attachments.order_by('-participation__plan__event_id', '-date', '-id')
 
 
 class FileView(APIView):

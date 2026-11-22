@@ -1,3 +1,6 @@
+from django.db import connection
+from django.test.utils import CaptureQueriesContext
+
 from participant.serializers import encode_file_id
 from common.testing import (
     APITest,
@@ -81,3 +84,55 @@ class CertificateFileTests(APITest):
 
         self.assertEqual(self.client.get(f'/api/file/{encode_file_id("other/secret.pdf")}/').status_code, 404)
         self.assertEqual(self.client.get('/api/file/not-base64!/').status_code, 404)
+
+
+class CertificateListTests(APITest):
+    def setUp(self):
+        super().setUp()
+        self.participant = make_participant('ada@example.com')
+        self.old_event, self.new_event = make_event(), make_event()
+        self.old = ParticipationAttachment.objects.create(
+            participation=register(self.participant, make_mode_plan(self.old_event)), attachment='participation/old.png'
+        )
+        self.new = ParticipationAttachment.objects.create(
+            participation=register(self.participant, make_mode_plan(self.new_event)), attachment='participation/new.png'
+        )
+
+    def test_lists_every_edition_newest_first_with_its_event(self):
+        self.authenticate(self.participant)
+        response = self.client.get('/api/attachment/')
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(
+            [(item['id'], item['event']) for item in response.json()],
+            [(self.new.pk, self.new_event.pk), (self.old.pk, self.old_event.pk)],
+        )
+
+    def test_edition_route_still_lists_one_edition(self):
+        self.authenticate(self.participant)
+        response = self.client.get(f'/api/attachment/{self.old_event.pk}/')
+
+        self.assertEqual([(item['id'], item['event']) for item in response.json()], [(self.old.pk, self.old_event.pk)])
+
+    def test_never_lists_someone_elses_certificates(self):
+        other = make_participant()
+        ParticipationAttachment.objects.create(
+            participation=register(other, make_mode_plan(self.new_event)), attachment='participation/other.png'
+        )
+
+        self.authenticate(self.participant)
+        self.assertEqual({item['id'] for item in self.client.get('/api/attachment/').json()}, {self.old.pk, self.new.pk})
+
+    def test_requires_authentication(self):
+        self.assertEqual(self.client.get('/api/attachment/').status_code, 401)
+
+    def test_query_count_stays_constant(self):
+        self.authenticate(self.participant)
+        with CaptureQueriesContext(connection) as before:
+            self.client.get('/api/attachment/')
+        for _ in range(3):
+            ParticipationAttachment.objects.create(
+                participation=register(self.participant, make_mode_plan(make_event())), attachment='participation/x.png'
+            )
+        with self.assertNumQueries(len(before)):
+            self.client.get('/api/attachment/')

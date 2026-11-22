@@ -163,10 +163,11 @@ class ParticipationAttachmentSerializer(serializers.ModelSerializer):
 
     UUID = serializers.SerializerMethodField()
     plan = serializers.CharField(source='participation.plan', read_only=True)
+    event = serializers.IntegerField(source='participation.plan.event_id', read_only=True)
 
     class Meta:
         model = ParticipationAttachment
-        fields = ('id', 'plan', 'description', 'date', 'UUID')
+        fields = ('id', 'plan', 'event', 'description', 'date', 'UUID')
 
     def get_UUID(self, attachment: ParticipationAttachment) -> str:
         return encode_file_id(attachment.attachment.name)
