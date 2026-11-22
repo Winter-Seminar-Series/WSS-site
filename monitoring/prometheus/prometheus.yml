@@ -1,0 +1,31 @@
+global:
+  scrape_interval: 30s
+  scrape_timeout: 10s
+  evaluation_interval: 30s
+
+scrape_configs:
+  - job_name: prometheus
+    static_configs:
+      - targets: ['localhost:9090']
+
+  - job_name: grafana
+    static_configs:
+      - targets: ['grafana:3000']
+
+  # Resolves to the `app` bridge gateway through extra_hosts (monitoring-compose.yaml).
+  - job_name: node
+    static_configs:
+      - targets: ['node-exporter:9100']
+
+  - job_name: cadvisor
+    static_configs:
+      - targets: ['cadvisor:8080']
+
+  - job_name: postgres
+    static_configs:
+      - targets: ['postgres-exporter:9187']
+        # The PostgreSQL dashboard (grafana.com 9628) was written for Kubernetes and selects its targets by these two
+        # labels.
+        labels:
+          kubernetes_namespace: wss
+          release: wss

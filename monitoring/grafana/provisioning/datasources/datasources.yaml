@@ -1,0 +1,50 @@
+# Provisioned on every start; edits made in the UI are overwritten. Change them here.
+# $VARS are read from the container environment (.env.grafana).
+apiVersion: 1
+
+datasources:
+  - name: Prometheus
+    uid: prometheus
+    type: prometheus
+    access: proxy
+    url: http://prometheus:9090
+    isDefault: true
+    editable: false
+    jsonData:
+      timeInterval: 30s
+
+  # Read-only role with column-level grants: no password hashes, sessions, tokens or personal identifiers
+  # (monitoring/postgres/roles.sql).
+  - name: WSS backend DB
+    uid: wss-backend-db
+    type: grafana-postgresql-datasource
+    url: postgresql:5432
+    user: grafana_reader
+    editable: false
+    jsonData:
+      database: backend
+      sslmode: disable
+      postgresVersion: 1600
+      timescaledb: false
+      maxOpenConns: 5
+      maxIdleConns: 2
+      connMaxLifetime: 14400
+    secureJsonData:
+      password: $WSS_DB_READER_PASSWORD
+
+  - name: WSS payment DB
+    uid: wss-payment-db
+    type: grafana-postgresql-datasource
+    url: postgresql:5432
+    user: grafana_reader
+    editable: false
+    jsonData:
+      database: payment
+      sslmode: disable
+      postgresVersion: 1600
+      timescaledb: false
+      maxOpenConns: 2
+      maxIdleConns: 1
+      connMaxLifetime: 14400
+    secureJsonData:
+      password: $WSS_DB_READER_PASSWORD

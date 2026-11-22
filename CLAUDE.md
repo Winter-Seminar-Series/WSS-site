@@ -32,6 +32,11 @@ Server Components, Server Actions and route handlers. Each yearly edition is one
 One frontend serves every edition: the current one at `/`, the others under their slug (`/8th/…`).
 The registry is `frontend/lib/editions.ts`, which maps each edition to its `core_event.id`.
 
+Monitoring (`monitoring-compose.yaml`, docs in `monitoring/README.md`) is not an image module. Grafana sits behind
+the same nginx at `grafana.wss-sharif.com` and reads Prometheus plus the `backend` and `payment` databases through
+the read-only `grafana_reader` role. A migration that adds a table must be followed by a re-run of
+`monitoring/postgres/roles.sql`, and a sensitive new table or column needs a column-level grant there.
+
 ---
 
 ## Repository layout
@@ -41,6 +46,7 @@ frontend/  backend/  payment/        # one directory per module = one Docker ima
 compose.yaml                         # production: postgres, redis, backend, payment (external `app` network)
 front-compose.yaml                   # production: frontend
 nginx-compose.yaml, nginx.conf       # production: reverse proxy; old edition subdomains 301 to /<edition>/…
+monitoring-compose.yaml, monitoring/ # production: Grafana (grafana.wss-sharif.com), Prometheus, exporters
 compose.dev.yaml                     # local: postgres + redis + backend + payment, self-contained
 .env.*.example                       # documented env templates (committed); real .env.* are git-ignored
 .github/workflows/images.yml         # build + push an image per changed module

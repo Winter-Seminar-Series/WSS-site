@@ -1,0 +1,155 @@
+# Monitoring: Grafana at https://grafana.wss-sharif.com (proxied by wss-nginx, see nginx.conf), Prometheus and its
+# exporters. Nothing here publishes a host port; everything is reached over the external `app` network.
+#
+#   docker-compose -f monitoring-compose.yaml up -d
+#
+# First deploy: create the database roles (monitoring/postgres/roles.sql) and fill .env.grafana and
+# .env.postgres-exporter from their examples. Docs: monitoring/README.md.
+#
+# Docker Hub is unreachable from the server, so Hub images come through the ArvanCloud mirror (like compose.yaml);
+# cAdvisor is published on ghcr.io. The server is small (4 CPUs, 3.8 GiB, no swap): every service has a memory cap
+# and the logs are rotated, because the Docker daemon has no default log limit.
+
+networks:
+  app-net:
+    external: true
+    name: app
+
+x-logging: &logging
+  driver: json-file
+  options:
+    max-size: 10m
+    max-file: '3'
+
+services:
+  grafana:
+    image: docker.arvancloud.ir/grafana/grafana:12.2.1
+    container_name: wss-grafana
+    restart: unless-stopped
+    networks:
+      - app-net
+    env_file:
+      - .env.grafana
+    environment:
+      GF_SERVER_DOMAIN: grafana.wss-sharif.com
+      GF_SERVER_ROOT_URL: https://grafana.wss-sharif.com/
+      # TLS ends at the CDN; the browser only ever sees https, so the session cookie can be Secure.
+      GF_SECURITY_COOKIE_SECURE: 'true'
+      GF_SECURITY_COOKIE_SAMESITE: strict
+      GF_SECURITY_DISABLE_GRAVATAR: 'true'
+      GF_SECURITY_CONTENT_SECURITY_POLICY: 'true'
+      GF_USERS_ALLOW_SIGN_UP: 'false'
+      GF_USERS_ALLOW_ORG_CREATE: 'false'
+      GF_AUTH_ANONYMOUS_ENABLED: 'false'
+      GF_SNAPSHOTS_EXTERNAL_ENABLED: 'false'
+      # The server cannot reach grafana.com anyway; don't let it try on every start.
+      GF_ANALYTICS_REPORTING_ENABLED: 'false'
+      GF_ANALYTICS_CHECK_FOR_UPDATES: 'false'
+      GF_ANALYTICS_CHECK_FOR_PLUGIN_UPDATES: 'false'
+      GF_NEWS_NEWS_FEED_ENABLED: 'false'
+      GF_DATE_FORMATS_DEFAULT_TIMEZONE: Asia/Tehran
+      GF_LOG_MODE: console
+      GF_LOG_LEVEL: warn
+    volumes:
+      - grafana-data:/var/lib/grafana
+      - ./monitoring/grafana/provisioning:/etc/grafana/provisioning:ro
+      - ./monitoring/grafana/dashboards:/var/lib/grafana-dashboards:ro
+    depends_on:
+      - prometheus
+    mem_limit: 384m
+    healthcheck:
+      test: ['CMD', 'wget', '-q', '-O', '/dev/null', 'http://localhost:3000/api/health']
+      interval: 30s
+      timeout: 5s
+      retries: 3
+    logging: *logging
+
+  prometheus:
+    image: docker.arvancloud.ir/prom/prometheus:v3.7.3
+    container_name: wss-prometheus
+    restart: unless-stopped
+    networks:
+      - app-net
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml
+      - --storage.tsdb.path=/prometheus
+      # The disk is the scarcest resource on the server: whichever limit is reached first wins.
+      - --storage.tsdb.retention.time=15d
+      - --storage.tsdb.retention.size=1GB
+    # node-exporter runs in the host's network namespace and listens on the `app` bridge gateway only; give it a name.
+    # The gateway is `docker network inspect app -f '{{(index .IPAM.Config 0).Gateway}}'`.
+    extra_hosts:
+      - node-exporter:${APP_NETWORK_GATEWAY:-19.16.3.1}
+    volumes:
+      - ./monitoring/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus-data:/prometheus
+    mem_limit: 512m
+    healthcheck:
+      test: ['CMD', 'wget', '-q', '-O', '/dev/null', 'http://localhost:9090/-/healthy']
+      interval: 30s
+      timeout: 5s
+      retries: 3
+    logging: *logging
+
+  # Host metrics. Host network so the network panels show the server's interfaces, not a container's; bound to the
+  # `app` bridge gateway so it is reachable from the containers but not from outside the server.
+  node-exporter:
+    image: docker.arvancloud.ir/prom/node-exporter:v1.9.1
+    container_name: wss-node-exporter
+    restart: unless-stopped
+    network_mode: host
+    pid: host
+    read_only: true
+    command:
+      - --path.rootfs=/host
+      - --web.listen-address=${APP_NETWORK_GATEWAY:-19.16.3.1}:9100
+      - --collector.filesystem.mount-points-exclude=^/(dev|proc|sys|run|var/lib/docker/.+|var/lib/containerd/.+)($$|/)
+    volumes:
+      - /:/host:ro,rslave
+    mem_limit: 64m
+    logging: *logging
+
+  # Per-container CPU, memory, network and disk I/O.
+  cadvisor:
+    image: ghcr.io/google/cadvisor:0.55.1
+    container_name: wss-cadvisor
+    restart: unless-stopped
+    networks:
+      - app-net
+    command:
+      - --docker_only=true
+      - --housekeeping_interval=30s
+      - --store_container_labels=false
+      - --whitelisted_container_labels=com.docker.compose.project,com.docker.compose.service
+      - --disable_metrics=advtcp,cpu_topology,cpuset,hugetlb,memory_numa,percpu,process,referenced_memory,resctrl,sched,tcp,udp
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:ro
+      - /sys:/sys:ro
+      - /var/lib/docker:/var/lib/docker:ro
+      - /dev/disk:/dev/disk:ro
+    devices:
+      - /dev/kmsg
+    privileged: true
+    mem_limit: 256m
+    logging: *logging
+
+  # PostgreSQL server metrics, through a role that only has pg_monitor (monitoring/postgres/roles.sql).
+  postgres-exporter:
+    image: docker.arvancloud.ir/prometheuscommunity/postgres-exporter:v0.18.1
+    container_name: wss-postgres-exporter
+    restart: unless-stopped
+    networks:
+      - app-net
+    read_only: true
+    env_file:
+      - .env.postgres-exporter
+    environment:
+      DATA_SOURCE_URI: postgresql:5432/postgres?sslmode=disable
+      DATA_SOURCE_USER: wss_monitor
+    mem_limit: 64m
+    logging: *logging
+
+volumes:
+  grafana-data:
+  prometheus-data:
