@@ -962,6 +962,462 @@
           ]
         }
       }
+    },
+    {
+      "id": 21,
+      "type": "row",
+      "title": "Discount codes (whole edition)",
+      "collapsed": false,
+      "gridPos": {
+        "x": 0,
+        "y": 51,
+        "w": 24,
+        "h": 1
+      },
+      "panels": []
+    },
+    {
+      "id": 22,
+      "type": "stat",
+      "title": "Codes defined",
+      "description": "Discount codes that exist for the edition.",
+      "gridPos": {
+        "x": 0,
+        "y": 52,
+        "w": 4,
+        "h": 4
+      },
+      "datasource": {
+        "type": "grafana-postgresql-datasource",
+        "uid": "wss-backend-db"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "grafana-postgresql-datasource",
+            "uid": "wss-backend-db"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT count(*) FROM payment_paymentdiscount WHERE event_id = ${event}"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "decimals": 0,
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "blue"
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "colorMode": "value",
+        "graphMode": "none",
+        "textMode": "value",
+        "justifyMode": "center"
+      }
+    },
+    {
+      "id": 23,
+      "type": "stat",
+      "title": "Codes used",
+      "description": "Codes redeemed in at least one paid order.",
+      "gridPos": {
+        "x": 4,
+        "y": 52,
+        "w": 4,
+        "h": 4
+      },
+      "datasource": {
+        "type": "grafana-postgresql-datasource",
+        "uid": "wss-backend-db"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "grafana-postgresql-datasource",
+            "uid": "wss-backend-db"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "WITH r AS (\n  SELECT discount_id, status FROM payment_paymentrequest WHERE discount_id IS NOT NULL\n  UNION ALL\n  SELECT discount_id, status FROM payment_grouppaymentrequest WHERE discount_id IS NOT NULL\n)\nSELECT count(DISTINCT d.id)\nFROM payment_paymentdiscount d\nJOIN r ON r.discount_id = d.id AND r.status = 'paid'\nWHERE d.event_id = ${event}"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "decimals": 0,
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "purple"
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "colorMode": "value",
+        "graphMode": "none",
+        "textMode": "value",
+        "justifyMode": "center"
+      }
+    },
+    {
+      "id": 24,
+      "type": "stat",
+      "title": "Paid redemptions",
+      "description": "Paid orders that used a discount code.",
+      "gridPos": {
+        "x": 8,
+        "y": 52,
+        "w": 4,
+        "h": 4
+      },
+      "datasource": {
+        "type": "grafana-postgresql-datasource",
+        "uid": "wss-backend-db"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "grafana-postgresql-datasource",
+            "uid": "wss-backend-db"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "WITH r AS (\n  SELECT discount_id, status FROM payment_paymentrequest WHERE discount_id IS NOT NULL\n  UNION ALL\n  SELECT discount_id, status FROM payment_grouppaymentrequest WHERE discount_id IS NOT NULL\n)\nSELECT count(*)\nFROM payment_paymentdiscount d\nJOIN r ON r.discount_id = d.id\nWHERE d.event_id = ${event} AND r.status = 'paid'"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "decimals": 0,
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "green"
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "colorMode": "value",
+        "graphMode": "none",
+        "textMode": "value",
+        "justifyMode": "center"
+      }
+    },
+    {
+      "id": 25,
+      "type": "stat",
+      "title": "Pending redemptions",
+      "description": "",
+      "gridPos": {
+        "x": 12,
+        "y": 52,
+        "w": 4,
+        "h": 4
+      },
+      "datasource": {
+        "type": "grafana-postgresql-datasource",
+        "uid": "wss-backend-db"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "grafana-postgresql-datasource",
+            "uid": "wss-backend-db"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "WITH r AS (\n  SELECT discount_id, status FROM payment_paymentrequest WHERE discount_id IS NOT NULL\n  UNION ALL\n  SELECT discount_id, status FROM payment_grouppaymentrequest WHERE discount_id IS NOT NULL\n)\nSELECT count(*)\nFROM payment_paymentdiscount d\nJOIN r ON r.discount_id = d.id\nWHERE d.event_id = ${event} AND r.status = 'pending'"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "decimals": 0,
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "orange"
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "colorMode": "value",
+        "graphMode": "none",
+        "textMode": "value",
+        "justifyMode": "center"
+      }
+    },
+    {
+      "id": 26,
+      "type": "stat",
+      "title": "Uses left (capped codes)",
+      "description": "Remaining uses across codes that have a usage cap (unlimited codes are excluded).",
+      "gridPos": {
+        "x": 16,
+        "y": 52,
+        "w": 4,
+        "h": 4
+      },
+      "datasource": {
+        "type": "grafana-postgresql-datasource",
+        "uid": "wss-backend-db"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "grafana-postgresql-datasource",
+            "uid": "wss-backend-db"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT coalesce(sum(count), 0) FROM payment_paymentdiscount\nWHERE event_id = ${event} AND count <> -1"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "decimals": 0,
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "blue"
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "colorMode": "value",
+        "graphMode": "none",
+        "textMode": "value",
+        "justifyMode": "center"
+      }
+    },
+    {
+      "id": 27,
+      "type": "stat",
+      "title": "Unlimited codes",
+      "description": "Codes with no usage cap.",
+      "gridPos": {
+        "x": 20,
+        "y": 52,
+        "w": 4,
+        "h": 4
+      },
+      "datasource": {
+        "type": "grafana-postgresql-datasource",
+        "uid": "wss-backend-db"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "grafana-postgresql-datasource",
+            "uid": "wss-backend-db"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT count(*) FROM payment_paymentdiscount WHERE event_id = ${event} AND count = -1"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "decimals": 0,
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "text"
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "colorMode": "value",
+        "graphMode": "none",
+        "textMode": "value",
+        "justifyMode": "center"
+      }
+    },
+    {
+      "id": 28,
+      "type": "barchart",
+      "title": "Top codes by paid redemptions",
+      "description": "",
+      "gridPos": {
+        "x": 0,
+        "y": 56,
+        "w": 12,
+        "h": 11
+      },
+      "datasource": {
+        "type": "grafana-postgresql-datasource",
+        "uid": "wss-backend-db"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "grafana-postgresql-datasource",
+            "uid": "wss-backend-db"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "WITH r AS (\n  SELECT discount_id, status FROM payment_paymentrequest WHERE discount_id IS NOT NULL\n  UNION ALL\n  SELECT discount_id, status FROM payment_grouppaymentrequest WHERE discount_id IS NOT NULL\n)\nSELECT d.code, count(*) FILTER (WHERE r.status = 'paid') AS count\nFROM payment_paymentdiscount d\nJOIN r ON r.discount_id = d.id\nWHERE d.event_id = ${event}\nGROUP BY d.code\nHAVING count(*) FILTER (WHERE r.status = 'paid') > 0\nORDER BY count DESC\nLIMIT 15"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "orientation": "horizontal",
+        "showValue": "auto",
+        "legend": {
+          "showLegend": false
+        },
+        "xTickLabelMaxLength": 40,
+        "colorByField": "count"
+      }
+    },
+    {
+      "id": 29,
+      "type": "table",
+      "title": "Discount codes",
+      "description": "Every code of the edition: its value (fixed Toman or percentage), remaining uses (∞ = unlimited) and redemptions by order status.",
+      "gridPos": {
+        "x": 12,
+        "y": 56,
+        "w": 12,
+        "h": 11
+      },
+      "datasource": {
+        "type": "grafana-postgresql-datasource",
+        "uid": "wss-backend-db"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "grafana-postgresql-datasource",
+            "uid": "wss-backend-db"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "WITH r AS (\n  SELECT discount_id, status FROM payment_paymentrequest WHERE discount_id IS NOT NULL\n  UNION ALL\n  SELECT discount_id, status FROM payment_grouppaymentrequest WHERE discount_id IS NOT NULL\n)\nSELECT d.code,\n  CASE WHEN d.amount > 0 THEN (d.amount / 10) || ' T' ELSE d.percentage || ' %' END AS value,\n  CASE WHEN d.count = -1 THEN '∞' ELSE d.count::text END AS uses_left,\n  count(*) FILTER (WHERE r.status = 'paid') AS paid,\n  count(*) FILTER (WHERE r.status = 'pending') AS pending,\n  count(*) FILTER (WHERE r.status = 'failed') AS failed\nFROM payment_paymentdiscount d\nLEFT JOIN r ON r.discount_id = d.id\nWHERE d.event_id = ${event}\nGROUP BY d.id\nORDER BY paid DESC, d.code"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "filterable": true
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "paid"
+            },
+            "properties": [
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-text"
+                }
+              },
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "green"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "options": {
+        "showHeader": true,
+        "footer": {
+          "show": true,
+          "reducer": [
+            "sum"
+          ],
+          "fields": [
+            "paid",
+            "pending",
+            "failed"
+          ]
+        },
+        "sortBy": [
+          {
+            "displayName": "paid",
+            "desc": true
+          }
+        ]
+      }
     }
   ]
 }
