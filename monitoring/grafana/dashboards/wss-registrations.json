@@ -317,8 +317,8 @@
     {
       "id": 7,
       "type": "stat",
-      "title": "Revenue in range (Toman)",
-      "description": "Verified gateway payments inside the selected time range, all editions (the payment database does not know editions). Amounts are stored in Rial.",
+      "title": "Real income in range (Toman)",
+      "description": "Money actually received: net of discounts, successful gateway payments inside the selected time range, all editions (the payment database does not know editions). Stored in Rial, shown in Toman. See the Income section for the full breakdown.",
       "gridPos": {
         "x": 20,
         "y": 1,
@@ -339,7 +339,7 @@
           "editorMode": "code",
           "format": "table",
           "rawQuery": true,
-          "rawSql": "SELECT coalesce(sum(to_pay_amount), 0) / 10 AS revenue\nFROM payments\nWHERE payment_status = 3 -- success\nAND $__timeFilter(verified_at)"
+          "rawSql": "SELECT coalesce(sum(to_pay_amount), 0) / 10 AS income\nFROM payments\nWHERE payment_status = 3 -- success\nAND $__timeFilter(verified_at)"
         }
       ],
       "fieldConfig": {
@@ -493,8 +493,8 @@
     {
       "id": 11,
       "type": "timeseries",
-      "title": "Revenue per day (Toman, all editions)",
-      "description": "",
+      "title": "Real income per day (Toman, net, all editions)",
+      "description": "Money received per day, net of discounts.",
       "gridPos": {
         "x": 0,
         "y": 14,
@@ -515,7 +515,7 @@
           "editorMode": "code",
           "format": "time_series",
           "rawQuery": true,
-          "rawSql": "SELECT date_trunc('day', verified_at AT TIME ZONE 'Asia/Tehran') AT TIME ZONE 'Asia/Tehran' AS time, sum(to_pay_amount) / 10 AS revenue\nFROM payments\nWHERE payment_status = 3 -- success\nAND $__timeFilter(verified_at)\nGROUP BY 1\nORDER BY 1"
+          "rawSql": "SELECT date_trunc('day', verified_at AT TIME ZONE 'Asia/Tehran') AT TIME ZONE 'Asia/Tehran' AS time, sum(to_pay_amount) / 10 AS income\nFROM payments\nWHERE payment_status = 3 -- success\nAND $__timeFilter(verified_at)\nGROUP BY 1\nORDER BY 1"
         }
       ],
       "fieldConfig": {
@@ -1417,6 +1417,392 @@
             "desc": true
           }
         ]
+      }
+    },
+    {
+      "id": 30,
+      "type": "row",
+      "title": "Income (real money received, net of discounts, all editions)",
+      "collapsed": false,
+      "gridPos": {
+        "x": 0,
+        "y": 67,
+        "w": 24,
+        "h": 1
+      },
+      "panels": []
+    },
+    {
+      "id": 31,
+      "type": "stat",
+      "title": "Real income (Toman)",
+      "description": "Money actually received: net of discounts, successful payments in range.",
+      "gridPos": {
+        "x": 0,
+        "y": 68,
+        "w": 4,
+        "h": 4
+      },
+      "datasource": {
+        "type": "grafana-postgresql-datasource",
+        "uid": "wss-payment-db"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "grafana-postgresql-datasource",
+            "uid": "wss-payment-db"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT coalesce(sum(to_pay_amount), 0) / 10 AS income\nFROM payments\nWHERE payment_status = 3 -- success\nAND $__timeFilter(verified_at)"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "locale",
+          "decimals": 0,
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "green"
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "colorMode": "value",
+        "graphMode": "none",
+        "textMode": "value",
+        "justifyMode": "center"
+      }
+    },
+    {
+      "id": 32,
+      "type": "stat",
+      "title": "Discounts given (Toman)",
+      "description": "Total taken off by discount codes on successful payments.",
+      "gridPos": {
+        "x": 4,
+        "y": 68,
+        "w": 4,
+        "h": 4
+      },
+      "datasource": {
+        "type": "grafana-postgresql-datasource",
+        "uid": "wss-payment-db"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "grafana-postgresql-datasource",
+            "uid": "wss-payment-db"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT coalesce(sum(discount), 0) / 10 AS discount\nFROM payments\nWHERE payment_status = 3 -- success\nAND $__timeFilter(verified_at)"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "locale",
+          "decimals": 0,
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "orange"
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "colorMode": "value",
+        "graphMode": "none",
+        "textMode": "value",
+        "justifyMode": "center"
+      }
+    },
+    {
+      "id": 33,
+      "type": "stat",
+      "title": "Gross before discount (Toman)",
+      "description": "What the orders would have cost at full price (real income + discounts given).",
+      "gridPos": {
+        "x": 8,
+        "y": 68,
+        "w": 4,
+        "h": 4
+      },
+      "datasource": {
+        "type": "grafana-postgresql-datasource",
+        "uid": "wss-payment-db"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "grafana-postgresql-datasource",
+            "uid": "wss-payment-db"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT coalesce(sum(to_pay_amount + discount), 0) / 10 AS gross\nFROM payments\nWHERE payment_status = 3 -- success\nAND $__timeFilter(verified_at)"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "locale",
+          "decimals": 0,
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "blue"
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "colorMode": "value",
+        "graphMode": "none",
+        "textMode": "value",
+        "justifyMode": "center"
+      }
+    },
+    {
+      "id": 34,
+      "type": "stat",
+      "title": "Successful payments",
+      "description": "Count of settled gateway payments in range.",
+      "gridPos": {
+        "x": 12,
+        "y": 68,
+        "w": 4,
+        "h": 4
+      },
+      "datasource": {
+        "type": "grafana-postgresql-datasource",
+        "uid": "wss-payment-db"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "grafana-postgresql-datasource",
+            "uid": "wss-payment-db"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT count(*)\nFROM payments\nWHERE payment_status = 3 -- success\nAND $__timeFilter(verified_at)"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "decimals": 0,
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "green"
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "colorMode": "value",
+        "graphMode": "none",
+        "textMode": "value",
+        "justifyMode": "center"
+      }
+    },
+    {
+      "id": 35,
+      "type": "stat",
+      "title": "Avg paid order (Toman)",
+      "description": "Average net amount per successful payment.",
+      "gridPos": {
+        "x": 16,
+        "y": 68,
+        "w": 4,
+        "h": 4
+      },
+      "datasource": {
+        "type": "grafana-postgresql-datasource",
+        "uid": "wss-payment-db"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "grafana-postgresql-datasource",
+            "uid": "wss-payment-db"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT coalesce(round(avg(to_pay_amount)), 0) / 10 AS avg_order\nFROM payments\nWHERE payment_status = 3 -- success\nAND $__timeFilter(verified_at)"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "locale",
+          "decimals": 0,
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "purple"
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "colorMode": "value",
+        "graphMode": "none",
+        "textMode": "value",
+        "justifyMode": "center"
+      }
+    },
+    {
+      "id": 36,
+      "type": "stat",
+      "title": "Payment success rate",
+      "description": "Successful out of all finalized attempts (success + failed + timeout) started in range.",
+      "gridPos": {
+        "x": 20,
+        "y": 68,
+        "w": 4,
+        "h": 4
+      },
+      "datasource": {
+        "type": "grafana-postgresql-datasource",
+        "uid": "wss-payment-db"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "grafana-postgresql-datasource",
+            "uid": "wss-payment-db"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT round(100.0 * count(*) FILTER (WHERE payment_status = 3)\n  / nullif(count(*) FILTER (WHERE payment_status IN (1, 2, 3)), 0), 1) AS rate\nFROM payments\nWHERE $__timeFilter(created_at)"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "decimals": 0,
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "blue"
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "colorMode": "value",
+        "graphMode": "none",
+        "textMode": "value",
+        "justifyMode": "center"
+      }
+    },
+    {
+      "id": 37,
+      "type": "timeseries",
+      "title": "Income per day: net + discount = gross (Toman)",
+      "description": "Stacked bars: real income plus discounts given equals the gross value of what sold each day.",
+      "gridPos": {
+        "x": 0,
+        "y": 72,
+        "w": 24,
+        "h": 9
+      },
+      "datasource": {
+        "type": "grafana-postgresql-datasource",
+        "uid": "wss-payment-db"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "grafana-postgresql-datasource",
+            "uid": "wss-payment-db"
+          },
+          "editorMode": "code",
+          "format": "time_series",
+          "rawQuery": true,
+          "rawSql": "SELECT date_trunc('day', verified_at AT TIME ZONE 'Asia/Tehran') AT TIME ZONE 'Asia/Tehran' AS time,\n  sum(to_pay_amount) / 10 AS \"real income\",\n  sum(discount) / 10 AS \"discount given\"\nFROM payments\nWHERE payment_status = 3 -- success\nAND $__timeFilter(verified_at)\nGROUP BY 1\nORDER BY 1"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "locale",
+          "custom": {
+            "drawStyle": "bars",
+            "fillOpacity": 80,
+            "lineWidth": 1,
+            "stacking": {
+              "mode": "normal",
+              "group": "A"
+            }
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "desc"
+        }
       }
     }
   ]
