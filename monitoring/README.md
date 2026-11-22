@@ -42,6 +42,14 @@ are stored in Grafana's own database (the `grafana-data` volume) and are not in 
   numbers or license keys.
 - **`wss_monitor`** is used by postgres-exporter. It has `pg_monitor`: server statistics, no table data.
 
+**Per-edition income** needs the backend and payment databases joined, but they are separate databases, so
+`monitoring/postgres/payment-fdw.sql` sets up `postgres_fdw`: it exposes the payment `payments` table (money
+columns only, no `user_id`) inside the backend database as `payment_remote.payments`. The income panels run on the
+backend datasource and join each order to it on `order_id`, attributing the money to the edition through the
+order's plans. Run it after `roles.sql`, and re-run it if the reader password rotates (the foreign user mapping
+stores a copy). Editions before the current payment gateway (roughly 1–9) have no rows in `payments` and correctly
+show zero income.
+
 The grants cover the tables that exist when the script runs. **Re-run it after a migration adds a table.** Grafana
 can't read the new table until you do, and the script grants a new table in full, so first check whether it holds
 anything sensitive and add a column-level grant if it does.
@@ -62,6 +70,10 @@ chmod 600 .env.grafana .env.postgres-exporter
 # 2. Database roles (WSS_DB_READER_PASSWORD from .env.grafana, DATA_SOURCE_PASS from .env.postgres-exporter)
 docker exec -i wss-postgres psql -U postgres -v ON_ERROR_STOP=1 \
   -v reader_password='…' -v monitor_password='…' < monitoring/postgres/roles.sql
+
+# 2b. Cross-database bridge for per-edition income (reader_password from .env.grafana)
+docker exec -i wss-postgres psql -U postgres -v ON_ERROR_STOP=1 \
+  -v reader_password='…' < monitoring/postgres/payment-fdw.sql
 
 # 3. Start the stack, then let nginx route the domain
 docker-compose -f monitoring-compose.yaml up -d
