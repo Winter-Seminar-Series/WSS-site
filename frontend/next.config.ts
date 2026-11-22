@@ -15,6 +15,7 @@ const nextConfig: NextConfig = {
     // 75 is the default; 90 is for full-width photo backdrops only (lib/images.ts).
     qualities: [100, 75, 90],
     minimumCacheTTL: 60 * 60 * 24 * 7,
+    maximumDiskCacheSize: 64 * 1024 * 1024,
     dangerouslyAllowSVG: false,
     // Only our own bucket: an open allow-list lets /_next/image fetch attacker-chosen URLs (SSRF).
     remotePatterns: [{ protocol: 'https', hostname: 's3.ir-thr-at1.arvanstorage.ir', pathname: '/wss/**' }],
