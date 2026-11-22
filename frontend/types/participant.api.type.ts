@@ -42,10 +42,12 @@ export interface AddonHoldingResponse {
   quantity: number;
 }
 
-/** `/attachment/:event/` */
+/** `/attachment/` (every edition) and `/attachment/:event/` */
 export interface AttachmentResponse {
   id: number;
   plan: string;
+  /** `core_event.id`. Missing from a backend that predates the all-editions list. */
+  event?: number;
   description: string;
   date: string;
   UUID: string;

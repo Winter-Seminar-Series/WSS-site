@@ -28,6 +28,8 @@ export interface Participation {
 export interface Certificate {
   id: number;
   plan: string;
+  /** `core_event.id` of the edition the certificate belongs to. */
+  eventId: number;
   /** ISO date. */
   date: string;
   fileId: string;

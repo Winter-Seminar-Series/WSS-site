@@ -26,9 +26,23 @@ export async function getAddonHoldings(): Promise<Record<number, number>> {
   }
 }
 
+/** Every certificate of the user, across all editions. The page groups them by edition. */
 export async function getCertificates(): Promise<Certificate[]> {
-  const response = await httpGet<AttachmentResponse[]>(`/attachment/${CURRENT_EDITION.eventId}/`, { auth: true });
-  return response.map((item) => ({ id: item.id, plan: item.plan, date: item.date, fileId: item.UUID }));
+  let response: AttachmentResponse[];
+  try {
+    response = await httpGet<AttachmentResponse[]>('/attachment/', { auth: true });
+  } catch (error) {
+    // A backend from before the all-editions list only has the per-edition route: show the current edition.
+    if (!isHttpError(error, 404)) throw error;
+    response = await httpGet<AttachmentResponse[]>(`/attachment/${CURRENT_EDITION.eventId}/`, { auth: true });
+  }
+  return response.map((item) => ({
+    id: item.id,
+    plan: item.plan,
+    eventId: item.event ?? CURRENT_EDITION.eventId,
+    date: item.date,
+    fileId: item.UUID,
+  }));
 }
 
 /** SpotPlayer licenses for every paid plan that has one. */
