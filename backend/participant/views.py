@@ -75,8 +75,7 @@ class PasswordResetView(APIView):
         serializer = PasswordResetRequestSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         services.send_password_reset(serializer.validated_data['email'])
-        # The same answer whether or not the address has an account.
-        return Response({'detail': 'If an account uses this email, a reset link is on its way.'})
+        return Response({'detail': 'A reset link is on its way.'})
 
     def put(self, request):
         serializer = PasswordResetConfirmSerializer(data=request.data)

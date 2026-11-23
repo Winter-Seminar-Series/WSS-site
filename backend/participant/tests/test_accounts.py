@@ -101,13 +101,18 @@ class PasswordResetTests(APITest):
     def token_from_email(self) -> str:
         return re.search(r'/reset-password/(\S+)', mail.outbox[-1].body).group(1)
 
-    def test_the_answer_does_not_reveal_whether_an_account_exists(self):
-        known = self.request_reset('ADA@example.com')
-        unknown = self.request_reset('nobody@example.com')
-        self.assertEqual(known.status_code, 200)
-        self.assertEqual(known.json(), unknown.json())
+    def test_an_existing_account_gets_the_link_whatever_the_email_case(self):
+        response = self.request_reset('ADA@example.com')
+        self.assertEqual(response.status_code, 200)
         self.assertEqual(len(mail.outbox), 1)
         self.assertEqual(mail.outbox[0].to, ['ada@example.com'])
+
+    def test_an_unknown_email_is_told_there_is_no_account_and_gets_no_mail(self):
+        response = self.request_reset('nobody@example.com')
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(self.error_codes(response), ['account_not_found'])
+        self.assertEqual([error['attr'] for error in response.json()['errors']], ['email'])
+        self.assertEqual(len(mail.outbox), 0)
 
     def test_the_emailed_link_resets_the_password_once_and_signs_out_other_sessions(self):
         session = RefreshToken.for_user(self.participant.user)

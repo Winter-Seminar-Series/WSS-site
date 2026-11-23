@@ -82,12 +82,19 @@ def _reset_link_lifetime(seconds: int) -> str:
             return f'{count} {unit}{"s" if count != 1 else ""}'
 
 
+NO_ACCOUNT_FOR_EMAIL = 'No account found with this email. Check the address, or sign up.'
+
+
 def send_password_reset(email: str) -> None:
     """
-    Emails a reset link to every participant account with this address. Says nothing about whether one exists:
-    the caller answers the same either way, and a delivery failure is logged rather than reported.
+    Emails a reset link to every participant account with this address, or fails with `account_not_found` when none
+    uses it (sign-up already says when an email is taken, so this reveals nothing new). A delivery failure is logged
+    rather than reported.
     """
-    for user in _participant_accounts(email):
+    users = list(_participant_accounts(email))
+    if not users:
+        raise serializers.ValidationError({'email': NO_ACCOUNT_FOR_EMAIL}, code='account_not_found')
+    for user in users:
         token = default_token_generator.make_token(user)
         context = {
             'site_url': settings.FRONTEND_ORIGIN,
