@@ -4,10 +4,13 @@ from django.contrib import admin
 from django.db.models import Sum
 from django.db.models.functions import Coalesce
 from django.http import HttpResponse
+from django.template.defaultfilters import filesizeformat
+from django.utils.html import format_html
 
 from core.admin import ExportCSVMixin
 from participant.models import (
     AddonPurchase,
+    CV,
     ModeOfAttendance,
     Participant,
     ParticipantInfo,
@@ -161,3 +164,35 @@ class AddonPurchaseAdmin(admin.ModelAdmin):
 
 admin.site.register(ParticipationAttachment)
 admin.site.register(ModeOfAttendance)
+
+
+@admin.register(CV)
+class CVAdmin(admin.ModelAdmin):
+    """CVs per edition. Read-only here: participants upload and replace their own from the dashboard. Deleting a row
+    deletes its file."""
+
+    list_display = ('user', 'participant_name', 'event', 'file_name', 'file_size', 'updated_at', 'open_file')
+    list_filter = ('event',)
+    list_select_related = ('user__participant__info', 'event')
+    search_fields = ('user__email', 'user__participant__info__first_name', 'user__participant__info__last_name')
+    date_hierarchy = 'updated_at'
+    ordering = ('-updated_at',)
+    raw_id_fields = ('user',)
+    readonly_fields = ('user', 'event', 'file', 'file_name', 'size', 'uploaded_at', 'updated_at', 'open_file')
+
+    def has_add_permission(self, request):
+        return False
+
+    @admin.display(description='Name')
+    def participant_name(self, obj):
+        info = getattr(getattr(obj.user, 'participant', None), 'info', None)
+        return f'{info.first_name} {info.last_name}'.strip() if info else ''
+
+    @admin.display(description='Size', ordering='size')
+    def file_size(self, obj):
+        return filesizeformat(obj.size)
+
+    @admin.display(description='File')
+    def open_file(self, obj):
+        # A signed URL, minted per page view: it expires, so it is never stored.
+        return format_html('<a href="{}" target="_blank" rel="noopener noreferrer">Open</a>', obj.file.url)

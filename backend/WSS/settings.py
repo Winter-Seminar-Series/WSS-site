@@ -209,6 +209,7 @@ REST_FRAMEWORK = {
         'password_reset_confirm': '30/hour',
         'password_change': '10/hour',
         'payment': '30/min',
+        'cv_upload': '30/hour',
     },
 }
 

@@ -159,3 +159,27 @@ class ParticipationAttachment(models.Model):
     attachment = models.FileField(upload_to=UniqueUploadPath('participation'), null=True, blank=True)
     description = models.TextField(blank=True)
     date = models.DateTimeField(auto_now_add=True)
+
+
+class CV(models.Model):
+    """A participant's CV for one edition. Every edition collects its own: a CV sent to one edition is never shown to
+    or reused by another, so the next edition starts with none. Deleting a row deletes its file (participant.signals).
+    """
+
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='cvs')
+    event = models.ForeignKey(Event, on_delete=models.PROTECT, related_name='cvs')
+    # Private: `cv/` is not in common.storage.PUBLIC_PREFIXES, so it is only ever served by signed, expiring URLs.
+    file = models.FileField(upload_to=UniqueUploadPath('cv'))
+    # As uploaded; the stored object has a random name. Shown back to the participant and the organisers.
+    file_name = models.CharField(max_length=255)
+    size = models.PositiveIntegerField(help_text='Bytes.')
+    uploaded_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name = 'CV'
+        verbose_name_plural = 'CVs'
+        constraints = [models.UniqueConstraint(fields=('user', 'event'), name='unique_cv_per_user_event')]
+
+    def __str__(self):
+        return f'CV of {self.user.email} - {self.event}'

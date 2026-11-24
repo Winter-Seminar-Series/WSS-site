@@ -1,4 +1,5 @@
 import logging
+from zoneinfo import ZoneInfo
 
 from django.conf import settings
 from django.contrib.auth import get_user_model, password_validation
@@ -6,15 +7,19 @@ from django.contrib.auth.tokens import default_token_generator
 from django.core.exceptions import ValidationError as DjangoValidationError
 from django.core.mail import EmailMultiAlternatives
 from django.db import IntegrityError, transaction
+from django.shortcuts import get_object_or_404
 from django.template.loader import render_to_string
+from django.utils import timezone
 from rest_framework import serializers
-from rest_framework.exceptions import NotFound
+from rest_framework.exceptions import NotFound, PermissionDenied
 from rest_framework_simplejwt.token_blacklist.models import (
     BlacklistedToken,
     OutstandingToken,
 )
 
-from participant.models import Participant, ParticipantInfo
+from core.models import Event
+from participant.models import CV, Participant, ParticipantInfo
+from participant.signals import delete_stored_file
 
 User = get_user_model()
 logger = logging.getLogger(__name__)
@@ -142,3 +147,57 @@ def change_password(user, old_password: str, new_password: str) -> None:
     check_password_strength(new_password, user)
     user.set_password(new_password)
     user.save(update_fields=['password'])
+
+
+# --- CV ------------------------------------------------------------------------------------------------------------
+
+# Editions run in Tehran: "the edition has not ended" is judged by the date there, not the server's UTC date.
+EDITION_TIME_ZONE = ZoneInfo('Asia/Tehran')
+
+
+class CVSubmissionClosed(PermissionDenied):
+    default_detail = 'This edition has ended, so its CVs can no longer be changed.'
+    default_code = 'cv_submission_closed'
+
+
+def cv_event(event_id: int) -> Event:
+    return get_object_or_404(Event, pk=event_id)
+
+
+def cv_submission_open(event: Event) -> bool:
+    """A CV can be sent or replaced until the edition's last day is over. Withdrawing one is always allowed."""
+    return timezone.localdate(timezone=EDITION_TIME_ZONE) <= event.ending_date
+
+
+def get_cv(user, event: Event) -> CV:
+    try:
+        return CV.objects.get(user=user, event=event)
+    except CV.DoesNotExist:
+        raise NotFound('You have not uploaded a CV for this edition.', code='cv_not_found')
+
+
+@transaction.atomic
+def save_cv(*, user, event: Event, file) -> tuple[CV, bool]:
+    """Creates or replaces the user's CV for this edition; returns it and whether it was created. Never touches the
+    CVs of other editions."""
+    if not cv_submission_open(event):
+        raise CVSubmissionClosed()
+    # Lock a row that exists before the first upload, so two concurrent first uploads cannot both create.
+    User.objects.select_for_update().only('pk').get(pk=user.pk)
+    cv = CV.objects.filter(user=user, event=event).first()
+    created = cv is None
+    previous = None if created else cv.file.name
+    if created:
+        cv = CV(user=user, event=event)
+    cv.file = file
+    cv.file_name = file.name
+    cv.size = file.size
+    cv.save()
+    if previous:
+        delete_stored_file(cv.file.storage, previous)
+    return cv, created
+
+
+def delete_cv(user, event: Event) -> None:
+    # The stored file goes with the row (participant.signals).
+    get_cv(user, event).delete()

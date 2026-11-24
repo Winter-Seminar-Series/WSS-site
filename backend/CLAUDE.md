@@ -21,7 +21,7 @@ ArvanCloud for media, WhiteNoise for static files, and gunicorn.
 | --- | --- |
 | `common` | Cross-cutting: throttles (`throttling.py`), `UpstreamError`, `/api/health/`, test factories (`testing.py`) |
 | `core` | Editions (`Event`, selected by id = `eventId` in `frontend/lib/editions.ts`), seminars, round tables, lab talks, poster sessions, workshops, speakers, poster submissions |
-| `participant` | Accounts (email sign-in backend, sign-up, password reset/change), profile, plans, registrations, certificates |
+| `participant` | Accounts (email sign-in backend, sign-up, password reset/change), profile, plans, registrations, certificates, CVs |
 | `payment` | Pricing, discount codes, checkout and verification. It calls the `payment` Go service at `PAYMENT_SERVICE_URL` |
 | `skyroom` | Live-stream rooms and personal login links |
 | `spotplayer` | Recorded-video licences |
@@ -35,6 +35,13 @@ replace or delete a submission, and its `create/` child to upload one. The old u
 WSS 10. Migration `core/0020` assigns the 39 legacy submissions to WSS 10 without changing their files; it refuses
 rollback once submissions from another edition exist. Deploy the backend and run migrations before deploying
 the frontend that uses the event-scoped URLs.
+
+CVs (`participant.CV`) are unique per user and event, and each edition collects its own: a CV is never carried
+over to the next edition. `/api/cv/<event_id>/` reads (GET), uploads or replaces (PUT, multipart `file`: a PDF of at
+most 5 MB) and withdraws (DELETE) the signed-in user's CV. Uploads close when the edition's `ending_date` is over in
+Tehran (403 `cv_submission_closed`); withdrawing stays allowed. Files live under the private `cv/` prefix. Replacing
+or deleting a CV, from the API, the admin or a deleted account, deletes the old file once the transaction commits
+(`participant/signals.py`). Because the table is new, re-run `monitoring/postgres/roles.sql` after migrating.
 
 ## Layout of an app
 
@@ -69,8 +76,8 @@ tests/                    one module per area, built on common.testing
   (legacy accounts share addresses in different cases). Reset links carry Django's signed
   `default_token_generator` token (nothing stored, expires after `PASSWORD_RESET_TIMEOUT`, dies once the password
   changes) and revoke the account's refresh tokens. New passwords go through `AUTH_PASSWORD_VALIDATORS`.
-- **Rate limits:** sign-in, sign-up, password reset/change and checkout set `throttle_scope` and use the throttles
-  in `common/throttling.py` (per client, plus per targeted email for credentials). Rates are in
+- **Rate limits:** sign-in, sign-up, password reset/change, checkout and CV uploads set `throttle_scope` and use
+  the throttles in `common/throttling.py` (per client, plus per targeted email for credentials). Rates are in
   `REST_FRAMEWORK['DEFAULT_THROTTLE_RATES']`, counters in Redis. Clients are told apart by the last
   X-Forwarded-For hop (`NUM_PROXIES=1`): nginx appends the visitor's address (from Cloudflare's CF-Connecting-IP)
   and the frontend relays that header on authenticated and mutating calls. Public content is never throttled,

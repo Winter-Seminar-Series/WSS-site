@@ -16,5 +16,6 @@ urlpatterns = [
     path('addon/<int:event_id>/', views.AddonHoldingListView.as_view(), name='addon-holdings'),
     path('attachment/', views.AttachmentListView.as_view(), name='all-attachments'),
     path('attachment/<int:event_id>/', views.AttachmentListView.as_view(), name='attachments'),
+    path('cv/<int:event_id>/', views.CVView.as_view(), name='cv'),
     path('file/<path:file_id>/', views.FileView.as_view(), name='file'),
 ]

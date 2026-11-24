@@ -8,6 +8,7 @@ from django.http import Http404
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import never_cache
 from rest_framework import generics, status
+from rest_framework.parsers import MultiPartParser
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -27,6 +28,7 @@ from participant.models import (
 )
 from participant.serializers import (
     AddonHoldingSerializer,
+    CVSerializer,
     EmailTokenObtainPairSerializer,
     FileSerializer,
     ParticipationAttachmentSerializer,
@@ -203,3 +205,35 @@ class FileView(APIView):
         if not ParticipationAttachment.objects.filter(attachment=name).exists():
             raise Http404
         return Response(FileSerializer({'attachment': default_storage.url(name)}).data, status=status.HTTP_200_OK)
+
+
+@method_decorator(never_cache, name='dispatch')
+class CVView(APIView):
+    """The signed-in user's CV for one edition. GET reads it (404 `cv_not_found` when there is none), PUT (multipart
+    `file`) uploads or replaces it (201 or 200; 403 `cv_submission_closed` once the edition has ended), DELETE
+    withdraws it. Each edition has its own: nothing here reads or changes another edition's CV."""
+
+    parser_classes = [MultiPartParser]
+    throttle_scope = 'cv_upload'
+
+    def get_throttles(self):
+        # Uploads reach S3; reads are one cheap query and happen on every visit to the tab.
+        return [ScopedRateThrottle()] if self.request.method in ('PUT', 'DELETE') else []
+
+    def get(self, request, event_id: int):
+        cv = services.get_cv(request.user, services.cv_event(event_id))
+        return Response(CVSerializer(cv, context={'request': request}).data)
+
+    def put(self, request, event_id: int):
+        event = services.cv_event(event_id)
+        serializer = CVSerializer(data=request.data, context={'request': request})
+        serializer.is_valid(raise_exception=True)
+        cv, created = services.save_cv(user=request.user, event=event, file=serializer.validated_data['file'])
+        return Response(
+            CVSerializer(cv, context={'request': request}).data,
+            status=status.HTTP_201_CREATED if created else status.HTTP_200_OK,
+        )
+
+    def delete(self, request, event_id: int):
+        services.delete_cv(request.user, services.cv_event(event_id))
+        return Response(status=status.HTTP_204_NO_CONTENT)

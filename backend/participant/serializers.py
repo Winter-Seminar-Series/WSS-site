@@ -1,13 +1,14 @@
 import base64
 
 from django.contrib.auth import get_user_model
+from django.core.validators import FileExtensionValidator
 from django.utils import timezone
 from rest_framework import serializers
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
 from core.serializers import WorkshopSerializer
 from participant import services
-from participant.models import ModeOfAttendance, Participant, ParticipantInfo, Participation, ParticipationAttachment
+from participant.models import CV, ModeOfAttendance, Participant, ParticipantInfo, Participation, ParticipationAttachment
 from participant.models import ParticipationPlan, PlanAddon
 from participant.validators import normalize_national_code, validate_phone_number
 
@@ -175,3 +176,31 @@ class ParticipationAttachmentSerializer(serializers.ModelSerializer):
 
 class FileSerializer(serializers.Serializer):
     attachment = serializers.CharField()
+
+
+# --- CV ------------------------------------------------------------------------------------------------------------
+
+
+class CVSerializer(serializers.ModelSerializer):
+    """`PUT` takes `file` (multipart); every response returns `file` as a signed URL that expires
+    (AWS_QUERYSTRING_EXPIRE), so clients fetch it fresh instead of storing it."""
+
+    MAX_SIZE = 5 * 1024 * 1024
+
+    file = serializers.FileField(validators=[FileExtensionValidator(['pdf'])])
+
+    class Meta:
+        model = CV
+        fields = ('file', 'file_name', 'size', 'uploaded_at', 'updated_at')
+        read_only_fields = ('file_name', 'size', 'uploaded_at', 'updated_at')
+
+    def validate_file(self, file):
+        if file.size > self.MAX_SIZE:
+            raise serializers.ValidationError('Your CV must be 5 MB or smaller.', code='file_too_large')
+        # The extension and content type are the client's word; the signature is the file's.
+        position = file.tell()
+        signature = file.read(5)
+        file.seek(position)
+        if signature != b'%PDF-':
+            raise serializers.ValidationError('Choose a valid PDF file.', code='invalid_pdf')
+        return file

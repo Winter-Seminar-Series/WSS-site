@@ -54,5 +54,9 @@ GRANT SELECT (id, participant_numbers, timestamp, paid, order_id, group_discount
 REVOKE ALL ON spotplayer_spotplayerlicense FROM grafana_reader;
 GRANT SELECT (id) ON spotplayer_spotplayerlicense TO grafana_reader;
 
+-- CVs: countable per edition; the stored path and the uploaded file name (often the person's name) stay hidden.
+REVOKE ALL ON participant_cv FROM grafana_reader;
+GRANT SELECT (id, user_id, event_id, size, uploaded_at, updated_at) ON participant_cv TO grafana_reader;
+
 REVOKE ALL ON staff_staff FROM grafana_reader;
 GRANT SELECT (id, name, designation) ON staff_staff TO grafana_reader;
