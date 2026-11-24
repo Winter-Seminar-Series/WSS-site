@@ -51,4 +51,13 @@ export interface VideoLicense {
 }
 
 /** Shared result type for Server Actions: expected failures are values, not throws. */
+/** The participant's CV for one edition. Every edition has its own; none is carried over. */
+export interface Cv {
+  fileName: string;
+  /** Bytes. */
+  size: number;
+  /** ISO timestamp of the last upload. */
+  updatedAt: string;
+}
+
 export type ActionResult<T = undefined> = { ok: true; data: T } | { ok: false; error: string };

@@ -21,10 +21,13 @@ and LTR, light theme, using Raleway from `public/fonts`.
 | Programs       | `/seminars`, `/round-tables`, `/lab-talks`, `/workshops` and their `/[id]` pages | ISR; `[id]` pages use `generateStaticParams = noStaticParams` |
 | Info           | `/about`, `/advisors`, `/timeline`, `/poster-session`                            | static; `/timeline` is ISR (built from the sessions)          |
 | Auth           | `/login`, `/signup`, `/reset-password`, `/reset-password/[token]`                | dynamic, `noindex`                                            |
-| Dashboard      | `/dashboard/{profile,register,stream,certificates,videos,poster-session}`        | dynamic, `noindex`, behind `withAuth`                         |
-| Route handlers | `/callback/[id]` (payment return), `/files/[id]` (signed file redirect)          | dynamic                                                       |
+| Dashboard      | `/dashboard/{profile,register,stream,certificates,videos,poster-session,cv}`     | dynamic, `noindex`, behind `withAuth`                         |
+| Route handlers | `/callback/[id]`, `/files/[id]` (signed file redirect), `/dashboard/cv/file`     | dynamic                                                       |
 
-Which dashboard tabs are visible, and whether registration and poster submission are open, is controlled by
+CVs are per edition: the CV tab reads and writes `CURRENT_EDITION.eventId` only, so launching a new edition starts
+everyone with no CV. `/dashboard/cv/file` redirects to a freshly signed URL because the API's link expires.
+
+Which dashboard tabs are visible, and whether registration, poster and CV submission are open, is controlled by
 flags in `lib/dashboard.ts` (`DASHBOARD_TABS[].visible`, `REGISTRATION`). Site-wide content (venue, contact,
 hosts, socials) lives in `lib/site.ts`.
 

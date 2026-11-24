@@ -61,3 +61,14 @@ export interface FileResponse {
 export interface PosterImageResponse {
   image: string | null;
 }
+
+/** `/cv/:event_id/`: the participant's CV for one edition. */
+export interface CvResponse {
+  /** Signed URL; it expires, so it is fetched fresh for every download (app/dashboard/cv/file). */
+  file: string;
+  file_name: string;
+  /** Bytes. */
+  size: number;
+  uploaded_at: string;
+  updated_at: string;
+}

@@ -82,7 +82,12 @@ const nextConfig: NextConfig = {
     serverActions: {
       // nginx proxies to the container by its compose service name.
       allowedOrigins: ['wss-sharif.com', 'frontend:3000'],
+      // Uploads go through Server Actions: posters (10 MB) and CVs (5 MB), plus multipart overhead. The default is
+      // 1 MB. nginx allows 20 MB.
+      bodySizeLimit: '12mb',
     },
+    // proxy.ts runs for /dashboard, and past this size it truncates the body it passes on. The default is 10 MB.
+    proxyClientMaxBodySize: '12mb',
   },
 
   compiler: {

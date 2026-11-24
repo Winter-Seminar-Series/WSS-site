@@ -83,10 +83,10 @@ export function PlanPickerSkeleton() {
   );
 }
 
-/** The poster upload card. */
-export function UploadSkeleton() {
+/** An upload card: the poster and CV tabs. */
+export function UploadSkeleton({ label = 'Loading your poster submission' }: { label?: string }) {
   return (
-    <LoadingRegion label="Loading your poster submission">
+    <LoadingRegion label={label}>
       <div aria-hidden className={CARD}>
         <CardHeading />
         <Skeleton className="h-52 w-full rounded-2xl" />

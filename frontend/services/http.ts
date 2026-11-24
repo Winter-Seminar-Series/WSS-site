@@ -130,6 +130,10 @@ export function httpPatch<T>(path: string, body?: unknown, options: Pick<Request
   return request<T>(path, { ...options, method: 'PATCH', body });
 }
 
+export function httpDelete<T = void>(path: string, options: Pick<RequestOptions, 'auth'> = {}): Promise<T> {
+  return request<T>(path, { ...options, method: 'DELETE' });
+}
+
 export function isHttpError(error: unknown, status?: number): error is HttpError {
   return error instanceof HttpError && (status === undefined || error.status === status);
 }

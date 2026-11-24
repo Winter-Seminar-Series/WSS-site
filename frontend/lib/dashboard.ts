@@ -1,4 +1,4 @@
-import { Award, CirclePlay, FileImage, PlaySquare, Ticket, UserRound } from 'lucide-react';
+import { Award, CirclePlay, FileImage, FileUser, PlaySquare, Ticket, UserRound } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 
 export interface DashboardTab {
@@ -68,13 +68,26 @@ export const DASHBOARD_TABS: DashboardTab[] = [
     visible: true,
     phone: 'more',
   },
+  {
+    href: '/dashboard/cv',
+    label: 'CV',
+    description: 'Share your CV with this edition. Each edition asks for its own.',
+    Icon: FileUser,
+    visible: true,
+    phone: 'more',
+  },
 ];
 
 /** Registration switches for the current edition. */
 export const REGISTRATION = {
   inPersonOpen: true,
   posterSubmissionOpen: true,
+  /** The API also stops taking CVs once the edition's last day is over. */
+  cvSubmissionOpen: true,
 } as const;
+
+/** Mirrors the API's CVSerializer.MAX_SIZE. */
+export const MAX_CV_BYTES = 5 * 1024 * 1024;
 
 export const isInPersonMode = (name: string): boolean => name.toLowerCase().startsWith('in person');
 export const isLunchAddOn = (name: string): boolean => name.toLowerCase().includes('lunch');
