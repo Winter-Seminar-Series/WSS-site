@@ -1054,7 +1054,7 @@
           "editorMode": "code",
           "format": "table",
           "rawQuery": true,
-          "rawSql": "WITH r AS (\n  SELECT discount_id, status FROM payment_paymentrequest WHERE discount_id IS NOT NULL\n  UNION ALL\n  SELECT discount_id, status FROM payment_grouppaymentrequest WHERE discount_id IS NOT NULL\n)\nSELECT count(DISTINCT d.id)\nFROM payment_paymentdiscount d\nJOIN r ON r.discount_id = d.id AND r.status = 'paid'\nWHERE d.event_id = ${event}"
+          "rawSql": "WITH r AS (\n  SELECT DISTINCT 's'::text AS src, pr.id AS req, pr.discount_id, pr.status, pl.event_id\n  FROM payment_paymentrequest pr\n  JOIN payment_paymentrequest_plans prp ON prp.paymentrequest_id = pr.id\n  JOIN participant_participationplan pl ON pl.id = prp.participationplan_id\n  WHERE pr.discount_id IS NOT NULL\n  UNION ALL\n  SELECT DISTINCT 'g'::text, g.id, g.discount_id, g.status, pl.event_id\n  FROM payment_grouppaymentrequest g\n  JOIN participant_participationplan pl ON pl.id = g.plan_id\n  WHERE g.discount_id IS NOT NULL\n)\nSELECT count(DISTINCT d.id)\nFROM payment_paymentdiscount d\nJOIN r ON r.discount_id = d.id AND r.status = 'paid' AND r.event_id = ${event}\nWHERE d.event_id = ${event}"
         }
       ],
       "fieldConfig": {
@@ -1319,7 +1319,7 @@
           "editorMode": "code",
           "format": "table",
           "rawQuery": true,
-          "rawSql": "WITH r AS (\n  SELECT discount_id, status FROM payment_paymentrequest WHERE discount_id IS NOT NULL\n  UNION ALL\n  SELECT discount_id, status FROM payment_grouppaymentrequest WHERE discount_id IS NOT NULL\n)\nSELECT d.code, count(*) FILTER (WHERE r.status = 'paid') AS count\nFROM payment_paymentdiscount d\nJOIN r ON r.discount_id = d.id\nWHERE d.event_id = ${event}\nGROUP BY d.code\nHAVING count(*) FILTER (WHERE r.status = 'paid') > 0\nORDER BY count DESC\nLIMIT 15"
+          "rawSql": "WITH r AS (\n  SELECT DISTINCT 's'::text AS src, pr.id AS req, pr.discount_id, pr.status, pl.event_id\n  FROM payment_paymentrequest pr\n  JOIN payment_paymentrequest_plans prp ON prp.paymentrequest_id = pr.id\n  JOIN participant_participationplan pl ON pl.id = prp.participationplan_id\n  WHERE pr.discount_id IS NOT NULL\n  UNION ALL\n  SELECT DISTINCT 'g'::text, g.id, g.discount_id, g.status, pl.event_id\n  FROM payment_grouppaymentrequest g\n  JOIN participant_participationplan pl ON pl.id = g.plan_id\n  WHERE g.discount_id IS NOT NULL\n)\nSELECT d.code, count(*) FILTER (WHERE r.status = 'paid') AS count\nFROM payment_paymentdiscount d\nJOIN r ON r.discount_id = d.id AND r.event_id = ${event}\nWHERE d.event_id = ${event}\nGROUP BY d.code\nHAVING count(*) FILTER (WHERE r.status = 'paid') > 0\nORDER BY count DESC\nLIMIT 15"
         }
       ],
       "fieldConfig": {
@@ -1365,7 +1365,7 @@
           "editorMode": "code",
           "format": "table",
           "rawQuery": true,
-          "rawSql": "WITH r AS (\n  SELECT discount_id, status FROM payment_paymentrequest WHERE discount_id IS NOT NULL\n  UNION ALL\n  SELECT discount_id, status FROM payment_grouppaymentrequest WHERE discount_id IS NOT NULL\n)\nSELECT d.code,\n  CASE WHEN d.amount > 0 THEN (d.amount / 10) || ' T' ELSE d.percentage || ' %' END AS value,\n  CASE WHEN d.count = -1 THEN '∞' ELSE d.count::text END AS uses_left,\n  count(*) FILTER (WHERE r.status = 'paid') AS paid,\n  count(*) FILTER (WHERE r.status = 'pending') AS pending,\n  count(*) FILTER (WHERE r.status = 'failed') AS failed\nFROM payment_paymentdiscount d\nLEFT JOIN r ON r.discount_id = d.id\nWHERE d.event_id = ${event}\nGROUP BY d.id\nORDER BY paid DESC, d.code"
+          "rawSql": "WITH r AS (\n  SELECT DISTINCT 's'::text AS src, pr.id AS req, pr.discount_id, pr.status, pl.event_id\n  FROM payment_paymentrequest pr\n  JOIN payment_paymentrequest_plans prp ON prp.paymentrequest_id = pr.id\n  JOIN participant_participationplan pl ON pl.id = prp.participationplan_id\n  WHERE pr.discount_id IS NOT NULL\n  UNION ALL\n  SELECT DISTINCT 'g'::text, g.id, g.discount_id, g.status, pl.event_id\n  FROM payment_grouppaymentrequest g\n  JOIN participant_participationplan pl ON pl.id = g.plan_id\n  WHERE g.discount_id IS NOT NULL\n)\nSELECT d.code,\n  CASE WHEN d.amount > 0 THEN (d.amount / 10) || ' T' ELSE d.percentage || ' %' END AS value,\n  CASE WHEN d.count = -1 THEN '∞' ELSE d.count::text END AS uses_left,\n  count(*) FILTER (WHERE r.status = 'paid')    AS paid,\n  count(*) FILTER (WHERE r.status = 'pending') AS pending,\n  count(*) FILTER (WHERE r.status = 'failed')  AS failed\nFROM payment_paymentdiscount d\nLEFT JOIN r ON r.discount_id = d.id AND r.event_id = ${event}\nWHERE d.event_id = ${event}\nGROUP BY d.id\nORDER BY paid DESC, d.code"
         }
       ],
       "fieldConfig": {
