@@ -30,7 +30,7 @@ function LogoRow({ logos }: { logos: LogoLink[] }) {
   return (
     <ul className="flex flex-wrap items-center gap-x-8 gap-y-5">
       {logos.map((partner) => {
-        const size = fitWithin(partner, PARTNER_BOX);
+        const size = fitWithin(partner, { ...PARTNER_BOX, width: partner.maxWidth ?? PARTNER_BOX.width });
         return (
           <li key={partner.name}>
             <a

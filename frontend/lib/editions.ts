@@ -131,7 +131,21 @@ export const EDITIONS: readonly [Edition, ...Edition[]] = [
       { value: '8+', label: 'Lab talks in all series' },
       { value: '21+', label: 'Round tables in all series' },
     ],
-    sponsors: [],
+    sponsors: [
+      { name: 'Nobitex', href: 'https://nobitex.ir/', src: '/images/partners/nobitex.svg', width: 294, height: 72 },
+      {
+        name: 'Mofid',
+        href: 'https://emofid.com/',
+        src: '/images/partners/mofid.svg',
+        width: 339,
+        height: 43,
+        maxWidth: 160,
+      },
+      { name: 'Sotoon', href: 'https://sotoon.ir/', src: '/images/partners/sotoon.svg', width: 204, height: 78 },
+      { name: 'Jabama', href: 'https://www.jabama.com/', src: '/images/partners/jabama.svg', width: 190, height: 50 },
+      { name: 'APK Group', href: 'https://apk-group.net/', src: '/images/partners/apk.svg', width: 141, height: 45 },
+      { name: 'Tapsi', href: 'https://tapsi.ir/', src: '/images/partners/tapsi.svg', width: 222, height: 48 },
+    ],
     theme: {
       brand: '#a2614a',
       brandStrong: '#62281e',

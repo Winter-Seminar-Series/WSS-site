@@ -49,6 +49,8 @@ export interface LogoLink {
   src: string;
   width: number;
   height: number;
+  /** Widest it may render (px), for a wide, thin wordmark the default box would shrink to a sliver. */
+  maxWidth?: number;
 }
 
 /** The organisers, shown before every edition's sponsors. */
