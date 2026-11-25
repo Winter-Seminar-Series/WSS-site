@@ -24,8 +24,19 @@ class StaffAdmin(admin.ModelAdmin):
     get_events.short_description = "Events"
 
 
+class StaffTeamMemberInline(admin.TabularInline):
+    model = StaffTeamMember
+    fields = ('display_order', 'staff')
+    autocomplete_fields = ('staff',)
+    ordering = ('display_order', 'id')
+    extra = 0
+    verbose_name = 'member'
+    verbose_name_plural = 'Members (shown in this order on the site, lowest number first)'
+
+
 @admin.register(StaffTeam)
 class StaffTeamAdmin(admin.ModelAdmin):
+    inlines = (StaffTeamMemberInline,)
     list_display = ('get_name', 'display_order')
     list_editable = ('display_order',)
     ordering = ('event', 'display_order', 'id')
@@ -40,7 +51,9 @@ class StaffTeamAdmin(admin.ModelAdmin):
 
 @admin.register(StaffTeamMember)
 class StaffTeamMemberAdmin(admin.ModelAdmin):
-    list_display = ('staff', 'staff_team',)
+    list_display = ('staff', 'staff_team', 'display_order')
+    list_editable = ('display_order',)
+    ordering = ('staff_team__event', 'staff_team__display_order', 'staff_team', 'display_order', 'id')
     list_filter = ('staff_team__event', 'staff_team__name',)
     search_fields = ('staff__name',)
     autocomplete_fields = ('staff', 'staff_team',)

@@ -12,7 +12,7 @@ class StaffTeamMemberSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = StaffTeamMember
-        fields = ('id', 'staff')
+        fields = ('id', 'display_order', 'staff')
 
 class StaffTeamSerializer(serializers.ModelSerializer):
     members = StaffTeamMemberSerializer(many=True, read_only=True)

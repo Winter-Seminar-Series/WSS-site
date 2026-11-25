@@ -36,6 +36,10 @@ class StaffTeam(models.Model):
 class StaffTeamMember(models.Model):
     staff = models.ForeignKey(Staff, on_delete=models.CASCADE, related_name='events')
     staff_team = models.ForeignKey(StaffTeam, on_delete=models.CASCADE, related_name='members')
+    display_order = models.PositiveIntegerField(default=0, help_text='Lower numbers appear first within the team.')
+
+    class Meta:
+        ordering = ('display_order', 'id')
 
     def __str__(self) -> str:
         return f'{self.staff_team} - {self.staff}'

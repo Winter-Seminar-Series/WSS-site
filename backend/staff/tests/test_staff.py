@@ -40,7 +40,7 @@ class StaffLinksTests(APITest):
     def test_staff_list_query_count_is_constant(self):
         for _ in range(4):
             self.member(github='https://github.com/ada')
-        with self.assertNumQueries(3):
+        with self.assertNumQueries(2):
             self.client.get(f'/api/staff/{self.event.pk}/')
 
     def test_scripting_schemes_are_rejected(self):
@@ -48,3 +48,25 @@ class StaffLinksTests(APITest):
         with self.assertRaises(ValidationError) as ctx:
             staff.full_clean()
         self.assertIn('website', ctx.exception.message_dict)
+
+
+class StaffMemberOrderTests(APITest):
+    def setUp(self):
+        super().setUp()
+        self.event = make_event()
+        self.team = StaffTeam.objects.create(name='Technical', event=self.event)
+
+    def add(self, name, display_order):
+        StaffTeamMember.objects.create(
+            staff=Staff.objects.create(name=name), staff_team=self.team, display_order=display_order
+        )
+
+    def test_members_follow_the_admin_order_then_creation(self):
+        self.add('Zed', 10)
+        self.add('Amy', 30)
+        self.add('Bob', 10)
+
+        members = self.client.get(f'/api/staff/{self.event.pk}/').json()[0]['members']
+
+        self.assertEqual([m['staff']['name'] for m in members], ['Zed', 'Bob', 'Amy'])
+        self.assertEqual([m['display_order'] for m in members], [10, 10, 30])
