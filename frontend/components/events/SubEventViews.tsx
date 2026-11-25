@@ -50,16 +50,28 @@ function byStart(a: SubEvent, b: SubEvent): number {
   return a.startTime.localeCompare(b.startTime);
 }
 
+// shortcut: every list is shown without day headings for now; set to true to group sessions by day again.
+const GROUP_BY_DAY = false;
+
 export async function SubEventList({ edition, kind }: ListProps) {
   const section = SUB_EVENT_SECTIONS[kind];
   const subEvents = await getSubEvents(edition.eventId, kind);
-  const days = (await getDayDates(edition, kind, subEvents))
-    .map((date, index) => ({
-      date,
-      number: index + 1,
-      subEvents: subEvents.filter((subEvent) => subEvent.date === date).sort(byStart),
-    }))
-    .filter((day) => day.subEvents.length > 0);
+  const grouped = GROUP_BY_DAY;
+  const days = grouped
+    ? (await getDayDates(edition, kind, subEvents))
+        .map((date, index) => ({
+          date,
+          number: index + 1,
+          subEvents: subEvents.filter((subEvent) => subEvent.date === date).sort(byStart),
+        }))
+        .filter((day) => day.subEvents.length > 0)
+    : [
+        {
+          date: 'all',
+          number: 0,
+          subEvents: [...subEvents].sort((a, b) => a.date.localeCompare(b.date) || byStart(a, b)),
+        },
+      ];
 
   return (
     <>
@@ -72,23 +84,25 @@ export async function SubEventList({ edition, kind }: ListProps) {
       ) : (
         <div className="mx-auto flex max-w-300 flex-col gap-14 px-4 py-12 md:gap-20 md:px-6 md:py-16">
           {days.map((day, dayIndex) => (
-            <section key={day.date} aria-labelledby={`day-${day.number}`}>
-              <div className="reveal flex flex-wrap items-end justify-between gap-x-6 gap-y-2 border-b border-line-soft pb-5">
-                <div>
-                  <h2
-                    id={`day-${day.number}`}
-                    className="text-4xl font-extrabold tracking-[-0.035em] text-ink md:text-5xl"
-                  >
-                    Day {day.number}
-                  </h2>
-                  <p className="mt-1 text-lg font-semibold text-muted">
-                    <time dateTime={day.date}>{formatEventDate(day.date)}</time>
+            <section key={day.date} aria-labelledby={grouped ? `day-${day.number}` : undefined}>
+              {grouped && (
+                <div className="reveal flex flex-wrap items-end justify-between gap-x-6 gap-y-2 border-b border-line-soft pb-5">
+                  <div>
+                    <h2
+                      id={`day-${day.number}`}
+                      className="text-4xl font-extrabold tracking-[-0.035em] text-ink md:text-5xl"
+                    >
+                      Day {day.number}
+                    </h2>
+                    <p className="mt-1 text-lg font-semibold text-muted">
+                      <time dateTime={day.date}>{formatEventDate(day.date)}</time>
+                    </p>
+                  </div>
+                  <p className="text-sm font-semibold text-muted">
+                    {day.subEvents.length} {day.subEvents.length === 1 ? 'session' : 'sessions'}
                   </p>
                 </div>
-                <p className="text-sm font-semibold text-muted">
-                  {day.subEvents.length} {day.subEvents.length === 1 ? 'session' : 'sessions'}
-                </p>
-              </div>
+              )}
               <DayGrid>
                 {day.subEvents.map((subEvent, index) => (
                   <li key={subEvent.id}>
