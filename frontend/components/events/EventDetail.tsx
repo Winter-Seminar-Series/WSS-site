@@ -56,8 +56,8 @@ export function EventDetail({
         lead={speakers.length > 0 && `With ${speakers.map((speaker) => speaker.name).join(', ')}`}
       />
 
-      <div className="mx-auto grid max-w-300 gap-10 px-4 pt-6 pb-16 md:px-6 md:pb-24 lg:grid-cols-[minmax(0,1fr)_20rem] lg:gap-16">
-        <aside className="lg:order-last">
+      <div className="mx-auto grid max-w-300 grid-cols-1 gap-10 px-4 pt-6 pb-16 md:px-6 md:pb-24 lg:grid-cols-[minmax(0,1fr)_20rem] lg:gap-16">
+        <aside className="min-w-0 lg:order-last">
           <div className="flex flex-col gap-5 rounded-3xl bg-canvas p-5 ring-1 ring-line-soft md:p-6 lg:sticky lg:top-[calc(var(--navbar-height)+1.5rem)]">
             <div className="text-[0.9375rem] [&>div]:flex-col [&>div]:items-start">{meta}</div>
             {speakers.length > 0 && (
