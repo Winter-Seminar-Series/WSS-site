@@ -8,25 +8,24 @@ export const STAFF_TAG = 'staff';
 
 export async function getStaffTeams(eventId: number): Promise<StaffTeam[]> {
   const teams = await httpGet<StaffTeamResponse[]>(`/staff/${eventId}/`, { tags: [STAFF_TAG] });
-  return teams.map((team) => ({
-    id: team.id,
-    name: team.name,
-    members: sortStaffMembers(
-      team.members.map(({ staff }) => ({
-        id: staff.id,
-        name: staff.name,
-        designation: staff.designation,
-        image: staff.image,
-        imageBlur: blurDataUrl(staff.image_blurhash),
-        links: {
-          website: staff.website || undefined,
-          linkedin: staff.linkedin || undefined,
-          github: staff.github || undefined,
-          email: staff.email || undefined,
-        },
-      })),
-    ),
-  }));
+  return teams.map((team) => {
+    const members = team.members.map(({ staff }) => ({
+      id: staff.id,
+      name: staff.name,
+      designation: staff.designation,
+      image: staff.image,
+      imageBlur: blurDataUrl(staff.image_blurhash),
+      links: {
+        website: staff.website || undefined,
+        linkedin: staff.linkedin || undefined,
+        github: staff.github || undefined,
+        email: staff.email || undefined,
+      },
+    }));
+    // The admin sets the order; an older backend without `display_order` falls back to ranking by role.
+    const ordered = team.members.every((member) => member.display_order !== undefined);
+    return { id: team.id, name: team.name, members: ordered ? members : sortStaffMembers(members) };
+  });
 }
 
 /**

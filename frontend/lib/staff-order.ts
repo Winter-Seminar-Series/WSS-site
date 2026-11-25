@@ -23,7 +23,7 @@ export function roleRank(designation: string): number {
 
 const byText = (a: string, b: string) => a.localeCompare(b, 'en', { sensitivity: 'base' });
 
-/** President, vice presidents, heads, leaders, sub-heads, seniors, other roles, then everyone else by name. */
+/** Fallback for backends without member `display_order`. President, vice presidents, heads, leaders, sub-heads, seniors, other roles, then everyone else by name. */
 export function sortStaffMembers<T extends Pick<StaffMember, 'name' | 'designation'>>(members: readonly T[]): T[] {
   return [...members].sort(
     (a, b) =>
