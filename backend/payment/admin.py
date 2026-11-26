@@ -7,6 +7,7 @@ from django import forms
 from django.conf import settings
 from django.contrib import admin, messages
 from django.db import close_old_connections, transaction
+from django.db.models import Q
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.urls import path
@@ -77,10 +78,28 @@ class PaymentRequestAddonInline(admin.TabularInline):
         return False
 
 
+class EventFilter(admin.SimpleListFilter):
+    """A payment's edition is its plans' (or, for an add-ons-only payment, its add-ons' plans'), newest first."""
+
+    title = 'event'
+    parameter_name = 'event'
+
+    def lookups(self, request, model_admin):
+        return [(event.pk, str(event)) for event in Event.objects.order_by('-order')]
+
+    def queryset(self, request, queryset):
+        if self.value() is None:
+            return queryset
+        in_event = PaymentRequest.objects.filter(
+            Q(plans__event_id=self.value()) | Q(addon_lines__addon__plan__event_id=self.value())
+        )
+        return queryset.filter(pk__in=in_event.values('pk'))
+
+
 class PaymentRequestAdmin(ExportCSVMixin, admin.ModelAdmin):
     list_display = ('participant', 'timestamp', 'status', 'discount_code', 'order_id', 'base_price', 'paid_price')
     list_select_related = ('participant__user', 'participant__info', 'discount')
-    list_filter = ('status', 'discount__code')
+    list_filter = (EventFilter, 'status', 'discount__code')
     inlines = (PaymentRequestAddonInline,)
 
     def get_queryset(self, request):

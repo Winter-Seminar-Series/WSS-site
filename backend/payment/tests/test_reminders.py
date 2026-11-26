@@ -283,3 +283,28 @@ class ReminderAdminActionTests(TestCase):
         send.assert_called_once()
         self.assertEqual(len(send.call_args.args[0]), 1)
         self.assertContains(response, 'Sending 1 reminder email(s) in the background.')
+
+
+@override_settings(
+    STORAGES={
+        'default': {'BACKEND': 'django.core.files.storage.InMemoryStorage'},
+        'staticfiles': {'BACKEND': 'django.contrib.staticfiles.storage.StaticFilesStorage'},
+    }
+)
+class PaymentRequestEventFilterTests(TestCase):
+    def setUp(self):
+        admin = get_user_model().objects.create_superuser('admin', 'admin@example.com', 'admin-password')
+        self.client.force_login(admin)
+        self.event = make_event(order=11)
+        other_event = make_event(order=12)
+        plan = make_mode_plan(self.event)
+        participant = make_participant()
+        self.with_plans = make_payment(participant, [plan, make_workshop_plan(self.event)])
+        self.addons_only = make_payment(participant, addons=[make_addon(plan)])
+        self.elsewhere = make_payment(participant, [make_mode_plan(other_event)])
+
+    def test_lists_each_payment_of_the_edition_once(self):
+        response = self.client.get('/admin/payment/paymentrequest/', {'event': self.event.pk})
+
+        listed = list(response.context['cl'].queryset)
+        self.assertCountEqual(listed, [self.with_plans, self.addons_only])
