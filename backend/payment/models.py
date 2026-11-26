@@ -107,3 +107,21 @@ class GroupPaymentRequest(PaymentRecord):
         """(total, payable) in Rial."""
         price = pricing.group_quote(self.plan, self.participant_numbers, self.discount)
         return price.total, price.payable
+
+
+class PaymentReminder(models.Model):
+    """How many reminder emails a person has had about their unpaid payments for one edition, kept on their oldest
+    account (legacy accounts share email addresses)."""
+
+    participant = models.ForeignKey(Participant, on_delete=models.CASCADE, related_name='payment_reminders')
+    event = models.ForeignKey(Event, on_delete=models.CASCADE, related_name='payment_reminders')
+    count = models.PositiveIntegerField(default=0)
+    last_sent_at = models.DateTimeField(null=True, blank=True)
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=('participant', 'event'), name='unique_payment_reminder_per_event')
+        ]
+
+    def __str__(self) -> str:
+        return f'{self.participant} - {self.event}: {self.count}'

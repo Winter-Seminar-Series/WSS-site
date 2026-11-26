@@ -1,15 +1,22 @@
 import codecs
 import csv
+import logging
+import threading
 
 from django import forms
-from django.contrib import admin
+from django.conf import settings
+from django.contrib import admin, messages
+from django.db import close_old_connections, transaction
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.urls import path
 
 from core.admin import ExportCSVMixin
 from core.models import Event
-from payment.models import PaymentDiscount, PaymentRequest, PaymentRequestAddon
+from payment.models import PaymentDiscount, PaymentReminder, PaymentRequest, PaymentRequestAddon
+from payment.reminders import Reminder, deliver_reminders, prepare_reminders
+
+logger = logging.getLogger(__name__)
 
 
 def latest_edition() -> Event | None:
@@ -78,7 +85,7 @@ class PaymentRequestAdmin(ExportCSVMixin, admin.ModelAdmin):
 
     def get_queryset(self, request):
         return super().get_queryset(request).prefetch_related('plans', 'addon_lines__addon')
-    actions = ["export_as_csv", "calculate_discount_usage"]
+    actions = ["export_as_csv", "calculate_discount_usage", "send_payment_reminders"]
     change_list_template = "payment_request_changelist.html"
 
     def base_price(self, obj):
@@ -126,6 +133,26 @@ class PaymentRequestAdmin(ExportCSVMixin, admin.ModelAdmin):
         return response
 
     calculate_discount_usage.short_description = "Calculate Discount Code Usage"
+
+    @admin.action(description='Send payment reminders (pending or failed)', permissions=['change'])
+    def send_payment_reminders(self, request, queryset):
+        batch = prepare_reminders(queryset)
+        if batch.reminders:
+            # Sending takes about a second an email, longer than a request may run, so it happens after the response.
+            transaction.on_commit(lambda: _send_in_background(batch.reminders))
+        skipped = []
+        if batch.at_limit:
+            skipped.append(f'{batch.at_limit} already had {settings.PAYMENT_REMINDER_MAX} reminder(s)')
+        if batch.registered:
+            skipped.append(f'{batch.registered} already registered or paid for that edition')
+        if batch.paying_now:
+            skipped.append(f'{batch.paying_now} have a payment under way (pending, under 30 minutes old)')
+        if batch.nothing_to_buy:
+            skipped.append(f'{batch.nothing_to_buy} chose only plans that are now closed or full')
+        summary = f'Sending {len(batch.reminders)} reminder email(s) in the background.'
+        if skipped:
+            summary += ' Skipped people: ' + '; '.join(skipped) + '.'
+        self.message_user(request, summary, messages.SUCCESS if batch.reminders else messages.WARNING)
 
     def import_discount_codes(self, request):
         if request.method == 'POST':
@@ -181,3 +208,30 @@ class PaymentRequestAdmin(ExportCSVMixin, admin.ModelAdmin):
         return my_urls + urls
 
 admin.site.register(PaymentRequest, PaymentRequestAdmin)
+
+
+def _send_in_background(reminders: list[Reminder]) -> None:
+    def run():
+        try:
+            sent = deliver_reminders(reminders)
+            logger.info('Sent %s of %s payment reminders', sent, len(reminders))
+        except Exception:
+            logger.exception('Payment reminders stopped before all were sent')
+        finally:
+            close_old_connections()
+
+    threading.Thread(target=run, name='payment-reminders').start()
+
+
+@admin.register(PaymentReminder)
+class PaymentReminderAdmin(admin.ModelAdmin):
+    """How many reminders each person (on their oldest account) has had per edition. Lower a count to allow another."""
+
+    list_display = ('participant', 'event', 'count', 'last_sent_at')
+    list_select_related = ('participant__user', 'participant__info', 'event')
+    list_filter = ('event',)
+    search_fields = ('participant__user__email',)
+    readonly_fields = ('participant', 'event', 'last_sent_at')
+
+    def has_add_permission(self, request):
+        return False

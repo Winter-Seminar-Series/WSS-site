@@ -1,0 +1,20 @@
+{% autoescape off %}{% if first_name %}Hi {{ first_name }},{% else %}Hi,{% endif %}
+
+Your seat at the {{ event_name }} ({{ dates }}) is still waiting.
+
+You started registering, but the payment wasn’t completed. What you picked is still open:
+{% for item in items %}
+  - {{ item }}{% endfor %}
+
+Complete your registration:
+{{ register_url }}
+
+Seats are limited and go first come, first served.
+
+Already paid and still not registered? Message us on Telegram at @wss_info (https://t.me/wss_info) and we’ll sort it out.
+
+Winter Seminar Series
+Sharif University of Technology
+
+Sponsored by Nobitex, Mofid, Sotoon, Jabama, APK Group and Tapsi.
+{% endautoescape %}
