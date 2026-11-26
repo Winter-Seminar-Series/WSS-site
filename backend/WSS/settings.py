@@ -221,7 +221,9 @@ INTEGRATION_TIMEOUT = float(os.getenv('INTEGRATION_TIMEOUT', '15'))
 PAYMENT_SERVICE_URL = os.getenv('PAYMENT_SERVICE_URL', 'http://payment:8080').rstrip('/')
 PAYMENT_CALLBACK_URL = os.getenv('PAYMENT_CALLBACK_URL', f'{FRONTEND_ORIGIN}/callback').rstrip('/')
 # Most reminder emails a participant gets about their unpaid payments for one edition (admin action).
-PAYMENT_REMINDER_MAX = int(os.getenv('PAYMENT_REMINDER_MAX', '1'))
+PAYMENT_REMINDER_MAX = int(os.getenv('PAYMENT_REMINDER_MAX', '2'))
+# Least time between two reminders to the same person, in hours (0: no wait).
+PAYMENT_REMINDER_INTERVAL_HOURS = int(os.getenv('PAYMENT_REMINDER_INTERVAL_HOURS', '48'))
 
 SKYROOM_API_KEY = os.getenv('SKYROOM_API_KEY', '')
 SPOTPLAYER_API_KEY = os.getenv('SPOTPLAYER_API_KEY', '')

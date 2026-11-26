@@ -23,7 +23,8 @@ def make_payment(participant, plans=(), status=PaymentStatus.FAILED, addons=(), 
     return payment
 
 
-@override_settings(PAYMENT_REMINDER_MAX=2, FRONTEND_ORIGIN='https://wss.test')
+# No wait between reminders here, so repeated runs reach the limit; the wait is tested in ReminderIntervalTests.
+@override_settings(PAYMENT_REMINDER_MAX=2, PAYMENT_REMINDER_INTERVAL_HOURS=0, FRONTEND_ORIGIN='https://wss.test')
 class PrepareRemindersTests(TestCase):
     def setUp(self):
         self.event = make_event(order=11)
@@ -255,6 +256,87 @@ class PrepareRemindersTests(TestCase):
 
         self.assertEqual(sent, 0)
         self.assertEqual(self.count(), 0)
+
+
+@override_settings(PAYMENT_REMINDER_MAX=2, PAYMENT_REMINDER_INTERVAL_HOURS=72)
+class ReminderIntervalTests(TestCase):
+    def setUp(self):
+        self.event = make_event(order=11)
+        self.plan = make_mode_plan(self.event)
+        self.participant = make_participant('ada@example.com')
+        make_payment(self.participant, [self.plan])
+
+    def send(self):
+        batch = prepare_reminders(PaymentRequest.objects.all())
+        deliver_reminders(batch.reminders)
+        return batch
+
+    def reminder(self, event=None):
+        return PaymentReminder.objects.get(participant=self.participant, event=event or self.event)
+
+    def sent_hours_ago(self, hours, event=None):
+        PaymentReminder.objects.filter(participant=self.participant, event=event or self.event).update(
+            last_sent_at=timezone.now() - datetime.timedelta(hours=hours)
+        )
+
+    def test_no_second_reminder_within_the_interval(self):
+        self.send()
+        self.sent_hours_ago(2)
+
+        batch = self.send()
+
+        self.assertEqual(len(mail.outbox), 1)
+        self.assertEqual(batch.too_soon, 1)
+        self.assertEqual(self.reminder().count, 1)
+
+    def test_a_second_reminder_once_the_interval_has_passed(self):
+        self.send()
+        self.sent_hours_ago(73)
+
+        self.send()
+
+        self.assertEqual(len(mail.outbox), 2)
+        self.assertEqual(self.reminder().count, 2)
+
+    def test_the_limit_still_applies_after_the_interval(self):
+        for _ in range(3):
+            self.send()
+            self.sent_hours_ago(73)
+
+        self.assertEqual(len(mail.outbox), 2)
+
+    def test_the_interval_spans_editions(self):
+        other_event = make_event(order=12)
+        make_payment(self.participant, [make_mode_plan(other_event)])
+        PaymentReminder.objects.create(participant=self.participant, event=self.event, count=1)
+        self.sent_hours_ago(2)
+
+        batch = self.send()
+
+        self.assertEqual(mail.outbox, [])
+        self.assertEqual(batch.too_soon, 1)
+
+    def test_a_failed_email_does_not_start_the_interval(self):
+        self.send()
+        self.sent_hours_ago(73)
+        before = self.reminder().last_sent_at
+
+        batch = prepare_reminders(PaymentRequest.objects.all())
+        with mock.patch('django.core.mail.EmailMultiAlternatives.send', side_effect=OSError('smtp down')):
+            deliver_reminders(batch.reminders)
+
+        reminder = self.reminder()
+        self.assertEqual(reminder.count, 1)
+        self.assertEqual(reminder.last_sent_at, before)
+        self.send()
+        self.assertEqual(len(mail.outbox), 2)
+
+    @override_settings(PAYMENT_REMINDER_INTERVAL_HOURS=0)
+    def test_zero_means_no_wait(self):
+        self.send()
+        self.send()
+
+        self.assertEqual(len(mail.outbox), 2)
 
 
 # The admin's pages need its static files; the test run has no collectstatic manifest.

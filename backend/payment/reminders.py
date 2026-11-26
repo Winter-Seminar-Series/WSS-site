@@ -11,16 +11,18 @@ Who gets one (`prepare_reminders`):
 - not about a pending payment younger than `IN_FLIGHT`: its payer may still be on the bank's page;
 - at most `settings.PAYMENT_REMINDER_MAX` times per edition. The counter is kept on the person's oldest account and
   claimed under a row lock before the email is built, so the limit holds across accounts and when two organisers
-  send at once.
+  send at once;
+- not within `settings.PAYMENT_REMINDER_INTERVAL_HOURS` of the person's last reminder, for any edition.
 
-`deliver_reminders` sends over one SMTP connection and gives the claim back for every email that did not go out. If
+`deliver_reminders` sends over one SMTP connection and gives the claim back (count and last send time) for every
+email that did not go out. If
 the process dies mid-run, the claims for the unsent emails stay counted: the limit errs towards fewer emails.
 """
 
 import logging
 from collections.abc import Iterable
 from dataclasses import dataclass, field
-from datetime import timedelta
+from datetime import datetime, timedelta
 
 from django.conf import settings
 from django.core.mail import EmailMultiAlternatives, get_connection
@@ -45,6 +47,8 @@ IN_FLIGHT = timedelta(minutes=30)
 class Reminder:
     reminder_id: int
     message: EmailMultiAlternatives
+    # Restored if the email does not go out, so a failed attempt does not start the waiting interval.
+    previous_sent_at: datetime | None = None
 
 
 @dataclass
@@ -55,11 +59,13 @@ class ReminderBatch:
     registered: int = 0
     nothing_to_buy: int = 0
     paying_now: int = 0
+    too_soon: int = 0
 
 
 def prepare_reminders(payments: QuerySet[PaymentRequest]) -> ReminderBatch:
     """Claims a reminder for each person with an unpaid payment in `payments` and builds its email."""
-    in_flight = Q(status=PaymentStatus.PENDING, timestamp__gt=timezone.now() - IN_FLIGHT)
+    now = timezone.now()
+    in_flight = Q(status=PaymentStatus.PENDING, timestamp__gt=now - IN_FLIGHT)
     selected = payments.filter(status__in=UNPAID)
     paying_now = set(
         selected.filter(in_flight).annotate(email=Lower('participant__user__email')).values_list('email', flat=True)
@@ -81,6 +87,11 @@ def prepare_reminders(payments: QuerySet[PaymentRequest]) -> ReminderBatch:
     registered = _registered(emails)
     counted_on = _oldest_accounts(emails)
     full_plans = _full_plans(unpaid)
+    reminded_lately = set(
+        PaymentReminder.objects.filter(
+            participant_id__in=counted_on.values(), last_sent_at__gt=now - _interval()
+        ).values_list('participant_id', flat=True)
+    )
 
     by_person: dict[str, list[tuple[PaymentRequest, Event, list[str]]]] = {}
     skipped_registered: set[str] = set()
@@ -109,10 +120,19 @@ def prepare_reminders(payments: QuerySet[PaymentRequest]) -> ReminderBatch:
             else:
                 batch.nothing_to_buy += 1
             continue
+        if counted_on[email] in reminded_lately:
+            batch.too_soon += 1
+            continue
         for payment, event, items in candidates:
-            reminder_id = _claim(counted_on[email], event)
-            if reminder_id is not None:
-                batch.reminders.append(Reminder(reminder_id, _message(payment.participant, event, items)))
+            claim = _claim(counted_on[email], event, now)
+            if claim is TOO_SOON:
+                # Reminded since `reminded_lately` was read, by an organiser sending at the same time.
+                batch.too_soon += 1
+                break
+            if claim is not AT_LIMIT:
+                reminder_id, previous_sent_at = claim
+                message = _message(payment.participant, event, items)
+                batch.reminders.append(Reminder(reminder_id, message, previous_sent_at))
                 break
         else:
             batch.at_limit += 1
@@ -146,7 +166,13 @@ def deliver_reminders(reminders: Iterable[Reminder]) -> int:
 
 def _release(reminders: Iterable[Reminder]) -> None:
     for reminder in reminders:
-        PaymentReminder.objects.filter(pk=reminder.reminder_id, count__gt=0).update(count=F('count') - 1)
+        PaymentReminder.objects.filter(pk=reminder.reminder_id, count__gt=0).update(
+            count=F('count') - 1, last_sent_at=reminder.previous_sent_at
+        )
+
+
+def _interval() -> timedelta:
+    return timedelta(hours=settings.PAYMENT_REMINDER_INTERVAL_HOURS)
 
 
 def _registered(emails: set[str]) -> set[tuple[str, int]]:
@@ -219,17 +245,25 @@ def _plan_name(plan) -> str:
     return str(plan)
 
 
-def _claim(participant_id: int, event: Event) -> int | None:
-    """Counts one more reminder for this person and edition, or returns None if they have had the most."""
+AT_LIMIT = 'at_limit'
+TOO_SOON = 'too_soon'
+
+
+def _claim(participant_id: int, event: Event, now: datetime) -> tuple[int, datetime | None] | str:
+    """Counts one more reminder for this person and edition and returns (its row, the previous send time), or
+    `AT_LIMIT` / `TOO_SOON` if they may not have another now."""
     with transaction.atomic():
         reminder, _ = PaymentReminder.objects.get_or_create(participant_id=participant_id, event=event)
         reminder = PaymentReminder.objects.select_for_update().get(pk=reminder.pk)
         if reminder.count >= settings.PAYMENT_REMINDER_MAX:
-            return None
+            return AT_LIMIT
+        if reminder.last_sent_at is not None and reminder.last_sent_at > now - _interval():
+            return TOO_SOON
+        previous_sent_at = reminder.last_sent_at
         reminder.count += 1
-        reminder.last_sent_at = timezone.now()
+        reminder.last_sent_at = now
         reminder.save(update_fields=['count', 'last_sent_at'])
-        return reminder.pk
+        return reminder.pk, previous_sent_at
 
 
 def _date_range(event: Event) -> str:

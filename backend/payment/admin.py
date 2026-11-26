@@ -162,6 +162,10 @@ class PaymentRequestAdmin(ExportCSVMixin, admin.ModelAdmin):
         skipped = []
         if batch.at_limit:
             skipped.append(f'{batch.at_limit} already had {settings.PAYMENT_REMINDER_MAX} reminder(s)')
+        if batch.too_soon:
+            skipped.append(
+                f'{batch.too_soon} had a reminder in the last {settings.PAYMENT_REMINDER_INTERVAL_HOURS} hours'
+            )
         if batch.registered:
             skipped.append(f'{batch.registered} already registered or paid for that edition')
         if batch.paying_now:
