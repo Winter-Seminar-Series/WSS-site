@@ -229,7 +229,8 @@ proxy.ts                 # Next 16 proxy (formerly middleware): refreshes the ac
   by the social tags), Open Graph and a `summary_large_image` card.
 - **Social images:** `app/og/[edition]/route.tsx` renders each edition's 1200×630 card at build, using its hero
   (`Edition.heroImage`, a JPEG, because Satori cannot decode WebP) and the Manrope TTFs in `assets/fonts`. Session
-  pages put their poster first and keep the edition card as a fallback (`posterImages`).
+  pages use their poster as the only image (`posterImages`): listed next to it, the card was what link previews
+  picked. A session without a poster keeps the card.
 - **Private pages** (auth and dashboard) spread `PRIVATE_PAGE`, which sets `noindex`.
 - **Structured data:** JSON-LD comes from `lib/structured-data.ts` and is rendered with `components/seo/JsonLd`.
   The root layout has WebSite and Organization (referenced by `@id`). Each edition's home and each seminar, round

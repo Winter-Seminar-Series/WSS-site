@@ -35,7 +35,7 @@ export async function generateMetadata({ params }: PageProps<'/[edition]/worksho
     workshop.name,
     workshopSummary(workshop),
     `/workshops/${workshop.id}`,
-    posterImages(edition, workshop.poster ?? workshop.thumbnail, workshop.name),
+    posterImages(workshop.poster ?? workshop.thumbnail, workshop.name),
   );
 }
 

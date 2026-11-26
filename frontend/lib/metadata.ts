@@ -33,9 +33,13 @@ function editionSocialImage(edition: Edition): SocialImage {
   return { url: socialImagePath(edition), ...SOCIAL_IMAGE_SIZE, alt: edition.title };
 }
 
-/** A session's own poster first; the edition card stays as a fallback for platforms that reject its size. */
-export function posterImages(edition: Edition, poster: string | null, alt: string): SocialImage[] | undefined {
-  return poster ? [{ url: poster, alt }, editionSocialImage(edition)] : undefined;
+/**
+ * A session's own poster as its only social image. Listing the edition card next to it made link previews (Telegram,
+ * WhatsApp, LinkedIn) show the card instead: they prefer the image with declared dimensions, or the last one.
+ * Without a poster, the page keeps the edition card.
+ */
+export function posterImages(poster: string | null, alt: string): SocialImage[] | undefined {
+  return poster ? [{ url: poster, alt }] : undefined;
 }
 
 interface SocialOptions {
@@ -138,7 +142,7 @@ export async function subEventMetadata(edition: Edition, kind: SubEventKind, raw
     title,
     summarize(subEvent.descriptionHtml, section.description),
     `${section.path}/${subEvent.id}`,
-    posterImages(edition, subEvent.poster ?? subEvent.thumbnail, subEvent.name),
+    posterImages(subEvent.poster ?? subEvent.thumbnail, subEvent.name),
   );
   return { ...metadata, openGraph: { ...metadata.openGraph, type: 'article' } };
 }
