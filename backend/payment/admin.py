@@ -1,12 +1,10 @@
 import codecs
 import csv
-import logging
-import threading
 
 from django import forms
 from django.conf import settings
 from django.contrib import admin, messages
-from django.db import close_old_connections, transaction
+from django.db import transaction
 from django.db.models import Q
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
@@ -15,9 +13,7 @@ from django.urls import path
 from core.admin import ExportCSVMixin
 from core.models import Event
 from payment.models import PaymentDiscount, PaymentReminder, PaymentRequest, PaymentRequestAddon
-from payment.reminders import Reminder, deliver_reminders, prepare_reminders
-
-logger = logging.getLogger(__name__)
+from payment.reminders import prepare_reminders, send_in_background
 
 
 def latest_edition() -> Event | None:
@@ -157,8 +153,7 @@ class PaymentRequestAdmin(ExportCSVMixin, admin.ModelAdmin):
     def send_payment_reminders(self, request, queryset):
         batch = prepare_reminders(queryset)
         if batch.reminders:
-            # Sending takes about a second an email, longer than a request may run, so it happens after the response.
-            transaction.on_commit(lambda: _send_in_background(batch.reminders))
+            transaction.on_commit(lambda: send_in_background(batch.reminders))
         skipped = []
         if batch.at_limit:
             skipped.append(f'{batch.at_limit} already had {settings.PAYMENT_REMINDER_MAX} reminder(s)')
@@ -231,19 +226,6 @@ class PaymentRequestAdmin(ExportCSVMixin, admin.ModelAdmin):
         return my_urls + urls
 
 admin.site.register(PaymentRequest, PaymentRequestAdmin)
-
-
-def _send_in_background(reminders: list[Reminder]) -> None:
-    def run():
-        try:
-            sent = deliver_reminders(reminders)
-            logger.info('Sent %s of %s payment reminders', sent, len(reminders))
-        except Exception:
-            logger.exception('Payment reminders stopped before all were sent')
-        finally:
-            close_old_connections()
-
-    threading.Thread(target=run, name='payment-reminders').start()
 
 
 @admin.register(PaymentReminder)

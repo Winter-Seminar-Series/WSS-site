@@ -1,10 +1,14 @@
 import csv
+from datetime import timedelta
 
-from django.contrib import admin
+from django.conf import settings
+from django.contrib import admin, messages
+from django.db import transaction
 from django.db.models import Sum
 from django.db.models.functions import Coalesce
 from django.http import HttpResponse
 from django.template.defaultfilters import filesizeformat
+from django.utils import timezone
 from django.utils.html import format_html
 
 from core.admin import ExportCSVMixin
@@ -19,14 +23,59 @@ from participant.models import (
     ParticipationPlan,
     PlanAddon,
 )
+from payment.reminders import prepare_signup_reminders, send_in_background
+
+
+class JoinedWithinFilter(admin.SimpleListFilter):
+    title = 'signed up'
+    parameter_name = 'joined_within'
+    DAYS = (3, 7, 14, 30, 90, 180, 360)
+
+    def lookups(self, request, model_admin):
+        return [(str(days), f'In the last {days} days') for days in self.DAYS]
+
+    def queryset(self, request, queryset):
+        if self.value() not in {str(days) for days in self.DAYS}:
+            return queryset
+        return queryset.filter(user__date_joined__gte=timezone.now() - timedelta(days=int(self.value())))
 
 
 @admin.register(Participant)
 class ParticipantAdmin(ExportCSVMixin, admin.ModelAdmin):
-    list_display = ('info', 'user', 'get_national_code')
+    list_display = ('info', 'user', 'get_national_code', 'date_joined')
     list_select_related = ('info', 'user')
+    list_filter = (JoinedWithinFilter,)
     search_fields = ('info__first_name', 'info__last_name', 'user__email', 'info__national_code',)
-    actions = ['export_as_csv']
+    actions = ['export_as_csv', 'send_signup_reminders']
+
+    @admin.display(description='Signed up', ordering='user__date_joined')
+    def date_joined(self, obj):
+        return obj.user.date_joined
+
+    @admin.action(description='Send sign-up reminders (no payment yet)', permissions=['change'])
+    def send_signup_reminders(self, request, queryset):
+        batch = prepare_signup_reminders(queryset)
+        if batch.reminders:
+            transaction.on_commit(lambda: send_in_background(batch.reminders))
+        skipped = []
+        if batch.joined_too_long_ago:
+            skipped.append(
+                f'{batch.joined_too_long_ago} signed up more than {settings.SIGNUP_REMINDER_DAYS} days ago'
+            )
+        if batch.started_payment:
+            skipped.append(f'{batch.started_payment} already have a payment or registration for this edition')
+        if batch.registration_closed:
+            skipped.append(f'{batch.registration_closed}: registration is closed (no open plan)')
+        if batch.too_soon:
+            skipped.append(
+                f'{batch.too_soon} had a reminder in the last {settings.PAYMENT_REMINDER_INTERVAL_HOURS} hours'
+            )
+        if batch.at_limit:
+            skipped.append(f'{batch.at_limit} already had {settings.PAYMENT_REMINDER_MAX} reminder(s)')
+        summary = f'Sending {len(batch.reminders)} reminder email(s) in the background.'
+        if skipped:
+            summary += ' Skipped people: ' + '; '.join(skipped) + '.'
+        self.message_user(request, summary, messages.SUCCESS if batch.reminders else messages.WARNING)
 
     @admin.display(description='National code')
     def get_national_code(self, obj):

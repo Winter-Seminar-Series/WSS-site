@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Your seat at the {{ event_name }} is one step away</title>
+    <!--[if !mso]><!-->
+    <style>
+      @font-face {
+        font-family: Raleway;
+        font-style: normal;
+        font-weight: 400 800;
+        font-display: swap;
+        src: url('{{ site_url }}/fonts/raleway-latin.woff2') format('woff2');
+      }
+    </style>
+    <!--<![endif]-->
+  </head>
+  <body style="margin: 0; padding: 0; background-color: #f8f6f2; color: #382b25;">
+    <div style="display: none; max-height: 0; overflow: hidden; mso-hide: all;">
+      You have a WSS account. Pick how you’ll attend and your seat is yours: it takes a minute.
+    </div>
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#f8f6f2">
+      <tr>
+        <td align="center" style="padding: 32px 16px;">
+          <!--[if mso]>
+          <table role="presentation" width="560" cellpadding="0" cellspacing="0" border="0"><tr><td>
+          <![endif]-->
+          <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"
+                 style="max-width: 560px; font-family: Raleway, Arial, sans-serif; font-variant-numeric: lining-nums proportional-nums;">
+            <tr>
+              <td align="center" style="padding: 0 12px 24px;">
+                <table role="presentation" align="center" cellpadding="0" cellspacing="0" border="0">
+                  <tr>
+                    <td valign="middle" style="padding-right: 16px; border-right: 1px solid #d8b598;">
+                      <img src="{{ site_url }}/images/email/wss-logo.png" width="60" height="40" alt=""
+                           style="display: block; border: 0;">
+                    </td>
+                    <td valign="middle" style="padding-left: 16px;">
+                      <img src="{{ site_url }}/images/institutions/sharif.png" width="44" height="44" alt=""
+                           style="display: block; border: 0;">
+                    </td>
+                  </tr>
+                </table>
+                <p style="margin: 12px 0 0; color: #3b201a; font-size: 15px; font-weight: 800; line-height: 21px;">
+                  Winter Seminar Series
+                </p>
+                <p style="margin: 2px 0 0; color: #756052; font-size: 13px; line-height: 19px;">
+                  Sharif University of Technology
+                </p>
+              </td>
+            </tr>
+            <tr>
+              <td bgcolor="#fffdfa"
+                  style="padding: 28px 24px 24px; border: 1px solid #d8b598; border-top: 4px solid #62281e; border-bottom: 0; border-radius: 12px 12px 0 0;">
+                <p style="margin: 0 0 8px; color: #a2614a; font-size: 12px; font-weight: 700; line-height: 18px; letter-spacing: 1.5px; text-transform: uppercase;">
+                  {{ event_name }} &middot; {{ dates }}
+                </p>
+                <h1 style="margin: 0 0 10px; color: #3b201a; font-size: 26px; font-weight: 800; line-height: 34px;">
+                  {% if first_name %}{{ first_name }}, you’re{% else %}You’re{% endif %} one step away
+                </h1>
+                <p style="margin: 0 0 20px; font-size: 16px; line-height: 25px;">
+                  Thanks for creating your WSS account. You haven’t picked your plan yet: choose how you’ll attend
+                  the {{ event_name }} and your seat is yours.
+                </p>
+
+                {# What is open #}
+                <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#f9efd1"
+                       style="border: 1px solid #ead9c8; border-radius: 10px;">
+                  <tr>
+                    <td style="padding: 16px 18px 6px;">
+                      <p style="margin: 0 0 8px; color: #62281e; font-size: 13px; font-weight: 800; line-height: 18px; letter-spacing: 1px; text-transform: uppercase;">
+                        Registration is open for
+                      </p>
+                      {% for item in items %}
+                        <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin: 0 0 10px;">
+                          <tr>
+                            <td valign="top" width="22" style="color: #a2614a; font-size: 16px; font-weight: 800; line-height: 22px;">&#10003;</td>
+                            <td valign="top" style="color: #3b201a; font-size: 15px; font-weight: 600; line-height: 22px;">{{ item }}</td>
+                          </tr>
+                        </table>
+                      {% endfor %}
+                    </td>
+                  </tr>
+                </table>
+
+                <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin: 22px 0 0;">
+                  <tr>
+                    <td bgcolor="#62281e" style="border-radius: 6px; mso-padding-alt: 12px 20px;">
+                      <a href="{{ register_url }}"
+                         style="display: inline-block; padding: 12px 20px; mso-padding-alt: 0; color: #fffdfa; font-size: 16px; font-weight: bold; line-height: 22px; text-decoration: none;">
+                        Choose my plan
+                      </a>
+                    </td>
+                  </tr>
+                </table>
+                <p style="margin: 12px 0 0; color: #756052; font-size: 14px; line-height: 21px;">
+                  Seats are limited and go first come, first served.
+                </p>
+              </td>
+            </tr>
+            <tr>
+              <td bgcolor="#f0ece5"
+                  style="padding: 16px 24px; border: 1px solid #d8b598; color: #756052; font-size: 13px; line-height: 20px;">
+                <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+                  <tr>
+                    <td align="center" width="33%" valign="top">
+                      <p style="margin: 0; color: #62281e; font-size: 22px; font-weight: 800; line-height: 28px;">5,700+</p>
+                      <p style="margin: 2px 0 0; font-size: 12px; line-height: 17px;">participants</p>
+                    </td>
+                    <td align="center" width="34%" valign="top" style="border-left: 1px solid #d8b598; border-right: 1px solid #d8b598;">
+                      <p style="margin: 0; color: #62281e; font-size: 22px; font-weight: 800; line-height: 28px;">268+</p>
+                      <p style="margin: 2px 0 0; font-size: 12px; line-height: 17px;">presentations</p>
+                    </td>
+                    <td align="center" width="33%" valign="top">
+                      <p style="margin: 0; color: #62281e; font-size: 22px; font-weight: 800; line-height: 28px;">53+</p>
+                      <p style="margin: 2px 0 0; font-size: 12px; line-height: 17px;">poster sessions</p>
+                    </td>
+                  </tr>
+                </table>
+                <p style="margin: 14px 0 0; padding-top: 12px; border-top: 1px solid #d8b598;">
+                  Questions before you register? Message us on Telegram at
+                  <a href="https://t.me/wss_info" style="color: #62281e; text-decoration: underline;">@wss_info</a>
+                  and we’ll help.
+                </p>
+              </td>
+            </tr>
+            <tr>
+              <td style="font-size: 0; line-height: 0;">
+                <img src="{{ site_url }}/images/email/11th-mountain-strip.jpg" width="560" alt=""
+                     style="display: block; width: 100%; max-width: 560px; height: auto; border: 0; border-radius: 0 0 12px 12px;">
+              </td>
+            </tr>
+
+            {% include 'email/sponsors.html' %}
+
+            <tr>
+              <td align="center" style="padding: 24px 16px 0; color: #9a8676; font-size: 12px; line-height: 18px;">
+                You’re getting this because you created an account at
+                <a href="{{ site_url }}" style="color: #9a8676;">wss-sharif.com</a>.
+              </td>
+            </tr>
+          </table>
+          <!--[if mso]>
+          </td></tr></table>
+          <![endif]-->
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>

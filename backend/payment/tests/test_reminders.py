@@ -354,7 +354,7 @@ class ReminderAdminActionTests(TestCase):
         self.payment = make_payment(make_participant(), [make_mode_plan(event)])
 
     def test_sends_the_reminders_in_the_background(self):
-        with mock.patch('payment.admin._send_in_background') as send, self.captureOnCommitCallbacks(execute=True):
+        with mock.patch('payment.admin.send_in_background') as send, self.captureOnCommitCallbacks(execute=True):
             response = self.client.post(
                 '/admin/payment/paymentrequest/',
                 {'action': 'send_payment_reminders', '_selected_action': [self.payment.pk]},

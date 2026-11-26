@@ -1,8 +1,15 @@
 """
-"Complete your registration" emails for participants whose payments are pending or failed, sent by hand from the
-Payment requests admin.
+Registration reminders, sent by hand from the admin:
 
-Who gets one (`prepare_reminders`):
+- "complete your registration", to people whose payments are pending or failed (Payment requests admin,
+  `prepare_reminders`);
+- "your seat is one step away", to people who signed up recently and never started a payment (Participants admin,
+  `prepare_signup_reminders`).
+
+Both share one counter per person and edition (`PaymentReminder`), so the limit and the wait below hold across the
+two emails: someone nudged after signing up is not sent a payment reminder an hour later.
+
+Who gets a payment reminder (`prepare_reminders`):
 - at most one email per person per run, however many of their payments are selected. A person is an email address:
   legacy accounts share addresses, and all of them count as the same person;
 - never someone already in the edition: registered for any of its plans, or with any paid payment for it (single or
@@ -14,19 +21,26 @@ Who gets one (`prepare_reminders`):
   send at once;
 - not within `settings.PAYMENT_REMINDER_INTERVAL_HOURS` of the person's last reminder, for any edition.
 
+Who gets a sign-up reminder (`prepare_signup_reminders`), about the current edition (the newest event):
+- someone who signed up within `settings.SIGNUP_REMINDER_DAYS`;
+- who has no payment for the edition at all (pending, failed or paid, single or group) and is not registered in it;
+- while registration is open: at least one of its plans is open and not full;
+- with the same per-person limit and wait as above, and at most one email per person per run.
+
 `deliver_reminders` sends over one SMTP connection and gives the claim back (count and last send time) for every
 email that did not go out. If
 the process dies mid-run, the claims for the unsent emails stay counted: the limit errs towards fewer emails.
 """
 
 import logging
+import threading
 from collections.abc import Iterable
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta
 
 from django.conf import settings
 from django.core.mail import EmailMultiAlternatives, get_connection
-from django.db import transaction
+from django.db import close_old_connections, transaction
 from django.db.models import Count, F, Min, Q, QuerySet
 from django.db.models.functions import Lower
 from django.template.loader import render_to_string
@@ -60,6 +74,10 @@ class ReminderBatch:
     nothing_to_buy: int = 0
     paying_now: int = 0
     too_soon: int = 0
+    # Sign-up reminders only.
+    joined_too_long_ago: int = 0
+    started_payment: int = 0
+    registration_closed: int = 0
 
 
 def prepare_reminders(payments: QuerySet[PaymentRequest]) -> ReminderBatch:
@@ -87,11 +105,7 @@ def prepare_reminders(payments: QuerySet[PaymentRequest]) -> ReminderBatch:
     registered = _registered(emails)
     counted_on = _oldest_accounts(emails)
     full_plans = _full_plans(unpaid)
-    reminded_lately = set(
-        PaymentReminder.objects.filter(
-            participant_id__in=counted_on.values(), last_sent_at__gt=now - _interval()
-        ).values_list('participant_id', flat=True)
-    )
+    reminded_lately = _reminded_lately(counted_on.values(), now)
 
     by_person: dict[str, list[tuple[PaymentRequest, Event, list[str]]]] = {}
     skipped_registered: set[str] = set()
@@ -131,12 +145,70 @@ def prepare_reminders(payments: QuerySet[PaymentRequest]) -> ReminderBatch:
                 break
             if claim is not AT_LIMIT:
                 reminder_id, previous_sent_at = claim
-                message = _message(payment.participant, event, items)
+                message = _payment_message(payment.participant, event, items)
                 batch.reminders.append(Reminder(reminder_id, message, previous_sent_at))
                 break
         else:
             batch.at_limit += 1
     return batch
+
+
+def prepare_signup_reminders(participants: QuerySet[Participant]) -> ReminderBatch:
+    """Claims a reminder for each recently signed-up person in `participants` who never started a payment for the
+    current edition, and builds its email."""
+    batch = ReminderBatch()
+    event = Event.objects.order_by('-order').first()
+    if event is None:
+        return batch
+    now = timezone.now()
+    joined_since = now - timedelta(days=settings.SIGNUP_REMINDER_DAYS)
+
+    # One account per person: the newest, whose profile is the one they just filled in.
+    people: dict[str, Participant] = {}
+    for participant in (
+        participants.exclude(user__email='').select_related('user', 'info').order_by('-user__date_joined', '-pk')
+    ):
+        people.setdefault(participant.user.email.lower(), participant)
+    started = _started(set(people), event)
+    counted_on = _oldest_accounts(set(people))
+    reminded_lately = _reminded_lately(counted_on.values(), now)
+    options = _open_options(event)
+
+    for email, participant in people.items():
+        if participant.user.date_joined < joined_since:
+            batch.joined_too_long_ago += 1
+        elif email in started:
+            batch.started_payment += 1
+        elif not options:
+            batch.registration_closed += 1
+        elif counted_on[email] in reminded_lately:
+            batch.too_soon += 1
+        else:
+            claim = _claim(counted_on[email], event, now)
+            if claim is AT_LIMIT:
+                batch.at_limit += 1
+            elif claim is TOO_SOON:
+                batch.too_soon += 1
+            else:
+                reminder_id, previous_sent_at = claim
+                message = _signup_message(participant, event, options)
+                batch.reminders.append(Reminder(reminder_id, message, previous_sent_at))
+    return batch
+
+
+def send_in_background(reminders: list[Reminder]) -> None:
+    """Sends the emails after the admin's response: about a second each, longer than a request may run."""
+
+    def run():
+        try:
+            sent = deliver_reminders(reminders)
+            logger.info('Sent %s of %s reminders', sent, len(reminders))
+        except Exception:
+            logger.exception('Reminders stopped before all were sent')
+        finally:
+            close_old_connections()
+
+    threading.Thread(target=run, name='reminders').start()
 
 
 def deliver_reminders(reminders: Iterable[Reminder]) -> int:
@@ -173,6 +245,44 @@ def _release(reminders: Iterable[Reminder]) -> None:
 
 def _interval() -> timedelta:
     return timedelta(hours=settings.PAYMENT_REMINDER_INTERVAL_HOURS)
+
+
+def _reminded_lately(participant_ids: Iterable[int], now: datetime) -> set[int]:
+    return set(
+        PaymentReminder.objects.filter(
+            participant_id__in=list(participant_ids), last_sent_at__gt=now - _interval()
+        ).values_list('participant_id', flat=True)
+    )
+
+
+def _started(emails: set[str], event: Event) -> set[str]:
+    """Addresses with any payment (whatever its status) or registration for this edition, on any of their accounts."""
+    in_event = Q(plans__event=event) | Q(addon_lines__addon__plan__event=event)
+    payments = PaymentRequest.objects.annotate(email=Lower('participant__user__email')).filter(in_event)
+    groups = GroupPaymentRequest.objects.annotate(email=Lower('participant__user__email')).filter(plan__event=event)
+    registrations = Participation.objects.annotate(email=Lower('participant__user__email')).filter(plan__event=event)
+    return {
+        email
+        for queryset in (payments, groups, registrations)
+        for email in queryset.filter(email__in=emails).values_list('email', flat=True)
+    }
+
+
+def _open_options(event: Event) -> list[str]:
+    """What can be bought in this edition right now: its open modes of attendance by name, then its open workshops
+    as a count. Empty when registration is closed."""
+    plans = list(
+        ParticipationPlan.objects.filter(event=event, is_open=True)
+        .select_related('workshop', 'mode_of_attendance')
+        .annotate(taken=Count('participation'))
+        .order_by('pk')
+    )
+    available = [plan for plan in plans if plan.capacity is None or plan.taken < plan.capacity]
+    options = [_plan_name(plan) for plan in available if plan.workshop is None]
+    workshops = sum(1 for plan in available if plan.workshop is not None)
+    if workshops:
+        options.append(f'{workshops} hands-on workshop{"s" if workshops != 1 else ""}')
+    return options
 
 
 def _registered(emails: set[str]) -> set[tuple[str, int]]:
@@ -277,7 +387,29 @@ def _date_range(event: Event) -> str:
     return f'{start:%B} {start.day}, {start.year} – {end:%B} {end.day}, {end.year}'
 
 
-def _message(participant: Participant, event: Event, items: list[str]) -> EmailMultiAlternatives:
+def _payment_message(participant: Participant, event: Event, items: list[str]) -> EmailMultiAlternatives:
+    return _email(
+        participant,
+        event,
+        subject=f'Your seat at the {event} is still waiting',
+        template='payment/email/payment_reminder',
+        tag='payment-reminder',
+        items=items,
+    )
+
+
+def _signup_message(participant: Participant, event: Event, options: list[str]) -> EmailMultiAlternatives:
+    return _email(
+        participant,
+        event,
+        subject=f'Your seat at the {event} is one step away',
+        template='payment/email/signup_reminder',
+        tag='signup-reminder',
+        items=options,
+    )
+
+
+def _email(participant: Participant, event: Event, subject: str, template: str, tag: str, items: list[str]):
     info = participant.info
     context = {
         'site_url': settings.FRONTEND_ORIGIN,
@@ -288,11 +420,11 @@ def _message(participant: Participant, event: Event, items: list[str]) -> EmailM
         'items': items,
     }
     message = EmailMultiAlternatives(
-        subject=f'Your seat at the {event} is still waiting',
-        body=render_to_string('payment/email/payment_reminder.txt', context),
+        subject=subject,
+        body=render_to_string(f'{template}.txt', context),
         from_email=settings.SERVER_EMAIL,
         to=[participant.user.email],
-        headers={'x-liara-tag': 'payment-reminder'},
+        headers={'x-liara-tag': tag},
     )
-    message.attach_alternative(render_to_string('payment/email/payment_reminder.html', context), 'text/html')
+    message.attach_alternative(render_to_string(f'{template}.html', context), 'text/html')
     return message

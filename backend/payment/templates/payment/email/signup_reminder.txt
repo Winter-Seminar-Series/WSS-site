@@ -1,0 +1,20 @@
+{% autoescape off %}{% if first_name %}Hi {{ first_name }},{% else %}Hi,{% endif %}
+
+You’re one step away from the {{ event_name }} ({{ dates }}).
+
+Thanks for creating your WSS account. You haven’t picked your plan yet. Registration is open for:
+{% for item in items %}
+  - {{ item }}{% endfor %}
+
+Choose your plan:
+{{ register_url }}
+
+Seats are limited and go first come, first served.
+
+Questions before you register? Message us on Telegram at @wss_info (https://t.me/wss_info) and we’ll help.
+
+Winter Seminar Series
+Sharif University of Technology
+
+Sponsored by Nobitex, Mofid, Sotoon, Jabama, APK Group and Tapsi.
+{% endautoescape %}
