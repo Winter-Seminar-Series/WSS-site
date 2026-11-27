@@ -5,7 +5,8 @@ import { SubEventPage } from '@/components/events/SubEventViews';
 import { resolveEdition } from '@/lib/edition-route';
 import { noStaticParams, parseId, subEventMetadata } from '@/lib/metadata';
 
-export const revalidate = 900;
+// Temporarily dynamic while the data cache is off (PUBLIC_DATA_CACHE in services/http.ts); was `revalidate = 900`.
+export const dynamic = 'force-dynamic';
 
 export const generateStaticParams = noStaticParams;
 

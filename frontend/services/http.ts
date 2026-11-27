@@ -14,6 +14,12 @@ export const API_BASE_URL = `${API_ORIGIN}/api`;
 export const PUBLIC_REVALIDATE_SECONDS = 900;
 
 /**
+ * Temporarily off: public GETs skip Next's data cache and are fetched on every render. A `no-store` fetch makes
+ * the route dynamic, so the public pages lose their ISR cache too until this is `true` again.
+ */
+const PUBLIC_DATA_CACHE = false;
+
+/**
  * The visitor's X-Forwarded-For, as nginx set it (it appends the client address, resolved from Cloudflare's
  * CF-Connecting-IP), forwarded unchanged: the API trusts exactly this one hop (NUM_PROXIES=1).
  */
@@ -96,7 +102,7 @@ async function request<T>(
     headers.Authorization = `Bearer ${token}`;
   }
 
-  const cacheable = method === 'GET' && !auth && cache !== 'no-store';
+  const cacheable = PUBLIC_DATA_CACHE && method === 'GET' && !auth && cache !== 'no-store';
   if (cache === 'no-store') headers['Cache-Control'] = 'no-cache, no-store';
   // The API rate-limits sign-in, sign-up, password and payment calls per visitor. They all reach it from this server,
   // so pass on the visitor's address. Cacheable GETs never read headers: that would make public pages dynamic.

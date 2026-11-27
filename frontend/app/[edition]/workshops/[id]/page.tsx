@@ -17,7 +17,8 @@ import type { Workshop } from '@/types/event.type';
 import { Disclosure } from '@/ui/Disclosure';
 import { RichText } from '@/ui/RichText';
 
-export const revalidate = 900;
+// Temporarily dynamic while the data cache is off (PUBLIC_DATA_CACHE in services/http.ts); was `revalidate = 900`.
+export const dynamic = 'force-dynamic';
 
 function workshopSummary(workshop: Workshop): string {
   return summarize(workshop.descriptionHtml, `${workshop.name} — a workshop at the Winter Seminar Series.`);

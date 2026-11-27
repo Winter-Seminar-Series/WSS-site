@@ -14,7 +14,8 @@ import { editionPageMetadata } from '@/lib/metadata';
 import { buildTimeline } from '@/lib/timeline';
 import type { SubEventKind } from '@/types/event.type';
 
-export const revalidate = 900;
+// Temporarily dynamic while the data cache is off (PUBLIC_DATA_CACHE in services/http.ts); was `revalidate = 900`.
+export const dynamic = 'force-dynamic';
 
 export const generateStaticParams = editionStaticParams();
 

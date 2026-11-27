@@ -13,7 +13,8 @@ import { editionPageMetadata, emptySectionRobots } from '@/lib/metadata';
 import { editionBreadcrumbs } from '@/lib/structured-data';
 import { WORKSHOPS_SECTION } from '@/lib/sub-events';
 
-export const revalidate = 900;
+// Temporarily dynamic while the data cache is off (PUBLIC_DATA_CACHE in services/http.ts); was `revalidate = 900`.
+export const dynamic = 'force-dynamic';
 
 export const generateStaticParams = editionStaticParams();
 

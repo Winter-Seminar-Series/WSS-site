@@ -117,6 +117,9 @@ proxy.ts                 # Next 16 proxy (formerly middleware): refreshes the ac
 `httpGet` / `httpPost` / `httpPut` / `httpPatch` wrap `fetch` against `API_BASE_URL`. The module is
 `server-only`.
 
+- **Temporarily off:** `PUBLIC_DATA_CACHE = false` makes public GETs `no-store`, so the eleven `[edition]` pages
+  that fetch are `force-dynamic` instead of `revalidate = 900`. To restore ISR, set it back to `true` and put the
+  `revalidate` lines back.
 - **Public GETs** use `next: { revalidate: PUBLIC_REVALIDATE_SECONDS, tags }`. Authenticated calls
   (`{ auth: true }`) attach the session's bearer token and are `cache: 'no-store'`.
 - **Registration data** bypasses caching: attendance modes always use `{ cache: 'no-store' }`, and the registration
