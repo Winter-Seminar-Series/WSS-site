@@ -88,6 +88,7 @@ export function ProfileForm({ profile }: Props) {
             options={UNIVERSITIES}
             placeholder="Search or enter your university"
             allowCustom
+            required
             defaultValue={value('university')}
           />
           <SelectField
@@ -96,6 +97,7 @@ export function ProfileForm({ profile }: Props) {
             key={`major:${value('major')}`}
             options={MAJORS}
             placeholder="Choose your major"
+            required
             defaultValue={value('major')}
           />
           <SelectField
@@ -104,6 +106,7 @@ export function ProfileForm({ profile }: Props) {
             key={`job:${value('job')}`}
             options={JOBS}
             placeholder="Choose your job"
+            required
             defaultValue={value('job')}
           />
           <Field label="Status" htmlFor="isOpenToWork">
@@ -125,13 +128,14 @@ export function ProfileForm({ profile }: Props) {
             defaultValue={value('fieldsOfInterest')}
             className="lg:col-span-2"
           />
-          <ChoiceGroup legend="Grade" name="grade" options={GRADES} defaultValue={value('grade')} />
+          <ChoiceGroup legend="Grade" name="grade" options={GRADES} defaultValue={value('grade')} required />
           <SelectField
             label="How did you hear about us?"
             name="introductionMethod"
             key={`introductionMethod:${value('introductionMethod')}`}
             options={INTRODUCTION_METHODS}
             placeholder="Choose one"
+            required
             defaultValue={value('introductionMethod')}
           />
           <TextField

@@ -77,7 +77,6 @@ export const INTRODUCTION_METHODS = [
   'Instagram',
   'LinkedIn',
   'YouTube',
-  'Quera',
   'Email',
   'SMS',
   'Friends',

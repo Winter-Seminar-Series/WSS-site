@@ -7,10 +7,11 @@ interface Props {
   name: string;
   options: readonly { value: string; label: string }[];
   defaultValue?: string;
+  required?: boolean;
 }
 
 /** Radio buttons drawn as chips: one tap target per option, wide enough for a thumb. */
-export function ChoiceGroup({ legend, name, options, defaultValue }: Props) {
+export function ChoiceGroup({ legend, name, options, defaultValue, required = false }: Props) {
   const error = useFieldErrors(name);
   return (
     <fieldset
@@ -18,7 +19,14 @@ export function ChoiceGroup({ legend, name, options, defaultValue }: Props) {
       aria-invalid={error ? true : undefined}
       aria-describedby={error ? `${name}-error` : undefined}
     >
-      <legend className="mb-2 text-sm font-semibold text-ink">{legend}</legend>
+      <legend className="mb-2 text-sm font-semibold text-ink">
+        {legend}
+        {required && (
+          <span className="ms-0.5 text-brand" aria-hidden>
+            *
+          </span>
+        )}
+      </legend>
       <div className="flex flex-wrap gap-2">
         {options.map((option) => (
           <label
@@ -30,6 +38,7 @@ export function ChoiceGroup({ legend, name, options, defaultValue }: Props) {
               name={name}
               value={option.value}
               defaultChecked={defaultValue === option.value}
+              required={required}
               className="sr-only"
             />
             {option.label}

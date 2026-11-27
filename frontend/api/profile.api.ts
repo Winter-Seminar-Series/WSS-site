@@ -56,6 +56,16 @@ export async function updateNationalCode(nationalCode: string): Promise<Profile>
   return toProfile(await httpPatch<ProfileResponse>('/profile/', { national_code: nationalCode }, { auth: true }));
 }
 
+/** Mirrors the API's REQUIRED_PROFILE_FIELDS: checkout refuses a profile missing any of them. */
 export function isProfileComplete(profile: Profile): boolean {
-  return Boolean(profile.firstName && profile.lastName && profile.phoneNumber);
+  return [
+    profile.firstName,
+    profile.lastName,
+    profile.phoneNumber,
+    profile.university,
+    profile.major,
+    profile.job,
+    profile.grade,
+    profile.introductionMethod,
+  ].every((value) => value.trim() !== '');
 }

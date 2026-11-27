@@ -96,7 +96,7 @@ export function RegisterForm({ modes, workshops, paidPlanIds, heldAddons, nation
           <Link href="/dashboard/profile" className="font-bold underline underline-offset-4">
             complete your profile
           </Link>{' '}
-          (name and phone number) before registering.
+          (name, phone number, studies and work) before registering.
         </Alert>
       )}
 

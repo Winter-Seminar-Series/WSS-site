@@ -95,6 +95,8 @@ interface SelectFieldProps {
   placeholder?: string;
   defaultValue?: string;
   allowCustom?: boolean;
+  /** Marks the field and drops the "None" choice. The form validates on submit (ValidatedForm is `noValidate`). */
+  required?: boolean;
 }
 
 export function SelectField({
@@ -104,6 +106,7 @@ export function SelectField({
   placeholder,
   defaultValue = '',
   allowCustom = false,
+  required = false,
 }: SelectFieldProps) {
   const error = useFieldErrors(name);
   const selectRef = useRef<HTMLSelectElement>(null);
@@ -123,7 +126,7 @@ export function SelectField({
     filtered.push({ value: search, label: `Use “${search}”` });
     choices.push({ value: search, label: search });
   }
-  const visible = [...filtered, { value: '', label: 'None' }];
+  const visible = required ? filtered : [...filtered, { value: '', label: 'None' }];
   const display = choices.find((option) => option.value === selected)?.label ?? selected;
 
   useEffect(() => {
@@ -156,7 +159,7 @@ export function SelectField({
   }
 
   return (
-    <Field label={label} htmlFor={name} error={error}>
+    <Field label={label} htmlFor={name} required={required} error={error}>
       <div className="relative">
         <input
           id={name}
@@ -167,6 +170,7 @@ export function SelectField({
           aria-controls={`${name}-options`}
           aria-activedescendant={open && active >= 0 ? `${name}-option-${active}` : undefined}
           aria-invalid={error ? true : undefined}
+          aria-required={required || undefined}
           aria-describedby={error ? `${name}-error` : undefined}
           placeholder={placeholder ?? 'Search…'}
           value={query ?? display}

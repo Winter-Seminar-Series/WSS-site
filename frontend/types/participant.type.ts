@@ -14,7 +14,7 @@ export interface Profile {
   job: string;
   isOpenToWork: boolean;
   fieldsOfInterest: string;
-  grade: Grade;
+  grade: Grade | '';
   introductionMethod: string;
   linkedin: string;
   github: string;

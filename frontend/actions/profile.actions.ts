@@ -15,6 +15,9 @@ const optionalText = z
   .optional()
   .transform((value) => value ?? '');
 
+const requiredChoice = (message: string) =>
+  z.string({ required_error: message }).trim().min(1, message).max(100, 'Use 100 characters or fewer.');
+
 const NATIONAL_CODE_FORMAT = 'Enter an 8–10 digit national code.';
 
 const nationalCode = z
@@ -60,9 +63,9 @@ const profileSchema = z.object({
     .refine((value) => !value || value <= new Date().toISOString().slice(0, 10), 'Birth date cannot be in the future.')
     .transform((value) => value ?? ''),
   gender: z.enum(['M', 'F', 'O']).default('O'),
-  university: optionalText,
-  major: optionalText,
-  job: optionalText,
+  university: requiredChoice('Choose or enter your university.'),
+  major: requiredChoice('Choose your major.'),
+  job: requiredChoice('Choose your job.'),
   isOpenToWork: z
     .string()
     .optional()
@@ -72,12 +75,8 @@ const profileSchema = z.object({
     .trim()
     .optional()
     .transform((value) => value ?? ''),
-  grade: z.enum(['B', 'M', 'P']).default('B'),
-  introductionMethod: z
-    .string()
-    .trim()
-    .optional()
-    .transform((value) => value ?? ''),
+  grade: z.enum(['B', 'M', 'P'], { errorMap: () => ({ message: 'Choose your grade.' }) }),
+  introductionMethod: requiredChoice('Tell us how you heard about us.'),
   linkedin: optionalText,
   github: optionalText,
 });

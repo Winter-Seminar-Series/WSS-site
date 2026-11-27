@@ -22,7 +22,8 @@ export interface ProfileResponse {
   job: string;
   is_open_to_work: boolean;
   fields_of_interest: string;
-  grade: Grade;
+  /** Empty until the participant picks one. */
+  grade: Grade | '';
   introduction_method: string;
   linkedin: string;
   github: string;
