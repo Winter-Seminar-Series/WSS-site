@@ -33,7 +33,7 @@ class ParticipantInfo(models.Model):
     job = models.CharField(max_length=100, blank=True)
     is_open_to_work = models.BooleanField(default=False)
     fields_of_interest = models.TextField(blank=True)
-    grade = models.CharField(max_length=1, default='B', choices=GRADE_CHOICES)
+    grade = models.CharField(max_length=1, blank=True, choices=GRADE_CHOICES)
     introduction_method = models.TextField(blank=True)
     linkedin = models.CharField(max_length=100, blank=True)
     github = models.CharField(max_length=100, blank=True)

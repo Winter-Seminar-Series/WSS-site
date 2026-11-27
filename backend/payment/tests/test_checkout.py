@@ -124,6 +124,26 @@ class CreatePaymentTests(CheckoutTest):
         register(self.participant, make_mode_plan(make_event(order=9)))
         self.assertEqual(self.checkout([self.online]).status_code, 201)
 
+    def test_an_incomplete_profile_cannot_check_out(self):
+        for field in ('university', 'grade', 'introduction_method'):
+            with self.subTest(field=field):
+                info = self.participant.info
+                complete = getattr(info, field)
+                setattr(info, field, ' ' if field != 'grade' else '')
+                info.save()
+
+                self.assertIn('incomplete_profile', self.error_codes(self.checkout([self.online])))
+
+                setattr(info, field, complete)
+                info.save()
+        self.assertFalse(PaymentRequest.objects.exists())
+        self.gateway.create_transaction.assert_not_called()
+
+    def test_a_participant_without_a_profile_cannot_check_out(self):
+        self.participant.info = None
+        self.participant.save()
+        self.assertIn('incomplete_profile', self.error_codes(self.checkout([self.online])))
+
     def test_plans_of_different_editions_cannot_be_mixed(self):
         other = make_workshop_plan(make_event(order=9))
         self.assertIn('mixed_events', self.error_codes(self.checkout([self.online, other])))

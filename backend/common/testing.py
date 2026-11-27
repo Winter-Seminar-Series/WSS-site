@@ -32,10 +32,23 @@ def make_event(order: int = 10) -> Event:
     )
 
 
+# Every field checkout requires (payment.services.validate_profile).
+COMPLETE_PROFILE = {
+    'first_name': 'Ada',
+    'last_name': 'Lovelace',
+    'phone_number': '09120000000',
+    'university': 'Sharif University of Technology',
+    'major': 'computer-engineering',
+    'job': 'Software Engineer',
+    'grade': 'B',
+    'introduction_method': 'Telegram',
+}
+
+
 def make_participant(email: str | None = None, password: str = PASSWORD, **info) -> Participant:
     email = email or f'participant{next(_ids)}@example.com'
     user = User.objects.create_user(username=email, email=email, password=password)
-    profile = ParticipantInfo.objects.create(first_name='Ada', last_name='Lovelace', phone_number='09120000000', **info)
+    profile = ParticipantInfo.objects.create(**{**COMPLETE_PROFILE, **info})
     return Participant.objects.create(user=user, info=profile)
 
 

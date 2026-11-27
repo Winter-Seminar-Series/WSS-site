@@ -124,6 +124,26 @@ def validate_addons_for_participant(
             )
 
 
+# The profile fields a registration needs: the dashboard's profile form requires the same ones.
+REQUIRED_PROFILE_FIELDS = (
+    'first_name',
+    'last_name',
+    'phone_number',
+    'university',
+    'major',
+    'job',
+    'grade',
+    'introduction_method',
+)
+
+
+def validate_profile(participant: Participant) -> None:
+    """Registrations snapshot the profile (Participation.info), so it must be complete before checkout."""
+    info = participant.info
+    if info is None or any(not str(getattr(info, field)).strip() for field in REQUIRED_PROFILE_FIELDS):
+        raise _error('Please complete your profile before registering.', 'incomplete_profile')
+
+
 def validate_for_participant(participant: Participant, plans: list[ParticipationPlan], event_id: int) -> None:
     """Checks a basket against what the participant already has in the same edition."""
     registered = list(
@@ -200,6 +220,7 @@ def create_payment(
     Everything runs in one transaction: if the payment service fails, the discount use is not lost.
     """
     event_id = validate_plans(plans, addons)
+    validate_profile(participant)
     validate_for_participant(participant, plans, event_id)
     validate_addons_for_participant(participant, plans, addons)
     discount = claim_discount(discount_code, event_id) if _discountable(plans, addons) else None
