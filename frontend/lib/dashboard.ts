@@ -1,4 +1,4 @@
-import { Award, CirclePlay, FileImage, FileUser, PlaySquare, Ticket, UserRound } from 'lucide-react';
+import { Award, CirclePlay, FileImage, FileUser, KeyRound, PlaySquare, Ticket, UserRound } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 
 export interface DashboardTab {
@@ -73,6 +73,14 @@ export const DASHBOARD_TABS: DashboardTab[] = [
     label: 'CV',
     description: 'Share your CV with this edition. Each edition asks for its own.',
     Icon: FileUser,
+    visible: true,
+    phone: 'more',
+  },
+  {
+    href: '/dashboard/password',
+    label: 'Password',
+    description: 'Change the password you sign in with.',
+    Icon: KeyRound,
     visible: true,
     phone: 'more',
   },

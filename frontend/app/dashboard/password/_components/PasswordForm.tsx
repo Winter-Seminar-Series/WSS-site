@@ -16,7 +16,7 @@ export function PasswordForm() {
   const [state, formAction] = useActionState(changePasswordAction, INITIAL_STATE);
 
   return (
-    <Panel id="password" title="Password" description="Use at least 8 characters.">
+    <Panel id="password" title="Change password" description="Use at least 8 characters.">
       <ValidatedForm state={state} action={formAction} className="flex flex-col gap-5">
         <div className="grid gap-5 lg:grid-cols-3">
           <TextField
