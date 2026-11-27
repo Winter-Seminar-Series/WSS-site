@@ -239,7 +239,7 @@ export function SelectField({
             id={`${name}-options`}
             role="listbox"
             aria-label={label}
-            className="absolute z-30 mt-2 max-h-64 w-full overflow-y-auto rounded-xl border border-line bg-surface p-1 shadow-lg"
+            className="absolute z-35 mt-2 max-h-64 w-full overflow-y-auto rounded-xl border border-line bg-surface p-1 shadow-lg"
           >
             {visible.map((option, index) => (
               <li
