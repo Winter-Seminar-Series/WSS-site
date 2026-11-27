@@ -3,7 +3,9 @@ from unittest import mock
 
 from django.contrib.auth import get_user_model
 from django.core import mail
+from django.db import connection
 from django.test import TestCase, override_settings
+from django.test.utils import CaptureQueriesContext
 from django.utils import timezone
 
 from common.testing import make_addon, make_event, make_mode_plan, make_participant, make_workshop_plan, register
@@ -390,3 +392,35 @@ class PaymentRequestEventFilterTests(TestCase):
 
         listed = list(response.context['cl'].queryset)
         self.assertCountEqual(listed, [self.with_plans, self.addons_only])
+
+
+@override_settings(
+    STORAGES={
+        'default': {'BACKEND': 'django.core.files.storage.InMemoryStorage'},
+        'staticfiles': {'BACKEND': 'django.contrib.staticfiles.storage.StaticFilesStorage'},
+    }
+)
+class PaymentRequestAdminPageTests(TestCase):
+    def setUp(self):
+        admin = get_user_model().objects.create_superuser('admin', 'admin@example.com', 'admin-password')
+        self.client.force_login(admin)
+        self.plan = make_mode_plan(make_event())
+        self.payment = make_payment(make_participant('grace@example.com', first_name='Grace'), [self.plan])
+        make_payment(make_participant('alan@example.com', first_name='Alan'), [self.plan])
+
+    def test_searches_by_email_and_name(self):
+        for query in ('grace@example', 'Grace'):
+            with self.subTest(query=query):
+                response = self.client.get('/admin/payment/paymentrequest/', {'q': query})
+                self.assertEqual(list(response.context['cl'].queryset), [self.payment])
+
+    def test_the_change_page_does_not_grow_with_the_participants(self):
+        url = f'/admin/payment/paymentrequest/{self.payment.pk}/change/'
+        self.client.get(url)  # warms the per-process caches (content types, session)
+        with CaptureQueriesContext(connection) as before:
+            self.assertEqual(self.client.get(url).status_code, 200)
+        for _ in range(20):
+            make_participant()
+
+        with self.assertNumQueries(len(before)):
+            self.client.get(url)

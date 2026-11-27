@@ -96,6 +96,16 @@ class PaymentRequestAdmin(ExportCSVMixin, admin.ModelAdmin):
     list_display = ('participant', 'timestamp', 'status', 'discount_code', 'order_id', 'base_price', 'paid_price')
     list_select_related = ('participant__user', 'participant__info', 'discount')
     list_filter = (EventFilter, 'status', 'discount__code')
+    search_fields = (
+        'participant__user__email',
+        'participant__info__first_name',
+        'participant__info__last_name',
+        'participant__info__phone_number',
+        'order_id',
+        'discount__code',
+    )
+    # A <select> of every participant (each label reads its profile) cost ~6,400 queries per change page.
+    raw_id_fields = ('participant', 'discount')
     inlines = (PaymentRequestAddonInline,)
 
     def get_queryset(self, request):
